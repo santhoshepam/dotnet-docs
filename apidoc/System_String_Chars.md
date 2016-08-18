@@ -11,7 +11,7 @@ For more information, see the "Char Objects and Unicode Characters" section in t
 In C#, the @System.String.Chars(System.Int32) property is an indexer. In Visual Basic, it is the default property of the @System.String class. 
 Each @System.Char object in the string can be accessed by using code such as the following.
 
-```cs
+```csharp
 string str1 = "Test";
 for (int ctr = 0; ctr <= str1.Length - 1; ctr++ )
    Console.Write("{0} ", str1[ctr]);

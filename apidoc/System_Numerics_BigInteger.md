@@ -14,7 +14,7 @@ This type differs from the other integral types in the .NET Framework, which hav
 You can instantiate a @System.Numerics.BigInteger object in several ways:
 
 - You can use the `new` keyword and provide any integral or floating-point value as a parameter to the @System.Numerics.BigInteger constructor. 
-(Floating-point values are truncated before they are assigned to the @System.Numerics.BigInteger.) 
+(Floating-point values are truncated before they are assigned to the @System.Numerics.BigInteger .) 
 The following example illustrates how to use the `new` keyword to instantiate @System.Numerics.BigInteger values.
 
 ```csharp

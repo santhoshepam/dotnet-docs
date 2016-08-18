@@ -34,7 +34,7 @@ remarks: >
 uid: System.Net.Http.HttpClient.Dispose(System.Boolean)
 remarks: |
  This method is called by the public `Dispose()` method and the @System.Object.Finalize method. `Dispose()` invokes the protected `Dispose(Boolean)` method with the `disposing` parameter set to `true`. @System.Object.Finalize invokes `Dispose` with  `disposing` set to `false`.
- When the `disposing parameter is `true`, this method releases all resources held by any managed objects that this @System.Net.Http.HttpClient references. This method invokes the `Dispose()` method of each referenced object.
+ When the `disposing` parameter is `true`, this method releases all resources held by any managed objects that this @System.Net.Http.HttpClient references. This method invokes the `Dispose()` method of each referenced object.
  When this method is called, the @System.Net.Http.HttpClient.CancelPendingRequests method is called to abort all pending requests.
 ---
 ---
@@ -76,7 +76,7 @@ The following methods are thread safe:
 
 @System.Net.Http.HttpClient is intended to be instantiated once and re-used throughout the life of an application. Instantiating an HttpClient class for every request will exhaust the number of sockets available under heavy loads. This will result in SocketException errors. Below is an example using HttpClient correctly.
 
-```cs
+```csharp
 public class GoodController : ApiController
 {
     // OK
