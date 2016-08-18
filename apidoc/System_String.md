@@ -1,5 +1,5 @@
 ---
-uid: System.String.Chars(System.Int32)
+uid: System.String
 ---
 > [!NOTE]
 To view the .NET Framework source code for this type, see the [Reference Source](http://referencesource.microsoft.com/#mscorlib/system/string.cs#8281103e6f23cb5c). You can browse through the source code online, download the reference for offline viewing, and step through the sources (including patches and updates) during debugging; see [instructions](http://referencesource.microsoft.com/).
