@@ -15,7 +15,7 @@ The maximum size of a @System.String object in memory is 2GB, or about 1 billion
 In this section:
          
 - [Instantiating a String object](#Instantiation)
-- [Char objects and Unicode characters](#Characters")
+- [Char objects and Unicode characters](#Characters)
 etc.
 
 <a name="Instantiation"></a>
