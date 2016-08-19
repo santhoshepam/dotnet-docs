@@ -1,14 +1,15 @@
 ---
 uid: System.String
+remarks: *content
 ---
 > [!NOTE]
 To view the .NET Framework source code for this type, see the [Reference Source](http://referencesource.microsoft.com/#mscorlib/system/string.cs#8281103e6f23cb5c). You can browse through the source code online, download the reference for offline viewing, and step through the sources (including patches and updates) during debugging; see [instructions](http://referencesource.microsoft.com/).
 
 A string is a sequential collection of characters that is used to represent text. 
-A @System.String object is a sequential collection of @System.Char?qualify=true objects that represent a string; 
-a @System.Char?qualify=true object corresponds to a UTF-16 code unit. 
-The value of the @System.String object is the content of the sequential collection of @System.Char?qualify=true objects, and that value is immutable (that is, it is read-only). 
-For more information about the immutability of strings, see the [Immutability and the StringBuilder class)(#Immutability) section later in this topic. 
+A @System.String object is a sequential collection of @System.Char objects that represent a string; 
+a @System.Char object corresponds to a UTF-16 code unit. 
+The value of the @System.String object is the content of the sequential collection of @System.Char objects, and that value is immutable (that is, it is read-only). 
+For more information about the immutability of strings, see the [Immutability and the StringBuilder class](#Immutability) section later in this topic. 
 The maximum size of a @System.String object in memory is 2GB, or about 1 billion characters.
 
 In this section:
@@ -105,13 +106,12 @@ public class Example
 
 etc.
 
-
 <a name="Unicode"></a>
-
 ###Strings and The Unicode Standard
+
 Characters in a string are represented by UTF-16 encoded code units, which correspond to @System.Char values. 
 Each character in a string has an associated Unicode character category, which is represented in the .NET Framework by the @System.Globalization.UnicodeCategory enumeration. 
-The category of a character or a surrogate pair can be determined by calling the @System.Globalization.CharUnicodeInfo.GetUnicodeCategory(System.Char)?qualify=true method.
+The category of a character or a surrogate pair can be determined by calling the @System.Globalization.CharUnicodeInfo.GetUnicodeCategory(System.Char) method.
 
 The .NET Framework maintains its own table of characters and their corresponding categories, which ensures that a version of the .NET Framework running on different platforms returns identical character category information. 
 The following table lists the versions of the .NET Framework and the versions of the Unicode Standard on which their character categories are based. 
@@ -129,7 +129,7 @@ The following table lists the versions of the .NET Framework and the versions of
 | .NET Framework 4.6.1   | The Unicode Standard, Version 6.3.0 |
 | .NET Framework 4.6.2   | The Unicode Standard, Version 8.0.0 |
 
-<a name="EmbeddedNulls">>/a>
+<a name="EmbeddedNulls"></a>
 ###Strings and embedded null characters
             
 In the .NET Framework, a @System.String object can include embedded null characters, which count as a part of the string's length. 
@@ -138,8 +138,8 @@ it is not considered a part of the string and is not counted as part of the stri
 This means that the following common assumptions that C and C++ programmers or libraries written in C or C++ might make about strings are not necessarily valid 
 when applied to @System.String objects:
               
-- The value returned by the `strlen` or `wcslen` functions does not necessarily equal @System.String.Length?qualify=true.
-- The string created by the `strcpy_s` or `wcscpy_s` functions is not necessarily identical to the string created by the @System.String.Copy(System.String)?qualify=true method.
+- The value returned by the `strlen` or `wcslen` functions does not necessarily equal @System.String.Length.
+- The string created by the `strcpy_s` or `wcscpy_s` functions is not necessarily identical to the string created by the @System.String.Copy(System.String) method.
                 
 You should ensure that native C and C++ code that instantiates @System.String objects, and code that is passed @System.String objects through platform invoke, 
 do not assume that an embedded null character marks the end of the string.
