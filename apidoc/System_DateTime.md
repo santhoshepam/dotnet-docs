@@ -12,47 +12,50 @@ Time values are measured in 100-nanosecond units called ticks, and a particular 
 
 In this section:
 
-- [Instantiating a DateTime object](#instantiating_datetime)
-- [DateTime values and their string representations](#instantiating_datetime)
-- [Converting strings to DateTime values](#instantiating_datetime)
-- [Version considerations](#instantiating_datetime)
-- [DateTime values](#instantiating_datetime) 
-- [DateTime operations](#instantiating_datetime)
-- [DateTime resolution](#instantiating_datetime)
-- [DateTime vs. TimeSpan](#instantiating_datetime)
-- [DateTime values and calendars](#instantiating_datetime)
-- [Persisting DateTime values](#instantiating_datetime)
-- [COM interop considerations](#instantiating_datetime)
+- [Instantiating a DateTime object](#Instantiation)
+- [DateTime values and their string representations](#Strings)
+- [Converting strings to DateTime values](#Instantiation)
+- [Version considerations](#Instantiation)
+- [DateTime values](#Instantiation) 
+- [DateTime operations](#Instantiation)
+- [DateTime resolution](#Instantiation)
+- [DateTime vs. TimeSpan](#Instantiation)
+- [DateTime values and calendars](#Instantiation)
+- [Persisting DateTime values](#Instantiation)
+- [COM interop considerations](#Instantiation)
 
-# <href a="instantiating_datetime"/>Instantiating a DateTime object #
+<a name="Instantiation"></a>
+## Instantiating a DateTime object ##
 
 You can create a new @System.DateTime value in any of the following ways:
 
 - By calling any of the overloads of the @System.DateTime constructor that allow you to specify specific elements of the date and time value (such as the year, month, and day, or the number of ticks). The following code illustrates a call to one of the @System.DateTime constructors to create a date with a specific year, month, day, hour, minute, and second.
 
-[!code-csharp[Instantating](../samples/snippets/csharp/instantiation1.cs#L17)]
-[!code-vb[Instantiating](../samples/snippets/vb/instantiation1.vb#L17)]
+  [!code-csharp[Instantating](../samples/snippets/csharp/instantiation1.cs#L17)]
+  [!code-vb[Instantiating](../samples/snippets/vb/instantiation1.vb#L17)]
 
 - By using any compiler-specific syntax for declaring date and time values. For example, the following Visual Basic statement initializes a new @System.DateTime value.
 
-[!code-vb[Instantiating](../samples/snippets/vb/instantiation1.vb#L23)]
+  [!code-vb[Instantiating](../samples/snippets/vb/instantiation1.vb#L23)]
 
+- By assigning the @System.DateTime object a date and time value returned by a property or method. The following example assigns the current date and time, the current Coordinated Universal Time (UTC) date and time, and the current date to three new @System.DateTime variables.
 
-                <maml:listItem>
-                  <maml:para>By assigning the @System.DateTime</maml:codeEntityReference> object a date and time value returned by a property or method. The following example assigns the current date and time, the current Coordinated Universal Time (UTC) date and time, and the current date to three new @System.DateTime</maml:codeEntityReference> variables. </maml:para>
-                  <maml:codeReference>System.DateTime.Instantiation#3</maml:codeReference>
-                </maml:listItem>
-                <maml:listItem>
-                  <maml:para>By parsing the string representation of a date and time value. The <maml:codeEntityReference autoUpgrade="true">Overload:System.DateTime.Parse</maml:codeEntityReference>, <maml:codeEntityReference autoUpgrade="true">Overload:System.DateTime.ParseExact</maml:codeEntityReference>, <maml:codeEntityReference autoUpgrade="true">Overload:System.DateTime.TryParse</maml:codeEntityReference>, and <maml:codeEntityReference autoUpgrade="true">Overload:System.DateTime.TryParseExact</maml:codeEntityReference> methods all convert a string to its equivalent date and time value. The following example uses the <maml:codeEntityReference autoUpgrade="true">M:System.DateTime.Parse(System.String,System.IFormatProvider)</maml:codeEntityReference> method to parse a string and convert it to a @System.DateTime</maml:codeEntityReference> value. </maml:para>
-                  <maml:codeReference>System.DateTime.Instantiation#4</maml:codeReference>
-                  <maml:para>
-                    <?Comment rcp: This section addresses several customer complaints that there is no illustration of how to createDateTimevalues. 2014-05-09T08:37:00Z  Id='2?>Note that the <maml:codeEntityReference autoUpgrade="true">Overload:System.DateTime.TryParse</maml:codeEntityReference> and <maml:codeEntityReference autoUpgrade="true">Overload:System.DateTime.TryParseExact</maml:codeEntityReference> methods indicate whether a particular string contains a valid representation of a @System.DateTime</maml:codeEntityReference> value in addition to performing the conversion. </maml:para>
-                </maml:listItem>
-                <maml:listItem>
-                  <maml:para>By calling the @System.DateTime</maml:codeEntityReference> structure's implicit default constructor. (For details on the implicit default constructor of a value type, see <maml:link xlink:href="471eb994-2958-49d5-a6be-19b4313f80a3">Value Types (C# Reference)</maml:link>.) An approximate equivalent, for compilers that support it, is declaring a @System.DateTime</maml:codeEntityReference>  value without explicitly assigning a date and time to it. The following example illustrates a call to the @System.DateTime</maml:codeEntityReference> implicit default constructor in C# and Visual Basic, as well as a @System.DateTime</maml:codeEntityReference> variable declaration with no assignment in Visual Basic.</maml:para>
-                  <maml:codeReference>System.DateTime.Instantiation#5</maml:codeReference>
-                </maml:listItem>
-              </maml:list>
-            </maml:content>
-          </maml:section>
+  [!code-csharp[Instantating](../samples/snippets/csharp/instantiation1.cs#L24-L26)]
+  [!code-vb[Instantiating](../samples/snippets/vb/instantiation1.vb#L29-L31)]
 
+- By parsing the string representation of a date and time value. The @System.DateTime.Parse, @System.DateTime.ParseExact<, @System.DateTime.TryParse, and @System.DateTime.TryParseExact methods all convert a string to its equivalent date and time value. The following example uses the @System.DateTime.Parse(System.String,System.IFormatProvider) method to parse a string and convert it to a @System.DateTime value.
+
+  [!code-csharp[Instantating](../samples/snippets/csharp/instantiation1.cs#L33-L35)]
+  [!code-vb[Instantiating](../samples/snippets/vb/instantiation1.vb#L37-L39)]
+
+  Note that the @System.DateTime.TryParse and @System.DateTime.TryParseExact methods indicate whether a particular string contains a valid representation of a @System.DateTime value in addition to performing the conversion.
+
+- By calling the @System.DateTime structure's implicit default constructor. (For details on the implicit default constructor of a value type, see [Value Types (C# Reference)](https://msdn.microsoft.com/library/s1ax56ch.aspx).) An approximate equivalent, for compilers that support it, is declaring a @System.DateTime value without explicitly assigning a date and time to it. The following example illustrates a call to the @System.DateTime implicit default constructor in C# and Visual Basic, as well as a @System.DateTime variable declaration with no assignment in Visual Basic.
+
+  [!code-csharp[Instantating](../samples/snippets/csharp/instantiation1.cs#L42-L46)]
+  [!code-vb[Instantiating](../samples/snippets/vb/instantiation1.vb#L46-L56)]
+
+<a name="Strings"></a>
+## DateTime values and their string representations ##
+
+Internally, all <@System.DateTime values are represented as the number of ticks (the number of 100-nanosecond intervals) that have elapsed since 12:00:00 midnight, January 1, 0001. The actual <@System.DateTime value is independent of the way in which that value appears when displayed in a user interface element or when written to a file. The appearance of a <@System.DateTime value is the result of a formatting operation. Formatting is the process of converting a value to its string representation.
