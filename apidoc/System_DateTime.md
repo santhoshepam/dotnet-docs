@@ -41,9 +41,9 @@ You can create a new @System.DateTime value in any of the following ways:
 - By assigning the @System.DateTime object a date and time value returned by a property or method. The following example assigns the current date and time, the current Coordinated Universal Time (UTC) date and time, and the current date to three new @System.DateTime variables.
 
   [!code-csharp[Instantating](../samples/snippets/csharp/System.DateTime/instantiation1.cs#L24-L26)]
-  [!code-vb[Instantiating](../samples/snippets/vb/System.DateTime/instantiation1.vb#L29-L31)]
+  [!code-visualbasic[Instantiating](../samples/snippets/vb/System.DateTime/instantiation1.vb#L29-L31)]
 
-- By parsing the string representation of a date and time value. The @System.DateTime.Parse, @System.DateTime.ParseExact<, @System.DateTime.TryParse, and @System.DateTime.TryParseExact methods all convert a string to its equivalent date and time value. The following example uses the @System.DateTime.Parse(System.String,System.IFormatProvider) method to parse a string and convert it to a @System.DateTime value.
+- By parsing the string representation of a date and time value. Overloads of the @System.DateTime.Parse(System.String), @System.DateTime.ParseExact(System.String,System.String,System.IFormatProvider), @System.DateTime.TryParse(System.String,System.DateTime), and @System.DateTime.TryParseExact(System.String,System.String,System.IFormatProvider,System.Globalization.DateTimeStyles,System.DateTime) methods all convert a string to its equivalent date and time value. The following example uses the @System.DateTime.Parse(System.String,System.IFormatProvider) method to parse a string and convert it to a @System.DateTime value.
 
   [!code-csharp[Instantating](../samples/snippets/csharp/System.DateTime/instantiation1.cs#L33-L35)]
   [!code-vb[Instantiating](../samples/snippets/vb/System.DateTime/instantiation1.vb#L37-L39)]
@@ -58,4 +58,9 @@ You can create a new @System.DateTime value in any of the following ways:
 <a name="Strings"></a>
 ## DateTime values and their string representations ##
 
-Internally, all <@System.DateTime values are represented as the number of ticks (the number of 100-nanosecond intervals) that have elapsed since 12:00:00 midnight, January 1, 0001. The actual <@System.DateTime value is independent of the way in which that value appears when displayed in a user interface element or when written to a file. The appearance of a <@System.DateTime value is the result of a formatting operation. Formatting is the process of converting a value to its string representation.
+Internally, all @System.DateTime values are represented as the number of ticks (the number of 100-nanosecond intervals) that have elapsed since 12:00:00 midnight, January 1, 0001. The actual @System.DateTime value is independent of the way in which that value appears when displayed in a user interface element or when written to a file. The appearance of a @System.DateTime value is the result of a formatting operation. Formatting is the process of converting a value to its string representation.
+
+Because the appearance of date and time values is dependent on such factors as culture, international standards, application requirements, and personal preference, the @System.DateTime structure offers a great deal of flexibility in formatting date and time values through the overloads of its @System.DateTime.ToString method. The default @System.DateTime.ToString method returns the string representation of a date and time value using the current culture's short date and long time pattern. The following example uses the default @System.DateTime.ToString method to display the date and time using the short date and long time pattern for the en-US culture, the current culture on the computer on which the example was run.
+
+[!code-csharp[Instantating](../samples/snippets/csharp/System.DateTime/formatting1.cs#Snippet1)]
+[!code-vb[Instantiating](../samples/snippets/vb/System.DateTime/formatting1.vb#1)]
