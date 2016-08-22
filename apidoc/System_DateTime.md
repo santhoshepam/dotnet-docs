@@ -31,12 +31,12 @@ You can create a new @System.DateTime value in any of the following ways:
 
 - By calling any of the overloads of the @System.DateTime constructor that allow you to specify specific elements of the date and time value (such as the year, month, and day, or the number of ticks). The following code illustrates a call to one of the @System.DateTime constructors to create a date with a specific year, month, day, hour, minute, and second.
 
-  [!code-csharp[Instantating](../samples/snippets/csharp/System.DateTime/instantiation1.cs#L17)]
-  [!code-vb[Instantiating](../samples/snippets/vb/System.DateTime/instantiation1.vb#L17)]
+  [!code-csharp[Instantating](../samples/snippets/csharp/System.DateTime/instantiation1.cs#L17-L17)]
+  [!code-vb[Instantiating](../samples/snippets/vb/System.DateTime/instantiation1.vb#L17-L17)]
 
 - By using any compiler-specific syntax for declaring date and time values. For example, the following Visual Basic statement initializes a new @System.DateTime value.
 
-  [!code-vb[Instantiating](../samples/snippets/vb/System.DateTime/instantiation1.vb#L23)]
+  [!code-vb[Instantiating](../samples/snippets/vb/System.DateTime/instantiation1.vb#L23-L23)]
 
 - By assigning the @System.DateTime object a date and time value returned by a property or method. The following example assigns the current date and time, the current Coordinated Universal Time (UTC) date and time, and the current date to three new @System.DateTime variables.
 
