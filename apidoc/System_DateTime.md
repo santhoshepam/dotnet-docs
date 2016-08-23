@@ -62,5 +62,9 @@ Internally, all @System.DateTime values are represented as the number of ticks (
 
 Because the appearance of date and time values is dependent on such factors as culture, international standards, application requirements, and personal preference, the @System.DateTime structure offers a great deal of flexibility in formatting date and time values through the overloads of its @System.DateTime.ToString method. The default @System.DateTime.ToString method returns the string representation of a date and time value using the current culture's short date and long time pattern. The following example uses the default @System.DateTime.ToString method to display the date and time using the short date and long time pattern for the en-US culture, the current culture on the computer on which the example was run.
 
-[!code-csharp[Instantating](../samples/snippets/csharp/System.DateTime/formatting1.cs#Snippet1)]
-[!code-vb[Instantiating](../samples/snippets/vb/System.DateTime/formatting1.vb#1)]
+[!code-csharp[Formatting](../samples/snippets/csharp/System.DateTime/formatting1.cs)]
+[!code-vb[Formatting](../samples/snippets/vb/System.DateTime/formatting1.vb)]
+
+# Example #
+
+This is an example!
