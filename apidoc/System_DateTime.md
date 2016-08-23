@@ -65,6 +65,3 @@ Because the appearance of date and time values is dependent on such factors as c
 [!code-csharp[Formatting](../samples/snippets/csharp/System.DateTime/formatting1.cs)]
 [!code-vb[FormattingVB](../samples/snippets/vb/System.DateTime/formatting1.vb)]
 
-# Example #
-
-This is an example!

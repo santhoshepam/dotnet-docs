@@ -1,5 +1,5 @@
 ---
-uid: System.DateTime
+uid: System.DateTime.Equals(System.DateTime)
 example: *content
 ---
 
