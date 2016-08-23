@@ -16,4 +16,6 @@ If `s` contains no time zone information, `result` contains a @System.DateTime v
 
 ## Notes for Callers ##
 
-Formatting is influenced by properties of the current @System.Globalization.DateTimeFormatInfo object, which by default are derived from the *Regional and Language Options* item in Control Panel. The `System.DateTime.TryParse` method can unexpectedly fail and return `false` if the current @System.Globalization.DateTimeFormatInfo.DateSeparator and @System.Globalization.DateTimeFormatInfo.TimeSeparator properties are set to the same value.
+In the .NET Framework, formatting is influenced by properties of the current @System.Globalization.DateTimeFormatInfo object, which by default are derived from the *Regional and Language Options* item in Control Panel. The `System.DateTime.TryParse` method can unexpectedly fail and return `false` if the current @System.Globalization.DateTimeFormatInfo.DateSeparator and @System.Globalization.DateTimeFormatInfo.TimeSeparator properties are set to the same value.
+
+The @System.Globalization.DateTimeFormatInfo.DateSeparator and @System.Globalization.DateTimeFormatInfo.TimeSeparator properties are not available in .NET Core.

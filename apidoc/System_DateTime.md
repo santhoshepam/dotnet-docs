@@ -36,7 +36,7 @@ You can create a new @System.DateTime value in any of the following ways:
 
 - By using any compiler-specific syntax for declaring date and time values. For example, the following Visual Basic statement initializes a new @System.DateTime value.
 
-  [!code-vb[InstantiatingVB](../samples/snippets/vb/System.DateTime/instantiation1.vb#L23-L23)]
+  [!code-vbnet[InstantiatingVB](../samples/snippets/vb/System.DateTime/instantiation1.vb#L23-L23)]
 
 - By assigning the @System.DateTime object a date and time value returned by a property or method. The following example assigns the current date and time, the current Coordinated Universal Time (UTC) date and time, and the current date to three new @System.DateTime variables.
 
@@ -62,6 +62,10 @@ Internally, all @System.DateTime values are represented as the number of ticks (
 
 Because the appearance of date and time values is dependent on such factors as culture, international standards, application requirements, and personal preference, the @System.DateTime structure offers a great deal of flexibility in formatting date and time values through the overloads of its @System.DateTime.ToString method. The default @System.DateTime.ToString method returns the string representation of a date and time value using the current culture's short date and long time pattern. The following example uses the default @System.DateTime.ToString method to display the date and time using the short date and long time pattern for the en-US culture, the current culture on the computer on which the example was run.
 
-[!code-csharp[Formatting](../samples/snippets/csharp/System.DateTime/formatting1.cs)]
-[!code-vb[FormattingVB](../samples/snippets/vb/System.DateTime/formatting1.vb)]
+[!code-csharp[Formatting](../samples/snippets/csharp/System.DateTime/formatting1.cs#Snippet1)]
+[!code-vb[FormattingVB](../samples/snippets/vb/System.DateTime/formatting1.vb#Snippet1)]
 
+The @System.DateTime.ToString(System.IFormatProvider) method returns the string representation of a date and time value using the short date and long time pattern of a specific culture. The following example uses the @System.DateTime.ToString(System.IFormatProvider) method to display the date and time using the short date and long time pattern for the fr-FR culture.
+
+[!code-vbnet[Formatting2](../samples/snippets/vb/System.DateTime/formatting1.vb#Snippet2)]
+[!code-csharp[Formatting2](../samples/snippets/csharp/System.DateTime/formatting1.cs#Snippet2)]
