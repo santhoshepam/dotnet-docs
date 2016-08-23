@@ -25,7 +25,7 @@ In this section:
 - [COM interop considerations](#Instantiation)
 
 <a name="Instantiation"></a>
-## Instantiating a DateTime object ##
+### Instantiating a DateTime object ###
 
 You can create a new @System.DateTime value in any of the following ways:
 
@@ -43,12 +43,12 @@ You can create a new @System.DateTime value in any of the following ways:
   [!code-csharp[Instantating](../samples/snippets/csharp/System.DateTime/instantiation1.cs#L24-L26)]
   [!code-visualbasic[InstantiatingVB](../samples/snippets/vb/System.DateTime/instantiation1.vb#L29-L31)]
 
-- By parsing the string representation of a date and time value. Overloads of the @System.DateTime.Parse(System.String), @System.DateTime.ParseExact(System.String,System.String,System.IFormatProvider), @System.DateTime.TryParse(System.String,System.DateTime), and @System.DateTime.TryParseExact(System.String,System.String,System.IFormatProvider,System.Globalization.DateTimeStyles,System.DateTime) methods all convert a string to its equivalent date and time value. The following example uses the @System.DateTime.Parse(System.String,System.IFormatProvider) method to parse a string and convert it to a @System.DateTime value.
+- By parsing the string representation of a date and time value. Overloads of the @System.DateTime.Parse(System.String), @System.DateTime.ParseExact(System.String,System.String,System.IFormatProvider), @System.DateTime.TryParse(System.String,System.DateTime@), and @System.DateTime.TryParseExact(System.String,System.String,System.IFormatProvider,System.Globalization.DateTimeStyles,System.DateTime@) methods all convert a string to its equivalent date and time value. The following example uses the @System.DateTime.Parse(System.String,System.IFormatProvider) method to parse a string and convert it to a @System.DateTime value.
 
   [!code-csharp[Instantating](../samples/snippets/csharp/System.DateTime/instantiation1.cs#L33-L35)]
   [!code-vb[InstantiatingVB](../samples/snippets/vb/System.DateTime/instantiation1.vb#L37-L39)]
 
-  Note that the @System.DateTime.TryParse and @System.DateTime.TryParseExact methods indicate whether a particular string contains a valid representation of a @System.DateTime value in addition to performing the conversion.
+  Note that the `System.DateTime.TryParse` and `System.DateTime.TryParseExact` methods indicate whether a particular string contains a valid representation of a @System.DateTime value in addition to performing the conversion.
 
 - By calling the @System.DateTime structure's implicit default constructor. (For details on the implicit default constructor of a value type, see [Value Types (C# Reference)](https://msdn.microsoft.com/library/s1ax56ch.aspx).) An approximate equivalent, for compilers that support it, is declaring a @System.DateTime value without explicitly assigning a date and time to it. The following example illustrates a call to the @System.DateTime implicit default constructor in C# and Visual Basic, as well as a @System.DateTime variable declaration with no assignment in Visual Basic.
 
@@ -56,7 +56,7 @@ You can create a new @System.DateTime value in any of the following ways:
   [!code-vb[InstantiatingVB](../samples/snippets/vb/System.DateTime/instantiation1.vb#L46-L56)]
 
 <a name="Strings"></a>
-## DateTime values and their string representations ##
+### DateTime values and their string representations ###
 
 Internally, all @System.DateTime values are represented as the number of ticks (the number of 100-nanosecond intervals) that have elapsed since 12:00:00 midnight, January 1, 0001. The actual @System.DateTime value is independent of the way in which that value appears when displayed in a user interface element or when written to a file. The appearance of a @System.DateTime value is the result of a formatting operation. Formatting is the process of converting a value to its string representation.
 
