@@ -1,5 +1,17 @@
 ---
 uid: System.DateTime
+seealso: 
+   - type: System.DateTimeOffset
+   - type: System.TimeSpan
+---
+---
+uuid: System.DateTime
+see:
+   - [Choosing Between DateTime, DateTimeOffset, TimeSpan, and TimeZoneInfo](https://msdn.microsoft.com/en-us/library/bb384267(v=vs.110).aspx)
+   - [Working with Calendars](https://msdn.microsoft.com/en-us/library/82aak18x(v=vs.110).aspx)
+---
+---
+uid: System.DateTime
 remarks: *content
 ---
 
