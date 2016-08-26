@@ -88,12 +88,12 @@ Some uses of this method include:
 
 The following example uses these three format strings to display a date and time value by using the conventions of the en-US and fr-FR cultures.
 
-[!code-vbnet[ToString](../samples/snippets/vb/System.DateTimeToString/tostring5.vb#Snippet5)]
+[!code-vbnet[ToString](../samples/snippets/vb/System.DateTime.ToString/tostring5.vb#Snippet5)]
 [!code-csharp[ToString](../samples/snippets/csharp/System.DateTime.ToString/tostring5.cs#Snippet5)]
 
 ###Notes for Callers ###
 
 The @System.DateTime.ToString(System.String) method returns the string representation of the date and time in the calendar used by the current culture. If the value of the current @System.DateTime instance is earlier than @System.Globalization.Calendar.MinSupportedDateTime or later than @System.Globalization.Calendar.MaxSupportedDateTime, the method throws an @System.ArgumentOutOfRangeException. The following example provides an illustration. It attempts to format a date that is outside the range of the @System.Globalization.HebrewCalendar class when the current culture is Hebrew (Israel).
 
-[!code-vbnet[ToString](../samples/snippets/vb/System.DateTimeToString/argumentoutofrangeexception.vb#Snippet3)]
+[!code-vbnet[ToString](../samples/snippets/vb/System.DateTime.ToString/argumentoutofrangeexception3.vb#Snippet3)]
 [!code-csharp[ToString](../samples/snippets/csharp/System.DateTime.ToString/argumentoutofrangeexception3.cs#Snippet3)]
