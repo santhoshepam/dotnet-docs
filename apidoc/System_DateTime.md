@@ -1,17 +1,5 @@
 ---
 uid: System.DateTime
-seealso: 
-   - System.DateTimeOffset
-   - System.TimeSpan
----
----
-uid: System.DateTime
-see:
-   - [Choosing Between DateTime, DateTimeOffset, TimeSpan, and TimeZoneInfo](https://msdn.microsoft.com/en-us/library/bb384267(v=vs.110).aspx)
-   - [Working with Calendars](https://msdn.microsoft.com/en-us/library/82aak18x(v=vs.110).aspx)
----
----
-uid: System.DateTime
 remarks: *content
 ---
 
@@ -81,3 +69,31 @@ The @System.DateTime.ToString(System.IFormatProvider) method returns the string 
 
 [!code-vbnet[Formatting2](../samples/snippets/vb/System.DateTime/formatting1.vb#Snippet2)]
 [!code-csharp[Formatting2](../samples/snippets/csharp/System.DateTime/formatting1.cs#Snippet2)]
+
+
+---
+uid: System.DateTime.ToString(System.String)
+remarks: *content
+---
+The @System.DateTime.ToString(System.String) method returns the string representation of a date and time value in a specific format that uses the formatting conventions of the current culture; for more information, see @System.Globalization.CultureInfo.CurrentCulture.
+
+The `format` parameter should contain either a single format specifier character (see [Standard Date and Time Format Strings(https://msdn.microsoft.com/en-us/library/az4se3k1(v=vs.110).aspx)) or a custom format pattern (see [Custom Date and Time Format Strings](https://msdn.microsoft.com/en-us/library/az4se3k1(v=vs.110).aspx)) that defines the format of the returned string. If `format` is `null` or an empty string, the general format specifier, 'G', is used.
+
+Some uses of this method include:
+
+- Getting a string that displays the date and time in the current culture’s short date and time format. To do this, you use the “G” format specifier.
+- Getting a string that contains only the month and year. To do this, you use the “MM/yyyy” format string. The format string uses the current culture’s date separator.
+- Getting a string that contains the date and time in a specific format. For example, the “MM/dd/yyyyHH:mm” format string displays the date and time string in a fixed format such as “19//03//2013 18:06". The format string uses “/” as a fixed date separator regardless of culture-specific settings.
+- Getting a date in a condensed format that could be used for serializing a date string. For example, the "yyyyMMdd" format string displays a four-digit year followed by a two-digit month and a two-digit day with no date separator. 
+
+The following example uses these three format strings to display a date and time value by using the conventions of the en-US and fr-FR cultures.
+
+[!code-vbnet[ToString](../samples/snippets/vb/System.DateTimeToString/tostring5.vb#Snippet5)]
+[!code-csharp[ToString](../samples/snippets/csharp/System.DateTime.ToString/tostring5.cs#Snippet5)]
+
+###Notes for Callers ###
+
+The @System.DateTime.ToString(System.String) method returns the string representation of the date and time in the calendar used by the current culture. If the value of the current @System.DateTime instance is earlier than @System.Globalization.Calendar.MinSupportedDateTime or later than @System.Globalization.Calendar.MaxSupportedDateTime, the method throws an @System.ArgumentOutOfRangeException. The following example provides an illustration. It attempts to format a date that is outside the range of the @System.Globalization.HebrewCalendar class when the current culture is Hebrew (Israel).
+
+[!code-vbnet[ToString](../samples/snippets/vb/System.DateTimeToString/argumentoutofrangeexception.vb#Snippet3)]
+[!code-csharp[ToString](../samples/snippets/csharp/System.DateTime.ToString/argumentoutofrangeexception3.cs#Snippet3)]
