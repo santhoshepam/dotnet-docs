@@ -1,4 +1,8 @@
 ---
+uid: System.DateTime.MinValue
+summary: conceptual
+Represents the earliest possible @System.DateTime value in the Gregorian calendar.
+---
 uid: System.DateTime
 remarks: *content
 ---
@@ -77,7 +81,7 @@ remarks: *content
 ---
 The @System.DateTime.ToString(System.String) method returns the string representation of a date and time value in a specific format that uses the formatting conventions of the current culture; for more information, see @System.Globalization.CultureInfo.CurrentCulture.
 
-The `format` parameter should contain either a single format specifier character (see [Standard Date and Time Format Strings(https://msdn.microsoft.com/en-us/library/az4se3k1(v=vs.110).aspx)) or a custom format pattern (see [Custom Date and Time Format Strings](https://msdn.microsoft.com/en-us/library/az4se3k1(v=vs.110).aspx)) that defines the format of the returned string. If `format` is `null` or an empty string, the general format specifier, 'G', is used.
+The `format` parameter should contain either a single format specifier character (see [Standard Date and Time Format Strings](https://msdn.microsoft.com/en-us/library/az4se3k1(v=vs.110).aspx)) or a custom format pattern (see [Custom Date and Time Format Strings](https://msdn.microsoft.com/en-us/library/az4se3k1(v=vs.110).aspx)) that defines the format of the returned string. If `format` is `null` or an empty string, the general format specifier, 'G', is used.
 
 Some uses of this method include:
 
