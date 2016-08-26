@@ -1,8 +1,8 @@
 ---
 uid: System.DateTime
 seealso: 
-   - type: System.DateTimeOffset
-   - type: System.TimeSpan
+   - System.DateTimeOffset
+   - System.TimeSpan
 ---
 ---
 uid: System.DateTime
