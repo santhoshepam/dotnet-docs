@@ -1,5 +1,5 @@
 ---
-uid: System.Sample.Random
+uid: System.Sample.Random()
 remarks: *content
 ---
 To produce a different random distribution or a implement a different random number generation algorithm, drive a class from the @System.Random class and override the @System.Random.Sample method.

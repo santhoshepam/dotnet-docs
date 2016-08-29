@@ -1,7 +1,6 @@
 ---
 uid: System.DateTime.MinValue
-summary: conceptual
-Represents the earliest possible @System.DateTime value in the Gregorian calendar.
+summary: Represents the earliest possible @System.DateTime value in the Gregorian calendar.
 ---
 uid: System.DateTime
 remarks: *content
