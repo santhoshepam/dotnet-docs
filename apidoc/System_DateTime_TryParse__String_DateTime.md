@@ -1,23 +1,5 @@
 ---
 uid: System.DateTime.TryParse(System.String,System.DateTime@)
-seealso:
-- System.DateTime.Parse(System.String)
-  @System.DateTime.Parse(System.String)
-- System.DateTime.TryParseExact(System.String,System.String,System.IFormatProvider,System.Globalization.DateTimeStyles,System.DateTime@)
-
----
-
----
-uid: System.DateTime.Parse(System.String,System.IFormatProvider)
-see:
-- System.DateTime.Parse(System.String)
-  @System.DateTime.Parse(System.String)
-- System.DateTime.TryParseExact(System.String,System.String,System.IFormatProvider,System.Globalization.DateTimeStyles,System.DateTime@)
-
----
-
----
-uid: System.DateTime.TryParse(System.String,System.DateTime@)
 remarks: *content
 ---
 The @System.DateTime.TryParse(System.String,System.DateTime@) method is similar to the @System.DateTime.Parse(System.String) method, except that the @System.DateTime.TryParse(System.String,System.DateTime@) method does not throw an exception if the conversion fails.

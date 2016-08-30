@@ -2,6 +2,7 @@
 uid: System.DateTime.MinValue
 summary: Represents the earliest possible @System.DateTime value in the Gregorian calendar.
 ---
+---
 uid: System.DateTime
 remarks: *content
 ---
