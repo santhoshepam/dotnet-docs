@@ -4,7 +4,7 @@ summary: Represents a precise moment in time.
 ---
 ---
 uid: System.DateTimeOffset
-seealso:
+see:
    - @System.Date
      DateTime Structure
    - @System.TimeSpan
