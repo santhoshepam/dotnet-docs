@@ -13,6 +13,9 @@ ms.assetid: da7a31a0-8072-4f23-82aa-8a19184cb701
 
 # .NET Core Application Deployment #
 
+[!WARNING]
+This document uses the new csproj syntax that is available as part of the RC3 release of the .NET Core SDK. Please note that you will have to install this version, either via the Visual Studio 2017 RC3 installer or via the .NET Core Command Line Tools installer to use the project file examples in this document. 
+
 You can create two types of deployments for .NET Core applications: 
 
 - Framework-dependent deployment. As the name implies, framework-dependent deployment (FDD) relies on a shared system-wide version of .NET Core to be present on the target system. Because .NET Core is already present, your app is also portable between installations of .NET Core. Your app contains only its own code and any third-party dependencies that are outside of the .NET Core libraries. FDDs contain .dll files that can be launched by using the [dotnet utility](../tools/dotnet.md) from the command line. For example, `dotnet app.dll` runs an application named `app`.
@@ -104,16 +107,7 @@ Deploying a framework-dependent deployment with one or more third-party dependen
 
     ```xml
       <ItemGroup>
-        <PackageReference Include="Microsoft.NETCore.App">
-          <Version>1.0.1</Version>
-        </PackageReference>
-        <PackageReference Include="Newtonsoft.Json">
-          <Version>9.0.1</Version>
-        </PackageReference>
-        <PackageReference Include="Microsoft.NET.Sdk">
-          <Version>1.0.0-alpha-20161102-2</Version>
-          <PrivateAssets>All</PrivateAssets>
-        </PackageReference>
+        <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
       </ItemGroup>
     ```
 
@@ -219,8 +213,7 @@ The published files can be deployed in any way you'd like. For example, you can 
 The following is the complete `csproj` file for this project.
 
 ```xml
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.0</TargetFramework>
@@ -229,23 +222,8 @@ The following is the complete `csproj` file for this project.
     <RuntimeIdentifiers>win10-x64;osx.10.11-x64</RuntimeIdentifiers>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" />
-    <EmbeddedResource Include="**\*.resx" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NETCore.App">
-      <Version>1.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>9.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.NET.Sdk">
-      <Version>1.0.0-alpha-20161102-2</Version>
-      <PrivateAssets>All</PrivateAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
 ```
 
@@ -258,16 +236,7 @@ Deploying a self-contained deployment with one or more third-party dependencies 
 
     ```xml
       <ItemGroup>
-        <PackageReference Include="Microsoft.NETCore.App">
-          <Version>1.0.1</Version>
-        </PackageReference>
-        <PackageReference Include="Microsoft.NET.Sdk">
-          <Version>1.0.0-alpha-20161102-2</Version>
-          <PrivateAssets>All</PrivateAssets>
-        </PackageReference>
-        <PackageReference Include="Newtonsoft.Json">
-          <Version>9.0.1</Version>
-        </PackageReference>
+        <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
       </ItemGroup>
     ```
 2. If you haven't already, download the NuGet package containing the third-party dependency to your system. To make the dependency available to your app, execute the `dotnet restore` command after adding the dependency. Because the dependency is resolved out of the local NuGet cache at publish time, it must be available on your system.
@@ -275,8 +244,7 @@ Deploying a self-contained deployment with one or more third-party dependencies 
 The following is the complete csproj file for this project:
 
 ```xml
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.0</TargetFramework>
@@ -285,23 +253,8 @@ The following is the complete csproj file for this project:
     <RuntimeIdentifiers>win10-x64;osx.10.11-x64</RuntimeIdentifiers>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" />
-    <EmbeddedResource Include="**\*.resx" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NETCore.App">
-      <Version>1.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>9.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.NET.Sdk">
-      <Version>1.0.0-alpha-20161102-2</Version>
-      <PrivateAssets>All</PrivateAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
 ```
 
@@ -326,19 +279,9 @@ This operation indicates that, instead of using the entire `netcoreapp1.0` frame
 
     ```xml
     <ItemGroup>
-      <PackageReference Include="NETSTandard.Library">
-        <Version>1.6.0</Version>
-      </PackageReference>
-      <PackageReference Include="Microsoft.NETCore.Runtime.CoreCLR">
-        <Version>1.0.2</Version>
-      </PackageReference>
-      <PackageReference Include="Microsoft.NETCore.DotNetHostPolicy">
-        <Version>1.0.1</Version>
-      </PackageReference>
-      <PackageReference Include="Microsoft.NET.Sdk">
-        <Version>1.0.0-alpha-20161102-2</Version>
-        <PrivateAssets>All</PrivateAssets>
-      </PackageReference>
+      <PackageReference Include="NETSTandard.Library" Version="1.6.1" />
+      <PackageReference Include="Microsoft.NETCore.Runtime.CoreCLR" Version="1.0.2" />
+      <PackageReference Include="Microsoft.NETCore.DotNetHostPolicy" Version="1.0.1" />
     </ItemGroup>
   ```
 
@@ -379,8 +322,7 @@ The published files can be deployed in any way you'd like. For example, you can 
 The following is the complete `csproj` file for this project.
 
 ```xml
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netstandard1.6</TargetFramework>
@@ -389,26 +331,10 @@ The following is the complete `csproj` file for this project.
     <RuntimeIdentifiers>win10-x64;osx.10.11-x64</RuntimeIdentifiers>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" />
-    <EmbeddedResource Include="**\*.resx" />
+      <PackageReference Include="NETSTandard.Library" Version="1.6.1" />
+      <PackageReference Include="Microsoft.NETCore.Runtime.CoreCLR" Version="1.0.2" />
+      <PackageReference Include="Microsoft.NETCore.DotNetHostPolicy" Version="1.0.1" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="NETSTandard.Library">
-      <Version>1.6.0</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.NETCore.Runtime.CoreCLR">
-      <Version>1.0.2</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.NETCore.DotNetHostPolicy">
-      <Version>1.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.NET.Sdk">
-      <Version>1.0.0-alpha-20161102-2</Version>
-      <PrivateAssets>All</PrivateAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
 ```
 
