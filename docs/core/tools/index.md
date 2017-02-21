@@ -30,7 +30,7 @@ The native installers are primarily meant for developer's machines. The CLI is d
 native install mechanism, for instance DEB packages on Ubuntu or MSI bundles on Windows. These installers will install 
 and set up the environment as needed for the user to use the CLI immediately after the install. However, they also 
 require administrative privileges on the machine. You can view the installation instructions on the
-[.NET Core getting started page](https://aka.ms/dotnetcoregs).
+[.NET Core installation guide](https://aka.ms/dotnetcoregs) page.
 
 Install scripts, on the other hand, do not require administrative privileges. However, they will also not install any 
 prerequisites on the machine; you need to install all of the prerequisites manually. The scripts are meant mostly for 
@@ -46,14 +46,29 @@ the [driver](#driver) section.
 ### What commands come in the box?
 The following commands are installed by default:
 
+#### Basic commands:
 * [new](dotnet-new.md)
-* [migrate](dotnet-migrate.md)
 * [restore](dotnet-restore.md)
-* [run](dotnet-run.md)
 * [build](dotnet-build.md)
-* [test](dotnet-test.md)
 * [publish](dotnet-publish.md)
+* [run](dotnet-run.md)
+* [test](dotnet-test.md)
 * [pack](dotnet-pack.md)
+* [migrate](dotnet-migrate.md)
+* [clean](dotnet-clean.md)
+* [sln](dotnet-sln.md)
+
+#### Project modification commands:
+* add
+* remove
+* list
+
+#### Advanced commands:
+* [nuget delete](dotnet-nuget-delete.md)
+* [nuget locals](dotnet-nuget-locals.md)
+* [nuget push](dotnet-nuget-push.md)
+* [msbuild](dotnet-msbuild.md)
+* vstest
 
 There is also a way to import more commands on a per-project basis as well as to add your own commands. This is 
 explained in greater detail in the [extensibility section](#extensibility). 
@@ -91,7 +106,7 @@ In the second case, the driver attempts to invoke the specified command. This st
 process. First, the driver determines the version of the tooling that you want. You can specify the version in the 
 [global.json](global-json.md) file using the `version` property. If that is not available, the driver finds the latest version
 of the tools that is installed on disk and uses that version. Once the version is determined, it executes the 
-command. 
+command.
 
 ### The "verb"
 The verb is simply a command that performs an action. `dotnet build` builds your code. `dotnet publish` publishes 
@@ -116,7 +131,7 @@ If you used Preview 2 tooling and *project.json* projects, you can consult the [
 to get acquainted with the command and how to migrate your project. 
 
 > [!NOTE]
-> The `dotnet migrate` command currently does not migrate pre-preview 2 *project.json* files. 
+> The `dotnet migrate` command does not migrate pre-preview 2 *project.json* files. 
 
 ## Extensibility
 Of course, not every tool that you could use in your workflow will be part of the core CLI tools. However, .NET Core 
