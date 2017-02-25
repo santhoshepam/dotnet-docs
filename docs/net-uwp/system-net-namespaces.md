@@ -18,11 +18,11 @@ manager: "wpickett"
 # System.Net namespaces 1
 `System.Net` and its child namespaces (`System.Net.Http`, `System.Net.Http.Headers`, and `System.Net.NetworkInformation`) contain types that provide networking support.  
   
- This topic displays the types in the `System.Net` namespaces that are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]. Note that the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)].  
+ This topic displays the types in the `System.Net` namespaces that are included in the .NET for Windows 8.x Store apps. Note that the .NET for Windows 8.x Store apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the .NET for Windows 8.x Store apps.  
   
 ## System.Net namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Net.AuthenticationSchemes>|Specifies protocols for authentication.|  
 |<xref:System.Net.Cookie>|Provides a set of properties and methods that are used to manage cookies. This class cannot be inherited.|  
@@ -51,7 +51,7 @@ manager: "wpickett"
   
 ## System.Net.Http namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Net.Http.ByteArrayContent>|Provides HTTP content based on a byte array.|  
 |<xref:System.Net.Http.ClientCertificateOption>|Specifies how client certificates are provided.|  
@@ -76,7 +76,7 @@ manager: "wpickett"
   
 ## System.Net.Http.Headers namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Net.Http.Headers.AuthenticationHeaderValue>|Represents authentication information in Authorization, ProxyAuthorization, WWW-Authneticate, and Proxy-Authenticate header values.|  
 |<xref:System.Net.Http.Headers.CacheControlHeaderValue>|Represents the value of the Cache-Control header.|  
@@ -106,7 +106,7 @@ manager: "wpickett"
   
 ## System.Net.NetworkInformation namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Net.NetworkInformation.NetworkAddressChangedEventHandler>|References one or more methods to be called when the address of a network interface changes.|  
 |<xref:System.Net.NetworkInformation.NetworkChange>|Allows applications to receive notification when the Internet Protocol (IP) address of a network interface, also called a network card or adapter, changes.|  

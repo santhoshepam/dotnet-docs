@@ -18,11 +18,11 @@ manager: "wpickett"
 # System.ComponentModel namespaces1
 `System.ComponentModel`, `System.ComponentModel.DataAnnotations`, and `System.ComponentModel.DataAnnotations.Schema` contain types that implement the run-time and design-time behavior of components and controls.  
   
- This topic displays the types in the `System.ComponentModel` namespaces that are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]. Note that the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)].  
+ This topic displays the types in the `System.ComponentModel` namespaces that are included in the .NET for Windows 8.x Store apps. Note that the .NET for Windows 8.x Store apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the .NET for Windows 8.x Store apps.  
   
 ## System.ComponentModel namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.ComponentModel.AsyncCompletedEventArgs>|Provides data for the MethodNameCompleted event.|  
 |<xref:System.ComponentModel.AsyncCompletedEventHandler>|Represents the method that will handle the MethodNameCompleted event of an asynchronous operation.|  
@@ -43,7 +43,7 @@ manager: "wpickett"
   
 ## System.ComponentModel.DataAnnotations namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.ComponentModel.DataAnnotations.AssociationAttribute>|Specifies that an entity member represents a data relationship, such as a foreign key relationship.|  
 |<xref:System.ComponentModel.DataAnnotations.ConcurrencyCheckAttribute>|Specifies that a property participates in optimistic concurrency checks.|  
@@ -71,7 +71,7 @@ manager: "wpickett"
   
 ## System.ComponentModel.DataAnnotations.Schema namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]||  
+|Types supported in the .NET for Windows 8.x Store apps||  
 |---------------------------------------------------------------------------------------------|-|  
 |<xref:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute>|Represents a database generated attribute.|  
 |<xref:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption>|Enumerates a database generated options.|  

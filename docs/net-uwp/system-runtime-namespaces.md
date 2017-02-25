@@ -18,18 +18,18 @@ manager: "wpickett"
 # System.Runtime namespaces 1
 `System.Runtime` and its child namespaces (`System.Runtime.CompilerServices`, `System.Runtime.ExceptionServices`, `System.Runtime.InteropServices`, `System.Runtime.InteropServices.ComTypes`, `System.Runtime.InteropServices.WindowsRuntime`, `System.Runtime.Serialization`, `System.Runtime.Serialization.Json`, and `System.Runtime.Versioning`) contain types that support an application's interaction with the common language runtime, and types that enable features such as advanced exception handling, COM interop, serialization and deserialization, and versioning.  
   
- This topic displays the types in the `System.Runtime` namespaces that are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]. Note that the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)].  
+ This topic displays the types in the `System.Runtime` namespaces that are included in the .NET for Windows 8.x Store apps. Note that the .NET for Windows 8.x Store apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the .NET for Windows 8.x Store apps.  
   
 ## System.Runtime namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.GCLatencyMode>|Adjusts the time that the garbage collector intrudes in your application.|  
 |<xref:System.Runtime.GCSettings>|Specifies the garbage collection settings for the current process.|  
   
 ## System.Runtime.CompilerServices namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.CompilerServices.AccessedThroughPropertyAttribute>|Specifies the name of the property that accesses the attributed field.|  
 |<xref:System.Runtime.CompilerServices.AsyncStateMachineAttribute>|Allows you to determine whether a method is marked with the Async (Visual Basic) or async (C# Reference) modifier.|  
@@ -83,13 +83,13 @@ manager: "wpickett"
   
 ## System.Runtime.ExceptionServices namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.ExceptionServices.ExceptionDispatchInfo>|Represents an exception whose state is captured at a certain point in code.|  
   
 ## System.Runtime.InteropServices namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.InteropServices.ArrayWithOffset>|Encapsulates an array and an offset within the specified array.|  
 |<xref:System.Runtime.InteropServices.BestFitMappingAttribute>|Controls whether Unicode characters are converted to the closest matching ANSI characters.|  
@@ -154,7 +154,7 @@ manager: "wpickett"
   
 ## System.Runtime.InteropServices.ComTypes namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.InteropServices.ComTypes.ADVF>|Specifies the requested behavior when setting up an advise sink or a caching connection with an object.|  
 |<xref:System.Runtime.InteropServices.ComTypes.BIND_OPTS>|Stores the parameters that are used during a moniker binding operation.|  
@@ -216,24 +216,24 @@ manager: "wpickett"
   
 ## System.Runtime.InteropServices.WindowsRuntime namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.InteropServices.WindowsRuntime.AsyncInfo>|Provides factory methods to construct representations of managed tasks that are compatible with Windows Runtime asynchronous actions and operations.|  
-|<xref:System.Runtime.InteropServices.WindowsRuntime.DefaultInterfaceAttribute>|Specifies the default interface of a managed [!INCLUDE[wrt](../net-uwp/includes/wrt-md.md)] class or interface group.|  
-|<xref:System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken>|A token that is returned when an event handler is added to a [!INCLUDE[wrt](../net-uwp/includes/wrt-md.md)] event that is implemented in managed code. The token is used to remove the event handler from the event at a later time.|  
-|<xref:System.Runtime.InteropServices.WindowsRuntime.EventRegistrationTokenTable%601>|Stores mappings between delegates and event tokens, to support the implementation of a [!INCLUDE[wrt](../net-uwp/includes/wrt-md.md)] event in managed code.|  
+|<xref:System.Runtime.InteropServices.WindowsRuntime.DefaultInterfaceAttribute>|Specifies the default interface of a managed Windows Runtime class or interface group.|  
+|<xref:System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken>|A token that is returned when an event handler is added to a Windows Runtime event that is implemented in managed code. The token is used to remove the event handler from the event at a later time.|  
+|<xref:System.Runtime.InteropServices.WindowsRuntime.EventRegistrationTokenTable%601>|Stores mappings between delegates and event tokens, to support the implementation of a Windows Runtime event in managed code.|  
 |<xref:System.Runtime.InteropServices.WindowsRuntime.IActivationFactory>|Enables classes to be activated by the Windows Runtime.|  
 |<xref:System.Runtime.InteropServices.WindowsRuntime.InterfaceImplementedInVersionAttribute>|Specifies the version of the target type that first implemented the specified interface.|  
-|<xref:System.Runtime.InteropServices.WindowsRuntime.ReadOnlyArrayAttribute>|When applied to an array parameter in a [!INCLUDE[wrt](../net-uwp/includes/wrt-md.md)] component, specifies that the contents of the array that is passed to that parameter are used only for input. The caller expects the array to be unchanged by the call.|  
-|<xref:System.Runtime.InteropServices.WindowsRuntime.ReturnValueNameAttribute>|Specifies the name of the return value of a method in a [!INCLUDE[wrt](../net-uwp/includes/wrt-md.md)] component.|  
+|<xref:System.Runtime.InteropServices.WindowsRuntime.ReadOnlyArrayAttribute>|When applied to an array parameter in a Windows Runtime component, specifies that the contents of the array that is passed to that parameter are used only for input. The caller expects the array to be unchanged by the call.|  
+|<xref:System.Runtime.InteropServices.WindowsRuntime.ReturnValueNameAttribute>|Specifies the name of the return value of a method in a Windows Runtime component.|  
 |<xref:System.Runtime.InteropServices.WindowsRuntime.WindowsRuntimeBuffer>|Provides an implementation of the Windows Runtime IBuffer interface (Windows.Storage.Streams.IBuffer), and all additional required interfaces.|  
 |<xref:System.Runtime.InteropServices.WindowsRuntime.WindowsRuntimeBufferExtensions>|Provides extension methods for operating on Windows Runtime buffers (Windows.Storage.Streams.IBuffer interface).|  
-|<xref:System.Runtime.InteropServices.WindowsRuntime.WindowsRuntimeMarshal>|Provides helper methods for marshaling data between the .NET Framework and the [!INCLUDE[wrt](../net-uwp/includes/wrt-md.md)].|  
-|<xref:System.Runtime.InteropServices.WindowsRuntime.WriteOnlyArrayAttribute>|When applied to an array parameter in a [!INCLUDE[wrt](../net-uwp/includes/wrt-md.md)] component, specifies that the contents of an array that is passed to that parameter are used only for output. The caller does not guarantee that the contents are initialized, and the called method should not read the contents.|  
+|<xref:System.Runtime.InteropServices.WindowsRuntime.WindowsRuntimeMarshal>|Provides helper methods for marshaling data between the .NET Framework and the Windows Runtime.|  
+|<xref:System.Runtime.InteropServices.WindowsRuntime.WriteOnlyArrayAttribute>|When applied to an array parameter in a Windows Runtime component, specifies that the contents of an array that is passed to that parameter are used only for output. The caller does not guarantee that the contents are initialized, and the called method should not read the contents.|  
   
 ## System.Runtime.Serialization namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.Serialization.CollectionDataContractAttribute>|When applied to a collection type, enables custom specification of the collection item elements. This attribute can be applied only to types that are recognized by the DataContractSerializer as valid, serializable collections.|  
 |<xref:System.Runtime.Serialization.ContractNamespaceAttribute>|Specifies the CLR namespace and XML namespace of the data contract.|  
@@ -258,7 +258,7 @@ manager: "wpickett"
   
 ## System.Runtime.Serialization.Json namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.Serialization.Json.DataContractJsonSerializer>|Serializes objects to the JavaScript Object Notation (JSON) and deserializes JSON data to objects. This class cannot be inherited.|  
 |<xref:System.Runtime.Serialization.Json.DataContractJsonSerializerSettings>|Specifies settings.|  
@@ -266,7 +266,7 @@ manager: "wpickett"
 <a name="versioning"></a>   
 ## System.Runtime.Versioning namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]Class|Description|  
+|Types supported in the .NET for Windows 8.x Store appsClass|Description|  
 |--------------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.Versioning.TargetFrameworkAttribute>|Identifies the version of the .NET Framework that a particular assembly was compiled against.|  
   

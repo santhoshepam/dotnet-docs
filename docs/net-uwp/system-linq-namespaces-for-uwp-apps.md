@@ -15,11 +15,11 @@ manager: "markl"
 # System.Linq namespaces for UWP apps
 The `System.Linq` and `System.Linq.Expressions` namespaces contain types that support queries that use Language-Integrated Query (LINQ).  
   
- This topic displays the types in the `System.Linq` and `System.Linq.Expressions` namespaces that are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]. Note that [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)].  
+ This topic displays the types in the `System.Linq` and `System.Linq.Expressions` namespaces that are included in .NET for UWP apps. Note that .NET for UWP apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in .NET for UWP apps.  
   
 ## System.Linq namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Linq.Enumerable>|Provides a set of static methods for querying objects that implement IEnumerable\<T>.|  
 |<xref:System.Linq.EnumerableExecutor>|Represents an expression tree and provides functionality to execute the expression tree after rewriting it.|  
@@ -47,7 +47,7 @@ The `System.Linq` and `System.Linq.Expressions` namespaces contain types that su
   
 ## System.Linq.Expressions namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Linq.Expressions.BinaryExpression>|Represents an expression that has a binary operator.|  
 |<xref:System.Linq.Expressions.BlockExpression>|Represents a block that contains a sequence of expressions where variables can be defined.|  

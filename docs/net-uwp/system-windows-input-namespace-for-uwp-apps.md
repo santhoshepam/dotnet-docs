@@ -15,11 +15,11 @@ manager: "markl"
 # System.Windows.Input namespace for UWP apps
 The `System.Windows.Input` namespace contains types that enable custom commands.  
   
- This topic displays the types in the `System.Windows.Input` namespace that are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]. Note that [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)].  
+ This topic displays the types in the `System.Windows.Input` namespace that are included in .NET for UWP apps. Note that .NET for UWP apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in .NET for UWP apps.  
   
 ## System.Windows.Input namespace  
   
-|Types supported in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in .NET for UWP apps|Description|  
 |------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Windows.Input.ICommand>|Defines a command.|  
   

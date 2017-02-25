@@ -15,11 +15,11 @@ manager: "markl"
 # System.ServiceModel namespaces for UWP apps
 `System.ServiceModel` and its child namespaces (`System.ServiceModel.Channels`, `System.ServiceModel.Description`, `System.ServiceModel.Dispatcher`, `System.ServiceModel.Security`, and `System.ServiceModel.Security.Tokens`) contain the types necessary to build Windows Communication Foundation (WCF) service and client applications.  
   
- This topic displays the types in the `System.ServiceModel` namespaces that are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]. Note that [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)].  
+ This topic displays the types in the `System.ServiceModel` namespaces that are included in .NET for UWP apps. Note that .NET for UWP apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in .NET for UWP apps.  
   
 ## System.ServiceModel namespace  
   
-|Types supported in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in .NET for UWP apps|Description|  
 |------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.ServiceModel.ActionNotSupportedException>|The exception that is thrown on the client when the action related to the operation invoked does not match any action of operations in the server.|  
 |<xref:System.ServiceModel.BasicHttpBinding>|Represents a binding that a  service can use to configure and expose endpoints that are able to communicate with ASMX-based Web services and clients and other services that conform to the WS-I Basic Profile 1.1.|  
@@ -99,7 +99,7 @@ manager: "markl"
   
 ## System.ServiceModel.Channels namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.ServiceModel.Channels.AddressHeader>|Represents a header that encapsulates an address information item used to identify or interact with an endpoint.|  
 |<xref:System.ServiceModel.Channels.AddressHeaderCollection>|Represents a thread-safe, read-only collection of address headers.|  
@@ -172,7 +172,7 @@ manager: "markl"
   
 ## System.ServiceModel.Description namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.ServiceModel.Description.ClientCredentials>|Enables the user to configure client and service credentials as well as service credential authentication settings for use on the client side of communication.|  
 |<xref:System.ServiceModel.Description.ContractDescription>|Describes a  contract that specifies what an endpoint communicates to the outside world.|  
@@ -198,7 +198,7 @@ manager: "markl"
   
 ## System.ServiceModel.Dispatcher namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.ServiceModel.Dispatcher.ClientOperation>|Used to modify or extend the execution behavior of a specific contract operation in a client object or client channel object. This class cannot be inherited.|  
 |<xref:System.ServiceModel.Dispatcher.ClientRuntime>|The insertion point for classes that extend the functionality of client objects for all messages handled by a client application.|  
@@ -212,7 +212,7 @@ manager: "markl"
   
 ## System.ServiceModel.Security namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.ServiceModel.Security.BasicSecurityProfileVersion>|Provides a message version that corresponds to the Basic Security Profile specification.|  
 |<xref:System.ServiceModel.Security.HttpDigestClientCredential>|Used for digest authentication of HTTP clients.|  
@@ -227,7 +227,7 @@ manager: "markl"
   
 ## System.ServiceModel.Security.Tokens namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.ServiceModel.Security.Tokens.SecureConversationSecurityTokenParameters>|Represents the parameters for a secure conversation security token.|  
 |<xref:System.ServiceModel.Security.Tokens.SecurityTokenParameters>|An abstract class that when implemented represents security token parameters.|  

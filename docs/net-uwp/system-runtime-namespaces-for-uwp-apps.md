@@ -15,18 +15,18 @@ manager: "markl"
 # System.Runtime namespaces for UWP apps
 `System.Runtime` and its child namespaces (`System.Runtime.CompilerServices`, `System.Runtime.ExceptionServices`, `System.Runtime.InteropServices`, `System.Runtime.InteropServices.ComTypes`, `System.Runtime.InteropServices.WindowsRuntime`, `System.Runtime.Serialization`, `System.Runtime.Serialization.Json`, and `System.Runtime.Versioning`) contain types that support an application's interaction with the common language runtime, and types that enable features such as advanced exception handling, COM interop, serialization and deserialization, and versioning.  
   
- This topic displays the types in the `System.Runtime` namespaces that are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]. Note that [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)].  
+ This topic displays the types in the `System.Runtime` namespaces that are included in .NET for UWP apps. Note that .NET for UWP apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in .NET for UWP apps.  
   
 ## System.Runtime namespace  
   
-|Types supported in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in .NET for UWP apps|Description|  
 |------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.GCLatencyMode>|Adjusts the time that the garbage collector intrudes in your application.|  
 |<xref:System.Runtime.GCSettings>|Specifies the garbage collection settings for the current process.|  
   
 ## System.Runtime.CompilerServices namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.CompilerServices.AccessedThroughPropertyAttribute>|Specifies the name of the property that accesses the attributed field.|  
 |<xref:System.Runtime.CompilerServices.AsyncStateMachineAttribute>|Allows you to determine whether a method is marked with the Async (Visual Basic) or async (C# Reference) modifier.|  
@@ -83,13 +83,13 @@ manager: "markl"
   
 ## System.Runtime.ExceptionServices namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.ExceptionServices.ExceptionDispatchInfo>|Represents an exception whose state is captured at a certain point in code.|  
   
 ## System.Runtime.InteropServices namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.InteropServices.ArrayWithOffset>|Encapsulates an array and an offset within the specified array.|  
 |<xref:System.Runtime.InteropServices.BestFitMappingAttribute>|Controls whether Unicode characters are converted to the closest matching ANSI characters.|  
@@ -156,7 +156,7 @@ manager: "markl"
   
 ## System.Runtime.InteropServices.ComTypes namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.InteropServices.ComTypes.ADVF>|Specifies the requested behavior when setting up an advise sink or a caching connection with an object.|  
 |<xref:System.Runtime.InteropServices.ComTypes.BIND_OPTS>|Stores the parameters that are used during a moniker binding operation.|  
@@ -218,7 +218,7 @@ manager: "markl"
   
 ## System.Runtime.InteropServices.WindowsRuntime namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.InteropServices.WindowsRuntime.AsyncInfo>|Provides factory methods to construct representations of managed tasks that are compatible with Windows Runtime asynchronous actions and operations.|  
 |<xref:System.Runtime.InteropServices.WindowsRuntime.DefaultInterfaceAttribute>|Specifies the default interface of a managed wrt class or interface group.|  
@@ -235,7 +235,7 @@ manager: "markl"
   
 ## System.Runtime.Serialization namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.Serialization.CollectionDataContractAttribute>|When applied to a collection type, enables custom specification of the collection item elements. This attribute can be applied only to types that are recognized by the DataContractSerializer as valid, serializable collections.|  
 |<xref:System.Runtime.Serialization.ContractNamespaceAttribute>|Specifies the CLR namespace and XML namespace of the data contract.|  
@@ -260,7 +260,7 @@ manager: "markl"
   
 ## System.Runtime.Serialization.Json namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.Serialization.Json.DataContractJsonSerializer>|Serializes objects to the JavaScript Object Notation (JSON) and deserializes JSON data to objects. This class cannot be inherited.|  
 |<xref:System.Runtime.Serialization.Json.DataContractJsonSerializerSettings>|Specifies settings.|  
@@ -268,7 +268,7 @@ manager: "markl"
 <a name="versioning"></a>   
 ## System.Runtime.Versioning namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]Class|Description|  
+|Types supported in the .NET for UWP appsClass|Description|  
 |---------------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Runtime.Versioning.FrameworkName>|Represents the name of a version of the .NET Framework.|  
 |<xref:System.Runtime.Versioning.TargetFrameworkAttribute>|Identifies the version of the .NET Framework that a particular assembly was compiled against.|  

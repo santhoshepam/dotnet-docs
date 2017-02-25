@@ -16,11 +16,11 @@ ms.author: "ronpet"
 manager: "wpickett"
 ---
 # .NET for Windows apps
-.NET for Windows apps provides a set of managed types that you can use to create [!INCLUDE[win10_uwp_long](../net-uwp/includes/win10-uwp-long-md.md)] apps and [!INCLUDE[win8_appname_long](../net-uwp/includes/win8-appname-long-md.md)] apps for Windows using C# or Visual Basic. Note that .NET for Windows apps include a subset of the types provided in the full .NET Framework for each namespace. For information about individual namespaces, see the linked topics.  
+.NET for Windows apps provides a set of managed types that you can use to create Universal Windows Platform apps and Windows 8.x Store apps for Windows using C# or Visual Basic. Note that .NET for Windows apps include a subset of the types provided in the full .NET Framework for each namespace. For information about individual namespaces, see the linked topics.  
   
 ## In this section  
   
 |Topic|Description|  
 |-----------|-----------------|  
-|[.NET for UWP apps](../net-uwp/dotnet-for-uwp.md)|Provides a set of managed types that you can use to create [!INCLUDE[win10_uwp](../net-uwp/includes/win10-uwp-md.md)] apps.|  
-|[.NET for Windows 8.x Store apps](../net-uwp/dotnet-for-windows-8x-store-apps.md)|Provides a set of managed types that you can use to create [!INCLUDE[win8_appname_long](../net-uwp/includes/win8-appname-long-md.md)] apps.|
+|[.NET for UWP apps](../net-uwp/dotnet-for-uwp.md)|Provides a set of managed types that you can use to create UWP apps.|  
+|[.NET for Windows 8.x Store apps](../net-uwp/dotnet-for-windows-8x-store-apps.md)|Provides a set of managed types that you can use to create Windows 8.x Store apps.|

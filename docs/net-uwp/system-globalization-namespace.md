@@ -18,11 +18,11 @@ manager: "wpickett"
 # System.Globalization namespace
 The `System.Globalization` namespace contains classes that define culture-related information, including the language, the country/region, the calendars in use, the format patterns for dates, currency, and numbers, and the sort order for strings.  
   
- This topic displays the types in the `System.Globalization` namespace that are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]. Note that the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)].  
+ This topic displays the types in the `System.Globalization` namespace that are included in the .NET for Windows 8.x Store apps. Note that the .NET for Windows 8.x Store apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the .NET for Windows 8.x Store apps.  
   
 ## System.Globalization namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Globalization.Calendar>|Represents time in divisions, such as weeks, months, and years.|  
 |<xref:System.Globalization.CalendarWeekRule>|Defines different rules for determining the first week of the year.|  

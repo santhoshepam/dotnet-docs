@@ -18,11 +18,11 @@ manager: "wpickett"
 # System.Xml namespaces1
 `System.Xml` and its child namespaces (`System.Xml.Linq`, `System.Xml.Schema`, and `System.Xml.Serialization`) contain types for processing XML.  
   
- This topic displays the types in the `System.Xml` namespaces that are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]. Note that the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)].  
+ This topic displays the types in the `System.Xml` namespaces that are included in the .NET for Windows 8.x Store apps. Note that the .NET for Windows 8.x Store apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the .NET for Windows 8.x Store apps.  
   
 ## System.Xml namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Xml.ConformanceLevel>|Specifies the amount of input or output checking that the created XmlReader and XmlWriter objects perform.|  
 |<xref:System.Xml.DtdProcessing>|Specifies the options for processing DTDs. The DtdProcessing enumeration is used by XmlReaderSettings.|  
@@ -38,11 +38,11 @@ manager: "wpickett"
 |<xref:System.Xml.XmlBinaryReaderSession>|Enables optimized strings to be managed in a dynamic way.|  
 |<xref:System.Xml.XmlBinaryWriterSession>|Enables using a dynamic dictionary to compress common strings that appear in a message and maintain state.|  
 |<xref:System.Xml.XmlConvert>|Encodes and decodes XML names and provides methods for converting between common language runtime types and XML Schema definition language (XSD) types. When converting data types the values returned are locale independent.|  
-|<xref:System.Xml.XmlDictionary>|Implements a dictionary used to optimize [!INCLUDE[indigo1](../net-uwp/includes/indigo1-md.md)]’s XML reader/writer implementations.|  
-|<xref:System.Xml.XmlDictionaryReader>|An abstract class that the [!INCLUDE[indigo1](../net-uwp/includes/indigo1-md.md)] derives from to do serialization and deserialization.|  
+|<xref:System.Xml.XmlDictionary>|Implements a dictionary used to optimize Windows Communication Foundation (WCF)’s XML reader/writer implementations.|  
+|<xref:System.Xml.XmlDictionaryReader>|An abstract class that the Windows Communication Foundation (WCF) derives from to do serialization and deserialization.|  
 |<xref:System.Xml.XmlDictionaryReaderQuotas>|Contains configurable quota values for XmlDictionaryReaders.|  
 |<xref:System.Xml.XmlDictionaryString>|Represents an entry stored in a XmlDictionary.|  
-|<xref:System.Xml.XmlDictionaryWriter>|An abstract class that the [!INCLUDE[indigo1](../net-uwp/includes/indigo1-md.md)] derives from to do serialization and deserialization.|  
+|<xref:System.Xml.XmlDictionaryWriter>|An abstract class that the Windows Communication Foundation (WCF) derives from to do serialization and deserialization.|  
 |<xref:System.Xml.XmlException>|Returns detailed information about the last exception.|  
 |<xref:System.Xml.XmlNamespaceManager>|Resolves, adds, and removes namespaces to a collection and provides scope management for these namespaces.|  
 |<xref:System.Xml.XmlNamespaceScope>|Defines the namespace scope.|  
@@ -58,7 +58,7 @@ manager: "wpickett"
   
 ## System.Xml.Linq namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Xml.Linq.Extensions>|Contains the LINQ to XML extension methods.|  
 |<xref:System.Xml.Linq.LoadOptions>|Specifies load options when parsing XML.|  
@@ -86,14 +86,14 @@ manager: "wpickett"
   
 ## System.Xml.Schema namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Xml.Schema.XmlSchema>|An in-memory representation of an XML Schema as specified in the World Wide Web Consortium (W3C) XML Schema Part 1: Structures and XML Schema Part 2: Datatypes specifications.|  
 |<xref:System.Xml.Schema.XmlSchemaForm>|Indicates if attributes or elements need to be qualified with a namespace prefix.|  
   
 ## System.Xml.Serialization namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Xml.Serialization.IXmlSerializable>|Provides custom formatting for XML serialization and deserialization.|  
 |<xref:System.Xml.Serialization.XmlAnyAttributeAttribute>|Specifies that the member (a field that returns an array of XmlAttribute objects) can contain any XML attributes.|  

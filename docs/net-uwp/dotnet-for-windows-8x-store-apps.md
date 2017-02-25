@@ -13,11 +13,11 @@ ms.author: "misatran"
 manager: "markl"
 ---
 # .NET for Windows 8.x Store apps
-The [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)] provide a set of managed types that you can use to create [!INCLUDE[win8_appname_long](../net-uwp/includes/win8-appname-long-md.md)] apps for Windows using C# or Visual Basic. The following list displays the namespaces in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]. Note that the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)] include a subset of the types provided in the full .NET Framework for each namespace. For information about individual namespaces, see the linked topics.  
+The .NET for Windows 8.x Store apps provide a set of managed types that you can use to create Windows 8.x Store apps for Windows using C# or Visual Basic. The following list displays the namespaces in the .NET for Windows 8.x Store apps. Note that the .NET for Windows 8.x Store apps include a subset of the types provided in the full .NET Framework for each namespace. For information about individual namespaces, see the linked topics.  
   
  For more information, see [.NET for Windows Store apps overview](../Topic/.NET%20for%20Windows%20Store%20apps%20overview.md).  
   
- [!INCLUDE[win8_appname_long](../net-uwp/includes/win8-appname-long-md.md)] apps only: APIs for [!INCLUDE[win8_appname_long](../net-uwp/includes/win8-appname-long-md.md)] apps that are expressed as HTML or XAML elements are supported only in [!INCLUDE[win8_appname_long](../net-uwp/includes/win8-appname-long-md.md)] apps; they are not supported in desktop apps or Windows desktop browsers.  
+ Windows 8.x Store apps only: APIs for Windows 8.x Store apps that are expressed as HTML or XAML elements are supported only in Windows 8.x Store apps; they are not supported in desktop apps or Windows desktop browsers.  
   
 ## Namespaces  
   
@@ -33,10 +33,10 @@ The [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)] pro
 |[System.ComponentModel](../net-uwp/system-componentmodel-namespaces.md)|Provides classes that are used to implement the run-time and design-time behavior of components and controls.|  
 |[System.ComponentModel.DataAnnotations](../net-uwp/system-componentmodel-namespaces.md)|Provides attribute classes that are used to define metadata for controls.|  
 |[System.ComponentModel.DataAnnotations.Schema](../net-uwp/system-componentmodel-namespaces.md)|Provides support for attribute classes that are used to define metadata for controls.|  
-|[System.Composition](../net-uwp/system-composition-namespaces.md)|To install the System.Composition namespaces, open your project in [!INCLUDE[vs_dev11_long](../net-uwp/includes/vs-dev11-long-md.md)] or later, choose **Manage NuGet Packages** from the **Project** menu, and search online for the Microsoft.Composition package.|  
-|[System.Composition.Convention](../net-uwp/system-composition-namespaces.md)|To install the System.Composition namespaces, open your project in [!INCLUDE[vs_dev11_long](../net-uwp/includes/vs-dev11-long-md.md)] or later, choose **Manage NuGet Packages** from the **Project** menu, and search online for the Microsoft.Composition package.|  
-|[System.Composition.Hosting](../net-uwp/system-composition-namespaces.md)|To install the System.Composition namespaces, open your project in [!INCLUDE[vs_dev11_long](../net-uwp/includes/vs-dev11-long-md.md)] or later, choose **Manage NuGet Packages** from the **Project** menu, and search online for the Microsoft.Composition package.|  
-|[System.Composition.Hosting.Core](../net-uwp/system-composition-namespaces.md)|To install the System.Composition namespaces, open your project in [!INCLUDE[vs_dev11_long](../net-uwp/includes/vs-dev11-long-md.md)] or later, choose **Manage NuGet Packages** from the **Project** menu, and search online for the Microsoft.Composition package.|  
+|[System.Composition](../net-uwp/system-composition-namespaces.md)|To install the System.Composition namespaces, open your project in Visual Studio 2012 or later, choose **Manage NuGet Packages** from the **Project** menu, and search online for the Microsoft.Composition package.|  
+|[System.Composition.Convention](../net-uwp/system-composition-namespaces.md)|To install the System.Composition namespaces, open your project in Visual Studio 2012 or later, choose **Manage NuGet Packages** from the **Project** menu, and search online for the Microsoft.Composition package.|  
+|[System.Composition.Hosting](../net-uwp/system-composition-namespaces.md)|To install the System.Composition namespaces, open your project in Visual Studio 2012 or later, choose **Manage NuGet Packages** from the **Project** menu, and search online for the Microsoft.Composition package.|  
+|[System.Composition.Hosting.Core](../net-uwp/system-composition-namespaces.md)|To install the System.Composition namespaces, open your project in Visual Studio 2012 or later, choose **Manage NuGet Packages** from the **Project** menu, and search online for the Microsoft.Composition package.|  
 |[System.Diagnostics](../net-uwp/system-diagnostics-namespaces.md)|Provides classes that enable you to interact with system processes, event logs, and performance counters.|  
 |[System.Diagnostics.CodeAnalysis](../net-uwp/system-diagnostics-namespaces.md)|Contains classes for interaction with code analysis tools.|  
 |[System.Diagnostics.Contracts](../net-uwp/system-diagnostics-namespaces.md)|Contains static classes for representing program constructs such as preconditions, postconditions, and invariants.|  
@@ -61,7 +61,7 @@ The [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)] pro
 |[System.Runtime.ExceptionServices](../net-uwp/system-runtime-namespaces.md)|Provides classes for advanced exception handling.|  
 |[System.Runtime.InteropServices](../net-uwp/system-runtime-namespaces.md)|Provides a wide variety of members that support COM interop and platform invoke services.|  
 |[System.Runtime.InteropServices.ComTypes](../net-uwp/system-runtime-namespaces.md)|Contains methods that are definitions of COM functions for managed code.|  
-|[System.Runtime.InteropServices.WindowsRuntime](../net-uwp/system-runtime-namespaces.md)|Contains classes that support interoperation between managed code and the [!INCLUDE[wrt](../net-uwp/includes/wrt-md.md)], and that enable the creation of [!INCLUDE[wrt](../net-uwp/includes/wrt-md.md)] types with managed code.|  
+|[System.Runtime.InteropServices.WindowsRuntime](../net-uwp/system-runtime-namespaces.md)|Contains classes that support interoperation between managed code and the Windows Runtime, and that enable the creation of Windows Runtime types with managed code.|  
 |[System.Runtime.Serialization](../net-uwp/system-runtime-namespaces.md)|Contains classes that can be used for serializing and deserializing objects.|  
 |[System.Runtime.Serialization.Json](../net-uwp/system-runtime-namespaces.md)|Contains types for serializing objects to JavaScript Object Notation (JSON) and deserializing objects from JSON.|  
 |[System.Runtime.Versioning](../net-uwp/system-runtime-namespaces.md)|Contains advanced types that support versioning in side-by-side implementations of the .NET Framework.|  
@@ -77,14 +77,14 @@ The [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)] pro
 |[System.Text.RegularExpressions](../net-uwp/system-text-namespaces.md)|Contains classes that provide access to the .NET Framework regular expression engine.|  
 |[System.Threading](../net-uwp/system.threading-namespaces1.md)|Provides classes and interfaces that enable multithreaded programming.|  
 |[System.Threading.Tasks](../net-uwp/system.threading-namespaces1.md)|Provides types that simplify the work of writing concurrent and asynchronous code.|  
-|[System.Threading.Tasks.DataFlow](../net-uwp/system.threading-namespaces1.md)|Provides an actor-based programming model that provides in-process message passing for coarse-grained dataflow and pipelining tasks.<br /><br /> To install the System.Threading.Tasks.Dataflow namespace, open your project in [!INCLUDE[vs_dev11_long](../net-uwp/includes/vs-dev11-long-md.md)] or later, choose **Manage NuGet Packages** from the **Project** menu, and search online for the Microsoft.Tpl.Dataflow package.|  
+|[System.Threading.Tasks.DataFlow](../net-uwp/system.threading-namespaces1.md)|Provides an actor-based programming model that provides in-process message passing for coarse-grained dataflow and pipelining tasks.<br /><br /> To install the System.Threading.Tasks.Dataflow namespace, open your project in Visual Studio 2012 or later, choose **Manage NuGet Packages** from the **Project** menu, and search online for the Microsoft.Tpl.Dataflow package.|  
 |[System.Windows.Input](../net-uwp/system-windows-input-namespace.md)|Contains types that enable custom commands.|  
 |[System.Xml](../net-uwp/system-xml-namespaces.md)|Provides standards-based support for processing XML.|  
 |[System.Xml.Linq](../net-uwp/system-xml-namespaces.md)|Contains the types for LINQ to XML, which is an in-memory XML programming interface that enables you to modify XML documents efficiently and easily.|  
 |[System.Xml.Schema](../net-uwp/system-xml-namespaces.md)|Contains the XML classes that provide standards-based support for XML Schema definition language (XSD) schemas.|  
 |[System.Xml.Serialization](../net-uwp/system-xml-namespaces.md)|Contains classes that are used to serialize objects into XML format documents or streams.|  
-|[Windows.Foundation](../net-uwp/windows-namespaces.md)|Enables fundamental [!INCLUDE[wrt](../net-uwp/includes/wrt-md.md)] functionality, including managing asynchronous operations, accessing property stores, and working with images and URIs.|  
-|[Windows.UI](../net-uwp/windows-namespaces.md)|Provides a [!INCLUDE[win8_appname_long](../net-uwp/includes/win8-appname-long-md.md)] app with access to core system functionality and run-time information about its UI.|  
+|[Windows.Foundation](../net-uwp/windows-namespaces.md)|Enables fundamental Windows Runtime functionality, including managing asynchronous operations, accessing property stores, and working with images and URIs.|  
+|[Windows.UI](../net-uwp/windows-namespaces.md)|Provides a Windows 8.x Store app with access to core system functionality and run-time information about its UI.|  
 |[Windows.UI.Xaml](../net-uwp/windows-namespaces.md)|Provides general framework API and application model API, and a variety of support classes that are commonly used by many different feature areas.|  
 |[Windows.UI.Xaml.Controls.Primitives](../net-uwp/windows-namespaces.md)|Defines classes that represent the component parts of UI controls, or otherwise support the control composition model. Also defines interfaces for control patterns such as snapping and selection.|  
 |[Windows.UI.Xaml.Media](../net-uwp/windows-namespaces.md)|Provides basic media support, graphics primitives, and brush-drawing APIs.|  

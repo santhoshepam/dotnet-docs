@@ -18,11 +18,11 @@ manager: "wpickett"
 # System.Security namespaces 1
 The `System.Security` and `System.Security.Principal` namespaces contain classes that represent the .NET Framework security system and permissions.  
   
- This topic displays the types in the `System.Security` and `System.Security.Principal` namespaces that are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]. Note that the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)].  
+ This topic displays the types in the `System.Security` and `System.Security.Principal` namespaces that are included in the .NET for Windows 8.x Store apps. Note that the .NET for Windows 8.x Store apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the .NET for Windows 8.x Store apps.  
   
 ## System.Security namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Security.AllowPartiallyTrustedCallersAttribute>|Allows an assembly to be called by partially trusted code. Without this declaration, only fully trusted callers are able to use the assembly. This class cannot be inherited.|  
 |<xref:System.Security.SecurityCriticalAttribute>|Specifies that code or an assembly performs security-critical operations.|  
@@ -33,7 +33,7 @@ The `System.Security` and `System.Security.Principal` namespaces contain classes
   
 ## System.Security.Principal namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Security.Principal.IIdentity>|Defines the basic functionality of an identity object.|  
 |<xref:System.Security.Principal.IPrincipal>|Defines the basic functionality of a principal object.|  

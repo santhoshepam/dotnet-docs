@@ -15,11 +15,11 @@ manager: "markl"
 # System.Diagnostics namespaces for UWP apps
 `System.Diagnostics` and its child namespaces (`System.Diagnostics.CodeAnalysis`, `System.Diagnostics.Contracts`, and `System.Diagnostics.Tracing`) contain types that enable you to interact with system processes, event logs, and performance counters.  
   
- This topic displays the types in the `System.Diagnostics` namespaces that are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]. Note that [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)].  
+ This topic displays the types in the `System.Diagnostics` namespaces that are included in .NET for UWP apps. Note that .NET for UWP apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in .NET for UWP apps.  
   
 ## System.Diagnostics namespace  
   
-|Types supported in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in .NET for UWP apps|Description|  
 |------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Diagnostics.ConditionalAttribute>|Indicates to compilers that a method call or attribute should be ignored unless a specified conditional compilation symbol is defined.|  
 |<xref:System.Diagnostics.Debug>|Provides a set of methods and properties that help debug your code. This class cannot be inherited.|  
@@ -40,13 +40,13 @@ manager: "markl"
   
 ## System.Diagnostics.CodeAnalysis namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Diagnostics.CodeAnalysis.SuppressMessageAttribute>|Suppresses reporting of a specific static analysis tool rule violation, allowing multiple suppressions on a single code artifact.|  
   
 ## System.Diagnostics.Contracts namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Diagnostics.Contracts.Contract>|Contains static methods for representing program contracts such as preconditions, postconditions, and object invariants.|  
 |<xref:System.Diagnostics.Contracts.ContractAbbreviatorAttribute>|Enables defining abbreviations for contracts which can be used in place of the full contract syntax.|  
@@ -65,7 +65,7 @@ manager: "markl"
   
 ## System.Diagnostics.Tracing namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Diagnostics.Tracing.EventActivityOptions>|Specifies the tracking of activity start and stop events.|  
 |<xref:System.Diagnostics.Tracing.EventAttribute>|Enables you to specify additional event schema information for an event.|  

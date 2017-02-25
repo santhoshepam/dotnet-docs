@@ -15,25 +15,25 @@ manager: "markl"
 # Windows namespaces for UWP apps
 The `Windows` namespaces (`Windows.Foundation`, `Windows.UI`, `Windows.UI.Xaml`, `Windows.UI.Xaml.Controls.Primitives`, `Windows.UI.Xaml.Media`, `Windows.UI.Xaml.Media.Animation`, and `Windows.UI.Xaml.Media.Media3D`) contain types for managing the user interface of your application.  
   
- This topic displays the types in the `Windows` namespaces that are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]. Note that [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)] do not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)].  
+ This topic displays the types in the `Windows` namespaces that are included in .NET for UWP apps. Note that .NET for UWP apps do not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in .NET for UWP apps.  
   
 ## Windows.Foundation namespace  
   
-|Types supported in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in .NET for UWP apps|Description|  
 |------------------------------------------------------------------------------------------|-----------------|  
-|[Point](http://msdn.microsoft.com/library/windows/apps/windows.foundation.point.aspx)|Represents an x- and y-coordinate pair in two-dimensional space. Can also represent a logical point for certain property usages.|  
+|<xref:Windows.Foundation.Point>|Represents an x- and y-coordinate pair in two-dimensional space. Can also represent a logical point for certain property usages.|  
 |[Rect](http://msdn.microsoft.com/library/windows/apps/windows.foundation.rect.aspx)|Describes the width, height, and point origin of a rectangle.|  
 |[Size](http://msdn.microsoft.com/library/windows/apps/windows.foundation.size.aspx)|Describes the width and height of an object.|  
   
 ## Windows.UI namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |[Color](http://msdn.microsoft.com/library/windows/apps/windows.ui.color.aspx)|Describes a color in terms of alpha, red, green, and blue channels.|  
   
 ## Windows.UI.Xaml namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |[CornerRadius](http://msdn.microsoft.com/library/windows/apps/windows.ui.xaml.cornerradius.aspx)|Describes the characteristics of a rounded corner, such as can be applied to a Windows.UI.Xaml.Controls.Border.|  
 |[Duration](http://msdn.microsoft.com/library/windows/apps/windows.ui.xaml.duration.aspx)|Represents the duration of time that a Windows.UI.Xaml.Media.Animation.Timeline is active.|  
@@ -44,19 +44,19 @@ The `Windows` namespaces (`Windows.Foundation`, `Windows.UI`, `Windows.UI.Xaml`,
   
 ## Windows.UI.Xaml.Controls.Primitives namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |[GeneratorPosition](http://msdn.microsoft.com/library/windows/apps/windows.ui.xaml.controls.primitives.generatorposition.aspx)|Used to describe the position of an item that is managed by Windows.UI.Xaml.Controls.ItemContainerGenerator.|  
   
 ## Windows.UI.Xaml.Media namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |[Matrix](http://msdn.microsoft.com/library/windows/apps/windows.ui.xaml.media.matrix.aspx)|Represents a 3x3 affine transformation matrix used for transformations in two-dimensional space.|  
   
 ## Windows.UI.Xaml.Media.Animation namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |[KeyTime](http://msdn.microsoft.com/library/windows/apps/windows.ui.xaml.media.animation.keytime.aspx)|Specifies when a particular key frame should take place during an animation.|  
 |[RepeatBehavior](http://msdn.microsoft.com/library/windows/apps/windows.ui.xaml.media.animation.repeatbehavior.aspx)|Describes how a Windows.UI.Xaml.Media.Animation.Timeline repeats its simple duration.|  
@@ -64,7 +64,7 @@ The `Windows` namespaces (`Windows.Foundation`, `Windows.UI`, `Windows.UI.Xaml`,
   
 ## Windows.UI.Xaml.Media.Media3D namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |[Matrix3D](http://msdn.microsoft.com/library/windows/apps/windows.ui.xaml.media.media3d.matrix3d.aspx)|Represents a 4 × 4 matrix that is used for transformations in a three-dimensional (3-D) space.|  
   

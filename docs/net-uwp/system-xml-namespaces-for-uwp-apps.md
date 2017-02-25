@@ -15,11 +15,11 @@ manager: "markl"
 # System.Xml namespaces for UWP apps
 `System.Xml` and its child namespaces (`System.Xml.Linq`, `System.Xml.Schema`, and `System.Xml.Serialization`) contain types for processing XML.  
   
- This topic displays the types in the `System.Xml` namespaces that are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]. Note that [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)].  
+ This topic displays the types in the `System.Xml` namespaces that are included in .NET for UWP apps. Note that .NET for UWP apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in .NET for UWP apps.  
   
 ## System.Xml namespace  
   
-|Types supported in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in .NET for UWP apps|Description|  
 |------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Xml.ConformanceLevel>|Specifies the amount of input or output checking that the created XmlReader and XmlWriter objects perform.|  
 |<xref:System.Xml.DtdProcessing>|Specifies the options for processing DTDs. The DtdProcessing enumeration is used by XmlReaderSettings.|  
@@ -43,12 +43,12 @@ manager: "markl"
 |<xref:System.Xml.XmlConvert>|Encodes and decodes XML names and provides methods for converting between common language runtime types and XML Schema definition language (XSD) types. When converting data types the values returned are locale independent.|  
 |<xref:System.Xml.XmlDateTimeSerializationMode>|Specifies how to treat the time value when converting between string and DateTime.|  
 |<xref:System.Xml.XmlDeclaration>|Represents the XML declaration node \<?xml version='1.0'...?>.|  
-|<xref:System.Xml.XmlDictionary>|Implements a dictionary used to optimize indigo1’s XML reader/writer implementations.|  
-|<xref:System.Xml.XmlDictionaryReader>|An abstract class that the indigo1 derives from to do serialization and deserialization.|  
+|<xref:System.Xml.XmlDictionary>|Implements a dictionary used to optimize Windows Communication Foundation (WCF)’s XML reader/writer implementations.|  
+|<xref:System.Xml.XmlDictionaryReader>|An abstract class that the Windows Communication Foundation (WCF) derives from to do serialization and deserialization.|  
 |<xref:System.Xml.XmlDictionaryReaderQuotas>|Contains configurable quota values for XmlDictionaryReaders.|  
 |<xref:System.Xml.XmlDictionaryReaderQuotaTypes>|Enumerates the configurable quota values for XmlDictionaryReaders.|  
 |<xref:System.Xml.XmlDictionaryString>|Represents an entry stored in a XmlDictionary.|  
-|<xref:System.Xml.XmlDictionaryWriter>|An abstract class that the indigo1 derives from to do serialization and deserialization.|  
+|<xref:System.Xml.XmlDictionaryWriter>|An abstract class that the Windows Communication Foundation (WCF) derives from to do serialization and deserialization.|  
 |<xref:System.Xml.XmlDocument>|Represents an XML document. You can use this class to load; validate; edit; add; and position XML in a document. For examples; see the Remarks section on this page.|  
 |<xref:System.Xml.XmlDocumentFragment>|Represents a lightweight object that is useful for tree insert operations.|  
 |<xref:System.Xml.XmlElement>|Represents an element.|  
@@ -80,7 +80,7 @@ manager: "markl"
   
 ## System.Xml.Linq namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Xml.Linq.Extensions>|Contains the LINQ to XML extension methods.|  
 |<xref:System.Xml.Linq.LoadOptions>|Specifies load options when parsing XML.|  
@@ -109,7 +109,7 @@ manager: "markl"
   
 ## System.Xml.Schema namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Xml.Schema.XmlSchema>|An in-memory representation of an XML Schema as specified in the World Wide Web Consortium (W3C) XML Schema Part 1: Structures and XML Schema Part 2: Datatypes specifications.|  
 |<xref:System.Xml.Schema.XmlSchemaForm>|Indicates if attributes or elements need to be qualified with a namespace prefix.|  
@@ -117,7 +117,7 @@ manager: "markl"
   
 ## System.Xml.Serialization namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Xml.Serialization.IXmlSerializable>|Provides custom formatting for XML serialization and deserialization.|  
 |<xref:System.Xml.Serialization.XmlAnyAttributeAttribute>|Specifies that the member (a field that returns an array of XmlAttribute objects) can contain any XML attributes.|  
@@ -145,7 +145,7 @@ manager: "markl"
   
 ## System.Xml.XPath namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Xml.XmlDocumentXPathExtensions>|For more information, see <xref:System.Xml.XmlDocumentXPathExtensions>.|  
 |<xref:System.Xml.XPath.XDocumentExtensions>|For more information, see <xref:System.Xml.XPath.XDocumentExtensions>.|  

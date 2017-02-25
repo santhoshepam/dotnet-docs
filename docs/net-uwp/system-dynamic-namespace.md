@@ -18,11 +18,11 @@ manager: "wpickett"
 # System.Dynamic namespace
 The `System.Dynamic` namespace provides classes and interfaces that support the dynamic language runtime (DLR).  
   
- This topic displays the types in the `System.Dynamic` namespace that are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]. Note that the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)].  
+ This topic displays the types in the `System.Dynamic` namespace that are included in the .NET for Windows 8.x Store apps. Note that the .NET for Windows 8.x Store apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the .NET for Windows 8.x Store apps.  
   
 ## System.Dynamic namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Dynamic.BinaryOperationBinder>|Represents the binary dynamic operation at the call site, providing the binding semantic and the details about the operation.|  
 |<xref:System.Dynamic.BindingRestrictions>|Represents a set of binding restrictions on the DynamicMetaObject under which the dynamic binding is valid.|  

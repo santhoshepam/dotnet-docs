@@ -15,11 +15,11 @@ manager: "markl"
 # System.Security namespaces for UWP apps
 The `System.Security` its children namespaces (`System.Security.Authentication`, `System.Security.Authentication.ExtendedProtection`,`System.Security.Claims`) contain classes that represent the .NET Framework security system and permissions.  
   
- This topic displays the types in the `System.Security` and `System.Security.Principal` namespaces that are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]. Note that [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)].  
+ This topic displays the types in the `System.Security` and `System.Security.Principal` namespaces that are included in .NET for UWP apps. Note that .NET for UWP apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in .NET for UWP apps.  
   
 ## System.Security namespace  
   
-|Types supported in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in .NET for UWP apps|Description|  
 |------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Security.AllowPartiallyTrustedCallersAttribute>|Allows an assembly to be called by partially trusted code. Without this declaration, only fully trusted callers are able to use the assembly. This class cannot be inherited.|  
 |<xref:System.Security.SecurityCriticalAttribute>|Specifies that code or an assembly performs security-critical operations.|  
@@ -30,7 +30,7 @@ The `System.Security` its children namespaces (`System.Security.Authentication`,
   
 ## System.Security.Authentication namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Security.Authentication.CipherAlgorithmType>|Defines the possible cipher algorithms for the SslStream class.|  
 |<xref:System.Security.Authentication.ExchangeAlgorithmType>|Specifies the algorithm used to create keys shared by the client and server.|  
@@ -39,14 +39,14 @@ The `System.Security` its children namespaces (`System.Security.Authentication`,
   
 ## System.Security.Authentication.ExtendedProtection namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Security.Authentication.ExtendedProtection.ChannelBinding>|The ChannelBinding class encapsulates a pointer to the opaque data used to bind an authenticated transaction to a secure channel.|  
 |<xref:System.Security.Authentication.ExtendedProtection.ChannelBindingKind>|The ChannelBindingKind enumeration represents the kinds of channel bindings that can be queried from secure channels.|  
   
 ## System.Security.Claims namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Security.Claims.Claim>|Represents a claim.|  
 |<xref:System.Security.Claims.ClaimsIdentity>|Represents a claims-based identity.|  
@@ -56,7 +56,7 @@ The `System.Security` its children namespaces (`System.Security.Authentication`,
   
 ## System.Security.Cryptography namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Security.Cryptography.Aes>|Represents the abstract base class from which all implementations of the Advanced Encryption Standard (AES) must inherit.|  
 |<xref:System.Security.Cryptography.AsnEncodedData>|Represents Abstract Syntax Notation One (ASN.1)-encoded data.|  
@@ -115,7 +115,7 @@ The `System.Security` its children namespaces (`System.Security.Authentication`,
   
 ## System.Security.Cryptography.X509Certificates namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Security.Cryptography.X509Certificates.OpenFlags>|Specifies the way to open the X.509 certificate store.|  
 |<xref:System.Security.Cryptography.X509Certificates.PublicKey>|Represents a certificate's public key information. This class cannot be inherited.|  
@@ -156,7 +156,7 @@ The `System.Security` its children namespaces (`System.Security.Authentication`,
   
 ## System.Security.Principal namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Security.Principal.GenericIdentity>|Represents a generic user.|  
 |<xref:System.Security.Principal.GenericPrincipal>|Represents a generic principal.|  

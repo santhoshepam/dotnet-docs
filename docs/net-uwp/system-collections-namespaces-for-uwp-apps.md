@@ -15,11 +15,11 @@ manager: "markl"
 # System.Collections namespaces for UWP apps
 `System.Collections` and its child namespaces (`System.Collections.Concurrent`, `System.Collections.Generic`, `System.Collections.ObjectModel`, and `System.Collections.Specialized`) contain types that define various standard, specialized, and generic collection objects.  
   
- This topic displays the types in the `System.Collections` namespaces that are included in  [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]. Note that [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)].  
+ This topic displays the types in the `System.Collections` namespaces that are included in  .NET for UWP apps. Note that .NET for UWP apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in .NET for UWP apps.  
   
 ## System.Collections namespace  
   
-|Types supported in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in .NET for UWP apps|Description|  
 |------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Collections.ArrayList>|Implements the IList interface using an array whose size is dynamically increased as required.To browse the .NET Framework source code for this type; see the Reference Source.|  
 |<xref:System.Collections.BitArray>|Manages a compact array of bit values, which are represented as Booleans, where true indicates that the bit is on (1) and false indicates the bit is off (0).|  
@@ -47,7 +47,7 @@ manager: "markl"
   
 ## System.Collections.Concurrent namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Collections.Concurrent.BlockingCollection%601>|Provides blocking and bounding capabilities for thread-safe collections that implement IProducerConsumerCollection<T\>.|  
 |<xref:System.Collections.Concurrent.ConcurrentBag%601>|Represents a thread-safe, unordered collection of objects.|  
@@ -62,7 +62,7 @@ manager: "markl"
   
 ## System.Collections.Generic namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Collections.Generic.Comparer%601>|Provides a base class for implementations of the IComparer<T\> generic interface.|  
 |<xref:System.Collections.Generic.Dictionary%602>|Represents a collection of keys and values.|  
@@ -108,7 +108,7 @@ manager: "markl"
   
 ## System.Collections.ObjectModel namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Collections.ObjectModel.Collection%601>|Provides the base class for a generic collection.|  
 |<xref:System.Collections.ObjectModel.KeyedCollection%602>|Provides the abstract base class for a collection whose keys are embedded in the values.|  
@@ -121,7 +121,7 @@ manager: "markl"
   
 ## System.Collections.Specialized namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Collections.Specialized.BitVector32>|Provides a simple structure that stores Boolean values and small integers in 32 bits of memory.|  
 |<xref:System.Collections.Specialized.BitVector32.Section>|Represents a section of the vector that can contain an integer number.|  

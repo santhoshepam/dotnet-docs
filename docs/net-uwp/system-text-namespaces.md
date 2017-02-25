@@ -18,11 +18,11 @@ manager: "wpickett"
 # System.Text namespaces1
 The `System.Text` and `System.Text.RegularExpressions` namespaces contain types for character encoding, string manipulation, and processing text using regular expressions.  
   
- This topic displays the types in the `System.Text` and `System.Text.RegularExpressions` namespaces that are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]. Note that the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)].  
+ This topic displays the types in the `System.Text` and `System.Text.RegularExpressions` namespaces that are included in the .NET for Windows 8.x Store apps. Note that the .NET for Windows 8.x Store apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the .NET for Windows 8.x Store apps.  
   
 ## System.Text namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Text.Decoder>|Converts a sequence of encoded bytes into a set of characters.|  
 |<xref:System.Text.DecoderFallbackException>|The exception that is thrown when a decoder fallback operation fails. This class cannot be inherited.|  
@@ -35,7 +35,7 @@ The `System.Text` and `System.Text.RegularExpressions` namespaces contain types 
   
 ## System.Text.RegularExpressions namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Text.RegularExpressions.Capture>|Represents the results from a single successful subexpression capture.|  
 |<xref:System.Text.RegularExpressions.CaptureCollection>|Represents the set of captures made by a single capturing group.|  

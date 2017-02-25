@@ -15,11 +15,11 @@ manager: "markl"
 # System.Data namespaces for UWP apps
 The `System.Data` namespace and its children namespace (`System.Data.Common`) contain classes for accessing and managing data from diverse sources.  
   
- This topic displays the types in the `System.Data` namespaces that are supported in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)].  
+ This topic displays the types in the `System.Data` namespaces that are supported in .NET for UWP apps.  
   
 ## System.Data namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Data.CommandBehavior>|Provides a description of the results of the query and its effect on the database.|  
 |<xref:System.Data.CommandType>|Specifies how a command string is interpreted.|  
@@ -33,7 +33,7 @@ The `System.Data` namespace and its children namespace (`System.Data.Common`) co
   
 ## System.Data.Common namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Data.Common.DbCommand>|Represents an SQL statement or stored procedure to execute against a data source. Provides a base class for database-specific classes that represent commands. ExecuteNonQueryAsync|  
 |<xref:System.Data.Common.DbConnection>|Represents a connection to a database.|  

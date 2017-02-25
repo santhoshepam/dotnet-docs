@@ -15,13 +15,13 @@ manager: "markl"
 # System.Composition namespaces for UWP apps
 `System.Composition` and its child namespaces (`System.Composition.Convention`, `System.Composition.Hosting`, and `System.Composition.Hosting.Core`) contain types for developing extensible applications.  
   
- This topic displays the types in the `System.Composition` namespaces that are supported in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)].  
+ This topic displays the types in the `System.Composition` namespaces that are supported in .NET for UWP apps.  
   
- To install the following namespaces, open your project in [!INCLUDE[vs_dev14](../net-uwp/includes/vs-dev14-md.md)] or later, choose **Manage NuGet Packages** from the **Project** menu, and search online for the Microsoft.Composition package.  
+ To install the following namespaces, open your project in Visual Studio 2015 or later, choose **Manage NuGet Packages** from the **Project** menu, and search online for the Microsoft.Composition package.  
   
 ## System.Composition namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.ComponentModel.Composition.ExportLifetimeContext%601>|Holds an exported value created by an ExportFactory<T\> object and a reference to a method to release that object.|  
 |<xref:System.Composition.CompositionContext>|Provides methods to retrieve exports from the composition.|  
@@ -42,7 +42,7 @@ manager: "markl"
   
 ## System.Composition.Convention namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Composition.CompositionContextExtensions>||  
 |<xref:System.Composition.Convention.AttributedModelProvider>|Provides augmented reflection data to support convention-based models.|  
@@ -55,7 +55,7 @@ manager: "markl"
   
 ## System.Composition.Hosting namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Composition.Hosting.CompositionFailedException>|The exception that is thrown when composition problems occur.|  
 |<xref:System.Composition.Hosting.CompositionHost>|Assembles a lightweight composition container from specified providers.|  
@@ -63,7 +63,7 @@ manager: "markl"
   
 ## System.Composition.Hosting.Core namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Composition.Hosting.Core.CompositeActivator>|The delegate signature that allows instances of parts and exports to be accessed during a composition operation.|  
 |<xref:System.Composition.Hosting.Core.CompositionContract>|Defines a standard to match exports and imports.|  

@@ -15,11 +15,11 @@ manager: "markl"
 # System.Reflection namespaces for UWP apps
 The `System.Reflection`, `System.Reflection.Context`, and `System.Reflection.Emit` namespaces contain types that provide a managed view of loaded types, methods, and fields, and that enable customized reflection contexts.  
   
- This topic displays the types in the `System.Reflection`, `System.Reflection.Context`, and `System.Reflection.Emit` namespaces that are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]. Note that [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)].  
+ This topic displays the types in the `System.Reflection`, `System.Reflection.Context`, and `System.Reflection.Emit` namespaces that are included in .NET for UWP apps. Note that .NET for UWP apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in .NET for UWP apps.  
   
 ## System.Reflection namespace  
   
-|Types supported in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in .NET for UWP apps|Description|  
 |------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Reflection.AmbiguousMatchException>|The exception that is thrown when binding to a member results in more than one member matching the binding criteria. This class cannot be inherited.|  
 |<xref:System.Reflection.Assembly>|Represents an assembly, which is a reusable, versionable, and self-describing building block of a common language runtime application.|  
@@ -91,13 +91,13 @@ The `System.Reflection`, `System.Reflection.Context`, and `System.Reflection.Emi
   
 ## System.Reflection.Context namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Reflection.Context.CustomReflectionContext>|Represents a customizable reflection context.|  
   
 ## System.Reflection.Emit namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Reflection.Emit.FlowControl>|Describes how an instruction alters the flow of control.|  
 |<xref:System.Reflection.Emit.OpCode>|Describes a Microsoft intermediate language (MSIL) instruction.|  

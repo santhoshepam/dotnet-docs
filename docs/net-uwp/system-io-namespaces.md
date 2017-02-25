@@ -18,11 +18,11 @@ manager: "wpickett"
 # System.IO namespaces1
 The `System.IO` and `System.IO.Compression` namespaces contain types that support reading and writing data to streams, and basic compression and decompression services for streams.  
   
- This topic displays the types in the `System.IO` and `System.IO.Compression` namespaces that are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]. Note that the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)].  
+ This topic displays the types in the `System.IO` and `System.IO.Compression` namespaces that are included in the .NET for Windows 8.x Store apps. Note that the .NET for Windows 8.x Store apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the .NET for Windows 8.x Store apps.  
   
 ## System.IO namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.IO.BinaryReader>|Reads primitive data types as binary values in a specific encoding.|  
 |<xref:System.IO.BinaryWriter>|Writes primitive types in binary to a stream and supports writing strings in a specific encoding.|  
@@ -40,12 +40,12 @@ The `System.IO` and `System.IO.Compression` namespaces contain types that suppor
 |<xref:System.IO.StringWriter>|Implements a TextWriter for writing information to a string. The information is stored in an underlying StringBuilder.|  
 |<xref:System.IO.TextReader>|Represents a reader that can read a sequential series of characters.|  
 |<xref:System.IO.TextWriter>|Represents a writer that can write a sequential series of characters. This class is abstract.|  
-|<xref:System.IO.WindowsRuntimeStorageExtensions>|Contains extension methods for the IStorageFile and IStorageFolder interfaces in the [!INCLUDE[wrt](../net-uwp/includes/wrt-md.md)] when developing [!INCLUDE[win8_appname_long](../net-uwp/includes/win8-appname-long-md.md)] apps.|  
-|<xref:System.IO.WindowsRuntimeStreamExtensions>|Contains extension methods for converting between streams in the [!INCLUDE[wrt](../net-uwp/includes/wrt-md.md)] and managed streams in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)].|  
+|<xref:System.IO.WindowsRuntimeStorageExtensions>|Contains extension methods for the IStorageFile and IStorageFolder interfaces in the Windows Runtime when developing Windows 8.x Store apps.|  
+|<xref:System.IO.WindowsRuntimeStreamExtensions>|Contains extension methods for converting between streams in the Windows Runtime and managed streams in the .NET for Windows 8.x Store apps.|  
   
 ## System.IO.Compression namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.IO.Compression.CompressionLevel>|Specifies values that indicate whether a compression operation emphasizes speed or compression size.|  
 |<xref:System.IO.Compression.CompressionMode>|Specifies whether to compress or decompress the underlying stream.|  

@@ -18,13 +18,13 @@ manager: "wpickett"
 # Windows namespaces
 The `Windows` namespaces (`Windows.Foundation`, `Windows.UI`, `Windows.UI.Xaml`, `Windows.UI.Xaml.Controls.Primitives`, `Windows.UI.Xaml.Media`, `Windows.UI.Xaml.Media.Animation`, and `Windows.UI.Xaml.Media.Media3D`) contain types for managing the user interface of your application.  
   
- This topic displays the types in the `Windows` namespaces that are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]. Note that the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)] do not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)].  
+ This topic displays the types in the `Windows` namespaces that are included in the .NET for Windows 8.x Store apps. Note that the .NET for Windows 8.x Store apps do not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the .NET for Windows 8.x Store apps.  
   
- [!INCLUDE[win8_appname_long](../net-uwp/includes/win8-appname-long-md.md)] apps only: APIs for [!INCLUDE[win8_appname_long](../net-uwp/includes/win8-appname-long-md.md)] apps that are expressed as HTML or XAML elements are supported only in [!INCLUDE[win8_appname_long](../net-uwp/includes/win8-appname-long-md.md)] apps; they are not supported in desktop apps or [!INCLUDE[win8_appname_long](../net-uwp/includes/win8-appname-long-md.md)] enabled desktop browsers.  
+ Windows 8.x Store apps only: APIs for Windows 8.x Store apps that are expressed as HTML or XAML elements are supported only in Windows 8.x Store apps; they are not supported in desktop apps or Windows 8.x Store enabled desktop browsers.  
   
 ## Windows.Foundation namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |[Point](http://msdn.microsoft.com/library/windows/apps/windows.foundation.point.aspx)|Represents an x- and y-coordinate pair in two-dimensional space. Can also represent a logical point for certain property usages.|  
 |[Rect](http://msdn.microsoft.com/library/windows/apps/windows.foundation.rect.aspx)|Describes the width, height, and point origin of a rectangle.|  
@@ -32,13 +32,13 @@ The `Windows` namespaces (`Windows.Foundation`, `Windows.UI`, `Windows.UI.Xaml`,
   
 ## Windows.UI namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |[Color](http://msdn.microsoft.com/library/windows/apps/windows.ui.color.aspx)|Describes a color in terms of alpha, red, green, and blue channels.|  
   
 ## Windows.UI.Xaml namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |[CornerRadius](http://msdn.microsoft.com/library/windows/apps/windows.ui.xaml.cornerradius.aspx)|Describes the characteristics of a rounded corner, such as can be applied to a Windows.UI.Xaml.Controls.Border.|  
 |[Duration](http://msdn.microsoft.com/library/windows/apps/windows.ui.xaml.duration.aspx)|Represents the duration of time that a Windows.UI.Xaml.Media.Animation.Timeline is active.|  
@@ -49,19 +49,19 @@ The `Windows` namespaces (`Windows.Foundation`, `Windows.UI`, `Windows.UI.Xaml`,
   
 ## Windows.UI.Xaml.Controls.Primitives namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |[GeneratorPosition](http://msdn.microsoft.com/library/windows/apps/windows.ui.xaml.controls.primitives.generatorposition.aspx)|Used to describe the position of an item that is managed by Windows.UI.Xaml.Controls.ItemContainerGenerator.|  
   
 ## Windows.UI.Xaml.Media namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |[Matrix](http://msdn.microsoft.com/library/windows/apps/windows.ui.xaml.media.matrix.aspx)|Represents a 3x3 affine transformation matrix used for transformations in two-dimensional space.|  
   
 ## Windows.UI.Xaml.Media.Animation namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |[KeyTime](http://msdn.microsoft.com/library/windows/apps/windows.ui.xaml.media.animation.keytime.aspx)|Specifies when a particular key frame should take place during an animation.|  
 |[RepeatBehavior](http://msdn.microsoft.com/library/windows/apps/windows.ui.xaml.media.animation.repeatbehavior.aspx)|Describes how a Windows.UI.Xaml.Media.Animation.Timeline repeats its simple duration.|  
@@ -69,7 +69,7 @@ The `Windows` namespaces (`Windows.Foundation`, `Windows.UI`, `Windows.UI.Xaml`,
   
 ## Windows.UI.Xaml.Media.Media3D namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |[Matrix3D](http://msdn.microsoft.com/library/windows/apps/windows.ui.xaml.media.media3d.matrix3d.aspx)|Represents a 4 × 4 matrix that is used for transformations in a three-dimensional (3-D) space.|  
   

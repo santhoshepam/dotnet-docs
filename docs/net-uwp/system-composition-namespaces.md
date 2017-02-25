@@ -18,13 +18,13 @@ manager: "wpickett"
 # System.Composition namespaces
 `System.Composition` and its child namespaces (`System.Composition.Convention`, `System.Composition.Hosting`, and `System.Composition.Hosting.Core`) contain types for developing extensible applications.  
   
- This topic displays the types in the `System.Composition` namespaces that can be installed and used to create [!INCLUDE[win8_appname_long](../net-uwp/includes/win8-appname-long-md.md)] apps.  
+ This topic displays the types in the `System.Composition` namespaces that can be installed and used to create Windows 8.x Store apps.  
   
- To install the following namespaces, open your project in [!INCLUDE[vs_dev11_long](../net-uwp/includes/vs-dev11-long-md.md)] or later, choose **Manage NuGet Packages** from the **Project** menu, and search online for the Microsoft.Composition package.  
+ To install the following namespaces, open your project in Visual Studio 2012 or later, choose **Manage NuGet Packages** from the **Project** menu, and search online for the Microsoft.Composition package.  
   
 ## System.Composition namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Composition.CompositionContext>|Provides methods to retrieve exports from the composition.|  
 |<xref:System.Composition.ExportAttribute>|Specifies that a type, property, field, or method provides a particular export.|  
@@ -41,11 +41,11 @@ manager: "wpickett"
 |<xref:System.Composition.PartMetadataAttribute>|Specifies metadata for a part.|  
 |<xref:System.Composition.PartNotDiscoverableAttribute>|Specifies that this type’s exports won’t be included in a ComposablePartCatalog.|  
 |<xref:System.Composition.SharedAttribute>|Marks the decorated part as being constrained to sharing within the specified boundary.|  
-|<xref:System.Composition.SharingBoundaryAttribute>|When applied to an import of an  HYPERLINK "https://msdn.microsoft.com/en-us/library/jj637957(v=vs.110).aspx" ExportFactory<T\> object, marks the boundary of a sharing scope.|  
+|<xref:System.Composition.SharingBoundaryAttribute>|When applied to an import of an <xref:System.Composition.ExportFactory%601> object, marks the boundary of a sharing scope.|  
   
 ## System.Composition.Convention namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Composition.Convention.AttributedModelProvider>|Provides augmented reflection data to support convention-based models.|  
 |<xref:System.Composition.CompositionContextExtensions>||  
@@ -58,7 +58,7 @@ manager: "wpickett"
   
 ## System.Composition.Hosting namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Composition.Hosting.CompositionFailedException>|The exception that is thrown when composition problems occur.|  
 |<xref:System.Composition.Hosting.CompositionHost>|Assembles a lightweight composition container from specified providers.|  
@@ -66,7 +66,7 @@ manager: "wpickett"
   
 ## System.Composition.Hosting.Core namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Composition.Hosting.Core.CompositeActivator>|The delegate signature that allows instances of parts and exports to be accessed during a composition operation.|  
 |<xref:System.Composition.Hosting.Core.CompositionContract>|Defines a standard to match exports and imports.|  

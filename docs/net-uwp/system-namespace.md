@@ -18,11 +18,11 @@ manager: "wpickett"
 # System namespace
 The `System` namespace contains fundamental classes and base classes that define commonly used value and reference data types, events and event handlers, interfaces, attributes, and processing exceptions.  
   
- This topic displays the types in the `System` namespace that are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]. Note that the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)].  
+ This topic displays the types in the `System` namespace that are included in the .NET for Windows 8.x Store apps. Note that the .NET for Windows 8.x Store apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in the .NET for Windows 8.x Store apps.  
   
 ## System namespace  
   
-|Types supported in the [!INCLUDE[net_win8_profile](../net-uwp/includes/net-win8-profile-md.md)]|Description|  
+|Types supported in the .NET for Windows 8.x Store apps|Description|  
 |---------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Action>|Encapsulates a method that has no parameters and does not return a value.|  
 |<xref:System.Action%601>|Encapsulates a method that has a single parameter and does not return a value.|  
@@ -188,7 +188,7 @@ The `System` namespace contains fundamental classes and base classes that define
 |<xref:System.Void>|Specifies a return value type for a method that does not return a value.|  
 |<xref:System.WeakReference>|Represents a weak reference, which references an object while still allowing that object to be reclaimed by garbage collection.|  
 |<xref:System.WeakReference%601>|Represents a typed weak reference, which references an object while still allowing that object to be reclaimed by garbage collection.|  
-|<xref:System.WindowsRuntimeSystemExtensions>|Provides extension methods for working with the [!INCLUDE[wrt](../net-uwp/includes/wrt-md.md)].|  
+|<xref:System.WindowsRuntimeSystemExtensions>|Provides extension methods for working with the Windows Runtime.|  
   
 ## See Also  
  [.NET for Windows apps](../net-uwp/dotnet-for-windows-apps.md)

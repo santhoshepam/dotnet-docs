@@ -15,11 +15,11 @@ manager: "markl"
 # System.Net namespaces for UWP apps
 `System.Net` and its child namespaces (`System.Net.Http`, `System.Net.Http.Headers`, `System.Net.NetworkInformation`, `System.Net.Security`, and `System.Net.Sockets`) contain types that provide networking support.  
   
- This topic displays the types in the `System.Net` namespaces that are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]. Note that [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)].  
+ This topic displays the types in the `System.Net` namespaces that are included in .NET for UWP apps. Note that .NET for UWP apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in .NET for UWP apps.  
   
 ## System.Net namespace  
   
-|Types supported in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in .NET for UWP apps|Description|  
 |------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Net.AuthenticationSchemes>|Specifies protocols for authentication.|  
 |<xref:System.Net.Cookie>|Provides a set of properties and methods that are used to manage cookies. This class cannot be inherited.|  
@@ -54,7 +54,7 @@ manager: "markl"
   
 ## System.Net.Http namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Net.Http.ByteArrayContent>|Provides HTTP content based on a byte array.|  
 |<xref:System.Net.Http.ClientCertificateOption>|Specifies how client certificates are provided.|  
@@ -79,7 +79,7 @@ manager: "markl"
   
 ## System.Net.Http.Headers namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Net.Http.Headers.AuthenticationHeaderValue>|Represents authentication information in Authorization, ProxyAuthorization, WWW-Authneticate, and Proxy-Authenticate header values.|  
 |<xref:System.Net.Http.Headers.CacheControlHeaderValue>|Represents the value of the Cache-Control header.|  
@@ -109,7 +109,7 @@ manager: "markl"
   
 ## System.Net.NetworkInformation namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Net.NetworkInformation.IPAddressCollection>|Stores a set of IPAddress types.|  
 |<xref:System.Net.NetworkInformation.NetworkAddressChangedEventHandler>|References one or more methods to be called when the address of a network interface changes.|  
@@ -118,14 +118,14 @@ manager: "markl"
   
 ## System.Net.Security namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Net.Security.AuthenticationLevel>|Specifies client requirements for authentication and impersonation when using the WebRequest class and derived classes to request a resource.|  
 |<xref:System.Net.Security.SslPolicyErrors>|Enumerates Secure Socket Layer (SSL) policy errors.|  
   
 ## System.Net.Sockets namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Net.Sockets.AddressFamily>|Specifies the addressing scheme that an instance of the Socket class can use.|  
 |<xref:System.Net.Sockets.ProtocolType>|Specifies the protocols that the Socket class supports.|  

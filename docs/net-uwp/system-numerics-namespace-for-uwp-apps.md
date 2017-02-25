@@ -15,11 +15,11 @@ manager: "markl"
 # System.Numerics namespace for UWP apps
 The `System.Numerics` namespace contains types that complement the numeric primitives that are defined by the .NET Framework.  
   
- This topic displays the types in the `System.Numerics` namespace that are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]. Note that [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)].  
+ This topic displays the types in the `System.Numerics` namespace that are included in .NET for UWP apps. Note that .NET for UWP apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in .NET for UWP apps.  
   
 ## System.Numerics namespace  
   
-|Types supported in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in .NET for UWP apps|Description|  
 |------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Numerics.BigInteger>|Represents an arbitrarily large signed integer.|  
 |<xref:System.Numerics.Complex>|Represents a complex number.|  

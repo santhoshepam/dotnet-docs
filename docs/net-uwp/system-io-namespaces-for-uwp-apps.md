@@ -15,11 +15,11 @@ manager: "markl"
 # System.IO namespaces for UWP apps
 The `System.IO`, `System.IO.Compression`, and `System.IO.IsolatedStorage` namespaces contain types that support reading and writing data to streams; basic compression and decompression services for streams; and allow the creation and use of isolated stores.  
   
- This topic displays the types in the `System.IO` and `System.IO.Compression` namespaces that are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]. Note that [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)].  
+ This topic displays the types in the `System.IO` and `System.IO.Compression` namespaces that are included in .NET for UWP apps. Note that .NET for UWP apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in .NET for UWP apps.  
   
 ## System.IO namespace  
   
-|Types supported in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in .NET for UWP apps|Description|  
 |------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.IO.BinaryReader>|Reads primitive data types as binary values in a specific encoding.|  
 |<xref:System.IO.BinaryWriter>|Writes primitive types in binary to a stream and supports writing strings in a specific encoding.|  
@@ -60,7 +60,7 @@ The `System.IO`, `System.IO.Compression`, and `System.IO.IsolatedStorage` namesp
   
 ## System.IO.Compression namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.IO.Compression.CompressionLevel>|Specifies values that indicate whether a compression operation emphasizes speed or compression size.|  
 |<xref:System.IO.Compression.CompressionMode>|Specifies whether to compress or decompress the underlying stream.|  
@@ -74,7 +74,7 @@ The `System.IO`, `System.IO.Compression`, and `System.IO.IsolatedStorage` namesp
   
 ## System.IO.IsolatedStorage namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.IO.IsolatedStorage.IsolatedStorageException>|The exception that is thrown when an operation in isolated storage fails.|  
 |<xref:System.IO.IsolatedStorage.IsolatedStorageFile>|Represents an isolated storage area containing files and directories.|  

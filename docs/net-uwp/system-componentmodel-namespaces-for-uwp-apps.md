@@ -15,11 +15,11 @@ manager: "markl"
 # System.ComponentModel namespaces for UWP apps
 `System.ComponentModel`, `System.ComponentModel.DataAnnotations`, and `System.ComponentModel.DataAnnotations.Schema` contain types that implement the run-time and design-time behavior of components and controls.  
   
- This topic displays the types in the `System.ComponentModel` namespaces that are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]. Note that [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)].  
+ This topic displays the types in the `System.ComponentModel` namespaces that are included in .NET for UWP apps. Note that .NET for UWP apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in .NET for UWP apps.  
   
 ## System.ComponentModel namespace  
   
-|Types supported in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in .NET for UWP apps|Description|  
 |------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.ComponentModel.ArrayConverter>|Provides a type converter to convert Array objects to and from various other representations.|  
 |<xref:System.ComponentModel.AsyncCompletedEventArgs>|Provides data for the MethodNameCompleted event.|  
@@ -85,7 +85,7 @@ manager: "markl"
   
 ## System.ComponentModel.DataAnnotations namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in the .NET for UWP apps|Description|  
 |----------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.ComponentModel.DataAnnotations.AssociationAttribute>|Specifies that an entity member represents a data relationship, such as a foreign key relationship.|  
 |<xref:System.ComponentModel.DataAnnotations.CompareAttribute>|Provides an attribute that compares two properties.|  
@@ -123,7 +123,7 @@ manager: "markl"
   
 ## System.ComponentModel.DataAnnotations.Schema namespace  
   
-|Types supported in the [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]||  
+|Types supported in the .NET for UWP apps||  
 |----------------------------------------------------------------------------------------------|-|  
 |<xref:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute>|Represents the database column that a property is mapped to.|  
 |<xref:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute>|Denotes that the class is a complex type. Complex types are non-scalar properties of entity types that enable scalar properties to be organized within entities. Complex types do not have keys and cannot be managed by the Entity Framework apart from the parent object.|  

@@ -15,11 +15,11 @@ manager: "markl"
 # System.Resources namespaces for UWP apps
 The `System.Resources` namespace contains classes and interfaces that enable developers to create, store, and manage various culture-specific resources used in an application.  
   
- This topic displays the types in the `System.Resources` namespace that are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]. Note that [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)] does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)].  
+ This topic displays the types in the `System.Resources` namespace that are included in .NET for UWP apps. Note that .NET for UWP apps does not include all the members of each type. For information about individual types, see the linked topics. The documentation for a type indicates which members are included in .NET for UWP apps.  
   
 ## System.Resources namespace  
   
-|Types supported in [!INCLUDE[net_win10_profile](../net-uwp/includes/net-win10-profile-md.md)]|Description|  
+|Types supported in .NET for UWP apps|Description|  
 |------------------------------------------------------------------------------------------|-----------------|  
 |<xref:System.Resources.MissingManifestResourceException>|The exception that is thrown if the main assembly does not contain the resources for the neutral culture, and they are required because of a missing appropriate satellite assembly.|  
 |<xref:System.Resources.NeutralResourcesLanguageAttribute>|Informs the ResourceManager of the default culture of an application. This class cannot be inherited.|  
