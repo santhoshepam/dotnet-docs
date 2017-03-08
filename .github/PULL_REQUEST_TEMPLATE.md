@@ -1,6 +1,6 @@
 # Title
 
-On the title describe
+Describe
 what you've fixed (or created) with this Pull Request (PR).
 
 ## Summary
