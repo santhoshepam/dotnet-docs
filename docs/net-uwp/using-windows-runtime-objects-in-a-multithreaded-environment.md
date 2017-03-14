@@ -39,7 +39,7 @@ This article discusses the way the .NET Framework handles calls from C# and Visu
 ## Objects from the Windows Runtime  
  Most classes in the Windows Runtime are agile, and the CLR treats them as agile. The documentation for these classes lists "MarshalingBehaviorAttribute(Agile)" among the class attributes. However, the members of some of these agile classes, such as XAML controls, throw exceptions if they aren't called on the UI thread. For example, the following code tries to use a background thread to set a property of the button that was clicked. The button's [Content](http://go.microsoft.com/fwlink/p/?LinkId=256025) property throws an exception.  
   
-```c#  
+```csharp
   
 private async void Button_Click_2(object sender, RoutedEventArgs e)  
 {  
@@ -64,7 +64,7 @@ End Sub
   
  You can access the button safely by using its [Dispatcher](http://go.microsoft.com/fwlink/p/?LinkId=256026) property, or the `Dispatcher` property of any object that exists in the context of the UI thread (such as the page the button is on). The following code uses the [CoreDispatcher](http://go.microsoft.com/fwlink/p/?LinkId=256029) object's [RunAsync](http://go.microsoft.com/fwlink/p/?LinkId=256030) method to dispatch the call on the UI thread.  
   
-```c#  
+```csharp
   
 private async void Button_Click_2(object sender, RoutedEventArgs e)  
 {  
@@ -102,7 +102,7 @@ End Sub
   
  The following code creates a [CameraCaptureUI](http://go.microsoft.com/fwlink/p/?LinkId=256027) object on the UI thread, and then tries to set a property of the object from a thread pool thread. The CLR is unable to marshal the call, and throws an <xref:System.InvalidCastException> exception with a message indicating that the object can be used only in the threading context where it was created.  
   
-```c#  
+```csharp
   
 Windows.Media.Capture.CameraCaptureUI ccui;  
   
@@ -135,7 +135,7 @@ End Sub
   
  If you want to access the [CameraCaptureUI](http://go.microsoft.com/fwlink/p/?LinkId=256027) object from another thread, you can cache the [CoreDispatcher](http://go.microsoft.com/fwlink/p/?LinkId=256029) object for the UI thread and use it later to dispatch the call on that thread. Or you can obtain the dispatcher from a XAML object such as the page, as shown in the following code.  
   
-```c#  
+```csharp
   
 Windows.Media.Capture.CameraCaptureUI ccui;  
   
