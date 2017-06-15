@@ -64,7 +64,8 @@
       "customized_tasks": {
         "docset_prebuild": [
           "_dependentPackages/ECMA2Yaml/tools/Run.ps1",
-          "_dependentPackages/splitToc/tools/run.ps1"
+          "_dependentPackages/splitToc/tools/run.ps1",
+          "_dependentPackages/CommonPlugins/tools/PushFiles.ps1"
         ],
         "docset_postbuild": [
           "_dependentPackages/ECMA2Yaml/tools/PostBuild.ps1"
@@ -98,6 +99,13 @@
   ],
   "dependent_packages": [
     {
+      "id": "Microsoft.OpenPublishing.CommonPlugins",
+      "nuget_feed": "https://www.myget.org/F/op/api/v2",
+      "path_to_root": "_dependentPackages/CommonPlugins",
+      "target_framework": "net45",
+      "version": "latest"
+    },
+    {
       "id": "Microsoft.DocAsCode.ECMA2Yaml",
       "nuget_feed": "https://www.myget.org/F/op/api/v2",
       "path_to_root": "_dependentPackages/ECMA2Yaml",
@@ -125,5 +133,15 @@
     "OutputYamlFolder": "api",
     "Flatten": true
   },
-  "toc_path_need_to_split": "api/toc.yml"
+  "toc_path_need_to_split": "api/toc.yml",
+  "PushFiles": [
+    {
+      "branchFilter": ["master", "live", "ymlExport"],
+      "targetRepo": "https://github.com/MicrosoftDocs/dotnet-docs-yml4loc.git",
+      "src": "api",
+      "dest": "/",
+      "files": "*.yml *.md",
+      "purge": true
+    }
+  ]
 }
