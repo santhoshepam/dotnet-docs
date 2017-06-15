@@ -1,0 +1,1601 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Threading.ReaderWriterLock
+  commentId: T:System.Threading.ReaderWriterLock
+  id: ReaderWriterLock
+  children:
+  - System.Threading.ReaderWriterLock.#ctor
+  - System.Threading.ReaderWriterLock.AcquireReaderLock(System.Int32)
+  - System.Threading.ReaderWriterLock.AcquireReaderLock(System.TimeSpan)
+  - System.Threading.ReaderWriterLock.AcquireWriterLock(System.Int32)
+  - System.Threading.ReaderWriterLock.AcquireWriterLock(System.TimeSpan)
+  - System.Threading.ReaderWriterLock.AnyWritersSince(System.Int32)
+  - System.Threading.ReaderWriterLock.DowngradeFromWriterLock(System.Threading.LockCookie@)
+  - System.Threading.ReaderWriterLock.Finalize
+  - System.Threading.ReaderWriterLock.IsReaderLockHeld
+  - System.Threading.ReaderWriterLock.IsWriterLockHeld
+  - System.Threading.ReaderWriterLock.ReleaseLock
+  - System.Threading.ReaderWriterLock.ReleaseReaderLock
+  - System.Threading.ReaderWriterLock.ReleaseWriterLock
+  - System.Threading.ReaderWriterLock.RestoreLock(System.Threading.LockCookie@)
+  - System.Threading.ReaderWriterLock.UpgradeToWriterLock(System.Int32)
+  - System.Threading.ReaderWriterLock.UpgradeToWriterLock(System.TimeSpan)
+  - System.Threading.ReaderWriterLock.WriterSeqNum
+  langs:
+  - csharp
+  name: ReaderWriterLock
+  nameWithType: ReaderWriterLock
+  fullName: System.Threading.ReaderWriterLock
+  type: Class
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Threading
+  namespace: System.Threading
+  summary: Defines a lock that supports single writers and multiple readers.
+  remarks: "> [!IMPORTANT]\n>  The [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] has two reader-writer locks, <xref:System.Threading.ReaderWriterLockSlim> and <xref:System.Threading.ReaderWriterLock>. <xref:System.Threading.ReaderWriterLockSlim> is recommended for all new development. <xref:System.Threading.ReaderWriterLockSlim> is similar to <xref:System.Threading.ReaderWriterLock>, but it has simplified rules for recursion and for upgrading and downgrading lock state. <xref:System.Threading.ReaderWriterLockSlim> avoids many cases of potential deadlock. In addition, the performance of <xref:System.Threading.ReaderWriterLockSlim> is significantly better than <xref:System.Threading.ReaderWriterLock>.  \n  \n <xref:System.Threading.ReaderWriterLock> is used to synchronize access to a resource. At any given time, it allows either concurrent read access for multiple threads, or write access for a single thread. In a situation where a resource is changed infrequently, a `ReaderWriterLock` provides better throughput than a simple one-at-a-time lock, such as <xref:System.Threading.Monitor>.  \n  \n `ReaderWriterLock` works best where most accesses are reads, while writes are infrequent and of short duration. Multiple readers alternate with single writers, so that neither readers nor writers are blocked for long periods.  \n  \n> [!NOTE]\n>  Holding reader locks or writer locks for long periods will starve other threads. For best performance, consider restructuring your application to minimize the duration of writes.  \n  \n A thread can hold a reader lock or a writer lock, but not both at the same time. Instead of releasing a reader lock in order to acquire the writer lock, you can use <xref:System.Threading.ReaderWriterLock.UpgradeToWriterLock%2A> and <xref:System.Threading.ReaderWriterLock.DowngradeFromWriterLock%2A>.  \n  \n Recursive lock requests increase the lock count on a lock.  \n  \n Readers and writers are queued separately. When a thread releases the writer lock, all threads waiting in the reader queue at that instant are granted reader locks; when all of those reader locks have been released, the next thread waiting in the writer queue, if any, is granted the writer lock, and so on. In other words, `ReaderWriterLock` alternates between a collection of readers, and one writer.  \n  \n While a thread in the writer queue is waiting for active reader locks to be released, threads requesting new reader locks accumulate in the reader queue. Their requests are not granted, even though they could share concurrent access with existing reader-lock holders; this helps protect writers against indefinite blockage by readers.  \n  \n Most methods for acquiring locks on a `ReaderWriterLock` accept time-out values. Use time-outs to avoid deadlocks in your application. For example, a thread might acquire the writer lock on one resource and then request a reader lock on a second resource; in the meantime, another thread might acquire the writer lock on the second resource, and request a reader lock on the first. Unless time-outs are used, the threads deadlock.  \n  \n If the time-out interval expires and the lock request has not been granted, the method returns control to the calling thread by throwing an <xref:System.ApplicationException>. A thread can catch this exception and determine what action to take next.  \n  \n Time-outs are expressed in milliseconds. If you use a <xref:System.TimeSpan?displayProperty=fullName> to specify the time-out, the value used is the total number of whole milliseconds represented by the <xref:System.TimeSpan>. The following table shows the valid time-out values in milliseconds.  \n  \n|Value|Description|  \n|-----------|-----------------|  \n|-1|The thread waits until the lock is acquired, regardless of how long it takes. For methods that specify integer time-outs, the constant <xref:System.Threading.Timeout.Infinite> can be used.|  \n|0|The thread does not wait to acquire the lock. If the lock cannot be acquired immediately, the method returns.|  \n|>0|The number of milliseconds to wait.|  \n  \n With the exception of -1, negative time-out values are not allowed. If you specify a negative integer other than -1, a time-out value of zero is used instead. (That is, the method returns without waiting, if the lock cannot be acquired immediately.) If you specify a <xref:System.TimeSpan> that represents a negative number of milliseconds other than -1, <xref:System.ArgumentOutOfRangeException> is thrown."
+  example:
+  - "The following example demonstrates how to use a <xref:System.Threading.ReaderWriterLock> to protect a shared resource, an integer value named `resource`, that is read concurrently and written exclusively by multiple threads. Note that the <xref:System.Threading.ReaderWriterLock> is declared at the class level so that it is visible to all threads.  \n  \n [!code-cpp[System.Threading.ReaderWriterLock#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#1)]\n [!code-csharp[System.Threading.ReaderWriterLock#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#1)]\n [!code-vb[System.Threading.ReaderWriterLock#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#1)]"
+  syntax:
+    content: >-
+      [System.Runtime.InteropServices.ComVisible(true)]
+
+      public sealed class ReaderWriterLock : System.Runtime.ConstrainedExecution.CriticalFinalizerObject
+  inheritance:
+  - System.Object
+  - System.Runtime.ConstrainedExecution.CriticalFinalizerObject
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: System.Runtime.InteropServices.ComVisibleAttribute
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLock.#ctor
+  commentId: M:System.Threading.ReaderWriterLock.#ctor
+  id: '#ctor'
+  parent: System.Threading.ReaderWriterLock
+  langs:
+  - csharp
+  name: ReaderWriterLock()
+  nameWithType: ReaderWriterLock.ReaderWriterLock()
+  fullName: ReaderWriterLock.ReaderWriterLock()
+  type: Constructor
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Threading
+  namespace: System.Threading
+  summary: Initializes a new instance of the <xref href="System.Threading.ReaderWriterLock"></xref> class.
+  remarks: ''
+  example:
+  - "The following code example demonstrates how to create a new instance of the <xref:System.Threading.ReaderWriterLock> class.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLock> class.  \n  \n [!code-cpp[System.Threading.ReaderWriterLock#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#2)]\n [!code-csharp[System.Threading.ReaderWriterLock#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLock#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#2)]  \n[!code-cpp[System.Threading.ReaderWriterLock#7](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#7)]\n[!code-csharp[System.Threading.ReaderWriterLock#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#7)]\n[!code-vb[System.Threading.ReaderWriterLock#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#7)]"
+  syntax:
+    content: public ReaderWriterLock ();
+    parameters: []
+  overload: System.Threading.ReaderWriterLock.#ctor*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLock.AcquireReaderLock(System.Int32)
+  commentId: M:System.Threading.ReaderWriterLock.AcquireReaderLock(System.Int32)
+  id: AcquireReaderLock(System.Int32)
+  parent: System.Threading.ReaderWriterLock
+  langs:
+  - csharp
+  name: AcquireReaderLock(Int32)
+  nameWithType: ReaderWriterLock.AcquireReaderLock(Int32)
+  fullName: ReaderWriterLock.AcquireReaderLock(Int32)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Threading
+  namespace: System.Threading
+  summary: Acquires a reader lock, using an <xref href="System.Int32"></xref> value for the time-out.
+  remarks: "<xref:System.Threading.ReaderWriterLock.AcquireReaderLock%2A> blocks if a different thread has the writer lock, or if at least one thread is waiting for the writer lock.  \n  \n> [!NOTE]\n>  If the current thread already has the writer lock, no reader lock is acquired. Instead, the lock count on the writer lock is incremented. This prevents a thread from blocking on its own writer lock. The result is exactly the same as calling <xref:System.Threading.ReaderWriterLock.AcquireWriterLock%2A>, and an additional call to <xref:System.Threading.ReaderWriterLock.ReleaseWriterLock%2A> is required when releasing the writer lock.  \n  \n `AcquireReaderLock` supports recursive reader-lock requests. That is, a thread can call AcquireReaderLock multiple times, which increments the lock count each time. You must call <xref:System.Threading.ReaderWriterLock.ReleaseReaderLock%2A> once for each time you call `AcquireReaderLock`. Alternatively, you can call <xref:System.Threading.ReaderWriterLock.ReleaseLock%2A> to reduce the lock count to zero immediately.  \n  \n Recursive lock requests are always granted immediately, without placing the requesting thread in the reader queue. Use recursive locks with caution, to avoid blocking writer-lock requests for long periods.  \n  \n For valid time-out values, see <xref:System.Threading.ReaderWriterLock>."
+  example:
+  - "The following code example shows how to acquire and release a reader lock, and how to handle the exception thrown when a request times out.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLock> class.  \n  \n [!code-cpp[System.Threading.ReaderWriterLock#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#2)]\n [!code-csharp[System.Threading.ReaderWriterLock#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLock#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#2)]  \n[!code-cpp[System.Threading.ReaderWriterLock#3](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#3)]\n[!code-csharp[System.Threading.ReaderWriterLock#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#3)]\n[!code-vb[System.Threading.ReaderWriterLock#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#3)]  \n[!code-cpp[System.Threading.ReaderWriterLock#7](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#7)]\n[!code-csharp[System.Threading.ReaderWriterLock#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#7)]\n[!code-vb[System.Threading.ReaderWriterLock#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#7)]"
+  syntax:
+    content: public void AcquireReaderLock (int millisecondsTimeout);
+    parameters:
+    - id: millisecondsTimeout
+      type: System.Int32
+      description: The time-out in milliseconds.
+  overload: System.Threading.ReaderWriterLock.AcquireReaderLock*
+  exceptions:
+  - type: System.ApplicationException
+    commentId: T:System.ApplicationException
+    description: <code>millisecondsTimeout</code> expires before the lock request is granted.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLock.AcquireReaderLock(System.TimeSpan)
+  commentId: M:System.Threading.ReaderWriterLock.AcquireReaderLock(System.TimeSpan)
+  id: AcquireReaderLock(System.TimeSpan)
+  parent: System.Threading.ReaderWriterLock
+  langs:
+  - csharp
+  name: AcquireReaderLock(TimeSpan)
+  nameWithType: ReaderWriterLock.AcquireReaderLock(TimeSpan)
+  fullName: ReaderWriterLock.AcquireReaderLock(TimeSpan)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Threading
+  namespace: System.Threading
+  summary: Acquires a reader lock, using a <xref href="System.TimeSpan"></xref> value for the time-out.
+  remarks: "<xref:System.Threading.ReaderWriterLock.AcquireReaderLock%2A> blocks if a different thread has the writer lock, or if at least one thread is waiting for the writer lock.  \n  \n> [!NOTE]\n>  If the current thread already has the writer lock, no reader lock is acquired. Instead, the lock count on the writer lock is incremented. This prevents a thread from blocking on its own writer lock. The result is exactly the same as calling <xref:System.Threading.ReaderWriterLock.AcquireWriterLock%2A>, and an additional call to <xref:System.Threading.ReaderWriterLock.ReleaseWriterLock%2A> is required when releasing the writer lock.  \n  \n `AcquireReaderLock` supports recursive reader-lock requests. That is, a thread can call AcquireReaderLock multiple times, which increments the lock count each time. You must call <xref:System.Threading.ReaderWriterLock.ReleaseReaderLock%2A> once for each time you call `AcquireReaderLock`. Alternatively, you can call <xref:System.Threading.ReaderWriterLock.ReleaseLock%2A> to reduce the lock count to zero immediately.  \n  \n Recursive lock requests are always granted immediately, without placing the requesting thread in the reader queue. Use recursive locks with caution, to avoid blocking writer-lock requests for long periods.  \n  \n For valid time-out values, see <xref:System.Threading.ReaderWriterLock>."
+  syntax:
+    content: public void AcquireReaderLock (TimeSpan timeout);
+    parameters:
+    - id: timeout
+      type: System.TimeSpan
+      description: A `TimeSpan` specifying the time-out period.
+  overload: System.Threading.ReaderWriterLock.AcquireReaderLock*
+  exceptions:
+  - type: System.ApplicationException
+    commentId: T:System.ApplicationException
+    description: <code>timeout</code> expires before the lock request is granted.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>timeout</code> specifies a negative value other than -1 milliseconds.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLock.AcquireWriterLock(System.Int32)
+  commentId: M:System.Threading.ReaderWriterLock.AcquireWriterLock(System.Int32)
+  id: AcquireWriterLock(System.Int32)
+  parent: System.Threading.ReaderWriterLock
+  langs:
+  - csharp
+  name: AcquireWriterLock(Int32)
+  nameWithType: ReaderWriterLock.AcquireWriterLock(Int32)
+  fullName: ReaderWriterLock.AcquireWriterLock(Int32)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Threading
+  namespace: System.Threading
+  summary: Acquires the writer lock, using an <xref href="System.Int32"></xref> value for the time-out.
+  remarks: "This method blocks if another thread has a reader lock or writer lock. For a description of the way the writer lock alternates with multiple concurrent reader locks, see the <xref:System.Threading.ReaderWriterLock> class.  \n  \n A thread that already has a reader lock can acquire the writer lock in one of two ways: by releasing the reader lock before calling <xref:System.Threading.ReaderWriterLock.AcquireWriterLock%2A>, or by calling <xref:System.Threading.ReaderWriterLock.UpgradeToWriterLock%2A>.  \n  \n> [!CAUTION]\n>  If a thread calls `AcquireWriterLock` while it still has a reader lock, it will block on its own reader lock; if an infinite time-out is specified, the thread will deadlock. To avoid such deadlocks, use <xref:System.Threading.ReaderWriterLock.IsReaderLockHeld%2A> to determine whether the current thread already has a reader lock.  \n  \n `AcquireWriterLock` supports recursive writer-lock requests. That is, a thread can call `AcquireWriterLock` multiple times, which increments the lock count each time. You must call <xref:System.Threading.ReaderWriterLock.ReleaseWriterLock%2A> once for each time you call `AcquireWriterLock`. Alternatively, you can call <xref:System.Threading.ReaderWriterLock.ReleaseLock%2A> to reduce the lock count to zero immediately.  \n  \n Recursive lock requests are always granted immediately, without placing the requesting thread in the writer queue.  \n  \n For valid time-out values, see <xref:System.Threading.ReaderWriterLock>."
+  example:
+  - "The following code example shows how to acquire and release a writer lock, and how to handle the exception thrown when a request times out.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLock> class.  \n  \n [!code-cpp[System.Threading.ReaderWriterLock#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#2)]\n [!code-csharp[System.Threading.ReaderWriterLock#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLock#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#2)]  \n[!code-cpp[System.Threading.ReaderWriterLock#4](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#4)]\n[!code-csharp[System.Threading.ReaderWriterLock#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#4)]\n[!code-vb[System.Threading.ReaderWriterLock#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#4)]  \n[!code-cpp[System.Threading.ReaderWriterLock#7](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#7)]\n[!code-csharp[System.Threading.ReaderWriterLock#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#7)]\n[!code-vb[System.Threading.ReaderWriterLock#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#7)]"
+  syntax:
+    content: public void AcquireWriterLock (int millisecondsTimeout);
+    parameters:
+    - id: millisecondsTimeout
+      type: System.Int32
+      description: The time-out in milliseconds.
+  overload: System.Threading.ReaderWriterLock.AcquireWriterLock*
+  exceptions:
+  - type: System.ApplicationException
+    commentId: T:System.ApplicationException
+    description: <code>timeout</code> expires before the lock request is granted.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLock.AcquireWriterLock(System.TimeSpan)
+  commentId: M:System.Threading.ReaderWriterLock.AcquireWriterLock(System.TimeSpan)
+  id: AcquireWriterLock(System.TimeSpan)
+  parent: System.Threading.ReaderWriterLock
+  langs:
+  - csharp
+  name: AcquireWriterLock(TimeSpan)
+  nameWithType: ReaderWriterLock.AcquireWriterLock(TimeSpan)
+  fullName: ReaderWriterLock.AcquireWriterLock(TimeSpan)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Threading
+  namespace: System.Threading
+  summary: Acquires the writer lock, using a <xref href="System.TimeSpan"></xref> value for the time-out.
+  remarks: "This method blocks if another thread has a reader lock or writer lock. For a description of the way the writer lock alternates with multiple concurrent reader locks, see the <xref:System.Threading.ReaderWriterLock> class.  \n  \n A thread that already has a reader lock can acquire the writer lock in one of two ways: by releasing the reader lock before calling <xref:System.Threading.ReaderWriterLock.AcquireWriterLock%2A>, or by calling <xref:System.Threading.ReaderWriterLock.UpgradeToWriterLock%2A>.  \n  \n> [!CAUTION]\n>  If a thread calls `AcquireWriterLock` while it still has a reader lock, it will block on its own reader lock; if an infinite time-out is specified, the thread will deadlock. To avoid such deadlocks, use <xref:System.Threading.ReaderWriterLock.IsReaderLockHeld%2A> to determine whether the current thread already has a reader lock.  \n  \n `AcquireWriterLock` supports recursive writer-lock requests. That is, a thread can call `AcquireWriterLock` multiple times, which increments the lock count each time. You must call <xref:System.Threading.ReaderWriterLock.ReleaseWriterLock%2A> once for each time you call `AcquireWriterLock`. Alternatively, you can call <xref:System.Threading.ReaderWriterLock.ReleaseLock%2A> to reduce the lock count to zero immediately.  \n  \n Recursive lock requests are always granted immediately, without placing the requesting thread in the writer queue.  \n  \n For valid time-out values, see <xref:System.Threading.ReaderWriterLock>."
+  syntax:
+    content: public void AcquireWriterLock (TimeSpan timeout);
+    parameters:
+    - id: timeout
+      type: System.TimeSpan
+      description: The `TimeSpan` specifying the time-out period.
+  overload: System.Threading.ReaderWriterLock.AcquireWriterLock*
+  exceptions:
+  - type: System.ApplicationException
+    commentId: T:System.ApplicationException
+    description: <code>timeout</code> expires before the lock request is granted.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>timeout</code> specifies a negative value other than -1 milliseconds.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLock.AnyWritersSince(System.Int32)
+  commentId: M:System.Threading.ReaderWriterLock.AnyWritersSince(System.Int32)
+  id: AnyWritersSince(System.Int32)
+  parent: System.Threading.ReaderWriterLock
+  langs:
+  - csharp
+  name: AnyWritersSince(Int32)
+  nameWithType: ReaderWriterLock.AnyWritersSince(Int32)
+  fullName: ReaderWriterLock.AnyWritersSince(Int32)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Threading
+  namespace: System.Threading
+  summary: Indicates whether the writer lock has been granted to any thread since the sequence number was obtained.
+  remarks: "You can use <xref:System.Threading.ReaderWriterLock.WriterSeqNum%2A> and `AnyWritersSince` to improve application performance. For example, a thread might cache the information it obtains while holding a reader lock. After releasing and later reacquiring the lock, the thread can use `AnyWritersSince` to determine whether other threads have written to the resource in the interim; if not, the cached information can be used. This technique is useful where reading the information protected by the lock is expensive; for example, running a database query.  \n  \n The caller must be holding a reader lock or a writer lock in order for the sequence number to be useful."
+  example:
+  - "The following code example shows how to use the <xref:System.Threading.ReaderWriterLock.AnyWritersSince%2A> method and the <xref:System.Threading.ReaderWriterLock.WriterSeqNum%2A> property to determine whether another thread acquired the writer lock on the protected resource since the current thread last held the writer lock.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLock> class.  \n  \n [!code-cpp[System.Threading.ReaderWriterLock#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#2)]\n [!code-csharp[System.Threading.ReaderWriterLock#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLock#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#2)]  \n[!code-cpp[System.Threading.ReaderWriterLock#6](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#6)]\n[!code-csharp[System.Threading.ReaderWriterLock#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#6)]\n[!code-vb[System.Threading.ReaderWriterLock#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#6)]  \n[!code-cpp[System.Threading.ReaderWriterLock#7](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#7)]\n[!code-csharp[System.Threading.ReaderWriterLock#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#7)]\n[!code-vb[System.Threading.ReaderWriterLock#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#7)]"
+  syntax:
+    content: public bool AnyWritersSince (int seqNum);
+    parameters:
+    - id: seqNum
+      type: System.Int32
+      description: The sequence number.
+    return:
+      type: System.Boolean
+      description: '`true` if the writer lock has been granted to any thread since the sequence number was obtained; otherwise, `false`.'
+  overload: System.Threading.ReaderWriterLock.AnyWritersSince*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLock.DowngradeFromWriterLock(System.Threading.LockCookie@)
+  commentId: M:System.Threading.ReaderWriterLock.DowngradeFromWriterLock(System.Threading.LockCookie@)
+  id: DowngradeFromWriterLock(System.Threading.LockCookie@)
+  parent: System.Threading.ReaderWriterLock
+  langs:
+  - csharp
+  name: DowngradeFromWriterLock(LockCookie)
+  nameWithType: ReaderWriterLock.DowngradeFromWriterLock(LockCookie)
+  fullName: ReaderWriterLock.DowngradeFromWriterLock(LockCookie)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Threading
+  namespace: System.Threading
+  summary: Restores the lock status of the thread to what it was before <xref href="System.Threading.ReaderWriterLock.UpgradeToWriterLock(System.Int32)"></xref> was called.
+  remarks: "<xref:System.Threading.ReaderWriterLock.DowngradeFromWriterLock%2A> releases the writer lock, regardless of the recursive lock count, and restores the reader lock that was held by the thread before upgrading to the writer lock. The lock count on the reader lock is restored.  \n  \n> [!NOTE]\n>  `DowngradeFromWriterLock` accepts a <xref:System.Threading.LockCookie> obtained by calling <xref:System.Threading.ReaderWriterLock.UpgradeToWriterLock%2A>. Do not use a `LockCookie` returned by <xref:System.Threading.ReaderWriterLock.ReleaseLock%2A>.  \n  \n A thread does not block when downgrading from the writer lock, even if other threads are waiting for the writer lock, because all reader-lock requests are granted when the writer lock is released."
+  example:
+  - "The following code example shows how to request a reader lock, upgrade the reader lock to a writer lock, and downgrade to a reader lock again.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLock> class.  \n  \n [!code-cpp[System.Threading.ReaderWriterLock#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#2)]\n [!code-csharp[System.Threading.ReaderWriterLock#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLock#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#2)]  \n[!code-cpp[System.Threading.ReaderWriterLock#5](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#5)]\n[!code-csharp[System.Threading.ReaderWriterLock#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#5)]\n[!code-vb[System.Threading.ReaderWriterLock#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#5)]  \n[!code-cpp[System.Threading.ReaderWriterLock#7](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#7)]\n[!code-csharp[System.Threading.ReaderWriterLock#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#7)]\n[!code-vb[System.Threading.ReaderWriterLock#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#7)]"
+  syntax:
+    content: public void DowngradeFromWriterLock (ref System.Threading.LockCookie lockCookie);
+    parameters:
+    - id: lockCookie
+      type: System.Threading.LockCookie
+      description: A <xref href="System.Threading.LockCookie"></xref> returned by <xref href="System.Threading.ReaderWriterLock.UpgradeToWriterLock(System.Int32)"></xref>.
+  overload: System.Threading.ReaderWriterLock.DowngradeFromWriterLock*
+  exceptions:
+  - type: System.ApplicationException
+    commentId: T:System.ApplicationException
+    description: The thread does not have the writer lock.
+  - type: System.NullReferenceException
+    commentId: T:System.NullReferenceException
+    description: The address of <code>lockCookie</code> is a null pointer.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLock.Finalize
+  commentId: M:System.Threading.ReaderWriterLock.Finalize
+  id: Finalize
+  parent: System.Threading.ReaderWriterLock
+  langs:
+  - csharp
+  name: Finalize()
+  nameWithType: ReaderWriterLock.Finalize()
+  fullName: ReaderWriterLock.Finalize()
+  type: Method
+  assemblies:
+  - mscorlib
+  - System.Threading
+  namespace: System.Threading
+  summary: Ensures that resources are freed and other cleanup operations are performed when the garbage collector reclaims the <xref href="System.Threading.ReaderWriterLock"></xref> object.
+  remarks: The garbage collector calls <xref:System.Threading.ReaderWriterLock.Finalize%2A> when the current <xref:System.Threading.ReaderWriterLock> object is ready to be finalized.
+  syntax:
+    content: ~ReaderWriterLock ();
+    parameters: []
+  overload: System.Threading.ReaderWriterLock.Finalize*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLock.IsReaderLockHeld
+  commentId: P:System.Threading.ReaderWriterLock.IsReaderLockHeld
+  id: IsReaderLockHeld
+  parent: System.Threading.ReaderWriterLock
+  langs:
+  - csharp
+  name: IsReaderLockHeld
+  nameWithType: ReaderWriterLock.IsReaderLockHeld
+  fullName: ReaderWriterLock.IsReaderLockHeld
+  type: Property
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Threading
+  namespace: System.Threading
+  summary: Gets a value indicating whether the current thread holds a reader lock.
+  remarks: ''
+  example:
+  - "The following code example demonstrates how to use `IsReaderLockHeld` to avoid deadlocks.  \n  \n [!code-cpp[System.Threading.ReaderWriterLock.IsWriterLockHeld#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock.IsWriterLockHeld/CPP/source.cpp#1)]\n [!code-csharp[System.Threading.ReaderWriterLock.IsWriterLockHeld#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock.IsWriterLockHeld/CS/source.cs#1)]\n [!code-vb[System.Threading.ReaderWriterLock.IsWriterLockHeld#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock.IsWriterLockHeld/VB/source.vb#1)]"
+  syntax:
+    content: >-
+      [get: System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)]
+
+      public bool IsReaderLockHeld { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the current thread holds a reader lock; otherwise, `false`.'
+  overload: System.Threading.ReaderWriterLock.IsReaderLockHeld*
+  exceptions: []
+  attributes:
+  - type: 'get: System.Runtime.ConstrainedExecution.ReliabilityContract'
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLock.IsWriterLockHeld
+  commentId: P:System.Threading.ReaderWriterLock.IsWriterLockHeld
+  id: IsWriterLockHeld
+  parent: System.Threading.ReaderWriterLock
+  langs:
+  - csharp
+  name: IsWriterLockHeld
+  nameWithType: ReaderWriterLock.IsWriterLockHeld
+  fullName: ReaderWriterLock.IsWriterLockHeld
+  type: Property
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Threading
+  namespace: System.Threading
+  summary: Gets a value indicating whether the current thread holds the writer lock.
+  remarks: ''
+  example:
+  - "The following code example demonstrates that when an attempt is made to acquire a reader lock on a thread that has a writer lock, `ReaderWriterLock` does not grant the reader lock but instead increments the lock count on the writer lock.  \n  \n [!code-cpp[System.Threading.ReaderWriterLock.IsWriterLockHeld#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock.IsWriterLockHeld/CPP/source.cpp#1)]\n [!code-csharp[System.Threading.ReaderWriterLock.IsWriterLockHeld#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock.IsWriterLockHeld/CS/source.cs#1)]\n [!code-vb[System.Threading.ReaderWriterLock.IsWriterLockHeld#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock.IsWriterLockHeld/VB/source.vb#1)]"
+  syntax:
+    content: >-
+      [get: System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)]
+
+      public bool IsWriterLockHeld { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the current thread holds the writer lock; otherwise, `false`.'
+  overload: System.Threading.ReaderWriterLock.IsWriterLockHeld*
+  exceptions: []
+  attributes:
+  - type: 'get: System.Runtime.ConstrainedExecution.ReliabilityContract'
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLock.ReleaseLock
+  commentId: M:System.Threading.ReaderWriterLock.ReleaseLock
+  id: ReleaseLock
+  parent: System.Threading.ReaderWriterLock
+  langs:
+  - csharp
+  name: ReleaseLock()
+  nameWithType: ReaderWriterLock.ReleaseLock()
+  fullName: ReaderWriterLock.ReleaseLock()
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Threading
+  namespace: System.Threading
+  summary: Releases the lock, regardless of the number of times the thread acquired the lock.
+  remarks: <xref:System.Threading.ReaderWriterLock.ReleaseLock%2A> releases the reader lock or writer lock, regardless of the recursive lock count. To restore the state of the lock, including the lock count, pass the <xref:System.Threading.LockCookie> to <xref:System.Threading.ReaderWriterLock.RestoreLock%2A>.
+  example:
+  - "The following code example shows how to use the <xref:System.Threading.ReaderWriterLock.ReleaseLock%2A> method to release the lock, regardless of how many times it has been acquired by the thread, and how to restore the state of the lock later.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLock> class.  \n  \n [!code-cpp[System.Threading.ReaderWriterLock#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#2)]\n [!code-csharp[System.Threading.ReaderWriterLock#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLock#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#2)]  \n[!code-cpp[System.Threading.ReaderWriterLock#6](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#6)]\n[!code-csharp[System.Threading.ReaderWriterLock#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#6)]\n[!code-vb[System.Threading.ReaderWriterLock#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#6)]  \n[!code-cpp[System.Threading.ReaderWriterLock#7](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#7)]\n[!code-csharp[System.Threading.ReaderWriterLock#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#7)]\n[!code-vb[System.Threading.ReaderWriterLock#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#7)]"
+  syntax:
+    content: public System.Threading.LockCookie ReleaseLock ();
+    parameters: []
+    return:
+      type: System.Threading.LockCookie
+      description: A <xref href="System.Threading.LockCookie"></xref> value representing the released lock.
+  overload: System.Threading.ReaderWriterLock.ReleaseLock*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLock.ReleaseReaderLock
+  commentId: M:System.Threading.ReaderWriterLock.ReleaseReaderLock
+  id: ReleaseReaderLock
+  parent: System.Threading.ReaderWriterLock
+  langs:
+  - csharp
+  name: ReleaseReaderLock()
+  nameWithType: ReaderWriterLock.ReleaseReaderLock()
+  fullName: ReaderWriterLock.ReleaseReaderLock()
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Threading
+  namespace: System.Threading
+  summary: Decrements the lock count.
+  remarks: "<xref:System.Threading.ReaderWriterLock.ReleaseReaderLock%2A> decrements the lock count. When the count reaches zero, the lock is released.  \n  \n> [!NOTE]\n>  If a thread has the writer lock, calling `ReleaseReaderLock` has the same effect as calling <xref:System.Threading.ReaderWriterLock.ReleaseWriterLock%2A>. If a thread has no locks, calling `ReleaseReaderLock` throws an <xref:System.ApplicationException>."
+  example:
+  - "The following code example shows how to acquire and release a reader lock, and how to handle the exception thrown when a request times out.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLock> class.  \n  \n [!code-cpp[System.Threading.ReaderWriterLock#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#2)]\n [!code-csharp[System.Threading.ReaderWriterLock#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLock#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#2)]  \n[!code-cpp[System.Threading.ReaderWriterLock#3](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#3)]\n[!code-csharp[System.Threading.ReaderWriterLock#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#3)]\n[!code-vb[System.Threading.ReaderWriterLock#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#3)]  \n[!code-cpp[System.Threading.ReaderWriterLock#7](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#7)]\n[!code-csharp[System.Threading.ReaderWriterLock#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#7)]\n[!code-vb[System.Threading.ReaderWriterLock#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#7)]"
+  syntax:
+    content: public void ReleaseReaderLock ();
+    parameters: []
+  overload: System.Threading.ReaderWriterLock.ReleaseReaderLock*
+  exceptions:
+  - type: System.ApplicationException
+    commentId: T:System.ApplicationException
+    description: The thread does not have any reader or writer locks.
+  attributes: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLock.ReleaseWriterLock
+  commentId: M:System.Threading.ReaderWriterLock.ReleaseWriterLock
+  id: ReleaseWriterLock
+  parent: System.Threading.ReaderWriterLock
+  langs:
+  - csharp
+  name: ReleaseWriterLock()
+  nameWithType: ReaderWriterLock.ReleaseWriterLock()
+  fullName: ReaderWriterLock.ReleaseWriterLock()
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Threading
+  namespace: System.Threading
+  summary: Decrements the lock count on the writer lock.
+  remarks: "<xref:System.Threading.ReaderWriterLock.ReleaseWriterLock%2A> decrements the writer lock count. When the count reaches zero, the writer lock is released.  \n  \n> [!NOTE]\n>  If a thread has a reader lock, or no locks, calling `ReleaseWriterLock` throws an <xref:System.ApplicationException>."
+  example:
+  - "The following code example shows how to acquire and release a writer lock, and how to handle the exception thrown when a request times out.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLock> class.  \n  \n [!code-cpp[System.Threading.ReaderWriterLock#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#2)]\n [!code-csharp[System.Threading.ReaderWriterLock#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLock#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#2)]  \n[!code-cpp[System.Threading.ReaderWriterLock#4](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#4)]\n[!code-csharp[System.Threading.ReaderWriterLock#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#4)]\n[!code-vb[System.Threading.ReaderWriterLock#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#4)]  \n[!code-cpp[System.Threading.ReaderWriterLock#7](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#7)]\n[!code-csharp[System.Threading.ReaderWriterLock#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#7)]\n[!code-vb[System.Threading.ReaderWriterLock#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#7)]"
+  syntax:
+    content: public void ReleaseWriterLock ();
+    parameters: []
+  overload: System.Threading.ReaderWriterLock.ReleaseWriterLock*
+  exceptions:
+  - type: System.ApplicationException
+    commentId: T:System.ApplicationException
+    description: The thread does not have the writer lock.
+  attributes: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLock.RestoreLock(System.Threading.LockCookie@)
+  commentId: M:System.Threading.ReaderWriterLock.RestoreLock(System.Threading.LockCookie@)
+  id: RestoreLock(System.Threading.LockCookie@)
+  parent: System.Threading.ReaderWriterLock
+  langs:
+  - csharp
+  name: RestoreLock(LockCookie)
+  nameWithType: ReaderWriterLock.RestoreLock(LockCookie)
+  fullName: ReaderWriterLock.RestoreLock(LockCookie)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Threading
+  namespace: System.Threading
+  summary: Restores the lock status of the thread to what it was before calling <xref href="System.Threading.ReaderWriterLock.ReleaseLock"></xref>.
+  remarks: "The state restored by `RestoreLock` includes the recursive lock count.  \n  \n A thread blocks if it tries to restore a reader lock after another thread has acquired the writer lock, or if it tries to restore the writer lock after another thread has acquired a reader lock or writer lock. Because `RestoreLock` does not accept a time-out, you should take care to avoid possible deadlocks.  \n  \n> [!CAUTION]\n>  Before calling `RestoreLock`, make sure you have released all locks acquired since the call to <xref:System.Threading.ReaderWriterLock.ReleaseLock%2A>. For example, a thread deadlocks if it acquires a reader lock, and then attempts to restore an earlier writer lock. Use <xref:System.Threading.ReaderWriterLock.IsReaderLockHeld%2A> and <xref:System.Threading.ReaderWriterLock.IsWriterLockHeld%2A> to detect such additional locks.  \n  \n Do not use a <xref:System.Threading.LockCookie> returned from <xref:System.Threading.ReaderWriterLock.UpgradeToWriterLock%2A>."
+  example:
+  - "The following code example shows how to use the <xref:System.Threading.ReaderWriterLock.ReleaseLock%2A> method to release the lock, regardless of how many times it has been acquired by the thread, and how to restore the state of the lock later.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLock> class.  \n  \n [!code-cpp[System.Threading.ReaderWriterLock#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#2)]\n [!code-csharp[System.Threading.ReaderWriterLock#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLock#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#2)]  \n[!code-cpp[System.Threading.ReaderWriterLock#6](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#6)]\n[!code-csharp[System.Threading.ReaderWriterLock#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#6)]\n[!code-vb[System.Threading.ReaderWriterLock#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#6)]  \n[!code-cpp[System.Threading.ReaderWriterLock#7](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#7)]\n[!code-csharp[System.Threading.ReaderWriterLock#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#7)]\n[!code-vb[System.Threading.ReaderWriterLock#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#7)]"
+  syntax:
+    content: public void RestoreLock (ref System.Threading.LockCookie lockCookie);
+    parameters:
+    - id: lockCookie
+      type: System.Threading.LockCookie
+      description: A <xref href="System.Threading.LockCookie"></xref> returned by <xref href="System.Threading.ReaderWriterLock.ReleaseLock"></xref>.
+  overload: System.Threading.ReaderWriterLock.RestoreLock*
+  exceptions:
+  - type: System.NullReferenceException
+    commentId: T:System.NullReferenceException
+    description: The address of <code>lockCookie</code> is a null pointer.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLock.UpgradeToWriterLock(System.Int32)
+  commentId: M:System.Threading.ReaderWriterLock.UpgradeToWriterLock(System.Int32)
+  id: UpgradeToWriterLock(System.Int32)
+  parent: System.Threading.ReaderWriterLock
+  langs:
+  - csharp
+  name: UpgradeToWriterLock(Int32)
+  nameWithType: ReaderWriterLock.UpgradeToWriterLock(Int32)
+  fullName: ReaderWriterLock.UpgradeToWriterLock(Int32)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Threading
+  namespace: System.Threading
+  summary: Upgrades a reader lock to the writer lock, using an `Int32` value for the time-out.
+  remarks: "When a thread calls `UpgradeToWriterLock` the reader lock is released, regardless of the lock count, and the thread goes to the end of the queue for the writer lock. Thus, other threads might write to the resource before the thread that requested the upgrade is granted the writer lock.  \n  \n> [!IMPORTANT]\n>  The time-out exception is not thrown until the thread that called the <xref:System.Threading.ReaderWriterLock.UpgradeToWriterLock%2A> method can reacquire the reader lock. If there are no other threads waiting for the writer lock, this happens immediately. However, if another thread is queued for the writer lock, the thread that called the <xref:System.Threading.ReaderWriterLock.UpgradeToWriterLock%2A> method cannot reacquire the reader lock until all current readers have released their locks, and one thread has acquired and released the writer lock. This is true even if the other thread that requested the writer lock requested it after the current thread called the <xref:System.Threading.ReaderWriterLock.UpgradeToWriterLock%2A> method.  \n  \n To restore the lock state, call <xref:System.Threading.ReaderWriterLock.DowngradeFromWriterLock%2A> using the <xref:System.Threading.LockCookie> returned by `UpgradeToWriterLock`. Do not use this `LockCookie` with <xref:System.Threading.ReaderWriterLock.RestoreLock%2A>.  \n  \n When a thread has no reader lock, do not use `UpgradeToWriterLock`. Use <xref:System.Threading.ReaderWriterLock.AcquireWriterLock%2A> instead.  \n  \n For valid time-out values, see <xref:System.Threading.ReaderWriterLock>."
+  example:
+  - "The following code example shows how to request a reader lock, upgrade the reader lock to a writer lock, and downgrade to a reader lock again.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLock> class.  \n  \n [!code-cpp[System.Threading.ReaderWriterLock#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#2)]\n [!code-csharp[System.Threading.ReaderWriterLock#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLock#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#2)]  \n[!code-cpp[System.Threading.ReaderWriterLock#5](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#5)]\n[!code-csharp[System.Threading.ReaderWriterLock#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#5)]\n[!code-vb[System.Threading.ReaderWriterLock#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#5)]  \n[!code-cpp[System.Threading.ReaderWriterLock#7](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#7)]\n[!code-csharp[System.Threading.ReaderWriterLock#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#7)]\n[!code-vb[System.Threading.ReaderWriterLock#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#7)]"
+  syntax:
+    content: public System.Threading.LockCookie UpgradeToWriterLock (int millisecondsTimeout);
+    parameters:
+    - id: millisecondsTimeout
+      type: System.Int32
+      description: The time-out in milliseconds.
+    return:
+      type: System.Threading.LockCookie
+      description: A <xref href="System.Threading.LockCookie"></xref> value.
+  overload: System.Threading.ReaderWriterLock.UpgradeToWriterLock*
+  exceptions:
+  - type: System.ApplicationException
+    commentId: T:System.ApplicationException
+    description: <code>millisecondsTimeout</code> expires before the lock request is granted.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLock.UpgradeToWriterLock(System.TimeSpan)
+  commentId: M:System.Threading.ReaderWriterLock.UpgradeToWriterLock(System.TimeSpan)
+  id: UpgradeToWriterLock(System.TimeSpan)
+  parent: System.Threading.ReaderWriterLock
+  langs:
+  - csharp
+  name: UpgradeToWriterLock(TimeSpan)
+  nameWithType: ReaderWriterLock.UpgradeToWriterLock(TimeSpan)
+  fullName: ReaderWriterLock.UpgradeToWriterLock(TimeSpan)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Threading
+  namespace: System.Threading
+  summary: Upgrades a reader lock to the writer lock, using a `TimeSpan` value for the time-out.
+  remarks: "When a thread calls `UpgradeToWriterLock` the reader lock is released, regardless of the lock count, and the thread goes to the end of the queue for the writer lock. Thus, other threads might write to the resource before the thread that requested the upgrade is granted the writer lock.  \n  \n> [!IMPORTANT]\n>  The time-out exception is not thrown until the thread that called the <xref:System.Threading.ReaderWriterLock.UpgradeToWriterLock%2A> method can reacquire the reader lock. If there are no other threads waiting for the writer lock, this happens immediately. However, if another thread is queued for the writer lock, the thread that called the <xref:System.Threading.ReaderWriterLock.UpgradeToWriterLock%2A> method cannot reacquire the reader lock until all current readers have released their locks, and one thread has acquired and released the writer lock. This is true even if the other thread that requested the writer lock requested it after the current thread called the <xref:System.Threading.ReaderWriterLock.UpgradeToWriterLock%2A> method.  \n  \n To restore the lock state, call <xref:System.Threading.ReaderWriterLock.DowngradeFromWriterLock%2A> using the <xref:System.Threading.LockCookie> returned by `UpgradeToWriterLock`. Do not use this `LockCookie` with <xref:System.Threading.ReaderWriterLock.RestoreLock%2A>.  \n  \n When a thread has no reader lock, do not use `UpgradeToWriterLock`. Use <xref:System.Threading.ReaderWriterLock.AcquireWriterLock%2A> instead.  \n  \n For valid time-out values, see <xref:System.Threading.ReaderWriterLock>."
+  syntax:
+    content: public System.Threading.LockCookie UpgradeToWriterLock (TimeSpan timeout);
+    parameters:
+    - id: timeout
+      type: System.TimeSpan
+      description: The `TimeSpan` specifying the time-out period.
+    return:
+      type: System.Threading.LockCookie
+      description: A <xref href="System.Threading.LockCookie"></xref> value.
+  overload: System.Threading.ReaderWriterLock.UpgradeToWriterLock*
+  exceptions:
+  - type: System.ApplicationException
+    commentId: T:System.ApplicationException
+    description: <code>timeout</code> expires before the lock request is granted.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>timeout</code> specifies a negative value other than -1 milliseconds.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLock.WriterSeqNum
+  commentId: P:System.Threading.ReaderWriterLock.WriterSeqNum
+  id: WriterSeqNum
+  parent: System.Threading.ReaderWriterLock
+  langs:
+  - csharp
+  name: WriterSeqNum
+  nameWithType: ReaderWriterLock.WriterSeqNum
+  fullName: ReaderWriterLock.WriterSeqNum
+  type: Property
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Threading
+  namespace: System.Threading
+  summary: Gets the current sequence number.
+  remarks: "The sequence number increases whenever a thread acquires the writer lock. You can save the sequence number and pass it to <xref:System.Threading.ReaderWriterLock.AnyWritersSince%2A> at a later time, if you want to determine whether other threads have acquired the writer lock in the meantime.  \n  \n You can use `WriterSeqNum` to improve application performance. For example, a thread might cache the information it obtains while holding a reader lock. After releasing and later reacquiring the lock, the thread can determine whether other threads have written to the resource by calling `AnyWritersSince`; if not, the cached information can be used. This technique is useful when reading the information protected by the lock is expensive; for example, running a database query.  \n  \n The caller must be holding a reader lock or a writer lock in order for the sequence number to be useful."
+  example:
+  - "The following code example shows how to use the <xref:System.Threading.ReaderWriterLock.WriterSeqNum%2A> property and the <xref:System.Threading.ReaderWriterLock.AnyWritersSince%2A> method to determine whether another thread acquired the writer lock on the protected resource since the current thread last held the writer lock.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLock> class.  \n  \n [!code-cpp[System.Threading.ReaderWriterLock#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#2)]\n [!code-csharp[System.Threading.ReaderWriterLock#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLock#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#2)]  \n[!code-cpp[System.Threading.ReaderWriterLock#6](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#6)]\n[!code-csharp[System.Threading.ReaderWriterLock#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#6)]\n[!code-vb[System.Threading.ReaderWriterLock#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#6)]  \n[!code-cpp[System.Threading.ReaderWriterLock#7](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CPP/source.cpp#7)]\n[!code-csharp[System.Threading.ReaderWriterLock#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/CS/source.cs#7)]\n[!code-vb[System.Threading.ReaderWriterLock#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLock/VB/source.vb#7)]"
+  syntax:
+    content: public int WriterSeqNum { get; }
+    return:
+      type: System.Int32
+      description: The current sequence number.
+  overload: System.Threading.ReaderWriterLock.WriterSeqNum*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+references:
+- uid: System.Runtime.ConstrainedExecution.CriticalFinalizerObject
+  parent: System.Runtime.ConstrainedExecution
+  isExternal: false
+  name: CriticalFinalizerObject
+  nameWithType: CriticalFinalizerObject
+  fullName: System.Runtime.ConstrainedExecution.CriticalFinalizerObject
+- uid: System.ApplicationException
+  parent: System
+  isExternal: false
+  name: ApplicationException
+  nameWithType: ApplicationException
+  fullName: System.ApplicationException
+- uid: System.ArgumentOutOfRangeException
+  parent: System
+  isExternal: false
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: System.NullReferenceException
+  parent: System
+  isExternal: false
+  name: NullReferenceException
+  nameWithType: NullReferenceException
+  fullName: System.NullReferenceException
+- uid: System.Threading.ReaderWriterLock.#ctor
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: ReaderWriterLock()
+  nameWithType: ReaderWriterLock.ReaderWriterLock()
+  fullName: ReaderWriterLock.ReaderWriterLock()
+- uid: System.Threading.ReaderWriterLock.AcquireReaderLock(System.Int32)
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: AcquireReaderLock(Int32)
+  nameWithType: ReaderWriterLock.AcquireReaderLock(Int32)
+  fullName: ReaderWriterLock.AcquireReaderLock(Int32)
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Threading.ReaderWriterLock.AcquireReaderLock(System.TimeSpan)
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: AcquireReaderLock(TimeSpan)
+  nameWithType: ReaderWriterLock.AcquireReaderLock(TimeSpan)
+  fullName: ReaderWriterLock.AcquireReaderLock(TimeSpan)
+- uid: System.TimeSpan
+  parent: System
+  isExternal: false
+  name: TimeSpan
+  nameWithType: TimeSpan
+  fullName: System.TimeSpan
+- uid: System.Threading.ReaderWriterLock.AcquireWriterLock(System.Int32)
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: AcquireWriterLock(Int32)
+  nameWithType: ReaderWriterLock.AcquireWriterLock(Int32)
+  fullName: ReaderWriterLock.AcquireWriterLock(Int32)
+- uid: System.Threading.ReaderWriterLock.AcquireWriterLock(System.TimeSpan)
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: AcquireWriterLock(TimeSpan)
+  nameWithType: ReaderWriterLock.AcquireWriterLock(TimeSpan)
+  fullName: ReaderWriterLock.AcquireWriterLock(TimeSpan)
+- uid: System.Threading.ReaderWriterLock.AnyWritersSince(System.Int32)
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: AnyWritersSince(Int32)
+  nameWithType: ReaderWriterLock.AnyWritersSince(Int32)
+  fullName: ReaderWriterLock.AnyWritersSince(Int32)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Threading.ReaderWriterLock.DowngradeFromWriterLock(System.Threading.LockCookie@)
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: DowngradeFromWriterLock(LockCookie)
+  nameWithType: ReaderWriterLock.DowngradeFromWriterLock(LockCookie)
+  fullName: ReaderWriterLock.DowngradeFromWriterLock(LockCookie)
+- uid: System.Threading.LockCookie
+  parent: System.Threading
+  isExternal: false
+  name: LockCookie
+  nameWithType: LockCookie
+  fullName: System.Threading.LockCookie
+- uid: System.Threading.ReaderWriterLock.Finalize
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: Finalize()
+  nameWithType: ReaderWriterLock.Finalize()
+  fullName: ReaderWriterLock.Finalize()
+- uid: System.Threading.ReaderWriterLock.IsReaderLockHeld
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: IsReaderLockHeld
+  nameWithType: ReaderWriterLock.IsReaderLockHeld
+  fullName: ReaderWriterLock.IsReaderLockHeld
+- uid: System.Threading.ReaderWriterLock.IsWriterLockHeld
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: IsWriterLockHeld
+  nameWithType: ReaderWriterLock.IsWriterLockHeld
+  fullName: ReaderWriterLock.IsWriterLockHeld
+- uid: System.Threading.ReaderWriterLock.ReleaseLock
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: ReleaseLock()
+  nameWithType: ReaderWriterLock.ReleaseLock()
+  fullName: ReaderWriterLock.ReleaseLock()
+- uid: System.Threading.ReaderWriterLock.ReleaseReaderLock
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: ReleaseReaderLock()
+  nameWithType: ReaderWriterLock.ReleaseReaderLock()
+  fullName: ReaderWriterLock.ReleaseReaderLock()
+- uid: System.Threading.ReaderWriterLock.ReleaseWriterLock
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: ReleaseWriterLock()
+  nameWithType: ReaderWriterLock.ReleaseWriterLock()
+  fullName: ReaderWriterLock.ReleaseWriterLock()
+- uid: System.Threading.ReaderWriterLock.RestoreLock(System.Threading.LockCookie@)
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: RestoreLock(LockCookie)
+  nameWithType: ReaderWriterLock.RestoreLock(LockCookie)
+  fullName: ReaderWriterLock.RestoreLock(LockCookie)
+- uid: System.Threading.ReaderWriterLock.UpgradeToWriterLock(System.Int32)
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: UpgradeToWriterLock(Int32)
+  nameWithType: ReaderWriterLock.UpgradeToWriterLock(Int32)
+  fullName: ReaderWriterLock.UpgradeToWriterLock(Int32)
+- uid: System.Threading.ReaderWriterLock.UpgradeToWriterLock(System.TimeSpan)
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: UpgradeToWriterLock(TimeSpan)
+  nameWithType: ReaderWriterLock.UpgradeToWriterLock(TimeSpan)
+  fullName: ReaderWriterLock.UpgradeToWriterLock(TimeSpan)
+- uid: System.Threading.ReaderWriterLock.WriterSeqNum
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: WriterSeqNum
+  nameWithType: ReaderWriterLock.WriterSeqNum
+  fullName: ReaderWriterLock.WriterSeqNum
+- uid: System.Threading.ReaderWriterLock.#ctor*
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: ReaderWriterLock
+  nameWithType: ReaderWriterLock.ReaderWriterLock
+  fullName: ReaderWriterLock.ReaderWriterLock
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+- uid: System.Threading.ReaderWriterLock.AcquireReaderLock*
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: AcquireReaderLock
+  nameWithType: ReaderWriterLock.AcquireReaderLock
+  fullName: ReaderWriterLock.AcquireReaderLock
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+- uid: System.Threading.ReaderWriterLock.AcquireWriterLock*
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: AcquireWriterLock
+  nameWithType: ReaderWriterLock.AcquireWriterLock
+  fullName: ReaderWriterLock.AcquireWriterLock
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+- uid: System.Threading.ReaderWriterLock.AnyWritersSince*
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: AnyWritersSince
+  nameWithType: ReaderWriterLock.AnyWritersSince
+  fullName: ReaderWriterLock.AnyWritersSince
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+- uid: System.Threading.ReaderWriterLock.DowngradeFromWriterLock*
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: DowngradeFromWriterLock
+  nameWithType: ReaderWriterLock.DowngradeFromWriterLock
+  fullName: ReaderWriterLock.DowngradeFromWriterLock
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+- uid: System.Threading.ReaderWriterLock.Finalize*
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: Finalize
+  nameWithType: ReaderWriterLock.Finalize
+  fullName: ReaderWriterLock.Finalize
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+- uid: System.Threading.ReaderWriterLock.IsReaderLockHeld*
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: IsReaderLockHeld
+  nameWithType: ReaderWriterLock.IsReaderLockHeld
+  fullName: ReaderWriterLock.IsReaderLockHeld
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+- uid: System.Threading.ReaderWriterLock.IsWriterLockHeld*
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: IsWriterLockHeld
+  nameWithType: ReaderWriterLock.IsWriterLockHeld
+  fullName: ReaderWriterLock.IsWriterLockHeld
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+- uid: System.Threading.ReaderWriterLock.ReleaseLock*
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: ReleaseLock
+  nameWithType: ReaderWriterLock.ReleaseLock
+  fullName: ReaderWriterLock.ReleaseLock
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+- uid: System.Threading.ReaderWriterLock.ReleaseReaderLock*
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: ReleaseReaderLock
+  nameWithType: ReaderWriterLock.ReleaseReaderLock
+  fullName: ReaderWriterLock.ReleaseReaderLock
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+- uid: System.Threading.ReaderWriterLock.ReleaseWriterLock*
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: ReleaseWriterLock
+  nameWithType: ReaderWriterLock.ReleaseWriterLock
+  fullName: ReaderWriterLock.ReleaseWriterLock
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+- uid: System.Threading.ReaderWriterLock.RestoreLock*
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: RestoreLock
+  nameWithType: ReaderWriterLock.RestoreLock
+  fullName: ReaderWriterLock.RestoreLock
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+- uid: System.Threading.ReaderWriterLock.UpgradeToWriterLock*
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: UpgradeToWriterLock
+  nameWithType: ReaderWriterLock.UpgradeToWriterLock
+  fullName: ReaderWriterLock.UpgradeToWriterLock
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+- uid: System.Threading.ReaderWriterLock.WriterSeqNum*
+  parent: System.Threading.ReaderWriterLock
+  isExternal: false
+  name: WriterSeqNum
+  nameWithType: ReaderWriterLock.WriterSeqNum
+  fullName: ReaderWriterLock.WriterSeqNum
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLock.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

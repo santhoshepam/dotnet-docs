@@ -1,0 +1,8 @@
+---
+uid: System.Web.UI.WebControls.WebParts.WebPartChrome
+additional_notes.overrides: *content
+---
+
+<p>Inherit from the <xref href="System.Web.UI.WebControls.WebParts.WebPartChrome"></xref> class when you want to override the default rendering of certain sections of <xref href="System.Web.UI.WebControls.WebParts.WebPart"></xref> or server controls. You can optionally override the <xref href="System.Web.UI.WebControls.WebParts.WebPartChrome.CreateWebPartChromeStyle(System.Web.UI.WebControls.WebParts.WebPart,System.Web.UI.WebControls.WebParts.PartChromeType)"></xref> method, the <xref href="System.Web.UI.WebControls.WebParts.WebPartChrome.GetWebPartVerbs(System.Web.UI.WebControls.WebParts.WebPart)"></xref> method, and especially the <xref href="System.Web.UI.WebControls.WebParts.WebPartChrome.RenderPartContents(System.Web.UI.HtmlTextWriter,System.Web.UI.WebControls.WebParts.WebPart)"></xref> or <xref href="System.Web.UI.WebControls.WebParts.WebPartChrome.RenderWebPart(System.Web.UI.HtmlTextWriter,System.Web.UI.WebControls.WebParts.WebPart)"></xref> methods, to customize the rendering. To use your custom <xref href="System.Web.UI.WebControls.WebParts.WebPartChrome"></xref> class for the <xref href="System.Web.UI.WebControls.WebParts.WebPart"></xref> controls in a zone, develop a custom zone derived from the <xref href="System.Web.UI.WebControls.WebParts.WebPartZoneBase"></xref> class, and override its <xref href="System.Web.UI.WebControls.WebParts.WebPartZoneBase.CreateWebPartChrome"></xref> method. For details on how to use a child <xref href="System.Web.UI.WebControls.WebParts.WebPartChrome"></xref> object in a zone, see the Example section.</p>
+
+

@@ -1,0 +1,808 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Web.Security.ActiveDirectoryMembershipUser
+  commentId: T:System.Web.Security.ActiveDirectoryMembershipUser
+  id: ActiveDirectoryMembershipUser
+  children:
+  - System.Web.Security.ActiveDirectoryMembershipUser.#ctor
+  - System.Web.Security.ActiveDirectoryMembershipUser.#ctor(System.String,System.String,System.Object,System.String,System.String,System.String,System.Boolean,System.Boolean,System.DateTime,System.DateTime,System.DateTime,System.DateTime,System.DateTime)
+  - System.Web.Security.ActiveDirectoryMembershipUser.Comment
+  - System.Web.Security.ActiveDirectoryMembershipUser.Email
+  - System.Web.Security.ActiveDirectoryMembershipUser.IsApproved
+  - System.Web.Security.ActiveDirectoryMembershipUser.LastActivityDate
+  - System.Web.Security.ActiveDirectoryMembershipUser.LastLoginDate
+  - System.Web.Security.ActiveDirectoryMembershipUser.ProviderUserKey
+  langs:
+  - csharp
+  name: ActiveDirectoryMembershipUser
+  nameWithType: ActiveDirectoryMembershipUser
+  fullName: System.Web.Security.ActiveDirectoryMembershipUser
+  type: Class
+  assemblies:
+  - System.Web
+  namespace: System.Web.Security
+  summary: Exposes and updates membership user information stored in an Active Directory data store.
+  remarks: "The <xref:System.Web.Security.ActiveDirectoryMembershipUser> object is used to represent a single membership user in the Active Directory membership data store. It exposes information about the membership user such as the e-mail address, and provides functionality for the membership user such as the ability to change or reset his or her password.  \n  \n An <xref:System.Web.Security.ActiveDirectoryMembershipUser> object is returned by the application's membership provider whenever the application is configured to use an Active Directory data store. In an application that can be configured to use different data stores, or in an application that uses multiple data stores, you can refer to the base class, <xref:System.Web.Security.MembershipUser>. Because the <xref:System.Web.Security.ActiveDirectoryMembershipUser> object does not implement the <xref:System.Web.Security.ActiveDirectoryMembershipUser.LastActivityDate%2A> and <xref:System.Web.Security.ActiveDirectoryMembershipUser.LastLoginDate%2A> properties, you must be prepared to handle the <xref:System.NotSupportedException> that is thrown when these members are accessed on an <xref:System.Web.Security.ActiveDirectoryMembershipUser> object.  \n  \n The <xref:System.Web.Security.ActiveDirectoryMembershipUser> class implements internal optimizations used by the <xref:System.Web.Security.ActiveDirectoryMembershipProvider> class to minimize the number of attribute updates that occur when calling the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.UpdateUser%2A> method. It also serializes the <xref:System.Security.Principal.SecurityIdentifier> representation (available in the <xref:System.Web.Security.ActiveDirectoryMembershipUser.ProviderUserKey%2A> property) so that an <xref:System.Web.Security.ActiveDirectoryMembershipUser> object can be serialized and deserialized without throwing exceptions.  \n  \n A <xref:System.Web.Security.ActiveDirectoryMembershipUser> object is returned by the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.GetUser%2A> and <xref:System.Web.Security.ActiveDirectoryMembershipProvider.CreateUser%2A> methods or as part of a <xref:System.Web.Security.MembershipUserCollection> returned by the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.GetAllUsers%2A>, <xref:System.Web.Security.ActiveDirectoryMembershipProvider.FindUsersByName%2A>, and <xref:System.Web.Security.ActiveDirectoryMembershipProvider.FindUsersByEmail%2A> methods.  \n  \n An <xref:System.Web.Security.ActiveDirectoryMembershipUser> object is required by the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.UpdateUser%2A> method when you want to update the information for an existing membership user.  \n  \n <xref:System.Web.Security.ActiveDirectoryMembershipUser> properties are mapped to Active Directory attributes. The following table lists the <xref:System.Web.Security.ActiveDirectoryMembershipUser> properties and their default attribute mappings.  \n  \n|Property|Default directory attribute|Can be mapped?|  \n|--------------|---------------------------------|--------------------|  \n|<xref:System.Web.Security.ActiveDirectoryMembershipUser.ProviderUserKey%2A>|`securityIdentifier`|No|  \n|<xref:System.Web.Security.MembershipUser.UserName%2A>|`userPrincipalName`|Yes, but must be either userPrincipalName or sAMAccountName|  \n|<xref:System.Web.Security.ActiveDirectoryMembershipUser.Comment%2A>|`comment`|No|  \n|<xref:System.Web.Security.MembershipUser.CreationDate%2A>|`whenCreated`|No|  \n|<xref:System.Web.Security.ActiveDirectoryMembershipUser.Email%2A>|`mail`|Yes, but must be a single-valued attribute of type Unicode String.|  \n|<xref:System.Web.Security.ActiveDirectoryMembershipUser.LastActivityDate%2A>|n/a|Not supported by <xref:System.Web.Security.ActiveDirectoryMembershipProvider>.|  \n|<xref:System.Web.Security.ActiveDirectoryMembershipUser.LastLoginDate%2A>|n/a|Not supported by <xref:System.Web.Security.ActiveDirectoryMembershipProvider>.|  \n|<xref:System.Web.Security.MembershipUser.LastPasswordChangedDate%2A>|`pwdLastSet`|No|  \n|<xref:System.Web.Security.MembershipUser.PasswordQuestion%2A>|none, but must be mapped to an attribute if using question-and-answer security for password reset or retrieval.|Yes, but must be a single-valued attribute of type Unicode String.|  \n|<xref:System.Web.Security.ActiveDirectoryMembershipUser.IsApproved%2A>|`User-Account-Control` (AD)<br /><br /> `mDS-UserAccountDisabled` (ADAM)|No|  \n|<xref:System.Web.Security.MembershipUser.IsLockedOut%2A>|computed from `lockoutTime` and the AD lockout duration (AD on Windows 2000)<br /><br /> `msDS-User-Account-Control-Computed` (AD on Windows Server 2003)<br /><br /> `msDS-User-Account-Control-Computed` (ADAM)|No|  \n|<xref:System.Web.Security.MembershipUser.LastLockoutDate%2A>|If locked out due to too many bad password attempts, the lockout time attribute is returned.<br /><br /> If locked out due to too many bad password answer attempts, the value stored in the attribute defined by `attributeMapFailedPasswordAnswerLockoutTime` is returned.<br /><br /> If locked out due to both a bad password and too many bad password attempts, the most recent date/time value is returned.<br /><br /> If the account is not locked out, return 1/1/1753 for SQL compatibility.|No|"
+  example:
+  - "The following code example demonstrates using properties on the <xref:System.Web.Security.ActiveDirectoryMembershipUser> object on a Web page that may return user information from multiple membership data stores. Because the <xref:System.Web.Security.ActiveDirectoryMembershipUser> object that underlies the <xref:System.Web.Security.MembershipUser> object returned by the membership provider does not implement the <xref:System.Web.Security.ActiveDirectoryMembershipUser.LastActivityDate%2A> and <xref:System.Web.Security.ActiveDirectoryMembershipUser.LastLoginDate%2A> properties, the code first checks the type of the user object returned from the membership provider before displaying the contents of those properties.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.Security.ActiveDirectoryMembershipUser#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.Security.ActiveDirectoryMembershipUser/CS/admuClassExamplecs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.Security.ActiveDirectoryMembershipUser#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.Security.ActiveDirectoryMembershipUser/VB/admuClassExamplevb.aspx#1)]  -->"
+  syntax:
+    content: 'public class ActiveDirectoryMembershipUser : System.Web.Security.MembershipUser'
+  inheritance:
+  - System.Object
+  - System.Web.Security.MembershipUser
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Web.Security.MembershipUser.ChangePassword(System.String,System.String)
+  - System.Web.Security.MembershipUser.ChangePasswordQuestionAndAnswer(System.String,System.String,System.String)
+  - System.Web.Security.MembershipUser.CreationDate
+  - System.Web.Security.MembershipUser.GetPassword
+  - System.Web.Security.MembershipUser.GetPassword(System.String)
+  - System.Web.Security.MembershipUser.IsLockedOut
+  - System.Web.Security.MembershipUser.IsOnline
+  - System.Web.Security.MembershipUser.LastLockoutDate
+  - System.Web.Security.MembershipUser.LastPasswordChangedDate
+  - System.Web.Security.MembershipUser.PasswordQuestion
+  - System.Web.Security.MembershipUser.ProviderName
+  - System.Web.Security.MembershipUser.ResetPassword
+  - System.Web.Security.MembershipUser.ResetPassword(System.String)
+  - System.Web.Security.MembershipUser.ToString
+  - System.Web.Security.MembershipUser.UnlockUser
+  - System.Web.Security.MembershipUser.UserName
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.Security/ActiveDirectoryMembershipUser.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.#ctor
+  commentId: M:System.Web.Security.ActiveDirectoryMembershipUser.#ctor
+  id: '#ctor'
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  langs:
+  - csharp
+  name: ActiveDirectoryMembershipUser()
+  nameWithType: ActiveDirectoryMembershipUser.ActiveDirectoryMembershipUser()
+  fullName: ActiveDirectoryMembershipUser.ActiveDirectoryMembershipUser()
+  type: Constructor
+  assemblies:
+  - System.Web
+  namespace: System.Web.Security
+  summary: Initializes a new instance of an <xref href="System.Web.Security.ActiveDirectoryMembershipUser"></xref> object for a class that inherits the <xref href="System.Web.Security.ActiveDirectoryMembershipUser"></xref> class.
+  remarks: The <xref:System.Web.Security.ActiveDirectoryMembershipUser.%23ctor%2A> constructor is not intended to be used from your code.
+  syntax:
+    content: protected ActiveDirectoryMembershipUser ();
+    parameters: []
+  overload: System.Web.Security.ActiveDirectoryMembershipUser.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.Security/ActiveDirectoryMembershipUser.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.#ctor(System.String,System.String,System.Object,System.String,System.String,System.String,System.Boolean,System.Boolean,System.DateTime,System.DateTime,System.DateTime,System.DateTime,System.DateTime)
+  commentId: M:System.Web.Security.ActiveDirectoryMembershipUser.#ctor(System.String,System.String,System.Object,System.String,System.String,System.String,System.Boolean,System.Boolean,System.DateTime,System.DateTime,System.DateTime,System.DateTime,System.DateTime)
+  id: '#ctor(System.String,System.String,System.Object,System.String,System.String,System.String,System.Boolean,System.Boolean,System.DateTime,System.DateTime,System.DateTime,System.DateTime,System.DateTime)'
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  langs:
+  - csharp
+  name: ActiveDirectoryMembershipUser(String, String, Object, String, String, String, Boolean, Boolean, DateTime, DateTime, DateTime, DateTime, DateTime)
+  nameWithType: ActiveDirectoryMembershipUser.ActiveDirectoryMembershipUser(String, String, Object, String, String, String, Boolean, Boolean, DateTime, DateTime, DateTime, DateTime, DateTime)
+  fullName: ActiveDirectoryMembershipUser.ActiveDirectoryMembershipUser(String, String, Object, String, String, String, Boolean, Boolean, DateTime, DateTime, DateTime, DateTime, DateTime)
+  type: Constructor
+  assemblies:
+  - System.Web
+  namespace: System.Web.Security
+  summary: Creates a new instance of the <xref href="System.Web.Security.ActiveDirectoryMembershipUser"></xref> class with the specified property values.
+  remarks: "Creating a new <xref:System.Web.Security.ActiveDirectoryMembershipUser> object does not add a new membership user object to the membership data store. To add a new membership user to the membership data store, use the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.CreateUser%2A> method. Note that the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.CreateUser%2A> method returns an <xref:System.Web.Security.ActiveDirectoryMembershipUser> object for the membership user added to the data store.  \n  \n <xref:System.Web.Security.ActiveDirectoryMembershipUser> objects are commonly constructed in application code for use with the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.UpdateUser%2A> method, although you can also pass an <xref:System.Web.Security.ActiveDirectoryMembershipUser> object returned from the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.CreateUser%2A>, <xref:System.Web.Security.ActiveDirectoryMembershipProvider.GetUser%2A>, <xref:System.Web.Security.ActiveDirectoryMembershipProvider.GetAllUsers%2A>, <xref:System.Web.Security.ActiveDirectoryMembershipProvider.FindUsersByName%2A>, or <xref:System.Web.Security.ActiveDirectoryMembershipProvider.FindUsersByEmail%2A> method to the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.UpdateUser%2A> method as well.  \n  \n <xref:System.Web.Security.ActiveDirectoryMembershipUser> objects are also commonly constructed by membership provider implementations for the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.CreateUser%2A>, <xref:System.Web.Security.ActiveDirectoryMembershipProvider.GetUser%2A>, <xref:System.Web.Security.ActiveDirectoryMembershipProvider.GetAllUsers%2A>, <xref:System.Web.Security.ActiveDirectoryMembershipProvider.UpdateUser%2A>, <xref:System.Web.Security.ActiveDirectoryMembershipProvider.FindUsersByName%2A>, and <xref:System.Web.Security.ActiveDirectoryMembershipProvider.FindUsersByEmail%2A> methods."
+  syntax:
+    content: public ActiveDirectoryMembershipUser (string providerName, string name, object providerUserKey, string email, string passwordQuestion, string comment, bool isApproved, bool isLockedOut, DateTime creationDate, DateTime lastLoginDate, DateTime lastActivityDate, DateTime lastPasswordChangedDate, DateTime lastLockoutDate);
+    parameters:
+    - id: providerName
+      type: System.String
+      description: The <xref href="System.Web.Security.MembershipUser.ProviderName"></xref> for the membership user.
+    - id: name
+      type: System.String
+      description: The <xref href="System.Web.Security.MembershipUser.UserName"></xref> for the membership user.
+    - id: providerUserKey
+      type: System.Object
+      description: The <xref href="System.Web.Security.ActiveDirectoryMembershipUser.ProviderUserKey"></xref> for the membership user.
+    - id: email
+      type: System.String
+      description: The <xref href="System.Web.Security.ActiveDirectoryMembershipUser.Email"></xref> address of the membership user.
+    - id: passwordQuestion
+      type: System.String
+      description: The <xref href="System.Web.Security.MembershipUser.PasswordQuestion"></xref> for the membership user.
+    - id: comment
+      type: System.String
+      description: The <xref href="System.Web.Security.ActiveDirectoryMembershipUser.Comment"></xref> for the membership user.
+    - id: isApproved
+      type: System.Boolean
+      description: The <xref href="System.Web.Security.ActiveDirectoryMembershipUser.IsApproved"></xref> value for the membership user.
+    - id: isLockedOut
+      type: System.Boolean
+      description: The <xref href="System.Web.Security.MembershipUser.IsLockedOut"></xref> value for the membership user.
+    - id: creationDate
+      type: System.DateTime
+      description: The <xref href="System.Web.Security.MembershipUser.CreationDate"></xref> for the membership user.
+    - id: lastLoginDate
+      type: System.DateTime
+      description: The <xref href="System.Web.Security.ActiveDirectoryMembershipUser.LastLoginDate"></xref> for the membership user. This parameter is not used.
+    - id: lastActivityDate
+      type: System.DateTime
+      description: The <xref href="System.Web.Security.ActiveDirectoryMembershipUser.LastActivityDate"></xref> for the membership user. This parameter is not used.
+    - id: lastPasswordChangedDate
+      type: System.DateTime
+      description: The <xref href="System.Web.Security.MembershipUser.LastPasswordChangedDate"></xref> for the membership user.
+    - id: lastLockoutDate
+      type: System.DateTime
+      description: The <xref href="System.Web.Security.MembershipUser.LastLockoutDate"></xref> for the membership user.
+  overload: System.Web.Security.ActiveDirectoryMembershipUser.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: "<code>providerUserKey</code> is not a <xref href=\"System.Security.Principal.SecurityIdentifier\"></xref> object.  \n  \n \\- or -  \n  \n <code>providerName</code> is `null` and a provider is not set in the application's configuration file."
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.Security/ActiveDirectoryMembershipUser.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.Comment
+  commentId: P:System.Web.Security.ActiveDirectoryMembershipUser.Comment
+  id: Comment
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  langs:
+  - csharp
+  name: Comment
+  nameWithType: ActiveDirectoryMembershipUser.Comment
+  fullName: ActiveDirectoryMembershipUser.Comment
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.Security
+  summary: Gets or sets application-specific information for the membership user.
+  remarks: "The <xref:System.Web.Security.ActiveDirectoryMembershipUser.Comment%2A> property can be used to store custom information for a membership user that is specific to an application. The amount of information that can be stored in the `Comment` property for an <xref:System.Web.Security.ActiveDirectoryMembershipUser> is defined by the <xref:System.Web.Security.ActiveDirectoryMembershipProvider>.  \n  \n The <xref:System.Web.Security.ActiveDirectoryMembershipUser.Comment%2A> property is mapped to the `Comment` default Active Directory attribute. This property cannot be remapped to another attribute."
+  syntax:
+    content: public override string Comment { get; set; }
+    return:
+      type: System.String
+      description: Application-specific information for the Active Directory member stored in the `Comment` directory attribute.
+  overload: System.Web.Security.ActiveDirectoryMembershipUser.Comment*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.Security/ActiveDirectoryMembershipUser.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.Email
+  commentId: P:System.Web.Security.ActiveDirectoryMembershipUser.Email
+  id: Email
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  langs:
+  - csharp
+  name: Email
+  nameWithType: ActiveDirectoryMembershipUser.Email
+  fullName: ActiveDirectoryMembershipUser.Email
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.Security
+  summary: Gets or sets the e-mail address of the membership user.
+  remarks: The <xref:System.Web.Security.ActiveDirectoryMembershipUser.Email%2A> property is mapped to the `Mail` directory attribute. This property can be remapped in the Web.config file by setting the `attributeMapUserName` attribute in the [providers Element for profile (ASP.NET Settings Schema)](http://msdn.microsoft.com/en-us/9e998377-b07f-44c1-ad9b-20a60e83c18f) element for profiles.
+  syntax:
+    content: public override string Email { get; set; }
+    return:
+      type: System.String
+      description: The e-mail address of the membership user.
+  overload: System.Web.Security.ActiveDirectoryMembershipUser.Email*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.Security/ActiveDirectoryMembershipUser.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.IsApproved
+  commentId: P:System.Web.Security.ActiveDirectoryMembershipUser.IsApproved
+  id: IsApproved
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  langs:
+  - csharp
+  name: IsApproved
+  nameWithType: ActiveDirectoryMembershipUser.IsApproved
+  fullName: ActiveDirectoryMembershipUser.IsApproved
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.Security
+  summary: Gets or sets a value that indicates whether the membership user can be authenticated.
+  remarks: "The <xref:System.Web.Security.ActiveDirectoryMembershipUser> value for a membership user is checked during the call to <xref:System.Web.Security.ActiveDirectoryMembershipProvider.ValidateUser%2A> by the <xref:System.Web.Security.ActiveDirectoryMembershipProvider>. If the <xref:System.Web.Security.ActiveDirectoryMembershipUser.IsApproved%2A> property returns `false`, the <xref:System.Web.Security.ActiveDirectoryMembershipProvider.ValidateUser%2A> method returns `false` even if the supplied user name and password are correct.  \n  \n The <xref:System.Web.Security.ActiveDirectoryMembershipUser.IsApproved%2A> property is mapped to one of the following Active Directory attributes.  \n  \n|||  \n|-|-|  \n|Active Directory|`User-Account-Control`|  \n|Active Directory Application Mode|`msDS-UserAccountDisabled`|  \n  \n This property cannot be remapped to another attribute."
+  syntax:
+    content: public override bool IsApproved { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if the user can be authenticated; otherwise, `false`.'
+  overload: System.Web.Security.ActiveDirectoryMembershipUser.IsApproved*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.Security/ActiveDirectoryMembershipUser.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.LastActivityDate
+  commentId: P:System.Web.Security.ActiveDirectoryMembershipUser.LastActivityDate
+  id: LastActivityDate
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  langs:
+  - csharp
+  name: LastActivityDate
+  nameWithType: ActiveDirectoryMembershipUser.LastActivityDate
+  fullName: ActiveDirectoryMembershipUser.LastActivityDate
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.Security
+  summary: Throws a <xref href="System.NotSupportedException"></xref> exception in all cases
+  remarks: The <xref:System.Web.Security.ActiveDirectoryMembershipUser.LastActivityDate%2A> property is not supported by the <xref:System.Web.Security.ActiveDirectoryMembershipUser> class. Attempting to get or set the value will always throw a <xref:System.NotSupportedException>.
+  example:
+  - "The following code example demonstrates how to determine whether the underlying type of a membership user is <xref:System.Web.Security.ActiveDirectoryMembershipUser>, and to avoid throwing a <xref:System.NotSupportedException> for accessing the <xref:System.Web.Security.ActiveDirectoryMembershipUser.LastActivityDate%2A> property. For the full code required to run the example, see the Example section of the <xref:System.Web.Security.ActiveDirectoryMembershipUser> class overview topic.  \n  \n [!code-csharp[System.Web.Security.ActiveDirectoryMembershipUser#2](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.Security.ActiveDirectoryMembershipUser/CS/admuClassExamplecs.aspx#2)]\n [!code-vb[System.Web.Security.ActiveDirectoryMembershipUser#2](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.Security.ActiveDirectoryMembershipUser/VB/admuClassExamplevb.aspx#2)]"
+  syntax:
+    content: public override DateTime LastActivityDate { get; set; }
+    return:
+      type: System.DateTime
+      description: Always throws a <xref href="System.NotSupportedException"></xref> exception.
+  overload: System.Web.Security.ActiveDirectoryMembershipUser.LastActivityDate*
+  exceptions:
+  - type: System.NotSupportedException
+    commentId: T:System.NotSupportedException
+    description: any attempt to get or set the <xref href="System.Web.Security.ActiveDirectoryMembershipUser.LastActivityDate"></xref> property.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.Security/ActiveDirectoryMembershipUser.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.LastLoginDate
+  commentId: P:System.Web.Security.ActiveDirectoryMembershipUser.LastLoginDate
+  id: LastLoginDate
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  langs:
+  - csharp
+  name: LastLoginDate
+  nameWithType: ActiveDirectoryMembershipUser.LastLoginDate
+  fullName: ActiveDirectoryMembershipUser.LastLoginDate
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.Security
+  summary: Throws a <xref href="System.NotSupportedException"></xref> exception in all cases.
+  remarks: The <xref:System.Web.Security.ActiveDirectoryMembershipUser.LastLoginDate%2A> property is not supported by the <xref:System.Web.Security.ActiveDirectoryMembershipUser> class. Attempting to get or set the value will always throw a <xref:System.NotSupportedException>.
+  example:
+  - "The following code example demonstrates how to determine whether the underlying type of a membership user is <xref:System.Web.Security.ActiveDirectoryMembershipUser>, and to avoid throwing a <xref:System.NotSupportedException> for accessing the <xref:System.Web.Security.ActiveDirectoryMembershipUser.LastLoginDate%2A> property. For the full code required to run the example, see the Example section of the <xref:System.Web.Security.ActiveDirectoryMembershipUser> class overview topic.  \n  \n [!code-csharp[System.Web.Security.ActiveDirectoryMembershipUser#2](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.Security.ActiveDirectoryMembershipUser/CS/admuClassExamplecs.aspx#2)]\n [!code-vb[System.Web.Security.ActiveDirectoryMembershipUser#2](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.Security.ActiveDirectoryMembershipUser/VB/admuClassExamplevb.aspx#2)]"
+  syntax:
+    content: public override DateTime LastLoginDate { get; set; }
+    return:
+      type: System.DateTime
+      description: Always throws a <xref href="System.NotSupportedException"></xref> exception.
+  overload: System.Web.Security.ActiveDirectoryMembershipUser.LastLoginDate*
+  exceptions:
+  - type: System.NotSupportedException
+    commentId: T:System.NotSupportedException
+    description: any attempt to get or set the <xref href="System.Web.Security.ActiveDirectoryMembershipUser.LastLoginDate"></xref> property.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.Security/ActiveDirectoryMembershipUser.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.ProviderUserKey
+  commentId: P:System.Web.Security.ActiveDirectoryMembershipUser.ProviderUserKey
+  id: ProviderUserKey
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  langs:
+  - csharp
+  name: ProviderUserKey
+  nameWithType: ActiveDirectoryMembershipUser.ProviderUserKey
+  fullName: ActiveDirectoryMembershipUser.ProviderUserKey
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.Security
+  summary: Gets the user identifier from the Active Directory data store for the membership user.
+  remarks: The <xref:System.Web.Security.ActiveDirectoryMembershipUser.ProviderUserKey%2A> property exposes the identifier from the membership data source generically typed as an `object`. The <xref:System.Web.Security.ActiveDirectoryMembershipUser.ProviderUserKey%2A> class can be cast as a <xref:System.Security.Principal.SecurityIdentifier> object.
+  example:
+  - "The following code example displays the <xref:System.Web.Security.ActiveDirectoryMembershipUser.ProviderUserKey%2A> property in Security Descriptor Definition Language (SDDL) format by converting it to a <xref:System.Security.Principal.SecurityIdentifier> object. For the full code required to run the example, see the Example section of the <xref:System.Web.Security.ActiveDirectoryMembershipUser> class overview topic.  \n  \n [!code-csharp[System.Web.Security.ActiveDirectoryMembershipUser#3](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.Security.ActiveDirectoryMembershipUser/CS/admuClassExamplecs.aspx#3)]\n [!code-vb[System.Web.Security.ActiveDirectoryMembershipUser#3](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.Security.ActiveDirectoryMembershipUser/VB/admuClassExamplevb.aspx#3)]"
+  syntax:
+    content: public override object ProviderUserKey { get; }
+    return:
+      type: System.Object
+      description: The user identifier from the Active Directory data store for the membership user.
+  overload: System.Web.Security.ActiveDirectoryMembershipUser.ProviderUserKey*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.Security/ActiveDirectoryMembershipUser.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+references:
+- uid: System.Web.Security.MembershipUser
+  parent: System.Web.Security
+  isExternal: false
+  name: MembershipUser
+  nameWithType: MembershipUser
+  fullName: System.Web.Security.MembershipUser
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.NotSupportedException
+  parent: System
+  isExternal: false
+  name: NotSupportedException
+  nameWithType: NotSupportedException
+  fullName: System.NotSupportedException
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.#ctor
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  isExternal: false
+  name: ActiveDirectoryMembershipUser()
+  nameWithType: ActiveDirectoryMembershipUser.ActiveDirectoryMembershipUser()
+  fullName: ActiveDirectoryMembershipUser.ActiveDirectoryMembershipUser()
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.#ctor(System.String,System.String,System.Object,System.String,System.String,System.String,System.Boolean,System.Boolean,System.DateTime,System.DateTime,System.DateTime,System.DateTime,System.DateTime)
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  isExternal: false
+  name: ActiveDirectoryMembershipUser(String, String, Object, String, String, String, Boolean, Boolean, DateTime, DateTime, DateTime, DateTime, DateTime)
+  nameWithType: ActiveDirectoryMembershipUser.ActiveDirectoryMembershipUser(String, String, Object, String, String, String, Boolean, Boolean, DateTime, DateTime, DateTime, DateTime, DateTime)
+  fullName: ActiveDirectoryMembershipUser.ActiveDirectoryMembershipUser(String, String, Object, String, String, String, Boolean, Boolean, DateTime, DateTime, DateTime, DateTime, DateTime)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.DateTime
+  parent: System
+  isExternal: false
+  name: DateTime
+  nameWithType: DateTime
+  fullName: System.DateTime
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.Comment
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  isExternal: false
+  name: Comment
+  nameWithType: ActiveDirectoryMembershipUser.Comment
+  fullName: ActiveDirectoryMembershipUser.Comment
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.Email
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  isExternal: false
+  name: Email
+  nameWithType: ActiveDirectoryMembershipUser.Email
+  fullName: ActiveDirectoryMembershipUser.Email
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.IsApproved
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  isExternal: false
+  name: IsApproved
+  nameWithType: ActiveDirectoryMembershipUser.IsApproved
+  fullName: ActiveDirectoryMembershipUser.IsApproved
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.LastActivityDate
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  isExternal: false
+  name: LastActivityDate
+  nameWithType: ActiveDirectoryMembershipUser.LastActivityDate
+  fullName: ActiveDirectoryMembershipUser.LastActivityDate
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.LastLoginDate
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  isExternal: false
+  name: LastLoginDate
+  nameWithType: ActiveDirectoryMembershipUser.LastLoginDate
+  fullName: ActiveDirectoryMembershipUser.LastLoginDate
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.ProviderUserKey
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  isExternal: false
+  name: ProviderUserKey
+  nameWithType: ActiveDirectoryMembershipUser.ProviderUserKey
+  fullName: ActiveDirectoryMembershipUser.ProviderUserKey
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.#ctor*
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  isExternal: false
+  name: ActiveDirectoryMembershipUser
+  nameWithType: ActiveDirectoryMembershipUser.ActiveDirectoryMembershipUser
+  fullName: ActiveDirectoryMembershipUser.ActiveDirectoryMembershipUser
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.Security/ActiveDirectoryMembershipUser.xml
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.Comment*
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  isExternal: false
+  name: Comment
+  nameWithType: ActiveDirectoryMembershipUser.Comment
+  fullName: ActiveDirectoryMembershipUser.Comment
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.Security/ActiveDirectoryMembershipUser.xml
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.Email*
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  isExternal: false
+  name: Email
+  nameWithType: ActiveDirectoryMembershipUser.Email
+  fullName: ActiveDirectoryMembershipUser.Email
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.Security/ActiveDirectoryMembershipUser.xml
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.IsApproved*
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  isExternal: false
+  name: IsApproved
+  nameWithType: ActiveDirectoryMembershipUser.IsApproved
+  fullName: ActiveDirectoryMembershipUser.IsApproved
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.Security/ActiveDirectoryMembershipUser.xml
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.LastActivityDate*
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  isExternal: false
+  name: LastActivityDate
+  nameWithType: ActiveDirectoryMembershipUser.LastActivityDate
+  fullName: ActiveDirectoryMembershipUser.LastActivityDate
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.Security/ActiveDirectoryMembershipUser.xml
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.LastLoginDate*
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  isExternal: false
+  name: LastLoginDate
+  nameWithType: ActiveDirectoryMembershipUser.LastLoginDate
+  fullName: ActiveDirectoryMembershipUser.LastLoginDate
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.Security/ActiveDirectoryMembershipUser.xml
+- uid: System.Web.Security.ActiveDirectoryMembershipUser.ProviderUserKey*
+  parent: System.Web.Security.ActiveDirectoryMembershipUser
+  isExternal: false
+  name: ProviderUserKey
+  nameWithType: ActiveDirectoryMembershipUser.ProviderUserKey
+  fullName: ActiveDirectoryMembershipUser.ProviderUserKey
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.Security/ActiveDirectoryMembershipUser.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Web.Security.MembershipUser.ToString
+  parent: System.Web.Security.MembershipUser
+  isExternal: false
+  name: ToString()
+  nameWithType: MembershipUser.ToString()
+  fullName: MembershipUser.ToString()
+- uid: System.Web.Security.MembershipUser.ChangePassword(System.String,System.String)
+  parent: System.Web.Security.MembershipUser
+  isExternal: false
+  name: ChangePassword(String, String)
+  nameWithType: MembershipUser.ChangePassword(String, String)
+  fullName: MembershipUser.ChangePassword(String, String)
+- uid: System.Web.Security.MembershipUser.ChangePasswordQuestionAndAnswer(System.String,System.String,System.String)
+  parent: System.Web.Security.MembershipUser
+  isExternal: false
+  name: ChangePasswordQuestionAndAnswer(String, String, String)
+  nameWithType: MembershipUser.ChangePasswordQuestionAndAnswer(String, String, String)
+  fullName: MembershipUser.ChangePasswordQuestionAndAnswer(String, String, String)
+- uid: System.Web.Security.MembershipUser.CreationDate
+  parent: System.Web.Security.MembershipUser
+  isExternal: false
+  name: CreationDate
+  nameWithType: MembershipUser.CreationDate
+  fullName: MembershipUser.CreationDate
+- uid: System.Web.Security.MembershipUser.GetPassword
+  parent: System.Web.Security.MembershipUser
+  isExternal: false
+  name: GetPassword()
+  nameWithType: MembershipUser.GetPassword()
+  fullName: MembershipUser.GetPassword()
+- uid: System.Web.Security.MembershipUser.GetPassword(System.String)
+  parent: System.Web.Security.MembershipUser
+  isExternal: false
+  name: GetPassword(String)
+  nameWithType: MembershipUser.GetPassword(String)
+  fullName: MembershipUser.GetPassword(String)
+- uid: System.Web.Security.MembershipUser.IsLockedOut
+  parent: System.Web.Security.MembershipUser
+  isExternal: false
+  name: IsLockedOut
+  nameWithType: MembershipUser.IsLockedOut
+  fullName: MembershipUser.IsLockedOut
+- uid: System.Web.Security.MembershipUser.IsOnline
+  parent: System.Web.Security.MembershipUser
+  isExternal: false
+  name: IsOnline
+  nameWithType: MembershipUser.IsOnline
+  fullName: MembershipUser.IsOnline
+- uid: System.Web.Security.MembershipUser.LastLockoutDate
+  parent: System.Web.Security.MembershipUser
+  isExternal: false
+  name: LastLockoutDate
+  nameWithType: MembershipUser.LastLockoutDate
+  fullName: MembershipUser.LastLockoutDate
+- uid: System.Web.Security.MembershipUser.LastPasswordChangedDate
+  parent: System.Web.Security.MembershipUser
+  isExternal: false
+  name: LastPasswordChangedDate
+  nameWithType: MembershipUser.LastPasswordChangedDate
+  fullName: MembershipUser.LastPasswordChangedDate
+- uid: System.Web.Security.MembershipUser.PasswordQuestion
+  parent: System.Web.Security.MembershipUser
+  isExternal: false
+  name: PasswordQuestion
+  nameWithType: MembershipUser.PasswordQuestion
+  fullName: MembershipUser.PasswordQuestion
+- uid: System.Web.Security.MembershipUser.ProviderName
+  parent: System.Web.Security.MembershipUser
+  isExternal: false
+  name: ProviderName
+  nameWithType: MembershipUser.ProviderName
+  fullName: MembershipUser.ProviderName
+- uid: System.Web.Security.MembershipUser.ResetPassword
+  parent: System.Web.Security.MembershipUser
+  isExternal: false
+  name: ResetPassword()
+  nameWithType: MembershipUser.ResetPassword()
+  fullName: MembershipUser.ResetPassword()
+- uid: System.Web.Security.MembershipUser.ResetPassword(System.String)
+  parent: System.Web.Security.MembershipUser
+  isExternal: false
+  name: ResetPassword(String)
+  nameWithType: MembershipUser.ResetPassword(String)
+  fullName: MembershipUser.ResetPassword(String)
+- uid: System.Web.Security.MembershipUser.UnlockUser
+  parent: System.Web.Security.MembershipUser
+  isExternal: false
+  name: UnlockUser()
+  nameWithType: MembershipUser.UnlockUser()
+  fullName: MembershipUser.UnlockUser()
+- uid: System.Web.Security.MembershipUser.UserName
+  parent: System.Web.Security.MembershipUser
+  isExternal: false
+  name: UserName
+  nameWithType: MembershipUser.UserName
+  fullName: MembershipUser.UserName

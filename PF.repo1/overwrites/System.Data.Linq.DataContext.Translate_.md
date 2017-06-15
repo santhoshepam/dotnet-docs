@@ -1,0 +1,5 @@
+---
+summary: Converts an existing <xref href="System.Data.IDataReader"></xref> to objects.
+remarks: "Each row in the <xref:System.Data.IDataReader> is converted to an object in the <xref:System.Collections.Generic.IEnumerable%601>.  \n  \n```  \npublic IEnumerable<T> Translate<T>(IDataReader reader) {}  \n```  \n  \n Description: This method is used to convert an existing <xref:System.Data.Common.DbDataReader> to objects. Each row in the <xref:System.Data.Common.DbDataReader> is converted to an object in the <xref:System.Collections.Generic.IEnumerable%601>.  \n  \n **Generic parameters:**  \n  \n `T`: See <xref:System.Data.Linq.DataContext.ExecuteQuery%2A>.  \n  \n **Parameters:**  \n  \n `Query`: See the description for command under <xref:System.Data.Linq.DataContext.ExecuteCommand%2A>.  \n  \n `Parameters`: See the description for parameters under <xref:System.Data.Linq.DataContext.ExecuteCommand%2A>.  \n  \n **Return type:**  \n  \n <xref:System.Collections.Generic.IEnumerable%601>: collection of objects returned by the conversion."
+uid: System.Data.Linq.DataContext.Translate*
+---

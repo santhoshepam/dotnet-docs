@@ -1,0 +1,834 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.ServiceModel.TransactionFlowAttribute
+  commentId: T:System.ServiceModel.TransactionFlowAttribute
+  id: TransactionFlowAttribute
+  children:
+  - System.ServiceModel.TransactionFlowAttribute.#ctor(System.ServiceModel.TransactionFlowOption)
+  - System.ServiceModel.TransactionFlowAttribute.Transactions
+  - System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#AddBindingParameters(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Channels.BindingParameterCollection)
+  - System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#ApplyClientBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.ClientOperation)
+  - System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#ApplyDispatchBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.DispatchOperation)
+  - System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#Validate(System.ServiceModel.Description.OperationDescription)
+  langs:
+  - csharp
+  name: TransactionFlowAttribute
+  nameWithType: TransactionFlowAttribute
+  fullName: System.ServiceModel.TransactionFlowAttribute
+  type: Class
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Specifies whether a service operation accepts incoming transactions from a client.
+  remarks: "The <xref:System.ServiceModel.TransactionFlowAttribute> is an attribute used declaratively to associate a specific transaction flow policy with a service operation. The <xref:System.ServiceModel.TransactionFlowOption> property of this attribute specifies whether the respective operation accepts a transaction flowed from the client, or if the operation requires the client to always flow a transaction. The <xref:System.ServiceModel.TransactionFlowAttribute> can also be used as an operation behavior to programmatically associate a transaction flow policy with a specific operation. In this case, it should be added to the `Behaviors` collection on the operation’s description.  \n  \n> [!NOTE]\n>  The `OperationContract` for each method that uses the <xref:System.ServiceModel.TransactionFlowAttribute> must provide a fully-qualified `Action` string. A value of \"*\" is not supported."
+  example:
+  - "The following code example shows the use of this enumeration together with the <xref:System.ServiceModel.TransactionFlowOption> class at the operation level.  \n  \n```  \nusing System;  \nusing System.ServiceModel;  \nusing System.Transactions;  \n  \nnamespace Microsoft.WCF.Documentation  \n{  \n  [ServiceContract(  \n    Namespace=\"http://microsoft.wcf.documentation\",   \n    SessionMode=SessionMode.Required  \n  )]  \n  public interface IBehaviorService  \n  {  \n    [OperationContract]  \n    [TransactionFlow(TransactionFlowOption.Mandatory)]  \n    string TxWork(string message);  \n  }  \n  \n  // Note: To use the TransactionIsolationLevel property, you   \n  // must add a reference to the System.Transactions.dll assembly.  \n  /* The following service implementation:  \n   *   -- Processes messages on one thread at a time  \n   *   -- Creates one service object per session  \n   *   -- Releases the service object when the transaction commits  \n   */  \n  [ServiceBehavior(  \n    ConcurrencyMode=ConcurrencyMode.Single,  \n    InstanceContextMode=InstanceContextMode.PerSession,  \n    ReleaseServiceInstanceOnTransactionComplete=true  \n  )]  \n  public class BehaviorService : IBehaviorService, IDisposable  \n  {  \n    Guid myID;  \n  \n    public BehaviorService()  \n    {  \n      myID = Guid.NewGuid();  \n      Console.WriteLine(  \n        \"Object \"  \n        + myID.ToString()  \n        + \" created.\");  \n    }  \n  \n    /*  \n    / * The following operation-level behaviors are specified:  \n    / * Always executes under a transaction scope.  \n    / * The transaction scope is completed when the operation  \n    / * terminates without an unhandled exception.  \n    /*  \n    [OperationBehavior(  \n      TransactionAutoComplete = true,  \n      TransactionScopeRequired = true  \n    )]  \n    public string TxWork(string message)  \n    {  \n      // Do some transactable work.  \n      Console.WriteLine(\"TxWork called with: \" + message);  \n      // Display transaction information.  \n  \n      TransactionInformation info = Transaction.Current.TransactionInformation;  \n      Console.WriteLine(\"The distributed tx ID: {0}.\", info.DistributedIdentifier);  \n      Console.WriteLine(\"The tx status: {0}.\", info.Status);  \n      return String.Format(\"Hello. This was object {0}.\",myID.ToString()) ;  \n    }  \n  \n    public void Dispose()  \n    {  \n      Console.WriteLine(  \n        \"Service \"  \n        + myID.ToString()  \n        + \" is being recycled.\"  \n      );  \n    }  \n  }  \n}  \n```"
+  syntax:
+    content: >-
+      [System.AttributeUsage(System.AttributeTargets.Method)]
+
+      public sealed class TransactionFlowAttribute : Attribute, System.ServiceModel.Description.IOperationBehavior
+  inheritance:
+  - System.Object
+  - System.Attribute
+  implements:
+  - System.ServiceModel.Description.IOperationBehavior
+  inheritedMembers:
+  - System.Attribute.Equals(System.Object)
+  - System.Attribute.GetCustomAttribute(System.Reflection.Assembly,System.Type)
+  - System.Attribute.GetCustomAttribute(System.Reflection.Assembly,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttribute(System.Reflection.MemberInfo,System.Type)
+  - System.Attribute.GetCustomAttribute(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttribute(System.Reflection.Module,System.Type)
+  - System.Attribute.GetCustomAttribute(System.Reflection.Module,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttribute(System.Reflection.ParameterInfo,System.Type)
+  - System.Attribute.GetCustomAttribute(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Assembly)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Type)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo)
+  - System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Type)
+  - System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Module)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Type)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo)
+  - System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Type)
+  - System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  - System.Attribute.GetHashCode
+  - System.Attribute.IsDefaultAttribute
+  - System.Attribute.IsDefined(System.Reflection.Assembly,System.Type)
+  - System.Attribute.IsDefined(System.Reflection.Assembly,System.Type,System.Boolean)
+  - System.Attribute.IsDefined(System.Reflection.MemberInfo,System.Type)
+  - System.Attribute.IsDefined(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  - System.Attribute.IsDefined(System.Reflection.Module,System.Type)
+  - System.Attribute.IsDefined(System.Reflection.Module,System.Type,System.Boolean)
+  - System.Attribute.IsDefined(System.Reflection.ParameterInfo,System.Type)
+  - System.Attribute.IsDefined(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  - System.Attribute.Match(System.Object)
+  - System.Attribute.System#Runtime#InteropServices#_Attribute#GetIDsOfNames(System.Guid@,System.IntPtr,System.UInt32,System.UInt32,System.IntPtr)
+  - System.Attribute.System#Runtime#InteropServices#_Attribute#GetTypeInfo(System.UInt32,System.UInt32,System.IntPtr)
+  - System.Attribute.System#Runtime#InteropServices#_Attribute#GetTypeInfoCount(System.UInt32@)
+  - System.Attribute.System#Runtime#InteropServices#_Attribute#Invoke(System.UInt32,System.Guid@,System.UInt32,System.Int16,System.IntPtr,System.IntPtr,System.IntPtr,System.IntPtr)
+  - System.Attribute.TypeId
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: System.AttributeUsageAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransactionFlowAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.TransactionFlowAttribute.#ctor(System.ServiceModel.TransactionFlowOption)
+  commentId: M:System.ServiceModel.TransactionFlowAttribute.#ctor(System.ServiceModel.TransactionFlowOption)
+  id: '#ctor(System.ServiceModel.TransactionFlowOption)'
+  parent: System.ServiceModel.TransactionFlowAttribute
+  langs:
+  - csharp
+  name: TransactionFlowAttribute(TransactionFlowOption)
+  nameWithType: TransactionFlowAttribute.TransactionFlowAttribute(TransactionFlowOption)
+  fullName: TransactionFlowAttribute.TransactionFlowAttribute(TransactionFlowOption)
+  type: Constructor
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Initializes a new instance of the <xref href="System.ServiceModel.TransactionFlowAttribute"></xref> class.
+  remarks: ''
+  example:
+  - "The following code example shows the use of this enumeration together with the <xref:System.ServiceModel.TransactionFlowOption> class at the operation level.  \n  \n [!code-csharp[OperationBehaviorAttribute1#2](~/samples/snippets/csharp/VS_Snippets_CFX/operationbehaviorattribute1/cs/services.cs#2)]\n [!code-vb[OperationBehaviorAttribute1#2](~/samples/snippets/visualbasic/VS_Snippets_CFX/operationbehaviorattribute1/vb/services.vb#2)]"
+  syntax:
+    content: public TransactionFlowAttribute (System.ServiceModel.TransactionFlowOption transactions);
+    parameters:
+    - id: transactions
+      type: System.ServiceModel.TransactionFlowOption
+      description: A <xref href="System.ServiceModel.TransactionFlowOption"></xref>.
+  overload: System.ServiceModel.TransactionFlowAttribute.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransactionFlowAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.TransactionFlowAttribute.Transactions
+  commentId: P:System.ServiceModel.TransactionFlowAttribute.Transactions
+  id: Transactions
+  parent: System.ServiceModel.TransactionFlowAttribute
+  langs:
+  - csharp
+  name: Transactions
+  nameWithType: TransactionFlowAttribute.Transactions
+  fullName: TransactionFlowAttribute.Transactions
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Gets a value that indicates whether the incoming transaction is supported.
+  syntax:
+    content: public System.ServiceModel.TransactionFlowOption Transactions { get; }
+    return:
+      type: System.ServiceModel.TransactionFlowOption
+      description: A <xref href="System.ServiceModel.TransactionFlowOption"></xref> that indicates whether the incoming transaction is supported.
+  overload: System.ServiceModel.TransactionFlowAttribute.Transactions*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransactionFlowAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#AddBindingParameters(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Channels.BindingParameterCollection)
+  commentId: M:System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#AddBindingParameters(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Channels.BindingParameterCollection)
+  id: System#ServiceModel#Description#IOperationBehavior#AddBindingParameters(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Channels.BindingParameterCollection)
+  isEii: true
+  parent: System.ServiceModel.TransactionFlowAttribute
+  langs:
+  - csharp
+  name: IOperationBehavior.AddBindingParameters(OperationDescription, BindingParameterCollection)
+  nameWithType: TransactionFlowAttribute.IOperationBehavior.AddBindingParameters(OperationDescription, BindingParameterCollection)
+  fullName: TransactionFlowAttribute.IOperationBehavior.AddBindingParameters(OperationDescription, BindingParameterCollection)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Adds extra parameters (settings) to the binding context to support this operation’s behavior. This method cannot be inherited.
+  remarks: This method provides a binding context with the extra parameters (settings) to support the required behavior for this operation. It is called internally by the infrastructure when a service is created.
+  syntax:
+    content: void IOperationBehavior.AddBindingParameters (System.ServiceModel.Description.OperationDescription description, System.ServiceModel.Channels.BindingParameterCollection parameters);
+    parameters:
+    - id: description
+      type: System.ServiceModel.Description.OperationDescription
+      description: The operation description for which the attribute adds extra functionality.
+    - id: parameters
+      type: System.ServiceModel.Channels.BindingParameterCollection
+      description: The collection of parameter objects on the binding context.
+  overload: System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#AddBindingParameters*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransactionFlowAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#ApplyClientBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.ClientOperation)
+  commentId: M:System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#ApplyClientBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.ClientOperation)
+  id: System#ServiceModel#Description#IOperationBehavior#ApplyClientBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.ClientOperation)
+  isEii: true
+  parent: System.ServiceModel.TransactionFlowAttribute
+  langs:
+  - csharp
+  name: IOperationBehavior.ApplyClientBehavior(OperationDescription, ClientOperation)
+  nameWithType: TransactionFlowAttribute.IOperationBehavior.ApplyClientBehavior(OperationDescription, ClientOperation)
+  fullName: TransactionFlowAttribute.IOperationBehavior.ApplyClientBehavior(OperationDescription, ClientOperation)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Attaches the attribute functionality to the `ProxyOperation` object for the method that the attribute marks. This method cannot be inherited.
+  remarks: This method allows you to view, modify, or add custom extensions to the client runtime across all messages, or for a specific operation. Note that in the case of the <xref:System.ServiceModel.TransactionFlowAttribute>, the implementation of this method is empty. This method is called internally by the infrastructure when a service proxy is created.
+  syntax:
+    content: void IOperationBehavior.ApplyClientBehavior (System.ServiceModel.Description.OperationDescription description, System.ServiceModel.Dispatcher.ClientOperation proxy);
+    parameters:
+    - id: description
+      type: System.ServiceModel.Description.OperationDescription
+      description: The operation to which the attribute attaches functionality.
+    - id: proxy
+      type: System.ServiceModel.Dispatcher.ClientOperation
+      description: The <xref href="System.ServiceModel.Dispatcher.ClientOperation"></xref> object that represents the current operation.
+  overload: System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#ApplyClientBehavior*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransactionFlowAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#ApplyDispatchBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.DispatchOperation)
+  commentId: M:System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#ApplyDispatchBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.DispatchOperation)
+  id: System#ServiceModel#Description#IOperationBehavior#ApplyDispatchBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.DispatchOperation)
+  isEii: true
+  parent: System.ServiceModel.TransactionFlowAttribute
+  langs:
+  - csharp
+  name: IOperationBehavior.ApplyDispatchBehavior(OperationDescription, DispatchOperation)
+  nameWithType: TransactionFlowAttribute.IOperationBehavior.ApplyDispatchBehavior(OperationDescription, DispatchOperation)
+  fullName: TransactionFlowAttribute.IOperationBehavior.ApplyDispatchBehavior(OperationDescription, DispatchOperation)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Attaches the attribute functionality to the <xref href="System.ServiceModel.Dispatcher.DispatchOperation"></xref> object for the method that the attribute marks. This method cannot be inherited.
+  remarks: This method allows you to view, modify, or add custom extensions to the client runtime across all messages, or for a specific operation. Note that in the case of the <xref:System.ServiceModel.TransactionFlowAttribute>, the implementation of this method is empty. This method is called internally by the infrastructure when a service is created.
+  syntax:
+    content: void IOperationBehavior.ApplyDispatchBehavior (System.ServiceModel.Description.OperationDescription description, System.ServiceModel.Dispatcher.DispatchOperation dispatch);
+    parameters:
+    - id: description
+      type: System.ServiceModel.Description.OperationDescription
+      description: The description for this operation.
+    - id: dispatch
+      type: System.ServiceModel.Dispatcher.DispatchOperation
+      description: The <xref href="System.ServiceModel.Dispatcher.DispatchOperation"></xref> object for this operation.
+  overload: System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#ApplyDispatchBehavior*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransactionFlowAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#Validate(System.ServiceModel.Description.OperationDescription)
+  commentId: M:System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#Validate(System.ServiceModel.Description.OperationDescription)
+  id: System#ServiceModel#Description#IOperationBehavior#Validate(System.ServiceModel.Description.OperationDescription)
+  isEii: true
+  parent: System.ServiceModel.TransactionFlowAttribute
+  langs:
+  - csharp
+  name: IOperationBehavior.Validate(OperationDescription)
+  nameWithType: TransactionFlowAttribute.IOperationBehavior.Validate(OperationDescription)
+  fullName: TransactionFlowAttribute.IOperationBehavior.Validate(OperationDescription)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Verifies that the operation can support this behavior. This method cannot be inherited.
+  remarks: This method verifies whether the operation description is sufficient to support the transaction flow behavior. Note that in the case of the <xref:System.ServiceModel.TransactionFlowAttribute>, the implementation of this method is empty. This method is called internally by the infrastructure when a service is created.
+  syntax:
+    content: void IOperationBehavior.Validate (System.ServiceModel.Description.OperationDescription description);
+    parameters:
+    - id: description
+      type: System.ServiceModel.Description.OperationDescription
+      description: The operation to validate.
+  overload: System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#Validate*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransactionFlowAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+references:
+- uid: System.Attribute
+  parent: System
+  isExternal: false
+  name: Attribute
+  nameWithType: Attribute
+  fullName: System.Attribute
+- uid: System.ServiceModel.TransactionFlowAttribute.#ctor(System.ServiceModel.TransactionFlowOption)
+  parent: System.ServiceModel.TransactionFlowAttribute
+  isExternal: false
+  name: TransactionFlowAttribute(TransactionFlowOption)
+  nameWithType: TransactionFlowAttribute.TransactionFlowAttribute(TransactionFlowOption)
+  fullName: TransactionFlowAttribute.TransactionFlowAttribute(TransactionFlowOption)
+- uid: System.ServiceModel.TransactionFlowOption
+  parent: System.ServiceModel
+  isExternal: false
+  name: TransactionFlowOption
+  nameWithType: TransactionFlowOption
+  fullName: System.ServiceModel.TransactionFlowOption
+- uid: System.ServiceModel.TransactionFlowAttribute.Transactions
+  parent: System.ServiceModel.TransactionFlowAttribute
+  isExternal: false
+  name: Transactions
+  nameWithType: TransactionFlowAttribute.Transactions
+  fullName: TransactionFlowAttribute.Transactions
+- uid: System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#AddBindingParameters(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.TransactionFlowAttribute
+  isExternal: false
+  name: IOperationBehavior.AddBindingParameters(OperationDescription, BindingParameterCollection)
+  nameWithType: TransactionFlowAttribute.IOperationBehavior.AddBindingParameters(OperationDescription, BindingParameterCollection)
+  fullName: TransactionFlowAttribute.IOperationBehavior.AddBindingParameters(OperationDescription, BindingParameterCollection)
+- uid: System.ServiceModel.Description.OperationDescription
+  parent: System.ServiceModel.Description
+  isExternal: false
+  name: OperationDescription
+  nameWithType: OperationDescription
+  fullName: System.ServiceModel.Description.OperationDescription
+- uid: System.ServiceModel.Channels.BindingParameterCollection
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: BindingParameterCollection
+  nameWithType: BindingParameterCollection
+  fullName: System.ServiceModel.Channels.BindingParameterCollection
+- uid: System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#ApplyClientBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.ClientOperation)
+  parent: System.ServiceModel.TransactionFlowAttribute
+  isExternal: false
+  name: IOperationBehavior.ApplyClientBehavior(OperationDescription, ClientOperation)
+  nameWithType: TransactionFlowAttribute.IOperationBehavior.ApplyClientBehavior(OperationDescription, ClientOperation)
+  fullName: TransactionFlowAttribute.IOperationBehavior.ApplyClientBehavior(OperationDescription, ClientOperation)
+- uid: System.ServiceModel.Dispatcher.ClientOperation
+  parent: System.ServiceModel.Dispatcher
+  isExternal: false
+  name: ClientOperation
+  nameWithType: ClientOperation
+  fullName: System.ServiceModel.Dispatcher.ClientOperation
+- uid: System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#ApplyDispatchBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.DispatchOperation)
+  parent: System.ServiceModel.TransactionFlowAttribute
+  isExternal: false
+  name: IOperationBehavior.ApplyDispatchBehavior(OperationDescription, DispatchOperation)
+  nameWithType: TransactionFlowAttribute.IOperationBehavior.ApplyDispatchBehavior(OperationDescription, DispatchOperation)
+  fullName: TransactionFlowAttribute.IOperationBehavior.ApplyDispatchBehavior(OperationDescription, DispatchOperation)
+- uid: System.ServiceModel.Dispatcher.DispatchOperation
+  parent: System.ServiceModel.Dispatcher
+  isExternal: false
+  name: DispatchOperation
+  nameWithType: DispatchOperation
+  fullName: System.ServiceModel.Dispatcher.DispatchOperation
+- uid: System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#Validate(System.ServiceModel.Description.OperationDescription)
+  parent: System.ServiceModel.TransactionFlowAttribute
+  isExternal: false
+  name: IOperationBehavior.Validate(OperationDescription)
+  nameWithType: TransactionFlowAttribute.IOperationBehavior.Validate(OperationDescription)
+  fullName: TransactionFlowAttribute.IOperationBehavior.Validate(OperationDescription)
+- uid: System.ServiceModel.TransactionFlowAttribute.#ctor*
+  parent: System.ServiceModel.TransactionFlowAttribute
+  isExternal: false
+  name: TransactionFlowAttribute
+  nameWithType: TransactionFlowAttribute.TransactionFlowAttribute
+  fullName: TransactionFlowAttribute.TransactionFlowAttribute
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransactionFlowAttribute.xml
+- uid: System.ServiceModel.TransactionFlowAttribute.Transactions*
+  parent: System.ServiceModel.TransactionFlowAttribute
+  isExternal: false
+  name: Transactions
+  nameWithType: TransactionFlowAttribute.Transactions
+  fullName: TransactionFlowAttribute.Transactions
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransactionFlowAttribute.xml
+- uid: System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#AddBindingParameters*
+  parent: System.ServiceModel.TransactionFlowAttribute
+  isExternal: false
+  name: System.ServiceModel.Description.IOperationBehavior.AddBindingParameters
+  nameWithType: TransactionFlowAttribute.System.ServiceModel.Description.IOperationBehavior.AddBindingParameters
+  fullName: TransactionFlowAttribute.System.ServiceModel.Description.IOperationBehavior.AddBindingParameters
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransactionFlowAttribute.xml
+- uid: System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#ApplyClientBehavior*
+  parent: System.ServiceModel.TransactionFlowAttribute
+  isExternal: false
+  name: System.ServiceModel.Description.IOperationBehavior.ApplyClientBehavior
+  nameWithType: TransactionFlowAttribute.System.ServiceModel.Description.IOperationBehavior.ApplyClientBehavior
+  fullName: TransactionFlowAttribute.System.ServiceModel.Description.IOperationBehavior.ApplyClientBehavior
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransactionFlowAttribute.xml
+- uid: System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#ApplyDispatchBehavior*
+  parent: System.ServiceModel.TransactionFlowAttribute
+  isExternal: false
+  name: System.ServiceModel.Description.IOperationBehavior.ApplyDispatchBehavior
+  nameWithType: TransactionFlowAttribute.System.ServiceModel.Description.IOperationBehavior.ApplyDispatchBehavior
+  fullName: TransactionFlowAttribute.System.ServiceModel.Description.IOperationBehavior.ApplyDispatchBehavior
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransactionFlowAttribute.xml
+- uid: System.ServiceModel.TransactionFlowAttribute.System#ServiceModel#Description#IOperationBehavior#Validate*
+  parent: System.ServiceModel.TransactionFlowAttribute
+  isExternal: false
+  name: System.ServiceModel.Description.IOperationBehavior.Validate
+  nameWithType: TransactionFlowAttribute.System.ServiceModel.Description.IOperationBehavior.Validate
+  fullName: TransactionFlowAttribute.System.ServiceModel.Description.IOperationBehavior.Validate
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransactionFlowAttribute.xml
+- uid: System.Attribute.Equals(System.Object)
+  parent: System.Attribute
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Attribute.Equals(Object)
+  fullName: Attribute.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Attribute.GetHashCode
+  parent: System.Attribute
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Attribute.GetHashCode()
+  fullName: Attribute.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(ParameterInfo, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttribute(ParameterInfo, Type, Boolean)
+  fullName: Attribute.GetCustomAttribute(ParameterInfo, Type, Boolean)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(MemberInfo, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttribute(MemberInfo, Type, Boolean)
+  fullName: Attribute.GetCustomAttribute(MemberInfo, Type, Boolean)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.Assembly,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(Assembly, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttribute(Assembly, Type, Boolean)
+  fullName: Attribute.GetCustomAttribute(Assembly, Type, Boolean)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.Module,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(Module, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttribute(Module, Type, Boolean)
+  fullName: Attribute.GetCustomAttribute(Module, Type, Boolean)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.Module,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(Module, Type)
+  nameWithType: Attribute.GetCustomAttribute(Module, Type)
+  fullName: Attribute.GetCustomAttribute(Module, Type)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.MemberInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(MemberInfo, Type)
+  nameWithType: Attribute.GetCustomAttribute(MemberInfo, Type)
+  fullName: Attribute.GetCustomAttribute(MemberInfo, Type)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.Assembly,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(Assembly, Type)
+  nameWithType: Attribute.GetCustomAttribute(Assembly, Type)
+  fullName: Attribute.GetCustomAttribute(Assembly, Type)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.ParameterInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(ParameterInfo, Type)
+  nameWithType: Attribute.GetCustomAttribute(ParameterInfo, Type)
+  fullName: Attribute.GetCustomAttribute(ParameterInfo, Type)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Module, Type)
+  nameWithType: Attribute.GetCustomAttributes(Module, Type)
+  fullName: Attribute.GetCustomAttributes(Module, Type)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(ParameterInfo, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(ParameterInfo, Type, Boolean)
+  fullName: Attribute.GetCustomAttributes(ParameterInfo, Type, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Module, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(Module, Type, Boolean)
+  fullName: Attribute.GetCustomAttributes(Module, Type, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(MemberInfo, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(MemberInfo, Type, Boolean)
+  fullName: Attribute.GetCustomAttributes(MemberInfo, Type, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Assembly, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(Assembly, Type, Boolean)
+  fullName: Attribute.GetCustomAttributes(Assembly, Type, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(ParameterInfo, Type)
+  nameWithType: Attribute.GetCustomAttributes(ParameterInfo, Type)
+  fullName: Attribute.GetCustomAttributes(ParameterInfo, Type)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Module, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(Module, Boolean)
+  fullName: Attribute.GetCustomAttributes(Module, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(ParameterInfo, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(ParameterInfo, Boolean)
+  fullName: Attribute.GetCustomAttributes(ParameterInfo, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(MemberInfo, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(MemberInfo, Boolean)
+  fullName: Attribute.GetCustomAttributes(MemberInfo, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Assembly, Type)
+  nameWithType: Attribute.GetCustomAttributes(Assembly, Type)
+  fullName: Attribute.GetCustomAttributes(Assembly, Type)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Assembly, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(Assembly, Boolean)
+  fullName: Attribute.GetCustomAttributes(Assembly, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(ParameterInfo)
+  nameWithType: Attribute.GetCustomAttributes(ParameterInfo)
+  fullName: Attribute.GetCustomAttributes(ParameterInfo)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Module)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Module)
+  nameWithType: Attribute.GetCustomAttributes(Module)
+  fullName: Attribute.GetCustomAttributes(Module)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(MemberInfo)
+  nameWithType: Attribute.GetCustomAttributes(MemberInfo)
+  fullName: Attribute.GetCustomAttributes(MemberInfo)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Assembly)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Assembly)
+  nameWithType: Attribute.GetCustomAttributes(Assembly)
+  fullName: Attribute.GetCustomAttributes(Assembly)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(MemberInfo, Type)
+  nameWithType: Attribute.GetCustomAttributes(MemberInfo, Type)
+  fullName: Attribute.GetCustomAttributes(MemberInfo, Type)
+- uid: System.Attribute.IsDefaultAttribute
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefaultAttribute()
+  nameWithType: Attribute.IsDefaultAttribute()
+  fullName: Attribute.IsDefaultAttribute()
+- uid: System.Attribute.IsDefined(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(ParameterInfo, Type, Boolean)
+  nameWithType: Attribute.IsDefined(ParameterInfo, Type, Boolean)
+  fullName: Attribute.IsDefined(ParameterInfo, Type, Boolean)
+- uid: System.Attribute.IsDefined(System.Reflection.Module,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(Module, Type, Boolean)
+  nameWithType: Attribute.IsDefined(Module, Type, Boolean)
+  fullName: Attribute.IsDefined(Module, Type, Boolean)
+- uid: System.Attribute.IsDefined(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(MemberInfo, Type, Boolean)
+  nameWithType: Attribute.IsDefined(MemberInfo, Type, Boolean)
+  fullName: Attribute.IsDefined(MemberInfo, Type, Boolean)
+- uid: System.Attribute.IsDefined(System.Reflection.Assembly,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(Assembly, Type, Boolean)
+  nameWithType: Attribute.IsDefined(Assembly, Type, Boolean)
+  fullName: Attribute.IsDefined(Assembly, Type, Boolean)
+- uid: System.Attribute.IsDefined(System.Reflection.MemberInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(MemberInfo, Type)
+  nameWithType: Attribute.IsDefined(MemberInfo, Type)
+  fullName: Attribute.IsDefined(MemberInfo, Type)
+- uid: System.Attribute.IsDefined(System.Reflection.Module,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(Module, Type)
+  nameWithType: Attribute.IsDefined(Module, Type)
+  fullName: Attribute.IsDefined(Module, Type)
+- uid: System.Attribute.IsDefined(System.Reflection.Assembly,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(Assembly, Type)
+  nameWithType: Attribute.IsDefined(Assembly, Type)
+  fullName: Attribute.IsDefined(Assembly, Type)
+- uid: System.Attribute.IsDefined(System.Reflection.ParameterInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(ParameterInfo, Type)
+  nameWithType: Attribute.IsDefined(ParameterInfo, Type)
+  fullName: Attribute.IsDefined(ParameterInfo, Type)
+- uid: System.Attribute.Match(System.Object)
+  parent: System.Attribute
+  isExternal: false
+  name: Match(Object)
+  nameWithType: Attribute.Match(Object)
+  fullName: Attribute.Match(Object)
+- uid: System.Attribute.TypeId
+  parent: System.Attribute
+  isExternal: false
+  name: TypeId
+  nameWithType: Attribute.TypeId
+  fullName: Attribute.TypeId
+- uid: System.Attribute.System#Runtime#InteropServices#_Attribute#GetIDsOfNames(System.Guid@,System.IntPtr,System.UInt32,System.UInt32,System.IntPtr)
+  parent: System.Attribute
+  isExternal: false
+  name: _Attribute.GetIDsOfNames(Guid, IntPtr, UInt32, UInt32, IntPtr)
+  nameWithType: Attribute._Attribute.GetIDsOfNames(Guid, IntPtr, UInt32, UInt32, IntPtr)
+  fullName: Attribute._Attribute.GetIDsOfNames(Guid, IntPtr, UInt32, UInt32, IntPtr)
+- uid: System.Attribute.System#Runtime#InteropServices#_Attribute#GetTypeInfo(System.UInt32,System.UInt32,System.IntPtr)
+  parent: System.Attribute
+  isExternal: false
+  name: _Attribute.GetTypeInfo(UInt32, UInt32, IntPtr)
+  nameWithType: Attribute._Attribute.GetTypeInfo(UInt32, UInt32, IntPtr)
+  fullName: Attribute._Attribute.GetTypeInfo(UInt32, UInt32, IntPtr)
+- uid: System.Attribute.System#Runtime#InteropServices#_Attribute#GetTypeInfoCount(System.UInt32@)
+  parent: System.Attribute
+  isExternal: false
+  name: _Attribute.GetTypeInfoCount(UInt32)
+  nameWithType: Attribute._Attribute.GetTypeInfoCount(UInt32)
+  fullName: Attribute._Attribute.GetTypeInfoCount(UInt32)
+- uid: System.Attribute.System#Runtime#InteropServices#_Attribute#Invoke(System.UInt32,System.Guid@,System.UInt32,System.Int16,System.IntPtr,System.IntPtr,System.IntPtr,System.IntPtr)
+  parent: System.Attribute
+  isExternal: false
+  name: _Attribute.Invoke(UInt32, Guid, UInt32, Int16, IntPtr, IntPtr, IntPtr, IntPtr)
+  nameWithType: Attribute._Attribute.Invoke(UInt32, Guid, UInt32, Int16, IntPtr, IntPtr, IntPtr, IntPtr)
+  fullName: Attribute._Attribute.Invoke(UInt32, Guid, UInt32, Int16, IntPtr, IntPtr, IntPtr, IntPtr)
+- uid: System.ServiceModel.Description.IOperationBehavior
+  parent: System.ServiceModel.Description
+  isExternal: false
+  name: IOperationBehavior
+  nameWithType: IOperationBehavior
+  fullName: System.ServiceModel.Description.IOperationBehavior

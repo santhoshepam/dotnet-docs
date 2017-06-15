@@ -1,0 +1,428 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.IObserver`1
+  commentId: T:System.IObserver`1
+  id: IObserver`1
+  children:
+  - System.IObserver`1.OnCompleted
+  - System.IObserver`1.OnError(System.Exception)
+  - System.IObserver`1.OnNext(`0)
+  langs:
+  - csharp
+  name: IObserver<T>
+  nameWithType: IObserver<T>
+  fullName: System.IObserver<T>
+  type: Interface
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Provides a mechanism for receiving push-based notifications.
+  remarks: "The <xref:System.IObserver%601> and <xref:System.IObservable%601> interfaces provide a generalized mechanism for push-based notification, also known as the observer design pattern. The <xref:System.IObservable%601> interface represents the class that sends notifications (the provider); the <xref:System.IObserver%601> interface represents the class that receives them (the observer). `T` represents the class that provides the notification information.  \n  \n An <xref:System.IObserver%601> implementation arranges to receive notifications from a provider (an <xref:System.IObservable%601> implementation) by passing an instance of itself to the provider's <xref:System.IObservable%601.Subscribe%2A?displayProperty=fullName> method. This method returns an <xref:System.IDisposable> object that can be used to unsubscribe the observer before the provider finishes sending notifications.  \n  \n The <xref:System.IObserver%601> interface defines the following three methods that the observer must implement:  \n  \n-   The <xref:System.IObserver%601.OnNext%2A> method, which is typically called by the provider to supply the observer with new data or state information.  \n  \n-   The <xref:System.IObserver%601.OnError%2A> method, which is typically called by the provider to indicate that data is unavailable, inaccessible, or corrupted, or that the provider has experienced some other error condition.  \n  \n-   The <xref:System.IObserver%601.OnCompleted%2A> method, which is typically called by the provider to indicate that it has finished sending notifications to observers."
+  example:
+  - "The following example illustrates the observer design pattern. It defines a `Location` class that contains latitude and longitude information.  \n  \n [!code-csharp[System.IObserver.Class#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/provider.cs#5)]\n [!code-vb[System.IObserver.Class#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/provider.vb#5)]  \n  \n The `LocationReporter` class provides the <xref:System.IObserver%601> implementation. It displays information about the current location to the console. Its constructor includes a `name` parameter, which allows the `LocationReporter` instance to identify itself in its string output. It also includes a `Subscribe` method, which wraps a call to the provider's <xref:System.IObservable%601.Subscribe%2A> method. This enables the method to assign the returned <xref:System.IDisposable> reference to a private variable. The `LocationReporter` class also includes an `Unsubscribe` method, which calls the <xref:System.IDisposable.Dispose%2A?displayProperty=fullName> method of the object returned by the <xref:System.IObservable%601.Subscribe%2A?displayProperty=fullName> method. The following code defines the `LocationReporter` class.  \n  \n [!code-csharp[System.IObserver.Class#8](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/observer.cs#8)]\n [!code-vb[System.IObserver.Class#8](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/observer.vb#8)]  \n  \n The `LocationTracker` class provides the <xref:System.IObservable%601> implementation. Its `TrackLocation` method is passed a nullable `Location` object that contains the latitude and longitude data. If the `Location` value is not `null`, the `TrackLocation` method calls the <xref:System.IObserver%601.OnNext%2A> method of each observer.  \n  \n [!code-csharp[System.IObserver.Class#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/provider.cs#6)]\n [!code-vb[System.IObserver.Class#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/provider.vb#6)]  \n  \n If the `Location` value is `null`, the `TrackLocation` method instantiates a `LocationNotFoundException` object, which is shown in the following example. It then calls each observer's <xref:System.IObserver%601.OnError%2A> method and passes it the `LocationNotFoundException` object. Note that `LocationNotFoundException` derives from <xref:System.Exception> but does not add any new members.  \n  \n [!code-csharp[System.IObserver.Class#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/provider.cs#7)]\n [!code-vb[System.IObserver.Class#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/provider.vb#7)]  \n  \n Observers register to receive notifications from a `TrackLocation` object by calling its <xref:System.IObservable%601.Subscribe%2A?displayProperty=fullName> method, which assigns a reference to the observer object to a private generic <xref:System.Collections.Generic.List%601> object. The method returns an `Unsubscriber` object, which is an <xref:System.IDisposable> implementation that enables observers to stop receiving notifications. The `LocationTracker` class also includes an `EndTransmission` method. When no further location data is available, the method calls each observer's <xref:System.IObserver%601.OnCompleted%2A> method and then clears the internal list of observers.  \n  \n The following code then instantiates the provider and the observer.  \n  \n [!code-csharp[System.IObserver.Class#9](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/program.cs#9)]\n [!code-vb[System.IObserver.Class#9](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/module1.vb#9)]"
+  syntax:
+    content: public interface IObserver<in T>
+    typeParameters:
+    - id: T
+      description: The object that provides notification information.
+  derivedClasses:
+  - System.Web.Hosting.LowPhysicalMemoryObserver
+  - System.Web.Hosting.RecycleLimitObserver
+  implements: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IObserver`1.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IObserver`1.OnCompleted
+  commentId: M:System.IObserver`1.OnCompleted
+  id: OnCompleted
+  parent: System.IObserver`1
+  langs:
+  - csharp
+  name: OnCompleted()
+  nameWithType: IObserver<T>.OnCompleted()
+  fullName: IObserver<T>.OnCompleted()
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Notifies the observer that the provider has finished sending push-based notifications.
+  remarks: When the observer's <xref:System.IObserver%601.OnCompleted%2A> implementation is called, the <xref:System.IObserver%601.OnCompleted%2A> method can optionally call the <xref:System.IDisposable.Dispose%2A> method of the <xref:System.IDisposable> object that was returned to the observer when it called the <xref:System.IObservable%601.Subscribe%2A?displayProperty=fullName> method.
+  example:
+  - "The following example provides an implementation of the <xref:System.IObserver%601.OnCompleted%2A> method in a latitude/longitude tracking application. The method simply reports that no further data is available and calls the provider's <xref:System.IDisposable.Dispose%2A?displayProperty=fullName> implementation. See the Example section of the <xref:System.IObserver%601> topic for the complete example.  \n  \n [!code-csharp[System.IObserver.Class#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/observer.cs#11)]\n [!code-vb[System.IObserver.Class#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/observer.vb#11)]"
+  syntax:
+    content: public void OnCompleted ();
+    parameters: []
+  overload: System.IObserver`1.OnCompleted*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IObserver`1.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IObserver`1.OnError(System.Exception)
+  commentId: M:System.IObserver`1.OnError(System.Exception)
+  id: OnError(System.Exception)
+  parent: System.IObserver`1
+  langs:
+  - csharp
+  name: OnError(Exception)
+  nameWithType: IObserver<T>.OnError(Exception)
+  fullName: IObserver<T>.OnError(Exception)
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Notifies the observer that the provider has experienced an error condition.
+  remarks: Although `error` is an object that is derived from <xref:System.Exception?displayProperty=fullName>, it does not necessarily represent an exception that is thrown by the provider. It can also represent a routine or expected error condition, such as data that is missing or unavailable. The <xref:System.IObserver%601.OnError%2A> method should be seen as informational, and the provider should not expect the observer to provide error handling.
+  example:
+  - "The following example provides an implementation of the <xref:System.IObserver%601.OnError%2A> method in a latitude/longitude tracking application. The method simply reports that data is currently unavailable; it does not make use of the <xref:System.Exception> object passed to it as a parameter. See the Example section of the <xref:System.IObserver%601> topic for the complete example.  \n  \n [!code-csharp[System.IObserver.Class#10](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/observer.cs#10)]\n [!code-vb[System.IObserver.Class#10](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/observer.vb#10)]"
+  syntax:
+    content: public void OnError (Exception error);
+    parameters:
+    - id: error
+      type: System.Exception
+      description: An object that provides additional information about the error.
+  overload: System.IObserver`1.OnError*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IObserver`1.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IObserver`1.OnNext(`0)
+  commentId: M:System.IObserver`1.OnNext(`0)
+  id: OnNext(`0)
+  parent: System.IObserver`1
+  langs:
+  - csharp
+  name: OnNext(T)
+  nameWithType: IObserver<T>.OnNext(T)
+  fullName: IObserver<T>.OnNext(T)
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Provides the observer with new data.
+  remarks: After an observer has called a provider's <xref:System.IObservable%601.Subscribe%2A?displayProperty=fullName> method, the provider calls the observer's <xref:System.IObserver%601.OnNext%2A> method to provide notifications.
+  example:
+  - "The following example provides an implementation of the <xref:System.IObserver%601.OnNext%2A> method in a latitude/longitude tracking application. See the Example section of the <xref:System.IObserver%601> topic for the complete example.  \n  \n [!code-csharp[System.IObserver.Class#12](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.iobserver.class/cs/observer.cs#12)]\n [!code-vb[System.IObserver.Class#12](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.iobserver.class/vb/observer.vb#12)]"
+  syntax:
+    content: public void OnNext (T value);
+    parameters:
+    - id: value
+      type: T
+      description: The current notification information.
+  overload: System.IObserver`1.OnNext*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IObserver`1.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+references:
+- uid: System.IObserver`1.OnCompleted
+  parent: System.IObserver`1
+  isExternal: false
+  name: OnCompleted()
+  nameWithType: IObserver<T>.OnCompleted()
+  fullName: IObserver<T>.OnCompleted()
+- uid: System.IObserver`1.OnError(System.Exception)
+  parent: System.IObserver`1
+  isExternal: false
+  name: OnError(Exception)
+  nameWithType: IObserver<T>.OnError(Exception)
+  fullName: IObserver<T>.OnError(Exception)
+- uid: System.Exception
+  parent: System
+  isExternal: false
+  name: Exception
+  nameWithType: Exception
+  fullName: System.Exception
+- uid: System.IObserver`1.OnNext(`0)
+  parent: System.IObserver`1
+  isExternal: false
+  name: OnNext(T)
+  nameWithType: IObserver<T>.OnNext(T)
+  fullName: IObserver<T>.OnNext(T)
+- uid: T
+  isExternal: true
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: System.IObserver`1.OnCompleted*
+  parent: System.IObserver`1
+  isExternal: false
+  name: OnCompleted
+  nameWithType: IObserver<T>.OnCompleted
+  fullName: IObserver<T>.OnCompleted
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IObserver`1.xml
+- uid: System.IObserver`1.OnError*
+  parent: System.IObserver`1
+  isExternal: false
+  name: OnError
+  nameWithType: IObserver<T>.OnError
+  fullName: IObserver<T>.OnError
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IObserver`1.xml
+- uid: System.IObserver`1.OnNext*
+  parent: System.IObserver`1
+  isExternal: false
+  name: OnNext
+  nameWithType: IObserver<T>.OnNext
+  fullName: IObserver<T>.OnNext
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IObserver`1.xml

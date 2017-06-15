@@ -1,0 +1,1888 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Speech.Recognition.Grammar
+  commentId: T:System.Speech.Recognition.Grammar
+  id: Grammar
+  children:
+  - System.Speech.Recognition.Grammar.#ctor
+  - System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Uri,System.Object[])
+  - System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String,System.Uri,System.Object[])
+  - System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Uri)
+  - System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Object[])
+  - System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String,System.Uri)
+  - System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String,System.Object[])
+  - System.Speech.Recognition.Grammar.#ctor(System.String,System.String,System.Object[])
+  - System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String)
+  - System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String)
+  - System.Speech.Recognition.Grammar.#ctor(System.String)
+  - System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument)
+  - System.Speech.Recognition.Grammar.#ctor(System.String,System.String)
+  - System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.GrammarBuilder)
+  - System.Speech.Recognition.Grammar.#ctor(System.IO.Stream)
+  - System.Speech.Recognition.Grammar.Enabled
+  - System.Speech.Recognition.Grammar.IsStg
+  - System.Speech.Recognition.Grammar.Loaded
+  - System.Speech.Recognition.Grammar.LoadLocalizedGrammarFromType(System.Type,System.Object[])
+  - System.Speech.Recognition.Grammar.Name
+  - System.Speech.Recognition.Grammar.Priority
+  - System.Speech.Recognition.Grammar.ResourceName
+  - System.Speech.Recognition.Grammar.RuleName
+  - System.Speech.Recognition.Grammar.SpeechRecognized
+  - System.Speech.Recognition.Grammar.StgInit(System.Object[])
+  - System.Speech.Recognition.Grammar.Weight
+  langs:
+  - csharp
+  name: Grammar
+  nameWithType: Grammar
+  fullName: System.Speech.Recognition.Grammar
+  type: Class
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: A runtime object that references a speech recognition grammar, which an application can use to define the constraints for speech recognition.
+  remarks: "A speech recognition grammar is a set of rules or constraints that define what a speech recognition engine can recognize as meaningful input. For more information about creating and using speech recognition grammars, see [Speech Recognition](http://msdn.microsoft.com/en-us/6a7dc524-07fc-4862-8d48-8c10dc64b919),  [Create Grammars Using XML](http://msdn.microsoft.com/en-us/2d799487-49c6-4cc9-b42f-f71cd3824fe1), [Create Grammars Using GrammarBuilder](http://msdn.microsoft.com/en-us/7e2cc577-cb05-4318-9da3-7c8675d3d9ae), and [Create Grammars Using SrgsGrammar](http://msdn.microsoft.com/en-us/e4d9f96e-2241-4c39-b9e0-ac9ef4e9a906).  \n  \n After you author a grammar, you must build it into a <xref:System.Speech.Recognition.Grammar> object that a speech recognition engine can load and that your application can use at runtime to manage speech recognition. You can use a <xref:System.Speech.Recognition.Grammar.%23ctor%2A> constructor to create a <xref:System.Speech.Recognition.Grammar> instance from a <xref:System.Speech.Recognition.GrammarBuilder> or a <xref:System.Speech.Recognition.SrgsGrammar.SrgsDocument> object, or from a file or a <xref:System.IO.Stream> that contains a description of a grammar in a supported format. Supported formats include the following:  \n  \n-   XML-format files that conform to the W3C [Speech Recognition Grammar Specification (SRGS) Version 1.0](http://go.microsoft.com/fwlink/?LinkId=201761)  \n  \n-   Grammars that have been compiled to a binary file with a .cfg file extension  \n  \n Grammar constructors that accept XML-format grammar files in their arguments compile the XML grammars to a binary format to optimize them for loading and consumption by a speech recognition engine. You can reduce the amount of time required to construct a <xref:System.Speech.Recognition.Grammar> object from an XML-format grammar by compiling the grammar in advance, using one of the <xref:System.Speech.Recognition.SrgsGrammar.SrgsGrammarCompiler.Compile%2A> methods.  \n  \n An application's speech recognition engine, as managed by a <xref:System.Speech.Recognition.SpeechRecognizer> or <xref:System.Speech.Recognition.SpeechRecognitionEngine> object, can load multiple speech recognition grammars. The application can independently enable or disable individual grammars by setting the <xref:System.Speech.Recognition.Grammar.Enabled%2A> property, and modify recognition behavior through <xref:System.Speech.Recognition.Grammar> properties, such as the <xref:System.Speech.Recognition.Grammar.Priority%2A> and <xref:System.Speech.Recognition.Grammar.Weight%2A> properties.  \n  \n The grammar’s <xref:System.Speech.Recognition.Grammar.SpeechRecognized> event is raised when input matches a path through the grammar.  \n  \n> [!NOTE]\n>  It is a best practice to verify the safety of any URI or DLL used to build a <xref:System.Speech.Recognition.Grammar> object.  \n>   \n>  Windows and the Speech platform provide security for applications constructing a <xref:System.Speech.Recognition.Grammar> instance from a DLL or from a grammar that supports scripting.  \n>   \n>  Scripts in <xref:System.Speech.Recognition.Grammar> objects are always run as if downloaded from a web page in the `Internet Zone`. The Common Language Runtime (CLR) isolates any DLL loaded to obtain a grammar definition."
+  example:
+  - "The following example constructs a <xref:System.Speech.Recognition.Grammar> object from a speech recognition grammar defined in a XML file (cities.xml). The content of the cities.xml file appears in the following XML example.  \n  \n```csharp  \n// Load a cities grammar from a local file and return the grammar object.   \nprivate static Grammar CreateGrammarFromFile()  \n{  \n  Grammar citiesGrammar = new Grammar(@\"c:\\temp\\cities.xml\");  \n  citiesGrammar.Name = \"SRGS File Cities Grammar\";  \n  return citiesGrammar;  \n}  \n  \n```  \n  \n```xml  \n  \n<?xml version=\"1.0\" encoding=\"UTF-8\" ?>  \n<grammar version=\"1.0\" xml:lang=\"en-US\"  \n         xmlns=\"http://www.w3.org/2001/06/grammar\"  \n         tag-format=\"semantics/1.0\" root=\"Main\">  \n  \n  <!-- cities.xml:   \n    Defines an SRGS grammar for requesting a flight. This grammar includes  \n    a Cities rule that lists the cities that can be used for departures  \n    and destinations. -->  \n  \n  <rule id=\"Main\">  \n    <item>  \n      I would like to fly from <ruleref uri=\"#Cities\"/>  \n      to <ruleref uri=\"#Cities\"/>  \n    </item>  \n  </rule>  \n  \n  <rule id=\"Cities\" scope=\"public\">  \n    <one-of>  \n      <item> Seattle </item>  \n      <item> Los Angeles </item>  \n      <item> New York </item>  \n      <item> Miami </item>  \n    </one-of>  \n  </rule>  \n</grammar>  \n```"
+  syntax:
+    content: public class Grammar
+  inheritance:
+  - System.Object
+  derivedClasses:
+  - System.Speech.Recognition.DictationGrammar
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.#ctor
+  commentId: M:System.Speech.Recognition.Grammar.#ctor
+  id: '#ctor'
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Grammar()
+  nameWithType: Grammar.Grammar()
+  fullName: Grammar.Grammar()
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Initializes a new instance of the <xref href="System.Speech.Recognition.Grammar"></xref> class
+  syntax:
+    content: protected Grammar ();
+    parameters: []
+  overload: System.Speech.Recognition.Grammar.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Uri,System.Object[])
+  commentId: M:System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Uri,System.Object[])
+  id: '#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Uri,System.Object[])'
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Grammar(SrgsDocument, String, Uri, Object[])
+  nameWithType: Grammar.Grammar(SrgsDocument, String, Uri, Object[])
+  fullName: Grammar.Grammar(SrgsDocument, String, Uri, Object[])
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Initializes a new instance of the <xref href="System.Speech.Recognition.Grammar"></xref> class from an instance of <xref href="System.Speech.Recognition.SrgsGrammar.SrgsDocument"></xref>, and specifies the name of a rule to be the entry point to the grammar and a base URI to resolve relative references.
+  remarks: Parameters for an initialization handler may also be specified.
+  syntax:
+    content: public Grammar (System.Speech.Recognition.SrgsGrammar.SrgsDocument srgsDocument, string ruleName, Uri baseUri, object[] parameters);
+    parameters:
+    - id: srgsDocument
+      type: System.Speech.Recognition.SrgsGrammar.SrgsDocument
+      description: An instance of <xref href="System.Speech.Recognition.SrgsGrammar.SrgsDocument"></xref> that contains the constraints for the speech recognition grammar.
+    - id: ruleName
+      type: System.String
+      description: The identifier of the rule to use as the entry point of the speech recognition grammar, or `null` to use the default root rule of the grammar description.
+    - id: baseUri
+      type: System.Uri
+      description: The base URI to use to resolve any relative rule reference in the grammar description, or `null`.
+    - id: parameters
+      type: System.Object[]
+      description: Parameters to be passed to the initialization handler specified by the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsRule.OnInit"></xref> property for the entry point or the root rule of the <xref href="System.Speech.Recognition.Grammar"></xref> to be created.This parameter may be null.
+  overload: System.Speech.Recognition.Grammar.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: "-   Any of the parameters contain an invalid value.  \n  \n-   The <xref href=\"System.Speech.Recognition.SrgsGrammar.SrgsDocument\"></xref> specified by <code>srgsDocument</code> does not contain the rule specified in <code>ruleName</code>.  \n  \n-   The contents of the array parameters do not match the arguments of any of the rule's initialization handlers.  \n  \n-   The grammar has a relative rule reference that cannot be resolved by the default base <xref href=\"System.Uri\"></xref> rule for grammars or the URI supplied by <code>baseUri</code>."
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String,System.Uri,System.Object[])
+  commentId: M:System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String,System.Uri,System.Object[])
+  id: '#ctor(System.IO.Stream,System.String,System.Uri,System.Object[])'
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Grammar(Stream, String, Uri, Object[])
+  nameWithType: Grammar.Grammar(Stream, String, Uri, Object[])
+  fullName: Grammar.Grammar(Stream, String, Uri, Object[])
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Initializes a new instance of the <xref href="System.Speech.Recognition.Grammar"></xref> class a <xref href="System.IO.Stream"></xref> and specifies a root rule and a base URI to resolve relative references.
+  remarks: Parameters for an initialization handler may also be specified.
+  syntax:
+    content: public Grammar (System.IO.Stream stream, string ruleName, Uri baseUri, object[] parameters);
+    parameters:
+    - id: stream
+      type: System.IO.Stream
+      description: A <xref href="System.IO.Stream"></xref> connected to an input/output object (including files, VisualStudio Resources, and DLLs) that contains a grammar specification.
+    - id: ruleName
+      type: System.String
+      description: The identifier of the rule to use as the entry point of the speech recognition grammar, or `null` to use the default root rule of the grammar description.
+    - id: baseUri
+      type: System.Uri
+      description: The base URI to use to resolve any relative rule reference in the grammar description, or `null`.
+    - id: parameters
+      type: System.Object[]
+      description: Parameters to be passed to the initialization handler specified by the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsRule.OnInit"></xref> property for the entry point or the root rule of the <xref href="System.Speech.Recognition.Grammar"></xref> to be created. This parameter may be null.
+  overload: System.Speech.Recognition.Grammar.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: "-   Any of the parameters contain an invalid value.  \n  \n-   The <code>stream</code> is connected to a grammar that does not contain the rule specified by <code>ruleName</code>.  \n  \n-   The contents of the array parameters do not match the arguments of any of the rule's initialization handlers.  \n  \n-   The grammar contains a relative rule reference that cannot be resolved by the default base <xref href=\"System.Uri\"></xref> rule for grammars or the URI supplied by <code>baseUri</code>."
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Uri)
+  commentId: M:System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Uri)
+  id: '#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Uri)'
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Grammar(SrgsDocument, String, Uri)
+  nameWithType: Grammar.Grammar(SrgsDocument, String, Uri)
+  fullName: Grammar.Grammar(SrgsDocument, String, Uri)
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Initializes a new instance of a <xref href="System.Speech.Recognition.Grammar"></xref> class from an <xref href="System.Speech.Recognition.SrgsGrammar.SrgsDocument"></xref> object, specifies a root rule, and defines a base Uniform Resource Identifier (URI) to resolve relative rule references.
+  remarks: "This constructor does not pass any parameters to the initialization handler, and the <xref:System.Speech.Recognition.SrgsGrammar.SrgsDocument> should not contain an initialization handler that requires arguments.  \n  \n This constructor does not validate `baseUri`. However, the `LoadGrammar` method of a <xref:System.Speech.Recognition.SpeechRecognitionEngine> or <xref:System.Speech.Recognition.SpeechRecognizer> object throws an exception if it cannot resolve all of the rule references in the grammar description. If `baseUri` is not `null`, the `LoadGrammar` method uses the URI to resolve any rule references that it cannot otherwise resolve. If `baseUri` represents a file, then the `LoadGrammar` method uses both the designated file and the file's directory when it attempts to resolve relative rule references."
+  example:
+  - "The following example creates a speech recognition grammar in an <xref:System.Speech.Recognition.SrgsGrammar.SrgsDocument> that contains a relative rule reference to the cities.xml file, and specifies a URI to use to resolve the rule reference. The content of the cities.xml file appears in the XML example that follows the C# example.  \n  \n```csharp  \n  \nprivate static Grammar CreateSrgsDocumentGrammar3()  \n{  \n  // Create the SrgsDocument.  \n  SrgsDocument document = new SrgsDocument();  \n  \n  // Create the Main rule and add it to the document.  \n  SrgsRule mainRule = new SrgsRule(\"Main\");  \n  mainRule.Scope = SrgsRuleScope.Public;  \n  \n  SrgsItem item = new SrgsItem(\"Can I get a shuttle in\");  \n  \n  // Create a relative URI for the cities rule.  \n  Uri ruleUri = new Uri(\"cities.xml#Cities\", UriKind.Relative);  \n  \n  item.Add(new SrgsRuleRef(ruleUri));  \n  \n  mainRule.Add(item);  \n  document.Rules.Add(mainRule);  \n  \n  // Set the root rule.  \n  document.Root = mainRule;  \n  \n  // Create the grammar.  \n  Uri baseUri = new Uri(@\"file://c:\\temp\\\");  \n  Grammar citiesGrammar = new Grammar(document, null, baseUri);  \n  citiesGrammar.Name = \"SrgsDocument Cities Grammar 3\";  \n  \n  return citiesGrammar;  \n}  \n  \n```  \n  \n```xml  \n  \n<?xml version=\"1.0\" encoding=\"UTF-8\" ?>  \n<grammar version=\"1.0\" xml:lang=\"en-US\"  \n         xmlns=\"http://www.w3.org/2001/06/grammar\"  \n         tag-format=\"semantics/1.0\" root=\"Main\">  \n  \n  <!-- cities.xml:   \n    Defines an SRGS grammar for requesting a flight. This grammar includes  \n    a Cities rule that lists the cities that can be used for departures  \n    and destinations. -->  \n  \n  <rule id=\"Main\">  \n    <item>  \n      I would like to fly from <ruleref uri=\"#Cities\"/>  \n      to <ruleref uri=\"#Cities\"/>  \n    </item>  \n  </rule>  \n  \n  <rule id=\"Cities\" scope=\"public\">  \n    <one-of>  \n      <item>Seattle</item>  \n      <item>Los Angeles</item>  \n      <item>New York</item>  \n      <item>Miami</item>  \n    </one-of>  \n  </rule>  \n</grammar>  \n```"
+  syntax:
+    content: public Grammar (System.Speech.Recognition.SrgsGrammar.SrgsDocument srgsDocument, string ruleName, Uri baseUri);
+    parameters:
+    - id: srgsDocument
+      type: System.Speech.Recognition.SrgsGrammar.SrgsDocument
+      description: The constraints for the speech recognition grammar.
+    - id: ruleName
+      type: System.String
+      description: The identifier of the rule to use as the entry point of the speech recognition grammar, or `null` to use the default root rule of the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsDocument"></xref>.
+    - id: baseUri
+      type: System.Uri
+      description: The base URI to use to resolve any relative rule reference in the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsDocument"></xref>, or `null`.
+  overload: System.Speech.Recognition.Grammar.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>ruleName</code> cannot be resolved or is not public, or <code>ruleName</code> is `null` and <code>srgsDocument</code> does not contain a root rule.
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>srgsDocument</code> is `null`.
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: <code>srgsDocument</code> contains a rule reference that cannot be resolved.
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Object[])
+  commentId: M:System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Object[])
+  id: '#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Object[])'
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Grammar(SrgsDocument, String, Object[])
+  nameWithType: Grammar.Grammar(SrgsDocument, String, Object[])
+  fullName: Grammar.Grammar(SrgsDocument, String, Object[])
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Initializes a new instance of the <xref href="System.Speech.Recognition.Grammar"></xref> class from an instance of <xref href="System.Speech.Recognition.SrgsGrammar.SrgsDocument"></xref>, and specifies the name of a rule to be the entry point to the grammar.
+  remarks: Parameters for an initialization handler may also be specified.
+  syntax:
+    content: public Grammar (System.Speech.Recognition.SrgsGrammar.SrgsDocument srgsDocument, string ruleName, object[] parameters);
+    parameters:
+    - id: srgsDocument
+      type: System.Speech.Recognition.SrgsGrammar.SrgsDocument
+      description: An instance of <xref href="System.Speech.Recognition.SrgsGrammar.SrgsDocument"></xref> that contains the constraints for the speech recognition grammar.
+    - id: ruleName
+      type: System.String
+      description: The identifier of the rule to use as the entry point of the speech recognition grammar, or `null` to use the default root rule of the grammar description.
+    - id: parameters
+      type: System.Object[]
+      description: Parameters to be passed to the initialization handler specified by the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsRule.OnInit"></xref> property for the entry point or the root rule of the <xref href="System.Speech.Recognition.Grammar"></xref> to be created. This parameter may be null.
+  overload: System.Speech.Recognition.Grammar.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: "-   Any of the parameters contain an invalid value.  \n  \n-   The <xref href=\"System.Speech.Recognition.SrgsGrammar.SrgsDocument\"></xref> specified by <code>srgsDocument</code> does not contain the rule specified by <code>ruleName</code>.  \n  \n-   The contents of the array parameters do not match the arguments of any of the rule's initialization handlers."
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String,System.Uri)
+  commentId: M:System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String,System.Uri)
+  id: '#ctor(System.IO.Stream,System.String,System.Uri)'
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Grammar(Stream, String, Uri)
+  nameWithType: Grammar.Grammar(Stream, String, Uri)
+  fullName: Grammar.Grammar(Stream, String, Uri)
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Initializes a new instance of the <xref href="System.Speech.Recognition.Grammar"></xref> class from a stream, specifies a root rule, and defines a base Uniform Resource Identifier (URI) to resolve relative rule references.
+  remarks: "This constructor does not pass any parameters to the initialization handler, and the description should not define an initialization handler that requires arguments.  \n  \n This constructor can create a <xref:System.Speech.Recognition.Grammar> instance from the following formats:  \n  \n-   XML-format files that conform to the W3C [Speech Recognition Grammar Specification (SRGS) Version 1.0](http://go.microsoft.com/fwlink/?LinkId=201761)  \n  \n-   Grammars that have been compiled to a binary file with a .cfg file extension  \n  \n This constructor compiles XML-format grammar files to a binary format to optimize them for loading and consumption by a speech recognition engine. You can reduce the amount of time required to construct a <xref:System.Speech.Recognition.Grammar> object from an XML-format grammar by compiling the grammar in advance, using one of the <xref:System.Speech.Recognition.SrgsGrammar.SrgsGrammarCompiler.Compile%2A> methods.  \n  \n This constructor does not validate `baseUri`. However, the `LoadGrammar` method of a <xref:System.Speech.Recognition.SpeechRecognitionEngine> or <xref:System.Speech.Recognition.SpeechRecognizer> object throws an exception if it cannot resolve all of the rule references in the grammar description. If `baseUri` is not `null`, the `LoadGrammar` method uses the URI to resolve any rule references that it cannot otherwise resolve. If `baseUri` represents a file, then the `LoadGrammar` uses both the designated file and the file's directory when it attempts to resolve relative rule references."
+  example:
+  - "The following example loads a local SRGS file (shuttle.xml) from a file stream. The file contains a relative rule reference to a rule in the cities.xml file, and specifies a base URI to use to resolve the rule reference. The content of the shuttle.xml and cities.xml files appears in the XML examples that follow the C# example.  \n  \n```csharp  \n  \nprivate static Grammar CreateGrammarFromStream3()  \n{  \n  FileInfo file = new FileInfo(@\".\\shuttle.xml\");  \n  Uri baseUri = new Uri(@\"file://c:\\temp\\\");  \n  Grammar citiesGrammar = new Grammar(file.OpenRead(), null, baseUri);  \n  citiesGrammar.Name = \"Stream Cities Grammar 3\";  \n  return citiesGrammar;  \n}  \n```  \n  \n```xml  \n  \n<?xml version=\"1.0\" encoding=\"UTF-8\" ?>  \n<grammar version=\"1.0\" xml:lang=\"en-US\"  \n         xmlns=\"http://www.w3.org/2001/06/grammar\"  \n         tag-format=\"semantics/1.0\" root=\"Main\">  \n  \n  <!-- shuttle.xml:   \n    Defines an SRGS grammar for asking about a shuttle service. This grammar  \n    references a Cities rule that is defined in the cities.xml grammar. -->  \n  \n  <rule id=\"Main\">  \n    <item>  \n      Can I get a shuttle in  \n      <ruleref uri=\"cities.xml#Cities\"/>  \n    </item>  \n  </rule>  \n</grammar>  \n```  \n  \n```xml  \n  \n<?xml version=\"1.0\" encoding=\"UTF-8\" ?>  \n<grammar version=\"1.0\" xml:lang=\"en-US\"  \n         xmlns=\"http://www.w3.org/2001/06/grammar\"  \n         tag-format=\"semantics/1.0\" root=\"Main\">  \n  \n  <!-- cities.xml:   \n    Defines an SRGS grammar for requesting a flight. This grammar includes  \n    a Cities rule that lists the cities that can be used for departures  \n    and destinations. -->  \n  \n  <rule id=\"Main\">  \n    <item>  \n      I would like to fly from <ruleref uri=\"#Cities\"/>  \n      to <ruleref uri=\"#Cities\"/>  \n    </item>  \n  </rule>  \n  \n  <rule id=\"Cities\" scope=\"public\">  \n    <one-of>  \n      <item>Seattle</item>  \n      <item>Los Angeles</item>  \n      <item>New York</item>  \n      <item>Miami</item>  \n    </one-of>  \n  </rule>  \n</grammar>  \n```"
+  syntax:
+    content: public Grammar (System.IO.Stream stream, string ruleName, Uri baseUri);
+    parameters:
+    - id: stream
+      type: System.IO.Stream
+      description: A stream that describes a speech recognition grammar in a supported format.
+    - id: ruleName
+      type: System.String
+      description: The identifier of the rule to use as the entry point of the speech recognition grammar, or `null` to use the default root rule of the grammar description.
+    - id: baseUri
+      type: System.Uri
+      description: The base URI to use to resolve any relative rule reference in the grammar description, or `null`.
+  overload: System.Speech.Recognition.Grammar.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>ruleName</code> cannot be resolved or is not public, or <code>ruleName</code> is `null` and the grammar description does not define a root rule.
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>stream</code> is `null`.
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: The stream does not contain a valid description or describes a grammar that contains a rule reference that cannot be resolved.
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String,System.Object[])
+  commentId: M:System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String,System.Object[])
+  id: '#ctor(System.IO.Stream,System.String,System.Object[])'
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Grammar(Stream, String, Object[])
+  nameWithType: Grammar.Grammar(Stream, String, Object[])
+  fullName: Grammar.Grammar(Stream, String, Object[])
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Initializes a new instance of the <xref href="System.Speech.Recognition.Grammar"></xref> class from a <xref href="System.IO.Stream"></xref> and specifies a root rule.
+  remarks: Parameters for an initialization handler may also be specified.
+  syntax:
+    content: public Grammar (System.IO.Stream stream, string ruleName, object[] parameters);
+    parameters:
+    - id: stream
+      type: System.IO.Stream
+      description: A <xref href="System.IO.Stream"></xref> connected to an input/output object (including files, VisualStudio Resources, and DLLs) that contains a grammar specification.
+    - id: ruleName
+      type: System.String
+      description: The identifier of the rule to use as the entry point of the speech recognition grammar, or `null` to use the default root rule of the grammar description.
+    - id: parameters
+      type: System.Object[]
+      description: Parameters to be passed to the initialization handler specified by the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsRule.OnInit"></xref> property for the entry point or the root rule of the <xref href="System.Speech.Recognition.Grammar"></xref> to be created. This parameter may be null.
+  overload: System.Speech.Recognition.Grammar.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: "<code>stream</code> is connected to a grammar that:  \n  \n-   Does not contain the rule specified in <code>ruleName</code>  \n  \n-   Requires initialization parameters different from those specified in <code>parameters</code>  \n  \n-   Contains a relative rule reference that cannot be resolved by the default base <xref href=\"System.Uri\"></xref> rule for grammars"
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.#ctor(System.String,System.String,System.Object[])
+  commentId: M:System.Speech.Recognition.Grammar.#ctor(System.String,System.String,System.Object[])
+  id: '#ctor(System.String,System.String,System.Object[])'
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Grammar(String, String, Object[])
+  nameWithType: Grammar.Grammar(String, String, Object[])
+  fullName: Grammar.Grammar(String, String, Object[])
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Initializes a new instance of the <xref href="System.Speech.Recognition.Grammar"></xref> class from a file that contains a grammar definition, and specifies the name of a rule to be the entry point to the grammar..
+  remarks: Parameters for an initialization handler may also be specified.
+  syntax:
+    content: public Grammar (string path, string ruleName, object[] parameters);
+    parameters:
+    - id: path
+      type: System.String
+      description: The path to a file, including DLLs, that contains a grammar specification.
+    - id: ruleName
+      type: System.String
+      description: The identifier of the rule to use as the entry point of the speech recognition grammar, or `null` to use the default root rule of the grammar description.
+    - id: parameters
+      type: System.Object[]
+      description: Parameters to be passed to the initialization handler specified by the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsRule.OnInit"></xref> property for the entry point or the root rule of the <xref href="System.Speech.Recognition.Grammar"></xref> to be created. This parameter may be null.
+  overload: System.Speech.Recognition.Grammar.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: "-   Any of the parameters contain an invalid value.  \n  \n-   The file specified by <code>path</code> does not contain a valid grammar or the rule specified in <code>ruleName</code>.  \n  \n-   The contents of the array parameters do not match the arguments of any of the rule's initialization handlers.  \n  \n-   The grammar has a relative rule reference that cannot be resolved by the default base <xref href=\"System.Uri\"></xref> rule for grammars."
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String)
+  commentId: M:System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String)
+  id: '#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String)'
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Grammar(SrgsDocument, String)
+  nameWithType: Grammar.Grammar(SrgsDocument, String)
+  fullName: Grammar.Grammar(SrgsDocument, String)
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Initializes a new instance of a <xref href="System.Speech.Recognition.Grammar"></xref> class from an <xref href="System.Speech.Recognition.SrgsGrammar.SrgsDocument"></xref> object and specifies a root rule.
+  remarks: "This constructor does not pass any parameters to the initialization handler, and the <xref:System.Speech.Recognition.SrgsGrammar.SrgsDocument> should not contain an initialization handler that requires arguments.  \n  \n To create a <xref:System.Speech.Recognition.Grammar> object from a <xref:System.Speech.Recognition.SrgsGrammar.SrgsDocument> and specify a base URI to use to resolve relative rule references, use the <xref:System.Speech.Recognition.Grammar.%23ctor%2A> constructor."
+  example:
+  - "The following example creates a speech recognition grammar in an <xref:System.Speech.Recognition.SrgsGrammar.SrgsDocument> instance and specifies a rule to use as the root rule of the grammar. The example constructs a <xref:System.Speech.Recognition.Grammar> object from the <xref:System.Speech.Recognition.SrgsGrammar.SrgsDocument> instance and loads it into the speech recognition engine.  \n  \n```csharp  \nusing System;  \nusing System.Speech.Recognition;  \nusing System.Speech.Recognition.SrgsGrammar;  \n  \nnamespace SampleRecognition  \n{  \n  class Program  \n  {  \n    static void Main(string[] args)  \n  \n    // Initialize an in-process speech recognition engine.  \n    {  \n      using (SpeechRecognitionEngine recognizer =  \n         new SpeechRecognitionEngine())  \n      {  \n  \n        // Create the SrgsDocument.  \n        SrgsDocument document = new SrgsDocument();  \n  \n        // Create the Cities rule and add it to the document.  \n        SrgsRule citiesRule = new SrgsRule(\"Cities\");  \n        citiesRule.Scope = SrgsRuleScope.Public;  \n  \n        SrgsOneOf cityChoice = new SrgsOneOf();  \n        cityChoice.Add(new SrgsItem(\"Seattle\"));  \n        cityChoice.Add(new SrgsItem(\"Los Angeles\"));  \n        cityChoice.Add(new SrgsItem(\"New York\"));  \n        cityChoice.Add(new SrgsItem(\"Miami\"));  \n  \n        citiesRule.Add(cityChoice);  \n        document.Rules.Add(citiesRule);  \n  \n        // Create the Main rule and add it to the document.  \n        SrgsRule mainRule = new SrgsRule(\"Main\");  \n        mainRule.Scope = SrgsRuleScope.Public;  \n  \n        mainRule.Add(new SrgsItem(\"I would like to fly from\"));  \n        mainRule.Add(new SrgsRuleRef(citiesRule));  \n        mainRule.Add(new SrgsItem(\"to\"));  \n        mainRule.Add(new SrgsRuleRef(citiesRule));  \n  \n        document.Rules.Add(mainRule);  \n  \n        // Create the Grammar object and specify which rule to use as the root.  \n        Grammar citiesGrammar = new Grammar(document,\"Main\");  \n  \n        // Load the grammar object to the recognizer.  \n        recognizer.LoadGrammarAsync(citiesGrammar);  \n  \n        // Attach a handler for the SpeechRecognized event.  \n        recognizer.SpeechRecognized +=  \n          new EventHandler<SpeechRecognizedEventArgs>(recognizer_SpeechRecognized);  \n  \n        // Set the input to the recognizer.  \n        recognizer.SetInputToDefaultAudioDevice();  \n  \n        // Start recognition.  \n        recognizer.RecognizeAsync();  \n        Console.WriteLine(\"Starting aynchronous recognition...\");  \n  \n        // Keep the console window open.  \n        Console.ReadLine();  \n      }  \n    }  \n  \n    // Handle the SpeechRecognized event.  \n    static void recognizer_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)  \n    {  \n      Console.WriteLine(\"  Speech recognized: \" + e.Result.Text);  \n    }  \n  }  \n}  \n  \n```"
+  syntax:
+    content: public Grammar (System.Speech.Recognition.SrgsGrammar.SrgsDocument srgsDocument, string ruleName);
+    parameters:
+    - id: srgsDocument
+      type: System.Speech.Recognition.SrgsGrammar.SrgsDocument
+      description: The constraints for the speech recognition grammar.
+    - id: ruleName
+      type: System.String
+      description: The identifier of the rule to use as the entry point of the speech recognition grammar, or `null` to use the default root rule of the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsDocument"></xref>.
+  overload: System.Speech.Recognition.Grammar.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>ruleName</code> cannot be resolved or is not public, or <code>ruleName</code> is `null` and <code>srgsDocument</code> does not contain a root rule.
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>srgsDocument</code> is `null`.
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: <code>srgsDocument</code> contains a rule reference that cannot be resolved.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String)
+  commentId: M:System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String)
+  id: '#ctor(System.IO.Stream,System.String)'
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Grammar(Stream, String)
+  nameWithType: Grammar.Grammar(Stream, String)
+  fullName: Grammar.Grammar(Stream, String)
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Initializes a new instance of the <xref href="System.Speech.Recognition.Grammar"></xref> class from a <xref href="System.IO.Stream"></xref> and specifies a root rule.
+  remarks: "This constructor does not pass any parameters to the initialization handler, and the description should not define an initialization handler that requires arguments.  \n  \n This constructor can create a  <xref:System.Speech.Recognition.Grammar> instance from the following formats:  \n  \n-   XML-format files that conform to the W3C [Speech Recognition Grammar Specification (SRGS) Version 1.0](http://go.microsoft.com/fwlink/?LinkId=201761)  \n  \n-   Grammars that have been compiled to a binary file with a .cfg file extension  \n  \n This constructor compiles XML-format grammar files to a binary format to optimize them for loading and consumption by a speech recognition engine. You can reduce the amount of time required to construct a <xref:System.Speech.Recognition.Grammar> object from an XML-format grammar by compiling the grammar in advance, using one of the <xref:System.Speech.Recognition.SrgsGrammar.SrgsGrammarCompiler.Compile%2A> methods.  \n  \n To create a <xref:System.Speech.Recognition.Grammar> from a stream and specify a base URI to use to resolve relative rule references, use the <xref:System.Speech.Recognition.Grammar.%23ctor%2A> constructor."
+  example:
+  - "The following example loads a local SRGS file (cities.xml) from a file stream and specifies a rule to use as the root of the grammar. The content of the cities.xml file appears in the XML example that follows the C# example.  \n  \n```csharp  \n  \n// Load a cities grammar from an I/O stream, use a specific  \n// rule as the root of the grammar, and return the new grammar.   \nprivate static Grammar CreateGrammarFromStream2()  \n{  \n  FileInfo file = new FileInfo(@\"c:\\temp\\cities.xml\");  \n  Grammar citiesGrammar = new Grammar(file.OpenRead(), \"Main\");  \n  citiesGrammar.Name = \"Stream Cities Grammar 2\";  \n  return citiesGrammar;  \n}  \n```  \n  \n```xml  \n  \n<?xml version=\"1.0\" encoding=\"UTF-8\" ?>  \n<grammar version=\"1.0\" xml:lang=\"en-US\"  \n         xmlns=\"http://www.w3.org/2001/06/grammar\"  \n         tag-format=\"semantics/1.0\" root=\"Main\">  \n  \n  <!-- cities.xml:   \n    Defines an SRGS grammar for requesting a flight. This grammar includes  \n    a Cities rule that lists the cities that can be used for departures  \n    and destinations. -->  \n  \n  <rule id=\"Main\">  \n    <item>  \n      I would like to fly from <ruleref uri=\"#Cities\"/>  \n      to <ruleref uri=\"#Cities\"/>  \n    </item>  \n  </rule>  \n  \n  <rule id=\"Cities\" scope=\"public\">  \n    <one-of>  \n      <item>Seattle</item>  \n      <item>Los Angeles</item>  \n      <item>New York</item>  \n      <item>Miami</item>  \n    </one-of>  \n  </rule>  \n</grammar>  \n```"
+  syntax:
+    content: public Grammar (System.IO.Stream stream, string ruleName);
+    parameters:
+    - id: stream
+      type: System.IO.Stream
+      description: A stream that describes a speech recognition grammar in a supported format.
+    - id: ruleName
+      type: System.String
+      description: The identifier of the rule to use as the entry point of the speech recognition grammar, or `null` to use the default root rule of the grammar description.
+  overload: System.Speech.Recognition.Grammar.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>ruleName</code> cannot be resolved or is not public, or <code>ruleName</code> is `null` and the grammar description does not define a root rule.
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>stream</code> is `null`.
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: The stream does not contain a valid description or describes a grammar that contains a rule reference that cannot be resolved.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.#ctor(System.String)
+  commentId: M:System.Speech.Recognition.Grammar.#ctor(System.String)
+  id: '#ctor(System.String)'
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Grammar(String)
+  nameWithType: Grammar.Grammar(String)
+  fullName: Grammar.Grammar(String)
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Initializes a new instance of the <xref href="System.Speech.Recognition.Grammar"></xref> class from a file.
+  remarks: "This constructor does not pass any parameters to the initialization handler, and the description should not define an initialization handler that requires arguments.  \n  \n This constructor can create a <xref:System.Speech.Recognition.Grammar> instance from the following formats:  \n  \n-   XML-format files that conform to the W3C [Speech Recognition Grammar Specification (SRGS) Version 1.0](http://go.microsoft.com/fwlink/?LinkId=201761)  \n  \n-   Grammars that have been compiled to a binary file with a .cfg file extension  \n  \n This constructor compiles XML-format grammar files to a binary format to optimize them for loading and consumption by a speech recognition engine. You can reduce the amount of time required to construct a <xref:System.Speech.Recognition.Grammar> object from an XML-format grammar by compiling the grammar in advance, using one of the <xref:System.Speech.Recognition.SrgsGrammar.SrgsGrammarCompiler.Compile%2A> methods.  \n  \n An SRGS grammar can define a root rule. To create a <xref:System.Speech.Recognition.Grammar> object from a string and specify a root rule, use the <xref:System.Speech.Recognition.Grammar.%23ctor%2A> constructor.  \n  \n To create a <xref:System.Speech.Recognition.Grammar> object that specifies a base URI to use to resolve relative rule references, open the file in a file stream and use the <xref:System.Speech.Recognition.Grammar.%23ctor%2A?displayProperty=fullName> constructor."
+  example:
+  - "The following example loads a speech recognition grammar from a local SRGS file to build a <xref:System.Speech.Recognition.Grammar> object. The content of the cities.xml file appears in the XML example that follows the C# example.  \n  \n```csharp  \n// Load a cities grammar from a local file and  \n// return the new grammar.   \nprivate static Grammar CreateGrammarFromFile()  \n{  \n  Grammar citiesGrammar = new Grammar(@\"c:\\temp\\cities.xml\");  \n  citiesGrammar.Name = \"SRGS File Cities Grammar\";  \n  return citiesGrammar;  \n}  \n  \n```  \n  \n```xml  \n  \n<?xml version=\"1.0\" encoding=\"UTF-8\" ?>  \n<grammar version=\"1.0\" xml:lang=\"en-US\"  \n         xmlns=\"http://www.w3.org/2001/06/grammar\"  \n         tag-format=\"semantics/1.0\" root=\"Main\">  \n  \n  <!-- cities.xml:   \n    Defines an SRGS grammar for requesting a flight. This grammar includes  \n    a Cities rule that lists the cities that can be used for departures  \n    and destinations. -->  \n  \n  <rule id=\"Main\">  \n    <item>  \n      I would like to fly from <ruleref uri=\"#Cities\"/>  \n      to <ruleref uri=\"#Cities\"/>  \n    </item>  \n  </rule>  \n  \n  <rule id=\"Cities\" scope=\"public\">  \n    <one-of>  \n      <item>Seattle</item>  \n      <item>Los Angeles</item>  \n      <item>New York</item>  \n      <item>Miami</item>  \n    </one-of>  \n  </rule>  \n</grammar>  \n```"
+  syntax:
+    content: public Grammar (string path);
+    parameters:
+    - id: path
+      type: System.String
+      description: The path of the file that describes a speech recognition grammar in a supported format.
+  overload: System.Speech.Recognition.Grammar.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>path</code> contains the empty string (""), or the file describes a grammar that does not contain a root rule.
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>path</code> is `null`.
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: The file does not contain a valid description, or describes a grammar that contains a rule reference that cannot be resolved.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument)
+  commentId: M:System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument)
+  id: '#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument)'
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Grammar(SrgsDocument)
+  nameWithType: Grammar.Grammar(SrgsDocument)
+  fullName: Grammar.Grammar(SrgsDocument)
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Initializes a new instance of a <xref href="System.Speech.Recognition.Grammar"></xref> class from an <xref href="System.Speech.Recognition.SrgsGrammar.SrgsDocument"></xref> object.
+  remarks: "This constructor does not pass any parameters to the initialization handler, and the <xref:System.Speech.Recognition.SrgsGrammar.SrgsDocument> should not contain an initialization handler that requires arguments.  \n  \n A <xref:System.Speech.Recognition.SrgsGrammar.SrgsDocument> can have a root rule. To create a <xref:System.Speech.Recognition.Grammar> object that specifies a root rule, use the <xref:System.Speech.Recognition.Grammar.%23ctor%2A> or <xref:System.Speech.Recognition.Grammar.%23ctor%2A> constructor.  \n  \n To create a speech recognition <xref:System.Speech.Recognition.Grammar> from an <xref:System.Speech.Recognition.SrgsGrammar.SrgsDocument> and specify a base URI to use to resolve relative rule references, use the <xref:System.Speech.Recognition.Grammar.%23ctor%2A> constructor."
+  example:
+  - "The following example creates a speech recognition grammar in an <xref:System.Speech.Recognition.SrgsGrammar.SrgsDocument> instance, which is then used to construct a <xref:System.Speech.Recognition.Grammar> object.  \n  \n```csharp  \nprivate static Grammar CreateSrgsDocumentGrammar()  \n{  \n  // Create the SrgsDocument.  \n  SrgsDocument document = new SrgsDocument();  \n  \n  // Create the Cities rule and add it to the document.  \n  SrgsRule citiesRule = new SrgsRule(\"Cities\");  \n  \n  SrgsOneOf cityChoice = new SrgsOneOf();  \n  cityChoice.Add(new SrgsItem(\"Seattle\"));  \n  cityChoice.Add(new SrgsItem(\"Los Angeles\"));  \n  cityChoice.Add(new SrgsItem(\"New York\"));  \n  cityChoice.Add(new SrgsItem(\"Miami\"));  \n  \n  citiesRule.Add(cityChoice);  \n  document.Rules.Add(citiesRule);  \n  \n  // Create the Main rule and add it to the document.  \n  SrgsRule mainRule = new SrgsRule(\"Main\");  \n  mainRule.Scope = SrgsRuleScope.Public;  \n  \n  SrgsItem item = new SrgsItem(\"I would like to fly from\");  \n  item.Add(new SrgsRuleRef(citiesRule));  \n  item.Add(new SrgsText(\"to\"));  \n  item.Add(new SrgsRuleRef(citiesRule));  \n  \n  mainRule.Add(item);  \n  document.Rules.Add(mainRule);  \n  \n  // Set the root rule.  \n  document.Root = mainRule;  \n  \n  // Create the Grammar object.  \n  Grammar citiesGrammar = new Grammar(document);  \n  citiesGrammar.Name = \"SrgsDocument Cities Grammar\";  \n  \n  return citiesGrammar;  \n}  \n  \n```"
+  syntax:
+    content: public Grammar (System.Speech.Recognition.SrgsGrammar.SrgsDocument srgsDocument);
+    parameters:
+    - id: srgsDocument
+      type: System.Speech.Recognition.SrgsGrammar.SrgsDocument
+      description: The constraints for the speech recognition grammar.
+  overload: System.Speech.Recognition.Grammar.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>srgsDocument</code> does not contain a root rule.
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>srgsDocument</code> is `null`.
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: <code>srgsDocument</code> contains a rule reference that cannot be resolved.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.#ctor(System.String,System.String)
+  commentId: M:System.Speech.Recognition.Grammar.#ctor(System.String,System.String)
+  id: '#ctor(System.String,System.String)'
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Grammar(String, String)
+  nameWithType: Grammar.Grammar(String, String)
+  fullName: Grammar.Grammar(String, String)
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Initializes a new instance of the <xref href="System.Speech.Recognition.Grammar"></xref> class from a file and specifies a root rule.
+  remarks: "This constructor does not pass any parameters to the initialization handler, and the description should not define an initialization handler that requires arguments.  \n  \n This constructor can create a <xref:System.Speech.Recognition.Grammar> instance from the following formats:  \n  \n-   XML-format files that conform to the W3C [Speech Recognition Grammar Specification (SRGS) Version 1.0](http://go.microsoft.com/fwlink/?LinkId=201761)  \n  \n-   Grammars that have been compiled to a binary file with a .cfg file extension  \n  \n This constructor compiles XML-format grammar files to a binary format to optimize them for loading and consumption by a speech recognition engine. You can reduce the amount of time required to construct a <xref:System.Speech.Recognition.Grammar> object from an XML-format grammar by compiling the grammar in advance, using one of the <xref:System.Speech.Recognition.SrgsGrammar.SrgsGrammarCompiler.Compile%2A> methods.  \n  \n To create a <xref:System.Speech.Recognition.Grammar> that specifies a base URI to use to resolve relative rule references, open a file stream for the file and use the <xref:System.Speech.Recognition.Grammar.%23ctor%2A> constructor."
+  example:
+  - "The following example loads a local SRGS file (cities.xml) from a file and specifies a rule to use as the root of the grammar. The content of the cities.xml file appears in the XML example that follows the C# example.  \n  \n```csharp  \n  \n// Load a cities grammar from a local file, use a specific  \n// rule as the root of the grammar, and return the new grammar.  \nprivate static Grammar CreateGrammarFromFile2()  \n{  \n  Grammar citiesGrammar = new Grammar(@\"c:\\temp\\cities.xml\", \"Main\");  \n  citiesGrammar.Name = \"SRGS File Cities Grammar 2\";  \n  return citiesGrammar;  \n}  \n```  \n  \n```xml  \n  \n<?xml version=\"1.0\" encoding=\"UTF-8\" ?>  \n<grammar version=\"1.0\" xml:lang=\"en-US\"  \n         xmlns=\"http://www.w3.org/2001/06/grammar\"  \n         tag-format=\"semantics/1.0\" root=\"Main\">  \n  \n  <!-- cities.xml:   \n    Defines an SRGS grammar for requesting a flight. This grammar includes  \n    a Cities rule that lists the cities that can be used for departures  \n    and destinations. -->  \n  \n  <rule id=\"Main\">  \n    <item>  \n      I would like to fly from <ruleref uri=\"#Cities\"/>  \n      to <ruleref uri=\"#Cities\"/>  \n    </item>  \n  </rule>  \n  \n  <rule id=\"Cities\" scope=\"public\">  \n    <one-of>  \n      <item>Seattle</item>  \n      <item>Los Angeles</item>  \n      <item>New York</item>  \n      <item>Miami</item>  \n    </one-of>  \n  </rule>  \n</grammar>  \n```"
+  syntax:
+    content: public Grammar (string path, string ruleName);
+    parameters:
+    - id: path
+      type: System.String
+      description: The path of the file that describes a speech recognition grammar in a supported format.
+    - id: ruleName
+      type: System.String
+      description: The identifier of the rule to use as the entry point of the speech recognition grammar, or `null` to use the default root rule of the grammar description.
+  overload: System.Speech.Recognition.Grammar.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>ruleName</code> cannot be resolved or is not public, <code>path</code> is the empty string (""), or <code>ruleName</code> is `null` and the grammar description does not define a root rule.
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>path</code> is `null`.
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: The file does not contain a valid description or describes a grammar that contains a rule reference that cannot be resolved.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.GrammarBuilder)
+  commentId: M:System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.GrammarBuilder)
+  id: '#ctor(System.Speech.Recognition.GrammarBuilder)'
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Grammar(GrammarBuilder)
+  nameWithType: Grammar.Grammar(GrammarBuilder)
+  fullName: Grammar.Grammar(GrammarBuilder)
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Initializes a new instance of the <xref href="System.Speech.Recognition.Grammar"></xref> class from a <xref href="System.Speech.Recognition.GrammarBuilder"></xref> object.
+  remarks: For more information about using the <xref:System.Speech.Recognition.GrammarBuilder> class to define a grammar, see [Create Grammars Using GrammarBuilder](http://msdn.microsoft.com/en-us/7e2cc577-cb05-4318-9da3-7c8675d3d9ae).
+  example:
+  - "The following example creates a speech recognition grammar using <xref:System.Speech.Recognition.Choices> and <xref:System.Speech.Recognition.GrammarBuilder> objects. The <xref:System.Speech.Recognition.Grammar.%23ctor%2A> constructor creates a <xref:System.Speech.Recognition.Grammar> object from the <xref:System.Speech.Recognition.GrammarBuilder> object.  \n  \n```csharp  \n  \n// Create a grammar using a GrammarBuilder and return the new grammar.   \nprivate static Grammar CreateGrammarBuilderGrammar()  \n{  \n  GrammarBuilder builder = new GrammarBuilder();  \n  \n  Choices cityChoice = new Choices (new string[]   \n  {\"Seattle\", \"New York\", \"Miami\", \"Los Angeles\"});  \n  \n  builder.Append(\"I would like to fly from\");  \n  builder.Append(cityChoice);  \n  builder.Append(\"to\");  \n  builder.Append(cityChoice);  \n  \n  Grammar citiesGrammar = new Grammar(builder);  \n  citiesGrammar.Name = \"GrammarBuilder Cities Grammar\";  \n  \n  return citiesGrammar;  \n}  \n```"
+  syntax:
+    content: public Grammar (System.Speech.Recognition.GrammarBuilder builder);
+    parameters:
+    - id: builder
+      type: System.Speech.Recognition.GrammarBuilder
+      description: An instance of <xref href="System.Speech.Recognition.GrammarBuilder"></xref> that contains the constraints for the speech recognition grammar.
+  overload: System.Speech.Recognition.Grammar.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.#ctor(System.IO.Stream)
+  commentId: M:System.Speech.Recognition.Grammar.#ctor(System.IO.Stream)
+  id: '#ctor(System.IO.Stream)'
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Grammar(Stream)
+  nameWithType: Grammar.Grammar(Stream)
+  fullName: Grammar.Grammar(Stream)
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Initializes a new instance of the <xref href="System.Speech.Recognition.Grammar"></xref> class from a <xref href="System.IO.Stream"></xref>.
+  remarks: "This constructor does not pass any parameters to the initialization handler, and the description should not define an initialization handler that requires arguments.  \n  \n This constructor can create a <xref:System.Speech.Recognition.Grammar> instance from the following formats:  \n  \n-   XML-format files that conform to the W3C [Speech Recognition Grammar Specification (SRGS) Version 1.0](http://go.microsoft.com/fwlink/?LinkId=201761)  \n  \n-   Grammars that have been compiled to a binary file with a .cfg file extension  \n  \n This constructor compiles XML-format grammar files to a binary format to optimize them for loading and consumption by a speech recognition engine. You can reduce the amount of time required to construct a <xref:System.Speech.Recognition.Grammar> object from an XML-format grammar by compiling the grammar in advance, using one of the <xref:System.Speech.Recognition.SrgsGrammar.SrgsGrammarCompiler.Compile%2A> methods.  \n  \n An SRGS grammar can define a root rule. To create a <xref:System.Speech.Recognition.Grammar> object from a stream and specify a root rule, use the <xref:System.Speech.Recognition.Grammar.%23ctor%2A> or <xref:System.Speech.Recognition.Grammar.%23ctor%2A> constructor.  \n  \n To create a <xref:System.Speech.Recognition.Grammar> object from a stream and specify a base URI to use to resolve relative rule references, use the <xref:System.Speech.Recognition.Grammar.%23ctor%2A> constructor."
+  example:
+  - "The following example creates a speech recognition grammar from a local SRGS file (cities.xml) using a file stream. The content of the cities.xml file appears following C# example.  \n  \n```csharp  \n  \n// Load a cities grammar from an I/O stream and    \n// return the new grammar.   \nprivate static Grammar CreateGrammarFromStream()  \n{  \n  string fileName = @\"c:\\temp\\cities.xml\";  \n  Grammar citiesGrammar =  \n    new Grammar(new FileStream(fileName, FileMode.Open));  \n  citiesGrammar.Name = \"Stream Cities Grammar\";  \n  return citiesGrammar;  \n}  \n```  \n  \n```xml  \n  \n<?xml version=\"1.0\" encoding=\"UTF-8\" ?>  \n<grammar version=\"1.0\" xml:lang=\"en-US\"  \n         xmlns=\"http://www.w3.org/2001/06/grammar\"  \n         tag-format=\"semantics/1.0\" root=\"Main\">  \n  \n  <!-- cities.xml:   \n    Defines an SRGS grammar for requesting a flight. This grammar includes  \n    a Cities rule that lists the cities that can be used for departures  \n    and destinations. -->  \n  \n  <rule id=\"Main\">  \n    <item>  \n      I would like to fly from <ruleref uri=\"#Cities\"/>  \n      to <ruleref uri=\"#Cities\"/>  \n    </item>  \n  </rule>  \n  \n  <rule id=\"Cities\" scope=\"public\">  \n    <one-of>  \n      <item>Seattle</item>  \n      <item>Los Angeles</item>  \n      <item>New York</item>  \n      <item>Miami</item>  \n    </one-of>  \n  </rule>  \n</grammar>  \n```"
+  syntax:
+    content: public Grammar (System.IO.Stream stream);
+    parameters:
+    - id: stream
+      type: System.IO.Stream
+      description: A stream that describes a speech recognition grammar in a supported format.
+  overload: System.Speech.Recognition.Grammar.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>stream</code> describes a grammar that does not contain a root rule.
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>stream</code> is `null`.
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: The stream does not contain a valid description of a grammar, or describes a grammar that contains a rule reference that cannot be resolved.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.Enabled
+  commentId: P:System.Speech.Recognition.Grammar.Enabled
+  id: Enabled
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Enabled
+  nameWithType: Grammar.Enabled
+  fullName: Grammar.Enabled
+  type: Property
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Gets or sets a value that controls whether a <xref href="System.Speech.Recognition.Grammar"></xref> can be used by a speech recognizer to perform recognition.
+  remarks: An instance of <xref:System.Speech.Recognition.Grammar> may be enabled or disabled independently of being loaded by a speech recognition engine.
+  example:
+  - "The following example writes information about a <xref:System.Speech.Recognition.Grammar> object to the [console](http://go.microsoft.com/fwlink/?LinkId=159613).  \n  \n```csharp  \n  \nprivate static void DumpGrammarStatus(Grammar item)  \n{  \n  Console.WriteLine(\"Grammar name is {0}:\", item.Name);  \n  Console.WriteLine(\"  The Grammar {0} loaded.\",  \n    item.Loaded ? \"is\" : \"is not\");  \n  Console.WriteLine(\"  The Grammar {0} enabled.\",  \n    item.Enabled ? \"is\" : \"is not\");  \n  if (item.RuleName != null)  \n  {  \n    Console.WriteLine(\"  The root rule is {0}.\", item.RuleName);  \n  }  \n  else  \n  {  \n    Console.WriteLine(\"  The Grammar does not specify a root rule.\");  \n  }  \n}  \n```"
+  syntax:
+    content: public bool Enabled { get; set; }
+    return:
+      type: System.Boolean
+      description: The  `Enabled` property returns `true` if a speech recognizer can perform recognition using the speech recognition grammar; otherwise the property returns `false`. The default is `true`.
+  overload: System.Speech.Recognition.Grammar.Enabled*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.IsStg
+  commentId: P:System.Speech.Recognition.Grammar.IsStg
+  id: IsStg
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: IsStg
+  nameWithType: Grammar.IsStg
+  fullName: Grammar.IsStg
+  type: Property
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Gets whether a grammar is strongly typed.
+  remarks: "A strongly-typed <xref:System.Speech.Recognition.Grammar> object (`IsStg` equals `true`) can return strongly-typed results (objects, rather than raw text) to a client application. For example, a strongly-typed grammar might return <xref:System.DateTime> objects rather than raw recognized input.  \n  \n You can implement strongly-typed grammars by attaching code to the rules of a grammar. As a recognition engine processes any given rule, taking as input the current partial results, the associated code is executed and the textual information becomes rich type objects. This allows a client to more easily make use of enhanced semantic checking, support for multiple cultures, and internal grammar logic.  \n  \n Instances of strongly-typed <xref:System.Speech.Recognition.Grammar> objects are typically obtained from resources in an assembly as a <xref:System.Type> of the Common Language Runtime (CLR). The localized types used to support different languages are examples of such <xref:System.Speech.Recognition.Grammar> objects."
+  syntax:
+    content: protected virtual bool IsStg { get; }
+    return:
+      type: System.Boolean
+      description: The `IsStg` property returns `true` if the grammar is strongly-typed; otherwise the property returns `false`.
+  overload: System.Speech.Recognition.Grammar.IsStg*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.Loaded
+  commentId: P:System.Speech.Recognition.Grammar.Loaded
+  id: Loaded
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Loaded
+  nameWithType: Grammar.Loaded
+  fullName: Grammar.Loaded
+  type: Property
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Gets whether a <xref href="System.Speech.Recognition.Grammar"></xref> has been loaded by a speech recognizer.
+  remarks: Once a <xref:System.Speech.Recognition.Grammar> has been loaded, the values of <xref:System.Speech.Recognition.Grammar.Weight%2A>, and <xref:System.Speech.Recognition.Grammar.Priority%2A> cannot be changed.
+  example:
+  - "The following example writes information about a <xref:System.Speech.Recognition.Grammar> object to the [console](http://go.microsoft.com/fwlink/?LinkId=159613).  \n  \n```csharp  \n  \nprivate static void DumpGrammarStatus(Grammar item)  \n{  \n  Console.WriteLine(\"Grammar name is {0}:\", item.Name);  \n  Console.WriteLine(\"  The Grammar {0} loaded.\",  \n    item.Loaded ? \"is\" : \"is not\");  \n  Console.WriteLine(\"  The Grammar {0} enabled.\",  \n    item.Enabled ? \"is\" : \"is not\");  \n  if (item.RuleName != null)  \n  {  \n    Console.WriteLine(\"  The root rule is {0}.\", item.RuleName);  \n  }  \n  else  \n  {  \n    Console.WriteLine(\"  The Grammar does not specify a root rule.\");  \n  }  \n}  \n```"
+  syntax:
+    content: public bool Loaded { get; }
+    return:
+      type: System.Boolean
+      description: The `Loaded` property returns `true` if the referenced speech recognition grammar is currently loaded in a speech recognizer; otherwise the property returns `false`. The default is `false`.
+  overload: System.Speech.Recognition.Grammar.Loaded*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.LoadLocalizedGrammarFromType(System.Type,System.Object[])
+  commentId: M:System.Speech.Recognition.Grammar.LoadLocalizedGrammarFromType(System.Type,System.Object[])
+  id: LoadLocalizedGrammarFromType(System.Type,System.Object[])
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: LoadLocalizedGrammarFromType(Type, Object[])
+  nameWithType: Grammar.LoadLocalizedGrammarFromType(Type, Object[])
+  fullName: Grammar.LoadLocalizedGrammarFromType(Type, Object[])
+  type: Method
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: The `LoadLocalizedGrammarFromType` method returns a localized instance of a <xref href="System.Speech.Recognition.Grammar"></xref> object derived from <xref href="System.Type"></xref>.
+  remarks: Localized grammars obtained with `LoadLocalizedGrammarFromType` are typically strongly-typed (see <xref:System.Speech.Recognition.Grammar.IsStg%2A> for more information on strongly typed grammars). If `onInitParameters` is a null reference (Nothing in Visual Basic) the localized grammar should have either no initialization method, or a method that takes no arguments.
+  syntax:
+    content: public static System.Speech.Recognition.Grammar LoadLocalizedGrammarFromType (Type type, object[] onInitParameters);
+    parameters:
+    - id: type
+      type: System.Type
+      description: In an assembly, the <xref href="System.Type"></xref> of an object based on <xref href="System.Speech.Recognition.Grammar"></xref>.
+    - id: onInitParameters
+      type: System.Object[]
+      description: Parameters to be passed to an initialization method of the localizedobject based on <xref href="System.Speech.Recognition.Grammar"></xref>. This parameter may be null.
+    return:
+      type: System.Speech.Recognition.Grammar
+      description: The `LoadLocalizedGrammarFromType` method returns a valid object based on <xref href="System.Speech.Recognition.Grammar"></xref>, or `null` if there has been an error.
+  overload: System.Speech.Recognition.Grammar.LoadLocalizedGrammarFromType*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.Name
+  commentId: P:System.Speech.Recognition.Grammar.Name
+  id: Name
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Name
+  nameWithType: Grammar.Name
+  fullName: Grammar.Name
+  type: Property
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Gets or sets the name of a <xref href="System.Speech.Recognition.Grammar"></xref> object.
+  remarks: ''
+  example:
+  - "The following example creates two <xref:System.Speech.Recognition.Grammar> objects, one for digits and one for fractions. The Grammar objects are assigned names and relative weights and priorities, and loaded by an in-process speech recognizer. The `CreateDigitsGrammar`, `CreateFractionsGrammar`, and `recognizer_SpeechRecognized` methods are not shown here.  \n  \n```csharp  \n  \n// Create a Grammar for recognizing numeric digits.  \nGrammar digitsGrammar = CreateDigitsGrammar();  \ndigitsGrammar.Name = \"Digits Grammar\";  \ndigitsGrammar.Priority = 2;  \ndigitsGrammar.Weight = 0.6f;  \n  \n// Create a Grammar for recognizing fractions.  \nGrammar fractionsGrammar = CreateFractionsGrammar();  \nfractionsGrammar.Name = \"Fractions Grammar\";  \nfractionsGrammar.Priority = 1;  \nfractionsGrammar.Weight = 1f;  \n  \n// Create an in-process speech recognizer.  \nSpeechRecognitionEngine recognizer = new SpeechRecognitionEngine();  \n  \nrecognizer.SpeechRecognized +=  \n  new EventHandler<SpeechRecognizedEventArgs>(  \n    recognizer_SpeechRecognized);  \n  \n// Load the digits and fractions Grammar objects.  \nrecognizer.LoadGrammar(digitsGrammar);  \nrecognizer.LoadGrammar(fractionsGrammar);  \n  \n// Start recognition.  \nrecognizer.SetInputToDefaultAudioDevice();  \nrecognizer.RecognizeAsync(RecognizeMode.Multiple);  \n```"
+  syntax:
+    content: public string Name { get; set; }
+    return:
+      type: System.String
+      description: The `Name` property returns the name of the <xref href="System.Speech.Recognition.Grammar"></xref> object. The default is `null`.
+  overload: System.Speech.Recognition.Grammar.Name*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.Priority
+  commentId: P:System.Speech.Recognition.Grammar.Priority
+  id: Priority
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Priority
+  nameWithType: Grammar.Priority
+  fullName: Grammar.Priority
+  type: Property
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Gets or sets the priority value of a <xref href="System.Speech.Recognition.Grammar"></xref> object.
+  remarks: The `Priority` property is used to select a grammar when more than one grammar will produce an identical recognition result. If a speech recognizer has more than one speech recognition grammar loaded and enabled that match the input, and the match is the best result from the recognizer, then the recognizer uses the grammar that has the highest `Priority`. If the grammars that produce the identical recognition result also have the same `Priority` value, then the grammar that the recognizer uses is undefined.
+  example:
+  - "The following example creates two <xref:System.Speech.Recognition.Grammar> objects, one for digits and one for fractions. The <xref:System.Speech.Recognition.Grammar> objects are assigned names and relative weights and priorities, and loaded by an in-process speech recognizer. The `CreateDigitsGrammar`, `CreateFractionsGrammar`, and `recognizer_SpeechRecognized` methods are not shown here.  \n  \n```csharp  \n  \n// Create a Grammar for recognizing numeric digits.  \nGrammar digitsGrammar = CreateDigitsGrammar();  \ndigitsGrammar.Name = \"Digits Grammar\";  \ndigitsGrammar.Priority = 2;  \ndigitsGrammar.Weight = 0.6f;  \n  \n// Create a Grammar for recognizing fractions.  \nGrammar fractionsGrammar = CreateFractionsGrammar();  \nfractionsGrammar.Name = \"Fractions Grammar\";  \nfractionsGrammar.Priority = 1;  \nfractionsGrammar.Weight = 1f;  \n  \n// Create an in-process speech recognizer.  \nSpeechRecognitionEngine recognizer = new SpeechRecognitionEngine();  \n  \nrecognizer.SpeechRecognized +=  \n  new EventHandler<SpeechRecognizedEventArgs>(  \n    recognizer_SpeechRecognized);  \n  \n// Load the digits and fractions Grammar objects.  \nrecognizer.LoadGrammar(digitsGrammar);  \nrecognizer.LoadGrammar(fractionsGrammar);  \n  \n// Start recognition.  \nrecognizer.SetInputToDefaultAudioDevice();  \nrecognizer.RecognizeAsync(RecognizeMode.Multiple);  \n```"
+  syntax:
+    content: public int Priority { get; set; }
+    return:
+      type: System.Int32
+      description: The `Priority` property returns an integer value that represents the relative priority of a specific <xref href="System.Speech.Recognition.Grammar"></xref>. The range is from -128 to 127 inclusive. The default is 0.
+  overload: System.Speech.Recognition.Grammar.Priority*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.ResourceName
+  commentId: P:System.Speech.Recognition.Grammar.ResourceName
+  id: ResourceName
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: ResourceName
+  nameWithType: Grammar.ResourceName
+  fullName: Grammar.ResourceName
+  type: Property
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Gets or sets a value with the name of a binary resource that was used to load the current <xref href="System.Speech.Recognition.Grammar"></xref>.
+  syntax:
+    content: protected string ResourceName { get; set; }
+    return:
+      type: System.String
+      description: The `ResourceName` property returns the name of the binary resource from which the strongly-typed grammar, used by <xref href="System.Speech.Recognition.Grammar"></xref>, was loaded.
+  overload: System.Speech.Recognition.Grammar.ResourceName*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.RuleName
+  commentId: P:System.Speech.Recognition.Grammar.RuleName
+  id: RuleName
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: RuleName
+  nameWithType: Grammar.RuleName
+  fullName: Grammar.RuleName
+  type: Property
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Gets the name of the root rule or entry point of a <xref href="System.Speech.Recognition.Grammar"></xref> object.
+  remarks: "To construct a <xref:System.Speech.Recognition.Grammar> object and set the name for its root rule, use one of the <xref:System.Speech.Recognition.Grammar.%23ctor%2A> constructors that takes the `ruleName` parameter.  \n  \n If the root rule of a <xref:System.Speech.Recognition.Grammar> has no name, the property returns `null`.  \n  \n The root rules of <xref:System.Speech.Recognition.Grammar> instances constructed from <xref:System.Speech.Recognition.GrammarBuilder> objects typically have no name, so <xref:System.Speech.Recognition.Grammar.RuleName%2A> returns `null`."
+  example:
+  - "The following example writes information about a <xref:System.Speech.Recognition.Grammar> object to the [console](http://go.microsoft.com/fwlink/?LinkId=159613).  \n  \n```csharp  \n  \nprivate static void DumpGrammarStatus(Grammar item)  \n{  \n  Console.WriteLine(\"Grammar name is {0}:\", item.Name);  \n  Console.WriteLine(\"  The Grammar {0} loaded.\",  \n    item.Loaded ? \"is\" : \"is not\");  \n  Console.WriteLine(\"  The Grammar {0} enabled.\",  \n    item.Enabled ? \"is\" : \"is not\");  \n  if (item.RuleName != null)  \n  {  \n    Console.WriteLine(\"  The root rule is {0}.\", item.RuleName);  \n  }  \n  else  \n  {  \n    Console.WriteLine(\"  The Grammar does not specify a root rule.\");  \n  }  \n}  \n```"
+  syntax:
+    content: public string RuleName { get; }
+    return:
+      type: System.String
+      description: The `RuleName` property returns the identifier for the root rule of the referenced speech recognition grammar. The default is `null`.
+  overload: System.Speech.Recognition.Grammar.RuleName*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.SpeechRecognized
+  commentId: E:System.Speech.Recognition.Grammar.SpeechRecognized
+  id: SpeechRecognized
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: SpeechRecognized
+  nameWithType: Grammar.SpeechRecognized
+  fullName: Grammar.SpeechRecognized
+  type: Event
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Raised when a speech recognizer performs recognition using the <xref href="System.Speech.Recognition.Grammar"></xref> object.
+  remarks: "The speech recognizer also raises a `SpeechRecognized`  event when it recognizes input. The <xref:System.Speech.Recognition.Grammar> object's <xref:System.Speech.Recognition.Grammar.SpeechRecognized> event is raised prior to the speech recognizer's `SpeechRecognized` event . For more information, see the <xref:System.Speech.Recognition.SpeechRecognizer.SpeechRecognized?displayProperty=fullName>, <xref:System.Speech.Recognition.SpeechRecognitionEngine.SpeechRecognized?displayProperty=fullName>, and <xref:System.Speech.Recognition.SpeechRecognitionEngine.RecognizeCompleted> events.  \n  \n Any tasks specific to a particular grammar should always be handled by handlers for the <xref:System.Speech.Recognition.Grammar> object's <xref:System.Speech.Recognition.Grammar.SpeechRecognized> event."
+  example:
+  - "The following example shows the use of an event handler for the <xref:System.Speech.Recognition.Grammar> object's <xref:System.Speech.Recognition.Grammar.SpeechRecognized> event. It outputs the recognition results to the [console](http://go.microsoft.com/fwlink/?LinkId=159613).  \n  \n```csharp  \npublic partial class Form1 : Form  \n{  \n  SpeechRecognitionEngine sre;  \n  \n  public Form1()  \n  {  \n  InitializeComponent();  \n  \n  // Create an in-process speech recognizer.  \n  sre = new SpeechRecognitionEngine();  \n  \n  // Configure input to the speech recognizer.  \n  sre.SetInputToDefaultAudioDevice();  \n  \n  // Create a simple grammar and load it.  \n  Grammar testGrammar = new Grammar(new GrammarBuilder(\"testing\"));  \n  sre.LoadGrammarAsync(testGrammar);  \n  \n  // Add a handler for the grammar's speech recognized event.  \n  testGrammar.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(testGrammar_SpeechRecognized);  \n  \n  // Start asynchronous speech recognition.  \n  sre.RecognizeAsync();  \n  }  \n  \n  // Handle the grammar's SpeechRecognized event, output the recognized text.  \n  void testGrammar_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)  \n  {  \n    Console.WriteLine(\"Recognized text: \" + e.Result.Text);  \n  }  \n}  \n```"
+  syntax:
+    content: public event EventHandler<System.Speech.Recognition.SpeechRecognizedEventArgs> SpeechRecognized;
+    return:
+      type: System.EventHandler{System.Speech.Recognition.SpeechRecognizedEventArgs}
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.StgInit(System.Object[])
+  commentId: M:System.Speech.Recognition.Grammar.StgInit(System.Object[])
+  id: StgInit(System.Object[])
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: StgInit(Object[])
+  nameWithType: Grammar.StgInit(Object[])
+  fullName: Grammar.StgInit(Object[])
+  type: Method
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: The `StgInit` method initializes a strongly-typed grammar.
+  remarks: "A strongly-typed <xref:System.Speech.Recognition.Grammar> object (`IsStg` equals `true`) can return strongly-typed results (objects, rather than raw text) to a client application. For example, a strongly-typed grammar might return <xref:System.DateTime> objects rather than raw recognized input.  \n  \n You can implement strongly-typed grammars by attaching code to the rules of a grammar. As a recognition engine processes any given rule, taking as input the current partial results, the associated code is executed and the textual information becomes rich type objects. This allows a client to more easily make use of enhanced semantic checking, support for multiple cultures, and internal grammar logic.  \n  \n Instances of strongly-typed <xref:System.Speech.Recognition.Grammar> objects are typically obtained from resources in an assembly as a <xref:System.Type> of the Common Language Runtime (CLR). The localized types used to support different languages are examples of such <xref:System.Speech.Recognition.Grammar> objects."
+  syntax:
+    content: protected void StgInit (object[] parameters);
+    parameters:
+    - id: parameters
+      type: System.Object[]
+      description: Parameters to be passed to initialize the strongly-typed grammar.This parameter may be null.
+  overload: System.Speech.Recognition.Grammar.StgInit*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.Grammar.Weight
+  commentId: P:System.Speech.Recognition.Grammar.Weight
+  id: Weight
+  parent: System.Speech.Recognition.Grammar
+  langs:
+  - csharp
+  name: Weight
+  nameWithType: Grammar.Weight
+  fullName: Grammar.Weight
+  type: Property
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Gets or sets the weight value of a <xref href="System.Speech.Recognition.Grammar"></xref> object.
+  remarks: "Because of the complexity of a recognition engine's use of **Weight**, its effect on a particular grammar's performance is not as directly predictable as that of <xref:System.Speech.Recognition.Grammar.Priority%2A>.  \n  \n Speech recognition is a weighted system. It evaluates all possible recognition paths based on a combination of the weight of the grammar, the weights defined for alternatives within the grammar, and the probabilities defined by speech models. The speech recognition engine uses the combination of these weights and probabilities to rank potential alternative recognitions. Grammars with higher weights will contribute more to the ranking of recognition alternatives than grammars with lower weights.  \n  \n The effect of the <xref:System.Speech.Recognition.Grammar.Weight%2A> property on a speech recognizer is dependent on the implementation of the recognizer. Although the <xref:System.Speech.Recognition.Grammar.Weight%2A> property can be used to tune the accuracy of speech recognition for an application, it should be used only after controlled diagnostic study of a particular recognition environment and with full information about the recognition engine under use."
+  example:
+  - "The following example creates two <xref:System.Speech.Recognition.Grammar> objects, one for digits and one for fractions. The <xref:System.Speech.Recognition.Grammar> objects are assigned names and relative weights and priorities, and loaded by an in-process speech recognizer. The `CreateDigitsGrammar`, `CreateFractionsGrammar`, and `recognizer_SpeechRecognized` methods are not shown here.  \n  \n```csharp  \n  \n// Create a Grammar for recognizing numeric digits.  \nGrammar digitsGrammar = CreateDigitsGrammar();  \ndigitsGrammar.Name = \"Digits Grammar\";  \ndigitsGrammar.Priority = 2;  \ndigitsGrammar.Weight = 0.6f;  \n  \n// Create a Grammar for recognizing fractions.  \nGrammar fractionsGrammar = CreateFractionsGrammar();  \nfractionsGrammar.Name = \"Fractions Grammar\";  \nfractionsGrammar.Priority = 1;  \nfractionsGrammar.Weight = 1f;  \n  \n// Create an in-process speech recognizer.  \nSpeechRecognitionEngine recognizer = new SpeechRecognitionEngine();  \n  \nrecognizer.SpeechRecognized +=  \n  new EventHandler<SpeechRecognizedEventArgs>(  \n    recognizer_SpeechRecognized);  \n  \n// Load the digits and fractions Grammar objects.  \nrecognizer.LoadGrammar(digitsGrammar);  \nrecognizer.LoadGrammar(fractionsGrammar);  \n  \n// Start recognition.  \nrecognizer.SetInputToDefaultAudioDevice();  \nrecognizer.RecognizeAsync(RecognizeMode.Multiple);  \n```"
+  syntax:
+    content: public float Weight { get; set; }
+    return:
+      type: System.Single
+      description: The `Weight` property returns a floating point value indicating the relative weight that a recognition engine  instance should assign to the grammar when processing speech input. The range is from 0.0 to 1.0 inclusive. The default is 1.0.
+  overload: System.Speech.Recognition.Grammar.Weight*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.FormatException
+  parent: System
+  isExternal: false
+  name: FormatException
+  nameWithType: FormatException
+  fullName: System.FormatException
+- uid: System.Speech.Recognition.Grammar.#ctor
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Grammar()
+  nameWithType: Grammar.Grammar()
+  fullName: Grammar.Grammar()
+- uid: System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Uri,System.Object[])
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Grammar(SrgsDocument, String, Uri, Object[])
+  nameWithType: Grammar.Grammar(SrgsDocument, String, Uri, Object[])
+  fullName: Grammar.Grammar(SrgsDocument, String, Uri, Object[])
+- uid: System.Speech.Recognition.SrgsGrammar.SrgsDocument
+  parent: System.Speech.Recognition.SrgsGrammar
+  isExternal: false
+  name: SrgsDocument
+  nameWithType: SrgsDocument
+  fullName: System.Speech.Recognition.SrgsGrammar.SrgsDocument
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Uri
+  parent: System
+  isExternal: false
+  name: Uri
+  nameWithType: Uri
+  fullName: System.Uri
+- uid: System.Object[]
+  parent: System
+  isExternal: false
+  name: Object[]
+  nameWithType: Object[]
+  fullName: System.Object[]
+  spec.csharp:
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+- uid: System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String,System.Uri,System.Object[])
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Grammar(Stream, String, Uri, Object[])
+  nameWithType: Grammar.Grammar(Stream, String, Uri, Object[])
+  fullName: Grammar.Grammar(Stream, String, Uri, Object[])
+- uid: System.IO.Stream
+  parent: System.IO
+  isExternal: false
+  name: Stream
+  nameWithType: Stream
+  fullName: System.IO.Stream
+- uid: System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Uri)
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Grammar(SrgsDocument, String, Uri)
+  nameWithType: Grammar.Grammar(SrgsDocument, String, Uri)
+  fullName: Grammar.Grammar(SrgsDocument, String, Uri)
+- uid: System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String,System.Object[])
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Grammar(SrgsDocument, String, Object[])
+  nameWithType: Grammar.Grammar(SrgsDocument, String, Object[])
+  fullName: Grammar.Grammar(SrgsDocument, String, Object[])
+- uid: System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String,System.Uri)
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Grammar(Stream, String, Uri)
+  nameWithType: Grammar.Grammar(Stream, String, Uri)
+  fullName: Grammar.Grammar(Stream, String, Uri)
+- uid: System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String,System.Object[])
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Grammar(Stream, String, Object[])
+  nameWithType: Grammar.Grammar(Stream, String, Object[])
+  fullName: Grammar.Grammar(Stream, String, Object[])
+- uid: System.Speech.Recognition.Grammar.#ctor(System.String,System.String,System.Object[])
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Grammar(String, String, Object[])
+  nameWithType: Grammar.Grammar(String, String, Object[])
+  fullName: Grammar.Grammar(String, String, Object[])
+- uid: System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument,System.String)
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Grammar(SrgsDocument, String)
+  nameWithType: Grammar.Grammar(SrgsDocument, String)
+  fullName: Grammar.Grammar(SrgsDocument, String)
+- uid: System.Speech.Recognition.Grammar.#ctor(System.IO.Stream,System.String)
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Grammar(Stream, String)
+  nameWithType: Grammar.Grammar(Stream, String)
+  fullName: Grammar.Grammar(Stream, String)
+- uid: System.Speech.Recognition.Grammar.#ctor(System.String)
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Grammar(String)
+  nameWithType: Grammar.Grammar(String)
+  fullName: Grammar.Grammar(String)
+- uid: System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.SrgsGrammar.SrgsDocument)
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Grammar(SrgsDocument)
+  nameWithType: Grammar.Grammar(SrgsDocument)
+  fullName: Grammar.Grammar(SrgsDocument)
+- uid: System.Speech.Recognition.Grammar.#ctor(System.String,System.String)
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Grammar(String, String)
+  nameWithType: Grammar.Grammar(String, String)
+  fullName: Grammar.Grammar(String, String)
+- uid: System.Speech.Recognition.Grammar.#ctor(System.Speech.Recognition.GrammarBuilder)
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Grammar(GrammarBuilder)
+  nameWithType: Grammar.Grammar(GrammarBuilder)
+  fullName: Grammar.Grammar(GrammarBuilder)
+- uid: System.Speech.Recognition.GrammarBuilder
+  parent: System.Speech.Recognition
+  isExternal: false
+  name: GrammarBuilder
+  nameWithType: GrammarBuilder
+  fullName: System.Speech.Recognition.GrammarBuilder
+- uid: System.Speech.Recognition.Grammar.#ctor(System.IO.Stream)
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Grammar(Stream)
+  nameWithType: Grammar.Grammar(Stream)
+  fullName: Grammar.Grammar(Stream)
+- uid: System.Speech.Recognition.Grammar.Enabled
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Enabled
+  nameWithType: Grammar.Enabled
+  fullName: Grammar.Enabled
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Speech.Recognition.Grammar.IsStg
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: IsStg
+  nameWithType: Grammar.IsStg
+  fullName: Grammar.IsStg
+- uid: System.Speech.Recognition.Grammar.Loaded
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Loaded
+  nameWithType: Grammar.Loaded
+  fullName: Grammar.Loaded
+- uid: System.Speech.Recognition.Grammar.LoadLocalizedGrammarFromType(System.Type,System.Object[])
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: LoadLocalizedGrammarFromType(Type, Object[])
+  nameWithType: Grammar.LoadLocalizedGrammarFromType(Type, Object[])
+  fullName: Grammar.LoadLocalizedGrammarFromType(Type, Object[])
+- uid: System.Speech.Recognition.Grammar
+  parent: System.Speech.Recognition
+  isExternal: false
+  name: Grammar
+  nameWithType: Grammar
+  fullName: System.Speech.Recognition.Grammar
+- uid: System.Type
+  parent: System
+  isExternal: false
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: System.Speech.Recognition.Grammar.Name
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Name
+  nameWithType: Grammar.Name
+  fullName: Grammar.Name
+- uid: System.Speech.Recognition.Grammar.Priority
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Priority
+  nameWithType: Grammar.Priority
+  fullName: Grammar.Priority
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Speech.Recognition.Grammar.ResourceName
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: ResourceName
+  nameWithType: Grammar.ResourceName
+  fullName: Grammar.ResourceName
+- uid: System.Speech.Recognition.Grammar.RuleName
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: RuleName
+  nameWithType: Grammar.RuleName
+  fullName: Grammar.RuleName
+- uid: System.Speech.Recognition.Grammar.SpeechRecognized
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: SpeechRecognized
+  nameWithType: Grammar.SpeechRecognized
+  fullName: Grammar.SpeechRecognized
+- uid: System.EventHandler`1
+  name: EventHandler<TEventArgs>
+  nameWithType: EventHandler<TEventArgs>
+  fullName: System.EventHandler<TEventArgs>
+- uid: System.Speech.Recognition.SpeechRecognizedEventArgs
+  name: SpeechRecognizedEventArgs
+  nameWithType: SpeechRecognizedEventArgs
+  fullName: System.Speech.Recognition.SpeechRecognizedEventArgs
+- uid: System.EventHandler{System.Speech.Recognition.SpeechRecognizedEventArgs}
+  parent: System
+  isExternal: false
+  name: EventHandler<SpeechRecognizedEventArgs>
+  nameWithType: EventHandler<SpeechRecognizedEventArgs>
+  fullName: System.EventHandler<System.Speech.Recognition.SpeechRecognizedEventArgs>
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Speech.Recognition.SpeechRecognizedEventArgs
+    name: SpeechRecognizedEventArgs
+    nameWithType: SpeechRecognizedEventArgs
+    fullName: System.Speech.Recognition.SpeechRecognizedEventArgs
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Speech.Recognition.Grammar.StgInit(System.Object[])
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: StgInit(Object[])
+  nameWithType: Grammar.StgInit(Object[])
+  fullName: Grammar.StgInit(Object[])
+- uid: System.Speech.Recognition.Grammar.Weight
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Weight
+  nameWithType: Grammar.Weight
+  fullName: Grammar.Weight
+- uid: System.Single
+  parent: System
+  isExternal: false
+  name: Single
+  nameWithType: Single
+  fullName: System.Single
+- uid: System.Speech.Recognition.Grammar.#ctor*
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Grammar
+  nameWithType: Grammar.Grammar
+  fullName: Grammar.Grammar
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+- uid: System.Speech.Recognition.Grammar.Enabled*
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Enabled
+  nameWithType: Grammar.Enabled
+  fullName: Grammar.Enabled
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+- uid: System.Speech.Recognition.Grammar.IsStg*
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: IsStg
+  nameWithType: Grammar.IsStg
+  fullName: Grammar.IsStg
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+- uid: System.Speech.Recognition.Grammar.Loaded*
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Loaded
+  nameWithType: Grammar.Loaded
+  fullName: Grammar.Loaded
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+- uid: System.Speech.Recognition.Grammar.LoadLocalizedGrammarFromType*
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: LoadLocalizedGrammarFromType
+  nameWithType: Grammar.LoadLocalizedGrammarFromType
+  fullName: Grammar.LoadLocalizedGrammarFromType
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+- uid: System.Speech.Recognition.Grammar.Name*
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Name
+  nameWithType: Grammar.Name
+  fullName: Grammar.Name
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+- uid: System.Speech.Recognition.Grammar.Priority*
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Priority
+  nameWithType: Grammar.Priority
+  fullName: Grammar.Priority
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+- uid: System.Speech.Recognition.Grammar.ResourceName*
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: ResourceName
+  nameWithType: Grammar.ResourceName
+  fullName: Grammar.ResourceName
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+- uid: System.Speech.Recognition.Grammar.RuleName*
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: RuleName
+  nameWithType: Grammar.RuleName
+  fullName: Grammar.RuleName
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+- uid: System.Speech.Recognition.Grammar.StgInit*
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: StgInit
+  nameWithType: Grammar.StgInit
+  fullName: Grammar.StgInit
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+- uid: System.Speech.Recognition.Grammar.Weight*
+  parent: System.Speech.Recognition.Grammar
+  isExternal: false
+  name: Weight
+  nameWithType: Grammar.Weight
+  fullName: Grammar.Weight
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/Grammar.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

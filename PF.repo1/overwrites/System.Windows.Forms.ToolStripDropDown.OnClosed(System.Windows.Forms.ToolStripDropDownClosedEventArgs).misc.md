@@ -1,0 +1,8 @@
+---
+uid: System.Windows.Forms.ToolStripDropDown.OnClosed(System.Windows.Forms.ToolStripDropDownClosedEventArgs)
+additional_notes.overrides: *content
+---
+
+<p>When overriding <xref href="System.Windows.Forms.ToolStripDropDown.OnClosed(System.Windows.Forms.ToolStripDropDownClosedEventArgs)"></xref> in a derived class, be sure to call the base class's <xref href="System.Windows.Forms.ToolStripDropDown.OnClosed(System.Windows.Forms.ToolStripDropDownClosedEventArgs)"></xref> method so that registered delegates receive the event.</p>
+
+

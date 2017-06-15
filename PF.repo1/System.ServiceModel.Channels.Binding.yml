@@ -1,0 +1,2263 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.ServiceModel.Channels.Binding
+  commentId: T:System.ServiceModel.Channels.Binding
+  id: Binding
+  children:
+  - System.ServiceModel.Channels.Binding.#ctor
+  - System.ServiceModel.Channels.Binding.#ctor(System.String,System.String)
+  - System.ServiceModel.Channels.Binding.BuildChannelFactory``1(System.Object[])
+  - System.ServiceModel.Channels.Binding.BuildChannelFactory``1(System.ServiceModel.Channels.BindingParameterCollection)
+  - System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Object[])
+  - System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.ServiceModel.Channels.BindingParameterCollection)
+  - System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.Object[])
+  - System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.ServiceModel.Channels.BindingParameterCollection)
+  - System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.String,System.Object[])
+  - System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.String,System.ServiceModel.Channels.BindingParameterCollection)
+  - System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.String,System.ServiceModel.Description.ListenUriMode,System.Object[])
+  - System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.String,System.ServiceModel.Description.ListenUriMode,System.ServiceModel.Channels.BindingParameterCollection)
+  - System.ServiceModel.Channels.Binding.CanBuildChannelFactory``1(System.ServiceModel.Channels.BindingParameterCollection)
+  - System.ServiceModel.Channels.Binding.CanBuildChannelFactory``1(System.Object[])
+  - System.ServiceModel.Channels.Binding.CanBuildChannelListener``1(System.Object[])
+  - System.ServiceModel.Channels.Binding.CanBuildChannelListener``1(System.ServiceModel.Channels.BindingParameterCollection)
+  - System.ServiceModel.Channels.Binding.CloseTimeout
+  - System.ServiceModel.Channels.Binding.CreateBindingElements
+  - System.ServiceModel.Channels.Binding.GetProperty``1(System.ServiceModel.Channels.BindingParameterCollection)
+  - System.ServiceModel.Channels.Binding.MessageVersion
+  - System.ServiceModel.Channels.Binding.Name
+  - System.ServiceModel.Channels.Binding.Namespace
+  - System.ServiceModel.Channels.Binding.OpenTimeout
+  - System.ServiceModel.Channels.Binding.ReceiveTimeout
+  - System.ServiceModel.Channels.Binding.Scheme
+  - System.ServiceModel.Channels.Binding.SendTimeout
+  - System.ServiceModel.Channels.Binding.ShouldSerializeName
+  - System.ServiceModel.Channels.Binding.ShouldSerializeNamespace
+  langs:
+  - csharp
+  name: Binding
+  nameWithType: Binding
+  fullName: System.ServiceModel.Channels.Binding
+  type: Class
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Contains the binding elements that specify the protocols, transports, and message encoders used for communication between clients and services.
+  remarks: "Represents a collection of binding elements, each of which describes an aspect of how an endpoint communicates with other endpoints and that are built, consistently, into a channel factory on the client and into a channel listener on the service. A binding contains a collection of binding elements that correspond to protocol channels, transport channels, and message encoders. There can be any number of binding elements for protocol channels but one and only one binding element for each the transport and message encoder. There are commonly six layers of binding elements in a binding. Only the transport and encoding binding elements at the bottom of the stack are required. Because an encoding is required for each binding, if an encoding is not specified, [!INCLUDE[indigo1](~/includes/indigo1-md.md)] adds a default encoding for you. The default is Text/XML for the HTTP and HTTPS transports, and Binary for other transports.  \n  \n The following table summarizes the options for each layer.  \n  \n|Layer|Options|Required|  \n|-----------|-------------|--------------|  \n|Transaction Flow|<xref:System.ServiceModel.Channels.TransactionFlowBindingElement>|No|  \n|Reliability|<xref:System.ServiceModel.Channels.ReliableSessionBindingElement>|No|  \n|Security|Symmetric, Asymmetric, Transport-Level|No|  \n|Shape Change|<xref:System.ServiceModel.Channels.CompositeDuplexBindingElement>|No|  \n|Transport Upgrades|SSL stream, Windows stream, Peer Resolver|No|  \n|Encoding|Text, Binary, MTOM, Custom|Yes|  \n|Transport|TCP, Named Pipes, HTTP, HTTPS, MSMQ, Custom|Yes|  \n  \n Each binding element provides the specification for building a channel factory on the client and a channel listener on the service. When the channel factory stack is constructed, for example, there is one channel factory in the stack for each binding element in the binding. The same sort of mapping applies to the channel listeners in the stack on the service. Consistency on the client and service is critical for establishing the channel-based connection between these endpoints. Each factory and listener, in turn, processes the sending and accepting of the corresponding channels in the channel stack that connects them, and these channels can then send and receive the messages used to communicate.  \n  \n Each instance of a <xref:System.ServiceModel.Channels.Binding> has a <xref:System.ServiceModel.Channels.Binding.Name%2A> and <xref:System.ServiceModel.Channels.Binding.Namespace%2A> that together uniquely identify it in the metadata of the service. If no name or namespace is specified, [!INCLUDE[indigo2](~/includes/indigo2-md.md)] adds a default values for you. The default name is `null` and the default namespace is http://tempuri.org/. This user name for the binding is distinct from the specification of the protocol name, which is specified by the <xref:System.ServiceModel.Channels.Binding.Scheme%2A> property. If you want to add more HTTP bindings, for example, you can name them whatever you want and set all of their schemes to \"http\". There is no inherent application or machine dispatch based on the <xref:System.ServiceModel.Channels.Binding.Scheme%2A>. So you avoid the common problem of being unable to register additional handlers for well-known protocols. You can also easily work with multiple versions of a binding side-by-side by giving each version a different name.  \n  \n The <xref:System.ServiceModel.Channels.Binding> class implements the <xref:System.ServiceModel.IDefaultCommunicationTimeouts> interface to mitigate Denial of Service (DOS) attacks that rely on tying up resources for extended intervals of time. The implementation specifies the communication timeouts values for opening and closing connections and for the reading and writing operations associated with receiving and sending messages. The properties used to get and set these timeouts and their default values operations are summarized in the following table.  \n  \n|Timeout Property|Default Value|  \n|----------------------|-------------------|  \n|<xref:System.ServiceModel.Channels.Binding.OpenTimeout%2A>|1 minute|  \n|<xref:System.ServiceModel.Channels.Binding.CloseTimeout%2A>|1 minute|  \n|<xref:System.ServiceModel.Channels.Binding.SendTimeout%2A>|1 minute|  \n|<xref:System.ServiceModel.Channels.Binding.ReceiveTimeout%2A>|10 minutes|  \n  \n When you create a binding by inheriting from <xref:System.ServiceModel.Channels.Binding>, you must override <xref:System.ServiceModel.Channels.Binding.CreateBindingElements%2A>.  \n  \n In addition, you can define your own binding elements and insert them between any of the defined layers in the preceding table. For more information, see the <xref:System.ServiceModel.Channels.CustomBinding> class."
+  example:
+  - '[!code-csharp[S_UEBinding#11](~/samples/snippets/csharp/VS_Snippets_CFX/s_uebinding/cs/service.cs#11)]'
+  syntax:
+    content: 'public abstract class Binding : System.ServiceModel.IDefaultCommunicationTimeouts'
+  inheritance:
+  - System.Object
+  derivedClasses:
+  - System.ServiceModel.HttpBindingBase
+  - System.ServiceModel.MsmqBindingBase
+  - System.ServiceModel.NetNamedPipeBinding
+  - System.ServiceModel.NetPeerTcpBinding
+  - System.ServiceModel.NetTcpBinding
+  - System.ServiceModel.UdpBinding
+  - System.ServiceModel.WebHttpBinding
+  - System.ServiceModel.WSDualHttpBinding
+  - System.ServiceModel.WSHttpBindingBase
+  - System.ServiceModel.Channels.CustomBinding
+  implements:
+  - System.ServiceModel.IDefaultCommunicationTimeouts
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.#ctor
+  commentId: M:System.ServiceModel.Channels.Binding.#ctor
+  id: '#ctor'
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: Binding()
+  nameWithType: Binding.Binding()
+  fullName: Binding.Binding()
+  type: Constructor
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Initializes a new instance of the <xref href="System.ServiceModel.Channels.Binding"></xref> class with a default name and namespace.
+  remarks: The default name is `null` and the default namespace is http://tempuri.org/.
+  example:
+  - >-
+    [!code-csharp[S_UEBinding#2](~/samples/snippets/csharp/VS_Snippets_CFX/s_uebinding/cs/service.cs#2)]
+     [!code-vb[S_UEBinding#2](~/samples/snippets/visualbasic/VS_Snippets_CFX/s_uebinding/vb/service.vb#2)]
+  syntax:
+    content: protected Binding ();
+    parameters: []
+  overload: System.ServiceModel.Channels.Binding.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.#ctor(System.String,System.String)
+  commentId: M:System.ServiceModel.Channels.Binding.#ctor(System.String,System.String)
+  id: '#ctor(System.String,System.String)'
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: Binding(String, String)
+  nameWithType: Binding.Binding(String, String)
+  fullName: Binding.Binding(String, String)
+  type: Constructor
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Initializes a new instance of the <xref href="System.ServiceModel.Channels.Binding"></xref> class from a specified binding of the service.
+  remarks: The <xref:System.ServiceModel.Channels.Binding.Name%2A> and <xref:System.ServiceModel.Channels.Binding.Namespace%2A> together uniquely identify an instance of a <xref:System.ServiceModel.Channels.Binding> in the metadata of the service.
+  syntax:
+    content: protected Binding (string name, string ns);
+    parameters:
+    - id: name
+      type: System.String
+      description: The <xref href="System.ServiceModel.Channels.Binding.Name"></xref> of the binding.
+    - id: ns
+      type: System.String
+      description: The <xref href="System.ServiceModel.Channels.Binding.Namespace"></xref> of the binding.
+  overload: System.ServiceModel.Channels.Binding.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>name</code> is `null` or an empty string.
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>ns</code> is `null`.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.BuildChannelFactory``1(System.Object[])
+  commentId: M:System.ServiceModel.Channels.Binding.BuildChannelFactory``1(System.Object[])
+  id: BuildChannelFactory``1(System.Object[])
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: BuildChannelFactory<TChannel>(Object[])
+  nameWithType: Binding.BuildChannelFactory<TChannel>(Object[])
+  fullName: Binding.BuildChannelFactory<TChannel>(Object[])
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Builds the channel factory stack on the client that creates a specified type of channel and that satisfies the features specified by an object array.
+  syntax:
+    content: public System.ServiceModel.Channels.IChannelFactory<TChannel> BuildChannelFactory<TChannel> (object[] parameters);
+    parameters:
+    - id: parameters
+      type: System.Object[]
+      description: The object array that specifies requirements for the channel factory that is built.
+    typeParameters:
+    - id: TChannel
+      description: The type of channel the channel factory produces.
+    return:
+      type: System.ServiceModel.Channels.IChannelFactory`1
+      description: An <xref href="System.ServiceModel.Channels.IChannelFactory`1"></xref> of type <code>TChannel</code> that satisfies the features specified by the collection.
+  overload: System.ServiceModel.Channels.Binding.BuildChannelFactory``1*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: Transport element is missing or out of order or scheme is invalid or the message version is not specified.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.BuildChannelFactory``1(System.ServiceModel.Channels.BindingParameterCollection)
+  commentId: M:System.ServiceModel.Channels.Binding.BuildChannelFactory``1(System.ServiceModel.Channels.BindingParameterCollection)
+  id: BuildChannelFactory``1(System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: BuildChannelFactory<TChannel>(BindingParameterCollection)
+  nameWithType: Binding.BuildChannelFactory<TChannel>(BindingParameterCollection)
+  fullName: Binding.BuildChannelFactory<TChannel>(BindingParameterCollection)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Builds the channel factory stack on the client that creates a specified type of channel and that satisfies the features specified by a collection of binding parameters.
+  syntax:
+    content: public virtual System.ServiceModel.Channels.IChannelFactory<TChannel> BuildChannelFactory<TChannel> (System.ServiceModel.Channels.BindingParameterCollection parameters);
+    parameters:
+    - id: parameters
+      type: System.ServiceModel.Channels.BindingParameterCollection
+      description: The <xref href="System.ServiceModel.Channels.BindingParameterCollection"></xref> that specifies requirements for the channel factory built.
+    typeParameters:
+    - id: TChannel
+      description: The type of channel the channel factory produces.
+    return:
+      type: System.ServiceModel.Channels.IChannelFactory`1
+      description: An <xref href="System.ServiceModel.Channels.IChannelFactory`1"></xref> of type <code>TChannel</code> that satisfies the features specified by the collection.
+  overload: System.ServiceModel.Channels.Binding.BuildChannelFactory``1*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: Transport element is missing or out of order or scheme is invalid or the message version is not specified.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Object[])
+  commentId: M:System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Object[])
+  id: BuildChannelListener``1(System.Object[])
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: BuildChannelListener<TChannel>(Object[])
+  nameWithType: Binding.BuildChannelListener<TChannel>(Object[])
+  fullName: Binding.BuildChannelListener<TChannel>(Object[])
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Builds the channel listener on the service that accepts a specified type of channel and that satisfies the features specified.
+  syntax:
+    content: 'public virtual System.ServiceModel.Channels.IChannelListener<TChannel> BuildChannelListener<TChannel> (object[] parameters) where TChannel : class, System.ServiceModel.Channels.IChannel;'
+    parameters:
+    - id: parameters
+      type: System.Object[]
+      description: The object array that specifies requirements for the channel factory built.
+    typeParameters:
+    - id: TChannel
+      description: The type of channel the channel listener accepts.
+    return:
+      type: System.ServiceModel.Channels.IChannelListener`1
+      description: An <xref href="System.ServiceModel.Channels.IChannelListener`1"></xref> of type <code>TChannel</code> that satisfies the features specified.
+  overload: System.ServiceModel.Channels.Binding.BuildChannelListener``1*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: Transport element is missing or out of order or scheme is invalid or the message version is not specified.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.ServiceModel.Channels.BindingParameterCollection)
+  commentId: M:System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.ServiceModel.Channels.BindingParameterCollection)
+  id: BuildChannelListener``1(System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: BuildChannelListener<TChannel>(BindingParameterCollection)
+  nameWithType: Binding.BuildChannelListener<TChannel>(BindingParameterCollection)
+  fullName: Binding.BuildChannelListener<TChannel>(BindingParameterCollection)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Builds the channel listener on the service that accepts a specified type of channel and that satisfies the features specified by a collection of binding parameters.
+  syntax:
+    content: 'public virtual System.ServiceModel.Channels.IChannelListener<TChannel> BuildChannelListener<TChannel> (System.ServiceModel.Channels.BindingParameterCollection parameters) where TChannel : class, System.ServiceModel.Channels.IChannel;'
+    parameters:
+    - id: parameters
+      type: System.ServiceModel.Channels.BindingParameterCollection
+      description: The <xref href="System.ServiceModel.Channels.BindingParameterCollection"></xref> that specifies requirements for the channel listener that is built.
+    typeParameters:
+    - id: TChannel
+      description: The type of channel the channel listener accepts.
+    return:
+      type: System.ServiceModel.Channels.IChannelListener`1
+      description: An <xref href="System.ServiceModel.Channels.IChannelListener`1"></xref> of type <code>TChannel</code> that satisfies the features specified.
+  overload: System.ServiceModel.Channels.Binding.BuildChannelListener``1*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: Transport element is missing or out of order or scheme is invalid or the message version is not specified.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.Object[])
+  commentId: M:System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.Object[])
+  id: BuildChannelListener``1(System.Uri,System.Object[])
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: BuildChannelListener<TChannel>(Uri, Object[])
+  nameWithType: Binding.BuildChannelListener<TChannel>(Uri, Object[])
+  fullName: Binding.BuildChannelListener<TChannel>(Uri, Object[])
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Builds the channel listener on the service that accepts a specified type of channel and that satisfies the features specified.
+  syntax:
+    content: 'public virtual System.ServiceModel.Channels.IChannelListener<TChannel> BuildChannelListener<TChannel> (Uri listenUri, object[] parameters) where TChannel : class, System.ServiceModel.Channels.IChannel;'
+    parameters:
+    - id: listenUriBaseAddress
+      type: System.Uri
+      description: ''
+    - id: parameters
+      type: System.Object[]
+      description: The object array that specifies requirements for the channel factory that is built.
+    typeParameters:
+    - id: TChannel
+      description: The type of channel the channel listener accepts.
+    return:
+      type: System.ServiceModel.Channels.IChannelListener`1
+      description: An <xref href="System.ServiceModel.Channels.IChannelListener`1"></xref> of type <code>TChannel</code> that satisfies the features specified.
+  overload: System.ServiceModel.Channels.Binding.BuildChannelListener``1*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: Transport element is missing or out of order or scheme is invalid or the message version is not specified.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.ServiceModel.Channels.BindingParameterCollection)
+  commentId: M:System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.ServiceModel.Channels.BindingParameterCollection)
+  id: BuildChannelListener``1(System.Uri,System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: BuildChannelListener<TChannel>(Uri, BindingParameterCollection)
+  nameWithType: Binding.BuildChannelListener<TChannel>(Uri, BindingParameterCollection)
+  fullName: Binding.BuildChannelListener<TChannel>(Uri, BindingParameterCollection)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Builds the channel listener on the service that accepts a specified type of channel and that satisfies the features specified.
+  syntax:
+    content: 'public virtual System.ServiceModel.Channels.IChannelListener<TChannel> BuildChannelListener<TChannel> (Uri listenUri, System.ServiceModel.Channels.BindingParameterCollection parameters) where TChannel : class, System.ServiceModel.Channels.IChannel;'
+    parameters:
+    - id: listenUriBaseAddress
+      type: System.Uri
+      description: ''
+    - id: parameters
+      type: System.ServiceModel.Channels.BindingParameterCollection
+      description: The <xref href="System.ServiceModel.Channels.BindingParameterCollection"></xref> that specifies requirements for the channel listener that is built.
+    typeParameters:
+    - id: TChannel
+      description: The type of channel the channel listener accepts.
+    return:
+      type: System.ServiceModel.Channels.IChannelListener`1
+      description: An <xref href="System.ServiceModel.Channels.IChannelListener`1"></xref> of type <code>TChannel</code> that satisfies the features specified.
+  overload: System.ServiceModel.Channels.Binding.BuildChannelListener``1*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: Transport element is missing or out of order or scheme is invalid or the message version is not specified.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.String,System.Object[])
+  commentId: M:System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.String,System.Object[])
+  id: BuildChannelListener``1(System.Uri,System.String,System.Object[])
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: BuildChannelListener<TChannel>(Uri, String, Object[])
+  nameWithType: Binding.BuildChannelListener<TChannel>(Uri, String, Object[])
+  fullName: Binding.BuildChannelListener<TChannel>(Uri, String, Object[])
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Builds the channel listener on the service that accepts a specified type of channel and that satisfies the features specified.
+  syntax:
+    content: 'public virtual System.ServiceModel.Channels.IChannelListener<TChannel> BuildChannelListener<TChannel> (Uri listenUriBaseAddress, string listenUriRelativeAddress, object[] parameters) where TChannel : class, System.ServiceModel.Channels.IChannel;'
+    parameters:
+    - id: listenUriBaseAddress
+      type: System.Uri
+      description: The <xref href="System.Uri"></xref> that provides the base address on which the service listens.
+    - id: listenUriRelativeAddress
+      type: System.String
+      description: The address, relative to the base address, on which the service listens.
+    - id: parameters
+      type: System.Object[]
+      description: The object array that specifies requirements for the channel factory that is built.
+    typeParameters:
+    - id: TChannel
+      description: The type of channel the channel listener accepts.
+    return:
+      type: System.ServiceModel.Channels.IChannelListener`1
+      description: An <xref href="System.ServiceModel.Channels.IChannelListener`1"></xref> of type <code>TChannel</code> that satisfies the features specified.
+  overload: System.ServiceModel.Channels.Binding.BuildChannelListener``1*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: Transport element is missing or out of order or scheme is invalid or the message version is not specified.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.String,System.ServiceModel.Channels.BindingParameterCollection)
+  commentId: M:System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.String,System.ServiceModel.Channels.BindingParameterCollection)
+  id: BuildChannelListener``1(System.Uri,System.String,System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: BuildChannelListener<TChannel>(Uri, String, BindingParameterCollection)
+  nameWithType: Binding.BuildChannelListener<TChannel>(Uri, String, BindingParameterCollection)
+  fullName: Binding.BuildChannelListener<TChannel>(Uri, String, BindingParameterCollection)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Builds the channel listener on the service that accepts a specified type of channel and that satisfies the features specified.
+  syntax:
+    content: 'public virtual System.ServiceModel.Channels.IChannelListener<TChannel> BuildChannelListener<TChannel> (Uri listenUriBaseAddress, string listenUriRelativeAddress, System.ServiceModel.Channels.BindingParameterCollection parameters) where TChannel : class, System.ServiceModel.Channels.IChannel;'
+    parameters:
+    - id: listenUriBaseAddress
+      type: System.Uri
+      description: The <xref href="System.Uri"></xref> that provides the base address on which the service listens.
+    - id: listenUriRelativeAddress
+      type: System.String
+      description: The address, relative to the base address, on which the service listens.
+    - id: parameters
+      type: System.ServiceModel.Channels.BindingParameterCollection
+      description: The <xref href="System.ServiceModel.Channels.BindingParameterCollection"></xref> that specifies requirements for the channel listener that is built.
+    typeParameters:
+    - id: TChannel
+      description: The type of channel the channel listener accepts.
+    return:
+      type: System.ServiceModel.Channels.IChannelListener`1
+      description: An <xref href="System.ServiceModel.Channels.IChannelListener`1"></xref> of type <code>TChannel</code> that satisfies the features specified.
+  overload: System.ServiceModel.Channels.Binding.BuildChannelListener``1*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: Transport element is missing or out of order or scheme is invalid or the message version is not specified.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.String,System.ServiceModel.Description.ListenUriMode,System.Object[])
+  commentId: M:System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.String,System.ServiceModel.Description.ListenUriMode,System.Object[])
+  id: BuildChannelListener``1(System.Uri,System.String,System.ServiceModel.Description.ListenUriMode,System.Object[])
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: BuildChannelListener<TChannel>(Uri, String, ListenUriMode, Object[])
+  nameWithType: Binding.BuildChannelListener<TChannel>(Uri, String, ListenUriMode, Object[])
+  fullName: Binding.BuildChannelListener<TChannel>(Uri, String, ListenUriMode, Object[])
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Builds the channel listener on the service that accepts a specified type of channel and that satisfies the features specified.
+  syntax:
+    content: 'public virtual System.ServiceModel.Channels.IChannelListener<TChannel> BuildChannelListener<TChannel> (Uri listenUriBaseAddress, string listenUriRelativeAddress, System.ServiceModel.Description.ListenUriMode listenUriMode, object[] parameters) where TChannel : class, System.ServiceModel.Channels.IChannel;'
+    parameters:
+    - id: listenUriBaseAddress
+      type: System.Uri
+      description: The <xref href="System.Uri"></xref> that provides the base address on which the service listens.
+    - id: listenUriRelativeAddress
+      type: System.String
+      description: The address, relative to the base address, on which the service listens.
+    - id: listenUriMode
+      type: System.ServiceModel.Description.ListenUriMode
+      description: A value of the <xref href="System.ServiceModel.Description.ListenUriMode"></xref> that indicates whether the transport must ensure that the URI provided for the service to listen on is unique or can be used exactly as provided.
+    - id: parameters
+      type: System.Object[]
+      description: The object array that specifies requirements for the channel factory that is built.
+    typeParameters:
+    - id: TChannel
+      description: The type of channel the channel listener accepts.
+    return:
+      type: System.ServiceModel.Channels.IChannelListener`1
+      description: An <xref href="System.ServiceModel.Channels.IChannelListener`1"></xref> of type <code>TChannel</code> that satisfies the features specified.
+  overload: System.ServiceModel.Channels.Binding.BuildChannelListener``1*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: Transport element is missing or out of order or scheme is invalid or the message version is not specified.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.String,System.ServiceModel.Description.ListenUriMode,System.ServiceModel.Channels.BindingParameterCollection)
+  commentId: M:System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.String,System.ServiceModel.Description.ListenUriMode,System.ServiceModel.Channels.BindingParameterCollection)
+  id: BuildChannelListener``1(System.Uri,System.String,System.ServiceModel.Description.ListenUriMode,System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: BuildChannelListener<TChannel>(Uri, String, ListenUriMode, BindingParameterCollection)
+  nameWithType: Binding.BuildChannelListener<TChannel>(Uri, String, ListenUriMode, BindingParameterCollection)
+  fullName: Binding.BuildChannelListener<TChannel>(Uri, String, ListenUriMode, BindingParameterCollection)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Builds the channel listener on the service that accepts a specified type of channel and that satisfies the features specified.
+  syntax:
+    content: 'public virtual System.ServiceModel.Channels.IChannelListener<TChannel> BuildChannelListener<TChannel> (Uri listenUriBaseAddress, string listenUriRelativeAddress, System.ServiceModel.Description.ListenUriMode listenUriMode, System.ServiceModel.Channels.BindingParameterCollection parameters) where TChannel : class, System.ServiceModel.Channels.IChannel;'
+    parameters:
+    - id: listenUriBaseAddress
+      type: System.Uri
+      description: The <xref href="System.Uri"></xref> that provides the base address on which the service listens.
+    - id: listenUriRelativeAddress
+      type: System.String
+      description: The address, relative to the base address, on which the service listens.
+    - id: listenUriMode
+      type: System.ServiceModel.Description.ListenUriMode
+      description: A value of the <xref href="System.ServiceModel.Description.ListenUriMode"></xref> that indicates whether the transport must ensure that the URI provided for the service to listen on is unique or can be used exactly as provided.
+    - id: parameters
+      type: System.ServiceModel.Channels.BindingParameterCollection
+      description: The <xref href="System.ServiceModel.Channels.BindingParameterCollection"></xref> that specifies requirements for the channel listener that is built.
+    typeParameters:
+    - id: TChannel
+      description: The type of channel the channel listener accepts.
+    return:
+      type: System.ServiceModel.Channels.IChannelListener`1
+      description: An <xref href="System.ServiceModel.Channels.IChannelListener`1"></xref> of type <code>TChannel</code> that satisfies the features specified.
+  overload: System.ServiceModel.Channels.Binding.BuildChannelListener``1*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: Transport element is missing or out of order or scheme is invalid or the message version is not specified.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.CanBuildChannelFactory``1(System.ServiceModel.Channels.BindingParameterCollection)
+  commentId: M:System.ServiceModel.Channels.Binding.CanBuildChannelFactory``1(System.ServiceModel.Channels.BindingParameterCollection)
+  id: CanBuildChannelFactory``1(System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: CanBuildChannelFactory<TChannel>(BindingParameterCollection)
+  nameWithType: Binding.CanBuildChannelFactory<TChannel>(BindingParameterCollection)
+  fullName: Binding.CanBuildChannelFactory<TChannel>(BindingParameterCollection)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Returns a value that indicates whether the current binding can build a channel factory stack on the client that satisfies the collection of binding parameters specified.
+  remarks: Use this method if you want to check that the channel factory for channels of type `TChannel` can be build for the binding `parameters` specified before attempting to actually build the factory. Alternatively, try to build the channel factory by calling <xref:System.ServiceModel.Channels.Binding.BuildChannelFactory%60%601%28System.ServiceModel.Channels.BindingParameterCollection%29> and catch the exception generated if it cannot be built.
+  syntax:
+    content: public virtual bool CanBuildChannelFactory<TChannel> (System.ServiceModel.Channels.BindingParameterCollection parameters);
+    parameters:
+    - id: parameters
+      type: System.ServiceModel.Channels.BindingParameterCollection
+      description: The <xref href="System.ServiceModel.Channels.BindingParameterCollection"></xref> that specifies requirements for the channel factory that is built.
+    typeParameters:
+    - id: TChannel
+      description: The type of channel for which the factory is being tested.
+    return:
+      type: System.Boolean
+      description: '`true` if the specified channel factory stack can be build on the client; otherwise, `false`.'
+  overload: System.ServiceModel.Channels.Binding.CanBuildChannelFactory``1*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.CanBuildChannelFactory``1(System.Object[])
+  commentId: M:System.ServiceModel.Channels.Binding.CanBuildChannelFactory``1(System.Object[])
+  id: CanBuildChannelFactory``1(System.Object[])
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: CanBuildChannelFactory<TChannel>(Object[])
+  nameWithType: Binding.CanBuildChannelFactory<TChannel>(Object[])
+  fullName: Binding.CanBuildChannelFactory<TChannel>(Object[])
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Returns a value that indicates whether the current binding can build a channel factory stack on the client that satisfies the requirements specified by an object array.
+  remarks: Use this method if you want to check that the channel factory for channels of type `TChannel` can be build for the binding `parameters` specified before attempting to actually build the factory. Alternatively, try to build the channel factory by calling <xref:System.ServiceModel.Channels.Binding.BuildChannelFactory%60%601%28System.Object%5B%5D%29> and catch the exception generated if it cannot be built.
+  syntax:
+    content: public bool CanBuildChannelFactory<TChannel> (object[] parameters);
+    parameters:
+    - id: parameters
+      type: System.Object[]
+      description: The object array that specifies requirements for the channel factory that is built.
+    typeParameters:
+    - id: TChannel
+      description: The type of channel for which the factory is being tested.
+    return:
+      type: System.Boolean
+      description: '`true` if the specified channel factory stack can be build on the client; otherwise, `false`.'
+  overload: System.ServiceModel.Channels.Binding.CanBuildChannelFactory``1*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.CanBuildChannelListener``1(System.Object[])
+  commentId: M:System.ServiceModel.Channels.Binding.CanBuildChannelListener``1(System.Object[])
+  id: CanBuildChannelListener``1(System.Object[])
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: CanBuildChannelListener<TChannel>(Object[])
+  nameWithType: Binding.CanBuildChannelListener<TChannel>(Object[])
+  fullName: Binding.CanBuildChannelListener<TChannel>(Object[])
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Returns a value that indicates whether the current binding can build a channel listener stack on the service that satisfies the criteria specified in an array of objects.
+  remarks: Use this method if you want to check that the channel listener for channels of type `TChannel` can be build for the binding `parameters` specified before attempting to actually build the listener. Alternatively, try to build the channel listener by calling <xref:System.ServiceModel.Channels.Binding.BuildChannelListener%60%601%28System.Object%5B%5D%29> and catch the exception generated if it cannot be built.
+  syntax:
+    content: 'public bool CanBuildChannelListener<TChannel> (object[] parameters) where TChannel : class, System.ServiceModel.Channels.IChannel;'
+    parameters:
+    - id: parameters
+      type: System.Object[]
+      description: The object array that specifies requirements for the channel factory that is built.
+    typeParameters:
+    - id: TChannel
+      description: The type of channel for which the listener is being tested.
+    return:
+      type: System.Boolean
+      description: '`true` if the specified channel listener stack can be build on the service; otherwise, `false`.'
+  overload: System.ServiceModel.Channels.Binding.CanBuildChannelListener``1*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.CanBuildChannelListener``1(System.ServiceModel.Channels.BindingParameterCollection)
+  commentId: M:System.ServiceModel.Channels.Binding.CanBuildChannelListener``1(System.ServiceModel.Channels.BindingParameterCollection)
+  id: CanBuildChannelListener``1(System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: CanBuildChannelListener<TChannel>(BindingParameterCollection)
+  nameWithType: Binding.CanBuildChannelListener<TChannel>(BindingParameterCollection)
+  fullName: Binding.CanBuildChannelListener<TChannel>(BindingParameterCollection)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Returns a value that indicates whether the current binding can build a channel listener stack on the service that satisfies the collection of binding parameters specified.
+  remarks: Use this method if you want to check that the channel listener for channels of type `TChannel` can be build for the binding `parameters` specified before attempting to actually build the listener. Alternatively, try to build the channel listener by calling <xref:System.ServiceModel.Channels.Binding.BuildChannelListener%60%601%28System.ServiceModel.Channels.BindingParameterCollection%29> and catch the exception generated if it cannot be built.
+  syntax:
+    content: 'public virtual bool CanBuildChannelListener<TChannel> (System.ServiceModel.Channels.BindingParameterCollection parameters) where TChannel : class, System.ServiceModel.Channels.IChannel;'
+    parameters:
+    - id: parameters
+      type: System.ServiceModel.Channels.BindingParameterCollection
+      description: The <xref href="System.ServiceModel.Channels.BindingParameterCollection"></xref> that specifies requirements for the channel listener that is built.
+    typeParameters:
+    - id: TChannel
+      description: The type of channel for which the listener is being tested.
+    return:
+      type: System.Boolean
+      description: '`true` if the specified channel listener stack can be build on the service; otherwise, `false`.'
+  overload: System.ServiceModel.Channels.Binding.CanBuildChannelListener``1*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.CloseTimeout
+  commentId: P:System.ServiceModel.Channels.Binding.CloseTimeout
+  id: CloseTimeout
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: CloseTimeout
+  nameWithType: Binding.CloseTimeout
+  fullName: Binding.CloseTimeout
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Gets or sets the interval of time provided for a connection to close before the transport raises an exception.
+  remarks: The value of this property is used by the channels and listeners produced by the factories of the binding.
+  syntax:
+    content: public TimeSpan CloseTimeout { get; set; }
+    return:
+      type: System.TimeSpan
+      description: The <xref href="System.TimeSpan"></xref> that specifies how long the close operation has to complete before timing out. The default value is 1 minute.
+  overload: System.ServiceModel.Channels.Binding.CloseTimeout*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The value is less than zero or too large.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.CreateBindingElements
+  commentId: M:System.ServiceModel.Channels.Binding.CreateBindingElements
+  id: CreateBindingElements
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: CreateBindingElements()
+  nameWithType: Binding.CreateBindingElements()
+  fullName: Binding.CreateBindingElements()
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: When overridden in a derived class, creates a collection that contains the binding elements that are part of the current binding.
+  remarks: The elements should not reference any internal elements that the <xref:System.ServiceModel.Channels.Binding> object uses.
+  syntax:
+    content: public abstract System.ServiceModel.Channels.BindingElementCollection CreateBindingElements ();
+    parameters: []
+    return:
+      type: System.ServiceModel.Channels.BindingElementCollection
+      description: A <xref href="System.Collections.Generic.ICollection`1"></xref> object of type <xref href="System.ServiceModel.Channels.BindingElement"></xref> that contains the binding elements from the current binding object in the correct order.
+  overload: System.ServiceModel.Channels.Binding.CreateBindingElements*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.GetProperty``1(System.ServiceModel.Channels.BindingParameterCollection)
+  commentId: M:System.ServiceModel.Channels.Binding.GetProperty``1(System.ServiceModel.Channels.BindingParameterCollection)
+  id: GetProperty``1(System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: GetProperty<T>(BindingParameterCollection)
+  nameWithType: Binding.GetProperty<T>(BindingParameterCollection)
+  fullName: Binding.GetProperty<T>(BindingParameterCollection)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Returns a typed object requested, if present, from the appropriate layer in the binding stack.
+  remarks: If a layer supports returning the requested object, it returns it. If not, it delegates the call down to the next layer in the stack. If it gets to the bottom of the stack and no layer supported the requested object, then the method returns `null`.
+  syntax:
+    content: 'public T GetProperty<T> (System.ServiceModel.Channels.BindingParameterCollection parameters) where T : class;'
+    parameters:
+    - id: parameters
+      type: System.ServiceModel.Channels.BindingParameterCollection
+      description: The <xref href="System.ServiceModel.Channels.BindingParameterCollection"></xref> that specifies requirements for the channel listener that is built.
+    typeParameters:
+    - id: T
+      description: The typed object for which the method is querying.
+    return:
+      type: T
+      description: The typed object <code>T</code> requested if it is present or `null` if it is not.
+  overload: System.ServiceModel.Channels.Binding.GetProperty``1*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.MessageVersion
+  commentId: P:System.ServiceModel.Channels.Binding.MessageVersion
+  id: MessageVersion
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: MessageVersion
+  nameWithType: Binding.MessageVersion
+  fullName: Binding.MessageVersion
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Gets the message version used by clients and services configured with the binding.
+  syntax:
+    content: public System.ServiceModel.Channels.MessageVersion MessageVersion { get; }
+    return:
+      type: System.ServiceModel.Channels.MessageVersion
+      description: The <xref href="System.ServiceModel.Channels.MessageVersion"></xref> used by clients and services configured with the binding.
+  overload: System.ServiceModel.Channels.Binding.MessageVersion*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.Name
+  commentId: P:System.ServiceModel.Channels.Binding.Name
+  id: Name
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: Name
+  nameWithType: Binding.Name
+  fullName: Binding.Name
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Gets or sets the name of the binding.
+  remarks: "Each instance of a <xref:System.ServiceModel.Channels.Binding> has a <xref:System.ServiceModel.Channels.Binding.Name%2A> and <xref:System.ServiceModel.Channels.Binding.Namespace%2A> that together uniquely identify the user name for the binding in the metadata of the service.  \n  \n This user name for the binding is distinct from the specification of the protocol name, which is specified by the <xref:System.ServiceModel.Channels.Binding.Scheme%2A> property. If you want to add more HTTP bindings, for example, you can name them whatever you want and set all of their schemes to \"http\". There is no inherent application or machine dispatch based on the <xref:System.ServiceModel.Channels.Binding.Scheme%2A>. So you avoid the common problem of being unable to register additional handlers for well-known protocols. You can also easily work with multiple versions of a binding side-by-side by giving each version a different name."
+  syntax:
+    content: public string Name { get; set; }
+    return:
+      type: System.String
+      description: The name of the binding. The default name is `null`.
+  overload: System.ServiceModel.Channels.Binding.Name*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The value set cannot be `null` or an empty string.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.Namespace
+  commentId: P:System.ServiceModel.Channels.Binding.Namespace
+  id: Namespace
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: Namespace
+  nameWithType: Binding.Namespace
+  fullName: Binding.Namespace
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Gets or sets the XML namespace of the binding.
+  remarks: "Each instance of a <xref:System.ServiceModel.Channels.Binding> has a <xref:System.ServiceModel.Channels.Binding.Name%2A> and <xref:System.ServiceModel.Channels.Binding.Namespace%2A> that together uniquely identify the user name for the binding in the metadata of the service.  \n  \n This user name for the binding is distinct from the specification of the protocol name, which is specified by the <xref:System.ServiceModel.Channels.Binding.Scheme%2A> property. If you want to add more HTTP bindings, for example, you can name them whatever you want and set all of their schemes to \"http\". There is no inherent application or machine dispatch based on the <xref:System.ServiceModel.Channels.Binding.Scheme%2A>. So you avoid the common problem of being unable to register additional handlers for well-known protocols. You can also easily work with multiple versions of a binding side-by-side by giving each version a different name."
+  syntax:
+    content: public string Namespace { get; set; }
+    return:
+      type: System.String
+      description: The XML namespace of the binding. The default value is "http://tempuri.org/".
+  overload: System.ServiceModel.Channels.Binding.Namespace*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The value set cannot be `null`.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.OpenTimeout
+  commentId: P:System.ServiceModel.Channels.Binding.OpenTimeout
+  id: OpenTimeout
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: OpenTimeout
+  nameWithType: Binding.OpenTimeout
+  fullName: Binding.OpenTimeout
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Gets or sets the interval of time provided for a connection to open before the transport raises an exception.
+  remarks: The value of this property is used by the channels and listeners produced by the factories of the binding.
+  syntax:
+    content: public TimeSpan OpenTimeout { get; set; }
+    return:
+      type: System.TimeSpan
+      description: The <xref href="System.TimeSpan"></xref> that specifies how long the open operation has to complete before timing out. The default value is 1 minute.
+  overload: System.ServiceModel.Channels.Binding.OpenTimeout*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The value is less than zero or too large.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.ReceiveTimeout
+  commentId: P:System.ServiceModel.Channels.Binding.ReceiveTimeout
+  id: ReceiveTimeout
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: ReceiveTimeout
+  nameWithType: Binding.ReceiveTimeout
+  fullName: Binding.ReceiveTimeout
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Gets or sets the interval of time that a connection can remain inactive, during which no application messages are received, before it is dropped.
+  remarks: "When using a reliable session, there are two different inactivity timers that must be satisfied to keep the connection alive. If either of these inactivity timers goes off, then the connection is dropped.  \n  \n-   The first inactivity timer is on the reliable session and is called the <xref:System.ServiceModel.ReliableSession.InactivityTimeout%2A>. This inactivity timer fires if no messages, either application or infrastructure, are received within the timeout period. An infrastructure message is a message that is generated for the purpose of one of the protocols in the channel stack, such as a keep alive or an acknowledgment, rather than containing application data.  \n  \n-   The second inactivity timer is on the service and uses the <xref:System.ServiceModel.Channels.Binding.ReceiveTimeout%2A> setting of the binding. This inactivity timer fires if no application messages are received within the timeout period. This specifies, for example, the maximum time a client may take to send at least one message to the server before the server will close the channel used by a session. This behavior ensures that clients cannot hold on to server resources for arbitrary long periods.  \n  \n Since the connection is dropped if either inactivity timer fires, increasing <xref:System.ServiceModel.ReliableSession.InactivityTimeout%2A> once it is greater than <xref:System.ServiceModel.Channels.Binding.ReceiveTimeout%2A> has no effect. The default for both of these timeouts is 10 minutes, so you always have to increase both of them to make a difference when using a reliable session.  \n  \n If transaction flow is enabled on the binding or the channel, the operation may take longer to execute than the specified timeout. In these circumstances the operation fails due to the expired timeout and the transaction aborts appropriately.  \n  \n When security is used with sessions, the <xref:System.ServiceModel.Channels.Binding.ReceiveTimeout%2A> value set on the binding is also used as the session timeout."
+  syntax:
+    content: public TimeSpan ReceiveTimeout { get; set; }
+    return:
+      type: System.TimeSpan
+      description: The <xref href="System.TimeSpan"></xref> that specifies how long the application has to receive a message before timing out. The default value is 10 minute.
+  overload: System.ServiceModel.Channels.Binding.ReceiveTimeout*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The value is less than zero or too large.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.Scheme
+  commentId: P:System.ServiceModel.Channels.Binding.Scheme
+  id: Scheme
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: Scheme
+  nameWithType: Binding.Scheme
+  fullName: Binding.Scheme
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: When implemented in a derived class, sets the URI scheme that specifies the transport used by the channel and listener factories that are built by the bindings.
+  remarks: This user name for the binding is distinct from the specification of the protocol name, which is specified by the <xref:System.ServiceModel.Channels.Binding.Scheme%2A> property. Each instance of a <xref:System.ServiceModel.Channels.Binding> has a <xref:System.ServiceModel.Channels.Binding.Name%2A> and <xref:System.ServiceModel.Channels.Binding.Namespace%2A> that together uniquely identify the user name for the binding in the metadata of the service. If you want to add more HTTP bindings, for example, you can name them whatever you want and set all of their schemes to "http". There is no inherent application or machine dispatch based on the <xref:System.ServiceModel.Channels.Binding.Scheme%2A>. So you avoid the common problem of being unable to register additional handlers for well-known protocols. You can also easily work with multiple versions of a binding side-by-side by giving each version a different name.
+  syntax:
+    content: public abstract string Scheme { get; }
+    return:
+      type: System.String
+      description: The URI scheme that is used by the channels or listeners that are created by the factories built by the current binding.
+  overload: System.ServiceModel.Channels.Binding.Scheme*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.SendTimeout
+  commentId: P:System.ServiceModel.Channels.Binding.SendTimeout
+  id: SendTimeout
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: SendTimeout
+  nameWithType: Binding.SendTimeout
+  fullName: Binding.SendTimeout
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Gets or sets the interval of time provided for a write operation to complete before the transport raises an exception.
+  remarks: If transaction flow is enabled on the binding or the channel, the operation may take longer to execute than the specified timeout. In these circumstances the operation fails due to the expired timeout and the transaction aborts appropriately.
+  syntax:
+    content: public TimeSpan SendTimeout { get; set; }
+    return:
+      type: System.TimeSpan
+      description: The <xref href="System.TimeSpan"></xref> that specifies how long the write operation has to complete before timing out. The default value is 1 minute.
+  overload: System.ServiceModel.Channels.Binding.SendTimeout*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The value is less than zero or too large.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.ShouldSerializeName
+  commentId: M:System.ServiceModel.Channels.Binding.ShouldSerializeName
+  id: ShouldSerializeName
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: ShouldSerializeName()
+  nameWithType: Binding.ShouldSerializeName()
+  fullName: Binding.ShouldSerializeName()
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Returns whether the name of the binding should be serialized.
+  syntax:
+    content: public bool ShouldSerializeName ();
+    parameters: []
+    return:
+      type: System.Boolean
+      description: '`true` if the binding name should be serialized; otherwise, `false`.'
+  overload: System.ServiceModel.Channels.Binding.ShouldSerializeName*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.Binding.ShouldSerializeNamespace
+  commentId: M:System.ServiceModel.Channels.Binding.ShouldSerializeNamespace
+  id: ShouldSerializeNamespace
+  parent: System.ServiceModel.Channels.Binding
+  langs:
+  - csharp
+  name: ShouldSerializeNamespace()
+  nameWithType: Binding.ShouldSerializeNamespace()
+  fullName: Binding.ShouldSerializeNamespace()
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Returns whether the namespace of the binding should be serialized.
+  syntax:
+    content: public bool ShouldSerializeNamespace ();
+    parameters: []
+    return:
+      type: System.Boolean
+      description: '`true` if the binding namespace should be serialized; otherwise, `false`.'
+  overload: System.ServiceModel.Channels.Binding.ShouldSerializeNamespace*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.InvalidOperationException
+  parent: System
+  isExternal: false
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.ArgumentOutOfRangeException
+  parent: System
+  isExternal: false
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: System.ServiceModel.Channels.Binding.#ctor
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: Binding()
+  nameWithType: Binding.Binding()
+  fullName: Binding.Binding()
+- uid: System.ServiceModel.Channels.Binding.#ctor(System.String,System.String)
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: Binding(String, String)
+  nameWithType: Binding.Binding(String, String)
+  fullName: Binding.Binding(String, String)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.ServiceModel.Channels.Binding.BuildChannelFactory``1(System.Object[])
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: BuildChannelFactory<TChannel>(Object[])
+  nameWithType: Binding.BuildChannelFactory<TChannel>(Object[])
+  fullName: Binding.BuildChannelFactory<TChannel>(Object[])
+- uid: System.ServiceModel.Channels.IChannelFactory`1
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: IChannelFactory<TChannel>
+  nameWithType: IChannelFactory<TChannel>
+  fullName: System.ServiceModel.Channels.IChannelFactory<TChannel>
+- uid: System.Object[]
+  parent: System
+  isExternal: false
+  name: Object[]
+  nameWithType: Object[]
+  fullName: System.Object[]
+  spec.csharp:
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+- uid: System.ServiceModel.Channels.Binding.BuildChannelFactory``1(System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: BuildChannelFactory<TChannel>(BindingParameterCollection)
+  nameWithType: Binding.BuildChannelFactory<TChannel>(BindingParameterCollection)
+  fullName: Binding.BuildChannelFactory<TChannel>(BindingParameterCollection)
+- uid: System.ServiceModel.Channels.BindingParameterCollection
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: BindingParameterCollection
+  nameWithType: BindingParameterCollection
+  fullName: System.ServiceModel.Channels.BindingParameterCollection
+- uid: System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Object[])
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: BuildChannelListener<TChannel>(Object[])
+  nameWithType: Binding.BuildChannelListener<TChannel>(Object[])
+  fullName: Binding.BuildChannelListener<TChannel>(Object[])
+- uid: System.ServiceModel.Channels.IChannelListener`1
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: IChannelListener<TChannel>
+  nameWithType: IChannelListener<TChannel>
+  fullName: System.ServiceModel.Channels.IChannelListener<TChannel>
+- uid: System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: BuildChannelListener<TChannel>(BindingParameterCollection)
+  nameWithType: Binding.BuildChannelListener<TChannel>(BindingParameterCollection)
+  fullName: Binding.BuildChannelListener<TChannel>(BindingParameterCollection)
+- uid: System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.Object[])
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: BuildChannelListener<TChannel>(Uri, Object[])
+  nameWithType: Binding.BuildChannelListener<TChannel>(Uri, Object[])
+  fullName: Binding.BuildChannelListener<TChannel>(Uri, Object[])
+- uid: System.Uri
+  parent: System
+  isExternal: false
+  name: Uri
+  nameWithType: Uri
+  fullName: System.Uri
+- uid: System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: BuildChannelListener<TChannel>(Uri, BindingParameterCollection)
+  nameWithType: Binding.BuildChannelListener<TChannel>(Uri, BindingParameterCollection)
+  fullName: Binding.BuildChannelListener<TChannel>(Uri, BindingParameterCollection)
+- uid: System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.String,System.Object[])
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: BuildChannelListener<TChannel>(Uri, String, Object[])
+  nameWithType: Binding.BuildChannelListener<TChannel>(Uri, String, Object[])
+  fullName: Binding.BuildChannelListener<TChannel>(Uri, String, Object[])
+- uid: System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.String,System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: BuildChannelListener<TChannel>(Uri, String, BindingParameterCollection)
+  nameWithType: Binding.BuildChannelListener<TChannel>(Uri, String, BindingParameterCollection)
+  fullName: Binding.BuildChannelListener<TChannel>(Uri, String, BindingParameterCollection)
+- uid: System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.String,System.ServiceModel.Description.ListenUriMode,System.Object[])
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: BuildChannelListener<TChannel>(Uri, String, ListenUriMode, Object[])
+  nameWithType: Binding.BuildChannelListener<TChannel>(Uri, String, ListenUriMode, Object[])
+  fullName: Binding.BuildChannelListener<TChannel>(Uri, String, ListenUriMode, Object[])
+- uid: System.ServiceModel.Description.ListenUriMode
+  parent: System.ServiceModel.Description
+  isExternal: false
+  name: ListenUriMode
+  nameWithType: ListenUriMode
+  fullName: System.ServiceModel.Description.ListenUriMode
+- uid: System.ServiceModel.Channels.Binding.BuildChannelListener``1(System.Uri,System.String,System.ServiceModel.Description.ListenUriMode,System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: BuildChannelListener<TChannel>(Uri, String, ListenUriMode, BindingParameterCollection)
+  nameWithType: Binding.BuildChannelListener<TChannel>(Uri, String, ListenUriMode, BindingParameterCollection)
+  fullName: Binding.BuildChannelListener<TChannel>(Uri, String, ListenUriMode, BindingParameterCollection)
+- uid: System.ServiceModel.Channels.Binding.CanBuildChannelFactory``1(System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: CanBuildChannelFactory<TChannel>(BindingParameterCollection)
+  nameWithType: Binding.CanBuildChannelFactory<TChannel>(BindingParameterCollection)
+  fullName: Binding.CanBuildChannelFactory<TChannel>(BindingParameterCollection)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.ServiceModel.Channels.Binding.CanBuildChannelFactory``1(System.Object[])
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: CanBuildChannelFactory<TChannel>(Object[])
+  nameWithType: Binding.CanBuildChannelFactory<TChannel>(Object[])
+  fullName: Binding.CanBuildChannelFactory<TChannel>(Object[])
+- uid: System.ServiceModel.Channels.Binding.CanBuildChannelListener``1(System.Object[])
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: CanBuildChannelListener<TChannel>(Object[])
+  nameWithType: Binding.CanBuildChannelListener<TChannel>(Object[])
+  fullName: Binding.CanBuildChannelListener<TChannel>(Object[])
+- uid: System.ServiceModel.Channels.Binding.CanBuildChannelListener``1(System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: CanBuildChannelListener<TChannel>(BindingParameterCollection)
+  nameWithType: Binding.CanBuildChannelListener<TChannel>(BindingParameterCollection)
+  fullName: Binding.CanBuildChannelListener<TChannel>(BindingParameterCollection)
+- uid: System.ServiceModel.Channels.Binding.CloseTimeout
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: CloseTimeout
+  nameWithType: Binding.CloseTimeout
+  fullName: Binding.CloseTimeout
+- uid: System.TimeSpan
+  parent: System
+  isExternal: false
+  name: TimeSpan
+  nameWithType: TimeSpan
+  fullName: System.TimeSpan
+- uid: System.ServiceModel.Channels.Binding.CreateBindingElements
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: CreateBindingElements()
+  nameWithType: Binding.CreateBindingElements()
+  fullName: Binding.CreateBindingElements()
+- uid: System.ServiceModel.Channels.BindingElementCollection
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: BindingElementCollection
+  nameWithType: BindingElementCollection
+  fullName: System.ServiceModel.Channels.BindingElementCollection
+- uid: System.ServiceModel.Channels.Binding.GetProperty``1(System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: GetProperty<T>(BindingParameterCollection)
+  nameWithType: Binding.GetProperty<T>(BindingParameterCollection)
+  fullName: Binding.GetProperty<T>(BindingParameterCollection)
+- uid: T
+  isExternal: true
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: System.ServiceModel.Channels.Binding.MessageVersion
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: MessageVersion
+  nameWithType: Binding.MessageVersion
+  fullName: Binding.MessageVersion
+- uid: System.ServiceModel.Channels.MessageVersion
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: MessageVersion
+  nameWithType: MessageVersion
+  fullName: System.ServiceModel.Channels.MessageVersion
+- uid: System.ServiceModel.Channels.Binding.Name
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: Name
+  nameWithType: Binding.Name
+  fullName: Binding.Name
+- uid: System.ServiceModel.Channels.Binding.Namespace
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: Namespace
+  nameWithType: Binding.Namespace
+  fullName: Binding.Namespace
+- uid: System.ServiceModel.Channels.Binding.OpenTimeout
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: OpenTimeout
+  nameWithType: Binding.OpenTimeout
+  fullName: Binding.OpenTimeout
+- uid: System.ServiceModel.Channels.Binding.ReceiveTimeout
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: ReceiveTimeout
+  nameWithType: Binding.ReceiveTimeout
+  fullName: Binding.ReceiveTimeout
+- uid: System.ServiceModel.Channels.Binding.Scheme
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: Scheme
+  nameWithType: Binding.Scheme
+  fullName: Binding.Scheme
+- uid: System.ServiceModel.Channels.Binding.SendTimeout
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: SendTimeout
+  nameWithType: Binding.SendTimeout
+  fullName: Binding.SendTimeout
+- uid: System.ServiceModel.Channels.Binding.ShouldSerializeName
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: ShouldSerializeName()
+  nameWithType: Binding.ShouldSerializeName()
+  fullName: Binding.ShouldSerializeName()
+- uid: System.ServiceModel.Channels.Binding.ShouldSerializeNamespace
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: ShouldSerializeNamespace()
+  nameWithType: Binding.ShouldSerializeNamespace()
+  fullName: Binding.ShouldSerializeNamespace()
+- uid: System.ServiceModel.Channels.Binding.CanBuildChannelFactory``1*
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: CanBuildChannelFactory<TChannel>
+  nameWithType: Binding.CanBuildChannelFactory<TChannel>
+  fullName: Binding.CanBuildChannelFactory<TChannel>
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+- uid: System.ServiceModel.Channels.Binding.#ctor*
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: Binding
+  nameWithType: Binding.Binding
+  fullName: Binding.Binding
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+- uid: System.ServiceModel.Channels.Binding.BuildChannelFactory``1*
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: BuildChannelFactory<TChannel>
+  nameWithType: Binding.BuildChannelFactory<TChannel>
+  fullName: Binding.BuildChannelFactory<TChannel>
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+- uid: System.ServiceModel.Channels.Binding.BuildChannelListener``1*
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: BuildChannelListener<TChannel>
+  nameWithType: Binding.BuildChannelListener<TChannel>
+  fullName: Binding.BuildChannelListener<TChannel>
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+- uid: System.ServiceModel.Channels.Binding.CanBuildChannelListener``1*
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: CanBuildChannelListener<TChannel>
+  nameWithType: Binding.CanBuildChannelListener<TChannel>
+  fullName: Binding.CanBuildChannelListener<TChannel>
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+- uid: System.ServiceModel.Channels.Binding.CloseTimeout*
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: CloseTimeout
+  nameWithType: Binding.CloseTimeout
+  fullName: Binding.CloseTimeout
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+- uid: System.ServiceModel.Channels.Binding.CreateBindingElements*
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: CreateBindingElements
+  nameWithType: Binding.CreateBindingElements
+  fullName: Binding.CreateBindingElements
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+- uid: System.ServiceModel.Channels.Binding.GetProperty``1*
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: GetProperty<T>
+  nameWithType: Binding.GetProperty<T>
+  fullName: Binding.GetProperty<T>
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+- uid: System.ServiceModel.Channels.Binding.MessageVersion*
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: MessageVersion
+  nameWithType: Binding.MessageVersion
+  fullName: Binding.MessageVersion
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+- uid: System.ServiceModel.Channels.Binding.Name*
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: Name
+  nameWithType: Binding.Name
+  fullName: Binding.Name
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+- uid: System.ServiceModel.Channels.Binding.Namespace*
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: Namespace
+  nameWithType: Binding.Namespace
+  fullName: Binding.Namespace
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+- uid: System.ServiceModel.Channels.Binding.OpenTimeout*
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: OpenTimeout
+  nameWithType: Binding.OpenTimeout
+  fullName: Binding.OpenTimeout
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+- uid: System.ServiceModel.Channels.Binding.ReceiveTimeout*
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: ReceiveTimeout
+  nameWithType: Binding.ReceiveTimeout
+  fullName: Binding.ReceiveTimeout
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+- uid: System.ServiceModel.Channels.Binding.Scheme*
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: Scheme
+  nameWithType: Binding.Scheme
+  fullName: Binding.Scheme
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+- uid: System.ServiceModel.Channels.Binding.SendTimeout*
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: SendTimeout
+  nameWithType: Binding.SendTimeout
+  fullName: Binding.SendTimeout
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+- uid: System.ServiceModel.Channels.Binding.ShouldSerializeName*
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: ShouldSerializeName
+  nameWithType: Binding.ShouldSerializeName
+  fullName: Binding.ShouldSerializeName
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+- uid: System.ServiceModel.Channels.Binding.ShouldSerializeNamespace*
+  parent: System.ServiceModel.Channels.Binding
+  isExternal: false
+  name: ShouldSerializeNamespace
+  nameWithType: Binding.ShouldSerializeNamespace
+  fullName: Binding.ShouldSerializeNamespace
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/Binding.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.ServiceModel.IDefaultCommunicationTimeouts
+  parent: System.ServiceModel
+  isExternal: false
+  name: IDefaultCommunicationTimeouts
+  nameWithType: IDefaultCommunicationTimeouts
+  fullName: System.ServiceModel.IDefaultCommunicationTimeouts

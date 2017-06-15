@@ -1,0 +1,2534 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime
+  commentId: T:System.ServiceModel.Dispatcher.DispatchRuntime
+  id: DispatchRuntime
+  children:
+  - System.ServiceModel.Dispatcher.DispatchRuntime.AutomaticInputSessionShutdown
+  - System.ServiceModel.Dispatcher.DispatchRuntime.CallbackClientRuntime
+  - System.ServiceModel.Dispatcher.DispatchRuntime.ChannelDispatcher
+  - System.ServiceModel.Dispatcher.DispatchRuntime.ConcurrencyMode
+  - System.ServiceModel.Dispatcher.DispatchRuntime.EndpointDispatcher
+  - System.ServiceModel.Dispatcher.DispatchRuntime.EnsureOrderedDispatch
+  - System.ServiceModel.Dispatcher.DispatchRuntime.ExternalAuthorizationPolicies
+  - System.ServiceModel.Dispatcher.DispatchRuntime.IgnoreTransactionMessageProperty
+  - System.ServiceModel.Dispatcher.DispatchRuntime.ImpersonateCallerForAllOperations
+  - System.ServiceModel.Dispatcher.DispatchRuntime.ImpersonateOnSerializingReply
+  - System.ServiceModel.Dispatcher.DispatchRuntime.InputSessionShutdownHandlers
+  - System.ServiceModel.Dispatcher.DispatchRuntime.InstanceContextInitializers
+  - System.ServiceModel.Dispatcher.DispatchRuntime.InstanceContextProvider
+  - System.ServiceModel.Dispatcher.DispatchRuntime.InstanceProvider
+  - System.ServiceModel.Dispatcher.DispatchRuntime.MessageAuthenticationAuditLevel
+  - System.ServiceModel.Dispatcher.DispatchRuntime.MessageInspectors
+  - System.ServiceModel.Dispatcher.DispatchRuntime.Operations
+  - System.ServiceModel.Dispatcher.DispatchRuntime.OperationSelector
+  - System.ServiceModel.Dispatcher.DispatchRuntime.PreserveMessage
+  - System.ServiceModel.Dispatcher.DispatchRuntime.PrincipalPermissionMode
+  - System.ServiceModel.Dispatcher.DispatchRuntime.ReleaseServiceInstanceOnTransactionComplete
+  - System.ServiceModel.Dispatcher.DispatchRuntime.RoleProvider
+  - System.ServiceModel.Dispatcher.DispatchRuntime.SecurityAuditLogLocation
+  - System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthenticationManager
+  - System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthorizationAuditLevel
+  - System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthorizationManager
+  - System.ServiceModel.Dispatcher.DispatchRuntime.SingletonInstanceContext
+  - System.ServiceModel.Dispatcher.DispatchRuntime.SuppressAuditFailure
+  - System.ServiceModel.Dispatcher.DispatchRuntime.SynchronizationContext
+  - System.ServiceModel.Dispatcher.DispatchRuntime.TransactionAutoCompleteOnSessionClose
+  - System.ServiceModel.Dispatcher.DispatchRuntime.Type
+  - System.ServiceModel.Dispatcher.DispatchRuntime.UnhandledDispatchOperation
+  - System.ServiceModel.Dispatcher.DispatchRuntime.ValidateMustUnderstand
+  langs:
+  - csharp
+  name: DispatchRuntime
+  nameWithType: DispatchRuntime
+  fullName: System.ServiceModel.Dispatcher.DispatchRuntime
+  type: Class
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Exposes properties that can be used to modify default service behavior as well as attach custom objects that can modify how incoming messages are transformed into objects and dispatched to operations. This class cannot be inherited.
+  remarks: "Use the <xref:System.ServiceModel.Dispatcher.DispatchRuntime> class either to modify the default behavior of a service or individual endpoint, or to insert objects that implement custom modifications to one or both of the following service processes:  \n  \n1.  The transformation of incoming messages into objects and releasing those objects as method invocations on a service object.  \n  \n2.  The transformation of objects received from the response to a service operation invocation into outbound messages.  \n  \n In [!INCLUDE[indigo1](~/includes/indigo1-md.md)], the channel and endpoint dispatchers are the service components responsible for accepting new channels, receiving messages, method dispatch and invocation, and response processing. Each endpoint exposed by a <xref:System.ServiceModel.ServiceHost> object has one endpoint dispatcher and an associated channel dispatcher; in addition, each client that participates in duplex communication also has an endpoint dispatcher and channel dispatcher for each callback endpoint.  \n  \n The <xref:System.ServiceModel.Dispatcher.DispatchRuntime> enables you to intercept and extend the channel or endpoint dispatcher for all messages across a particular contract, even when a message is not recognized. When a message arrives that does not match any messages declared in the contract it is dispatched to the operation that was returned by the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.UnhandledDispatchOperation%2A> property. To intercept or extend across all messages for a particular operation, see the <xref:System.ServiceModel.Dispatcher.DispatchOperation> class.  \n  \n There are four main areas of dispatcher extensibility exposed by the <xref:System.ServiceModel.Dispatcher.DispatchRuntime> class:  \n  \n1.  Dispatch components use the properties of the <xref:System.ServiceModel.Dispatcher.DispatchRuntime> and those of the associated channel dispatcher returned by the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.ChannelDispatcher%2A> property to customize how the channel dispatcher accepts and closes channels. This category includes the <xref:System.ServiceModel.Dispatcher.ChannelDispatcher.ChannelInitializers%2A> and <xref:System.ServiceModel.Dispatcher.DispatchRuntime.InputSessionShutdownHandlers%2A> properties.  \n  \n2.  Message components are customized for each message processed. This category includes the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.MessageInspectors%2A>, <xref:System.ServiceModel.Dispatcher.DispatchRuntime.OperationSelector%2A>, <xref:System.ServiceModel.Dispatcher.DispatchRuntime.Operations%2A>, and the <xref:System.ServiceModel.Dispatcher.ChannelDispatcher.ErrorHandlers%2A> properties.  \n  \n3.  Instance components customize the creation, lifetime, and disposal of instances of the service type. For more information about service object lifetimes, see the <xref:System.ServiceModel.ServiceBehaviorAttribute.InstanceContextMode%2A> property. This category includes the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.InstanceContextInitializers%2A> and the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.InstanceProvider%2A> properties.  \n  \n4.  Security-related components can use the following properties:  \n  \n    -   <xref:System.ServiceModel.Dispatcher.DispatchRuntime.SecurityAuditLogLocation%2A> indicates where audit events are written.  \n  \n    -   <xref:System.ServiceModel.Dispatcher.DispatchRuntime.ImpersonateCallerForAllOperations%2A> controls whether the service attempts to impersonate using the credentials provided by the incoming message.  \n  \n    -   <xref:System.ServiceModel.Dispatcher.DispatchRuntime.MessageAuthenticationAuditLevel%2A> controls whether successful message authentication events are written to the event log specified by <xref:System.ServiceModel.Dispatcher.DispatchRuntime.SecurityAuditLogLocation%2A>.  \n  \n    -   <xref:System.ServiceModel.Dispatcher.DispatchRuntime.PrincipalPermissionMode%2A> controls how the <xref:System.Threading.Thread.CurrentPrincipal%2A> property is set.  \n  \n    -   <xref:System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthorizationAuditLevel%2A> specifies how the auditing of authorization events is performed.  \n  \n    -   <xref:System.ServiceModel.Dispatcher.DispatchRuntime.SuppressAuditFailure%2A> specifies whether to suppress non-critical exceptions that occur during the logging process.  \n  \n Typically custom extension objects are assigned to a <xref:System.ServiceModel.Dispatcher.DispatchRuntime> property or inserted into a collection by a service behavior (an object that implements <xref:System.ServiceModel.Description.IServiceBehavior>), a contract behavior (an object that implements <xref:System.ServiceModel.Description.IContractBehavior>), or an endpoint behavior (an object that implements <xref:System.ServiceModel.Description.IEndpointBehavior>). Then the installing behavior object is added to the appropriate collection of behaviors either programmatically or by implementing a custom <xref:System.ServiceModel.Configuration.BehaviorExtensionElement> object to enable the behavior to be inserted using an application configuration file."
+  syntax:
+    content: public sealed class DispatchRuntime
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.AutomaticInputSessionShutdown
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.AutomaticInputSessionShutdown
+  id: AutomaticInputSessionShutdown
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: AutomaticInputSessionShutdown
+  nameWithType: DispatchRuntime.AutomaticInputSessionShutdown
+  fullName: DispatchRuntime.AutomaticInputSessionShutdown
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets a value that specifies whether the service closes an input session when the client closes an output session.
+  remarks: "If you set the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.AutomaticInputSessionShutdown%2A> property to `false`, the channel must be closed by some other mechanism. In this case, you must add a custom session shutdown handler to the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.InputSessionShutdownHandlers%2A> property.  \n  \n By default when a client closes an output session and the service has finished processing any remaining messages the server closes the session. Setting <xref:System.ServiceModel.Dispatcher.DispatchRuntime.AutomaticInputSessionShutdown%2A> to `false` prevents the server from automatically closing the session and enables custom control of session lifetimes."
+  syntax:
+    content: public bool AutomaticInputSessionShutdown { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if the service closes an input session when the client closes an output session; otherwise, `false`. The default is `true`.'
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.AutomaticInputSessionShutdown*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.CallbackClientRuntime
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.CallbackClientRuntime
+  id: CallbackClientRuntime
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: CallbackClientRuntime
+  nameWithType: DispatchRuntime.CallbackClientRuntime
+  fullName: DispatchRuntime.CallbackClientRuntime
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets the <xref href="System.ServiceModel.Dispatcher.ClientRuntime"></xref> object that represents the installation point for extensions to [!INCLUDE[indigo1](~/includes/indigo1-md.md)] for outbound calls to a duplex callback endpoint.
+  remarks: Use the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.CallbackClientRuntime%2A> to add custom extension objects that view or modify the conversion of parameters to outbound messages and response messages back into return values. For details, see <xref:System.ServiceModel.Dispatcher.ClientRuntime>.
+  syntax:
+    content: public System.ServiceModel.Dispatcher.ClientRuntime CallbackClientRuntime { get; }
+    return:
+      type: System.ServiceModel.Dispatcher.ClientRuntime
+      description: The <xref href="System.ServiceModel.Dispatcher.ClientRuntime"></xref> object that is the installation point for run-time client customization in duplex contracts.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.CallbackClientRuntime*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ChannelDispatcher
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.ChannelDispatcher
+  id: ChannelDispatcher
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: ChannelDispatcher
+  nameWithType: DispatchRuntime.ChannelDispatcher
+  fullName: DispatchRuntime.ChannelDispatcher
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets the <xref href="System.ServiceModel.Dispatcher.ChannelDispatcher"></xref> for this dispatch run-time object.
+  syntax:
+    content: public System.ServiceModel.Dispatcher.ChannelDispatcher ChannelDispatcher { get; }
+    return:
+      type: System.ServiceModel.Dispatcher.ChannelDispatcher
+      description: The channel dispatcher for the dispatch run-time object.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.ChannelDispatcher*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ConcurrencyMode
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.ConcurrencyMode
+  id: ConcurrencyMode
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: ConcurrencyMode
+  nameWithType: DispatchRuntime.ConcurrencyMode
+  fullName: DispatchRuntime.ConcurrencyMode
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets whether an instance of a service processes messages sequentially or concurrently.
+  remarks: The service implementation must be thread-safe to use the `Multiple` concurrency mode.
+  syntax:
+    content: public System.ServiceModel.ConcurrencyMode ConcurrencyMode { get; set; }
+    return:
+      type: System.ServiceModel.ConcurrencyMode
+      description: A <xref href="System.ServiceModel.ConcurrencyMode"></xref> object that controls whether an instance of a service processes messages sequentially or concurrently.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.ConcurrencyMode*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.EndpointDispatcher
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.EndpointDispatcher
+  id: EndpointDispatcher
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: EndpointDispatcher
+  nameWithType: DispatchRuntime.EndpointDispatcher
+  fullName: DispatchRuntime.EndpointDispatcher
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets the <xref href="System.ServiceModel.Dispatcher.EndpointDispatcher"></xref> for this dispatch runtime.
+  remarks: Use the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.EndpointDispatcher%2A> property to obtain the endpoint dispatcher associated with this dispatch runtime to modify or customize endpoint-specific execution.
+  syntax:
+    content: public System.ServiceModel.Dispatcher.EndpointDispatcher EndpointDispatcher { get; }
+    return:
+      type: System.ServiceModel.Dispatcher.EndpointDispatcher
+      description: The <xref href="System.ServiceModel.Dispatcher.EndpointDispatcher"></xref> for this dispatch runtime.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.EndpointDispatcher*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.EnsureOrderedDispatch
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.EnsureOrderedDispatch
+  id: EnsureOrderedDispatch
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: EnsureOrderedDispatch
+  nameWithType: DispatchRuntime.EnsureOrderedDispatch
+  fullName: DispatchRuntime.EnsureOrderedDispatch
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets a value that indicates whether messages are to be dispatched in the order they were sent.
+  syntax:
+    content: public bool EnsureOrderedDispatch { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if messages are to be dispatched in the order they were sent; otherwise, `false`.'
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.EnsureOrderedDispatch*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ExternalAuthorizationPolicies
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.ExternalAuthorizationPolicies
+  id: ExternalAuthorizationPolicies
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: ExternalAuthorizationPolicies
+  nameWithType: DispatchRuntime.ExternalAuthorizationPolicies
+  fullName: DispatchRuntime.ExternalAuthorizationPolicies
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets the external authorization policies that define a set of rules for authorizing a user, given a set of claims.
+  remarks: Use this property to add a custom implementation of <xref:System.IdentityModel.Policy.IAuthorizationPolicy> that defines a set of rules for authorizing a user, given a set of claims. This custom implementation is used every time the service is called.
+  syntax:
+    content: public System.Collections.ObjectModel.ReadOnlyCollection<System.IdentityModel.Policy.IAuthorizationPolicy> ExternalAuthorizationPolicies { get; set; }
+    return:
+      type: System.Collections.ObjectModel.ReadOnlyCollection{System.IdentityModel.Policy.IAuthorizationPolicy}
+      description: A <xref href="System.Collections.ObjectModel.ReadOnlyCollection`1"></xref> of <xref href="System.IdentityModel.Policy.IAuthorizationPolicy"></xref> objects that define a set of rules for authorizing a user, given a set of claims.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.ExternalAuthorizationPolicies*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.IgnoreTransactionMessageProperty
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.IgnoreTransactionMessageProperty
+  id: IgnoreTransactionMessageProperty
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: IgnoreTransactionMessageProperty
+  nameWithType: DispatchRuntime.IgnoreTransactionMessageProperty
+  fullName: DispatchRuntime.IgnoreTransactionMessageProperty
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets whether to ignore the <xref href="System.ServiceModel.Channels.TransactionMessageProperty"></xref>.
+  remarks: The <xref:System.ServiceModel.Channels.TransactionMessageProperty> allows third-party channel developers who use a proprietary transaction flow mechanism for their channel to introduce their transaction into [!INCLUDE[indigo1](~/includes/indigo1-md.md)]. If this property is set to `true`, the transaction is ignored when executing the service method.
+  syntax:
+    content: public bool IgnoreTransactionMessageProperty { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true`, the <xref href="System.ServiceModel.Channels.TransactionMessageProperty"></xref> is ignored when executing the service method; otherwise `false`.'
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.IgnoreTransactionMessageProperty*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ImpersonateCallerForAllOperations
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.ImpersonateCallerForAllOperations
+  id: ImpersonateCallerForAllOperations
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: ImpersonateCallerForAllOperations
+  nameWithType: DispatchRuntime.ImpersonateCallerForAllOperations
+  fullName: DispatchRuntime.ImpersonateCallerForAllOperations
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets a value that controls whether the service attempts to impersonate using the credentials provided by the incoming message.
+  remarks: "Use the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.ImpersonateCallerForAllOperations%2A> property to control whether impersonation is performed when an operation's <xref:System.ServiceModel.Dispatcher.DispatchOperation.Impersonation%2A> property value is <xref:System.ServiceModel.ImpersonationOption.Allowed>. An exception is thrown if the property is `true` but an operation's <xref:System.ServiceModel.Dispatcher.DispatchOperation.Impersonation%2A> property value is <xref:System.ServiceModel.ImpersonationOption.NotAllowed>.  \n  \n If an operation's <xref:System.ServiceModel.Dispatcher.DispatchOperation.Impersonation%2A> property value is <xref:System.ServiceModel.ImpersonationOption.Required> impersonation is always attempted."
+  syntax:
+    content: public bool ImpersonateCallerForAllOperations { get; set; }
+    return:
+      type: System.Boolean
+      description: "`true` if the service attempts to impersonate based on message credentials when an operation's <xref href=\"System.ServiceModel.Dispatcher.DispatchOperation.Impersonation\"></xref> property value is either <xref href=\"System.ServiceModel.ImpersonationOption.Required\"></xref> or <xref href=\"System.ServiceModel.ImpersonationOption.Allowed\"></xref>; `false` if the service attempts impersonation only if an operation's <xref href=\"System.ServiceModel.Dispatcher.DispatchOperation.Impersonation\"></xref> property value is <xref href=\"System.ServiceModel.ImpersonationOption.Required\"></xref>. The default is `false`."
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.ImpersonateCallerForAllOperations*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ImpersonateOnSerializingReply
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.ImpersonateOnSerializingReply
+  id: ImpersonateOnSerializingReply
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: ImpersonateOnSerializingReply
+  nameWithType: DispatchRuntime.ImpersonateOnSerializingReply
+  fullName: DispatchRuntime.ImpersonateOnSerializingReply
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets a value that indicates whether impersonation is used on serializing reply operation.
+  syntax:
+    content: public bool ImpersonateOnSerializingReply { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if impersonation is used on serializing reply operation; otherwise, `false`.'
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.ImpersonateOnSerializingReply*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.InputSessionShutdownHandlers
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.InputSessionShutdownHandlers
+  id: InputSessionShutdownHandlers
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: InputSessionShutdownHandlers
+  nameWithType: DispatchRuntime.InputSessionShutdownHandlers
+  fullName: DispatchRuntime.InputSessionShutdownHandlers
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets a collection of <xref href="System.ServiceModel.Dispatcher.IInputSessionShutdown"></xref> objects that can be used to add a custom handler to control how input sessions are closed.
+  remarks: Add an <xref:System.ServiceModel.Dispatcher.IInputSessionShutdown> object to this property to control the manner in which input sessions are closed. When a call to the <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A?displayProperty=fullName> method on the <xref:System.ServiceModel.Channels.IDuplexSessionChannel?displayProperty=fullName> first returns `null`, (which indicates that the input session has been closed), the dispatcher invokes each <xref:System.ServiceModel.Dispatcher.IInputSessionShutdown> object, passing it an <xref:System.ServiceModel.Channels.IDuplexSessionChannel?displayProperty=fullName> object. Custom <xref:System.ServiceModel.Dispatcher.IInputSessionShutdown> objects can use this <xref:System.ServiceModel.Channels.IDuplexSessionChannel> object to perform clean-up for each channel state or to send a response message before closing the channel.
+  syntax:
+    content: public System.Collections.Generic.SynchronizedCollection<System.ServiceModel.Dispatcher.IInputSessionShutdown> InputSessionShutdownHandlers { get; }
+    return:
+      type: System.Collections.Generic.SynchronizedCollection{System.ServiceModel.Dispatcher.IInputSessionShutdown}
+      description: A <xref href="System.Collections.Generic.SynchronizedCollection`1"></xref> of type <xref href="System.ServiceModel.Dispatcher.IInputSessionShutdown"></xref> objects.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.InputSessionShutdownHandlers*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.InstanceContextInitializers
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.InstanceContextInitializers
+  id: InstanceContextInitializers
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: InstanceContextInitializers
+  nameWithType: DispatchRuntime.InstanceContextInitializers
+  fullName: DispatchRuntime.InstanceContextInitializers
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets a collection of <xref href="System.ServiceModel.Dispatcher.IInstanceContextInitializer"></xref> objects that can be used to inspect or modify an <xref href="System.ServiceModel.InstanceContext"></xref> object when it is first created.
+  remarks: Use the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.InstanceContextInitializers%2A> property to add a custom initializer that can inspect or modify an <xref:System.ServiceModel.InstanceContext> object when it is first created. The frequency with which <xref:System.ServiceModel.InstanceContext> objects are created is controlled by the <xref:System.ServiceModel.ServiceBehaviorAttribute.InstanceContextMode%2A> property.
+  syntax:
+    content: public System.Collections.Generic.SynchronizedCollection<System.ServiceModel.Dispatcher.IInstanceContextInitializer> InstanceContextInitializers { get; }
+    return:
+      type: System.Collections.Generic.SynchronizedCollection{System.ServiceModel.Dispatcher.IInstanceContextInitializer}
+      description: A <xref href="System.Collections.Generic.SynchronizedCollection`1"></xref> object of type <xref href="System.ServiceModel.Dispatcher.IInstanceContextInitializer"></xref>.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.InstanceContextInitializers*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.InstanceContextProvider
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.InstanceContextProvider
+  id: InstanceContextProvider
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: InstanceContextProvider
+  nameWithType: DispatchRuntime.InstanceContextProvider
+  fullName: DispatchRuntime.InstanceContextProvider
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets the <xref href="System.ServiceModel.Dispatcher.IInstanceContextProvider"></xref> to be used by the <xref href="System.ServiceModel.Dispatcher.DispatchRuntime"></xref>.
+  syntax:
+    content: public System.ServiceModel.Dispatcher.IInstanceContextProvider InstanceContextProvider { get; set; }
+    return:
+      type: System.ServiceModel.Dispatcher.IInstanceContextProvider
+      description: The <xref href="System.ServiceModel.Dispatcher.IInstanceContextProvider"></xref> to be used by the <xref href="System.ServiceModel.Dispatcher.DispatchRuntime"></xref>.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.InstanceContextProvider*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.InstanceProvider
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.InstanceProvider
+  id: InstanceProvider
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: InstanceProvider
+  nameWithType: DispatchRuntime.InstanceProvider
+  fullName: DispatchRuntime.InstanceProvider
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets an <xref href="System.ServiceModel.Dispatcher.IInstanceProvider"></xref> object that you can use to control the creation and destruction of service objects.
+  remarks: "Implement the <xref:System.ServiceModel.Dispatcher.IInstanceProvider> interface and assign the implementation to the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.InstanceProvider%2A> property to control instances of the service type using a constructor other than the default constructor, for example, to implement a custom instancing mode such as instance pooling.  \n  \n Typically the <xref:System.ServiceModel.Dispatcher.IInstanceProvider.GetInstance%2A> method is invoked once, when the <xref:System.ServiceModel.InstanceContext> object is first created. The <xref:System.ServiceModel.Dispatcher.IInstanceProvider.ReleaseInstance%2A> method is also invoked once, when the <xref:System.ServiceModel.InstanceContext> object is closed.  \n  \n A service can also be configured to release an instance before the <xref:System.ServiceModel.InstanceContext> object is closed. This can be configured by using the <xref:System.ServiceModel.OperationBehaviorAttribute.ReleaseInstanceMode%2A> property or by calling the <xref:System.ServiceModel.InstanceContext.ReleaseServiceInstance%2A> method. If this is done, the <xref:System.ServiceModel.InstanceContext> object calls the <xref:System.ServiceModel.Dispatcher.IInstanceProvider.ReleaseInstance%2A> method. If a new message arrives after the instance has been released, a new instance is created using the <xref:System.ServiceModel.Dispatcher.IInstanceProvider.GetInstance%2A> method."
+  syntax:
+    content: public System.ServiceModel.Dispatcher.IInstanceProvider InstanceProvider { get; set; }
+    return:
+      type: System.ServiceModel.Dispatcher.IInstanceProvider
+      description: An <xref href="System.ServiceModel.Dispatcher.IInstanceProvider"></xref> object that controls the creation and destruction of service objects associated with an <xref href="System.ServiceModel.InstanceContext"></xref> object.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.InstanceProvider*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.MessageAuthenticationAuditLevel
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.MessageAuthenticationAuditLevel
+  id: MessageAuthenticationAuditLevel
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: MessageAuthenticationAuditLevel
+  nameWithType: DispatchRuntime.MessageAuthenticationAuditLevel
+  fullName: DispatchRuntime.MessageAuthenticationAuditLevel
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets a value that specifies whether successful message authentication events are written to the event log specified by <xref href="System.ServiceModel.Dispatcher.DispatchRuntime.SecurityAuditLogLocation"></xref>.
+  remarks: Use the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.MessageAuthenticationAuditLevel%2A> property to specify whether successful message authentication events are written to the event log.
+  syntax:
+    content: public System.ServiceModel.AuditLevel MessageAuthenticationAuditLevel { get; set; }
+    return:
+      type: System.ServiceModel.AuditLevel
+      description: One of the <xref href="System.ServiceModel.AuditLevel"></xref> values. The default is <xref href="System.ServiceModel.AuditLevel.None"></xref>.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.MessageAuthenticationAuditLevel*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.MessageInspectors
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.MessageInspectors
+  id: MessageInspectors
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: MessageInspectors
+  nameWithType: DispatchRuntime.MessageInspectors
+  fullName: DispatchRuntime.MessageInspectors
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets a collection of <xref href="System.ServiceModel.Dispatcher.IDispatchMessageInspector"></xref> objects that can be used to attach a custom message inspector for all incoming and outgoing messages across the endpoint.
+  remarks: Use the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.MessageInspectors%2A> property to attach custom <xref:System.ServiceModel.Dispatcher.IDispatchMessageInspector> objects that can inspect or transform all messages that flow through the endpoint. Because the <xref:System.ServiceModel.Dispatcher.IDispatchMessageInspector> object gets a reference to the message, you can buffer it and examine a copy of the body.
+  syntax:
+    content: public System.Collections.Generic.SynchronizedCollection<System.ServiceModel.Dispatcher.IDispatchMessageInspector> MessageInspectors { get; }
+    return:
+      type: System.Collections.Generic.SynchronizedCollection{System.ServiceModel.Dispatcher.IDispatchMessageInspector}
+      description: A <xref href="System.Collections.Generic.SynchronizedCollection`1"></xref> object of type <xref href="System.ServiceModel.Dispatcher.IDispatchMessageInspector"></xref>.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.MessageInspectors*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.Operations
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.Operations
+  id: Operations
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: Operations
+  nameWithType: DispatchRuntime.Operations
+  fullName: DispatchRuntime.Operations
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets a collection of <xref href="System.ServiceModel.Dispatcher.DispatchOperation"></xref> objects that can be used to control the execution behavior of a particular operation.
+  remarks: Use the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.Operations%2A> property to inspect or modify parameters, control parameter and return value serialization and deserialization, control operation invocation, and modify other behaviors for a single operation. For details, see <xref:System.ServiceModel.Dispatcher.DispatchOperation>.
+  syntax:
+    content: public System.Collections.Generic.SynchronizedKeyedCollection<string,System.ServiceModel.Dispatcher.DispatchOperation> Operations { get; }
+    return:
+      type: System.Collections.Generic.SynchronizedKeyedCollection{System.String,System.ServiceModel.Dispatcher.DispatchOperation}
+      description: A <xref href="System.Collections.Generic.SynchronizedKeyedCollection`2"></xref> of type <xref href="System.String"></xref> and <xref href="System.ServiceModel.Dispatcher.DispatchOperation"></xref> objects.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.Operations*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.OperationSelector
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.OperationSelector
+  id: OperationSelector
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: OperationSelector
+  nameWithType: DispatchRuntime.OperationSelector
+  fullName: DispatchRuntime.OperationSelector
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets the <xref href="System.ServiceModel.Dispatcher.IDispatchOperationSelector"></xref> object that controls the selection of a destination <xref href="System.ServiceModel.Dispatcher.DispatchOperation"></xref> for a particular message.
+  remarks: Use the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.OperationSelector%2A> property to decide which operation receives a given message. The default operation selector returns the value of the action header for the message, which is used as the key to locate the correct <xref:System.ServiceModel.Dispatcher.DispatchOperation>. If no matching operation is found, the invocation is dispatched to the return value from the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.UnhandledDispatchOperation%2A> property.
+  syntax:
+    content: public System.ServiceModel.Dispatcher.IDispatchOperationSelector OperationSelector { get; set; }
+    return:
+      type: System.ServiceModel.Dispatcher.IDispatchOperationSelector
+      description: The <xref href="System.ServiceModel.Dispatcher.IDispatchOperationSelector"></xref> object.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.OperationSelector*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.PreserveMessage
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.PreserveMessage
+  id: PreserveMessage
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: PreserveMessage
+  nameWithType: DispatchRuntime.PreserveMessage
+  fullName: DispatchRuntime.PreserveMessage
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets whether the message is preserved.
+  syntax:
+    content: public bool PreserveMessage { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if message is preserved; otherwise, `false`.'
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.PreserveMessage*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.PrincipalPermissionMode
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.PrincipalPermissionMode
+  id: PrincipalPermissionMode
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: PrincipalPermissionMode
+  nameWithType: DispatchRuntime.PrincipalPermissionMode
+  fullName: DispatchRuntime.PrincipalPermissionMode
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets a value that specifies how the <xref href="System.Threading.Thread.CurrentPrincipal"></xref> property is set.
+  remarks: "When the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.PrincipalPermissionMode%2A> is <xref:System.ServiceModel.Description.PrincipalPermissionMode.None>, the <xref:System.Threading.Thread.CurrentPrincipal%2A> property is not set.  \n  \n When the value is <xref:System.ServiceModel.Description.PrincipalPermissionMode.UseWindowsGroups> the <xref:System.Threading.Thread.CurrentPrincipal%2A> property is populated with a <xref:System.Security.Principal.WindowsPrincipal> based on the user credentials of the incoming message.  \n  \n When the value is <xref:System.ServiceModel.Description.PrincipalPermissionMode.UseAspNetRoles> the <xref:System.Threading.Thread.CurrentPrincipal%2A> property is populated with an <xref:System.Security.Principal.IPrincipal> object based on [!INCLUDE[vstecasp](~/includes/vstecasp-md.md)] role information.  \n  \n When the value is <xref:System.ServiceModel.Description.PrincipalPermissionMode.Custom> the <xref:System.Threading.Thread.CurrentPrincipal%2A> property is populated by a custom <xref:System.IdentityModel.Policy.IAuthorizationPolicy> implementation."
+  syntax:
+    content: public System.ServiceModel.Description.PrincipalPermissionMode PrincipalPermissionMode { get; set; }
+    return:
+      type: System.ServiceModel.Description.PrincipalPermissionMode
+      description: One of the <xref href="System.ServiceModel.Description.PrincipalPermissionMode"></xref> values; the default is <xref href="System.ServiceModel.Description.PrincipalPermissionMode.UseWindowsGroups"></xref>.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.PrincipalPermissionMode*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ReleaseServiceInstanceOnTransactionComplete
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.ReleaseServiceInstanceOnTransactionComplete
+  id: ReleaseServiceInstanceOnTransactionComplete
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: ReleaseServiceInstanceOnTransactionComplete
+  nameWithType: DispatchRuntime.ReleaseServiceInstanceOnTransactionComplete
+  fullName: DispatchRuntime.ReleaseServiceInstanceOnTransactionComplete
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets a value that specifies whether the service object is recycled after the transaction successfully completes.
+  remarks: Use the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.ReleaseServiceInstanceOnTransactionComplete%2A> to specify that the <xref:System.ServiceModel.InstanceContext.ReleaseServiceInstance%2A> method is called when the transaction successfully completes.
+  syntax:
+    content: public bool ReleaseServiceInstanceOnTransactionComplete { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if the service object is recycled after the transaction successfully completes; otherwise, `false`. The default value is the value of <xref href="System.ServiceModel.ServiceBehaviorAttribute.ReleaseServiceInstanceOnTransactionComplete"></xref>.'
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.ReleaseServiceInstanceOnTransactionComplete*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.RoleProvider
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.RoleProvider
+  id: RoleProvider
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: RoleProvider
+  nameWithType: DispatchRuntime.RoleProvider
+  fullName: DispatchRuntime.RoleProvider
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets the custom <xref href="System.Web.Security.RoleProvider"></xref> that is used by the <xref href="System.ServiceModel.Dispatcher.DispatchRuntime"></xref>.
+  syntax:
+    content: public System.Web.Security.RoleProvider RoleProvider { get; set; }
+    return:
+      type: System.Web.Security.RoleProvider
+      description: The custom <xref href="System.Web.Security.RoleProvider"></xref> that is used by the <xref href="System.ServiceModel.Dispatcher.DispatchRuntime"></xref>.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.RoleProvider*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.SecurityAuditLogLocation
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.SecurityAuditLogLocation
+  id: SecurityAuditLogLocation
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: SecurityAuditLogLocation
+  nameWithType: DispatchRuntime.SecurityAuditLogLocation
+  fullName: DispatchRuntime.SecurityAuditLogLocation
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets the location of the audit log.
+  syntax:
+    content: public System.ServiceModel.AuditLogLocation SecurityAuditLogLocation { get; set; }
+    return:
+      type: System.ServiceModel.AuditLogLocation
+      description: One of the <xref href="System.ServiceModel.AuditLogLocation"></xref> values.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.SecurityAuditLogLocation*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthenticationManager
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthenticationManager
+  id: ServiceAuthenticationManager
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: ServiceAuthenticationManager
+  nameWithType: DispatchRuntime.ServiceAuthenticationManager
+  fullName: DispatchRuntime.ServiceAuthenticationManager
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets the object that manages an authentication process for service operations.
+  remarks: Authentication determines the identity of the entity that signed a message.
+  syntax:
+    content: public System.ServiceModel.ServiceAuthenticationManager ServiceAuthenticationManager { get; set; }
+    return:
+      type: System.ServiceModel.ServiceAuthenticationManager
+      description: An authentication management object.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthenticationManager*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthorizationAuditLevel
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthorizationAuditLevel
+  id: ServiceAuthorizationAuditLevel
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: ServiceAuthorizationAuditLevel
+  nameWithType: DispatchRuntime.ServiceAuthorizationAuditLevel
+  fullName: DispatchRuntime.ServiceAuthorizationAuditLevel
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets a value that controls what service authorization events are audited.
+  remarks: In the default case, no service authorization events are audited. If the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthorizationAuditLevel%2A> value is <xref:System.ServiceModel.AuditLevel.Success>, only successful service authorization events are written to the audit log specified by the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.SecurityAuditLogLocation%2A> property. If this property has a value of <xref:System.ServiceModel.AuditLevel.Failure>, only unsuccessful service authorization events are written to the audit log specified by the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.SecurityAuditLogLocation%2A> property. If the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthorizationAuditLevel%2A> value is <xref:System.ServiceModel.AuditLevel.SuccessOrFailure>, both successful and failed service authorization events are written to the audit log.
+  syntax:
+    content: public System.ServiceModel.AuditLevel ServiceAuthorizationAuditLevel { get; set; }
+    return:
+      type: System.ServiceModel.AuditLevel
+      description: One of the <xref href="System.ServiceModel.AuditLevel"></xref> values. The default is <xref href="System.ServiceModel.AuditLevel.None"></xref>.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthorizationAuditLevel*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthorizationManager
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthorizationManager
+  id: ServiceAuthorizationManager
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: ServiceAuthorizationManager
+  nameWithType: DispatchRuntime.ServiceAuthorizationManager
+  fullName: DispatchRuntime.ServiceAuthorizationManager
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets the <xref href="System.ServiceModel.ServiceAuthorizationManager"></xref> that provides authorization checking for the <xref href="System.ServiceModel.Dispatcher.DispatchRuntime"></xref>.
+  syntax:
+    content: public System.ServiceModel.ServiceAuthorizationManager ServiceAuthorizationManager { get; set; }
+    return:
+      type: System.ServiceModel.ServiceAuthorizationManager
+      description: A <xref href="System.ServiceModel.ServiceAuthorizationManager"></xref> that provides authorization checking for the <xref href="System.ServiceModel.Dispatcher.DispatchRuntime"></xref>.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthorizationManager*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.SingletonInstanceContext
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.SingletonInstanceContext
+  id: SingletonInstanceContext
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: SingletonInstanceContext
+  nameWithType: DispatchRuntime.SingletonInstanceContext
+  fullName: DispatchRuntime.SingletonInstanceContext
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets the singleton <xref href="System.ServiceModel.Dispatcher.IInstanceContextProvider"></xref> to be used by the <xref href="System.ServiceModel.Dispatcher.DispatchRuntime"></xref>.
+  syntax:
+    content: public System.ServiceModel.InstanceContext SingletonInstanceContext { get; set; }
+    return:
+      type: System.ServiceModel.InstanceContext
+      description: The singleton <xref href="System.ServiceModel.Dispatcher.IInstanceContextProvider"></xref> to be used by the <xref href="System.ServiceModel.Dispatcher.DispatchRuntime"></xref>.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.SingletonInstanceContext*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.SuppressAuditFailure
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.SuppressAuditFailure
+  id: SuppressAuditFailure
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: SuppressAuditFailure
+  nameWithType: DispatchRuntime.SuppressAuditFailure
+  fullName: DispatchRuntime.SuppressAuditFailure
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets a value that specifies whether to suppress non-critical exceptions that occur during the logging process.
+  remarks: Set <xref:System.ServiceModel.Dispatcher.DispatchRuntime.SuppressAuditFailure%2A> to `false` if you want exceptions that occur during the course of writing the audit log to be re-thrown to the application. In the default case, only the <xref:System.OutOfMemoryException>, <xref:System.StackOverflowException>, <xref:System.Threading.ThreadAbortException>, and <xref:System.ArgumentException> exceptions that result from attempts to write audit events are re-thrown to the application; all other exceptions are suppressed.
+  syntax:
+    content: public bool SuppressAuditFailure { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if non-critical exceptions that occur during the logging process are suppressed; otherwise, `false`. The default is `true`.'
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.SuppressAuditFailure*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.SynchronizationContext
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.SynchronizationContext
+  id: SynchronizationContext
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: SynchronizationContext
+  nameWithType: DispatchRuntime.SynchronizationContext
+  fullName: DispatchRuntime.SynchronizationContext
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets the synchronization context that is used to invoke the service operations.
+  remarks: The return value can be `null`. If this value is not `null`, then this synchronization context is used to invoke the service operations on the correct thread.
+  syntax:
+    content: public System.Threading.SynchronizationContext SynchronizationContext { get; set; }
+    return:
+      type: System.Threading.SynchronizationContext
+      description: The <xref href="System.Threading.SynchronizationContext"></xref> object used to determine on which thread the service operation is invoked.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.SynchronizationContext*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.TransactionAutoCompleteOnSessionClose
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.TransactionAutoCompleteOnSessionClose
+  id: TransactionAutoCompleteOnSessionClose
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: TransactionAutoCompleteOnSessionClose
+  nameWithType: DispatchRuntime.TransactionAutoCompleteOnSessionClose
+  fullName: DispatchRuntime.TransactionAutoCompleteOnSessionClose
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets a value that specifies whether to automatically complete the current transaction when the session closes.
+  remarks: If <xref:System.ServiceModel.Dispatcher.DispatchRuntime.TransactionAutoCompleteOnSessionClose%2A> is `true` and there is an active transaction, the transaction is completed when the session closes. If <xref:System.ServiceModel.Dispatcher.DispatchRuntime.TransactionAutoCompleteOnSessionClose%2A> is `false`, active transactions are not completed and are eventually aborted.
+  syntax:
+    content: public bool TransactionAutoCompleteOnSessionClose { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if transactions automatically complete when the session closes; otherwise, `false`. The default is the value specified by <xref href="System.ServiceModel.ServiceBehaviorAttribute.TransactionAutoCompleteOnSessionClose"></xref>.'
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.TransactionAutoCompleteOnSessionClose*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.Type
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.Type
+  id: Type
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: Type
+  nameWithType: DispatchRuntime.Type
+  fullName: DispatchRuntime.Type
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets the contract type.
+  syntax:
+    content: public Type Type { get; set; }
+    return:
+      type: System.Type
+      description: The type of the contract.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.Type*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.UnhandledDispatchOperation
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.UnhandledDispatchOperation
+  id: UnhandledDispatchOperation
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: UnhandledDispatchOperation
+  nameWithType: DispatchRuntime.UnhandledDispatchOperation
+  fullName: DispatchRuntime.UnhandledDispatchOperation
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets the operation to which unrecognized messages are dispatched.
+  remarks: The operation return by the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.UnhandledDispatchOperation%2A> is the operation indicated by the use of the "*" (asterisk) in the <xref:System.ServiceModel.OperationContractAttribute.Action%2A> property.
+  syntax:
+    content: public System.ServiceModel.Dispatcher.DispatchOperation UnhandledDispatchOperation { get; set; }
+    return:
+      type: System.ServiceModel.Dispatcher.DispatchOperation
+      description: The <xref href="System.ServiceModel.Dispatcher.DispatchOperation"></xref> to which unrecognized messages are dispatched.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.UnhandledDispatchOperation*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ValidateMustUnderstand
+  commentId: P:System.ServiceModel.Dispatcher.DispatchRuntime.ValidateMustUnderstand
+  id: ValidateMustUnderstand
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  langs:
+  - csharp
+  name: ValidateMustUnderstand
+  nameWithType: DispatchRuntime.ValidateMustUnderstand
+  fullName: DispatchRuntime.ValidateMustUnderstand
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Dispatcher
+  summary: Gets or sets the value of <xref href="System.ServiceModel.ServiceBehaviorAttribute.ValidateMustUnderstand"></xref>.
+  remarks: Determines whether unexpected message headers cause an error condition.
+  syntax:
+    content: public bool ValidateMustUnderstand { get; set; }
+    return:
+      type: System.Boolean
+      description: The value of <xref href="System.ServiceModel.ServiceBehaviorAttribute.ValidateMustUnderstand"></xref>.
+  overload: System.ServiceModel.Dispatcher.DispatchRuntime.ValidateMustUnderstand*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.AutomaticInputSessionShutdown
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: AutomaticInputSessionShutdown
+  nameWithType: DispatchRuntime.AutomaticInputSessionShutdown
+  fullName: DispatchRuntime.AutomaticInputSessionShutdown
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.CallbackClientRuntime
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: CallbackClientRuntime
+  nameWithType: DispatchRuntime.CallbackClientRuntime
+  fullName: DispatchRuntime.CallbackClientRuntime
+- uid: System.ServiceModel.Dispatcher.ClientRuntime
+  parent: System.ServiceModel.Dispatcher
+  isExternal: false
+  name: ClientRuntime
+  nameWithType: ClientRuntime
+  fullName: System.ServiceModel.Dispatcher.ClientRuntime
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ChannelDispatcher
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ChannelDispatcher
+  nameWithType: DispatchRuntime.ChannelDispatcher
+  fullName: DispatchRuntime.ChannelDispatcher
+- uid: System.ServiceModel.Dispatcher.ChannelDispatcher
+  parent: System.ServiceModel.Dispatcher
+  isExternal: false
+  name: ChannelDispatcher
+  nameWithType: ChannelDispatcher
+  fullName: System.ServiceModel.Dispatcher.ChannelDispatcher
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ConcurrencyMode
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ConcurrencyMode
+  nameWithType: DispatchRuntime.ConcurrencyMode
+  fullName: DispatchRuntime.ConcurrencyMode
+- uid: System.ServiceModel.ConcurrencyMode
+  parent: System.ServiceModel
+  isExternal: false
+  name: ConcurrencyMode
+  nameWithType: ConcurrencyMode
+  fullName: System.ServiceModel.ConcurrencyMode
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.EndpointDispatcher
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: EndpointDispatcher
+  nameWithType: DispatchRuntime.EndpointDispatcher
+  fullName: DispatchRuntime.EndpointDispatcher
+- uid: System.ServiceModel.Dispatcher.EndpointDispatcher
+  parent: System.ServiceModel.Dispatcher
+  isExternal: false
+  name: EndpointDispatcher
+  nameWithType: EndpointDispatcher
+  fullName: System.ServiceModel.Dispatcher.EndpointDispatcher
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.EnsureOrderedDispatch
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: EnsureOrderedDispatch
+  nameWithType: DispatchRuntime.EnsureOrderedDispatch
+  fullName: DispatchRuntime.EnsureOrderedDispatch
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ExternalAuthorizationPolicies
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ExternalAuthorizationPolicies
+  nameWithType: DispatchRuntime.ExternalAuthorizationPolicies
+  fullName: DispatchRuntime.ExternalAuthorizationPolicies
+- uid: System.Collections.ObjectModel.ReadOnlyCollection`1
+  name: ReadOnlyCollection<T>
+  nameWithType: ReadOnlyCollection<T>
+  fullName: System.Collections.ObjectModel.ReadOnlyCollection<T>
+- uid: System.IdentityModel.Policy.IAuthorizationPolicy
+  name: IAuthorizationPolicy
+  nameWithType: IAuthorizationPolicy
+  fullName: System.IdentityModel.Policy.IAuthorizationPolicy
+- uid: System.Collections.ObjectModel.ReadOnlyCollection{System.IdentityModel.Policy.IAuthorizationPolicy}
+  parent: System.Collections.ObjectModel
+  isExternal: false
+  name: ReadOnlyCollection<IAuthorizationPolicy>
+  nameWithType: ReadOnlyCollection<IAuthorizationPolicy>
+  fullName: System.Collections.ObjectModel.ReadOnlyCollection<System.IdentityModel.Policy.IAuthorizationPolicy>
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ReadOnlyCollection`1
+    name: ReadOnlyCollection
+    nameWithType: ReadOnlyCollection
+    fullName: System.Collections.ObjectModel.ReadOnlyCollection
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.IdentityModel.Policy.IAuthorizationPolicy
+    name: IAuthorizationPolicy
+    nameWithType: IAuthorizationPolicy
+    fullName: System.IdentityModel.Policy.IAuthorizationPolicy
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.IgnoreTransactionMessageProperty
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: IgnoreTransactionMessageProperty
+  nameWithType: DispatchRuntime.IgnoreTransactionMessageProperty
+  fullName: DispatchRuntime.IgnoreTransactionMessageProperty
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ImpersonateCallerForAllOperations
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ImpersonateCallerForAllOperations
+  nameWithType: DispatchRuntime.ImpersonateCallerForAllOperations
+  fullName: DispatchRuntime.ImpersonateCallerForAllOperations
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ImpersonateOnSerializingReply
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ImpersonateOnSerializingReply
+  nameWithType: DispatchRuntime.ImpersonateOnSerializingReply
+  fullName: DispatchRuntime.ImpersonateOnSerializingReply
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.InputSessionShutdownHandlers
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: InputSessionShutdownHandlers
+  nameWithType: DispatchRuntime.InputSessionShutdownHandlers
+  fullName: DispatchRuntime.InputSessionShutdownHandlers
+- uid: System.Collections.Generic.SynchronizedCollection`1
+  name: SynchronizedCollection<T>
+  nameWithType: SynchronizedCollection<T>
+  fullName: System.Collections.Generic.SynchronizedCollection<T>
+- uid: System.ServiceModel.Dispatcher.IInputSessionShutdown
+  name: IInputSessionShutdown
+  nameWithType: IInputSessionShutdown
+  fullName: System.ServiceModel.Dispatcher.IInputSessionShutdown
+- uid: System.Collections.Generic.SynchronizedCollection{System.ServiceModel.Dispatcher.IInputSessionShutdown}
+  parent: System.Collections.Generic
+  isExternal: false
+  name: SynchronizedCollection<IInputSessionShutdown>
+  nameWithType: SynchronizedCollection<IInputSessionShutdown>
+  fullName: System.Collections.Generic.SynchronizedCollection<System.ServiceModel.Dispatcher.IInputSessionShutdown>
+  spec.csharp:
+  - uid: System.Collections.Generic.SynchronizedCollection`1
+    name: SynchronizedCollection
+    nameWithType: SynchronizedCollection
+    fullName: System.Collections.Generic.SynchronizedCollection
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.ServiceModel.Dispatcher.IInputSessionShutdown
+    name: IInputSessionShutdown
+    nameWithType: IInputSessionShutdown
+    fullName: System.ServiceModel.Dispatcher.IInputSessionShutdown
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.InstanceContextInitializers
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: InstanceContextInitializers
+  nameWithType: DispatchRuntime.InstanceContextInitializers
+  fullName: DispatchRuntime.InstanceContextInitializers
+- uid: System.ServiceModel.Dispatcher.IInstanceContextInitializer
+  name: IInstanceContextInitializer
+  nameWithType: IInstanceContextInitializer
+  fullName: System.ServiceModel.Dispatcher.IInstanceContextInitializer
+- uid: System.Collections.Generic.SynchronizedCollection{System.ServiceModel.Dispatcher.IInstanceContextInitializer}
+  parent: System.Collections.Generic
+  isExternal: false
+  name: SynchronizedCollection<IInstanceContextInitializer>
+  nameWithType: SynchronizedCollection<IInstanceContextInitializer>
+  fullName: System.Collections.Generic.SynchronizedCollection<System.ServiceModel.Dispatcher.IInstanceContextInitializer>
+  spec.csharp:
+  - uid: System.Collections.Generic.SynchronizedCollection`1
+    name: SynchronizedCollection
+    nameWithType: SynchronizedCollection
+    fullName: System.Collections.Generic.SynchronizedCollection
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.ServiceModel.Dispatcher.IInstanceContextInitializer
+    name: IInstanceContextInitializer
+    nameWithType: IInstanceContextInitializer
+    fullName: System.ServiceModel.Dispatcher.IInstanceContextInitializer
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.InstanceContextProvider
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: InstanceContextProvider
+  nameWithType: DispatchRuntime.InstanceContextProvider
+  fullName: DispatchRuntime.InstanceContextProvider
+- uid: System.ServiceModel.Dispatcher.IInstanceContextProvider
+  parent: System.ServiceModel.Dispatcher
+  isExternal: false
+  name: IInstanceContextProvider
+  nameWithType: IInstanceContextProvider
+  fullName: System.ServiceModel.Dispatcher.IInstanceContextProvider
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.InstanceProvider
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: InstanceProvider
+  nameWithType: DispatchRuntime.InstanceProvider
+  fullName: DispatchRuntime.InstanceProvider
+- uid: System.ServiceModel.Dispatcher.IInstanceProvider
+  parent: System.ServiceModel.Dispatcher
+  isExternal: false
+  name: IInstanceProvider
+  nameWithType: IInstanceProvider
+  fullName: System.ServiceModel.Dispatcher.IInstanceProvider
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.MessageAuthenticationAuditLevel
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: MessageAuthenticationAuditLevel
+  nameWithType: DispatchRuntime.MessageAuthenticationAuditLevel
+  fullName: DispatchRuntime.MessageAuthenticationAuditLevel
+- uid: System.ServiceModel.AuditLevel
+  parent: System.ServiceModel
+  isExternal: false
+  name: AuditLevel
+  nameWithType: AuditLevel
+  fullName: System.ServiceModel.AuditLevel
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.MessageInspectors
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: MessageInspectors
+  nameWithType: DispatchRuntime.MessageInspectors
+  fullName: DispatchRuntime.MessageInspectors
+- uid: System.ServiceModel.Dispatcher.IDispatchMessageInspector
+  name: IDispatchMessageInspector
+  nameWithType: IDispatchMessageInspector
+  fullName: System.ServiceModel.Dispatcher.IDispatchMessageInspector
+- uid: System.Collections.Generic.SynchronizedCollection{System.ServiceModel.Dispatcher.IDispatchMessageInspector}
+  parent: System.Collections.Generic
+  isExternal: false
+  name: SynchronizedCollection<IDispatchMessageInspector>
+  nameWithType: SynchronizedCollection<IDispatchMessageInspector>
+  fullName: System.Collections.Generic.SynchronizedCollection<System.ServiceModel.Dispatcher.IDispatchMessageInspector>
+  spec.csharp:
+  - uid: System.Collections.Generic.SynchronizedCollection`1
+    name: SynchronizedCollection
+    nameWithType: SynchronizedCollection
+    fullName: System.Collections.Generic.SynchronizedCollection
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.ServiceModel.Dispatcher.IDispatchMessageInspector
+    name: IDispatchMessageInspector
+    nameWithType: IDispatchMessageInspector
+    fullName: System.ServiceModel.Dispatcher.IDispatchMessageInspector
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.Operations
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: Operations
+  nameWithType: DispatchRuntime.Operations
+  fullName: DispatchRuntime.Operations
+- uid: System.Collections.Generic.SynchronizedKeyedCollection`2
+  name: SynchronizedKeyedCollection<K,T>
+  nameWithType: SynchronizedKeyedCollection<K,T>
+  fullName: System.Collections.Generic.SynchronizedKeyedCollection<K,T>
+- uid: System.String
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.ServiceModel.Dispatcher.DispatchOperation
+  name: DispatchOperation
+  nameWithType: DispatchOperation
+  fullName: System.ServiceModel.Dispatcher.DispatchOperation
+- uid: System.Collections.Generic.SynchronizedKeyedCollection{System.String,System.ServiceModel.Dispatcher.DispatchOperation}
+  parent: System.Collections.Generic
+  isExternal: false
+  name: SynchronizedKeyedCollection<String,DispatchOperation>
+  nameWithType: SynchronizedKeyedCollection<String,DispatchOperation>
+  fullName: System.Collections.Generic.SynchronizedKeyedCollection<System.String,System.ServiceModel.Dispatcher.DispatchOperation>
+  spec.csharp:
+  - uid: System.Collections.Generic.SynchronizedKeyedCollection`2
+    name: SynchronizedKeyedCollection
+    nameWithType: SynchronizedKeyedCollection
+    fullName: System.Collections.Generic.SynchronizedKeyedCollection
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+  - name: ','
+    nameWithType: ','
+    fullName: ','
+  - uid: System.ServiceModel.Dispatcher.DispatchOperation
+    name: DispatchOperation
+    nameWithType: DispatchOperation
+    fullName: System.ServiceModel.Dispatcher.DispatchOperation
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.OperationSelector
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: OperationSelector
+  nameWithType: DispatchRuntime.OperationSelector
+  fullName: DispatchRuntime.OperationSelector
+- uid: System.ServiceModel.Dispatcher.IDispatchOperationSelector
+  parent: System.ServiceModel.Dispatcher
+  isExternal: false
+  name: IDispatchOperationSelector
+  nameWithType: IDispatchOperationSelector
+  fullName: System.ServiceModel.Dispatcher.IDispatchOperationSelector
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.PreserveMessage
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: PreserveMessage
+  nameWithType: DispatchRuntime.PreserveMessage
+  fullName: DispatchRuntime.PreserveMessage
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.PrincipalPermissionMode
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: PrincipalPermissionMode
+  nameWithType: DispatchRuntime.PrincipalPermissionMode
+  fullName: DispatchRuntime.PrincipalPermissionMode
+- uid: System.ServiceModel.Description.PrincipalPermissionMode
+  parent: System.ServiceModel.Description
+  isExternal: false
+  name: PrincipalPermissionMode
+  nameWithType: PrincipalPermissionMode
+  fullName: System.ServiceModel.Description.PrincipalPermissionMode
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ReleaseServiceInstanceOnTransactionComplete
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ReleaseServiceInstanceOnTransactionComplete
+  nameWithType: DispatchRuntime.ReleaseServiceInstanceOnTransactionComplete
+  fullName: DispatchRuntime.ReleaseServiceInstanceOnTransactionComplete
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.RoleProvider
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: RoleProvider
+  nameWithType: DispatchRuntime.RoleProvider
+  fullName: DispatchRuntime.RoleProvider
+- uid: System.Web.Security.RoleProvider
+  parent: System.Web.Security
+  isExternal: false
+  name: RoleProvider
+  nameWithType: RoleProvider
+  fullName: System.Web.Security.RoleProvider
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.SecurityAuditLogLocation
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: SecurityAuditLogLocation
+  nameWithType: DispatchRuntime.SecurityAuditLogLocation
+  fullName: DispatchRuntime.SecurityAuditLogLocation
+- uid: System.ServiceModel.AuditLogLocation
+  parent: System.ServiceModel
+  isExternal: false
+  name: AuditLogLocation
+  nameWithType: AuditLogLocation
+  fullName: System.ServiceModel.AuditLogLocation
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthenticationManager
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ServiceAuthenticationManager
+  nameWithType: DispatchRuntime.ServiceAuthenticationManager
+  fullName: DispatchRuntime.ServiceAuthenticationManager
+- uid: System.ServiceModel.ServiceAuthenticationManager
+  parent: System.ServiceModel
+  isExternal: false
+  name: ServiceAuthenticationManager
+  nameWithType: ServiceAuthenticationManager
+  fullName: System.ServiceModel.ServiceAuthenticationManager
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthorizationAuditLevel
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ServiceAuthorizationAuditLevel
+  nameWithType: DispatchRuntime.ServiceAuthorizationAuditLevel
+  fullName: DispatchRuntime.ServiceAuthorizationAuditLevel
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthorizationManager
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ServiceAuthorizationManager
+  nameWithType: DispatchRuntime.ServiceAuthorizationManager
+  fullName: DispatchRuntime.ServiceAuthorizationManager
+- uid: System.ServiceModel.ServiceAuthorizationManager
+  parent: System.ServiceModel
+  isExternal: false
+  name: ServiceAuthorizationManager
+  nameWithType: ServiceAuthorizationManager
+  fullName: System.ServiceModel.ServiceAuthorizationManager
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.SingletonInstanceContext
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: SingletonInstanceContext
+  nameWithType: DispatchRuntime.SingletonInstanceContext
+  fullName: DispatchRuntime.SingletonInstanceContext
+- uid: System.ServiceModel.InstanceContext
+  parent: System.ServiceModel
+  isExternal: false
+  name: InstanceContext
+  nameWithType: InstanceContext
+  fullName: System.ServiceModel.InstanceContext
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.SuppressAuditFailure
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: SuppressAuditFailure
+  nameWithType: DispatchRuntime.SuppressAuditFailure
+  fullName: DispatchRuntime.SuppressAuditFailure
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.SynchronizationContext
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: SynchronizationContext
+  nameWithType: DispatchRuntime.SynchronizationContext
+  fullName: DispatchRuntime.SynchronizationContext
+- uid: System.Threading.SynchronizationContext
+  parent: System.Threading
+  isExternal: false
+  name: SynchronizationContext
+  nameWithType: SynchronizationContext
+  fullName: System.Threading.SynchronizationContext
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.TransactionAutoCompleteOnSessionClose
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: TransactionAutoCompleteOnSessionClose
+  nameWithType: DispatchRuntime.TransactionAutoCompleteOnSessionClose
+  fullName: DispatchRuntime.TransactionAutoCompleteOnSessionClose
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.Type
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: Type
+  nameWithType: DispatchRuntime.Type
+  fullName: DispatchRuntime.Type
+- uid: System.Type
+  parent: System
+  isExternal: false
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.UnhandledDispatchOperation
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: UnhandledDispatchOperation
+  nameWithType: DispatchRuntime.UnhandledDispatchOperation
+  fullName: DispatchRuntime.UnhandledDispatchOperation
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ValidateMustUnderstand
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ValidateMustUnderstand
+  nameWithType: DispatchRuntime.ValidateMustUnderstand
+  fullName: DispatchRuntime.ValidateMustUnderstand
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.AutomaticInputSessionShutdown*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: AutomaticInputSessionShutdown
+  nameWithType: DispatchRuntime.AutomaticInputSessionShutdown
+  fullName: DispatchRuntime.AutomaticInputSessionShutdown
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.CallbackClientRuntime*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: CallbackClientRuntime
+  nameWithType: DispatchRuntime.CallbackClientRuntime
+  fullName: DispatchRuntime.CallbackClientRuntime
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ChannelDispatcher*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ChannelDispatcher
+  nameWithType: DispatchRuntime.ChannelDispatcher
+  fullName: DispatchRuntime.ChannelDispatcher
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ConcurrencyMode*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ConcurrencyMode
+  nameWithType: DispatchRuntime.ConcurrencyMode
+  fullName: DispatchRuntime.ConcurrencyMode
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.EndpointDispatcher*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: EndpointDispatcher
+  nameWithType: DispatchRuntime.EndpointDispatcher
+  fullName: DispatchRuntime.EndpointDispatcher
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.EnsureOrderedDispatch*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: EnsureOrderedDispatch
+  nameWithType: DispatchRuntime.EnsureOrderedDispatch
+  fullName: DispatchRuntime.EnsureOrderedDispatch
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ExternalAuthorizationPolicies*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ExternalAuthorizationPolicies
+  nameWithType: DispatchRuntime.ExternalAuthorizationPolicies
+  fullName: DispatchRuntime.ExternalAuthorizationPolicies
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.IgnoreTransactionMessageProperty*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: IgnoreTransactionMessageProperty
+  nameWithType: DispatchRuntime.IgnoreTransactionMessageProperty
+  fullName: DispatchRuntime.IgnoreTransactionMessageProperty
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ImpersonateCallerForAllOperations*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ImpersonateCallerForAllOperations
+  nameWithType: DispatchRuntime.ImpersonateCallerForAllOperations
+  fullName: DispatchRuntime.ImpersonateCallerForAllOperations
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ImpersonateOnSerializingReply*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ImpersonateOnSerializingReply
+  nameWithType: DispatchRuntime.ImpersonateOnSerializingReply
+  fullName: DispatchRuntime.ImpersonateOnSerializingReply
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.InputSessionShutdownHandlers*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: InputSessionShutdownHandlers
+  nameWithType: DispatchRuntime.InputSessionShutdownHandlers
+  fullName: DispatchRuntime.InputSessionShutdownHandlers
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.InstanceContextInitializers*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: InstanceContextInitializers
+  nameWithType: DispatchRuntime.InstanceContextInitializers
+  fullName: DispatchRuntime.InstanceContextInitializers
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.InstanceContextProvider*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: InstanceContextProvider
+  nameWithType: DispatchRuntime.InstanceContextProvider
+  fullName: DispatchRuntime.InstanceContextProvider
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.InstanceProvider*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: InstanceProvider
+  nameWithType: DispatchRuntime.InstanceProvider
+  fullName: DispatchRuntime.InstanceProvider
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.MessageAuthenticationAuditLevel*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: MessageAuthenticationAuditLevel
+  nameWithType: DispatchRuntime.MessageAuthenticationAuditLevel
+  fullName: DispatchRuntime.MessageAuthenticationAuditLevel
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.MessageInspectors*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: MessageInspectors
+  nameWithType: DispatchRuntime.MessageInspectors
+  fullName: DispatchRuntime.MessageInspectors
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.Operations*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: Operations
+  nameWithType: DispatchRuntime.Operations
+  fullName: DispatchRuntime.Operations
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.OperationSelector*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: OperationSelector
+  nameWithType: DispatchRuntime.OperationSelector
+  fullName: DispatchRuntime.OperationSelector
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.PreserveMessage*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: PreserveMessage
+  nameWithType: DispatchRuntime.PreserveMessage
+  fullName: DispatchRuntime.PreserveMessage
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.PrincipalPermissionMode*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: PrincipalPermissionMode
+  nameWithType: DispatchRuntime.PrincipalPermissionMode
+  fullName: DispatchRuntime.PrincipalPermissionMode
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ReleaseServiceInstanceOnTransactionComplete*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ReleaseServiceInstanceOnTransactionComplete
+  nameWithType: DispatchRuntime.ReleaseServiceInstanceOnTransactionComplete
+  fullName: DispatchRuntime.ReleaseServiceInstanceOnTransactionComplete
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.RoleProvider*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: RoleProvider
+  nameWithType: DispatchRuntime.RoleProvider
+  fullName: DispatchRuntime.RoleProvider
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.SecurityAuditLogLocation*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: SecurityAuditLogLocation
+  nameWithType: DispatchRuntime.SecurityAuditLogLocation
+  fullName: DispatchRuntime.SecurityAuditLogLocation
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthenticationManager*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ServiceAuthenticationManager
+  nameWithType: DispatchRuntime.ServiceAuthenticationManager
+  fullName: DispatchRuntime.ServiceAuthenticationManager
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthorizationAuditLevel*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ServiceAuthorizationAuditLevel
+  nameWithType: DispatchRuntime.ServiceAuthorizationAuditLevel
+  fullName: DispatchRuntime.ServiceAuthorizationAuditLevel
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ServiceAuthorizationManager*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ServiceAuthorizationManager
+  nameWithType: DispatchRuntime.ServiceAuthorizationManager
+  fullName: DispatchRuntime.ServiceAuthorizationManager
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.SingletonInstanceContext*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: SingletonInstanceContext
+  nameWithType: DispatchRuntime.SingletonInstanceContext
+  fullName: DispatchRuntime.SingletonInstanceContext
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.SuppressAuditFailure*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: SuppressAuditFailure
+  nameWithType: DispatchRuntime.SuppressAuditFailure
+  fullName: DispatchRuntime.SuppressAuditFailure
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.SynchronizationContext*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: SynchronizationContext
+  nameWithType: DispatchRuntime.SynchronizationContext
+  fullName: DispatchRuntime.SynchronizationContext
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.TransactionAutoCompleteOnSessionClose*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: TransactionAutoCompleteOnSessionClose
+  nameWithType: DispatchRuntime.TransactionAutoCompleteOnSessionClose
+  fullName: DispatchRuntime.TransactionAutoCompleteOnSessionClose
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.Type*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: Type
+  nameWithType: DispatchRuntime.Type
+  fullName: DispatchRuntime.Type
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.UnhandledDispatchOperation*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: UnhandledDispatchOperation
+  nameWithType: DispatchRuntime.UnhandledDispatchOperation
+  fullName: DispatchRuntime.UnhandledDispatchOperation
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime.ValidateMustUnderstand*
+  parent: System.ServiceModel.Dispatcher.DispatchRuntime
+  isExternal: false
+  name: ValidateMustUnderstand
+  nameWithType: DispatchRuntime.ValidateMustUnderstand
+  fullName: DispatchRuntime.ValidateMustUnderstand
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Dispatcher/DispatchRuntime.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

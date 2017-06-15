@@ -1,0 +1,565 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Runtime.Versioning.ComponentGuaranteesAttribute
+  commentId: T:System.Runtime.Versioning.ComponentGuaranteesAttribute
+  id: ComponentGuaranteesAttribute
+  children:
+  - System.Runtime.Versioning.ComponentGuaranteesAttribute.#ctor(System.Runtime.Versioning.ComponentGuaranteesOptions)
+  - System.Runtime.Versioning.ComponentGuaranteesAttribute.Guarantees
+  langs:
+  - csharp
+  name: ComponentGuaranteesAttribute
+  nameWithType: ComponentGuaranteesAttribute
+  fullName: System.Runtime.Versioning.ComponentGuaranteesAttribute
+  type: Class
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime.Extensions
+  namespace: System.Runtime.Versioning
+  summary: Defines the compatibility guarantee of a component, type, or type member that may span multiple versions.
+  remarks: "The <xref:System.Runtime.Versioning.ComponentGuaranteesAttribute> is used by developers of components and class libraries to indicate the level of compatibility that consumers of their libraries can expect across multiple versions. It indicates the level of guarantee that a future version of the library or component will not break an existing client. Clients can then use the <xref:System.Runtime.Versioning.ComponentGuaranteesAttribute> as an aid in designing their own interfaces to ensure stability across versions.  \n  \n> [!NOTE]\n>  The common language runtime (CLR) does not use this attribute in any way. Its value lies in formally documenting the intent of the component author. Compile-time tools can also use these declarations to detect compile-time errors that would otherwise break the declared guarantee.  \n  \n## Levels of Compatibility  \n The <xref:System.Runtime.Versioning.ComponentGuaranteesAttribute> supports the following levels of compatibility, which are represented by members of the <xref:System.Runtime.Versioning.ComponentGuaranteesOptions> enumeration:  \n  \n-   No version-to-version compatibility (<xref:System.Runtime.Versioning.ComponentGuaranteesOptions?displayProperty=fullName>). The client can expect that future versions will break the existing client. For more information, see the [No Compatibility](#None) section later in this topic.  \n  \n-   Side-by-side version-to-version compatibility (<xref:System.Runtime.Versioning.ComponentGuaranteesOptions?displayProperty=fullName>). The component has been tested to work when more than one version of the assembly is loaded in the same application domain. In general, future versions can break compatibility. However, when breaking changes are made, the old version is not modified but exists alongside the new version. Side-by-side execution is the expected way to make existing clients work when breaking changes are made. For more information, see the [Side-by-Side Compatibility](#SideBySide) section later in this topic.  \n  \n-   Stable version-to-version compatibility (<xref:System.Runtime.Versioning.ComponentGuaranteesOptions?displayProperty=fullName>). Future versions should not break the client, and side-by-side execution should not be needed. However, if the client is inadvertently broken, it may be possible to use side-by-side execution to fix the problem. For more information, see the [Stable Compatibility](#Standard) section.  \n  \n-   Exchange version-to-version compatibility (<xref:System.Runtime.Versioning.ComponentGuaranteesOptions?displayProperty=fullName>). Extraordinary care is taken to ensure that future versions will not break the client. The client should use only these types in the signature of interfaces that are used for communication with other assemblies that are deployed independently of one another. Only one version of these types is expected to be in a given application domain, which means that if a client breaks, side-by-side execution cannot fix the compatibility problem. For more information, see the [Exchange Type Compatibility](#Exchange) section.  \n  \n The following sections discuss each level of guarantee in greater detail.  \n  \n<a name=\"None\"></a>   \n### No Compatibility  \n Marking a component as <xref:System.Runtime.Versioning.ComponentGuaranteesOptions?displayProperty=fullName> indicates that the provider makes no guarantees about compatibility. Clients should avoid taking any dependencies on the exposed interfaces. This level of compatibility is useful for types that are experimental or that are publicly exposed but are intended only for components that are always updated at the same time. <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.None> explicitly indicates that this component should not be used by external components.  \n  \n<a name=\"SideBySide\"></a>   \n### Side-by-Side Compatibility  \n Marking a component as <xref:System.Runtime.Versioning.ComponentGuaranteesOptions?displayProperty=fullName> indicates that the component has been tested to work when more than one version of the assembly is loaded into the same application domain. Breaking changes are allowed as long as they are made to the assembly that has the greater version number. Components that are bound to an old version of the assembly are expected to continue to bind to the old version, and other components can bind to the new version. It is also possible to update a component that is declared to be <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.SideBySide> by destructively modifying the old version.  \n  \n<a name=\"Standard\"></a>   \n### Stable Compatibility  \n Marking a type as <xref:System.Runtime.Versioning.ComponentGuaranteesOptions?displayProperty=fullName> indicates that the type should remain stable across versions. However, it may also be possible for side-by-side versions of a stable type to exist in the same application domain.  \n  \n Stable types maintain a high binary compatibility bar. Because of this, providers should avoid making breaking changes to stable types. The following kinds of changes are acceptable:  \n  \n-   Adding private instance fields to, or removing fields from, a type, as long as this does not break the serialization format.  \n  \n-   Changing a non-serializable type to a serializable type. (However, a serializable type cannot be changed to a non-serializable type.)  \n  \n-   Throwing new, more derived exceptions from a method.  \n  \n-   Improving the performance of a method.  \n  \n-   Changing the range of return values, as long as the change does not adversely affect the majority of clients.  \n  \n-   Fixing serious bugs, if the business justification is high and the number of adversely affected clients is low.  \n  \n Because new versions of stable components are not expected to break existing clients, generally only one version of a stable component is needed in an application domain. However, this is not a requirement, because stable types are not used as well-known exchange types that all components agree upon. Therefore, if a new version of a stable component does inadvertently break some component, and if other components need the new version, it may be possible to fix the problem by loading both the old and new component.  \n  \n <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.Stable> provides a stronger version compatibility guarantee than <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.None>. It is a common default for multi-version components.  \n  \n <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.Stable> can be combined with <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.SideBySide>, which states that the component will not break compatibility but is tested to work when more than one version is loaded in a given application domain.  \n  \n After a type or method is marked as <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.Stable>, it can be upgraded to <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.Exchange>. However, it cannot be downgraded to <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.None>.  \n  \n<a name=\"Exchange\"></a>   \n### Exchange Type Compatibility  \n Marking a type as <xref:System.Runtime.Versioning.ComponentGuaranteesOptions?displayProperty=fullName> provides a stronger version compatibility guarantee than <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.Stable>, and should be applied to the most stable of all types. These types are intended to be used for interchange between independently built components across all component boundaries in both time (any version of the CLR or any version of a component or application) and space (cross-process, cross-CLR in one process, cross-application domain in one CLR). If a breaking change is made to an exchange type, it is impossible to fix the issue by loading multiple versions of the type.  \n  \n Exchange types should be changed only when a problem is very serious (such as a severe security issue) or the probability of breakage is very low (that is, if the behavior was already broken in a random way that code could not have conceivably taken a dependency on). You can make the following kinds of changes to an exchange type:  \n  \n-   Add inheritance of new interface definitions.  \n  \n-   Add new private methods that implement the methods of newly inherited interface definitions.  \n  \n-   Add new static fields.  \n  \n-   Add new static methods.  \n  \n-   Add new non-virtual instance methods.  \n  \n The following are considered breaking changes and are not allowed for primitive types:  \n  \n-   Changing serialization formats. Version-tolerant serialization is required.  \n  \n-   Adding or removing private instance fields. This risks changing the serialization format of the type and breaking client code that uses reflection.  \n  \n-   Changing the serializability of a type. A non-serializable type may not be made serializable, and vice versa.  \n  \n-   Throwing different exceptions from a method.  \n  \n-   Changing the range of a method's return values, unless the member definition raises this possibility and clearly indicates how clients should handle unknown values.  \n  \n-   Fixing most bugs. Consumers of the type will rely on the existing behavior.  \n  \n After a component, type, or member is marked with the <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.Exchange> guarantee, it cannot be changed to either <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.Stable> or <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.None>.  \n  \n Typically, exchange types are the basic types (such as <xref:System.Int32> and <xref:System.String> in the .NET Framework) and interfaces (such as <xref:System.Collections.Generic.IList%601>, <xref:System.Collections.Generic.IEnumerable%601>, and <xref:System.IComparable%601>) that are commonly used in public interfaces.  \n  \n Exchange types may publicly expose only other types that are also marked with <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.Exchange> compatibility. In addition, exchange types cannot depend on the behavior of Windows APIs that are prone to change.  \n  \n## Component Guarantees: A Summary  \n The following table indicates how a component's characteristics and usage affect its compatibility guarantee.  \n  \n|Component characteristics|Exchange|Stable|Side-by-Side|None|  \n|-------------------------------|--------------|------------|--------------------|----------|  \n|Can be used in interfaces between components that version independently.|Y|N|N|N|  \n|Can be used (privately) by an assembly that versions independently.|Y|Y|Y|N|  \n|Can have multiple versions in a single application domain.|N|Y|Y|Y|  \n|Can make breaking changes|N|N|Y|Y|  \n|Tested to make certain multiple versions of the assembly can be loaded together.|N|N|Y|N|  \n|Can make breaking changes in place.|N|N|N|Y|  \n|Can make very safe non-breaking servicing changes in place.|Y|Y|Y|Y|  \n  \n## Applying the Attribute  \n You can apply the <xref:System.Runtime.Versioning.ComponentGuaranteesAttribute> to an assembly, a type, or a type member. Its application is hierarchical. That is, by default, the guarantee defined by the <xref:System.Runtime.Versioning.ComponentGuaranteesAttribute.Guarantees%2A> property of the attribute at the assembly level defines the guarantee of all types in the assembly and all members in those types. Similarly, if the guarantee is applied to the type, by default it also applies to each member of the type.  \n  \n This inherited guarantee can be overridden by applying the <xref:System.Runtime.Versioning.ComponentGuaranteesAttribute> to individual types and type members. However, guarantees that override the default can only weaken the guarantee; they cannot strengthen it. For example, if an assembly is marked with the <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.None> guarantee, its types and members have no compatibility guarantee, and any other guarantee that is applied to types or members in the assembly is ignored.  \n  \n## Testing the Guarantee  \n The <xref:System.Runtime.Versioning.ComponentGuaranteesAttribute.Guarantees%2A> property returns a member of the <xref:System.Runtime.Versioning.ComponentGuaranteesOptions> enumeration, which is marked with the <xref:System.FlagsAttribute> attribute. This means that you should test for the flag that you are interested in by masking away potentially unknown flags. For example, the following example tests whether a type is marked as <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.Stable>.  \n  \n [!code-csharp[System.Runtime.Versioning.ComponentGuaranteesAttribute.Class#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.runtime.versioning.componentguaranteesattribute.class/cs/apply1.cs#1)]\n [!code-vb[System.Runtime.Versioning.ComponentGuaranteesAttribute.Class#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.runtime.versioning.componentguaranteesattribute.class/vb/apply1.vb#1)]  \n  \n The following example tests whether a type is marked as <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.Stable> or <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.Exchange>.  \n  \n [!code-csharp[System.Runtime.Versioning.ComponentGuaranteesAttribute.Class#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.runtime.versioning.componentguaranteesattribute.class/cs/apply1.cs#2)]\n [!code-vb[System.Runtime.Versioning.ComponentGuaranteesAttribute.Class#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.runtime.versioning.componentguaranteesattribute.class/vb/apply1.vb#2)]  \n  \n The following example tests wither a type is marked as <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.None> (that is, neither <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.Stable> nor <xref:System.Runtime.Versioning.ComponentGuaranteesOptions.Exchange>).  \n  \n [!code-csharp[System.Runtime.Versioning.ComponentGuaranteesAttribute.Class#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.runtime.versioning.componentguaranteesattribute.class/cs/apply1.cs#3)]\n [!code-vb[System.Runtime.Versioning.ComponentGuaranteesAttribute.Class#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.runtime.versioning.componentguaranteesattribute.class/vb/apply1.vb#3)]"
+  syntax:
+    content: >-
+      [System.AttributeUsage(System.AttributeTargets.Assembly | System.AttributeTargets.Module | System.AttributeTargets.Class | System.AttributeTargets.Struct | System.AttributeTargets.Enum | System.AttributeTargets.Constructor | System.AttributeTargets.Method | System.AttributeTargets.Property | System.AttributeTargets.Event | System.AttributeTargets.Interface | System.AttributeTargets.Delegate, AllowMultiple=false, Inherited=false)]
+
+      public sealed class ComponentGuaranteesAttribute : Attribute
+  inheritance:
+  - System.Object
+  - System.Attribute
+  implements: []
+  inheritedMembers:
+  - System.Attribute.Equals(System.Object)
+  - System.Attribute.GetCustomAttribute(System.Reflection.Assembly,System.Type)
+  - System.Attribute.GetCustomAttribute(System.Reflection.Assembly,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttribute(System.Reflection.MemberInfo,System.Type)
+  - System.Attribute.GetCustomAttribute(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttribute(System.Reflection.Module,System.Type)
+  - System.Attribute.GetCustomAttribute(System.Reflection.Module,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttribute(System.Reflection.ParameterInfo,System.Type)
+  - System.Attribute.GetCustomAttribute(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Assembly)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Type)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo)
+  - System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Type)
+  - System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Module)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Type)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo)
+  - System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Type)
+  - System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  - System.Attribute.GetHashCode
+  - System.Attribute.IsDefaultAttribute
+  - System.Attribute.IsDefined(System.Reflection.Assembly,System.Type)
+  - System.Attribute.IsDefined(System.Reflection.Assembly,System.Type,System.Boolean)
+  - System.Attribute.IsDefined(System.Reflection.MemberInfo,System.Type)
+  - System.Attribute.IsDefined(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  - System.Attribute.IsDefined(System.Reflection.Module,System.Type)
+  - System.Attribute.IsDefined(System.Reflection.Module,System.Type,System.Boolean)
+  - System.Attribute.IsDefined(System.Reflection.ParameterInfo,System.Type)
+  - System.Attribute.IsDefined(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  - System.Attribute.Match(System.Object)
+  - System.Attribute.System#Runtime#InteropServices#_Attribute#GetIDsOfNames(System.Guid@,System.IntPtr,System.UInt32,System.UInt32,System.IntPtr)
+  - System.Attribute.System#Runtime#InteropServices#_Attribute#GetTypeInfo(System.UInt32,System.UInt32,System.IntPtr)
+  - System.Attribute.System#Runtime#InteropServices#_Attribute#GetTypeInfoCount(System.UInt32@)
+  - System.Attribute.System#Runtime#InteropServices#_Attribute#Invoke(System.UInt32,System.Guid@,System.UInt32,System.Int16,System.IntPtr,System.IntPtr,System.IntPtr,System.IntPtr)
+  - System.Attribute.TypeId
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: System.AttributeUsageAttribute
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Versioning/ComponentGuaranteesAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Runtime.Versioning.ComponentGuaranteesAttribute.#ctor(System.Runtime.Versioning.ComponentGuaranteesOptions)
+  commentId: M:System.Runtime.Versioning.ComponentGuaranteesAttribute.#ctor(System.Runtime.Versioning.ComponentGuaranteesOptions)
+  id: '#ctor(System.Runtime.Versioning.ComponentGuaranteesOptions)'
+  parent: System.Runtime.Versioning.ComponentGuaranteesAttribute
+  langs:
+  - csharp
+  name: ComponentGuaranteesAttribute(ComponentGuaranteesOptions)
+  nameWithType: ComponentGuaranteesAttribute.ComponentGuaranteesAttribute(ComponentGuaranteesOptions)
+  fullName: ComponentGuaranteesAttribute.ComponentGuaranteesAttribute(ComponentGuaranteesOptions)
+  type: Constructor
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime.Extensions
+  namespace: System.Runtime.Versioning
+  summary: Initializes a new instance of the <xref href="System.Runtime.Versioning.ComponentGuaranteesAttribute"></xref> class with a value that indicates a library, type, or member's guaranteed level of compatibility across multiple versions.
+  remarks: When the <xref:System.Runtime.Versioning.ComponentGuaranteesAttribute> class is instantiated, the value of the `guarantees` parameter is assigned to the <xref:System.Runtime.Versioning.ComponentGuaranteesAttribute.Guarantees%2A> property.
+  syntax:
+    content: public ComponentGuaranteesAttribute (System.Runtime.Versioning.ComponentGuaranteesOptions guarantees);
+    parameters:
+    - id: guarantees
+      type: System.Runtime.Versioning.ComponentGuaranteesOptions
+      description: One of the enumeration values that specifies the level of compatibility that is guaranteed across multiple versions.
+  overload: System.Runtime.Versioning.ComponentGuaranteesAttribute.#ctor*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Versioning/ComponentGuaranteesAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Runtime.Versioning.ComponentGuaranteesAttribute.Guarantees
+  commentId: P:System.Runtime.Versioning.ComponentGuaranteesAttribute.Guarantees
+  id: Guarantees
+  parent: System.Runtime.Versioning.ComponentGuaranteesAttribute
+  langs:
+  - csharp
+  name: Guarantees
+  nameWithType: ComponentGuaranteesAttribute.Guarantees
+  fullName: ComponentGuaranteesAttribute.Guarantees
+  type: Property
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime.Extensions
+  namespace: System.Runtime.Versioning
+  summary: Gets a value that indicates the guaranteed level of compatibility of a library, type, or type member that spans multiple versions.
+  remarks: The value of the <xref:System.Runtime.Versioning.ComponentGuaranteesAttribute.Guarantees%2A> property corresponds to the `guarantees` parameter of the <xref:System.Runtime.Versioning.ComponentGuaranteesAttribute.%23ctor%2A> constructor.
+  syntax:
+    content: public System.Runtime.Versioning.ComponentGuaranteesOptions Guarantees { get; }
+    return:
+      type: System.Runtime.Versioning.ComponentGuaranteesOptions
+      description: One of the enumeration values that specifies the level of compatibility that is guaranteed across multiple versions.
+  overload: System.Runtime.Versioning.ComponentGuaranteesAttribute.Guarantees*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Versioning/ComponentGuaranteesAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+references:
+- uid: System.Attribute
+  parent: System
+  isExternal: false
+  name: Attribute
+  nameWithType: Attribute
+  fullName: System.Attribute
+- uid: System.Runtime.Versioning.ComponentGuaranteesAttribute.#ctor(System.Runtime.Versioning.ComponentGuaranteesOptions)
+  parent: System.Runtime.Versioning.ComponentGuaranteesAttribute
+  isExternal: false
+  name: ComponentGuaranteesAttribute(ComponentGuaranteesOptions)
+  nameWithType: ComponentGuaranteesAttribute.ComponentGuaranteesAttribute(ComponentGuaranteesOptions)
+  fullName: ComponentGuaranteesAttribute.ComponentGuaranteesAttribute(ComponentGuaranteesOptions)
+- uid: System.Runtime.Versioning.ComponentGuaranteesOptions
+  parent: System.Runtime.Versioning
+  isExternal: false
+  name: ComponentGuaranteesOptions
+  nameWithType: ComponentGuaranteesOptions
+  fullName: System.Runtime.Versioning.ComponentGuaranteesOptions
+- uid: System.Runtime.Versioning.ComponentGuaranteesAttribute.Guarantees
+  parent: System.Runtime.Versioning.ComponentGuaranteesAttribute
+  isExternal: false
+  name: Guarantees
+  nameWithType: ComponentGuaranteesAttribute.Guarantees
+  fullName: ComponentGuaranteesAttribute.Guarantees
+- uid: System.Runtime.Versioning.ComponentGuaranteesAttribute.#ctor*
+  parent: System.Runtime.Versioning.ComponentGuaranteesAttribute
+  isExternal: false
+  name: ComponentGuaranteesAttribute
+  nameWithType: ComponentGuaranteesAttribute.ComponentGuaranteesAttribute
+  fullName: ComponentGuaranteesAttribute.ComponentGuaranteesAttribute
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Versioning/ComponentGuaranteesAttribute.xml
+- uid: System.Runtime.Versioning.ComponentGuaranteesAttribute.Guarantees*
+  parent: System.Runtime.Versioning.ComponentGuaranteesAttribute
+  isExternal: false
+  name: Guarantees
+  nameWithType: ComponentGuaranteesAttribute.Guarantees
+  fullName: ComponentGuaranteesAttribute.Guarantees
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Versioning/ComponentGuaranteesAttribute.xml
+- uid: System.Attribute.Equals(System.Object)
+  parent: System.Attribute
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Attribute.Equals(Object)
+  fullName: Attribute.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Attribute.GetHashCode
+  parent: System.Attribute
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Attribute.GetHashCode()
+  fullName: Attribute.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(ParameterInfo, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttribute(ParameterInfo, Type, Boolean)
+  fullName: Attribute.GetCustomAttribute(ParameterInfo, Type, Boolean)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(MemberInfo, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttribute(MemberInfo, Type, Boolean)
+  fullName: Attribute.GetCustomAttribute(MemberInfo, Type, Boolean)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.Assembly,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(Assembly, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttribute(Assembly, Type, Boolean)
+  fullName: Attribute.GetCustomAttribute(Assembly, Type, Boolean)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.Module,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(Module, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttribute(Module, Type, Boolean)
+  fullName: Attribute.GetCustomAttribute(Module, Type, Boolean)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.Module,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(Module, Type)
+  nameWithType: Attribute.GetCustomAttribute(Module, Type)
+  fullName: Attribute.GetCustomAttribute(Module, Type)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.MemberInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(MemberInfo, Type)
+  nameWithType: Attribute.GetCustomAttribute(MemberInfo, Type)
+  fullName: Attribute.GetCustomAttribute(MemberInfo, Type)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.Assembly,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(Assembly, Type)
+  nameWithType: Attribute.GetCustomAttribute(Assembly, Type)
+  fullName: Attribute.GetCustomAttribute(Assembly, Type)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.ParameterInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(ParameterInfo, Type)
+  nameWithType: Attribute.GetCustomAttribute(ParameterInfo, Type)
+  fullName: Attribute.GetCustomAttribute(ParameterInfo, Type)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Module, Type)
+  nameWithType: Attribute.GetCustomAttributes(Module, Type)
+  fullName: Attribute.GetCustomAttributes(Module, Type)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(ParameterInfo, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(ParameterInfo, Type, Boolean)
+  fullName: Attribute.GetCustomAttributes(ParameterInfo, Type, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Module, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(Module, Type, Boolean)
+  fullName: Attribute.GetCustomAttributes(Module, Type, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(MemberInfo, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(MemberInfo, Type, Boolean)
+  fullName: Attribute.GetCustomAttributes(MemberInfo, Type, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Assembly, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(Assembly, Type, Boolean)
+  fullName: Attribute.GetCustomAttributes(Assembly, Type, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(ParameterInfo, Type)
+  nameWithType: Attribute.GetCustomAttributes(ParameterInfo, Type)
+  fullName: Attribute.GetCustomAttributes(ParameterInfo, Type)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Module, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(Module, Boolean)
+  fullName: Attribute.GetCustomAttributes(Module, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(ParameterInfo, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(ParameterInfo, Boolean)
+  fullName: Attribute.GetCustomAttributes(ParameterInfo, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(MemberInfo, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(MemberInfo, Boolean)
+  fullName: Attribute.GetCustomAttributes(MemberInfo, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Assembly, Type)
+  nameWithType: Attribute.GetCustomAttributes(Assembly, Type)
+  fullName: Attribute.GetCustomAttributes(Assembly, Type)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Assembly, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(Assembly, Boolean)
+  fullName: Attribute.GetCustomAttributes(Assembly, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(ParameterInfo)
+  nameWithType: Attribute.GetCustomAttributes(ParameterInfo)
+  fullName: Attribute.GetCustomAttributes(ParameterInfo)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Module)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Module)
+  nameWithType: Attribute.GetCustomAttributes(Module)
+  fullName: Attribute.GetCustomAttributes(Module)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(MemberInfo)
+  nameWithType: Attribute.GetCustomAttributes(MemberInfo)
+  fullName: Attribute.GetCustomAttributes(MemberInfo)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Assembly)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Assembly)
+  nameWithType: Attribute.GetCustomAttributes(Assembly)
+  fullName: Attribute.GetCustomAttributes(Assembly)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(MemberInfo, Type)
+  nameWithType: Attribute.GetCustomAttributes(MemberInfo, Type)
+  fullName: Attribute.GetCustomAttributes(MemberInfo, Type)
+- uid: System.Attribute.IsDefaultAttribute
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefaultAttribute()
+  nameWithType: Attribute.IsDefaultAttribute()
+  fullName: Attribute.IsDefaultAttribute()
+- uid: System.Attribute.IsDefined(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(ParameterInfo, Type, Boolean)
+  nameWithType: Attribute.IsDefined(ParameterInfo, Type, Boolean)
+  fullName: Attribute.IsDefined(ParameterInfo, Type, Boolean)
+- uid: System.Attribute.IsDefined(System.Reflection.Module,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(Module, Type, Boolean)
+  nameWithType: Attribute.IsDefined(Module, Type, Boolean)
+  fullName: Attribute.IsDefined(Module, Type, Boolean)
+- uid: System.Attribute.IsDefined(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(MemberInfo, Type, Boolean)
+  nameWithType: Attribute.IsDefined(MemberInfo, Type, Boolean)
+  fullName: Attribute.IsDefined(MemberInfo, Type, Boolean)
+- uid: System.Attribute.IsDefined(System.Reflection.Assembly,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(Assembly, Type, Boolean)
+  nameWithType: Attribute.IsDefined(Assembly, Type, Boolean)
+  fullName: Attribute.IsDefined(Assembly, Type, Boolean)
+- uid: System.Attribute.IsDefined(System.Reflection.MemberInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(MemberInfo, Type)
+  nameWithType: Attribute.IsDefined(MemberInfo, Type)
+  fullName: Attribute.IsDefined(MemberInfo, Type)
+- uid: System.Attribute.IsDefined(System.Reflection.Module,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(Module, Type)
+  nameWithType: Attribute.IsDefined(Module, Type)
+  fullName: Attribute.IsDefined(Module, Type)
+- uid: System.Attribute.IsDefined(System.Reflection.Assembly,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(Assembly, Type)
+  nameWithType: Attribute.IsDefined(Assembly, Type)
+  fullName: Attribute.IsDefined(Assembly, Type)
+- uid: System.Attribute.IsDefined(System.Reflection.ParameterInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(ParameterInfo, Type)
+  nameWithType: Attribute.IsDefined(ParameterInfo, Type)
+  fullName: Attribute.IsDefined(ParameterInfo, Type)
+- uid: System.Attribute.Match(System.Object)
+  parent: System.Attribute
+  isExternal: false
+  name: Match(Object)
+  nameWithType: Attribute.Match(Object)
+  fullName: Attribute.Match(Object)
+- uid: System.Attribute.TypeId
+  parent: System.Attribute
+  isExternal: false
+  name: TypeId
+  nameWithType: Attribute.TypeId
+  fullName: Attribute.TypeId
+- uid: System.Attribute.System#Runtime#InteropServices#_Attribute#GetIDsOfNames(System.Guid@,System.IntPtr,System.UInt32,System.UInt32,System.IntPtr)
+  parent: System.Attribute
+  isExternal: false
+  name: _Attribute.GetIDsOfNames(Guid, IntPtr, UInt32, UInt32, IntPtr)
+  nameWithType: Attribute._Attribute.GetIDsOfNames(Guid, IntPtr, UInt32, UInt32, IntPtr)
+  fullName: Attribute._Attribute.GetIDsOfNames(Guid, IntPtr, UInt32, UInt32, IntPtr)
+- uid: System.Attribute.System#Runtime#InteropServices#_Attribute#GetTypeInfo(System.UInt32,System.UInt32,System.IntPtr)
+  parent: System.Attribute
+  isExternal: false
+  name: _Attribute.GetTypeInfo(UInt32, UInt32, IntPtr)
+  nameWithType: Attribute._Attribute.GetTypeInfo(UInt32, UInt32, IntPtr)
+  fullName: Attribute._Attribute.GetTypeInfo(UInt32, UInt32, IntPtr)
+- uid: System.Attribute.System#Runtime#InteropServices#_Attribute#GetTypeInfoCount(System.UInt32@)
+  parent: System.Attribute
+  isExternal: false
+  name: _Attribute.GetTypeInfoCount(UInt32)
+  nameWithType: Attribute._Attribute.GetTypeInfoCount(UInt32)
+  fullName: Attribute._Attribute.GetTypeInfoCount(UInt32)
+- uid: System.Attribute.System#Runtime#InteropServices#_Attribute#Invoke(System.UInt32,System.Guid@,System.UInt32,System.Int16,System.IntPtr,System.IntPtr,System.IntPtr,System.IntPtr)
+  parent: System.Attribute
+  isExternal: false
+  name: _Attribute.Invoke(UInt32, Guid, UInt32, Int16, IntPtr, IntPtr, IntPtr, IntPtr)
+  nameWithType: Attribute._Attribute.Invoke(UInt32, Guid, UInt32, Int16, IntPtr, IntPtr, IntPtr, IntPtr)
+  fullName: Attribute._Attribute.Invoke(UInt32, Guid, UInt32, Int16, IntPtr, IntPtr, IntPtr, IntPtr)

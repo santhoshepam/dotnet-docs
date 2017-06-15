@@ -1,0 +1,2479 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Web.UI.WebControls.AdRotator
+  commentId: T:System.Web.UI.WebControls.AdRotator
+  id: AdRotator
+  children:
+  - System.Web.UI.WebControls.AdRotator.#ctor
+  - System.Web.UI.WebControls.AdRotator.AdCreated
+  - System.Web.UI.WebControls.AdRotator.AdvertisementFile
+  - System.Web.UI.WebControls.AdRotator.AlternateTextField
+  - System.Web.UI.WebControls.AdRotator.Font
+  - System.Web.UI.WebControls.AdRotator.ImageUrlField
+  - System.Web.UI.WebControls.AdRotator.KeywordFilter
+  - System.Web.UI.WebControls.AdRotator.NavigateUrlField
+  - System.Web.UI.WebControls.AdRotator.OnAdCreated(System.Web.UI.WebControls.AdCreatedEventArgs)
+  - System.Web.UI.WebControls.AdRotator.OnInit(System.EventArgs)
+  - System.Web.UI.WebControls.AdRotator.OnPreRender(System.EventArgs)
+  - System.Web.UI.WebControls.AdRotator.PerformDataBinding(System.Collections.IEnumerable)
+  - System.Web.UI.WebControls.AdRotator.PerformSelect
+  - System.Web.UI.WebControls.AdRotator.Render(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.WebControls.AdRotator.TagKey
+  - System.Web.UI.WebControls.AdRotator.Target
+  - System.Web.UI.WebControls.AdRotator.UniqueID
+  langs:
+  - csharp
+  name: AdRotator
+  nameWithType: AdRotator
+  fullName: System.Web.UI.WebControls.AdRotator
+  type: Class
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Displays an advertisement banner on a Web page.
+  remarks: "In this topic:  \n  \n-   [Introduction](#Introduction)  \n  \n-   [XML Advertisement File Format](#XMLAdvertisementFileFormat)  \n  \n-   [Declarative Syntax](#DeclarativeSyntax)  \n  \n<a name=\"Introduction\"></a>   \n## Introduction  \n Use the <xref:System.Web.UI.WebControls.AdRotator> control to display a randomly selected advertisement banner on the Web page. The displayed advertisement changes whenever the page refreshes.  \n  \n Advertisement information is stored in a separate XML file. The XML file allows you to maintain a list of advertisements and their associated attributes. Attributes include the path to an image to display, the URL to link to when the control is clicked, the alternate text to display when the image is not available, a keyword, and the frequency of the advertisement. Information in this file is not validated by the <xref:System.Web.UI.WebControls.AdRotator> control. To prevent ads from executing malicious scripts, you should always check the data before releasing it, or accept ad information only from trusted sources.  \n  \n To secure your advertisement file from unauthorized Internet access, do one or more of the following:  \n  \n-   Store it in the App_Data directory, which is configured to deny Internet access for files of any type.  \n  \n-   Rename the file with an extension that is not .xml, and map the extension to the `HttpForbiddenHandler` in Web.config. For more information, see the  section in your Machine.config file.  \n  \n As an alternative to an XML file as the source of data, it is possible to provide advertisement information through a callback event. This event can also be used in combination with the XML file to extend the behavior of the <xref:System.Web.UI.WebControls.AdRotator> control, such as redirecting to another page. See the <xref:System.Web.UI.WebControls.AdRotator.AdvertisementFile%2A> property for additional information on the file format.  \n  \n> [!NOTE]\n>  When page caching is enabled, an <xref:System.Web.UI.WebControls.AdRotator> control is not cached. A new advertisement is selected whenever the Web page refreshes. A new advertisement is not selected, however, if you provide an event handler for the <xref:System.Web.UI.WebControls.AdRotator.AdCreated> event.  \n  \n<a name=\"XMLAdvertisementFileFormat\"></a>   \n## XML Advertisement File Format  \n The <xref:System.Web.UI.WebControls.AdRotator> control uses a separate XML advertisement file to store the advertisement information, such as the location of the image to display and the URL of the page to link to. The <xref:System.Web.UI.WebControls.AdRotator.AdvertisementFile%2A> property of the <xref:System.Web.UI.WebControls.AdRotator> control specifies the path to this file.  \n  \n When creating the advertisement file, opening and closing `<Advertisements>` tags mark the beginning and the end of the file, respectively. Opening and closing `<Ad>` tags delimit each advertisement. All advertisements are nested between the opening and closing `<Advertisements>` tags. If the file contains multiple `<Advertisements>` tags, only the first set of `<Advertisements>` tags in the file will be parsed by the <xref:System.Web.UI.WebControls.AdRotator> control. All other `<Advertisements>` tags will be ignored.  \n  \n The data elements for each advertisement are nested between the opening and closing `<Ad>` tags. Although certain data elements are predefined (such as <xref:System.Web.UI.WebControls.AdCreatedEventArgs.ImageUrl%2A> and <xref:System.Web.UI.WebControls.AdCreatedEventArgs.NavigateUrl%2A>), you can place custom elements between the `<Ad>` tags. These elements will be read by the <xref:System.Web.UI.WebControls.AdRotator> control when it parses the file. The information is then passed to the <xref:System.Web.UI.WebControls.AdRotator.AdCreated> event in the <xref:System.Web.UI.WebControls.AdCreatedEventArgs.AdProperties%2A> dictionary property.  \n  \n The following table lists the data elements that are predefined for the XML advertisement file.  \n  \n|Element|Description|  \n|-------------|-----------------|  \n|`ImageUrl`|The absolute or relative URL to an image file (optional).|  \n|`NavigateUrl`|The URL of a page to link to if the user clicks the ad (optional). **Note:**  If this element is not set, the `HRef` property is not rendered on the anchor tag.|  \n|`Height`|The height of the image, in pixels (optional).|  \n|`Width`|The width of the image, in pixels (optional).|  \n|`AlternateText`|The text display in place of the image when the image specified by the <xref:System.Web.UI.WebControls.AdCreatedEventArgs.ImageUrl%2A> property is not available (optional).<br /><br /> In some browsers, this text also appears as a `ToolTip` for the advertisement.|  \n|`Keyword`|A category for the advertisement (for example, \"computers\") that you can filter by (optional).|  \n|`Impressions`|A number that indicates the importance of the ad in the schedule of rotation relative to the other ads in the file (optional).<br /><br /> The larger the number, the more often the ad is displayed. The total of all `<Impressions>` values in the XML file cannot exceed 2,047,999,999*.* If it does, the <xref:System.Web.UI.WebControls.AdRotator> control throws a run-time exception.|  \n  \n The following example shows the format for the XML advertisement file.  \n  \n```  \n<Advertisements>  \n  <Ad>  \n    <ImageUrl>  \n      URL of image to display for Advertisement #1  \n    </ImageUrl>  \n    <NavigateUrl>  \n      URL of page to link to for Advertisement #1  \n    </NavigateUrl>  \n    <AlternateText>  \n      Text to show as a ToolTip for Advertisement #1  \n    </AlternateText>  \n    <Keyword>  \n      Keyword used to filter for Advertisement #1  \n    </Keyword>  \n    <Impressions>  \n       Relative importance of Advertisement #1  \n    </Impressions>  \n    <CustomInformation>  \n      Custom Data about Advertisement #1  \n    </CustomInformation>  \n  </Ad>  \n</Advertisements>  \n```  \n  \n<a name=\"DeclarativeSyntax\"></a>   \n## Declarative Syntax  \n  \n```  \n<asp:AdRotator  \n    AccessKey=\"string\"  \n    AdvertisementFile=\"uri\"  \n    AlternateTextField=\"string\"  \n    BackColor=\"color name|#dddddd\"  \n    BorderColor=\"color name|#dddddd\"  \n    BorderStyle=\"NotSet|None|Dotted|Dashed|Solid|Double|Groove|Ridge|  \n        Inset|Outset\"  \n    BorderWidth=\"size\"  \n    CssClass=\"string\"  \n    DataMember=\"string\"  \n    DataSource=\"string\"  \n    DataSourceID=\"string\"  \n    Enabled=\"True|False\"  \n    EnableTheming=\"True|False\"  \n    EnableViewState=\"True|False\"  \n    ForeColor=\"color name|#dddddd\"  \n    Height=\"size\"  \n    ID=\"string\"  \n    ImageUrlField=\"string\"  \n    KeywordFilter=\"string\"  \n    NavigateUrlField=\"string\"  \n    OnAdCreated=\"AdCreated event handler\"  \n    OnDataBinding=\"DataBinding event handler\"  \n    OnDataBound=\"DataBound event handler\"  \n    OnDisposed=\"Disposed event handler\"  \n    OnInit=\"Init event handler\"  \n    OnLoad=\"Load event handler\"  \n    OnPreRender=\"PreRender event handler\"  \n    OnUnload=\"Unload event handler\"  \n    runat=\"server\"  \n    SkinID=\"string\"  \n    Style=\"string\"  \n    TabIndex=\"integer\"  \n    Target=\"string|_blank|_parent|_search|_self|_top\"  \n    ToolTip=\"string\"  \n    Visible=\"True|False\"  \n    Width=\"size\"  \n/>  \n```"
+  example:
+  - "The following code example demonstrates how to use the <xref:System.Web.UI.WebControls.AdRotator> control to display an advertisement banner on a Web page.  \n  \n <!-- TODO: review snippet reference [!code-csharp[classic adrotator.advertisementfile example#1](~/samples/snippets/csharp/VS_Snippets_WebNet/Classic AdRotator.AdvertisementFile Example/CS/sourcecs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[classic adrotator.advertisementfile example#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/Classic AdRotator.AdvertisementFile Example/VB/sourcevb.aspx#1)]  -->  \n  \n The following code example demonstrates the file format for an XML file that contains advertisement information for the previous example. For more information on the file format, see the <xref:System.Web.UI.WebControls.AdRotator.AdvertisementFile%2A> member.  \n  \n```  \n<Advertisements>  \n  <Ad>  \n    <ImageUrl>~/Images/image1.jpg</ImageUrl>  \n    <height>60</height>  \n    <width>190</width>  \n    <NavigateUrl>http://www.microsoft.com</NavigateUrl>  \n    <AlternateText>Microsoft Main Site</AlternateText>  \n    <Impressions>80</Impressions>  \n    <Keyword>Topic1</Keyword>  \n  </Ad>  \n  <Ad>  \n    <ImageUrl>~/Images/image2.jpg</ImageUrl>  \n    <height>90</height>  \n    <width>90</width>  \n    <NavigateUrl>http://www.wingtiptoys.com</NavigateUrl>  \n    <AlternateText>Wingtip Toys</AlternateText>  \n    <Impressions>80</Impressions>  \n    <Keyword>Topic2</Keyword>  \n  </Ad>  \n</Advertisements>  \n```"
+  syntax:
+    content: 'public class AdRotator : System.Web.UI.WebControls.DataBoundControl'
+  inheritance:
+  - System.Object
+  - System.Web.UI.Control
+  - System.Web.UI.WebControls.WebControl
+  - System.Web.UI.WebControls.BaseDataBoundControl
+  - System.Web.UI.WebControls.DataBoundControl
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  - System.Web.UI.Control.Adapter
+  - System.Web.UI.Control.AddedControl(System.Web.UI.Control,System.Int32)
+  - System.Web.UI.Control.AddParsedSubObject(System.Object)
+  - System.Web.UI.Control.ApplyStyleSheetSkin(System.Web.UI.Page)
+  - System.Web.UI.Control.AppRelativeTemplateSourceDirectory
+  - System.Web.UI.Control.BeginRenderTracing(System.IO.TextWriter,System.Object)
+  - System.Web.UI.Control.BindingContainer
+  - System.Web.UI.Control.BuildProfileTree(System.String,System.Boolean)
+  - System.Web.UI.Control.ChildControlsCreated
+  - System.Web.UI.Control.ClearCachedClientID
+  - System.Web.UI.Control.ClearChildControlState
+  - System.Web.UI.Control.ClearChildState
+  - System.Web.UI.Control.ClearChildViewState
+  - System.Web.UI.Control.ClearEffectiveClientIDMode
+  - System.Web.UI.Control.ClientID
+  - System.Web.UI.Control.ClientIDMode
+  - System.Web.UI.Control.ClientIDSeparator
+  - System.Web.UI.Control.Context
+  - System.Web.UI.Control.Controls
+  - System.Web.UI.Control.CreateChildControls
+  - System.Web.UI.Control.CreateControlCollection
+  - System.Web.UI.Control.DataBind(System.Boolean)
+  - System.Web.UI.Control.DataBindChildren
+  - System.Web.UI.Control.DataBinding
+  - System.Web.UI.Control.DataItemContainer
+  - System.Web.UI.Control.DataKeysContainer
+  - System.Web.UI.Control.DesignMode
+  - System.Web.UI.Control.Dispose
+  - System.Web.UI.Control.Disposed
+  - System.Web.UI.Control.EnableViewState
+  - System.Web.UI.Control.EndRenderTracing(System.IO.TextWriter,System.Object)
+  - System.Web.UI.Control.EnsureChildControls
+  - System.Web.UI.Control.EnsureID
+  - System.Web.UI.Control.Events
+  - System.Web.UI.Control.FindControl(System.String)
+  - System.Web.UI.Control.FindControl(System.String,System.Int32)
+  - System.Web.UI.Control.Focus
+  - System.Web.UI.Control.GetDesignModeState
+  - System.Web.UI.Control.GetRouteUrl(System.Object)
+  - System.Web.UI.Control.GetRouteUrl(System.String,System.Object)
+  - System.Web.UI.Control.GetRouteUrl(System.String,System.Web.Routing.RouteValueDictionary)
+  - System.Web.UI.Control.GetRouteUrl(System.Web.Routing.RouteValueDictionary)
+  - System.Web.UI.Control.GetUniqueIDRelativeTo(System.Web.UI.Control)
+  - System.Web.UI.Control.HasChildViewState
+  - System.Web.UI.Control.HasControls
+  - System.Web.UI.Control.HasEvents
+  - System.Web.UI.Control.ID
+  - System.Web.UI.Control.IdSeparator
+  - System.Web.UI.Control.Init
+  - System.Web.UI.Control.IsChildControlStateCleared
+  - System.Web.UI.Control.IsLiteralContent
+  - System.Web.UI.Control.IsTrackingViewState
+  - System.Web.UI.Control.IsViewStateEnabled
+  - System.Web.UI.Control.Load
+  - System.Web.UI.Control.LoadControlState(System.Object)
+  - System.Web.UI.Control.LoadViewStateByID
+  - System.Web.UI.Control.MapPathSecure(System.String)
+  - System.Web.UI.Control.NamingContainer
+  - System.Web.UI.Control.OnBubbleEvent(System.Object,System.EventArgs)
+  - System.Web.UI.Control.OnDataBinding(System.EventArgs)
+  - System.Web.UI.Control.OnUnload(System.EventArgs)
+  - System.Web.UI.Control.OpenFile(System.String)
+  - System.Web.UI.Control.Page
+  - System.Web.UI.Control.Parent
+  - System.Web.UI.Control.PreRender
+  - System.Web.UI.Control.RaiseBubbleEvent(System.Object,System.EventArgs)
+  - System.Web.UI.Control.RemovedControl(System.Web.UI.Control)
+  - System.Web.UI.Control.RenderChildren(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter,System.Web.UI.Adapters.ControlAdapter)
+  - System.Web.UI.Control.RenderingCompatibility
+  - System.Web.UI.Control.ResolveAdapter
+  - System.Web.UI.Control.ResolveClientUrl(System.String)
+  - System.Web.UI.Control.ResolveUrl(System.String)
+  - System.Web.UI.Control.SaveControlState
+  - System.Web.UI.Control.SetDesignModeState(System.Collections.IDictionary)
+  - System.Web.UI.Control.SetRenderMethodDelegate(System.Web.UI.RenderMethod)
+  - System.Web.UI.Control.SetTraceData(System.Object,System.Object)
+  - System.Web.UI.Control.SetTraceData(System.Object,System.Object,System.Object)
+  - System.Web.UI.Control.Site
+  - System.Web.UI.Control.System#Web#UI#IControlBuilderAccessor#ControlBuilder
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#GetDesignModeState
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetDesignModeState(System.Collections.IDictionary)
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetOwnerControl(System.Web.UI.Control)
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#UserData
+  - System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#DataBindings
+  - System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#HasDataBindings
+  - System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#Expressions
+  - System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#HasExpressions
+  - System.Web.UI.Control.System#Web#UI#IParserAccessor#AddParsedSubObject(System.Object)
+  - System.Web.UI.Control.TemplateControl
+  - System.Web.UI.Control.TemplateSourceDirectory
+  - System.Web.UI.Control.Unload
+  - System.Web.UI.Control.ValidateRequestMode
+  - System.Web.UI.Control.ViewState
+  - System.Web.UI.Control.ViewStateIgnoresCase
+  - System.Web.UI.Control.ViewStateMode
+  - System.Web.UI.Control.Visible
+  - System.Web.UI.WebControls.BaseDataBoundControl.ConfirmInitState
+  - System.Web.UI.WebControls.BaseDataBoundControl.DataBind
+  - System.Web.UI.WebControls.BaseDataBoundControl.DataBound
+  - System.Web.UI.WebControls.BaseDataBoundControl.DataSource
+  - System.Web.UI.WebControls.BaseDataBoundControl.EnsureDataBound
+  - System.Web.UI.WebControls.BaseDataBoundControl.Initialized
+  - System.Web.UI.WebControls.BaseDataBoundControl.IsBoundUsingDataSourceID
+  - System.Web.UI.WebControls.BaseDataBoundControl.IsDataBindingAutomatic
+  - System.Web.UI.WebControls.BaseDataBoundControl.OnDataBound(System.EventArgs)
+  - System.Web.UI.WebControls.BaseDataBoundControl.RequiresDataBinding
+  - System.Web.UI.WebControls.BaseDataBoundControl.SupportsDisabledAttribute
+  - System.Web.UI.WebControls.DataBoundControl.CallingDataMethods
+  - System.Web.UI.WebControls.DataBoundControl.CreateDataSourceSelectArguments
+  - System.Web.UI.WebControls.DataBoundControl.CreatingModelDataSource
+  - System.Web.UI.WebControls.DataBoundControl.DataMember
+  - System.Web.UI.WebControls.DataBoundControl.DataSourceID
+  - System.Web.UI.WebControls.DataBoundControl.DataSourceObject
+  - System.Web.UI.WebControls.DataBoundControl.GetData
+  - System.Web.UI.WebControls.DataBoundControl.GetDataSource
+  - System.Web.UI.WebControls.DataBoundControl.IsUsingModelBinders
+  - System.Web.UI.WebControls.DataBoundControl.ItemType
+  - System.Web.UI.WebControls.DataBoundControl.LoadViewState(System.Object)
+  - System.Web.UI.WebControls.DataBoundControl.MarkAsDataBound
+  - System.Web.UI.WebControls.DataBoundControl.OnCreatingModelDataSource(System.Web.UI.WebControls.CreatingModelDataSourceEventArgs)
+  - System.Web.UI.WebControls.DataBoundControl.OnDataPropertyChanged
+  - System.Web.UI.WebControls.DataBoundControl.OnDataSourceViewChanged(System.Object,System.EventArgs)
+  - System.Web.UI.WebControls.DataBoundControl.OnLoad(System.EventArgs)
+  - System.Web.UI.WebControls.DataBoundControl.OnPagePreLoad(System.Object,System.EventArgs)
+  - System.Web.UI.WebControls.DataBoundControl.SaveViewState
+  - System.Web.UI.WebControls.DataBoundControl.SelectArguments
+  - System.Web.UI.WebControls.DataBoundControl.SelectMethod
+  - System.Web.UI.WebControls.DataBoundControl.TrackViewState
+  - System.Web.UI.WebControls.DataBoundControl.ValidateDataSource(System.Object)
+  - System.Web.UI.WebControls.WebControl.AccessKey
+  - System.Web.UI.WebControls.WebControl.AddAttributesToRender(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.WebControls.WebControl.ApplyStyle(System.Web.UI.WebControls.Style)
+  - System.Web.UI.WebControls.WebControl.Attributes
+  - System.Web.UI.WebControls.WebControl.BackColor
+  - System.Web.UI.WebControls.WebControl.BorderColor
+  - System.Web.UI.WebControls.WebControl.BorderStyle
+  - System.Web.UI.WebControls.WebControl.BorderWidth
+  - System.Web.UI.WebControls.WebControl.ControlStyle
+  - System.Web.UI.WebControls.WebControl.ControlStyleCreated
+  - System.Web.UI.WebControls.WebControl.CopyBaseAttributes(System.Web.UI.WebControls.WebControl)
+  - System.Web.UI.WebControls.WebControl.CreateControlStyle
+  - System.Web.UI.WebControls.WebControl.CssClass
+  - System.Web.UI.WebControls.WebControl.DisabledCssClass
+  - System.Web.UI.WebControls.WebControl.Enabled
+  - System.Web.UI.WebControls.WebControl.EnableTheming
+  - System.Web.UI.WebControls.WebControl.ForeColor
+  - System.Web.UI.WebControls.WebControl.HasAttributes
+  - System.Web.UI.WebControls.WebControl.Height
+  - System.Web.UI.WebControls.WebControl.IsEnabled
+  - System.Web.UI.WebControls.WebControl.MergeStyle(System.Web.UI.WebControls.Style)
+  - System.Web.UI.WebControls.WebControl.RenderBeginTag(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.WebControls.WebControl.RenderContents(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.WebControls.WebControl.RenderEndTag(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.WebControls.WebControl.SkinID
+  - System.Web.UI.WebControls.WebControl.Style
+  - System.Web.UI.WebControls.WebControl.System#Web#UI#IAttributeAccessor#GetAttribute(System.String)
+  - System.Web.UI.WebControls.WebControl.System#Web#UI#IAttributeAccessor#SetAttribute(System.String,System.String)
+  - System.Web.UI.WebControls.WebControl.TabIndex
+  - System.Web.UI.WebControls.WebControl.TagName
+  - System.Web.UI.WebControls.WebControl.ToolTip
+  - System.Web.UI.WebControls.WebControl.Width
+  extensionMethods:
+  - System.Web.DynamicData.DynamicDataExtensions.EnablePersistedSelection(System.Web.UI.WebControls.BaseDataBoundControl)
+  - System.Web.DynamicData.DynamicDataExtensions.FindDataSourceControl(System.Web.UI.Control)
+  - System.Web.DynamicData.DynamicDataExtensions.FindFieldTemplate(System.Web.UI.Control,System.String)
+  - System.Web.DynamicData.DynamicDataExtensions.FindMetaTable(System.Web.UI.Control)
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AdRotator.#ctor
+  commentId: M:System.Web.UI.WebControls.AdRotator.#ctor
+  id: '#ctor'
+  parent: System.Web.UI.WebControls.AdRotator
+  langs:
+  - csharp
+  name: AdRotator()
+  nameWithType: AdRotator.AdRotator()
+  fullName: AdRotator.AdRotator()
+  type: Constructor
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Initializes a new instance of the <xref href="System.Web.UI.WebControls.AdRotator"></xref> class.
+  remarks: Use this constructor to create and initialize a new instance of the <xref:System.Web.UI.WebControls.AdRotator> class.
+  example:
+  - "The following code example demonstrates how to create and initialize a new instance of the <xref:System.Web.UI.WebControls.AdRotator> class. The new <xref:System.Web.UI.WebControls.AdRotator> control is then added to the <xref:System.Web.UI.Control.Controls%2A?displayProperty=fullName> collection of a <xref:System.Web.UI.WebControls.PlaceHolder> control and displayed on the Web Forms page.  \n  \n> [!NOTE]\n>  The following code sample uses the single-file code model and may not work correctly if copied directly into a code-behind file. This code sample must be copied into an empty text file that has an .aspx extension. For more information on the Web Forms code model, see [ASP.NET Web Forms Page Code Model](http://msdn.microsoft.com/library/81b13e7a-b95b-4285-906f-d2dd77411417).  \n  \n <!-- TODO: review snippet reference [!code-csharp[AdRotatorCtor#1](~/samples/snippets/csharp/VS_Snippets_WebNet/AdRotatorCtor/CS/adrotatorctorcs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[AdRotatorCtor#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/AdRotatorCtor/VB/adrotatorctorvb.aspx#1)]  -->"
+  syntax:
+    content: public AdRotator ();
+    parameters: []
+  overload: System.Web.UI.WebControls.AdRotator.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AdRotator.AdCreated
+  commentId: E:System.Web.UI.WebControls.AdRotator.AdCreated
+  id: AdCreated
+  parent: System.Web.UI.WebControls.AdRotator
+  langs:
+  - csharp
+  name: AdCreated
+  nameWithType: AdRotator.AdCreated
+  fullName: AdRotator.AdCreated
+  type: Event
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Occurs once per round trip to the server after the creation of the control, but before the page is rendered.
+  remarks: "This event is raised once per round trip to the server after the creation of the control, but before the page is rendered. When the <xref:System.Web.UI.WebControls.AdRotator.AdvertisementFile%2A> property is set, this event occurs after the advertisement has been selected from the file.  \n  \n You can control how the <xref:System.Web.UI.WebControls.AdRotator> control is displayed by modifying the arguments passed to the event handler of the <xref:System.Web.UI.WebControls.AdRotator.AdCreated> event. If the <xref:System.Web.UI.WebControls.AdRotator.AdvertisementFile%2A> property is not set, this allows you to specify the advertisement information directly, without using a separate advertisement file. If the <xref:System.Web.UI.WebControls.AdRotator.AdvertisementFile%2A> property is set, this allows you to extend the behavior of the <xref:System.Web.UI.WebControls.AdRotator> control, such as redirecting to another page.  \n  \n> [!NOTE]\n>  When page caching is enabled, an <xref:System.Web.UI.WebControls.AdRotator> control is not cached. A new advertisement is selected whenever the Web page refreshes. A new advertisement is not selected, however, if you provide an event handler for the <xref:System.Web.UI.WebControls.AdRotator.AdCreated> event.  \n  \n For more information about handling events, see [Handling and Raising Events](http://msdn.microsoft.com/library/b6f65241-e0ad-4590-a99f-200ce741bb1f)."
+  example:
+  - "The following code example demonstrates how to specify and code a handler for the <xref:System.Web.UI.WebControls.AdRotator.AdCreated> event. It gets the URL associated with the advertisement, when the <xref:System.Web.UI.WebControls.AdRotator> control is created, and displays it below the control.  \n  \n> [!NOTE]\n>  The following code sample uses the single-file code model and may not work correctly if copied directly into a code-behind file. This code sample must be copied into an empty text file that has an .aspx extension. For more information on the Web Forms code model, see [ASP.NET Web Forms Page Code Model](http://msdn.microsoft.com/library/81b13e7a-b95b-4285-906f-d2dd77411417).  \n  \n <!-- TODO: review snippet reference [!code-csharp[Classic AdCreatedEventArgs Example#1](~/samples/snippets/csharp/VS_Snippets_WebNet/Classic AdCreatedEventArgs Example/CS/sourcecs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[Classic AdCreatedEventArgs Example#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/Classic AdCreatedEventArgs Example/VB/sourcevb.aspx#1)]  -->  \n  \n The following code example demonstrates how to format the XML file that contains the advertisement information. For more information on the XML file, see the <xref:System.Web.UI.WebControls.AdRotator.AdvertisementFile%2A> property.  \n  \n```  \n<Advertisements>  \n  <Ad>  \n    <ImageUrl>~/Images/image1.jpg</ImageUrl>  \n    <Height>60</Height>  \n    <Width>190</Width>  \n    <NavigateUrl>http://www.microsoft.com</NavigateUrl>  \n    <AlternateText>Microsoft Main Site</AlternateText>  \n    <Impressions>80</Impressions>  \n    <Keyword>Topic1</Keyword>  \n    <Caption>This is the caption for Ad#1</Caption>   \n  </Ad>  \n  <Ad>  \n    <ImageUrl>~/Images/image2.jpg</ImageUrl>  \n    <Height>90</Height>  \n    <Width>90</Width>  \n    <NavigateUrl>http://www.wingtiptoys.com</NavigateUrl>  \n    <AlternateText>Wingtip Toys</AlternateText>  \n    <Impressions>80</Impressions>  \n    <Keyword>Topic2</Keyword>  \n    <Caption>This is the caption for Ad#2</Caption>   \n  </Ad>  \n</Advertisements>  \n```  \n  \n> [!NOTE]\n>  The following code sample uses the single-file code model and may not work correctly if copied directly into a code-behind file. This code sample must be copied into an empty text file that has an .aspx extension. For more information on the Web Forms code model, see [ASP.NET Web Forms Page Code Model](http://msdn.microsoft.com/library/81b13e7a-b95b-4285-906f-d2dd77411417).  \n  \n <!-- TODO: review snippet reference [!code-csharp[AdCreatedEventHandler#1](~/samples/snippets/csharp/VS_Snippets_WebNet/AdCreatedEventHandler/CS/adcreatedeventhandlercs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[AdCreatedEventHandler#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/AdCreatedEventHandler/VB/adcreatedeventhandlervb.aspx#1)]  -->"
+  syntax:
+    content: public event System.Web.UI.WebControls.AdCreatedEventHandler AdCreated;
+    return:
+      type: System.Web.UI.WebControls.AdCreatedEventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AdRotator.AdvertisementFile
+  commentId: P:System.Web.UI.WebControls.AdRotator.AdvertisementFile
+  id: AdvertisementFile
+  parent: System.Web.UI.WebControls.AdRotator
+  langs:
+  - csharp
+  name: AdvertisementFile
+  nameWithType: AdRotator.AdvertisementFile
+  fullName: AdRotator.AdvertisementFile
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets or sets the path to an XML file that contains advertisement information.
+  remarks: "Use the <xref:System.Web.UI.WebControls.AdRotator.AdvertisementFile%2A> property to specify the location of an XML file that contains advertisement information. The XML file must reside within the same Web site. For deployment and security purposes, it is strongly recommended that you place the file in the same Web application. It is only possible to access an XML file that is located in a different application on the same site if the application has sufficient trust.  \n  \n You can set this property to either an absolute path or a path relative to the XML file. Use a relative path to simplify deployment. If you use a relative path, that path is relative to the location of the page or user control that contains the <xref:System.Web.UI.WebControls.AdRotator> control.  \n  \n The <xref:System.Web.UI.WebControls.AdRotator.AdvertisementFile%2A> property is optional. An advertisement can also be programmatically set in the <xref:System.Web.UI.WebControls.AdRotator.AdCreated> event.  \n  \n The XML file contains the following predefined attributes. Only the `ImageUrl` attribute is required.  \n  \n|Attribute|Description|  \n|---------------|-----------------|  \n|`ImageUrl`|The URL of the image to display.|  \n|`Height`|The height of the image, in pixels (optional).|  \n|`Width`|The width of the image, in pixels (optional).|  \n|`NavigateUrl`|The URL of the page to navigate to when the <xref:System.Web.UI.WebControls.AdRotator> control is clicked.|  \n|`AlternateText`|The text to display if the image is unavailable. On some browsers, this text is displayed as a ToolTip.|  \n|`Keyword`|The category for the advertisement. This is used by the <xref:System.Web.UI.WebControls.AdRotator> control to filter the list of advertisements for a specific category.|  \n|`Impressions`|A value that indicates how often an advertisement is displayed in relation to other advertisements in the XML file.|  \n  \n> [!NOTE]\n>  The `ImageUrl` and `NavigateUrl` attributes can be a full URL, a root-relative path, or a relative path. If you use a root-relative path, the path is relative to the same Web site. If you use a relative path, the path is relative to the directory that contains the advertisement file.  \n  \n You can also include custom attributes by using custom tags in the XML file. All attribute tags are parsed from the advertisement file, and the values are placed in the <xref:System.Web.UI.WebControls.AdCreatedEventArgs.AdProperties%2A> dictionary. You can use the <xref:System.Web.UI.WebControls.AdCreatedEventArgs.AdProperties%2A> dictionary to programmatically access your custom attributes.  \n  \n Information in this file is not validated by the <xref:System.Web.UI.WebControls.AdRotator> control. To prevent ads from executing malicious scripts, you should always check the data before releasing it, or accept ad information only from trusted sources.  \n  \n To secure your advertisement file from unauthorized Internet access, do one or more of the following:  \n  \n-   Store it in the Data directory, which is configured in Machine.config to deny Internet access for files of any type.  \n  \n-   Rename the file with an extension that is not .xml, and map the extension to `HttpForbiddenHandler` in Web.config. For more information, see the  section in your Machine.config file."
+  example:
+  - "The following code example demonstrates how to use the <xref:System.Web.UI.WebControls.AdRotator.AdvertisementFile%2A> property to specify the location of the XML file that contains advertisement information.  \n  \n <!-- TODO: review snippet reference [!code-csharp[Classic AdRotator.AdvertisementFile Example#1](~/samples/snippets/csharp/VS_Snippets_WebNet/Classic AdRotator.AdvertisementFile Example/CS/sourcecs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[Classic AdRotator.AdvertisementFile Example#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/Classic AdRotator.AdvertisementFile Example/VB/sourcevb.aspx#1)]  -->  \n  \n The following code example shows the file format of the XML advertisement file.  \n  \n```  \n<Advertisements>  \n  <Ad>  \n    <ImageUrl>~/Images/image1.jpg</ImageUrl>  \n    <Height>60</Height>  \n    <Width>190</Width>  \n    <NavigateUrl>http://www.microsoft.com</NavigateUrl>  \n    <AlternateText>Microsoft Main Site</AlternateText>  \n    <Impressions>80</Impressions>  \n    <Keyword>Topic1</Keyword>  \n    <Caption>This is the caption for Ad#1</Caption>   \n  </Ad>  \n  <Ad>  \n    <ImageUrl>~/Images/image2.jpg</ImageUrl>  \n    <Height>90</Height>  \n    <Width>90</Width>  \n    <NavigateUrl>http://www.wingtiptoys.com</NavigateUrl>  \n    <AlternateText>Wingtip Toys</AlternateText>  \n    <Impressions>80</Impressions>  \n    <Keyword>Topic2</Keyword>  \n    <Caption>This is the caption for Ad#2</Caption>   \n  </Ad>  \n</Advertisements>  \n```"
+  syntax:
+    content: >-
+      [System.ComponentModel.Bindable(true)]
+
+      public string AdvertisementFile { get; set; }
+    return:
+      type: System.String
+      description: The location of an XML file containing advertisement information. The default value is an empty string ("").
+  overload: System.Web.UI.WebControls.AdRotator.AdvertisementFile*
+  exceptions: []
+  attributes:
+  - type: System.ComponentModel.BindableAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AdRotator.AlternateTextField
+  commentId: P:System.Web.UI.WebControls.AdRotator.AlternateTextField
+  id: AlternateTextField
+  parent: System.Web.UI.WebControls.AdRotator
+  langs:
+  - csharp
+  name: AlternateTextField
+  nameWithType: AdRotator.AlternateTextField
+  fullName: AdRotator.AlternateTextField
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets or sets a custom data field to use in place of the `AlternateText` attribute for an advertisement.
+  remarks: The <xref:System.Web.UI.WebControls.AdRotator.AlternateTextField%2A> property is used to select a custom data field to use in place of the `AlternateText` attribute for an advertisement. Like `AlternateText`, this custom field is defined in the XML file that contains advertisement information.
+  example:
+  - "The following code example demonstrates using the <xref:System.Web.UI.WebControls.AdRotator.AlternateTextField%2A> property to specify a custom data field. The <xref:System.Web.UI.WebControls.AdRotator.NavigateUrlField%2A>, <xref:System.Web.UI.WebControls.AdRotator.ImageUrlField%2A>, and <xref:System.Web.UI.WebControls.AdRotator.AlternateTextField%2A> properties are used to dynamically select a custom field to use in place of the `NavigateUrl`, `ImageUrl`, and `AlternateText` attributes. This example uses a device filter to indicate that custom fields should be used for Wireless Application Protocol (WAP)-enabled devices.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.WebControls.AdRotator.MobileExamples#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.UI.WebControls.AdRotator.MobileExamples/CS/defaultcs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.WebControls.AdRotator.MobileExamples#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.UI.WebControls.AdRotator.MobileExamples/VB/defaultvb.aspx#1)]  -->  \n  \n The following is the sample XML data for the previous example.  \n  \n```  \n<Advertisements>  \n  <Ad>  \n    <ImageUrl>~/Images/ad1.gif</ImageUrl>  \n    <NavigateUrl>http://msdn.microsoft.com/vbasic/</NavigateUrl>  \n    <AlternateText>Visual Basic Developer Site</AlternateText>  \n    <Width>140</Width>  \n    <Height>100</Height>  \n    <!-- The following custom elements will be used by WAP-enabled  \n      devices. -->  \n    <WmlImageUrl>~/Images/mobileAd1.jpg</WmlImageUrl>  \n    <WmlNavigateUrl>http://msdn.microsoft.com/mobile/</WmlNavigateUrl>  \n    <WmlAlternateText>Windows Mobile Developer Site</WmlAlternateText>  \n  </Ad>  \n  <Ad>  \n    <ImageUrl>~/Images/ad2.gif</ImageUrl>  \n    <NavigateUrl>http://msdn.microsoft.com</NavigateUrl>  \n    <AlternateText>MSDN</AlternateText>  \n    <Width>150</Width>  \n    <Height>150</Height>  \n    <!-- The following custom elements will be used by WAP-enabled  \n      devices. -->  \n    <WmlImageUrl>~/Images/mobileAd2.jpg</WmlImageUrl>  \n    <WmlNavigateUrl>http://msdn.microsoft.com/mobility/</WmlNavigateUrl>  \n    <WmlAlternateText>Windows Mobile Developer Site</WmlAlternateText>  \n  </Ad>  \n</Advertisements>  \n```"
+  syntax:
+    content: public string AlternateTextField { get; set; }
+    return:
+      type: System.String
+      description: The name that identifies the field where the alternate text for an advertisement is stored. The default value is "AlternateText."
+  overload: System.Web.UI.WebControls.AdRotator.AlternateTextField*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AdRotator.Font
+  commentId: P:System.Web.UI.WebControls.AdRotator.Font
+  id: Font
+  parent: System.Web.UI.WebControls.AdRotator
+  langs:
+  - csharp
+  name: Font
+  nameWithType: AdRotator.Font
+  fullName: AdRotator.Font
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets the font properties associated with the advertisement banner control.
+  syntax:
+    content: >-
+      [System.ComponentModel.Browsable(false)]
+
+      public override System.Web.UI.WebControls.FontInfo Font { get; }
+    return:
+      type: System.Web.UI.WebControls.FontInfo
+      description: A <xref href="System.Web.UI.WebControls.FontInfo"></xref> object that represents the font properties of the control.
+  overload: System.Web.UI.WebControls.AdRotator.Font*
+  exceptions: []
+  attributes:
+  - type: System.ComponentModel.BrowsableAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AdRotator.ImageUrlField
+  commentId: P:System.Web.UI.WebControls.AdRotator.ImageUrlField
+  id: ImageUrlField
+  parent: System.Web.UI.WebControls.AdRotator
+  langs:
+  - csharp
+  name: ImageUrlField
+  nameWithType: AdRotator.ImageUrlField
+  fullName: AdRotator.ImageUrlField
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets or sets a custom data field to use in place of the `ImageUrl` attribute for an advertisement.
+  remarks: The <xref:System.Web.UI.WebControls.AdRotator.ImageUrlField%2A> property is used for selecting a custom data field used in place of the `ImageUrl` attribute for an advertisement. Like `ImageUrl`, this custom field is defined in the XML file that contains advertisement information.
+  example:
+  - "The following code example demonstrates using the <xref:System.Web.UI.WebControls.AdRotator.ImageUrlField%2A> property to specify a custom data field. The <xref:System.Web.UI.WebControls.AdRotator.NavigateUrlField%2A>, <xref:System.Web.UI.WebControls.AdRotator.ImageUrlField%2A>, and <xref:System.Web.UI.WebControls.AdRotator.AlternateTextField%2A> properties are used to dynamically select a custom field to use in place of the `NavigateUrl`, `ImageUrl`, and `AlternateText` attributes. This example uses a device filter to indicate that custom fields should be used for Wireless Application Protocol (WAP)-enabled devices.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.WebControls.AdRotator.MobileExamples#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.UI.WebControls.AdRotator.MobileExamples/CS/defaultcs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.WebControls.AdRotator.MobileExamples#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.UI.WebControls.AdRotator.MobileExamples/VB/defaultvb.aspx#1)]  -->  \n  \n The following is the sample XML data for the previous example.  \n  \n```  \n<Advertisements>  \n  <Ad>  \n    <ImageUrl>~/Images/ad1.gif</ImageUrl>  \n    <NavigateUrl>http://msdn.microsoft.com/vbasic/</NavigateUrl>  \n    <AlternateText>Visual Basic Developer Site</AlternateText>  \n    <Width>140</Width>  \n    <Height>100</Height>  \n      <!-- The following custom elements will be used by WAP-enabled  \n        devices. -->  \n     <WmlImageUrl>~/Images/mobileAd1.jpg</WmlImageUrl>  \n    <WmlNavigateUrl>http://msdn.microsoft.com/mobile/</WmlNavigateUrl>  \n    <WmlAlternateText>Windows Mobile Developer Site</WmlAlternateText>  \n  \n  </Ad>  \n  <Ad>  \n    <ImageUrl>~/Images/ad2.gif</ImageUrl>  \n    <NavigateUrl>http://msdn.microsoft.com</NavigateUrl>  \n    <AlternateText>MSDN</AlternateText>  \n    <Width>150</Width>  \n    <Height>150</Height>  \n    <!-- The following custom elements will be used by WAP-enabled  \n      devices. -->  \n    <WmlImageUrl>~/Images/mobileAd2.jpg</WmlImageUrl>  \n    <WmlNavigateUrl>http://msdn.microsoft.com/mobility/</WmlNavigateUrl>  \n    <WmlAlternateText>Windows Mobile Developer Site</WmlAlternateText>  \n  </Ad>  \n</Advertisements>  \n```"
+  syntax:
+    content: public string ImageUrlField { get; set; }
+    return:
+      type: System.String
+      description: The name that identifies the field where the URL for the image displayed for an advertisement is stored. The default value is "ImageUrl."
+  overload: System.Web.UI.WebControls.AdRotator.ImageUrlField*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AdRotator.KeywordFilter
+  commentId: P:System.Web.UI.WebControls.AdRotator.KeywordFilter
+  id: KeywordFilter
+  parent: System.Web.UI.WebControls.AdRotator
+  langs:
+  - csharp
+  name: KeywordFilter
+  nameWithType: AdRotator.KeywordFilter
+  fullName: AdRotator.KeywordFilter
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets or sets a category keyword to filter for specific types of advertisements in the XML advertisement file.
+  remarks: "Each advertisement in the XML advertisement file can be assigned a category keyword. Use the <xref:System.Web.UI.WebControls.AdRotator.KeywordFilter%2A> property to filter the advertisements for the specified keyword. Only advertisements containing the keyword will be selected for the <xref:System.Web.UI.WebControls.AdRotator> control. The <xref:System.Web.UI.WebControls.AdRotator.KeywordFilter%2A> property can be programmatically set to match the profile of the user.  \n  \n The <xref:System.Web.UI.WebControls.AdRotator.KeywordFilter%2A> property is a very simple filter that searches for the specified keyword. It is not possible to specify more than one keyword in the <xref:System.Web.UI.WebControls.AdRotator.KeywordFilter%2A> property, nor is it possible to declare multiple keywords in the advertisement file.  \n  \n> [!NOTE]\n>  The <xref:System.Web.UI.WebControls.AdRotator.AdvertisementFile%2A> property needs to be set for this property to have any effect.  \n  \n> [!CAUTION]\n>  If the specified keyword is not found in the XML advertisement file, no advertisement is displayed in the <xref:System.Web.UI.WebControls.AdRotator> control. Be sure to specify a keyword for this property with at least one match in the advertisement file."
+  example:
+  - "The following code example demonstrates how to use the <xref:System.Web.UI.WebControls.AdRotator.KeywordFilter%2A> property to filter for game-related advertisements.  \n  \n <!-- TODO: review snippet reference [!code-csharp[Classic AdRotator.KeywordFilter Example#1](~/samples/snippets/csharp/VS_Snippets_WebNet/Classic AdRotator.KeywordFilter Example/CS/sourcecs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[Classic AdRotator.KeywordFilter Example#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/Classic AdRotator.KeywordFilter Example/VB/sourcevb.aspx#1)]  -->  \n  \n The following code example demonstrates how to specify a keyword for each advertisement in the XML advertisement file. For more information on the file format, see the <xref:System.Web.UI.WebControls.AdRotator.AdvertisementFile%2A> member.  \n  \n```  \n<Advertisements>  \n  <Ad>  \n    <ImageUrl>~/Images/image1.jpg</ImageUrl>  \n    <Height>60</Height>  \n    <Width>190</Width>  \n    <NavigateUrl>http://www.microsoft.com</NavigateUrl>  \n    <AlternateText>Microsoft Main Site</AlternateText>  \n    <Impressions>80</Impressions>  \n    <Keyword>Business</Keyword>  \n    <Caption>This is the caption for Ad#1</Caption>   \n  </Ad>  \n  <Ad>  \n    <ImageUrl>~/Images/image2.jpg</ImageUrl>  \n    <Height>90</Height>  \n    <Width>90</Width>  \n    <NavigateUrl>http://www.wingtiptoys.com</NavigateUrl>  \n    <AlternateText>Wingtip Toys</AlternateText>  \n    <Impressions>80</Impressions>  \n    <Keyword>Games</Keyword>  \n    <Caption>This is the caption for Ad#2</Caption>   \n  </Ad>  \n</Advertisements>  \n```"
+  syntax:
+    content: >-
+      [System.ComponentModel.Bindable(true)]
+
+      public string KeywordFilter { get; set; }
+    return:
+      type: System.String
+      description: The keyword to filter for specific types of advertisements in the XML advertisement file. The default value is an empty string ("").
+  overload: System.Web.UI.WebControls.AdRotator.KeywordFilter*
+  exceptions: []
+  attributes:
+  - type: System.ComponentModel.BindableAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AdRotator.NavigateUrlField
+  commentId: P:System.Web.UI.WebControls.AdRotator.NavigateUrlField
+  id: NavigateUrlField
+  parent: System.Web.UI.WebControls.AdRotator
+  langs:
+  - csharp
+  name: NavigateUrlField
+  nameWithType: AdRotator.NavigateUrlField
+  fullName: AdRotator.NavigateUrlField
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets or sets a custom data field to use in place of the `NavigateUrl` attribute for an advertisement.
+  remarks: The <xref:System.Web.UI.WebControls.AdRotator.NavigateUrlField%2A> property is used to select a custom data field used in place of the `NavigateUrl` attribute for an advertisement. Like `NavigateUrl`, this custom field is defined in the XML file that contains advertisement information.
+  example:
+  - "The following code example demonstrates using the <xref:System.Web.UI.WebControls.AdRotator.NavigateUrlField%2A> property to specify a custom data field. The <xref:System.Web.UI.WebControls.AdRotator.NavigateUrlField%2A>, <xref:System.Web.UI.WebControls.AdRotator.ImageUrlField%2A>, and <xref:System.Web.UI.WebControls.AdRotator.AlternateTextField%2A> properties are used to dynamically select a custom field to use in place of the `NavigateUrl`, `ImageUrl`, and `AlternateText` attributes. This example uses a device filter to indicate that custom fields should be used for Wireless Application Protocol (WAP)-enabled devices.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.WebControls.AdRotator.MobileExamples#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.UI.WebControls.AdRotator.MobileExamples/CS/defaultcs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.WebControls.AdRotator.MobileExamples#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.UI.WebControls.AdRotator.MobileExamples/VB/defaultvb.aspx#1)]  -->  \n  \n The following is the sample XML data for the previous example.  \n  \n```  \n<Advertisements>  \n  <Ad>  \n    <ImageUrl>~/Images/ad1.gif</ImageUrl>  \n    <NavigateUrl>http://msdn.microsoft.com/vbasic/</NavigateUrl>  \n    <AlternateText>Visual Basic Developer Site</AlternateText>  \n    <Width>140</Width>  \n    <Height>100</Height>  \n    <!-- The following custom elements will be used by WAP-enabled  \n      devices. -->  \n     <WmlImageUrl>~/Images/mobileAd1.jpg</WmlImageUrl>  \n    <WmlNavigateUrl>http://msdn.microsoft.com/mobile/</WmlNavigateUrl>  \n    <WmlAlternateText>Windows Mobile Developer Site</WmlAlternateText>  \n  </Ad>  \n  <Ad>  \n    <ImageUrl>~/Images/ad2.gif</ImageUrl>  \n    <NavigateUrl>http://msdn.microsoft.com</NavigateUrl>  \n    <AlternateText>MSDN</AlternateText>  \n    <Width>150</Width>  \n    <Height>150</Height>  \n    <!-- The following custom elements will be used by WAP-enabled  \n      devices. -->  \n    <WmlImageUrl>~/Images/mobileAd2.jpg</WmlImageUrl>  \n    <WmlNavigateUrl>http://msdn.microsoft.com/mobility/</WmlNavigateUrl>  \n    <WmlAlternateText>Windows Mobile Developer Site</WmlAlternateText>  \n  </Ad>  \n</Advertisements>  \n```"
+  syntax:
+    content: public string NavigateUrlField { get; set; }
+    return:
+      type: System.String
+      description: The name that identifies the field containing the URL for the page to navigate to when the <xref href="System.Web.UI.WebControls.AdRotator"></xref> control is clicked. The default value is "NavigateUrl."
+  overload: System.Web.UI.WebControls.AdRotator.NavigateUrlField*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AdRotator.OnAdCreated(System.Web.UI.WebControls.AdCreatedEventArgs)
+  commentId: M:System.Web.UI.WebControls.AdRotator.OnAdCreated(System.Web.UI.WebControls.AdCreatedEventArgs)
+  id: OnAdCreated(System.Web.UI.WebControls.AdCreatedEventArgs)
+  parent: System.Web.UI.WebControls.AdRotator
+  langs:
+  - csharp
+  name: OnAdCreated(AdCreatedEventArgs)
+  nameWithType: AdRotator.OnAdCreated(AdCreatedEventArgs)
+  fullName: AdRotator.OnAdCreated(AdCreatedEventArgs)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Raises the <xref href="System.Web.UI.WebControls.AdRotator.AdCreated"></xref> event for the <xref href="System.Web.UI.WebControls.AdRotator"></xref> control.
+  remarks: "The <xref:System.Web.UI.WebControls.AdRotator.AdCreated> event is raised on the server after the <xref:System.Web.UI.WebControls.AdRotator> control is created, but before the page is rendered. If the <xref:System.Web.UI.WebControls.AdRotator.AdvertisementFile%2A> property is set, the <xref:System.Web.UI.WebControls.AdRotator.AdCreated> event is raised after an advertisement has been selected by the <xref:System.Web.UI.WebControls.AdRotator> control.  \n  \n Raising an event invokes the event-handling method through a delegate. For more information, see [How to: Consume Events in a Web Forms Application](~/docs/standard/events/how-to-consume-events-in-a-web-forms-application.md)."
+  example:
+  - "The following code example demonstrates how to specify and code a handler for the <xref:System.Web.UI.WebControls.AdRotator.AdCreated> event. It gets the URL associated with the advertisement when the <xref:System.Web.UI.WebControls.AdRotator> control is created and displays it below the control.  \n  \n <!-- TODO: review snippet reference [!code-csharp[Classic AdCreatedEventArgs Example#1](~/samples/snippets/csharp/VS_Snippets_WebNet/Classic AdCreatedEventArgs Example/CS/sourcecs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[Classic AdCreatedEventArgs Example#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/Classic AdCreatedEventArgs Example/VB/sourcevb.aspx#1)]  -->  \n  \n The following code example demonstrates how to format the XML file that contains the advertisement information. For more information on the XML file, see the <xref:System.Web.UI.WebControls.AdRotator.AdvertisementFile%2A> property.  \n  \n```  \n<Advertisements>  \n  <Ad>  \n    <ImageUrl>~/Images/image1.jpg</ImageUrl>  \n    <Height>60</Height>  \n    <Width>190</Width>  \n    <NavigateUrl>http://www.microsoft.com</NavigateUrl>  \n    <AlternateText>Microsoft Main Site</AlternateText>  \n    <Impressions>80</Impressions>  \n    <Keyword>Topic1</Keyword>  \n    <Caption>This is the caption for Ad#1</Caption>   \n  </Ad>  \n  <Ad>  \n    <ImageUrl>~/Images/image2.jpg</ImageUrl>  \n    <Height>90</Height>  \n    <Width>90</Width>  \n    <NavigateUrl>http://www.wingtiptoys.com</NavigateUrl>  \n    <AlternateText>Wingtip Toys</AlternateText>  \n    <Impressions>80</Impressions>  \n    <Keyword>Topic2</Keyword>  \n    <Caption>This is the caption for Ad#2</Caption>   \n  </Ad>  \n</Advertisements>  \n```  \n  \n <!-- TODO: review snippet reference [!code-csharp[AdCreatedEventHandler#1](~/samples/snippets/csharp/VS_Snippets_WebNet/AdCreatedEventHandler/CS/adcreatedeventhandlercs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[AdCreatedEventHandler#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/AdCreatedEventHandler/VB/adcreatedeventhandlervb.aspx#1)]  -->"
+  syntax:
+    content: protected virtual void OnAdCreated (System.Web.UI.WebControls.AdCreatedEventArgs e);
+    parameters:
+    - id: e
+      type: System.Web.UI.WebControls.AdCreatedEventArgs
+      description: An <xref href="System.Web.UI.WebControls.AdCreatedEventArgs"></xref> that contains event data.
+  overload: System.Web.UI.WebControls.AdRotator.OnAdCreated*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AdRotator.OnInit(System.EventArgs)
+  commentId: M:System.Web.UI.WebControls.AdRotator.OnInit(System.EventArgs)
+  id: OnInit(System.EventArgs)
+  parent: System.Web.UI.WebControls.AdRotator
+  langs:
+  - csharp
+  name: OnInit(EventArgs)
+  nameWithType: AdRotator.OnInit(EventArgs)
+  fullName: AdRotator.OnInit(EventArgs)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Raises the <xref href="System.Web.UI.Control.Init"></xref> event.
+  syntax:
+    content: protected override void OnInit (EventArgs e);
+    parameters:
+    - id: e
+      type: System.EventArgs
+      description: The event arguments.
+  overload: System.Web.UI.WebControls.AdRotator.OnInit*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AdRotator.OnPreRender(System.EventArgs)
+  commentId: M:System.Web.UI.WebControls.AdRotator.OnPreRender(System.EventArgs)
+  id: OnPreRender(System.EventArgs)
+  parent: System.Web.UI.WebControls.AdRotator
+  langs:
+  - csharp
+  name: OnPreRender(EventArgs)
+  nameWithType: AdRotator.OnPreRender(EventArgs)
+  fullName: AdRotator.OnPreRender(EventArgs)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets the advertisement information for rendering by looking up the file data or calling the user event.
+  remarks: ''
+  example:
+  - "The following code example demonstrates how to override the <xref:System.Web.UI.WebControls.AdRotator.OnPreRender%2A> method so that it always displays a border in a custom <xref:System.Web.UI.WebControls.AdRotator> control.  \n  \n <!-- TODO: review snippet reference [!code-csharp[CustomADRotatorOnPreRender#1](~/samples/snippets/csharp/VS_Snippets_WebNet/CustomADRotatorOnPreRender/CS/customadrotatoronprerendercs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[CustomADRotatorOnPreRender#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/CustomADRotatorOnPreRender/VB/customadrotatoronprerendervb.aspx#1)]  -->  \n[!code-csharp[CustomADRotatorOnPreRender#2](~/samples/snippets/csharp/VS_Snippets_WebNet/CustomADRotatorOnPreRender/CS/customadrotatoronprerender.cs#2)]\n[!code-vb[CustomADRotatorOnPreRender#2](~/samples/snippets/visualbasic/VS_Snippets_WebNet/CustomADRotatorOnPreRender/VB/customadrotatoronprerender.vb#2)]"
+  syntax:
+    content: protected override void OnPreRender (EventArgs e);
+    parameters:
+    - id: e
+      type: System.EventArgs
+      description: An <xref href="System.EventArgs"></xref> object that contains event data.
+  overload: System.Web.UI.WebControls.AdRotator.OnPreRender*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AdRotator.PerformDataBinding(System.Collections.IEnumerable)
+  commentId: M:System.Web.UI.WebControls.AdRotator.PerformDataBinding(System.Collections.IEnumerable)
+  id: PerformDataBinding(System.Collections.IEnumerable)
+  parent: System.Web.UI.WebControls.AdRotator
+  langs:
+  - csharp
+  name: PerformDataBinding(IEnumerable)
+  nameWithType: AdRotator.PerformDataBinding(IEnumerable)
+  fullName: AdRotator.PerformDataBinding(IEnumerable)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Binds the specified data source to the <xref href="System.Web.UI.WebControls.AdRotator"></xref> control.
+  remarks: "This method is used primarily by control developers.  \n  \n The <xref:System.Web.UI.WebControls.AdRotator.PerformDataBinding%2A> method is called by the base <xref:System.Web.UI.WebControls.DataBoundControl> class methods to bind the advertisement data from a data source to the control."
+  syntax:
+    content: protected override void PerformDataBinding (System.Collections.IEnumerable data);
+    parameters:
+    - id: data
+      type: System.Collections.IEnumerable
+      description: An object that represents the data source; the object must implement the <xref href="System.Collections.IEnumerable"></xref> interface.
+  overload: System.Web.UI.WebControls.AdRotator.PerformDataBinding*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AdRotator.PerformSelect
+  commentId: M:System.Web.UI.WebControls.AdRotator.PerformSelect
+  id: PerformSelect
+  parent: System.Web.UI.WebControls.AdRotator
+  langs:
+  - csharp
+  name: PerformSelect()
+  nameWithType: AdRotator.PerformSelect()
+  fullName: AdRotator.PerformSelect()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Retrieves the advertisement data from the associated data source.
+  remarks: "This method is used primarily by control developers.  \n  \n The <xref:System.Web.UI.WebControls.AdRotator.PerformSelect%2A> method for an <xref:System.Web.UI.WebControls.AdRotator> object retrieves the advertisement data from the <xref:System.Web.UI.WebControls.AdRotator.AdvertisementFile%2A>, and then calls the <xref:System.Web.UI.Control.OnDataBinding%2A> and <xref:System.Web.UI.WebControls.BaseDataBoundControl.OnDataBound%2A> methods.  \n  \n If the <xref:System.Web.UI.WebControls.AdRotator.AdvertisementFile%2A> property is not set, then the method calls the <xref:System.Web.UI.WebControls.AdRotator.PerformSelect%2A> method of the base <xref:System.Web.UI.WebControls.DataBoundControl> class."
+  syntax:
+    content: protected override void PerformSelect ();
+    parameters: []
+  overload: System.Web.UI.WebControls.AdRotator.PerformSelect*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AdRotator.Render(System.Web.UI.HtmlTextWriter)
+  commentId: M:System.Web.UI.WebControls.AdRotator.Render(System.Web.UI.HtmlTextWriter)
+  id: Render(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.WebControls.AdRotator
+  langs:
+  - csharp
+  name: Render(HtmlTextWriter)
+  nameWithType: AdRotator.Render(HtmlTextWriter)
+  fullName: AdRotator.Render(HtmlTextWriter)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Displays the <xref href="System.Web.UI.WebControls.AdRotator"></xref> control on the client.
+  remarks: Displays an image obtained from the advertisement chosen in <xref:System.Web.UI.WebControls.AdRotator.OnPreRender%2A>.
+  example:
+  - "The following code example demonstrates how to override the <xref:System.Web.UI.WebControls.AdRotator.Render%2A> method in a custom server control so that the <xref:System.Web.UI.WebControls.AdRotator> displays a random advertisement, from an XML file, with a link and an image.  \n  \n <!-- TODO: review snippet reference [!code-csharp[CustomADRotatorRender0#1](~/samples/snippets/csharp/VS_Snippets_WebNet/CustomADRotatorRender0/CS/customadrotatorcs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[CustomADRotatorRender0#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/CustomADRotatorRender0/VB/customadrotatorvb.aspx#1)]  -->  \n[!code-csharp[CustomADRotatorRender0#2](~/samples/snippets/csharp/VS_Snippets_WebNet/CustomADRotatorRender0/CS/customadrotator.cs#2)]\n[!code-vb[CustomADRotatorRender0#2](~/samples/snippets/visualbasic/VS_Snippets_WebNet/CustomADRotatorRender0/VB/customadrotator.vb#2)]"
+  syntax:
+    content: protected override void Render (System.Web.UI.HtmlTextWriter writer);
+    parameters:
+    - id: writer
+      type: System.Web.UI.HtmlTextWriter
+      description: A <xref href="System.Web.UI.HtmlTextWriter"></xref> that contains the output stream to render on the client.
+  overload: System.Web.UI.WebControls.AdRotator.Render*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AdRotator.TagKey
+  commentId: P:System.Web.UI.WebControls.AdRotator.TagKey
+  id: TagKey
+  parent: System.Web.UI.WebControls.AdRotator
+  langs:
+  - csharp
+  name: TagKey
+  nameWithType: AdRotator.TagKey
+  fullName: AdRotator.TagKey
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets the HTML tag for the <xref href="System.Web.UI.WebControls.AdRotator"></xref> control.
+  remarks: "This property is used primarily by control developers.  \n  \n Use the <xref:System.Web.UI.WebControls.AdRotator.TagKey%2A> property to determine the <xref:System.Web.UI.HtmlTextWriterTag> value associated with an <xref:System.Web.UI.WebControls.AdRotator> control. This property overrides the base implementation to always return <xref:System.Web.UI.HtmlTextWriterTag?displayProperty=fullName>."
+  syntax:
+    content: protected override System.Web.UI.HtmlTextWriterTag TagKey { get; }
+    return:
+      type: System.Web.UI.HtmlTextWriterTag
+      description: An <xref href="System.Web.UI.HtmlTextWriterTag"></xref> enumeration value representing the HTML tag for an <xref href="System.Web.UI.WebControls.AdRotator"></xref> control.
+  overload: System.Web.UI.WebControls.AdRotator.TagKey*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AdRotator.Target
+  commentId: P:System.Web.UI.WebControls.AdRotator.Target
+  id: Target
+  parent: System.Web.UI.WebControls.AdRotator
+  langs:
+  - csharp
+  name: Target
+  nameWithType: AdRotator.Target
+  fullName: AdRotator.Target
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets or sets the name of the browser window or frame that displays the contents of the Web page linked to when the <xref href="System.Web.UI.WebControls.AdRotator"></xref> control is clicked.
+  remarks: "Use the <xref:System.Web.UI.WebControls.AdRotator.Target%2A> property to specify the target window or frame that displays the contents of the Web page linked to when the <xref:System.Web.UI.WebControls.AdRotator> control is clicked.  \n  \n> [!NOTE]\n>  The <xref:System.Web.UI.WebControls.AdRotator.Target%2A> property renders as a `target` attribute . The `target` attribute on anchor (`a`) elements is not allowed in XHTML 1.1. Therefore, if rendered markup must conform to XHTML standards or must conform to accessibility standards, do not set the <xref:System.Web.UI.WebControls.AdRotator.Target%2A> property. For more information, see [XHTML Standards in Visual Studio and ASP.NET](http://msdn.microsoft.com/library/1b78d416-66bb-43a5-ac77-c703aab55b97) and [Accessibility in Visual Studio and ASP.NET](http://msdn.microsoft.com/library/7e3ce9c4-6b7d-4fb1-94b5-72cf2a44fe13).  \n  \n The <xref:System.Web.UI.WebControls.AdRotator.Target%2A> value must begin with a letter in the range of A to Z (case-insensitive), except for the following special values, which begin with an underscore.  \n  \n|Target value|Description|  \n|------------------|-----------------|  \n|`_blank`|Renders the content in a new window without frames.|  \n|`_parent`|Renders the content in the immediate frameset parent.|  \n|`_search`|Renders the content in the search pane.|  \n|`_self`|Renders the content in the frame with focus.|  \n|`_top`|Renders the content in the full window without frames.|  \n  \n> [!NOTE]\n>  Check your browser documentation to determine whether the `_search` value is supported.  For example, Internet Explorer 5.0 or later supports the `_search` target value."
+  example:
+  - "The following code example demonstrates how to use the <xref:System.Web.UI.WebControls.AdRotator.Target%2A> property. It displays the contents of the Web page linked to when the <xref:System.Web.UI.WebControls.AdRotator> control is clicked in a new, unframed window.  \n  \n <!-- TODO: review snippet reference [!code-csharp[classic adrotator.advertisementfile example#1](~/samples/snippets/csharp/VS_Snippets_WebNet/Classic AdRotator.AdvertisementFile Example/CS/sourcecs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[classic adrotator.advertisementfile example#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/Classic AdRotator.AdvertisementFile Example/VB/sourcevb.aspx#1)]  -->  \n  \n The following code example demonstrates the file format for an XML file that contains advertisement information. For more information on the file format, see the <xref:System.Web.UI.WebControls.AdRotator.AdvertisementFile%2A> member.  \n  \n```  \n<Advertisements>  \n  <Ad>  \n    <ImageUrl>~/Images/image1.jpg</ImageUrl>  \n    <Height>60</Height>  \n    <Width>190</Width>  \n    <NavigateUrl>http://www.microsoft.com</NavigateUrl>  \n    <AlternateText>Microsoft Main Site</AlternateText>  \n    <Impressions>80</Impressions>  \n    <Keyword>Topic1</Keyword>  \n    <Caption>This is the caption for Ad#1</Caption>   \n  </Ad>  \n  <Ad>  \n    <ImageUrl>~/Images/image2.jpg</ImageUrl>  \n    <Height>90</Height>  \n    <Width>90</Width>  \n    <NavigateUrl>http://www.wingtiptoys.com</NavigateUrl>  \n    <AlternateText>Wingtip Toys</AlternateText>  \n    <Impressions>80</Impressions>  \n    <Keyword>Topic2</Keyword>  \n    <Caption>This is the caption for Ad#2</Caption>   \n  </Ad>  \n</Advertisements>  \n```"
+  syntax:
+    content: >-
+      [System.ComponentModel.Bindable(true)]
+
+      [System.ComponentModel.TypeConverter(typeof(System.Web.UI.WebControls.TargetConverter))]
+
+      public string Target { get; set; }
+    return:
+      type: System.String
+      description: The browser window or frame that displays the contents of the Web page linked to when the <xref href="System.Web.UI.WebControls.AdRotator"></xref> control is clicked. The default value is an empty string (""), which refreshes the window or frame with focus.
+  overload: System.Web.UI.WebControls.AdRotator.Target*
+  exceptions: []
+  attributes:
+  - type: System.ComponentModel.BindableAttribute
+  - type: System.ComponentModel.TypeConverterAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AdRotator.UniqueID
+  commentId: P:System.Web.UI.WebControls.AdRotator.UniqueID
+  id: UniqueID
+  parent: System.Web.UI.WebControls.AdRotator
+  langs:
+  - csharp
+  name: UniqueID
+  nameWithType: AdRotator.UniqueID
+  fullName: AdRotator.UniqueID
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets the unique, hierarchically qualified identifier for the <xref href="System.Web.UI.WebControls.AdRotator"></xref> control.
+  remarks: This property differs from the <xref:System.Web.UI.Control.ID%2A> property in that the <xref:System.Web.UI.WebControls.AdRotator.UniqueID%2A> property includes the identifier for the server control's naming container. This identifier is generated automatically when a page request is processed.
+  syntax:
+    content: public override string UniqueID { get; }
+    return:
+      type: System.String
+      description: The fully qualified identifier for the server control.
+  overload: System.Web.UI.WebControls.AdRotator.UniqueID*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+references:
+- uid: System.Web.UI.WebControls.DataBoundControl
+  parent: System.Web.UI.WebControls
+  isExternal: false
+  name: DataBoundControl
+  nameWithType: DataBoundControl
+  fullName: System.Web.UI.WebControls.DataBoundControl
+- uid: System.Web.UI.WebControls.AdRotator.#ctor
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: AdRotator()
+  nameWithType: AdRotator.AdRotator()
+  fullName: AdRotator.AdRotator()
+- uid: System.Web.UI.WebControls.AdRotator.AdCreated
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: AdCreated
+  nameWithType: AdRotator.AdCreated
+  fullName: AdRotator.AdCreated
+- uid: System.Web.UI.WebControls.AdCreatedEventHandler
+  parent: System.Web.UI.WebControls
+  isExternal: false
+  name: AdCreatedEventHandler
+  nameWithType: AdCreatedEventHandler
+  fullName: System.Web.UI.WebControls.AdCreatedEventHandler
+- uid: System.Web.UI.WebControls.AdRotator.AdvertisementFile
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: AdvertisementFile
+  nameWithType: AdRotator.AdvertisementFile
+  fullName: AdRotator.AdvertisementFile
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Web.UI.WebControls.AdRotator.AlternateTextField
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: AlternateTextField
+  nameWithType: AdRotator.AlternateTextField
+  fullName: AdRotator.AlternateTextField
+- uid: System.Web.UI.WebControls.AdRotator.Font
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: Font
+  nameWithType: AdRotator.Font
+  fullName: AdRotator.Font
+- uid: System.Web.UI.WebControls.FontInfo
+  parent: System.Web.UI.WebControls
+  isExternal: false
+  name: FontInfo
+  nameWithType: FontInfo
+  fullName: System.Web.UI.WebControls.FontInfo
+- uid: System.Web.UI.WebControls.AdRotator.ImageUrlField
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: ImageUrlField
+  nameWithType: AdRotator.ImageUrlField
+  fullName: AdRotator.ImageUrlField
+- uid: System.Web.UI.WebControls.AdRotator.KeywordFilter
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: KeywordFilter
+  nameWithType: AdRotator.KeywordFilter
+  fullName: AdRotator.KeywordFilter
+- uid: System.Web.UI.WebControls.AdRotator.NavigateUrlField
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: NavigateUrlField
+  nameWithType: AdRotator.NavigateUrlField
+  fullName: AdRotator.NavigateUrlField
+- uid: System.Web.UI.WebControls.AdRotator.OnAdCreated(System.Web.UI.WebControls.AdCreatedEventArgs)
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: OnAdCreated(AdCreatedEventArgs)
+  nameWithType: AdRotator.OnAdCreated(AdCreatedEventArgs)
+  fullName: AdRotator.OnAdCreated(AdCreatedEventArgs)
+- uid: System.Web.UI.WebControls.AdCreatedEventArgs
+  parent: System.Web.UI.WebControls
+  isExternal: false
+  name: AdCreatedEventArgs
+  nameWithType: AdCreatedEventArgs
+  fullName: System.Web.UI.WebControls.AdCreatedEventArgs
+- uid: System.Web.UI.WebControls.AdRotator.OnInit(System.EventArgs)
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: OnInit(EventArgs)
+  nameWithType: AdRotator.OnInit(EventArgs)
+  fullName: AdRotator.OnInit(EventArgs)
+- uid: System.EventArgs
+  parent: System
+  isExternal: false
+  name: EventArgs
+  nameWithType: EventArgs
+  fullName: System.EventArgs
+- uid: System.Web.UI.WebControls.AdRotator.OnPreRender(System.EventArgs)
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: OnPreRender(EventArgs)
+  nameWithType: AdRotator.OnPreRender(EventArgs)
+  fullName: AdRotator.OnPreRender(EventArgs)
+- uid: System.Web.UI.WebControls.AdRotator.PerformDataBinding(System.Collections.IEnumerable)
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: PerformDataBinding(IEnumerable)
+  nameWithType: AdRotator.PerformDataBinding(IEnumerable)
+  fullName: AdRotator.PerformDataBinding(IEnumerable)
+- uid: System.Collections.IEnumerable
+  parent: System.Collections
+  isExternal: false
+  name: IEnumerable
+  nameWithType: IEnumerable
+  fullName: System.Collections.IEnumerable
+- uid: System.Web.UI.WebControls.AdRotator.PerformSelect
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: PerformSelect()
+  nameWithType: AdRotator.PerformSelect()
+  fullName: AdRotator.PerformSelect()
+- uid: System.Web.UI.WebControls.AdRotator.Render(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: Render(HtmlTextWriter)
+  nameWithType: AdRotator.Render(HtmlTextWriter)
+  fullName: AdRotator.Render(HtmlTextWriter)
+- uid: System.Web.UI.HtmlTextWriter
+  parent: System.Web.UI
+  isExternal: false
+  name: HtmlTextWriter
+  nameWithType: HtmlTextWriter
+  fullName: System.Web.UI.HtmlTextWriter
+- uid: System.Web.UI.WebControls.AdRotator.TagKey
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: TagKey
+  nameWithType: AdRotator.TagKey
+  fullName: AdRotator.TagKey
+- uid: System.Web.UI.HtmlTextWriterTag
+  parent: System.Web.UI
+  isExternal: false
+  name: HtmlTextWriterTag
+  nameWithType: HtmlTextWriterTag
+  fullName: System.Web.UI.HtmlTextWriterTag
+- uid: System.Web.UI.WebControls.AdRotator.Target
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: Target
+  nameWithType: AdRotator.Target
+  fullName: AdRotator.Target
+- uid: System.Web.UI.WebControls.AdRotator.UniqueID
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: UniqueID
+  nameWithType: AdRotator.UniqueID
+  fullName: AdRotator.UniqueID
+- uid: System.Web.UI.WebControls.AdRotator.#ctor*
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: AdRotator
+  nameWithType: AdRotator.AdRotator
+  fullName: AdRotator.AdRotator
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+- uid: System.Web.UI.WebControls.AdRotator.AdvertisementFile*
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: AdvertisementFile
+  nameWithType: AdRotator.AdvertisementFile
+  fullName: AdRotator.AdvertisementFile
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+- uid: System.Web.UI.WebControls.AdRotator.AlternateTextField*
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: AlternateTextField
+  nameWithType: AdRotator.AlternateTextField
+  fullName: AdRotator.AlternateTextField
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+- uid: System.Web.UI.WebControls.AdRotator.Font*
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: Font
+  nameWithType: AdRotator.Font
+  fullName: AdRotator.Font
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+- uid: System.Web.UI.WebControls.AdRotator.ImageUrlField*
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: ImageUrlField
+  nameWithType: AdRotator.ImageUrlField
+  fullName: AdRotator.ImageUrlField
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+- uid: System.Web.UI.WebControls.AdRotator.KeywordFilter*
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: KeywordFilter
+  nameWithType: AdRotator.KeywordFilter
+  fullName: AdRotator.KeywordFilter
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+- uid: System.Web.UI.WebControls.AdRotator.NavigateUrlField*
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: NavigateUrlField
+  nameWithType: AdRotator.NavigateUrlField
+  fullName: AdRotator.NavigateUrlField
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+- uid: System.Web.UI.WebControls.AdRotator.OnAdCreated*
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: OnAdCreated
+  nameWithType: AdRotator.OnAdCreated
+  fullName: AdRotator.OnAdCreated
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+- uid: System.Web.UI.WebControls.AdRotator.OnInit*
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: OnInit
+  nameWithType: AdRotator.OnInit
+  fullName: AdRotator.OnInit
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+- uid: System.Web.UI.WebControls.AdRotator.OnPreRender*
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: OnPreRender
+  nameWithType: AdRotator.OnPreRender
+  fullName: AdRotator.OnPreRender
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+- uid: System.Web.UI.WebControls.AdRotator.PerformDataBinding*
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: PerformDataBinding
+  nameWithType: AdRotator.PerformDataBinding
+  fullName: AdRotator.PerformDataBinding
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+- uid: System.Web.UI.WebControls.AdRotator.PerformSelect*
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: PerformSelect
+  nameWithType: AdRotator.PerformSelect
+  fullName: AdRotator.PerformSelect
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+- uid: System.Web.UI.WebControls.AdRotator.Render*
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: Render
+  nameWithType: AdRotator.Render
+  fullName: AdRotator.Render
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+- uid: System.Web.UI.WebControls.AdRotator.TagKey*
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: TagKey
+  nameWithType: AdRotator.TagKey
+  fullName: AdRotator.TagKey
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+- uid: System.Web.UI.WebControls.AdRotator.Target*
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: Target
+  nameWithType: AdRotator.Target
+  fullName: AdRotator.Target
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+- uid: System.Web.UI.WebControls.AdRotator.UniqueID*
+  parent: System.Web.UI.WebControls.AdRotator
+  isExternal: false
+  name: UniqueID
+  nameWithType: AdRotator.UniqueID
+  fullName: AdRotator.UniqueID
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AdRotator.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Web.UI.Control.Adapter
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Adapter
+  nameWithType: Control.Adapter
+  fullName: Control.Adapter
+- uid: System.Web.UI.Control.AddedControl(System.Web.UI.Control,System.Int32)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AddedControl(Control, Int32)
+  nameWithType: Control.AddedControl(Control, Int32)
+  fullName: Control.AddedControl(Control, Int32)
+- uid: System.Web.UI.Control.AddParsedSubObject(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AddParsedSubObject(Object)
+  nameWithType: Control.AddParsedSubObject(Object)
+  fullName: Control.AddParsedSubObject(Object)
+- uid: System.Web.UI.Control.ApplyStyleSheetSkin(System.Web.UI.Page)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ApplyStyleSheetSkin(Page)
+  nameWithType: Control.ApplyStyleSheetSkin(Page)
+  fullName: Control.ApplyStyleSheetSkin(Page)
+- uid: System.Web.UI.Control.AppRelativeTemplateSourceDirectory
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AppRelativeTemplateSourceDirectory
+  nameWithType: Control.AppRelativeTemplateSourceDirectory
+  fullName: Control.AppRelativeTemplateSourceDirectory
+- uid: System.Web.UI.Control.BeginRenderTracing(System.IO.TextWriter,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BeginRenderTracing(TextWriter, Object)
+  nameWithType: Control.BeginRenderTracing(TextWriter, Object)
+  fullName: Control.BeginRenderTracing(TextWriter, Object)
+- uid: System.Web.UI.Control.BindingContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BindingContainer
+  nameWithType: Control.BindingContainer
+  fullName: Control.BindingContainer
+- uid: System.Web.UI.Control.BuildProfileTree(System.String,System.Boolean)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BuildProfileTree(String, Boolean)
+  nameWithType: Control.BuildProfileTree(String, Boolean)
+  fullName: Control.BuildProfileTree(String, Boolean)
+- uid: System.Web.UI.Control.ChildControlsCreated
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ChildControlsCreated
+  nameWithType: Control.ChildControlsCreated
+  fullName: Control.ChildControlsCreated
+- uid: System.Web.UI.Control.ClearCachedClientID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearCachedClientID()
+  nameWithType: Control.ClearCachedClientID()
+  fullName: Control.ClearCachedClientID()
+- uid: System.Web.UI.Control.ClearChildControlState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildControlState()
+  nameWithType: Control.ClearChildControlState()
+  fullName: Control.ClearChildControlState()
+- uid: System.Web.UI.Control.ClearChildState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildState()
+  nameWithType: Control.ClearChildState()
+  fullName: Control.ClearChildState()
+- uid: System.Web.UI.Control.ClearChildViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildViewState()
+  nameWithType: Control.ClearChildViewState()
+  fullName: Control.ClearChildViewState()
+- uid: System.Web.UI.Control.ClearEffectiveClientIDMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearEffectiveClientIDMode()
+  nameWithType: Control.ClearEffectiveClientIDMode()
+  fullName: Control.ClearEffectiveClientIDMode()
+- uid: System.Web.UI.Control.ClientID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClientID
+  nameWithType: Control.ClientID
+  fullName: Control.ClientID
+- uid: System.Web.UI.Control.ClientIDMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClientIDMode
+  nameWithType: Control.ClientIDMode
+  fullName: Control.ClientIDMode
+- uid: System.Web.UI.Control.ClientIDSeparator
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClientIDSeparator
+  nameWithType: Control.ClientIDSeparator
+  fullName: Control.ClientIDSeparator
+- uid: System.Web.UI.Control.Context
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Context
+  nameWithType: Control.Context
+  fullName: Control.Context
+- uid: System.Web.UI.Control.Controls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Controls
+  nameWithType: Control.Controls
+  fullName: Control.Controls
+- uid: System.Web.UI.Control.CreateChildControls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: CreateChildControls()
+  nameWithType: Control.CreateChildControls()
+  fullName: Control.CreateChildControls()
+- uid: System.Web.UI.Control.CreateControlCollection
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: CreateControlCollection()
+  nameWithType: Control.CreateControlCollection()
+  fullName: Control.CreateControlCollection()
+- uid: System.Web.UI.WebControls.BaseDataBoundControl.DataBind
+  parent: System.Web.UI.WebControls.BaseDataBoundControl
+  isExternal: false
+  name: DataBind()
+  nameWithType: BaseDataBoundControl.DataBind()
+  fullName: BaseDataBoundControl.DataBind()
+- uid: System.Web.UI.Control.DataBind(System.Boolean)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBind(Boolean)
+  nameWithType: Control.DataBind(Boolean)
+  fullName: Control.DataBind(Boolean)
+- uid: System.Web.UI.Control.DataBindChildren
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBindChildren()
+  nameWithType: Control.DataBindChildren()
+  fullName: Control.DataBindChildren()
+- uid: System.Web.UI.Control.DataBinding
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBinding
+  nameWithType: Control.DataBinding
+  fullName: Control.DataBinding
+- uid: System.Web.UI.Control.DataItemContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataItemContainer
+  nameWithType: Control.DataItemContainer
+  fullName: Control.DataItemContainer
+- uid: System.Web.UI.Control.DataKeysContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataKeysContainer
+  nameWithType: Control.DataKeysContainer
+  fullName: Control.DataKeysContainer
+- uid: System.Web.UI.Control.DesignMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DesignMode
+  nameWithType: Control.DesignMode
+  fullName: Control.DesignMode
+- uid: System.Web.UI.Control.Dispose
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Dispose()
+  nameWithType: Control.Dispose()
+  fullName: Control.Dispose()
+- uid: System.Web.UI.Control.Disposed
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Disposed
+  nameWithType: Control.Disposed
+  fullName: Control.Disposed
+- uid: System.Web.UI.WebControls.WebControl.EnableTheming
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: EnableTheming
+  nameWithType: WebControl.EnableTheming
+  fullName: WebControl.EnableTheming
+- uid: System.Web.UI.Control.EnableViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnableViewState
+  nameWithType: Control.EnableViewState
+  fullName: Control.EnableViewState
+- uid: System.Web.UI.Control.EndRenderTracing(System.IO.TextWriter,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EndRenderTracing(TextWriter, Object)
+  nameWithType: Control.EndRenderTracing(TextWriter, Object)
+  fullName: Control.EndRenderTracing(TextWriter, Object)
+- uid: System.Web.UI.Control.EnsureChildControls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnsureChildControls()
+  nameWithType: Control.EnsureChildControls()
+  fullName: Control.EnsureChildControls()
+- uid: System.Web.UI.Control.EnsureID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnsureID()
+  nameWithType: Control.EnsureID()
+  fullName: Control.EnsureID()
+- uid: System.Web.UI.Control.Events
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Events
+  nameWithType: Control.Events
+  fullName: Control.Events
+- uid: System.Web.UI.Control.FindControl(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: FindControl(String)
+  nameWithType: Control.FindControl(String)
+  fullName: Control.FindControl(String)
+- uid: System.Web.UI.Control.FindControl(System.String,System.Int32)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: FindControl(String, Int32)
+  nameWithType: Control.FindControl(String, Int32)
+  fullName: Control.FindControl(String, Int32)
+- uid: System.Web.UI.Control.Focus
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Focus()
+  nameWithType: Control.Focus()
+  fullName: Control.Focus()
+- uid: System.Web.UI.Control.GetDesignModeState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetDesignModeState()
+  nameWithType: Control.GetDesignModeState()
+  fullName: Control.GetDesignModeState()
+- uid: System.Web.UI.Control.GetRouteUrl(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(Object)
+  nameWithType: Control.GetRouteUrl(Object)
+  fullName: Control.GetRouteUrl(Object)
+- uid: System.Web.UI.Control.GetRouteUrl(System.Web.Routing.RouteValueDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(RouteValueDictionary)
+  nameWithType: Control.GetRouteUrl(RouteValueDictionary)
+  fullName: Control.GetRouteUrl(RouteValueDictionary)
+- uid: System.Web.UI.Control.GetRouteUrl(System.String,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(String, Object)
+  nameWithType: Control.GetRouteUrl(String, Object)
+  fullName: Control.GetRouteUrl(String, Object)
+- uid: System.Web.UI.Control.GetRouteUrl(System.String,System.Web.Routing.RouteValueDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(String, RouteValueDictionary)
+  nameWithType: Control.GetRouteUrl(String, RouteValueDictionary)
+  fullName: Control.GetRouteUrl(String, RouteValueDictionary)
+- uid: System.Web.UI.Control.GetUniqueIDRelativeTo(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetUniqueIDRelativeTo(Control)
+  nameWithType: Control.GetUniqueIDRelativeTo(Control)
+  fullName: Control.GetUniqueIDRelativeTo(Control)
+- uid: System.Web.UI.Control.HasChildViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: HasChildViewState
+  nameWithType: Control.HasChildViewState
+  fullName: Control.HasChildViewState
+- uid: System.Web.UI.Control.HasControls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: HasControls()
+  nameWithType: Control.HasControls()
+  fullName: Control.HasControls()
+- uid: System.Web.UI.Control.HasEvents
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: HasEvents()
+  nameWithType: Control.HasEvents()
+  fullName: Control.HasEvents()
+- uid: System.Web.UI.Control.ID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ID
+  nameWithType: Control.ID
+  fullName: Control.ID
+- uid: System.Web.UI.Control.IdSeparator
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IdSeparator
+  nameWithType: Control.IdSeparator
+  fullName: Control.IdSeparator
+- uid: System.Web.UI.Control.Init
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Init
+  nameWithType: Control.Init
+  fullName: Control.Init
+- uid: System.Web.UI.Control.IsChildControlStateCleared
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsChildControlStateCleared
+  nameWithType: Control.IsChildControlStateCleared
+  fullName: Control.IsChildControlStateCleared
+- uid: System.Web.UI.Control.IsLiteralContent
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsLiteralContent()
+  nameWithType: Control.IsLiteralContent()
+  fullName: Control.IsLiteralContent()
+- uid: System.Web.UI.Control.IsTrackingViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsTrackingViewState
+  nameWithType: Control.IsTrackingViewState
+  fullName: Control.IsTrackingViewState
+- uid: System.Web.UI.Control.IsViewStateEnabled
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsViewStateEnabled
+  nameWithType: Control.IsViewStateEnabled
+  fullName: Control.IsViewStateEnabled
+- uid: System.Web.UI.Control.Load
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Load
+  nameWithType: Control.Load
+  fullName: Control.Load
+- uid: System.Web.UI.Control.LoadControlState(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: LoadControlState(Object)
+  nameWithType: Control.LoadControlState(Object)
+  fullName: Control.LoadControlState(Object)
+- uid: System.Web.UI.WebControls.DataBoundControl.LoadViewState(System.Object)
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: LoadViewState(Object)
+  nameWithType: DataBoundControl.LoadViewState(Object)
+  fullName: DataBoundControl.LoadViewState(Object)
+- uid: System.Web.UI.Control.LoadViewStateByID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: LoadViewStateByID
+  nameWithType: Control.LoadViewStateByID
+  fullName: Control.LoadViewStateByID
+- uid: System.Web.UI.Control.MapPathSecure(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: MapPathSecure(String)
+  nameWithType: Control.MapPathSecure(String)
+  fullName: Control.MapPathSecure(String)
+- uid: System.Web.UI.Control.NamingContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: NamingContainer
+  nameWithType: Control.NamingContainer
+  fullName: Control.NamingContainer
+- uid: System.Web.UI.Control.OnBubbleEvent(System.Object,System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnBubbleEvent(Object, EventArgs)
+  nameWithType: Control.OnBubbleEvent(Object, EventArgs)
+  fullName: Control.OnBubbleEvent(Object, EventArgs)
+- uid: System.Web.UI.Control.OnDataBinding(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnDataBinding(EventArgs)
+  nameWithType: Control.OnDataBinding(EventArgs)
+  fullName: Control.OnDataBinding(EventArgs)
+- uid: System.Web.UI.WebControls.DataBoundControl.OnLoad(System.EventArgs)
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: OnLoad(EventArgs)
+  nameWithType: DataBoundControl.OnLoad(EventArgs)
+  fullName: DataBoundControl.OnLoad(EventArgs)
+- uid: System.Web.UI.Control.OnUnload(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnUnload(EventArgs)
+  nameWithType: Control.OnUnload(EventArgs)
+  fullName: Control.OnUnload(EventArgs)
+- uid: System.Web.UI.Control.OpenFile(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OpenFile(String)
+  nameWithType: Control.OpenFile(String)
+  fullName: Control.OpenFile(String)
+- uid: System.Web.UI.Control.Page
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Page
+  nameWithType: Control.Page
+  fullName: Control.Page
+- uid: System.Web.UI.Control.Parent
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Parent
+  nameWithType: Control.Parent
+  fullName: Control.Parent
+- uid: System.Web.UI.Control.PreRender
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: PreRender
+  nameWithType: Control.PreRender
+  fullName: Control.PreRender
+- uid: System.Web.UI.Control.RaiseBubbleEvent(System.Object,System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RaiseBubbleEvent(Object, EventArgs)
+  nameWithType: Control.RaiseBubbleEvent(Object, EventArgs)
+  fullName: Control.RaiseBubbleEvent(Object, EventArgs)
+- uid: System.Web.UI.Control.RemovedControl(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RemovedControl(Control)
+  nameWithType: Control.RemovedControl(Control)
+  fullName: Control.RemovedControl(Control)
+- uid: System.Web.UI.Control.RenderChildren(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderChildren(HtmlTextWriter)
+  nameWithType: Control.RenderChildren(HtmlTextWriter)
+  fullName: Control.RenderChildren(HtmlTextWriter)
+- uid: System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderControl(HtmlTextWriter)
+  nameWithType: Control.RenderControl(HtmlTextWriter)
+  fullName: Control.RenderControl(HtmlTextWriter)
+- uid: System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter,System.Web.UI.Adapters.ControlAdapter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderControl(HtmlTextWriter, ControlAdapter)
+  nameWithType: Control.RenderControl(HtmlTextWriter, ControlAdapter)
+  fullName: Control.RenderControl(HtmlTextWriter, ControlAdapter)
+- uid: System.Web.UI.Control.RenderingCompatibility
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderingCompatibility
+  nameWithType: Control.RenderingCompatibility
+  fullName: Control.RenderingCompatibility
+- uid: System.Web.UI.Control.ResolveAdapter
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveAdapter()
+  nameWithType: Control.ResolveAdapter()
+  fullName: Control.ResolveAdapter()
+- uid: System.Web.UI.Control.ResolveClientUrl(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveClientUrl(String)
+  nameWithType: Control.ResolveClientUrl(String)
+  fullName: Control.ResolveClientUrl(String)
+- uid: System.Web.UI.Control.ResolveUrl(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveUrl(String)
+  nameWithType: Control.ResolveUrl(String)
+  fullName: Control.ResolveUrl(String)
+- uid: System.Web.UI.Control.SaveControlState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SaveControlState()
+  nameWithType: Control.SaveControlState()
+  fullName: Control.SaveControlState()
+- uid: System.Web.UI.WebControls.DataBoundControl.SaveViewState
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: SaveViewState()
+  nameWithType: DataBoundControl.SaveViewState()
+  fullName: DataBoundControl.SaveViewState()
+- uid: System.Web.UI.Control.SetDesignModeState(System.Collections.IDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetDesignModeState(IDictionary)
+  nameWithType: Control.SetDesignModeState(IDictionary)
+  fullName: Control.SetDesignModeState(IDictionary)
+- uid: System.Web.UI.Control.SetRenderMethodDelegate(System.Web.UI.RenderMethod)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetRenderMethodDelegate(RenderMethod)
+  nameWithType: Control.SetRenderMethodDelegate(RenderMethod)
+  fullName: Control.SetRenderMethodDelegate(RenderMethod)
+- uid: System.Web.UI.Control.SetTraceData(System.Object,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetTraceData(Object, Object)
+  nameWithType: Control.SetTraceData(Object, Object)
+  fullName: Control.SetTraceData(Object, Object)
+- uid: System.Web.UI.Control.SetTraceData(System.Object,System.Object,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetTraceData(Object, Object, Object)
+  nameWithType: Control.SetTraceData(Object, Object, Object)
+  fullName: Control.SetTraceData(Object, Object, Object)
+- uid: System.Web.UI.Control.Site
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Site
+  nameWithType: Control.Site
+  fullName: Control.Site
+- uid: System.Web.UI.WebControls.WebControl.SkinID
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: SkinID
+  nameWithType: WebControl.SkinID
+  fullName: WebControl.SkinID
+- uid: System.Web.UI.Control.TemplateControl
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: TemplateControl
+  nameWithType: Control.TemplateControl
+  fullName: Control.TemplateControl
+- uid: System.Web.UI.Control.TemplateSourceDirectory
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: TemplateSourceDirectory
+  nameWithType: Control.TemplateSourceDirectory
+  fullName: Control.TemplateSourceDirectory
+- uid: System.Web.UI.WebControls.DataBoundControl.TrackViewState
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: TrackViewState()
+  nameWithType: DataBoundControl.TrackViewState()
+  fullName: DataBoundControl.TrackViewState()
+- uid: System.Web.UI.Control.Unload
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Unload
+  nameWithType: Control.Unload
+  fullName: Control.Unload
+- uid: System.Web.UI.Control.ValidateRequestMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ValidateRequestMode
+  nameWithType: Control.ValidateRequestMode
+  fullName: Control.ValidateRequestMode
+- uid: System.Web.UI.Control.ViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewState
+  nameWithType: Control.ViewState
+  fullName: Control.ViewState
+- uid: System.Web.UI.Control.ViewStateIgnoresCase
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewStateIgnoresCase
+  nameWithType: Control.ViewStateIgnoresCase
+  fullName: Control.ViewStateIgnoresCase
+- uid: System.Web.UI.Control.ViewStateMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewStateMode
+  nameWithType: Control.ViewStateMode
+  fullName: Control.ViewStateMode
+- uid: System.Web.UI.Control.Visible
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Visible
+  nameWithType: Control.Visible
+  fullName: Control.Visible
+- uid: System.Web.UI.Control.System#Web#UI#IControlBuilderAccessor#ControlBuilder
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlBuilderAccessor.ControlBuilder
+  nameWithType: Control.IControlBuilderAccessor.ControlBuilder
+  fullName: Control.IControlBuilderAccessor.ControlBuilder
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#GetDesignModeState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.GetDesignModeState()
+  nameWithType: Control.IControlDesignerAccessor.GetDesignModeState()
+  fullName: Control.IControlDesignerAccessor.GetDesignModeState()
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetDesignModeState(System.Collections.IDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.SetDesignModeState(IDictionary)
+  nameWithType: Control.IControlDesignerAccessor.SetDesignModeState(IDictionary)
+  fullName: Control.IControlDesignerAccessor.SetDesignModeState(IDictionary)
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetOwnerControl(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.SetOwnerControl(Control)
+  nameWithType: Control.IControlDesignerAccessor.SetOwnerControl(Control)
+  fullName: Control.IControlDesignerAccessor.SetOwnerControl(Control)
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#UserData
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.UserData
+  nameWithType: Control.IControlDesignerAccessor.UserData
+  fullName: Control.IControlDesignerAccessor.UserData
+- uid: System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#DataBindings
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IDataBindingsAccessor.DataBindings
+  nameWithType: Control.IDataBindingsAccessor.DataBindings
+  fullName: Control.IDataBindingsAccessor.DataBindings
+- uid: System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#HasDataBindings
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IDataBindingsAccessor.HasDataBindings
+  nameWithType: Control.IDataBindingsAccessor.HasDataBindings
+  fullName: Control.IDataBindingsAccessor.HasDataBindings
+- uid: System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#Expressions
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IExpressionsAccessor.Expressions
+  nameWithType: Control.IExpressionsAccessor.Expressions
+  fullName: Control.IExpressionsAccessor.Expressions
+- uid: System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#HasExpressions
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IExpressionsAccessor.HasExpressions
+  nameWithType: Control.IExpressionsAccessor.HasExpressions
+  fullName: Control.IExpressionsAccessor.HasExpressions
+- uid: System.Web.UI.Control.System#Web#UI#IParserAccessor#AddParsedSubObject(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IParserAccessor.AddParsedSubObject(Object)
+  nameWithType: Control.IParserAccessor.AddParsedSubObject(Object)
+  fullName: Control.IParserAccessor.AddParsedSubObject(Object)
+- uid: System.Web.UI.WebControls.WebControl.AccessKey
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: AccessKey
+  nameWithType: WebControl.AccessKey
+  fullName: WebControl.AccessKey
+- uid: System.Web.UI.WebControls.WebControl.AddAttributesToRender(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: AddAttributesToRender(HtmlTextWriter)
+  nameWithType: WebControl.AddAttributesToRender(HtmlTextWriter)
+  fullName: WebControl.AddAttributesToRender(HtmlTextWriter)
+- uid: System.Web.UI.WebControls.WebControl.ApplyStyle(System.Web.UI.WebControls.Style)
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: ApplyStyle(Style)
+  nameWithType: WebControl.ApplyStyle(Style)
+  fullName: WebControl.ApplyStyle(Style)
+- uid: System.Web.UI.WebControls.WebControl.Attributes
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: Attributes
+  nameWithType: WebControl.Attributes
+  fullName: WebControl.Attributes
+- uid: System.Web.UI.WebControls.WebControl.BackColor
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: BackColor
+  nameWithType: WebControl.BackColor
+  fullName: WebControl.BackColor
+- uid: System.Web.UI.WebControls.WebControl.BorderColor
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: BorderColor
+  nameWithType: WebControl.BorderColor
+  fullName: WebControl.BorderColor
+- uid: System.Web.UI.WebControls.WebControl.BorderStyle
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: BorderStyle
+  nameWithType: WebControl.BorderStyle
+  fullName: WebControl.BorderStyle
+- uid: System.Web.UI.WebControls.WebControl.BorderWidth
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: BorderWidth
+  nameWithType: WebControl.BorderWidth
+  fullName: WebControl.BorderWidth
+- uid: System.Web.UI.WebControls.WebControl.ControlStyle
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: ControlStyle
+  nameWithType: WebControl.ControlStyle
+  fullName: WebControl.ControlStyle
+- uid: System.Web.UI.WebControls.WebControl.ControlStyleCreated
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: ControlStyleCreated
+  nameWithType: WebControl.ControlStyleCreated
+  fullName: WebControl.ControlStyleCreated
+- uid: System.Web.UI.WebControls.WebControl.CopyBaseAttributes(System.Web.UI.WebControls.WebControl)
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: CopyBaseAttributes(WebControl)
+  nameWithType: WebControl.CopyBaseAttributes(WebControl)
+  fullName: WebControl.CopyBaseAttributes(WebControl)
+- uid: System.Web.UI.WebControls.WebControl.CreateControlStyle
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: CreateControlStyle()
+  nameWithType: WebControl.CreateControlStyle()
+  fullName: WebControl.CreateControlStyle()
+- uid: System.Web.UI.WebControls.WebControl.CssClass
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: CssClass
+  nameWithType: WebControl.CssClass
+  fullName: WebControl.CssClass
+- uid: System.Web.UI.WebControls.WebControl.DisabledCssClass
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: DisabledCssClass
+  nameWithType: WebControl.DisabledCssClass
+  fullName: WebControl.DisabledCssClass
+- uid: System.Web.UI.WebControls.WebControl.Enabled
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: Enabled
+  nameWithType: WebControl.Enabled
+  fullName: WebControl.Enabled
+- uid: System.Web.UI.WebControls.WebControl.ForeColor
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: ForeColor
+  nameWithType: WebControl.ForeColor
+  fullName: WebControl.ForeColor
+- uid: System.Web.UI.WebControls.WebControl.HasAttributes
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: HasAttributes
+  nameWithType: WebControl.HasAttributes
+  fullName: WebControl.HasAttributes
+- uid: System.Web.UI.WebControls.WebControl.Height
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: Height
+  nameWithType: WebControl.Height
+  fullName: WebControl.Height
+- uid: System.Web.UI.WebControls.WebControl.IsEnabled
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: IsEnabled
+  nameWithType: WebControl.IsEnabled
+  fullName: WebControl.IsEnabled
+- uid: System.Web.UI.WebControls.WebControl.MergeStyle(System.Web.UI.WebControls.Style)
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: MergeStyle(Style)
+  nameWithType: WebControl.MergeStyle(Style)
+  fullName: WebControl.MergeStyle(Style)
+- uid: System.Web.UI.WebControls.WebControl.RenderBeginTag(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: RenderBeginTag(HtmlTextWriter)
+  nameWithType: WebControl.RenderBeginTag(HtmlTextWriter)
+  fullName: WebControl.RenderBeginTag(HtmlTextWriter)
+- uid: System.Web.UI.WebControls.WebControl.RenderContents(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: RenderContents(HtmlTextWriter)
+  nameWithType: WebControl.RenderContents(HtmlTextWriter)
+  fullName: WebControl.RenderContents(HtmlTextWriter)
+- uid: System.Web.UI.WebControls.WebControl.RenderEndTag(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: RenderEndTag(HtmlTextWriter)
+  nameWithType: WebControl.RenderEndTag(HtmlTextWriter)
+  fullName: WebControl.RenderEndTag(HtmlTextWriter)
+- uid: System.Web.UI.WebControls.WebControl.Style
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: Style
+  nameWithType: WebControl.Style
+  fullName: WebControl.Style
+- uid: System.Web.UI.WebControls.BaseDataBoundControl.SupportsDisabledAttribute
+  parent: System.Web.UI.WebControls.BaseDataBoundControl
+  isExternal: false
+  name: SupportsDisabledAttribute
+  nameWithType: BaseDataBoundControl.SupportsDisabledAttribute
+  fullName: BaseDataBoundControl.SupportsDisabledAttribute
+- uid: System.Web.UI.WebControls.WebControl.TabIndex
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: TabIndex
+  nameWithType: WebControl.TabIndex
+  fullName: WebControl.TabIndex
+- uid: System.Web.UI.WebControls.WebControl.TagName
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: TagName
+  nameWithType: WebControl.TagName
+  fullName: WebControl.TagName
+- uid: System.Web.UI.WebControls.WebControl.ToolTip
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: ToolTip
+  nameWithType: WebControl.ToolTip
+  fullName: WebControl.ToolTip
+- uid: System.Web.UI.WebControls.WebControl.Width
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: Width
+  nameWithType: WebControl.Width
+  fullName: WebControl.Width
+- uid: System.Web.UI.WebControls.WebControl.System#Web#UI#IAttributeAccessor#GetAttribute(System.String)
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: IAttributeAccessor.GetAttribute(String)
+  nameWithType: WebControl.IAttributeAccessor.GetAttribute(String)
+  fullName: WebControl.IAttributeAccessor.GetAttribute(String)
+- uid: System.Web.UI.WebControls.WebControl.System#Web#UI#IAttributeAccessor#SetAttribute(System.String,System.String)
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: IAttributeAccessor.SetAttribute(String, String)
+  nameWithType: WebControl.IAttributeAccessor.SetAttribute(String, String)
+  fullName: WebControl.IAttributeAccessor.SetAttribute(String, String)
+- uid: System.Web.UI.WebControls.BaseDataBoundControl.ConfirmInitState
+  parent: System.Web.UI.WebControls.BaseDataBoundControl
+  isExternal: false
+  name: ConfirmInitState()
+  nameWithType: BaseDataBoundControl.ConfirmInitState()
+  fullName: BaseDataBoundControl.ConfirmInitState()
+- uid: System.Web.UI.WebControls.BaseDataBoundControl.DataBound
+  parent: System.Web.UI.WebControls.BaseDataBoundControl
+  isExternal: false
+  name: DataBound
+  nameWithType: BaseDataBoundControl.DataBound
+  fullName: BaseDataBoundControl.DataBound
+- uid: System.Web.UI.WebControls.BaseDataBoundControl.DataSource
+  parent: System.Web.UI.WebControls.BaseDataBoundControl
+  isExternal: false
+  name: DataSource
+  nameWithType: BaseDataBoundControl.DataSource
+  fullName: BaseDataBoundControl.DataSource
+- uid: System.Web.UI.WebControls.DataBoundControl.DataSourceID
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: DataSourceID
+  nameWithType: DataBoundControl.DataSourceID
+  fullName: DataBoundControl.DataSourceID
+- uid: System.Web.UI.WebControls.BaseDataBoundControl.EnsureDataBound
+  parent: System.Web.UI.WebControls.BaseDataBoundControl
+  isExternal: false
+  name: EnsureDataBound()
+  nameWithType: BaseDataBoundControl.EnsureDataBound()
+  fullName: BaseDataBoundControl.EnsureDataBound()
+- uid: System.Web.UI.WebControls.BaseDataBoundControl.Initialized
+  parent: System.Web.UI.WebControls.BaseDataBoundControl
+  isExternal: false
+  name: Initialized
+  nameWithType: BaseDataBoundControl.Initialized
+  fullName: BaseDataBoundControl.Initialized
+- uid: System.Web.UI.WebControls.BaseDataBoundControl.IsBoundUsingDataSourceID
+  parent: System.Web.UI.WebControls.BaseDataBoundControl
+  isExternal: false
+  name: IsBoundUsingDataSourceID
+  nameWithType: BaseDataBoundControl.IsBoundUsingDataSourceID
+  fullName: BaseDataBoundControl.IsBoundUsingDataSourceID
+- uid: System.Web.UI.WebControls.BaseDataBoundControl.IsDataBindingAutomatic
+  parent: System.Web.UI.WebControls.BaseDataBoundControl
+  isExternal: false
+  name: IsDataBindingAutomatic
+  nameWithType: BaseDataBoundControl.IsDataBindingAutomatic
+  fullName: BaseDataBoundControl.IsDataBindingAutomatic
+- uid: System.Web.UI.WebControls.DataBoundControl.IsUsingModelBinders
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: IsUsingModelBinders
+  nameWithType: DataBoundControl.IsUsingModelBinders
+  fullName: DataBoundControl.IsUsingModelBinders
+- uid: System.Web.UI.WebControls.BaseDataBoundControl.OnDataBound(System.EventArgs)
+  parent: System.Web.UI.WebControls.BaseDataBoundControl
+  isExternal: false
+  name: OnDataBound(EventArgs)
+  nameWithType: BaseDataBoundControl.OnDataBound(EventArgs)
+  fullName: BaseDataBoundControl.OnDataBound(EventArgs)
+- uid: System.Web.UI.WebControls.DataBoundControl.OnDataPropertyChanged
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: OnDataPropertyChanged()
+  nameWithType: DataBoundControl.OnDataPropertyChanged()
+  fullName: DataBoundControl.OnDataPropertyChanged()
+- uid: System.Web.UI.WebControls.DataBoundControl.OnPagePreLoad(System.Object,System.EventArgs)
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: OnPagePreLoad(Object, EventArgs)
+  nameWithType: DataBoundControl.OnPagePreLoad(Object, EventArgs)
+  fullName: DataBoundControl.OnPagePreLoad(Object, EventArgs)
+- uid: System.Web.UI.WebControls.BaseDataBoundControl.RequiresDataBinding
+  parent: System.Web.UI.WebControls.BaseDataBoundControl
+  isExternal: false
+  name: RequiresDataBinding
+  nameWithType: BaseDataBoundControl.RequiresDataBinding
+  fullName: BaseDataBoundControl.RequiresDataBinding
+- uid: System.Web.UI.WebControls.DataBoundControl.ValidateDataSource(System.Object)
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: ValidateDataSource(Object)
+  nameWithType: DataBoundControl.ValidateDataSource(Object)
+  fullName: DataBoundControl.ValidateDataSource(Object)
+- uid: System.Web.UI.WebControls.DataBoundControl.CallingDataMethods
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: CallingDataMethods
+  nameWithType: DataBoundControl.CallingDataMethods
+  fullName: DataBoundControl.CallingDataMethods
+- uid: System.Web.UI.WebControls.DataBoundControl.CreateDataSourceSelectArguments
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: CreateDataSourceSelectArguments()
+  nameWithType: DataBoundControl.CreateDataSourceSelectArguments()
+  fullName: DataBoundControl.CreateDataSourceSelectArguments()
+- uid: System.Web.UI.WebControls.DataBoundControl.CreatingModelDataSource
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: CreatingModelDataSource
+  nameWithType: DataBoundControl.CreatingModelDataSource
+  fullName: DataBoundControl.CreatingModelDataSource
+- uid: System.Web.UI.WebControls.DataBoundControl.DataMember
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: DataMember
+  nameWithType: DataBoundControl.DataMember
+  fullName: DataBoundControl.DataMember
+- uid: System.Web.UI.WebControls.DataBoundControl.DataSourceObject
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: DataSourceObject
+  nameWithType: DataBoundControl.DataSourceObject
+  fullName: DataBoundControl.DataSourceObject
+- uid: System.Web.UI.WebControls.DataBoundControl.GetData
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: GetData()
+  nameWithType: DataBoundControl.GetData()
+  fullName: DataBoundControl.GetData()
+- uid: System.Web.UI.WebControls.DataBoundControl.GetDataSource
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: GetDataSource()
+  nameWithType: DataBoundControl.GetDataSource()
+  fullName: DataBoundControl.GetDataSource()
+- uid: System.Web.UI.WebControls.DataBoundControl.ItemType
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: ItemType
+  nameWithType: DataBoundControl.ItemType
+  fullName: DataBoundControl.ItemType
+- uid: System.Web.UI.WebControls.DataBoundControl.MarkAsDataBound
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: MarkAsDataBound()
+  nameWithType: DataBoundControl.MarkAsDataBound()
+  fullName: DataBoundControl.MarkAsDataBound()
+- uid: System.Web.UI.WebControls.DataBoundControl.OnCreatingModelDataSource(System.Web.UI.WebControls.CreatingModelDataSourceEventArgs)
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: OnCreatingModelDataSource(CreatingModelDataSourceEventArgs)
+  nameWithType: DataBoundControl.OnCreatingModelDataSource(CreatingModelDataSourceEventArgs)
+  fullName: DataBoundControl.OnCreatingModelDataSource(CreatingModelDataSourceEventArgs)
+- uid: System.Web.UI.WebControls.DataBoundControl.OnDataSourceViewChanged(System.Object,System.EventArgs)
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: OnDataSourceViewChanged(Object, EventArgs)
+  nameWithType: DataBoundControl.OnDataSourceViewChanged(Object, EventArgs)
+  fullName: DataBoundControl.OnDataSourceViewChanged(Object, EventArgs)
+- uid: System.Web.UI.WebControls.DataBoundControl.SelectArguments
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: SelectArguments
+  nameWithType: DataBoundControl.SelectArguments
+  fullName: DataBoundControl.SelectArguments
+- uid: System.Web.UI.WebControls.DataBoundControl.SelectMethod
+  parent: System.Web.UI.WebControls.DataBoundControl
+  isExternal: false
+  name: SelectMethod
+  nameWithType: DataBoundControl.SelectMethod
+  fullName: DataBoundControl.SelectMethod
+- uid: System.Web.DynamicData.DynamicDataExtensions.EnablePersistedSelection(System.Web.UI.WebControls.BaseDataBoundControl)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: EnablePersistedSelection(BaseDataBoundControl)
+  nameWithType: DynamicDataExtensions.EnablePersistedSelection(BaseDataBoundControl)
+  fullName: DynamicDataExtensions.EnablePersistedSelection(BaseDataBoundControl)
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindDataSourceControl(System.Web.UI.Control)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindDataSourceControl(Control)
+  nameWithType: DynamicDataExtensions.FindDataSourceControl(Control)
+  fullName: DynamicDataExtensions.FindDataSourceControl(Control)
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindFieldTemplate(System.Web.UI.Control,System.String)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindFieldTemplate(Control, String)
+  nameWithType: DynamicDataExtensions.FindFieldTemplate(Control, String)
+  fullName: DynamicDataExtensions.FindFieldTemplate(Control, String)
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindMetaTable(System.Web.UI.Control)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindMetaTable(Control)
+  nameWithType: DynamicDataExtensions.FindMetaTable(Control)
+  fullName: DynamicDataExtensions.FindMetaTable(Control)

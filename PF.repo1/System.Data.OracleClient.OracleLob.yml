@@ -1,0 +1,2536 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Data.OracleClient.OracleLob
+  commentId: T:System.Data.OracleClient.OracleLob
+  id: OracleLob
+  children:
+  - System.Data.OracleClient.OracleLob.Append(System.Data.OracleClient.OracleLob)
+  - System.Data.OracleClient.OracleLob.BeginBatch
+  - System.Data.OracleClient.OracleLob.BeginBatch(System.Data.OracleClient.OracleLobOpenMode)
+  - System.Data.OracleClient.OracleLob.CanRead
+  - System.Data.OracleClient.OracleLob.CanSeek
+  - System.Data.OracleClient.OracleLob.CanWrite
+  - System.Data.OracleClient.OracleLob.ChunkSize
+  - System.Data.OracleClient.OracleLob.Clone
+  - System.Data.OracleClient.OracleLob.Connection
+  - System.Data.OracleClient.OracleLob.CopyTo(System.Data.OracleClient.OracleLob)
+  - System.Data.OracleClient.OracleLob.CopyTo(System.Data.OracleClient.OracleLob,System.Int64)
+  - System.Data.OracleClient.OracleLob.CopyTo(System.Int64,System.Data.OracleClient.OracleLob,System.Int64,System.Int64)
+  - System.Data.OracleClient.OracleLob.Dispose(System.Boolean)
+  - System.Data.OracleClient.OracleLob.EndBatch
+  - System.Data.OracleClient.OracleLob.Erase(System.Int64,System.Int64)
+  - System.Data.OracleClient.OracleLob.Erase
+  - System.Data.OracleClient.OracleLob.Flush
+  - System.Data.OracleClient.OracleLob.IsBatched
+  - System.Data.OracleClient.OracleLob.IsNull
+  - System.Data.OracleClient.OracleLob.IsTemporary
+  - System.Data.OracleClient.OracleLob.Length
+  - System.Data.OracleClient.OracleLob.LobType
+  - System.Data.OracleClient.OracleLob.Null
+  - System.Data.OracleClient.OracleLob.Position
+  - System.Data.OracleClient.OracleLob.Read(System.Byte[],System.Int32,System.Int32)
+  - System.Data.OracleClient.OracleLob.Seek(System.Int64,System.IO.SeekOrigin)
+  - System.Data.OracleClient.OracleLob.SetLength(System.Int64)
+  - System.Data.OracleClient.OracleLob.Value
+  - System.Data.OracleClient.OracleLob.Write(System.Byte[],System.Int32,System.Int32)
+  - System.Data.OracleClient.OracleLob.WriteByte(System.Byte)
+  langs:
+  - csharp
+  name: OracleLob
+  nameWithType: OracleLob
+  fullName: System.Data.OracleClient.OracleLob
+  type: Class
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Represents a large object binary (`LOB`) data type stored on an Oracle server. This class cannot be inherited.
+  remarks: "An <xref:System.Data.OracleClient.OracleLob> differs from an <xref:System.Data.OracleClient.OracleBFile> in that the data is stored on the server instead of in a physical file in the operating system. It can also be a read-write object, unlike an <xref:System.Data.OracleClient.OracleBFile>, which is always read-only.  \n  \n An <xref:System.Data.OracleClient.OracleLob> may be one of these <xref:System.Data.OracleClient.OracleType> data types.  \n  \n|OracleType data type|Description|  \n|--------------------------|-----------------|  \n|`Blob`|An Oracle `BLOB` data type that contains binary data with a maximum size of 4 gigabytes (GB). This maps to an <xref:System.Array> of type <xref:System.Byte>.|  \n|`Clob`|An Oracle `CLOB` data type that contains character data, based on the default character set on the server, with a maximum size of 4 GB. This maps to <xref:System.String>.|  \n|`NClob`|An Oracle `NCLOB` data type that contains character data, based on the national character set on the server with a maximum size of 4 GB. This maps to <xref:System.String>.|  \n  \n A .NET application developer can retrieve the Oracle `LOB` values into basic .NET data types, such as <xref:System.Array> of type <xref:System.Byte> and <xref:System.String>, or the specialized <xref:System.Data.OracleClient.OracleLob> data type. The <xref:System.Data.OracleClient.OracleLob> class supports reading data from and writing to the Oracle `LOB` in the Oracle database.  \n  \n The following are the main characteristics of an <xref:System.Data.OracleClient.OracleLob> data type that distinguish it from basic .NET data types:  \n  \n-   After you retrieve the Oracle `LOB` value from the Oracle database into the <xref:System.Data.OracleClient.OracleLob> class, you can change the `LOB` data in an open transaction and your changes are directly reflected to the database. If you retrieve the Oracle `LOB` value into an <xref:System.Array> of type <xref:System.Byte> or <xref:System.String> and update these arrays, your changes are not reflected to the database.  \n  \n-   When you use the <xref:System.Data.OracleClient.OracleLob> class to access a chunk of a `LOB` value, only that chunk is passed from the Oracle database to the client. When you use the <xref:System.Data.OracleClient.OracleDataReader.GetChars%2A> method to access a chunk of a `LOB` value, the entire contents of the value are passed from the Oracle database to the client.  \n  \n To obtain an <xref:System.Data.OracleClient.OracleLob> object, call the <xref:System.Data.OracleClient.OracleDataReader.GetOracleLob%2A> method.  \n  \n You can construct an <xref:System.Data.OracleClient.OracleLob> that is NULL using this format:  \n  \n```  \nOracleLob myLob = OracleLob.Null;  \n```  \n  \n This technique is used primarily to test whether a `LOB` returned from the server is NULL, as this example illustrates:  \n  \n```  \nIf(myLob == OracleLob.Null)  \n```  \n  \n A NULL `LOB` behaves similarly to a zero-byte `LOB` in that <xref:System.Data.OracleClient.OracleLob.Read%2A> succeeds and always returns zero bytes.  \n  \n Selecting a `LOB` column that contains a null value returns <xref:System.Data.OracleClient.OracleLob.Null>.  \n  \n You must begin a transaction before obtaining a temporary `LOB`. Otherwise, the <xref:System.Data.OracleClient.OracleDataReader> may fail to obtain data later.  \n  \n You can also open a temporary `LOB` in Oracle by calling the DBMS_LOB.CREATETEMPORARY system stored procedure and binding a `LOB` output parameter. On the client side, a temporary `LOB` behaves like a table-based `LOB`. For example, to update the temporary `LOB`, it must be enclosed in a transaction.  \n  \n The following C# example demonstrates how to open a temporary `LOB`.  \n  \n```  \nOracleConnection connection = new OracleConnection(\"server=MyServer; integrated security=yes;\");  \nconnection.Open();  \nOracleTransaction transaction = connection.BeginTransaction();  \nOracleCommand command = connection.CreateCommand();  \ncommand.Transaction = transaction;  \ncommand.CommandText = \"declare xx blob; begin dbms_lob.createtemporary(xx, false, 0); :tempblob := xx; end;\";  \ncommand.Parameters.Add(new OracleParameter(\"tempblob\", OracleType.Blob)).Direction = ParameterDirection.Output;  \ncommand.ExecuteNonQuery();  \nOracleLob tempLob = (OracleLob)command.Parameters[0].Value;  \nbyte[] tempbuff = new byte[10000];  \ntempLob.BeginBatch(OracleLobOpenMode.ReadWrite);  \ntempLob.Write(tempbuff,0,tempbuff.Length);  \ntempLob.EndBatch();  \ncommand.Parameters.Clear();  \ncommand.CommandText = \"MyTable.MyProc\";  \ncommand.CommandType = CommandType.StoredProcedure;    \ncommand.Parameters.Add(new OracleParameter(\"ImportDoc\", OracleType.Blob)).Value = tempLob;  \ncommand.ExecuteNonQuery();  \ntransaction.Commit();  \nconnection.Close  \n```  \n  \n> [!NOTE]\n>  The inherited <xref:System.IO.Stream.WriteByte%2A> method fails if used with character data, and an <xref:System.InvalidOperationException> is thrown. Use the <xref:System.Data.OracleClient.OracleLob.Write%2A> method instead.  \n>   \n>  Temporary `LOB`s are only closed when the connection is closed, but with pooling and under load, temporary `LOB`s do not close. This can be resolved by disposing the temporary `LOB`, by invoking `tempLob.Dispose()`."
+  syntax:
+    content: 'public sealed class OracleLob : System.IO.Stream, ICloneable, System.Data.SqlTypes.INullable'
+  inheritance:
+  - System.Object
+  - System.IO.Stream
+  implements:
+  - System.Data.SqlTypes.INullable
+  - System.ICloneable
+  inheritedMembers:
+  - System.IO.Stream.BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)
+  - System.IO.Stream.BeginWrite(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)
+  - System.IO.Stream.CanTimeout
+  - System.IO.Stream.Close
+  - System.IO.Stream.CopyTo(System.IO.Stream)
+  - System.IO.Stream.CopyTo(System.IO.Stream,System.Int32)
+  - System.IO.Stream.CopyToAsync(System.IO.Stream)
+  - System.IO.Stream.CopyToAsync(System.IO.Stream,System.Int32)
+  - System.IO.Stream.CopyToAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)
+  - System.IO.Stream.CreateWaitHandle
+  - System.IO.Stream.Dispose
+  - System.IO.Stream.EndRead(System.IAsyncResult)
+  - System.IO.Stream.EndWrite(System.IAsyncResult)
+  - System.IO.Stream.FlushAsync
+  - System.IO.Stream.FlushAsync(System.Threading.CancellationToken)
+  - System.IO.Stream.ObjectInvariant
+  - System.IO.Stream.ReadAsync(System.Byte[],System.Int32,System.Int32)
+  - System.IO.Stream.ReadAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)
+  - System.IO.Stream.ReadByte
+  - System.IO.Stream.ReadTimeout
+  - System.IO.Stream.Synchronized(System.IO.Stream)
+  - System.IO.Stream.WriteAsync(System.Byte[],System.Int32,System.Int32)
+  - System.IO.Stream.WriteAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)
+  - System.IO.Stream.WriteTimeout
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.Append(System.Data.OracleClient.OracleLob)
+  commentId: M:System.Data.OracleClient.OracleLob.Append(System.Data.OracleClient.OracleLob)
+  id: Append(System.Data.OracleClient.OracleLob)
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: Append(OracleLob)
+  nameWithType: OracleLob.Append(OracleLob)
+  fullName: OracleLob.Append(OracleLob)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Appends data from the specified `LOB` to the current `LOB`.
+  remarks: "To write to the `LOB`, you must have retrieved the `LOB` using the FOR UPDATE clause in the SQL SELECT statement, and you must have a local transaction started.  \n  \n All data from the source `LOB` is appended to the end of the current `LOB`. The position of neither `LOB` is evaluated or changed during this process.  \n  \n The underlying data types must always be the same. For example, if you are appending from an <xref:System.Data.OracleClient.OracleType.NClob>, the destination <xref:System.Data.OracleClient.OracleLob> must also be an <xref:System.Data.OracleClient.OracleType.NClob>.  \n  \n> [!NOTE]\n>  In this release, a write operation to a read-only `LOB` might succeed, but does not update the `LOB` on the server. In this case, however, the local copy of the `LOB` is updated. Therefore, later read operations on the <xref:System.Data.OracleClient.OracleLob> object might return the results of the write operation."
+  syntax:
+    content: public void Append (System.Data.OracleClient.OracleLob source);
+    parameters:
+    - id: source
+      type: System.Data.OracleClient.OracleLob
+      description: The `LOB` from which to append data.
+  overload: System.Data.OracleClient.OracleLob.Append*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The source <xref href="System.Data.OracleClient.OracleLob"></xref> is null.
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The source <xref href="System.Data.OracleClient.OracleLob"></xref> is null, or the connection is closed.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The source <xref href="System.Data.OracleClient.OracleLob"></xref> object was closed or disposed.
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.BeginBatch
+  commentId: M:System.Data.OracleClient.OracleLob.BeginBatch
+  id: BeginBatch
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: BeginBatch()
+  nameWithType: OracleLob.BeginBatch()
+  fullName: OracleLob.BeginBatch()
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Prevents server-side triggers from firing while performing multiple read operations.
+  remarks: "Opens the `LOB` in <xref:System.Data.OracleClient.OracleLobOpenMode.ReadOnly> mode; therefore, the `LOB` can only be read from, not written to, until the corresponding call to <xref:System.Data.OracleClient.OracleLob.EndBatch%2A>. To perform batch writes to the `LOB`, call <xref:System.Data.OracleClient.OracleLob.BeginBatch%2A> with <xref:System.Data.OracleClient.OracleLobOpenMode.ReadWrite>.  \n  \n Calling <xref:System.Data.OracleClient.OracleLob.BeginBatch%2A> more than one time within the same transaction currently throws the Oracle \"ORA-22293: LOB already opened in the same transaction\" error. In addition, if you obtain the `LOB` using another <xref:System.Data.OracleClient.OracleDataReader>, and the original caller has not called the <xref:System.Data.OracleClient.OracleLob.EndBatch%2A> method, the same error is generated. Therefore, you must call the <xref:System.Data.OracleClient.OracleLob.EndBatch%2A> method when you are finished using the <xref:System.Data.OracleClient.OracleLob>."
+  syntax:
+    content: public void BeginBatch ();
+    parameters: []
+  overload: System.Data.OracleClient.OracleLob.BeginBatch*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The connection is closed.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The object was closed or disposed.
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.BeginBatch(System.Data.OracleClient.OracleLobOpenMode)
+  commentId: M:System.Data.OracleClient.OracleLob.BeginBatch(System.Data.OracleClient.OracleLobOpenMode)
+  id: BeginBatch(System.Data.OracleClient.OracleLobOpenMode)
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: BeginBatch(OracleLobOpenMode)
+  nameWithType: OracleLob.BeginBatch(OracleLobOpenMode)
+  fullName: OracleLob.BeginBatch(OracleLobOpenMode)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Prevents server-side triggers from firing while performing multiple read and write operations in the specified access mode.
+  remarks: "To write to the `LOB`, you must have retrieved the `LOB` using the FOR UPDATE clause in the SQL SELECT statement, and you must have a local transaction started.  \n  \n Calling <xref:System.Data.OracleClient.OracleLob.BeginBatch%2A> more than one time within the same transaction currently throws the Oracle \"ORA-22293: LOB already opened in the same transaction\" error. In addition, if you obtain the `LOB` using another <xref:System.Data.OracleClient.OracleDataReader>, and the original caller has not called the <xref:System.Data.OracleClient.OracleLob.EndBatch%2A> method, the same error is generated. Therefore, you must call the <xref:System.Data.OracleClient.OracleLob.EndBatch%2A> method when you are finished using the <xref:System.Data.OracleClient.OracleLob>."
+  syntax:
+    content: public void BeginBatch (System.Data.OracleClient.OracleLobOpenMode mode);
+    parameters:
+    - id: mode
+      type: System.Data.OracleClient.OracleLobOpenMode
+      description: Mode (one of the <xref href="System.Data.OracleClient.OracleLobOpenMode"></xref> values) in which the `LOB` can be accessed between this <xref href="System.Data.OracleClient.OracleLob.BeginBatch(System.Data.OracleClient.OracleLobOpenMode)"></xref> call and the corresponding <xref href="System.Data.OracleClient.OracleLob.EndBatch"></xref> call.
+  overload: System.Data.OracleClient.OracleLob.BeginBatch*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The connection is closed.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The object was closed or disposed.
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.CanRead
+  commentId: P:System.Data.OracleClient.OracleLob.CanRead
+  id: CanRead
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: CanRead
+  nameWithType: OracleLob.CanRead
+  fullName: OracleLob.CanRead
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets a value indicating whether the `LOB` stream can be read.
+  syntax:
+    content: public override bool CanRead { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the `LOB` stream supports reading, otherwise `false` if a `LOB` is closed or disposed.'
+  overload: System.Data.OracleClient.OracleLob.CanRead*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.CanSeek
+  commentId: P:System.Data.OracleClient.OracleLob.CanSeek
+  id: CanSeek
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: CanSeek
+  nameWithType: OracleLob.CanSeek
+  fullName: OracleLob.CanSeek
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets a value indicating whether forward and backward seek operations can be performed.
+  syntax:
+    content: public override bool CanSeek { get; }
+    return:
+      type: System.Boolean
+      description: '`false` if a `LOB` is closed or disposed, otherwise `true`. Always `true` for <xref href="System.Data.OracleClient.OracleLob.Null"></xref>.'
+  overload: System.Data.OracleClient.OracleLob.CanSeek*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.CanWrite
+  commentId: P:System.Data.OracleClient.OracleLob.CanWrite
+  id: CanWrite
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: CanWrite
+  nameWithType: OracleLob.CanWrite
+  fullName: OracleLob.CanWrite
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Always returns true, regardless of whether the `LOB` supports writing or not.
+  remarks: To write to the `LOB`, you must have retrieved the `LOB` using the FOR UPDATE clause in the SQL SELECT statement, and you must have started a local transaction.
+  syntax:
+    content: public override bool CanWrite { get; }
+    return:
+      type: System.Boolean
+      description: Always returns `true`, regardless of whether an opened or undisposed `LOB` supports writing or not, `false` if a `LOB` is closed or disposed.
+  overload: System.Data.OracleClient.OracleLob.CanWrite*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.ChunkSize
+  commentId: P:System.Data.OracleClient.OracleLob.ChunkSize
+  id: ChunkSize
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: ChunkSize
+  nameWithType: OracleLob.ChunkSize
+  fullName: OracleLob.ChunkSize
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets a value indicating the minimum number of bytes to retrieve from or send to the server during a read/write operation.
+  remarks: The value returned by the <xref:System.Data.OracleClient.OracleLob.ChunkSize%2A> property is not a setting of the .NET Framework Data Provider for Oracle. Instead, it is the value that the Oracle Call Interface (OCI) uses when communicating with the server. Use <xref:System.Data.OracleClient.OracleLob.ChunkSize%2A> to ensure that client-side chunks are the same size. Reading or writing in smaller chunks does not cache data, and causes a less-optimized round trip to the server, because a full packet is not received or sent.
+  syntax:
+    content: public int ChunkSize { get; }
+    return:
+      type: System.Int32
+      description: The minimum number of bytes to retrieve or send.
+  overload: System.Data.OracleClient.OracleLob.ChunkSize*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The connection is closed.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The object was closed or disposed.
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.Clone
+  commentId: M:System.Data.OracleClient.OracleLob.Clone
+  id: Clone
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: Clone()
+  nameWithType: OracleLob.Clone()
+  fullName: OracleLob.Clone()
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Creates a new <xref href="System.Data.OracleClient.OracleLob"></xref> object that references the same Oracle `LOB` as the original <xref href="System.Data.OracleClient.OracleLob"></xref> object.
+  remarks: The properties of the new <xref:System.Data.OracleClient.OracleLob> object initially have the same values as those of the original object. However, after the <xref:System.Data.OracleClient.OracleLob.Clone%2A> is complete, each <xref:System.Data.OracleClient.OracleLob> object is independent from the other. For example, changing the value of the <xref:System.Data.OracleClient.OracleLob.Position%2A> property on the original <xref:System.Data.OracleClient.OracleLob> does not change the value of <xref:System.Data.OracleClient.OracleLob.Position%2A> on the copy.
+  syntax:
+    content: public object Clone ();
+    parameters: []
+    return:
+      type: System.Object
+      description: A new <xref href="System.Data.OracleClient.OracleLob"></xref> object that references the same Oracle `LOB` as the original <xref href="System.Data.OracleClient.OracleLob"></xref> object.
+  overload: System.Data.OracleClient.OracleLob.Clone*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The connection is closed.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The object was closed or disposed.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.Connection
+  commentId: P:System.Data.OracleClient.OracleLob.Connection
+  id: Connection
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: Connection
+  nameWithType: OracleLob.Connection
+  fullName: OracleLob.Connection
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets the <xref href="System.Data.OracleClient.OracleConnection"></xref> used by this instance of the <xref href="System.Data.OracleClient.OracleLob"></xref>.
+  syntax:
+    content: public System.Data.OracleClient.OracleConnection Connection { get; }
+    return:
+      type: System.Data.OracleClient.OracleConnection
+      description: The connection to a data source.
+  overload: System.Data.OracleClient.OracleLob.Connection*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The object was closed or disposed.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.CopyTo(System.Data.OracleClient.OracleLob)
+  commentId: M:System.Data.OracleClient.OracleLob.CopyTo(System.Data.OracleClient.OracleLob)
+  id: CopyTo(System.Data.OracleClient.OracleLob)
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: CopyTo(OracleLob)
+  nameWithType: OracleLob.CopyTo(OracleLob)
+  fullName: OracleLob.CopyTo(OracleLob)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Copies from this <xref href="System.Data.OracleClient.OracleLob"></xref> to a destination <xref href="System.Data.OracleClient.OracleLob"></xref>.
+  remarks: "The underlying data types must always be the same. For example, if you are copying from an <xref:System.Data.OracleClient.OracleType.NClob>, the destination <xref:System.Data.OracleClient.OracleLob> must also be an <xref:System.Data.OracleClient.OracleType.NClob>.  \n  \n If the destination offset is beyond the end of destination `LOB`, the `LOB` to which the data is being copied is extended. The space between the end of the `LOB` and the destination offset beyond the end is padded with zeros for `BLOB` data types and spaces for `CLOB` and `NCLOB` data types.  \n  \n To write to the `LOB`, you must have retrieved the `LOB` using the FOR UPDATE clause in the SQL SELECT statement, and you must have a local transaction started.  \n  \n> [!NOTE]\n>  In this release, a write operation to a read-only `LOB` might succeed, but not update the `LOB` on the server. In this case, however, the local copy of the `LOB` will be updated. Therefore, later read operations on the <xref:System.Data.OracleClient.OracleLob> object might return the results of the write operation.  \n>   \n>  The `CopyTo` method does not clear the contents of the destination `OracleLob` before performing the copy operation."
+  syntax:
+    content: public long CopyTo (System.Data.OracleClient.OracleLob destination);
+    parameters:
+    - id: destination
+      type: System.Data.OracleClient.OracleLob
+      description: The destination <xref href="System.Data.OracleClient.OracleLob"></xref>.
+    return:
+      type: System.Int64
+      description: The number of bytes copied. This excludes any padded bytes.
+  overload: System.Data.OracleClient.OracleLob.CopyTo*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <xref href="System.Data.OracleClient.OracleLob"></xref> specified in the <code>destination</code> parameter is null.
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The operation is not within a transaction, the <xref href="System.Data.OracleClient.OracleLob"></xref> object is null, or the connection is closed.
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.CopyTo(System.Data.OracleClient.OracleLob,System.Int64)
+  commentId: M:System.Data.OracleClient.OracleLob.CopyTo(System.Data.OracleClient.OracleLob,System.Int64)
+  id: CopyTo(System.Data.OracleClient.OracleLob,System.Int64)
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: CopyTo(OracleLob, Int64)
+  nameWithType: OracleLob.CopyTo(OracleLob, Int64)
+  fullName: OracleLob.CopyTo(OracleLob, Int64)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Copies from this <xref href="System.Data.OracleClient.OracleLob"></xref> to a destination <xref href="System.Data.OracleClient.OracleLob"></xref> with the specified amount of data.
+  remarks: "The underlying data types must always be the same. For example, if you are copying from an <xref:System.Data.OracleClient.OracleType.NClob>, the destination <xref:System.Data.OracleClient.OracleLob> must also be an <xref:System.Data.OracleClient.OracleType.NClob>.  \n  \n If the destination offset is beyond the end of destination `LOB`, the `LOB` to which the data is being copied is extended. The space between the end of `LOB` and destination offset beyond the end is padded with zeros for `BLOB` data types and spaces for `CLOB` and `NCLOB` data types.  \n  \n To write to the `LOB`, you must have retrieved the `LOB` using the FOR UPDATE clause in the SQL SELECT statement, and you must have a local transaction started.  \n  \n> [!NOTE]\n>  In this release, a write operation to a read-only `LOB` might succeed, but does not update the `LOB` on the server. In this case, however, the local copy of the `LOB` is updated. Therefore, later read operations on the <xref:System.Data.OracleClient.OracleLob> object might return the results of the write operation.  \n>   \n>  The `CopyTo` method does not clear the contents of the destination `OracleLob` before performing the copy operation."
+  syntax:
+    content: public long CopyTo (System.Data.OracleClient.OracleLob destination, long destinationOffset);
+    parameters:
+    - id: destination
+      type: System.Data.OracleClient.OracleLob
+      description: The destination <xref href="System.Data.OracleClient.OracleLob"></xref>
+    - id: destinationOffset
+      type: System.Int64
+      description: The offset to which to copy. For `CLOB` and `NCLOB` data types, this must be an even number of bytes.
+    return:
+      type: System.Int64
+      description: The number of bytes copied. This excludes any padded bytes.
+  overload: System.Data.OracleClient.OracleLob.CopyTo*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <xref href="System.Data.OracleClient.OracleLob"></xref> specified in the <code>destination</code> parameter is full.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: "A value specified in the <code>destinationOffset</code> parameter is less than zero or greater than 4 gigabytes.  \n  \n -or-  \n  \n A value specified in the <code>destinationOffset</code> parameter for a `CLOB` or `NCLOB` data type is not even.  \n  \n -or-  \n  \n You must specify `CLOB` and `NCLOB` data types as an even number of bytes."
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The operation is not within a transaction, the <xref href="System.Data.OracleClient.OracleLob"></xref> object is null, or the connection is closed.
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.CopyTo(System.Int64,System.Data.OracleClient.OracleLob,System.Int64,System.Int64)
+  commentId: M:System.Data.OracleClient.OracleLob.CopyTo(System.Int64,System.Data.OracleClient.OracleLob,System.Int64,System.Int64)
+  id: CopyTo(System.Int64,System.Data.OracleClient.OracleLob,System.Int64,System.Int64)
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: CopyTo(Int64, OracleLob, Int64, Int64)
+  nameWithType: OracleLob.CopyTo(Int64, OracleLob, Int64, Int64)
+  fullName: OracleLob.CopyTo(Int64, OracleLob, Int64, Int64)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Copies from this <xref href="System.Data.OracleClient.OracleLob"></xref> to a destination <xref href="System.Data.OracleClient.OracleLob"></xref> with the specified amount of data, and the source offset.
+  remarks: "The underlying data types must always be the same. For example, if you are copying from an <xref:System.Data.OracleClient.OracleType.NClob>, the destination <xref:System.Data.OracleClient.OracleLob> must also be an <xref:System.Data.OracleClient.OracleType.NClob>.  \n  \n If the destination offset is beyond the end of destination `LOB`, the `LOB` to which the data is being copied is extended. The space between the end of `LOB` and destination offset beyond the end is padded with zeros for `BLOB` data types and spaces for `CLOB` and `NCLOB` data types.  \n  \n To write to the `LOB`, you must have retrieved the `LOB` using the FOR UPDATE clause in the SQL SELECT statement, and you must have a local transaction started.  \n  \n> [!NOTE]\n>  In this release, a write operation to a read-only `LOB` might succeed, but does not update the `LOB` on the server. In this case, however, the local copy of the `LOB` is updated. Therefore, later read operations on the <xref:System.Data.OracleClient.OracleLob> object might return the results of the write operation.  \n>   \n>  The `CopyTo` method does not clear the contents of the destination `OracleLob` before performing the copy operation."
+  syntax:
+    content: public long CopyTo (long sourceOffset, System.Data.OracleClient.OracleLob destination, long destinationOffset, long amount);
+    parameters:
+    - id: sourceOffset
+      type: System.Int64
+      description: The offset from which to copy. For `CLOB` and `NCLOB` data types, this must be an even number.
+    - id: destination
+      type: System.Data.OracleClient.OracleLob
+      description: The destination `OracleLob`<xref href="System.Data.OracleClient"></xref>.
+    - id: destinationOffset
+      type: System.Int64
+      description: The destination offset to which to copy. For `CLOB` and `NCLOB` data types, this must be an even number.
+    - id: amount
+      type: System.Int64
+      description: The quantity of data, in bytes, to copy. For `CLOB` and `NCLOB` data types, this must be an even number.
+    return:
+      type: System.Int64
+      description: The number of bytes copied. This excludes any padded bytes.
+  overload: System.Data.OracleClient.OracleLob.CopyTo*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <xref href="System.Data.OracleClient.OracleLob"></xref> specified in the <code>destination</code> parameter is full.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: "A value specified in the <code>amount</code>, <code>sourceOffset</code>, or <code>destinationOffset</code> parameter is less than zero or greater than 4 gigabytes.  \n  \n -or-  \n  \n A value specified in the <code>amount</code>, <code>sourceOffset</code>, or <code>destinationOffset</code> parameter for a `CLOB` or `NCLOB` data type is not even."
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The operation is not within a transaction, the <xref href="System.Data.OracleClient.OracleLob"></xref> object is null, or the connection is closed.
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.Dispose(System.Boolean)
+  commentId: M:System.Data.OracleClient.OracleLob.Dispose(System.Boolean)
+  id: Dispose(System.Boolean)
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: Dispose(Boolean)
+  nameWithType: OracleLob.Dispose(Boolean)
+  fullName: OracleLob.Dispose(Boolean)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  syntax:
+    content: protected override void Dispose (bool disposing);
+    parameters:
+    - id: disposing
+      type: System.Boolean
+      description: ''
+  overload: System.Data.OracleClient.OracleLob.Dispose*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.EndBatch
+  commentId: M:System.Data.OracleClient.OracleLob.EndBatch
+  id: EndBatch
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: EndBatch()
+  nameWithType: OracleLob.EndBatch()
+  fullName: OracleLob.EndBatch()
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Allows server-side triggers to resume firing after performing multiple write operations.
+  remarks: Call the <xref:System.Data.OracleClient.OracleLob.BeginBatch%2A> method before you begin performing write operations on the <xref:System.Data.OracleClient.OracleLob>.
+  syntax:
+    content: public void EndBatch ();
+    parameters: []
+  overload: System.Data.OracleClient.OracleLob.EndBatch*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The connection is closed.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The object was closed or disposed.
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.Erase(System.Int64,System.Int64)
+  commentId: M:System.Data.OracleClient.OracleLob.Erase(System.Int64,System.Int64)
+  id: Erase(System.Int64,System.Int64)
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: Erase(Int64, Int64)
+  nameWithType: OracleLob.Erase(Int64, Int64)
+  fullName: OracleLob.Erase(Int64, Int64)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Erases the specified amount of data from this <xref href="System.Data.OracleClient.OracleLob"></xref>.
+  remarks: "The sum of the values in the `offset` and `amount` parameters can be greater than that of the size of the <xref:System.Data.OracleClient.OracleLob>. Therefore, specifying a value greater than that returned by the <xref:System.Data.OracleClient.OracleLob.Length%2A> property succeeds; however <xref:System.Data.OracleClient.OracleLob.Erase%2A> only erases to the end of the <xref:System.Data.OracleClient.OracleLob>. (Similarly, if a negative value is passed to `offset`, <xref:System.Data.OracleClient.OracleLob.Erase%2A> will succeed, but only erase starting from the beginning of the <xref:System.Data.OracleClient.OracleLob>.) This behavior is different from that of the <xref:System.Data.OracleClient.OracleLob.Read%2A> and <xref:System.Data.OracleClient.OracleLob.Write%2A> methods, and offers the advantage of being able to erase all data from the value specified by `offset` without making an additional roundtrip to the server to verify the actual size.  \n  \n <xref:System.Data.OracleClient.OracleLob.Erase%2A> does not truncate data. The `LOB` length remains the same for a `BLOB` data type, and the erased data is replaced by 0x00. `CLOB` and `NCLOB` data types are replaced by spaces.  \n  \n To write to the `LOB`, you must have retrieved the `LOB` using the FOR UPDATE clause in the SQL SELECT statement, and you must have a local transaction started.  \n  \n> [!NOTE]\n>  In this release, a write operation to a read-only `LOB` might succeed, but does not update the `LOB` on the server. In this case, however, the local copy of the `LOB` is updated. Therefore, later read operations on the <xref:System.Data.OracleClient.OracleLob> object might return the results of the write operation."
+  syntax:
+    content: public long Erase (long offset, long amount);
+    parameters:
+    - id: offset
+      type: System.Int64
+      description: The offset from which to erase. For `CLOB` and `NCLOB` data types, this must be an even number.
+    - id: amount
+      type: System.Int64
+      description: The quantity of data, in bytes, to erase. For `CLOB` and `NCLOB` data types, this must be an even number.
+    return:
+      type: System.Int64
+      description: The number of bytes erased.
+  overload: System.Data.OracleClient.OracleLob.Erase*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The operation is not within a transaction, the <xref href="System.Data.OracleClient.OracleLob"></xref> object is null, or the connection is closed.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The object was closed or disposed.
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.Erase
+  commentId: M:System.Data.OracleClient.OracleLob.Erase
+  id: Erase
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: Erase()
+  nameWithType: OracleLob.Erase()
+  fullName: OracleLob.Erase()
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Erases all data from this <xref href="System.Data.OracleClient.OracleLob"></xref>.
+  remarks: "<xref:System.Data.OracleClient.OracleLob.Erase%2A> does not truncate data. The `LOB` length remains the same for a `BLOB` data type, and the erased data is replaced by 0x00. `CLOB` and `NCLOB` data types are replaced by spaces.  \n  \n To write to the `LOB`, you must have retrieved the `LOB` using the FOR UPDATE clause in the SQL SELECT statement, and you must have a local transaction started.  \n  \n> [!NOTE]\n>  In this release, a write operation to a read-only `LOB` might succeed, but does not update the `LOB` on the server. In this case, however, the local copy of the `LOB` is updated. Therefore, later read operations on the <xref:System.Data.OracleClient.OracleLob> object might return the results of the write operation."
+  syntax:
+    content: public long Erase ();
+    parameters: []
+    return:
+      type: System.Int64
+      description: The number of bytes erased.
+  overload: System.Data.OracleClient.OracleLob.Erase*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The operation is not within a transaction, the <xref href="System.Data.OracleClient.OracleLob"></xref> object is null, or the connection is closed.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The object was closed or disposed.
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.Flush
+  commentId: M:System.Data.OracleClient.OracleLob.Flush
+  id: Flush
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: Flush()
+  nameWithType: OracleLob.Flush()
+  fullName: OracleLob.Flush()
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Not currently supported.
+  remarks: In this release, this method is not functional.
+  syntax:
+    content: public override void Flush ();
+    parameters: []
+  overload: System.Data.OracleClient.OracleLob.Flush*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.IsBatched
+  commentId: P:System.Data.OracleClient.OracleLob.IsBatched
+  id: IsBatched
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: IsBatched
+  nameWithType: OracleLob.IsBatched
+  fullName: OracleLob.IsBatched
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets a value indicating whether an application called the <xref href="System.Data.OracleClient.OracleLob.BeginBatch"></xref> method.
+  remarks: 'When using an Oracle 8.0.5 server, an Oracle "ORA-00600: internal error code" exception is thrown.'
+  syntax:
+    content: public bool IsBatched { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if application called the <xref href="System.Data.OracleClient.OracleLob.BeginBatch"></xref> method, otherwise `false`.'
+  overload: System.Data.OracleClient.OracleLob.IsBatched*
+  exceptions:
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.IsNull
+  commentId: P:System.Data.OracleClient.OracleLob.IsNull
+  id: IsNull
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: IsNull
+  nameWithType: OracleLob.IsNull
+  fullName: OracleLob.IsNull
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets a value that indicates whether the <xref href="System.Data.OracleClient.OracleLob"></xref> is a <xref href="System.Data.OracleClient.OracleBFile.Null"></xref> stream.
+  syntax:
+    content: public bool IsNull { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the <xref href="System.Data.OracleClient.OracleLob"></xref> is a <xref href="System.Data.OracleClient.OracleBFile.Null"></xref> stream, otherwise `false`.'
+  overload: System.Data.OracleClient.OracleLob.IsNull*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.IsTemporary
+  commentId: P:System.Data.OracleClient.OracleLob.IsTemporary
+  id: IsTemporary
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: IsTemporary
+  nameWithType: OracleLob.IsTemporary
+  fullName: OracleLob.IsTemporary
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets a value indicating whether the <xref href="System.Data.OracleClient.OracleLob"></xref> is a temporary `LOB`.
+  remarks: "The following example demonstrates how to create a temporary `LOB`.  \n  \n```  \nOracleConnection connection = new OracleConnection(\"server=MyServer; integrated security=yes;\");  \nconnection.Open();  \nOracleTransaction transaction = connection.BeginTransaction();  \nOracleCommand command = connection.CreateCommand();  \ncommand.Transaction = transaction;  \ncommand.CommandText = \"declare xx blob; begin dbms_lob.createtemporary(xx, false, 0); :tempblob := xx; end;\";  \ncommand.Parameters.Add(new OracleParameter(\"tempblob\", OracleType.Blob)).Direction = ParameterDirection.Output;  \ncommand.ExecuteNonQuery();  \nOracleLob tempLob = (OracleLob)command.Parameters[0].Value;  \ntempLob.BeginBatch(OracleLobOpenMode.ReadWrite);  \ntempLob.Write(tempbuff,0,tempbuff.Length);  \ntempLob.EndBatch();  \ncommand.Parameters.Clear();  \ncommand.CommandText = \"MyTable.MyProc\";  \ncommand.CommandType = CommandType.StoredProcedure;    \ncommand.Parameters.Add(new OracleParameter(\"ImportDoc\", OracleType.Blob)).Value = tempLob;  \ncommand.ExecuteNonQuery();  \ntransaction.Commit();  \nconnection.Close  \n```"
+  syntax:
+    content: public bool IsTemporary { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the <xref href="System.Data.OracleClient.OracleLob"></xref> is a temporary `LOB`, otherwise `false`.'
+  overload: System.Data.OracleClient.OracleLob.IsTemporary*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The connection is closed.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The object was closed or disposed.
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.Length
+  commentId: P:System.Data.OracleClient.OracleLob.Length
+  id: Length
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: Length
+  nameWithType: OracleLob.Length
+  fullName: OracleLob.Length
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets a value that returns the size of the <xref href="System.Data.OracleClient.OracleLob"></xref>.
+  remarks: The size of the <xref:System.Data.OracleClient.OracleLob> is always returned in bytes for all data types.
+  syntax:
+    content: public override long Length { get; }
+    return:
+      type: System.Int64
+      description: The size of the <xref href="System.Data.OracleClient.OracleLob"></xref> in bytes.
+  overload: System.Data.OracleClient.OracleLob.Length*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The connection is closed.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The object was closed or disposed.
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.LobType
+  commentId: P:System.Data.OracleClient.OracleLob.LobType
+  id: LobType
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: LobType
+  nameWithType: OracleLob.LobType
+  fullName: OracleLob.LobType
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets a value that returns the `LOB` data type.
+  remarks: "An <xref:System.Data.OracleClient.OracleLob> may be one of the following <xref:System.Data.OracleClient.OracleType> data types.  \n  \n|OracleType data type|Description|  \n|--------------------------|-----------------|  \n|`Blob`|An Oracle `BLOB` data type that contains binary data with a maximum size of 4 gigabytes. This maps to an <xref:System.Array> of type <xref:System.Byte>.|  \n|`Clob`|An Oracle `CLOB` data type that contains character data, based on the default character set on the server, with a maximum size of 4 gigabytes. This maps to <xref:System.String>.|  \n|`NClob`|An Oracle `NCLOB` data type that contains character data, based on the national character set on the server with a maximum size of 4 gigabytes. This maps to <xref:System.String>.|"
+  syntax:
+    content: public System.Data.OracleClient.OracleType LobType { get; }
+    return:
+      type: System.Data.OracleClient.OracleType
+      description: One of the <xref href="System.Data.OracleClient.OracleType"></xref>`LOB` data types.
+  overload: System.Data.OracleClient.OracleLob.LobType*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.Null
+  commentId: F:System.Data.OracleClient.OracleLob.Null
+  id: "Null"
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: "Null"
+  nameWithType: OracleLob.Null
+  fullName: OracleLob.Null
+  type: Field
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Represents a null <xref href="System.Data.OracleClient.OracleLob"></xref> object.
+  remarks: "You can construct an <xref:System.Data.OracleClient.OracleLob> that is NULL using this format:  \n  \n```  \nOracleLob myLob = OracleLOB.Null;  \n```  \n  \n This technique is used primarily to test whether a `LOB` returned from the server is NULL, as this example illustrates:  \n  \n```  \nIf(myLob == OracleLob.Null)  \n```  \n  \n A NULL `LOB` behaves similarly to a zero byte `LOB` in that <xref:System.Data.OracleClient.OracleLob.Read%2A> succeeds and always returns zero bytes."
+  syntax:
+    content: public static readonly System.Data.OracleClient.OracleLob Null;
+    return:
+      type: System.Data.OracleClient.OracleLob
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.Position
+  commentId: P:System.Data.OracleClient.OracleLob.Position
+  id: Position
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: Position
+  nameWithType: OracleLob.Position
+  fullName: OracleLob.Position
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets the current read position in the <xref href="System.Data.OracleClient.OracleLob"></xref> stream.
+  remarks: "The stream must support seeking to get or set the position. Use the <xref:System.Data.OracleClient.OracleLob.CanSeek%2A> property to determine whether the stream supports seeking.  \n  \n Seeking to any location beyond the length of the stream is supported. Seeking to an odd position for `CLOB` and `NCLOB` data types is also supported. For more information, see the Remarks section of the <xref:System.Data.OracleClient.OracleLob.Read%2A> property.  \n  \n The <xref:System.Data.OracleClient.OracleLob.Position%2A> property does not keep track of the number of bytes from the stream that have been consumed, skipped, or both."
+  syntax:
+    content: public override long Position { get; set; }
+    return:
+      type: System.Int64
+      description: The current position within the <xref href="System.Data.OracleClient.OracleLob"></xref> stream.
+  overload: System.Data.OracleClient.OracleLob.Position*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The connection is closed.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The object was closed or disposed.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.Read(System.Byte[],System.Int32,System.Int32)
+  commentId: M:System.Data.OracleClient.OracleLob.Read(System.Byte[],System.Int32,System.Int32)
+  id: Read(System.Byte[],System.Int32,System.Int32)
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: Read(Byte[], Int32, Int32)
+  nameWithType: OracleLob.Read(Byte[], Int32, Int32)
+  fullName: OracleLob.Read(Byte[], Int32, Int32)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Reads a sequence of bytes from the current <xref href="System.Data.OracleClient.OracleLob"></xref> stream and advances the position within the stream by the number of bytes read.
+  remarks: "The <xref:System.Data.OracleClient.OracleLob.Read%2A> method reads a maximum of `count` bytes from the current stream and stores them in `buffer` beginning at `offset`. The current position within the stream is advanced by the number of bytes read; however, if an exception occurs, the current position within the stream remains unchanged. <xref:System.Data.OracleClient.OracleLob.Read%2A> returns the number of bytes read. The return value is zero only if the position is currently at the end of the stream. <xref:System.Data.OracleClient.OracleLob.Read%2A> will block until at least one byte of data can be read, in the event that no data is available.<xref:System.Data.OracleClient.OracleLob.Read%2A> returns 0 if you attempt to read from a `LOB` when the current position is at the end of `LOB`. <xref:System.Data.OracleClient.OracleLob.Read%2A> can return fewer bytes than requested even if the end of the stream has not been reached.  \n  \n The .NET Framework Data Provider for Oracle handles all `CLOB` and `NCLOB` data as Unicode. Therefore, when accessing `CLOB` and `NCLOB` data types, you are always dealing with the number of bytes, where each character is 2 bytes. For example, if a string of text containing three characters is saved as an `NCLOB` on an Oracle server where the character set is 4 bytes per character, and you perform a `Read` operation, you specify the length of the string as 6 bytes, although it is stored as 12 bytes on the server.  \n  \n The following C# example demonstrates how to read <xref:System.Data.OracleClient.OracleLob> objects.  \n  \n```  \npublic static void ReadLobExample(OracleCommand command)  \n{  \n   int actual = 0;  \n  \n   //Select some data.  \n   // Table Schema:  \n   //  \"CREATE TABLE TableWithLobs (a int, b BLOB, c CLOB, d NCLOB)\";  \n   //  \"INSERT INTO TableWithLobs values (1, 'AA', 'AAA', N'AAAA')\";  \n   command.CommandText = \"SELECT * FROM TableWithLobs\";  \n   OracleDataReader reader = command.ExecuteReader();  \n   using(reader)  \n   {  \n      //Obtain the first row of data.  \n      reader.Read();  \n      //Obtain the LOBs (all 3 varieties).  \n      OracleLob BLOB = reader.GetOracleLob(1);  \n      OracleLob CLOB  = reader.GetOracleLob(2);  \n      OracleLob NCLOB = reader.GetOracleLob(3);  \n  \n      //Example - Reading binary data (in chunks).  \n      byte[] buffer = new byte[100];  \n      while((actual = BLOB.Read(buffer, 0, buffer.Length)) >0)  \n         Console.WriteLine(BLOB.LobType + \".Read(\" + buffer + \", \" + buffer.Length + \") => \" + actual);  \n  \n      //Example - Reading CLOB/NCLOB data (in chunks).  \n      //Note: You can read character data as raw Unicode bytes (using OracleLob.Read as in the above example).  \n      //However, because the OracleLob object inherits directly from the.NET stream object,   \n      //all the existing classes that manipluate streams can also be used. For example, the   \n      //.NET StreamReader makes converting the raw bytes into actual characters easier.  \n      StreamReader streamreader = new StreamReader(CLOB, Encoding.Unicode);  \n      char[] cbuffer = new char[100];  \n      while((actual = streamreader.Read(cbuffer, 0, cbuffer.Length)) >0)  \n         Console.WriteLine(CLOB.LobType + \".Read(\" + new string(cbuffer, 0, actual) + \", \" + cbuffer.Length + \") => \" + actual);  \n  \n      //Example - Reading data (all at once).  \n      //You could use StreamReader.ReadToEnd to obtain all the string data,or simply  \n      //call OracleLob.Value to obtain a contiguous allocation of all the data.  \n      Console.WriteLine(NCLOB.LobType + \".Value => \" + NCLOB.Value);  \n   }  \n}  \n```  \n  \n You can construct an <xref:System.Data.OracleClient.OracleLob> that is NULL using this format:  \n  \n```  \nOracleLob myLob = OracleLob.Null;  \n```  \n  \n This technique is used primarily to test whether a `LOB` returned from the server is NULL, as the following example illustrates.  \n  \n```  \nIf(myLob == OracleLob.Null)  \n```  \n  \n A NULL `LOB` behaves similarly to a zero byte `LOB` in that <xref:System.Data.OracleClient.OracleLob.Read%2A> succeeds and always returns zero bytes."
+  syntax:
+    content: public override int Read (byte[] buffer, int offset, int count);
+    parameters:
+    - id: buffer
+      type: System.Byte[]
+      description: An array of bytes. When this method returns, the buffer contains the specified byte array with the values between <code>offset</code> and (<code>offset</code> + <code>count</code>) replaced by the bytes read from the current source.
+    - id: offset
+      type: System.Int32
+      description: The zero-based byte offset in <code>buffer</code> at which to begin storing the data read from the current stream. For `CLOB` and `NCLOB` data types, this must be an even number.
+    - id: count
+      type: System.Int32
+      description: The maximum number of bytes to be read from the current stream. For `CLOB` and `NCLOB` data types, this must be an even number.
+    return:
+      type: System.Int32
+      description: The total number of bytes read into the buffer. This may be less than the number of bytes requested if that many bytes are not currently available, or zero (0) if the end of the stream has been reached.
+  overload: System.Data.OracleClient.OracleLob.Read*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code>buffer</code> is a null reference (`Nothing` in Visual Basic).
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: "A value in the <code>offset</code> or <code>count</code> parameter is not positive.  \n  \n -or-  \n  \n The sum of the offset and count parameters is larger than the buffer length.  \n  \n -or-  \n  \n A value specified in the <code>amount</code> or <code>offset</code> parameter is less than zero or greater than 4 gigabytes."
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The operation is not within a transaction, the <xref href="System.Data.OracleClient.OracleLob"></xref> object is null, or the connection is closed.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The object was closed or disposed.
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.Seek(System.Int64,System.IO.SeekOrigin)
+  commentId: M:System.Data.OracleClient.OracleLob.Seek(System.Int64,System.IO.SeekOrigin)
+  id: Seek(System.Int64,System.IO.SeekOrigin)
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: Seek(Int64, SeekOrigin)
+  nameWithType: OracleLob.Seek(Int64, SeekOrigin)
+  fullName: OracleLob.Seek(Int64, SeekOrigin)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Sets the position on the current <xref href="System.Data.OracleClient.OracleLob"></xref> stream.
+  remarks: "If `offset` is negative, the new position must precede the position specified by `origin` by the number of bytes specified by `offset`. If `offset` is zero, the new position must be the position specified by `origin`. If `offset` is positive, the new position must follow the position specified by `origin` by the number of bytes specified by `offset`.  \n  \n Seeking to any location beyond the length of the stream is supported. Seeking to an odd position for `CLOB` and `NCLOB` data types is also supported. For more information, see the Remarks section of the <xref:System.Data.OracleClient.OracleLob.Read%2A> property."
+  syntax:
+    content: public override long Seek (long offset, System.IO.SeekOrigin origin);
+    parameters:
+    - id: offset
+      type: System.Int64
+      description: A byte offset relative to origin. If <code>offset</code> is negative, the new position precedes the position specified by <code>origin</code> by the number of bytes specified by <code>offset</code>. If <code>offset</code> is zero, the new position is the position specified by <code>origin</code>. If <code>offset</code> is positive, the new position follows the position specified by <code>origin</code> by the number of bytes specified by <code>offset</code>.
+    - id: origin
+      type: System.IO.SeekOrigin
+      description: A value of type <xref href="System.IO.SeekOrigin"></xref> indicating the reference point used to obtain the new position.
+    return:
+      type: System.Int64
+      description: The new position within the current stream.
+  overload: System.Data.OracleClient.OracleLob.Seek*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The <code>origin</code> parameter does not contain a valid value.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The resulting position is beyond the length of the value.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The <xref href="System.Data.OracleClient.OracleLob"></xref> object was closed or disposed.
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.SetLength(System.Int64)
+  commentId: M:System.Data.OracleClient.OracleLob.SetLength(System.Int64)
+  id: SetLength(System.Int64)
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: SetLength(Int64)
+  nameWithType: OracleLob.SetLength(Int64)
+  fullName: OracleLob.SetLength(Int64)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Sets the length of the <xref href="System.Data.OracleClient.OracleLob"></xref> stream to a value less than the current length.
+  remarks: "An attempt to increase the length of the <xref:System.Data.OracleClient.OracleLob> stream fails, and returns \"Message: ORA-22926: specified trim length is greater than current LOB value's length\" from the Oracle server.  \n  \n A stream must support both writing and seeking for <xref:System.Data.OracleClient.OracleLob.SetLength%2A> to function.  \n  \n The .NET Framework Data Provider for Oracle handles all `CLOB` and `NCLOB` data as Unicode. Therefore, when accessing `CLOB` and `NCLOB` data types, you are always dealing with the number of bytes, where each character is 2 bytes. For example, if a string of text containing three characters is saved as an `NCLOB` on an Oracle server where the character set is 4 bytes per character, and you perform a `SetLength` operation, you specify the length of the string as 6 bytes, although it is stored as 12 bytes on the server.  \n  \n To write to the `LOB`, you must have retrieved the `LOB` using the FOR UPDATE clause in the SQL SELECT statement, and you must have a local transaction started.  \n  \n> [!NOTE]\n>  A write operation to a read-only `LOB` might succeed, but does not update the `LOB` on the server. In this case, however, the local copy of the `LOB` is updated. Therefore, later read operations on the <xref:System.Data.OracleClient.OracleLob> object might return the results of the write operation."
+  syntax:
+    content: public override void SetLength (long value);
+    parameters:
+    - id: value
+      type: System.Int64
+      description: The desired length of the current <xref href="System.Data.OracleClient.OracleLob"></xref> stream in bytes. For `CLOB` and `NCLOB` data types, this must be an even number.
+  overload: System.Data.OracleClient.OracleLob.SetLength*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: "A value specified in the <code>value</code> parameter for a `CLOB` or `NCLOB` data type is not even.  \n  \n -or-  \n  \n A value specified in the <code>value</code> parameter is less than zero or greater than 4 gigabytes."
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The operation is not within a transaction, the <xref href="System.Data.OracleClient.OracleLob"></xref> object is null, or the connection is closed.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The object was closed or disposed.
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.Value
+  commentId: P:System.Data.OracleClient.OracleLob.Value
+  id: Value
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: Value
+  nameWithType: OracleLob.Value
+  fullName: OracleLob.Value
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets the common language runtime stream value equivalent of the underlying value.
+  remarks: "For <xref:System.Data.OracleClient.OracleType.Blob> data types, <xref:System.Data.OracleClient.OracleLob.Value%2A> returns the entire underlying data as a contiguous array of type `Byte[]`. For <xref:System.Data.OracleClient.OracleType.Clob> and <xref:System.Data.OracleClient.OracleType.NClob> data types, <xref:System.Data.OracleClient.OracleLob.Value%2A> returns all the data as a `String` data type. For null data, <xref:System.Data.OracleClient.OracleLob.Value%2A> returns <xref:System.DBNull>. By comparing the returned values, you can distinguish among empty data, null data, and data.  \n  \n> [!NOTE]\n>  A benefit of using `LOB` data types is the capability to retrieve large amounts of data in chunks at the client. However, when you use <xref:System.Data.OracleClient.OracleLob.Value%2A>, you obtain all the data for the `LOB` column as one contiguous chunk, which can significantly increase application overhead."
+  syntax:
+    content: public object Value { get; }
+    return:
+      type: System.Object
+      description: For <xref href="System.Data.OracleClient.OracleType.Blob"></xref>, an array of type `Byte[]`. For <xref href="System.Data.OracleClient.OracleType.Clob"></xref> and <xref href="System.Data.OracleClient.OracleType.NClob"></xref>, a `String`. For null data, <xref href="System.DBNull"></xref>.
+  overload: System.Data.OracleClient.OracleLob.Value*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The object was closed or disposed.
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.Write(System.Byte[],System.Int32,System.Int32)
+  commentId: M:System.Data.OracleClient.OracleLob.Write(System.Byte[],System.Int32,System.Int32)
+  id: Write(System.Byte[],System.Int32,System.Int32)
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: Write(Byte[], Int32, Int32)
+  nameWithType: OracleLob.Write(Byte[], Int32, Int32)
+  fullName: OracleLob.Write(Byte[], Int32, Int32)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Writes a sequence of bytes to the current <xref href="System.Data.OracleClient.OracleLob"></xref> stream, and advances the current position within this stream by the number of bytes written.
+  remarks: "If the write operation is successful, the position within the stream advances by the number of bytes written. If an exception occurs, the position within the stream remains unchanged.  \n  \n Writing beyond the end of `LOB` is allowed and enlarges the `LOB` by the number of bytes written.  \n  \n The .NET Framework Data Provider for Oracle handles all `CLOB` and `NCLOB` data as Unicode. Therefore, when accessing `CLOB` and `NCLOB` data types, you are always dealing with the number of bytes, where each character is 2 bytes. For example, if a string of text containing three characters is saved as an `NCLOB` on an Oracle server where the character set is 4 bytes per character, and you perform a `Write` operation, you specify the length of the string as 6 bytes, although it is stored as 12 bytes on the server.  \n  \n To write to the `LOB`, you must have retrieved the `LOB` using the FOR UPDATE clause in the SQL SELECT statement, and you must have a local transaction started.  \n  \n The following C# example demonstrates how to write to <xref:System.Data.OracleClient.OracleLob> objects.  \n  \n```  \npublic static void WriteLobExample(OracleCommand command)  \n{  \n   //Note: Updating LOB data requires a transaction.  \n   command.Transaction = command.Connection.BeginTransaction();  \n   //Select some data.  \n   //    Table Schema:  \n   //        \"CREATE TABLE tablewithlobs (a int, b BLOB, c BLOB)\";  \n   //        \"INSERT INTO tablewithlobs values (1, 'AA', 'AAA')\";  \n   command.CommandText = \"SELECT * FROM TableWithLobs FOR UPDATE\";  \n   OracleDataReader reader = command.ExecuteReader();  \n   using(reader)  \n   {  \n      //Obtain the first row of data.  \n      reader.Read();  \n      //Obtain both LOBs.  \n      OracleLob BLOB1    = reader.GetOracleLob(1);  \n      OracleLob BLOB2    = reader.GetOracleLob(2);  \n      //Perform any desired operations on the LOB, (read, position, and so on).  \n      //...  \n      //Example - Writing binary data (directly to the backend).  \n      //To write, you can use any of the stream classes, or write raw binary data using   \n      //the OracleLob write method. Writing character vs. binary is the same;  \n      //however note that character is always in terms of Unicode byte counts  \n      //(for example: even number of bytes - 2 bytes for every Unicode character).  \n      byte[] buffer = new byte[100];  \n      buffer[0] = 0xCC;  \n      buffer[1] = 0xDD;  \n      BLOB1.Write(buffer, 0, 2);  \n      BLOB1.Position = 0;  \n      Console.WriteLine(BLOB1.LobType + \".Write(\" + buffer + \", 0, 2) => \" + BLOB1.Value);  \n  \n      //Example - Copying data into another LOB.  \n      long actual = BLOB1.CopyTo(BLOB2);  \n      Console.WriteLine(BLOB1.LobType + \".CopyTo(\" + BLOB2.Value + \") => \" + actual);  \n  \n      //Commit the transaction now that everything succeeded.  \n      //Note: On error, Transaction.Dispose is called (from the using statement)  \n      //and will automatically roll-back the pending transaction.  \n      command.Transaction.Commit();  \n   }  \n}  \n```  \n  \n> [!NOTE]\n>  A write operation to a read-only `LOB` might succeed, but does not update the `LOB` on the server. In this case, however, the local copy of the `LOB` is updated. Therefore, later read operations on the <xref:System.Data.OracleClient.OracleLob> object might return the results of the write operation."
+  syntax:
+    content: public override void Write (byte[] buffer, int offset, int count);
+    parameters:
+    - id: buffer
+      type: System.Byte[]
+      description: An array of bytes. This method copies the number of bytes specified in <code>count</code> from <code>buffer</code> to the current stream.
+    - id: offset
+      type: System.Int32
+      description: The zero-based byte offset in <code>buffer</code> at which to begin copying bytes to the current stream. For `CLOB` and `NCLOB` data types, this must be an even number.
+    - id: count
+      type: System.Int32
+      description: The number of bytes to be written to the current stream. For `CLOB` and `NCLOB` data types, this must be an even number.
+  overload: System.Data.OracleClient.OracleLob.Write*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code>buffer</code> parameter is a null reference (`Nothing` in Visual Basic).
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: "A value in the <code>offset</code> or <code>count</code> parameter is not positive.  \n  \n -or-  \n  \n The sum of the <code>offset</code> and <code>count</code> parameters is larger than the <code>buffer</code> length.  \n  \n -or-  \n  \n A value specified in the <code>count</code> or <code>offset</code> parameter is less than zero or greater than 4 gigabytes.  \n  \n -or-  \n  \n You must specify `CLOB` and `NCLOB` data types as an even number of bytes."
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The operation is not within a transaction, the <xref href="System.Data.OracleClient.OracleLob"></xref> object is null, or the connection is closed.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The object was closed or disposed.
+  - type: System.Data.OracleClient.OracleException
+    commentId: T:System.Data.OracleClient.OracleException
+    description: An Oracle error has occurred.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleLob.WriteByte(System.Byte)
+  commentId: M:System.Data.OracleClient.OracleLob.WriteByte(System.Byte)
+  id: WriteByte(System.Byte)
+  parent: System.Data.OracleClient.OracleLob
+  langs:
+  - csharp
+  name: WriteByte(Byte)
+  nameWithType: OracleLob.WriteByte(Byte)
+  fullName: OracleLob.WriteByte(Byte)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Writes a byte to the current position in the <xref href="System.Data.OracleClient.OracleLob"></xref> stream, and advances the position within the stream by one byte.
+  remarks: "If the write operation is successful, the position within the stream advances by one byte. If an exception occurs, the position within the stream remains unchanged.  \n  \n Writing beyond the end of the `LOB` is allowed and enlarges the `LOB` by one byte.  \n  \n To write to the `LOB`, you must have retrieved the `LOB` using the FOR UPDATE clause in the SQL SELECT statement, and you must have a local transaction started.  \n  \n> [!NOTE]\n>  A write operation to a read-only `LOB` might succeed, but does not update the `LOB` on the server. In this case, however, the local copy of the `LOB` is updated. Therefore, later read operations on the <xref:System.Data.OracleClient.OracleLob> object might return the results of the write operation."
+  syntax:
+    content: public override void WriteByte (byte value);
+    parameters:
+    - id: value
+      type: System.Byte
+      description: The byte to write to the stream.
+  overload: System.Data.OracleClient.OracleLob.WriteByte*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+references:
+- uid: System.IO.Stream
+  parent: System.IO
+  isExternal: false
+  name: Stream
+  nameWithType: Stream
+  fullName: System.IO.Stream
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.InvalidOperationException
+  parent: System
+  isExternal: false
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.ObjectDisposedException
+  parent: System
+  isExternal: false
+  name: ObjectDisposedException
+  nameWithType: ObjectDisposedException
+  fullName: System.ObjectDisposedException
+- uid: System.Data.OracleClient.OracleException
+  parent: System.Data.OracleClient
+  isExternal: false
+  name: OracleException
+  nameWithType: OracleException
+  fullName: System.Data.OracleClient.OracleException
+- uid: System.ArgumentOutOfRangeException
+  parent: System
+  isExternal: false
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.Data.OracleClient.OracleLob.Append(System.Data.OracleClient.OracleLob)
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Append(OracleLob)
+  nameWithType: OracleLob.Append(OracleLob)
+  fullName: OracleLob.Append(OracleLob)
+- uid: System.Data.OracleClient.OracleLob
+  parent: System.Data.OracleClient
+  isExternal: false
+  name: OracleLob
+  nameWithType: OracleLob
+  fullName: System.Data.OracleClient.OracleLob
+- uid: System.Data.OracleClient.OracleLob.BeginBatch
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: BeginBatch()
+  nameWithType: OracleLob.BeginBatch()
+  fullName: OracleLob.BeginBatch()
+- uid: System.Data.OracleClient.OracleLob.BeginBatch(System.Data.OracleClient.OracleLobOpenMode)
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: BeginBatch(OracleLobOpenMode)
+  nameWithType: OracleLob.BeginBatch(OracleLobOpenMode)
+  fullName: OracleLob.BeginBatch(OracleLobOpenMode)
+- uid: System.Data.OracleClient.OracleLobOpenMode
+  parent: System.Data.OracleClient
+  isExternal: false
+  name: OracleLobOpenMode
+  nameWithType: OracleLobOpenMode
+  fullName: System.Data.OracleClient.OracleLobOpenMode
+- uid: System.Data.OracleClient.OracleLob.CanRead
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: CanRead
+  nameWithType: OracleLob.CanRead
+  fullName: OracleLob.CanRead
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Data.OracleClient.OracleLob.CanSeek
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: CanSeek
+  nameWithType: OracleLob.CanSeek
+  fullName: OracleLob.CanSeek
+- uid: System.Data.OracleClient.OracleLob.CanWrite
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: CanWrite
+  nameWithType: OracleLob.CanWrite
+  fullName: OracleLob.CanWrite
+- uid: System.Data.OracleClient.OracleLob.ChunkSize
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: ChunkSize
+  nameWithType: OracleLob.ChunkSize
+  fullName: OracleLob.ChunkSize
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Data.OracleClient.OracleLob.Clone
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Clone()
+  nameWithType: OracleLob.Clone()
+  fullName: OracleLob.Clone()
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Data.OracleClient.OracleLob.Connection
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Connection
+  nameWithType: OracleLob.Connection
+  fullName: OracleLob.Connection
+- uid: System.Data.OracleClient.OracleConnection
+  parent: System.Data.OracleClient
+  isExternal: false
+  name: OracleConnection
+  nameWithType: OracleConnection
+  fullName: System.Data.OracleClient.OracleConnection
+- uid: System.Data.OracleClient.OracleLob.CopyTo(System.Data.OracleClient.OracleLob)
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: CopyTo(OracleLob)
+  nameWithType: OracleLob.CopyTo(OracleLob)
+  fullName: OracleLob.CopyTo(OracleLob)
+- uid: System.Int64
+  parent: System
+  isExternal: false
+  name: Int64
+  nameWithType: Int64
+  fullName: System.Int64
+- uid: System.Data.OracleClient.OracleLob.CopyTo(System.Data.OracleClient.OracleLob,System.Int64)
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: CopyTo(OracleLob, Int64)
+  nameWithType: OracleLob.CopyTo(OracleLob, Int64)
+  fullName: OracleLob.CopyTo(OracleLob, Int64)
+- uid: System.Data.OracleClient.OracleLob.CopyTo(System.Int64,System.Data.OracleClient.OracleLob,System.Int64,System.Int64)
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: CopyTo(Int64, OracleLob, Int64, Int64)
+  nameWithType: OracleLob.CopyTo(Int64, OracleLob, Int64, Int64)
+  fullName: OracleLob.CopyTo(Int64, OracleLob, Int64, Int64)
+- uid: System.Data.OracleClient.OracleLob.Dispose(System.Boolean)
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Dispose(Boolean)
+  nameWithType: OracleLob.Dispose(Boolean)
+  fullName: OracleLob.Dispose(Boolean)
+- uid: System.Data.OracleClient.OracleLob.EndBatch
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: EndBatch()
+  nameWithType: OracleLob.EndBatch()
+  fullName: OracleLob.EndBatch()
+- uid: System.Data.OracleClient.OracleLob.Erase(System.Int64,System.Int64)
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Erase(Int64, Int64)
+  nameWithType: OracleLob.Erase(Int64, Int64)
+  fullName: OracleLob.Erase(Int64, Int64)
+- uid: System.Data.OracleClient.OracleLob.Erase
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Erase()
+  nameWithType: OracleLob.Erase()
+  fullName: OracleLob.Erase()
+- uid: System.Data.OracleClient.OracleLob.Flush
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Flush()
+  nameWithType: OracleLob.Flush()
+  fullName: OracleLob.Flush()
+- uid: System.Data.OracleClient.OracleLob.IsBatched
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: IsBatched
+  nameWithType: OracleLob.IsBatched
+  fullName: OracleLob.IsBatched
+- uid: System.Data.OracleClient.OracleLob.IsNull
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: IsNull
+  nameWithType: OracleLob.IsNull
+  fullName: OracleLob.IsNull
+- uid: System.Data.OracleClient.OracleLob.IsTemporary
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: IsTemporary
+  nameWithType: OracleLob.IsTemporary
+  fullName: OracleLob.IsTemporary
+- uid: System.Data.OracleClient.OracleLob.Length
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Length
+  nameWithType: OracleLob.Length
+  fullName: OracleLob.Length
+- uid: System.Data.OracleClient.OracleLob.LobType
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: LobType
+  nameWithType: OracleLob.LobType
+  fullName: OracleLob.LobType
+- uid: System.Data.OracleClient.OracleType
+  parent: System.Data.OracleClient
+  isExternal: false
+  name: OracleType
+  nameWithType: OracleType
+  fullName: System.Data.OracleClient.OracleType
+- uid: System.Data.OracleClient.OracleLob.Null
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: "Null"
+  nameWithType: OracleLob.Null
+  fullName: OracleLob.Null
+- uid: System.Data.OracleClient.OracleLob.Position
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Position
+  nameWithType: OracleLob.Position
+  fullName: OracleLob.Position
+- uid: System.Data.OracleClient.OracleLob.Read(System.Byte[],System.Int32,System.Int32)
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Read(Byte[], Int32, Int32)
+  nameWithType: OracleLob.Read(Byte[], Int32, Int32)
+  fullName: OracleLob.Read(Byte[], Int32, Int32)
+- uid: System.Byte
+  name: Byte
+  nameWithType: Byte
+  fullName: System.Byte
+- uid: System.Byte[]
+  parent: System
+  isExternal: false
+  name: Byte[]
+  nameWithType: Byte[]
+  fullName: System.Byte[]
+  spec.csharp:
+  - uid: System.Byte
+    name: Byte
+    nameWithType: Byte
+    fullName: System.Byte
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+- uid: System.Data.OracleClient.OracleLob.Seek(System.Int64,System.IO.SeekOrigin)
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Seek(Int64, SeekOrigin)
+  nameWithType: OracleLob.Seek(Int64, SeekOrigin)
+  fullName: OracleLob.Seek(Int64, SeekOrigin)
+- uid: System.IO.SeekOrigin
+  parent: System.IO
+  isExternal: false
+  name: SeekOrigin
+  nameWithType: SeekOrigin
+  fullName: System.IO.SeekOrigin
+- uid: System.Data.OracleClient.OracleLob.SetLength(System.Int64)
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: SetLength(Int64)
+  nameWithType: OracleLob.SetLength(Int64)
+  fullName: OracleLob.SetLength(Int64)
+- uid: System.Data.OracleClient.OracleLob.Value
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Value
+  nameWithType: OracleLob.Value
+  fullName: OracleLob.Value
+- uid: System.Data.OracleClient.OracleLob.Write(System.Byte[],System.Int32,System.Int32)
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Write(Byte[], Int32, Int32)
+  nameWithType: OracleLob.Write(Byte[], Int32, Int32)
+  fullName: OracleLob.Write(Byte[], Int32, Int32)
+- uid: System.Data.OracleClient.OracleLob.WriteByte(System.Byte)
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: WriteByte(Byte)
+  nameWithType: OracleLob.WriteByte(Byte)
+  fullName: OracleLob.WriteByte(Byte)
+- uid: System.Data.OracleClient.OracleLob.Append*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Append
+  nameWithType: OracleLob.Append
+  fullName: OracleLob.Append
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.BeginBatch*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: BeginBatch
+  nameWithType: OracleLob.BeginBatch
+  fullName: OracleLob.BeginBatch
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.CanRead*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: CanRead
+  nameWithType: OracleLob.CanRead
+  fullName: OracleLob.CanRead
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.CanSeek*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: CanSeek
+  nameWithType: OracleLob.CanSeek
+  fullName: OracleLob.CanSeek
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.CanWrite*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: CanWrite
+  nameWithType: OracleLob.CanWrite
+  fullName: OracleLob.CanWrite
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.ChunkSize*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: ChunkSize
+  nameWithType: OracleLob.ChunkSize
+  fullName: OracleLob.ChunkSize
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.Clone*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Clone
+  nameWithType: OracleLob.Clone
+  fullName: OracleLob.Clone
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.Connection*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Connection
+  nameWithType: OracleLob.Connection
+  fullName: OracleLob.Connection
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.CopyTo*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: CopyTo
+  nameWithType: OracleLob.CopyTo
+  fullName: OracleLob.CopyTo
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.Dispose*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Dispose
+  nameWithType: OracleLob.Dispose
+  fullName: OracleLob.Dispose
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.EndBatch*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: EndBatch
+  nameWithType: OracleLob.EndBatch
+  fullName: OracleLob.EndBatch
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.Erase*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Erase
+  nameWithType: OracleLob.Erase
+  fullName: OracleLob.Erase
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.Flush*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Flush
+  nameWithType: OracleLob.Flush
+  fullName: OracleLob.Flush
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.IsBatched*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: IsBatched
+  nameWithType: OracleLob.IsBatched
+  fullName: OracleLob.IsBatched
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.IsNull*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: IsNull
+  nameWithType: OracleLob.IsNull
+  fullName: OracleLob.IsNull
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.IsTemporary*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: IsTemporary
+  nameWithType: OracleLob.IsTemporary
+  fullName: OracleLob.IsTemporary
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.Length*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Length
+  nameWithType: OracleLob.Length
+  fullName: OracleLob.Length
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.LobType*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: LobType
+  nameWithType: OracleLob.LobType
+  fullName: OracleLob.LobType
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.Position*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Position
+  nameWithType: OracleLob.Position
+  fullName: OracleLob.Position
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.Read*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Read
+  nameWithType: OracleLob.Read
+  fullName: OracleLob.Read
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.Seek*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Seek
+  nameWithType: OracleLob.Seek
+  fullName: OracleLob.Seek
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.SetLength*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: SetLength
+  nameWithType: OracleLob.SetLength
+  fullName: OracleLob.SetLength
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.Value*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Value
+  nameWithType: OracleLob.Value
+  fullName: OracleLob.Value
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.Write*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: Write
+  nameWithType: OracleLob.Write
+  fullName: OracleLob.Write
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Data.OracleClient.OracleLob.WriteByte*
+  parent: System.Data.OracleClient.OracleLob
+  isExternal: false
+  name: WriteByte
+  nameWithType: OracleLob.WriteByte
+  fullName: OracleLob.WriteByte
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleLob.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.IO.Stream.BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)
+  parent: System.IO.Stream
+  isExternal: false
+  name: BeginRead(Byte[], Int32, Int32, AsyncCallback, Object)
+  nameWithType: Stream.BeginRead(Byte[], Int32, Int32, AsyncCallback, Object)
+  fullName: Stream.BeginRead(Byte[], Int32, Int32, AsyncCallback, Object)
+- uid: System.IO.Stream.BeginWrite(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)
+  parent: System.IO.Stream
+  isExternal: false
+  name: BeginWrite(Byte[], Int32, Int32, AsyncCallback, Object)
+  nameWithType: Stream.BeginWrite(Byte[], Int32, Int32, AsyncCallback, Object)
+  fullName: Stream.BeginWrite(Byte[], Int32, Int32, AsyncCallback, Object)
+- uid: System.IO.Stream.CanTimeout
+  parent: System.IO.Stream
+  isExternal: false
+  name: CanTimeout
+  nameWithType: Stream.CanTimeout
+  fullName: Stream.CanTimeout
+- uid: System.IO.Stream.Close
+  parent: System.IO.Stream
+  isExternal: false
+  name: Close()
+  nameWithType: Stream.Close()
+  fullName: Stream.Close()
+- uid: System.IO.Stream.CopyTo(System.IO.Stream,System.Int32)
+  parent: System.IO.Stream
+  isExternal: false
+  name: CopyTo(Stream, Int32)
+  nameWithType: Stream.CopyTo(Stream, Int32)
+  fullName: Stream.CopyTo(Stream, Int32)
+- uid: System.IO.Stream.CopyTo(System.IO.Stream)
+  parent: System.IO.Stream
+  isExternal: false
+  name: CopyTo(Stream)
+  nameWithType: Stream.CopyTo(Stream)
+  fullName: Stream.CopyTo(Stream)
+- uid: System.IO.Stream.CopyToAsync(System.IO.Stream)
+  parent: System.IO.Stream
+  isExternal: false
+  name: CopyToAsync(Stream)
+  nameWithType: Stream.CopyToAsync(Stream)
+  fullName: Stream.CopyToAsync(Stream)
+- uid: System.IO.Stream.CopyToAsync(System.IO.Stream,System.Int32)
+  parent: System.IO.Stream
+  isExternal: false
+  name: CopyToAsync(Stream, Int32)
+  nameWithType: Stream.CopyToAsync(Stream, Int32)
+  fullName: Stream.CopyToAsync(Stream, Int32)
+- uid: System.IO.Stream.CopyToAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)
+  parent: System.IO.Stream
+  isExternal: false
+  name: CopyToAsync(Stream, Int32, CancellationToken)
+  nameWithType: Stream.CopyToAsync(Stream, Int32, CancellationToken)
+  fullName: Stream.CopyToAsync(Stream, Int32, CancellationToken)
+- uid: System.IO.Stream.CreateWaitHandle
+  parent: System.IO.Stream
+  isExternal: false
+  name: CreateWaitHandle()
+  nameWithType: Stream.CreateWaitHandle()
+  fullName: Stream.CreateWaitHandle()
+- uid: System.IO.Stream.Dispose
+  parent: System.IO.Stream
+  isExternal: false
+  name: Dispose()
+  nameWithType: Stream.Dispose()
+  fullName: Stream.Dispose()
+- uid: System.IO.Stream.EndRead(System.IAsyncResult)
+  parent: System.IO.Stream
+  isExternal: false
+  name: EndRead(IAsyncResult)
+  nameWithType: Stream.EndRead(IAsyncResult)
+  fullName: Stream.EndRead(IAsyncResult)
+- uid: System.IO.Stream.EndWrite(System.IAsyncResult)
+  parent: System.IO.Stream
+  isExternal: false
+  name: EndWrite(IAsyncResult)
+  nameWithType: Stream.EndWrite(IAsyncResult)
+  fullName: Stream.EndWrite(IAsyncResult)
+- uid: System.IO.Stream.FlushAsync
+  parent: System.IO.Stream
+  isExternal: false
+  name: FlushAsync()
+  nameWithType: Stream.FlushAsync()
+  fullName: Stream.FlushAsync()
+- uid: System.IO.Stream.FlushAsync(System.Threading.CancellationToken)
+  parent: System.IO.Stream
+  isExternal: false
+  name: FlushAsync(CancellationToken)
+  nameWithType: Stream.FlushAsync(CancellationToken)
+  fullName: Stream.FlushAsync(CancellationToken)
+- uid: System.IO.Stream.ObjectInvariant
+  parent: System.IO.Stream
+  isExternal: false
+  name: ObjectInvariant()
+  nameWithType: Stream.ObjectInvariant()
+  fullName: Stream.ObjectInvariant()
+- uid: System.IO.Stream.ReadAsync(System.Byte[],System.Int32,System.Int32)
+  parent: System.IO.Stream
+  isExternal: false
+  name: ReadAsync(Byte[], Int32, Int32)
+  nameWithType: Stream.ReadAsync(Byte[], Int32, Int32)
+  fullName: Stream.ReadAsync(Byte[], Int32, Int32)
+- uid: System.IO.Stream.ReadAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)
+  parent: System.IO.Stream
+  isExternal: false
+  name: ReadAsync(Byte[], Int32, Int32, CancellationToken)
+  nameWithType: Stream.ReadAsync(Byte[], Int32, Int32, CancellationToken)
+  fullName: Stream.ReadAsync(Byte[], Int32, Int32, CancellationToken)
+- uid: System.IO.Stream.ReadByte
+  parent: System.IO.Stream
+  isExternal: false
+  name: ReadByte()
+  nameWithType: Stream.ReadByte()
+  fullName: Stream.ReadByte()
+- uid: System.IO.Stream.ReadTimeout
+  parent: System.IO.Stream
+  isExternal: false
+  name: ReadTimeout
+  nameWithType: Stream.ReadTimeout
+  fullName: Stream.ReadTimeout
+- uid: System.IO.Stream.Synchronized(System.IO.Stream)
+  parent: System.IO.Stream
+  isExternal: false
+  name: Synchronized(Stream)
+  nameWithType: Stream.Synchronized(Stream)
+  fullName: Stream.Synchronized(Stream)
+- uid: System.IO.Stream.WriteAsync(System.Byte[],System.Int32,System.Int32)
+  parent: System.IO.Stream
+  isExternal: false
+  name: WriteAsync(Byte[], Int32, Int32)
+  nameWithType: Stream.WriteAsync(Byte[], Int32, Int32)
+  fullName: Stream.WriteAsync(Byte[], Int32, Int32)
+- uid: System.IO.Stream.WriteAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)
+  parent: System.IO.Stream
+  isExternal: false
+  name: WriteAsync(Byte[], Int32, Int32, CancellationToken)
+  nameWithType: Stream.WriteAsync(Byte[], Int32, Int32, CancellationToken)
+  fullName: Stream.WriteAsync(Byte[], Int32, Int32, CancellationToken)
+- uid: System.IO.Stream.WriteTimeout
+  parent: System.IO.Stream
+  isExternal: false
+  name: WriteTimeout
+  nameWithType: Stream.WriteTimeout
+  fullName: Stream.WriteTimeout
+- uid: System.Data.SqlTypes.INullable
+  parent: System.Data.SqlTypes
+  isExternal: false
+  name: INullable
+  nameWithType: INullable
+  fullName: System.Data.SqlTypes.INullable
+- uid: System.ICloneable
+  parent: System
+  isExternal: false
+  name: ICloneable
+  nameWithType: ICloneable
+  fullName: System.ICloneable

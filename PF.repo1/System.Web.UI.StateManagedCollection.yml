@@ -1,0 +1,2528 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Web.UI.StateManagedCollection
+  commentId: T:System.Web.UI.StateManagedCollection
+  id: StateManagedCollection
+  children:
+  - System.Web.UI.StateManagedCollection.#ctor
+  - System.Web.UI.StateManagedCollection.Clear
+  - System.Web.UI.StateManagedCollection.CopyTo(System.Array,System.Int32)
+  - System.Web.UI.StateManagedCollection.Count
+  - System.Web.UI.StateManagedCollection.CreateKnownType(System.Int32)
+  - System.Web.UI.StateManagedCollection.GetEnumerator
+  - System.Web.UI.StateManagedCollection.GetKnownTypes
+  - System.Web.UI.StateManagedCollection.OnClear
+  - System.Web.UI.StateManagedCollection.OnClearComplete
+  - System.Web.UI.StateManagedCollection.OnInsert(System.Int32,System.Object)
+  - System.Web.UI.StateManagedCollection.OnInsertComplete(System.Int32,System.Object)
+  - System.Web.UI.StateManagedCollection.OnRemove(System.Int32,System.Object)
+  - System.Web.UI.StateManagedCollection.OnRemoveComplete(System.Int32,System.Object)
+  - System.Web.UI.StateManagedCollection.OnValidate(System.Object)
+  - System.Web.UI.StateManagedCollection.SetDirty
+  - System.Web.UI.StateManagedCollection.SetDirtyObject(System.Object)
+  - System.Web.UI.StateManagedCollection.System#Collections#ICollection#Count
+  - System.Web.UI.StateManagedCollection.System#Collections#ICollection#IsSynchronized
+  - System.Web.UI.StateManagedCollection.System#Collections#ICollection#SyncRoot
+  - System.Web.UI.StateManagedCollection.System#Collections#IEnumerable#GetEnumerator
+  - System.Web.UI.StateManagedCollection.System#Collections#IList#Add(System.Object)
+  - System.Web.UI.StateManagedCollection.System#Collections#IList#Clear
+  - System.Web.UI.StateManagedCollection.System#Collections#IList#Contains(System.Object)
+  - System.Web.UI.StateManagedCollection.System#Collections#IList#IndexOf(System.Object)
+  - System.Web.UI.StateManagedCollection.System#Collections#IList#Insert(System.Int32,System.Object)
+  - System.Web.UI.StateManagedCollection.System#Collections#IList#IsFixedSize
+  - System.Web.UI.StateManagedCollection.System#Collections#IList#IsReadOnly
+  - System.Web.UI.StateManagedCollection.System#Collections#IList#Item(System.Int32)
+  - System.Web.UI.StateManagedCollection.System#Collections#IList#Remove(System.Object)
+  - System.Web.UI.StateManagedCollection.System#Collections#IList#RemoveAt(System.Int32)
+  - System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#IsTrackingViewState
+  - System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#LoadViewState(System.Object)
+  - System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#SaveViewState
+  - System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#TrackViewState
+  langs:
+  - csharp
+  name: StateManagedCollection
+  nameWithType: StateManagedCollection
+  fullName: System.Web.UI.StateManagedCollection
+  type: Class
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Provides a base class for all strongly typed collections that manage <xref href="System.Web.UI.IStateManager"></xref> objects.
+  remarks: "The <xref:System.Web.UI.StateManagedCollection> class is the base class for all strongly typed collections that store <xref:System.Web.UI.IStateManager> elements, including <xref:System.Web.UI.WebControls.DataControlFieldCollection>, <xref:System.Web.UI.WebControls.ParameterCollection>, <xref:System.Web.UI.WebControls.StyleCollection>, <xref:System.Web.UI.WebControls.TreeNodeBindingCollection>, and others. The <xref:System.Web.UI.StateManagedCollection> collection manages its own state as well as the state of the elements it contains. Therefore, a call to <xref:System.Web.UI.StateManagedCollection.System%23Web%23UI%23IStateManager%23SaveViewState%2A> saves the state of the collection and the state of all the elements currently contained by the collection.  \n  \n The most important methods to consider when deriving from the <xref:System.Web.UI.StateManagedCollection> class are <xref:System.Web.UI.StateManagedCollection.CreateKnownType%2A>, <xref:System.Web.UI.StateManagedCollection.GetKnownTypes%2A>, <xref:System.Web.UI.StateManagedCollection.OnValidate%2A>, <xref:System.Web.UI.StateManagedCollection.SetDirty%2A>, and <xref:System.Web.UI.StateManagedCollection.SetDirtyObject%2A>. The <xref:System.Web.UI.StateManagedCollection.CreateKnownType%2A> and <xref:System.Web.UI.StateManagedCollection.GetKnownTypes%2A> methods are used to store an index in view state for the type of a contained element. Storing an index rather than a fully qualified type name improves performance. The <xref:System.Web.UI.StateManagedCollection.OnValidate%2A> method is called whenever elements of the collection are manipulated, and validates the elements according to business rules. Currently, the implementation of the <xref:System.Web.UI.StateManagedCollection.OnValidate%2A> method prohibits `null` objects from being stored in the collection; however, you can override this method to define your own validation behavior in a derived type. The <xref:System.Web.UI.StateManagedCollection.SetDirty%2A> method forces the entire collection to be serialized to view state, rather than just serializing changes made to state since the last time it was loaded. The <xref:System.Web.UI.StateManagedCollection.SetDirtyObject%2A> method is an abstract method you can implement to perform this same behavior at the element level.  \n  \n> [!IMPORTANT]\n>  <xref:System.Web.UI.StateManagedCollection> stores assembly-qualified type names of the collection items in view state. A site visitor could decode the view state and retrieve the type name. If this scenario creates a security concern in your Web site, you can manually encrypt the type name before placing it in the view state."
+  example:
+  - "The following code example demonstrates how to derive a strongly typed collection class from <xref:System.Web.UI.StateManagedCollection> to contain <xref:System.Web.UI.IStateManager> objects. In this example, the `CycleCollection` is derived to contain instances of the abstract `Cycle` class, which can be either `Bicycle` or `Tricycle` objects. The `Cycle` class implements the <xref:System.Web.UI.IStateManager> interface because it stores the value of the `CycleColor` property in view state.  \n  \n [!code-csharp[Samples.AspNet.CycleCollection#1](~/samples/snippets/csharp/VS_Snippets_WebNet/Samples.AspNet.CycleCollection/CS/statemanagedcollectionsample.cs#1)]\n [!code-vb[Samples.AspNet.CycleCollection#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/Samples.AspNet.CycleCollection/VB/statemanagedcollectionsample.vb#1)]"
+  syntax:
+    content: 'public abstract class StateManagedCollection : System.Collections.IList, System.Web.UI.IStateManager'
+  inheritance:
+  - System.Object
+  derivedClasses:
+  - System.Web.UI.WebControls.DataControlFieldCollection
+  - System.Web.UI.WebControls.DataPagerFieldCollection
+  - System.Web.UI.WebControls.HotSpotCollection
+  - System.Web.UI.WebControls.MenuItemBindingCollection
+  - System.Web.UI.WebControls.MenuItemStyleCollection
+  - System.Web.UI.WebControls.ParameterCollection
+  - System.Web.UI.WebControls.StyleCollection
+  - System.Web.UI.WebControls.SubMenuStyleCollection
+  - System.Web.UI.WebControls.TreeNodeBindingCollection
+  - System.Web.UI.WebControls.TreeNodeStyleCollection
+  - System.Web.UI.WebControls.Expressions.DataSourceExpressionCollection
+  implements:
+  - System.Collections.IList
+  - System.Web.UI.IStateManager
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Linq.Enumerable.Cast``1(System.Collections.IEnumerable)
+  - System.Linq.Enumerable.OfType``1(System.Collections.IEnumerable)
+  - System.Linq.ParallelEnumerable.AsParallel(System.Collections.IEnumerable)
+  - System.Linq.Queryable.AsQueryable(System.Collections.IEnumerable)
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.#ctor
+  commentId: M:System.Web.UI.StateManagedCollection.#ctor
+  id: '#ctor'
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: StateManagedCollection()
+  nameWithType: StateManagedCollection.StateManagedCollection()
+  fullName: StateManagedCollection.StateManagedCollection()
+  type: Constructor
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Initializes a new instance of the <xref href="System.Web.UI.StateManagedCollection"></xref> class.
+  remarks: Derived classes can override the constructor to provide customized implementation.
+  syntax:
+    content: protected StateManagedCollection ();
+    parameters: []
+  overload: System.Web.UI.StateManagedCollection.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.Clear
+  commentId: M:System.Web.UI.StateManagedCollection.Clear
+  id: Clear
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: Clear()
+  nameWithType: StateManagedCollection.Clear()
+  fullName: StateManagedCollection.Clear()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Removes all items from the <xref href="System.Web.UI.StateManagedCollection"></xref> collection.
+  remarks: The <xref:System.Web.UI.StateManagedCollection.OnClear%2A> method is called before the <xref:System.Web.UI.StateManagedCollection.Clear%2A> method is called, and the <xref:System.Web.UI.StateManagedCollection.OnClearComplete%2A> method is called after <xref:System.Web.UI.StateManagedCollection.Clear%2A> has finished removing elements from the collection.
+  syntax:
+    content: public void Clear ();
+    parameters: []
+  overload: System.Web.UI.StateManagedCollection.Clear*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.CopyTo(System.Array,System.Int32)
+  commentId: M:System.Web.UI.StateManagedCollection.CopyTo(System.Array,System.Int32)
+  id: CopyTo(System.Array,System.Int32)
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: CopyTo(Array, Int32)
+  nameWithType: StateManagedCollection.CopyTo(Array, Int32)
+  fullName: StateManagedCollection.CopyTo(Array, Int32)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Copies the elements of the <xref href="System.Web.UI.StateManagedCollection"></xref> collection to an array, starting at a particular array index.
+  remarks: "The specified array must be of a compatible type.  \n  \n The elements are copied to the <xref:System.Array> in the same order in which the enumerator iterates through the <xref:System.Web.UI.StateManagedCollection> collection."
+  syntax:
+    content: public void CopyTo (Array array, int index);
+    parameters:
+    - id: array
+      type: System.Array
+      description: The one-dimensional <xref href="System.Array"></xref> that is the destination of the elements copied from the <xref href="System.Web.UI.StateManagedCollection"></xref>. The <xref href="System.Array"></xref> must have zero-based indexing.
+    - id: index
+      type: System.Int32
+      description: The zero-based index in <code>array</code> at which copying begins.
+  overload: System.Web.UI.StateManagedCollection.CopyTo*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>array</code> is `null`.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>index</code> is less than zero.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: "<code>array</code> is multidimensional.  \n  \n \\- or -  \n  \n <code>index</code> is greater than or equal to the length of <code>array</code>.  \n  \n \\- or -  \n  \n The number of elements in the source <xref href=\"System.Web.UI.StateManagedCollection\"></xref> is greater than the available space from the <code>index</code> to the end of the destination <code>array</code>."
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.Count
+  commentId: P:System.Web.UI.StateManagedCollection.Count
+  id: Count
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: Count
+  nameWithType: StateManagedCollection.Count
+  fullName: StateManagedCollection.Count
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Gets the number of elements contained in the <xref href="System.Web.UI.StateManagedCollection"></xref> collection.
+  syntax:
+    content: public int Count { get; }
+    return:
+      type: System.Int32
+      description: The number of elements contained in the <xref href="System.Web.UI.StateManagedCollection"></xref>.
+  overload: System.Web.UI.StateManagedCollection.Count*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.CreateKnownType(System.Int32)
+  commentId: M:System.Web.UI.StateManagedCollection.CreateKnownType(System.Int32)
+  id: CreateKnownType(System.Int32)
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: CreateKnownType(Int32)
+  nameWithType: StateManagedCollection.CreateKnownType(Int32)
+  fullName: StateManagedCollection.CreateKnownType(Int32)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: When overridden in a derived class, creates an instance of a class that implements <xref href="System.Web.UI.IStateManager"></xref>. The type of object created is based on the specified member of the collection returned by the <xref href="System.Web.UI.StateManagedCollection.GetKnownTypes"></xref> method.
+  remarks: The <xref:System.Web.UI.StateManagedCollection.CreateKnownType%2A> method is called internally by the <xref:System.Web.UI.StateManagedCollection> collection in its implementation of the <xref:System.Web.UI.StateManagedCollection.System%23Web%23UI%23IStateManager%23LoadViewState%2A?displayProperty=fullName> method. Derived collections override the <xref:System.Web.UI.StateManagedCollection.CreateKnownType%2A> method to return a default instance of the <xref:System.Web.UI.IStateManager> type identified by the provided `index`, which maps to one of the types returned by the <xref:System.Web.UI.StateManagedCollection.GetKnownTypes%2A> method.
+  example:
+  - "The following code example demonstrates how a strongly typed <xref:System.Web.UI.StateManagedCollection> class implements the <xref:System.Web.UI.StateManagedCollection.CreateKnownType%2A> method. The `CycleCollection` implementation of <xref:System.Web.UI.StateManagedCollection.CreateKnownType%2A> returns the default instance of either a `Bicycle` or `Tricycle` object, depending on the index passed. This code example is part of a larger example provided for the <xref:System.Web.UI.StateManagedCollection> class.  \n  \n [!code-csharp[Samples.AspNet.CycleCollection#2](~/samples/snippets/csharp/VS_Snippets_WebNet/Samples.AspNet.CycleCollection/CS/statemanagedcollectionsample.cs#2)]\n [!code-vb[Samples.AspNet.CycleCollection#2](~/samples/snippets/visualbasic/VS_Snippets_WebNet/Samples.AspNet.CycleCollection/VB/statemanagedcollectionsample.vb#2)]"
+  syntax:
+    content: protected virtual object CreateKnownType (int index);
+    parameters:
+    - id: index
+      type: System.Int32
+      description: The index, from the ordered list of types returned by <xref href="System.Web.UI.StateManagedCollection.GetKnownTypes"></xref>, of the type of <xref href="System.Web.UI.IStateManager"></xref> to create.
+    return:
+      type: System.Object
+      description: An instance of a class derived from <xref href="System.Web.UI.IStateManager"></xref>, according to the <code>index</code> provided.
+  overload: System.Web.UI.StateManagedCollection.CreateKnownType*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: In all cases when not overridden in a derived class.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.GetEnumerator
+  commentId: M:System.Web.UI.StateManagedCollection.GetEnumerator
+  id: GetEnumerator
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: GetEnumerator()
+  nameWithType: StateManagedCollection.GetEnumerator()
+  fullName: StateManagedCollection.GetEnumerator()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Returns an iterator that iterates through the <xref href="System.Web.UI.StateManagedCollection"></xref> collection.
+  syntax:
+    content: public System.Collections.IEnumerator GetEnumerator ();
+    parameters: []
+    return:
+      type: System.Collections.IEnumerator
+      description: An <xref href="System.Collections.IEnumerator"></xref> that can be used to iterate through the <xref href="System.Web.UI.StateManagedCollection"></xref>.
+  overload: System.Web.UI.StateManagedCollection.GetEnumerator*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.GetKnownTypes
+  commentId: M:System.Web.UI.StateManagedCollection.GetKnownTypes
+  id: GetKnownTypes
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: GetKnownTypes()
+  nameWithType: StateManagedCollection.GetKnownTypes()
+  fullName: StateManagedCollection.GetKnownTypes()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: When overridden in a derived class, gets an array of <xref href="System.Web.UI.IStateManager"></xref> types that the <xref href="System.Web.UI.StateManagedCollection"></xref> collection can contain.
+  remarks: The <xref:System.Web.UI.StateManagedCollection.GetKnownTypes%2A> method is called internally by the <xref:System.Web.UI.StateManagedCollection> collection in its implementation of the <xref:System.Web.UI.StateManagedCollection.System%23Web%23UI%23IStateManager%23SaveViewState%2A> method. Derived collections override the <xref:System.Web.UI.StateManagedCollection.GetKnownTypes%2A> method to return an array of <xref:System.Type> objects that represent the types the collection can contain.
+  example:
+  - "The following code example demonstrates how a strongly typed <xref:System.Web.UI.StateManagedCollection> class implements the <xref:System.Web.UI.StateManagedCollection.GetKnownTypes%2A> method. The `CycleCollection` implementation of <xref:System.Web.UI.StateManagedCollection.GetKnownTypes%2A> returns a <xref:System.Type> array of known types, including `Bicycle` and `Tricycle` types. This code example is part of a larger example provided for the <xref:System.Web.UI.StateManagedCollection> class.  \n  \n [!code-csharp[Samples.AspNet.CycleCollection#2](~/samples/snippets/csharp/VS_Snippets_WebNet/Samples.AspNet.CycleCollection/CS/statemanagedcollectionsample.cs#2)]\n [!code-vb[Samples.AspNet.CycleCollection#2](~/samples/snippets/visualbasic/VS_Snippets_WebNet/Samples.AspNet.CycleCollection/VB/statemanagedcollectionsample.vb#2)]"
+  syntax:
+    content: protected virtual Type[] GetKnownTypes ();
+    parameters: []
+    return:
+      type: System.Type[]
+      description: An ordered array of <xref href="System.Type"></xref> objects that identify the types of <xref href="System.Web.UI.IStateManager"></xref> objects the collection can contain. The default implementation returns `null`.
+  overload: System.Web.UI.StateManagedCollection.GetKnownTypes*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.OnClear
+  commentId: M:System.Web.UI.StateManagedCollection.OnClear
+  id: OnClear
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: OnClear()
+  nameWithType: StateManagedCollection.OnClear()
+  fullName: StateManagedCollection.OnClear()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: When overridden in a derived class, performs additional work before the <xref href="System.Web.UI.StateManagedCollection.Clear"></xref> method removes all items from the collection.
+  remarks: Collections derived from <xref:System.Web.UI.StateManagedCollection> can override the <xref:System.Web.UI.StateManagedCollection.OnClear%2A> method to perform any additional work before all items are removed from the collection using the <xref:System.Web.UI.StateManagedCollection.Clear%2A> method.
+  syntax:
+    content: protected virtual void OnClear ();
+    parameters: []
+  overload: System.Web.UI.StateManagedCollection.OnClear*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.OnClearComplete
+  commentId: M:System.Web.UI.StateManagedCollection.OnClearComplete
+  id: OnClearComplete
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: OnClearComplete()
+  nameWithType: StateManagedCollection.OnClearComplete()
+  fullName: StateManagedCollection.OnClearComplete()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: When overridden in a derived class, performs additional work after the <xref href="System.Web.UI.StateManagedCollection.Clear"></xref> method finishes removing all items from the collection.
+  remarks: Collections derived from <xref:System.Web.UI.StateManagedCollection> can override the <xref:System.Web.UI.StateManagedCollection.OnClearComplete%2A> method to perform any additional work after all items are removed from the collection using the <xref:System.Web.UI.StateManagedCollection.Clear%2A> method.
+  syntax:
+    content: protected virtual void OnClearComplete ();
+    parameters: []
+  overload: System.Web.UI.StateManagedCollection.OnClearComplete*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.OnInsert(System.Int32,System.Object)
+  commentId: M:System.Web.UI.StateManagedCollection.OnInsert(System.Int32,System.Object)
+  id: OnInsert(System.Int32,System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: OnInsert(Int32, Object)
+  nameWithType: StateManagedCollection.OnInsert(Int32, Object)
+  fullName: StateManagedCollection.OnInsert(Int32, Object)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: When overridden in a derived class, performs additional work before the <xref href="System.Web.UI.StateManagedCollection.System#Collections#IList#Insert(System.Int32,System.Object)"></xref> or <xref href="System.Web.UI.StateManagedCollection.System#Collections#IList#Add(System.Object)"></xref> method adds an item to the collection.
+  remarks: Collections derived from <xref:System.Web.UI.StateManagedCollection> can override the <xref:System.Web.UI.StateManagedCollection.OnInsert%2A> method to perform any additional work before an item is added to the collection using the <xref:System.Web.UI.StateManagedCollection.System%23Collections%23IList%23Add%2A> or <xref:System.Web.UI.StateManagedCollection.System%23Collections%23IList%23Insert%2A> method.
+  syntax:
+    content: protected virtual void OnInsert (int index, object value);
+    parameters:
+    - id: index
+      type: System.Int32
+      description: The zero-based index at which <code>value</code> should be inserted by the <xref href="System.Web.UI.StateManagedCollection.System#Collections#IList#Insert(System.Int32,System.Object)"></xref> method.
+    - id: value
+      type: System.Object
+      description: The object to insert into the <xref href="System.Web.UI.StateManagedCollection"></xref>.
+  overload: System.Web.UI.StateManagedCollection.OnInsert*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.OnInsertComplete(System.Int32,System.Object)
+  commentId: M:System.Web.UI.StateManagedCollection.OnInsertComplete(System.Int32,System.Object)
+  id: OnInsertComplete(System.Int32,System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: OnInsertComplete(Int32, Object)
+  nameWithType: StateManagedCollection.OnInsertComplete(Int32, Object)
+  fullName: StateManagedCollection.OnInsertComplete(Int32, Object)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: When overridden in a derived class, performs additional work after the <xref href="System.Web.UI.StateManagedCollection.System#Collections#IList#Insert(System.Int32,System.Object)"></xref> or <xref href="System.Web.UI.StateManagedCollection.System#Collections#IList#Add(System.Object)"></xref> method adds an item to the collection.
+  remarks: Collections derived from <xref:System.Web.UI.StateManagedCollection> can override the <xref:System.Web.UI.StateManagedCollection.OnInsertComplete%2A> method to perform any additional work after an item is added to the collection using the <xref:System.Web.UI.StateManagedCollection.System%23Collections%23IList%23Add%2A> or <xref:System.Web.UI.StateManagedCollection.System%23Collections%23IList%23Insert%2A> method.
+  syntax:
+    content: protected virtual void OnInsertComplete (int index, object value);
+    parameters:
+    - id: index
+      type: System.Int32
+      description: The zero-based index at which <code>value</code> is inserted by the <xref href="System.Web.UI.StateManagedCollection.System#Collections#IList#Insert(System.Int32,System.Object)"></xref> method.
+    - id: value
+      type: System.Object
+      description: The object inserted into the <xref href="System.Web.UI.StateManagedCollection"></xref>.
+  overload: System.Web.UI.StateManagedCollection.OnInsertComplete*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.OnRemove(System.Int32,System.Object)
+  commentId: M:System.Web.UI.StateManagedCollection.OnRemove(System.Int32,System.Object)
+  id: OnRemove(System.Int32,System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: OnRemove(Int32, Object)
+  nameWithType: StateManagedCollection.OnRemove(Int32, Object)
+  fullName: StateManagedCollection.OnRemove(Int32, Object)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: When overridden in a derived class, performs additional work before the <xref href="System.Web.UI.StateManagedCollection.System#Collections#IList#Remove(System.Object)"></xref> or <xref href="System.Web.UI.StateManagedCollection.System#Collections#IList#RemoveAt(System.Int32)"></xref> method removes the specified item from the collection.
+  remarks: Collections derived from <xref:System.Web.UI.StateManagedCollection> can override the <xref:System.Web.UI.StateManagedCollection.OnRemove%2A> method to perform any additional work before an item is removed from the collection using the <xref:System.Web.UI.StateManagedCollection.System%23Collections%23IList%23Remove%2A> or <xref:System.Web.UI.StateManagedCollection.System%23Collections%23IList%23RemoveAt%2A> method.
+  syntax:
+    content: protected virtual void OnRemove (int index, object value);
+    parameters:
+    - id: index
+      type: System.Int32
+      description: The zero-based index of the item to remove, which is used when <xref href="System.Web.UI.StateManagedCollection.System#Collections#IList#RemoveAt(System.Int32)"></xref> is called.
+    - id: value
+      type: System.Object
+      description: The object to remove from the <xref href="System.Web.UI.StateManagedCollection"></xref>, which is used when <xref href="System.Web.UI.StateManagedCollection.System#Collections#IList#Remove(System.Object)"></xref> is called.
+  overload: System.Web.UI.StateManagedCollection.OnRemove*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.OnRemoveComplete(System.Int32,System.Object)
+  commentId: M:System.Web.UI.StateManagedCollection.OnRemoveComplete(System.Int32,System.Object)
+  id: OnRemoveComplete(System.Int32,System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: OnRemoveComplete(Int32, Object)
+  nameWithType: StateManagedCollection.OnRemoveComplete(Int32, Object)
+  fullName: StateManagedCollection.OnRemoveComplete(Int32, Object)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: When overridden in a derived class, performs additional work after the <xref href="System.Web.UI.StateManagedCollection.System#Collections#IList#Remove(System.Object)"></xref> or <xref href="System.Web.UI.StateManagedCollection.System#Collections#IList#RemoveAt(System.Int32)"></xref> method removes the specified item from the collection.
+  remarks: Collections derived from <xref:System.Web.UI.StateManagedCollection> can override the <xref:System.Web.UI.StateManagedCollection.OnRemoveComplete%2A> method to perform any additional work after an item is removed from the collection using the <xref:System.Web.UI.StateManagedCollection.System%23Collections%23IList%23Remove%2A> or <xref:System.Web.UI.StateManagedCollection.System%23Collections%23IList%23RemoveAt%2A> method.
+  syntax:
+    content: protected virtual void OnRemoveComplete (int index, object value);
+    parameters:
+    - id: index
+      type: System.Int32
+      description: The zero-based index of the item to remove, which is used when <xref href="System.Web.UI.StateManagedCollection.System#Collections#IList#RemoveAt(System.Int32)"></xref> is called.
+    - id: value
+      type: System.Object
+      description: The object removed from the <xref href="System.Web.UI.StateManagedCollection"></xref>, which is used when <xref href="System.Web.UI.StateManagedCollection.System#Collections#IList#Remove(System.Object)"></xref> is called.
+  overload: System.Web.UI.StateManagedCollection.OnRemoveComplete*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.OnValidate(System.Object)
+  commentId: M:System.Web.UI.StateManagedCollection.OnValidate(System.Object)
+  id: OnValidate(System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: OnValidate(Object)
+  nameWithType: StateManagedCollection.OnValidate(Object)
+  fullName: StateManagedCollection.OnValidate(Object)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: When overridden in a derived class, validates an element of the <xref href="System.Web.UI.StateManagedCollection"></xref> collection.
+  remarks: The <xref:System.Web.UI.StateManagedCollection.OnValidate%2A> method is called to validate the object manipulated through the <xref:System.Web.UI.StateManagedCollection> implementation of the <xref:System.Collections.IList> interface methods. The default implementation is to verify that the object manipulated by the collection is not `null`; however, collections derived from <xref:System.Web.UI.StateManagedCollection> override the <xref:System.Web.UI.StateManagedCollection.OnValidate%2A> method to perform any additional validation, such as type-checking.
+  syntax:
+    content: protected virtual void OnValidate (object value);
+    parameters:
+    - id: value
+      type: System.Object
+      description: The <xref href="System.Web.UI.IStateManager"></xref> to validate.
+  overload: System.Web.UI.StateManagedCollection.OnValidate*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>value</code> is `null`.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.SetDirty
+  commentId: M:System.Web.UI.StateManagedCollection.SetDirty
+  id: SetDirty
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: SetDirty()
+  nameWithType: StateManagedCollection.SetDirty()
+  fullName: StateManagedCollection.SetDirty()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Forces the entire <xref href="System.Web.UI.StateManagedCollection"></xref> collection to be serialized into view state.
+  remarks: The <xref:System.Web.UI.StateManagedCollection.SetDirty%2A> method forces the <xref:System.Web.UI.StateManagedCollection> collection to be serialized completely (whereas the <xref:System.Web.UI.StateManagedCollection.System%23Web%23UI%23IStateManager%23SaveViewState%2A> method saves only the change information). This is useful when a collection has changed in a significant way and change information is insufficient to recreate the object in memory from view state.
+  syntax:
+    content: public void SetDirty ();
+    parameters: []
+  overload: System.Web.UI.StateManagedCollection.SetDirty*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.SetDirtyObject(System.Object)
+  commentId: M:System.Web.UI.StateManagedCollection.SetDirtyObject(System.Object)
+  id: SetDirtyObject(System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: SetDirtyObject(Object)
+  nameWithType: StateManagedCollection.SetDirtyObject(Object)
+  fullName: StateManagedCollection.SetDirtyObject(Object)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: When overridden in a derived class, instructs an `object` contained by the collection to record its entire state to view state, rather than recording only change information.
+  remarks: The <xref:System.Web.UI.StateManagedCollection.SetDirtyObject%2A> method is called internally by the <xref:System.Web.UI.StateManagedCollection.System%23Web%23UI%23IStateManager%23SaveViewState%2A>, <xref:System.Web.UI.StateManagedCollection.System%23Collections%23IList%23Add%2A>, and <xref:System.Web.UI.StateManagedCollection.System%23Collections%23IList%23Insert%2A> methods.
+  example:
+  - "The following code example demonstrates how a strongly typed <xref:System.Web.UI.StateManagedCollection> class implements the abstract <xref:System.Web.UI.StateManagedCollection.SetDirtyObject%2A> method. The `CycleCollection` uses a <xref:System.Web.UI.StateBag> object to store its view-state information, and simply delegates the call to the <xref:System.Web.UI.StateBag.SetDirty%2A> method of the <xref:System.Web.UI.StateBag> object. This code example is part of a larger example provided for the <xref:System.Web.UI.StateManagedCollection> class.  \n  \n [!code-csharp[Samples.AspNet.CycleCollection#2](~/samples/snippets/csharp/VS_Snippets_WebNet/Samples.AspNet.CycleCollection/CS/statemanagedcollectionsample.cs#2)]\n [!code-vb[Samples.AspNet.CycleCollection#2](~/samples/snippets/visualbasic/VS_Snippets_WebNet/Samples.AspNet.CycleCollection/VB/statemanagedcollectionsample.vb#2)]"
+  syntax:
+    content: protected abstract void SetDirtyObject (object o);
+    parameters:
+    - id: o
+      type: System.Object
+      description: The <xref href="System.Web.UI.IStateManager"></xref> that should serialize itself completely.
+  overload: System.Web.UI.StateManagedCollection.SetDirtyObject*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Collections#ICollection#Count
+  commentId: P:System.Web.UI.StateManagedCollection.System#Collections#ICollection#Count
+  id: System#Collections#ICollection#Count
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: ICollection.Count
+  nameWithType: StateManagedCollection.ICollection.Count
+  fullName: StateManagedCollection.ICollection.Count
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Gets the number of elements contained in the <xref href="System.Web.UI.StateManagedCollection"></xref> collection.
+  syntax:
+    content: int System.Collections.ICollection.Count { get; }
+    return:
+      type: System.Int32
+      description: The number of elements in the <xref href="System.Web.UI.StateManagedCollection"></xref>.
+  overload: System.Web.UI.StateManagedCollection.System#Collections#ICollection#Count*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Collections#ICollection#IsSynchronized
+  commentId: P:System.Web.UI.StateManagedCollection.System#Collections#ICollection#IsSynchronized
+  id: System#Collections#ICollection#IsSynchronized
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: ICollection.IsSynchronized
+  nameWithType: StateManagedCollection.ICollection.IsSynchronized
+  fullName: StateManagedCollection.ICollection.IsSynchronized
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Gets a value indicating whether the <xref href="System.Web.UI.StateManagedCollection"></xref> collection is synchronized (thread safe). This method returns `false` in all cases.
+  syntax:
+    content: bool System.Collections.ICollection.IsSynchronized { get; }
+    return:
+      type: System.Boolean
+      description: '`false` in all cases.'
+  overload: System.Web.UI.StateManagedCollection.System#Collections#ICollection#IsSynchronized*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Collections#ICollection#SyncRoot
+  commentId: P:System.Web.UI.StateManagedCollection.System#Collections#ICollection#SyncRoot
+  id: System#Collections#ICollection#SyncRoot
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: ICollection.SyncRoot
+  nameWithType: StateManagedCollection.ICollection.SyncRoot
+  fullName: StateManagedCollection.ICollection.SyncRoot
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Gets an object that can be used to synchronize access to the <xref href="System.Web.UI.StateManagedCollection"></xref> collection. This method returns `null` in all cases.
+  syntax:
+    content: object System.Collections.ICollection.SyncRoot { get; }
+    return:
+      type: System.Object
+      description: '`null` in all cases.'
+  overload: System.Web.UI.StateManagedCollection.System#Collections#ICollection#SyncRoot*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IEnumerable#GetEnumerator
+  commentId: M:System.Web.UI.StateManagedCollection.System#Collections#IEnumerable#GetEnumerator
+  id: System#Collections#IEnumerable#GetEnumerator
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: IEnumerable.GetEnumerator()
+  nameWithType: StateManagedCollection.IEnumerable.GetEnumerator()
+  fullName: StateManagedCollection.IEnumerable.GetEnumerator()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Returns an iterator that iterates through the <xref href="System.Web.UI.StateManagedCollection"></xref> collection.
+  syntax:
+    content: System.Collections.IEnumerator IEnumerable.GetEnumerator ();
+    parameters: []
+    return:
+      type: System.Collections.IEnumerator
+      description: An <xref href="System.Collections.IEnumerator"></xref> that can be used to iterate through the <xref href="System.Web.UI.StateManagedCollection"></xref>.
+  overload: System.Web.UI.StateManagedCollection.System#Collections#IEnumerable#GetEnumerator*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Add(System.Object)
+  commentId: M:System.Web.UI.StateManagedCollection.System#Collections#IList#Add(System.Object)
+  id: System#Collections#IList#Add(System.Object)
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: IList.Add(Object)
+  nameWithType: StateManagedCollection.IList.Add(Object)
+  fullName: StateManagedCollection.IList.Add(Object)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Adds an item to the <xref href="System.Web.UI.StateManagedCollection"></xref> collection.
+  remarks: The <xref:System.Web.UI.StateManagedCollection.OnValidate%2A> and <xref:System.Web.UI.StateManagedCollection.OnInsert%2A> methods are called before the element is added to the collection, and the <xref:System.Web.UI.StateManagedCollection.OnInsertComplete%2A> method is called after the element is added.
+  syntax:
+    content: int IList.Add (object value);
+    parameters:
+    - id: value
+      type: System.Object
+      description: The `object` to add to the <xref href="System.Web.UI.StateManagedCollection"></xref>.
+    return:
+      type: System.Int32
+      description: The position at which the new element was inserted.
+  overload: System.Web.UI.StateManagedCollection.System#Collections#IList#Add*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The specified <code>value</code> is `null`.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Clear
+  commentId: M:System.Web.UI.StateManagedCollection.System#Collections#IList#Clear
+  id: System#Collections#IList#Clear
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: IList.Clear()
+  nameWithType: StateManagedCollection.IList.Clear()
+  fullName: StateManagedCollection.IList.Clear()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Removes all items from the <xref href="System.Web.UI.StateManagedCollection"></xref> collection.
+  remarks: The <xref:System.Web.UI.StateManagedCollection.OnClear%2A> method is called before the <xref:System.Web.UI.StateManagedCollection.Clear%2A> method is called, and the <xref:System.Web.UI.StateManagedCollection.OnClearComplete%2A> method is called after <xref:System.Web.UI.StateManagedCollection.Clear%2A> has finished removing elements from the collection.
+  syntax:
+    content: void IList.Clear ();
+    parameters: []
+  overload: System.Web.UI.StateManagedCollection.System#Collections#IList#Clear*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Contains(System.Object)
+  commentId: M:System.Web.UI.StateManagedCollection.System#Collections#IList#Contains(System.Object)
+  id: System#Collections#IList#Contains(System.Object)
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: IList.Contains(Object)
+  nameWithType: StateManagedCollection.IList.Contains(Object)
+  fullName: StateManagedCollection.IList.Contains(Object)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Determines whether the <xref href="System.Web.UI.StateManagedCollection"></xref> collection contains a specific value.
+  remarks: The <xref:System.Web.UI.StateManagedCollection.OnValidate%2A> method is called to validate `value` before the collection is checked.
+  syntax:
+    content: bool IList.Contains (object value);
+    parameters:
+    - id: value
+      type: System.Object
+      description: The `object` to locate in the <xref href="System.Web.UI.StateManagedCollection"></xref>.
+    return:
+      type: System.Boolean
+      description: '`true` if the object is found in the <xref href="System.Web.UI.StateManagedCollection"></xref>; otherwise, `false`. If `null` is passed for the value parameter, `false` is returned.'
+  overload: System.Web.UI.StateManagedCollection.System#Collections#IList#Contains*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#IndexOf(System.Object)
+  commentId: M:System.Web.UI.StateManagedCollection.System#Collections#IList#IndexOf(System.Object)
+  id: System#Collections#IList#IndexOf(System.Object)
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: IList.IndexOf(Object)
+  nameWithType: StateManagedCollection.IList.IndexOf(Object)
+  fullName: StateManagedCollection.IList.IndexOf(Object)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Determines the index of a specified item in the <xref href="System.Web.UI.StateManagedCollection"></xref> collection.
+  remarks: The <xref:System.Web.UI.StateManagedCollection.OnValidate%2A> method is called to validate `value` before the index is returned.
+  syntax:
+    content: int IList.IndexOf (object value);
+    parameters:
+    - id: value
+      type: System.Object
+      description: The object to locate in the <xref href="System.Web.UI.StateManagedCollection"></xref>.
+    return:
+      type: System.Int32
+      description: The index of <code>value</code>, if it is found in the list; otherwise, -1.
+  overload: System.Web.UI.StateManagedCollection.System#Collections#IList#IndexOf*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Insert(System.Int32,System.Object)
+  commentId: M:System.Web.UI.StateManagedCollection.System#Collections#IList#Insert(System.Int32,System.Object)
+  id: System#Collections#IList#Insert(System.Int32,System.Object)
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: IList.Insert(Int32, Object)
+  nameWithType: StateManagedCollection.IList.Insert(Int32, Object)
+  fullName: StateManagedCollection.IList.Insert(Int32, Object)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Inserts an item into the <xref href="System.Web.UI.StateManagedCollection"></xref> collection at the specified index.
+  remarks: If `index` is -1, `value` is appended to the beginning of the <xref:System.Web.UI.StateManagedCollection> collection. If `index` equals the number of items in the collection, `value` is appended to the end of the collection.
+  syntax:
+    content: void IList.Insert (int index, object value);
+    parameters:
+    - id: index
+      type: System.Int32
+      description: The zero-based index at which <code>value</code> should be inserted.
+    - id: value
+      type: System.Object
+      description: The object to insert into the <xref href="System.Web.UI.StateManagedCollection"></xref>.
+  overload: System.Web.UI.StateManagedCollection.System#Collections#IList#Insert*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The specified <code>index</code> is out of range of the collection.
+  - type: System.NotSupportedException
+    commentId: T:System.NotSupportedException
+    description: The <xref href="System.Web.UI.StateManagedCollection"></xref> is read-only.
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The specified <code>value</code> is `null`.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#IsFixedSize
+  commentId: P:System.Web.UI.StateManagedCollection.System#Collections#IList#IsFixedSize
+  id: System#Collections#IList#IsFixedSize
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: IList.IsFixedSize
+  nameWithType: StateManagedCollection.IList.IsFixedSize
+  fullName: StateManagedCollection.IList.IsFixedSize
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Gets a value indicating whether the <xref href="System.Web.UI.StateManagedCollection"></xref> collection has a fixed size. This method returns `false` in all cases.
+  syntax:
+    content: bool System.Collections.IList.IsFixedSize { get; }
+    return:
+      type: System.Boolean
+      description: '`false` in all cases.'
+  overload: System.Web.UI.StateManagedCollection.System#Collections#IList#IsFixedSize*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#IsReadOnly
+  commentId: P:System.Web.UI.StateManagedCollection.System#Collections#IList#IsReadOnly
+  id: System#Collections#IList#IsReadOnly
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: IList.IsReadOnly
+  nameWithType: StateManagedCollection.IList.IsReadOnly
+  fullName: StateManagedCollection.IList.IsReadOnly
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Gets a value indicating whether the <xref href="System.Web.UI.StateManagedCollection"></xref> collection is read-only.
+  syntax:
+    content: bool System.Collections.IList.IsReadOnly { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the <xref href="System.Web.UI.StateManagedCollection"></xref> is read-only; otherwise, `false`.'
+  overload: System.Web.UI.StateManagedCollection.System#Collections#IList#IsReadOnly*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Item(System.Int32)
+  commentId: P:System.Web.UI.StateManagedCollection.System#Collections#IList#Item(System.Int32)
+  id: System#Collections#IList#Item(System.Int32)
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: IList.Item(Int32)
+  nameWithType: StateManagedCollection.IList.Item(Int32)
+  fullName: StateManagedCollection.IList.Item(Int32)
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Gets the <xref href="System.Web.UI.IStateManager"></xref> element at the specified index.
+  syntax:
+    content: object System.Collections.IList.Item[int index] { get; set; }
+    parameters:
+    - id: index
+      type: System.Int32
+      description: The zero-based index of the element to get.
+    return:
+      type: System.Object
+      description: The element at the specified index.
+  overload: System.Web.UI.StateManagedCollection.System#Collections#IList#Item*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The specified <code>index</code> is out of range of the collection.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Remove(System.Object)
+  commentId: M:System.Web.UI.StateManagedCollection.System#Collections#IList#Remove(System.Object)
+  id: System#Collections#IList#Remove(System.Object)
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: IList.Remove(Object)
+  nameWithType: StateManagedCollection.IList.Remove(Object)
+  fullName: StateManagedCollection.IList.Remove(Object)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Removes the first occurrence of the specified object from the <xref href="System.Web.UI.StateManagedCollection"></xref> collection.
+  remarks: The <xref:System.Web.UI.StateManagedCollection.OnValidate%2A> method is called to validate `value` before the value is removed from the collection. The <xref:System.Web.UI.StateManagedCollection.OnRemove%2A> method is called before the object is removed, and the <xref:System.Web.UI.StateManagedCollection.OnRemoveComplete%2A> method is called after the object is removed.
+  syntax:
+    content: void IList.Remove (object value);
+    parameters:
+    - id: value
+      type: System.Object
+      description: The object to remove from the <xref href="System.Web.UI.StateManagedCollection"></xref>.
+  overload: System.Web.UI.StateManagedCollection.System#Collections#IList#Remove*
+  exceptions:
+  - type: System.NotSupportedException
+    commentId: T:System.NotSupportedException
+    description: The <xref href="System.Web.UI.StateManagedCollection"></xref> is read-only.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#RemoveAt(System.Int32)
+  commentId: M:System.Web.UI.StateManagedCollection.System#Collections#IList#RemoveAt(System.Int32)
+  id: System#Collections#IList#RemoveAt(System.Int32)
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: IList.RemoveAt(Int32)
+  nameWithType: StateManagedCollection.IList.RemoveAt(Int32)
+  fullName: StateManagedCollection.IList.RemoveAt(Int32)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Removes the <xref href="System.Web.UI.IStateManager"></xref> element at the specified index.
+  remarks: The <xref:System.Web.UI.StateManagedCollection.OnValidate%2A> method is called to validate `value` before the value is removed from the collection. The <xref:System.Web.UI.StateManagedCollection.OnRemove%2A> method is called before the object is removed, and the <xref:System.Web.UI.StateManagedCollection.OnRemoveComplete%2A> method is called after the object is removed.
+  syntax:
+    content: void IList.RemoveAt (int index);
+    parameters:
+    - id: index
+      type: System.Int32
+      description: The zero-based index of the item to remove.
+  overload: System.Web.UI.StateManagedCollection.System#Collections#IList#RemoveAt*
+  exceptions:
+  - type: System.NotSupportedException
+    commentId: T:System.NotSupportedException
+    description: The <xref href="System.Web.UI.StateManagedCollection"></xref> is read-only.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#IsTrackingViewState
+  commentId: P:System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#IsTrackingViewState
+  id: System#Web#UI#IStateManager#IsTrackingViewState
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: IStateManager.IsTrackingViewState
+  nameWithType: StateManagedCollection.IStateManager.IsTrackingViewState
+  fullName: StateManagedCollection.IStateManager.IsTrackingViewState
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Gets a value indicating whether the <xref href="System.Web.UI.StateManagedCollection"></xref> collection is saving changes to its view state.
+  syntax:
+    content: bool System.Web.UI.IStateManager.IsTrackingViewState { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the collection is marked to save its own state and the state of all the <xref href="System.Web.UI.IStateManager"></xref> items it contains; otherwise, `false`.'
+  overload: System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#IsTrackingViewState*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#LoadViewState(System.Object)
+  commentId: M:System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#LoadViewState(System.Object)
+  id: System#Web#UI#IStateManager#LoadViewState(System.Object)
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: IStateManager.LoadViewState(Object)
+  nameWithType: StateManagedCollection.IStateManager.LoadViewState(Object)
+  fullName: StateManagedCollection.IStateManager.LoadViewState(Object)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Restores the previously saved view state of the <xref href="System.Web.UI.StateManagedCollection"></xref> collection and the <xref href="System.Web.UI.IStateManager"></xref> items it contains.
+  remarks: "This method restores view-state information that was saved by the <xref:System.Web.UI.StateManagedCollection.System%23Web%23UI%23IStateManager%23SaveViewState%2A> method.  \n  \n View state is the accumulation of the values of a server control's properties. These values are automatically placed in the server control's <xref:System.Web.UI.Control.ViewState%2A> property, which is an instance of the <xref:System.Web.UI.StateBag> class. This property's value is then persisted to a string object after the save state stage of the server control life cycle. For more information, see [NIB: ASP.NET Web Server Controls](http://msdn.microsoft.com/en-us/e18eb2f2-cf00-47ae-b1a1-dfc188a6dea1).  \n  \n This method is used primarily by control developers. You can override this method to specify how a custom server control restores its view state. For more information, see [ASP.NET State Management Overview](http://msdn.microsoft.com/library/0218d965-5d30-445b-b6a6-8870e70e63ce)."
+  syntax:
+    content: void IStateManager.LoadViewState (object savedState);
+    parameters:
+    - id: savedState
+      type: System.Object
+      description: An object that represents the collection and collection elements' state to restore.
+  overload: System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#LoadViewState*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#SaveViewState
+  commentId: M:System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#SaveViewState
+  id: System#Web#UI#IStateManager#SaveViewState
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: IStateManager.SaveViewState()
+  nameWithType: StateManagedCollection.IStateManager.SaveViewState()
+  fullName: StateManagedCollection.IStateManager.SaveViewState()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Saves the changes to the <xref href="System.Web.UI.StateManagedCollection"></xref> collection and each <xref href="System.Web.UI.IStateManager"></xref> object it contains since the time the page was posted back to the server.
+  remarks: "This method is used primarily by control developers.  \n  \n View state is the accumulation of the values of a server control's properties. These values are automatically placed in the server control's <xref:System.Web.UI.Control.ViewState%2A> property, which is an instance of the <xref:System.Web.UI.StateBag> class. This property's value is then persisted to a string object after the save state stage of the server control life cycle. For more information, see [NIB: ASP.NET Web Server Controls](http://msdn.microsoft.com/en-us/e18eb2f2-cf00-47ae-b1a1-dfc188a6dea1).  \n  \n When view state is saved, this string object is returned to the client as a variable that is stored in an HTML hidden element (`<input type=\"hidden\">`). When you author custom server controls, you can improve efficiency by overriding this method and modifying your server control's <xref:System.Web.UI.Control.ViewState%2A> property. For more information, see [NIB: ASP.NET Web Server Controls](http://msdn.microsoft.com/en-us/e18eb2f2-cf00-47ae-b1a1-dfc188a6dea1) and[ASP.NET State Management Overview](http://msdn.microsoft.com/library/0218d965-5d30-445b-b6a6-8870e70e63ce)."
+  syntax:
+    content: object IStateManager.SaveViewState ();
+    parameters: []
+    return:
+      type: System.Object
+      description: The object that contains the changes to the view state of the <xref href="System.Web.UI.StateManagedCollection"></xref> and the items it contains. If no view state is associated with the collection and its elements, this method returns `null`.
+  overload: System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#SaveViewState*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#TrackViewState
+  commentId: M:System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#TrackViewState
+  id: System#Web#UI#IStateManager#TrackViewState
+  isEii: true
+  parent: System.Web.UI.StateManagedCollection
+  langs:
+  - csharp
+  name: IStateManager.TrackViewState()
+  nameWithType: StateManagedCollection.IStateManager.TrackViewState()
+  fullName: StateManagedCollection.IStateManager.TrackViewState()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI
+  summary: Causes the <xref href="System.Web.UI.StateManagedCollection"></xref> collection and each of the <xref href="System.Web.UI.IStateManager"></xref> objects it contains to track changes to their view state so they can be persisted across requests for the same page.
+  remarks: "View state is the accumulation of the values of a server control's properties. These values are automatically placed in the server control's <xref:System.Web.UI.Control.ViewState%2A> property, which is an instance of the <xref:System.Web.UI.StateBag> class. This property's value is then persisted to a string object after the save state stage of the server control life cycle. For more information, see [NIB: ASP.NET Web Server Controls](http://msdn.microsoft.com/en-us/e18eb2f2-cf00-47ae-b1a1-dfc188a6dea1)."
+  syntax:
+    content: void IStateManager.TrackViewState ();
+    parameters: []
+  overload: System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#TrackViewState*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.ArgumentOutOfRangeException
+  parent: System
+  isExternal: false
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.InvalidOperationException
+  parent: System
+  isExternal: false
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.NotSupportedException
+  parent: System
+  isExternal: false
+  name: NotSupportedException
+  nameWithType: NotSupportedException
+  fullName: System.NotSupportedException
+- uid: System.Web.UI.StateManagedCollection.#ctor
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: StateManagedCollection()
+  nameWithType: StateManagedCollection.StateManagedCollection()
+  fullName: StateManagedCollection.StateManagedCollection()
+- uid: System.Web.UI.StateManagedCollection.Clear
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: Clear()
+  nameWithType: StateManagedCollection.Clear()
+  fullName: StateManagedCollection.Clear()
+- uid: System.Web.UI.StateManagedCollection.CopyTo(System.Array,System.Int32)
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: CopyTo(Array, Int32)
+  nameWithType: StateManagedCollection.CopyTo(Array, Int32)
+  fullName: StateManagedCollection.CopyTo(Array, Int32)
+- uid: System.Array
+  parent: System
+  isExternal: false
+  name: Array
+  nameWithType: Array
+  fullName: System.Array
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Web.UI.StateManagedCollection.Count
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: Count
+  nameWithType: StateManagedCollection.Count
+  fullName: StateManagedCollection.Count
+- uid: System.Web.UI.StateManagedCollection.CreateKnownType(System.Int32)
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: CreateKnownType(Int32)
+  nameWithType: StateManagedCollection.CreateKnownType(Int32)
+  fullName: StateManagedCollection.CreateKnownType(Int32)
+- uid: System.Web.UI.StateManagedCollection.GetEnumerator
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: GetEnumerator()
+  nameWithType: StateManagedCollection.GetEnumerator()
+  fullName: StateManagedCollection.GetEnumerator()
+- uid: System.Collections.IEnumerator
+  parent: System.Collections
+  isExternal: false
+  name: IEnumerator
+  nameWithType: IEnumerator
+  fullName: System.Collections.IEnumerator
+- uid: System.Web.UI.StateManagedCollection.GetKnownTypes
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: GetKnownTypes()
+  nameWithType: StateManagedCollection.GetKnownTypes()
+  fullName: StateManagedCollection.GetKnownTypes()
+- uid: System.Type
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: System.Type[]
+  parent: System
+  isExternal: false
+  name: Type[]
+  nameWithType: Type[]
+  fullName: System.Type[]
+  spec.csharp:
+  - uid: System.Type
+    name: Type
+    nameWithType: Type
+    fullName: System.Type
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+- uid: System.Web.UI.StateManagedCollection.OnClear
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: OnClear()
+  nameWithType: StateManagedCollection.OnClear()
+  fullName: StateManagedCollection.OnClear()
+- uid: System.Web.UI.StateManagedCollection.OnClearComplete
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: OnClearComplete()
+  nameWithType: StateManagedCollection.OnClearComplete()
+  fullName: StateManagedCollection.OnClearComplete()
+- uid: System.Web.UI.StateManagedCollection.OnInsert(System.Int32,System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: OnInsert(Int32, Object)
+  nameWithType: StateManagedCollection.OnInsert(Int32, Object)
+  fullName: StateManagedCollection.OnInsert(Int32, Object)
+- uid: System.Web.UI.StateManagedCollection.OnInsertComplete(System.Int32,System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: OnInsertComplete(Int32, Object)
+  nameWithType: StateManagedCollection.OnInsertComplete(Int32, Object)
+  fullName: StateManagedCollection.OnInsertComplete(Int32, Object)
+- uid: System.Web.UI.StateManagedCollection.OnRemove(System.Int32,System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: OnRemove(Int32, Object)
+  nameWithType: StateManagedCollection.OnRemove(Int32, Object)
+  fullName: StateManagedCollection.OnRemove(Int32, Object)
+- uid: System.Web.UI.StateManagedCollection.OnRemoveComplete(System.Int32,System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: OnRemoveComplete(Int32, Object)
+  nameWithType: StateManagedCollection.OnRemoveComplete(Int32, Object)
+  fullName: StateManagedCollection.OnRemoveComplete(Int32, Object)
+- uid: System.Web.UI.StateManagedCollection.OnValidate(System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: OnValidate(Object)
+  nameWithType: StateManagedCollection.OnValidate(Object)
+  fullName: StateManagedCollection.OnValidate(Object)
+- uid: System.Web.UI.StateManagedCollection.SetDirty
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: SetDirty()
+  nameWithType: StateManagedCollection.SetDirty()
+  fullName: StateManagedCollection.SetDirty()
+- uid: System.Web.UI.StateManagedCollection.SetDirtyObject(System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: SetDirtyObject(Object)
+  nameWithType: StateManagedCollection.SetDirtyObject(Object)
+  fullName: StateManagedCollection.SetDirtyObject(Object)
+- uid: System.Web.UI.StateManagedCollection.System#Collections#ICollection#Count
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: ICollection.Count
+  nameWithType: StateManagedCollection.ICollection.Count
+  fullName: StateManagedCollection.ICollection.Count
+- uid: System.Web.UI.StateManagedCollection.System#Collections#ICollection#IsSynchronized
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: ICollection.IsSynchronized
+  nameWithType: StateManagedCollection.ICollection.IsSynchronized
+  fullName: StateManagedCollection.ICollection.IsSynchronized
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Web.UI.StateManagedCollection.System#Collections#ICollection#SyncRoot
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: ICollection.SyncRoot
+  nameWithType: StateManagedCollection.ICollection.SyncRoot
+  fullName: StateManagedCollection.ICollection.SyncRoot
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IEnumerable#GetEnumerator
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: IEnumerable.GetEnumerator()
+  nameWithType: StateManagedCollection.IEnumerable.GetEnumerator()
+  fullName: StateManagedCollection.IEnumerable.GetEnumerator()
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Add(System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: IList.Add(Object)
+  nameWithType: StateManagedCollection.IList.Add(Object)
+  fullName: StateManagedCollection.IList.Add(Object)
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Clear
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: IList.Clear()
+  nameWithType: StateManagedCollection.IList.Clear()
+  fullName: StateManagedCollection.IList.Clear()
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Contains(System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: IList.Contains(Object)
+  nameWithType: StateManagedCollection.IList.Contains(Object)
+  fullName: StateManagedCollection.IList.Contains(Object)
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#IndexOf(System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: IList.IndexOf(Object)
+  nameWithType: StateManagedCollection.IList.IndexOf(Object)
+  fullName: StateManagedCollection.IList.IndexOf(Object)
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Insert(System.Int32,System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: IList.Insert(Int32, Object)
+  nameWithType: StateManagedCollection.IList.Insert(Int32, Object)
+  fullName: StateManagedCollection.IList.Insert(Int32, Object)
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#IsFixedSize
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: IList.IsFixedSize
+  nameWithType: StateManagedCollection.IList.IsFixedSize
+  fullName: StateManagedCollection.IList.IsFixedSize
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#IsReadOnly
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: IList.IsReadOnly
+  nameWithType: StateManagedCollection.IList.IsReadOnly
+  fullName: StateManagedCollection.IList.IsReadOnly
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Item(System.Int32)
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: IList.Item(Int32)
+  nameWithType: StateManagedCollection.IList.Item(Int32)
+  fullName: StateManagedCollection.IList.Item(Int32)
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Remove(System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: IList.Remove(Object)
+  nameWithType: StateManagedCollection.IList.Remove(Object)
+  fullName: StateManagedCollection.IList.Remove(Object)
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#RemoveAt(System.Int32)
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: IList.RemoveAt(Int32)
+  nameWithType: StateManagedCollection.IList.RemoveAt(Int32)
+  fullName: StateManagedCollection.IList.RemoveAt(Int32)
+- uid: System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#IsTrackingViewState
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: IStateManager.IsTrackingViewState
+  nameWithType: StateManagedCollection.IStateManager.IsTrackingViewState
+  fullName: StateManagedCollection.IStateManager.IsTrackingViewState
+- uid: System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#LoadViewState(System.Object)
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: IStateManager.LoadViewState(Object)
+  nameWithType: StateManagedCollection.IStateManager.LoadViewState(Object)
+  fullName: StateManagedCollection.IStateManager.LoadViewState(Object)
+- uid: System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#SaveViewState
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: IStateManager.SaveViewState()
+  nameWithType: StateManagedCollection.IStateManager.SaveViewState()
+  fullName: StateManagedCollection.IStateManager.SaveViewState()
+- uid: System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#TrackViewState
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: IStateManager.TrackViewState()
+  nameWithType: StateManagedCollection.IStateManager.TrackViewState()
+  fullName: StateManagedCollection.IStateManager.TrackViewState()
+- uid: System.Web.UI.StateManagedCollection.#ctor*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: StateManagedCollection
+  nameWithType: StateManagedCollection.StateManagedCollection
+  fullName: StateManagedCollection.StateManagedCollection
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.Clear*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: Clear
+  nameWithType: StateManagedCollection.Clear
+  fullName: StateManagedCollection.Clear
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.CopyTo*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: CopyTo
+  nameWithType: StateManagedCollection.CopyTo
+  fullName: StateManagedCollection.CopyTo
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.Count*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: Count
+  nameWithType: StateManagedCollection.Count
+  fullName: StateManagedCollection.Count
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.CreateKnownType*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: CreateKnownType
+  nameWithType: StateManagedCollection.CreateKnownType
+  fullName: StateManagedCollection.CreateKnownType
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.GetEnumerator*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: GetEnumerator
+  nameWithType: StateManagedCollection.GetEnumerator
+  fullName: StateManagedCollection.GetEnumerator
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.GetKnownTypes*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: GetKnownTypes
+  nameWithType: StateManagedCollection.GetKnownTypes
+  fullName: StateManagedCollection.GetKnownTypes
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.OnClear*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: OnClear
+  nameWithType: StateManagedCollection.OnClear
+  fullName: StateManagedCollection.OnClear
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.OnClearComplete*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: OnClearComplete
+  nameWithType: StateManagedCollection.OnClearComplete
+  fullName: StateManagedCollection.OnClearComplete
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.OnInsert*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: OnInsert
+  nameWithType: StateManagedCollection.OnInsert
+  fullName: StateManagedCollection.OnInsert
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.OnInsertComplete*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: OnInsertComplete
+  nameWithType: StateManagedCollection.OnInsertComplete
+  fullName: StateManagedCollection.OnInsertComplete
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.OnRemove*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: OnRemove
+  nameWithType: StateManagedCollection.OnRemove
+  fullName: StateManagedCollection.OnRemove
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.OnRemoveComplete*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: OnRemoveComplete
+  nameWithType: StateManagedCollection.OnRemoveComplete
+  fullName: StateManagedCollection.OnRemoveComplete
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.OnValidate*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: OnValidate
+  nameWithType: StateManagedCollection.OnValidate
+  fullName: StateManagedCollection.OnValidate
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.SetDirty*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: SetDirty
+  nameWithType: StateManagedCollection.SetDirty
+  fullName: StateManagedCollection.SetDirty
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.SetDirtyObject*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: SetDirtyObject
+  nameWithType: StateManagedCollection.SetDirtyObject
+  fullName: StateManagedCollection.SetDirtyObject
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Collections#ICollection#Count*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Collections.ICollection.Count
+  nameWithType: StateManagedCollection.System.Collections.ICollection.Count
+  fullName: StateManagedCollection.System.Collections.ICollection.Count
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Collections#ICollection#IsSynchronized*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Collections.ICollection.IsSynchronized
+  nameWithType: StateManagedCollection.System.Collections.ICollection.IsSynchronized
+  fullName: StateManagedCollection.System.Collections.ICollection.IsSynchronized
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Collections#ICollection#SyncRoot*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Collections.ICollection.SyncRoot
+  nameWithType: StateManagedCollection.System.Collections.ICollection.SyncRoot
+  fullName: StateManagedCollection.System.Collections.ICollection.SyncRoot
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IEnumerable#GetEnumerator*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Collections.IEnumerable.GetEnumerator
+  nameWithType: StateManagedCollection.System.Collections.IEnumerable.GetEnumerator
+  fullName: StateManagedCollection.System.Collections.IEnumerable.GetEnumerator
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Add*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Collections.IList.Add
+  nameWithType: StateManagedCollection.System.Collections.IList.Add
+  fullName: StateManagedCollection.System.Collections.IList.Add
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Clear*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Collections.IList.Clear
+  nameWithType: StateManagedCollection.System.Collections.IList.Clear
+  fullName: StateManagedCollection.System.Collections.IList.Clear
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Contains*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Collections.IList.Contains
+  nameWithType: StateManagedCollection.System.Collections.IList.Contains
+  fullName: StateManagedCollection.System.Collections.IList.Contains
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#IndexOf*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Collections.IList.IndexOf
+  nameWithType: StateManagedCollection.System.Collections.IList.IndexOf
+  fullName: StateManagedCollection.System.Collections.IList.IndexOf
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Insert*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Collections.IList.Insert
+  nameWithType: StateManagedCollection.System.Collections.IList.Insert
+  fullName: StateManagedCollection.System.Collections.IList.Insert
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#IsFixedSize*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Collections.IList.IsFixedSize
+  nameWithType: StateManagedCollection.System.Collections.IList.IsFixedSize
+  fullName: StateManagedCollection.System.Collections.IList.IsFixedSize
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#IsReadOnly*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Collections.IList.IsReadOnly
+  nameWithType: StateManagedCollection.System.Collections.IList.IsReadOnly
+  fullName: StateManagedCollection.System.Collections.IList.IsReadOnly
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Item*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Collections.IList.Item
+  nameWithType: StateManagedCollection.System.Collections.IList.Item
+  fullName: StateManagedCollection.System.Collections.IList.Item
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#Remove*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Collections.IList.Remove
+  nameWithType: StateManagedCollection.System.Collections.IList.Remove
+  fullName: StateManagedCollection.System.Collections.IList.Remove
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Collections#IList#RemoveAt*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Collections.IList.RemoveAt
+  nameWithType: StateManagedCollection.System.Collections.IList.RemoveAt
+  fullName: StateManagedCollection.System.Collections.IList.RemoveAt
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#IsTrackingViewState*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Web.UI.IStateManager.IsTrackingViewState
+  nameWithType: StateManagedCollection.System.Web.UI.IStateManager.IsTrackingViewState
+  fullName: StateManagedCollection.System.Web.UI.IStateManager.IsTrackingViewState
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#LoadViewState*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Web.UI.IStateManager.LoadViewState
+  nameWithType: StateManagedCollection.System.Web.UI.IStateManager.LoadViewState
+  fullName: StateManagedCollection.System.Web.UI.IStateManager.LoadViewState
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#SaveViewState*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Web.UI.IStateManager.SaveViewState
+  nameWithType: StateManagedCollection.System.Web.UI.IStateManager.SaveViewState
+  fullName: StateManagedCollection.System.Web.UI.IStateManager.SaveViewState
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Web.UI.StateManagedCollection.System#Web#UI#IStateManager#TrackViewState*
+  parent: System.Web.UI.StateManagedCollection
+  isExternal: false
+  name: System.Web.UI.IStateManager.TrackViewState
+  nameWithType: StateManagedCollection.System.Web.UI.IStateManager.TrackViewState
+  fullName: StateManagedCollection.System.Web.UI.IStateManager.TrackViewState
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/StateManagedCollection.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Linq.Enumerable.Cast``1(System.Collections.IEnumerable)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Cast<TResult>(IEnumerable)
+  nameWithType: Enumerable.Cast<TResult>(IEnumerable)
+  fullName: Enumerable.Cast<TResult>(IEnumerable)
+- uid: System.Linq.Enumerable.OfType``1(System.Collections.IEnumerable)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: OfType<TResult>(IEnumerable)
+  nameWithType: Enumerable.OfType<TResult>(IEnumerable)
+  fullName: Enumerable.OfType<TResult>(IEnumerable)
+- uid: System.Linq.ParallelEnumerable.AsParallel(System.Collections.IEnumerable)
+  parent: System.Linq.ParallelEnumerable
+  isExternal: false
+  name: AsParallel(IEnumerable)
+  nameWithType: ParallelEnumerable.AsParallel(IEnumerable)
+  fullName: ParallelEnumerable.AsParallel(IEnumerable)
+- uid: System.Linq.Queryable.AsQueryable(System.Collections.IEnumerable)
+  parent: System.Linq.Queryable
+  isExternal: false
+  name: AsQueryable(IEnumerable)
+  nameWithType: Queryable.AsQueryable(IEnumerable)
+  fullName: Queryable.AsQueryable(IEnumerable)
+- uid: System.Collections.IList
+  parent: System.Collections
+  isExternal: false
+  name: IList
+  nameWithType: IList
+  fullName: System.Collections.IList
+- uid: System.Web.UI.IStateManager
+  parent: System.Web.UI
+  isExternal: false
+  name: IStateManager
+  nameWithType: IStateManager
+  fullName: System.Web.UI.IStateManager

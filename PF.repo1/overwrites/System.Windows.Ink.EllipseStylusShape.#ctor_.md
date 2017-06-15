@@ -1,0 +1,5 @@
+---
+summary: Initializes a new instance of the <xref href="System.Windows.Ink.EllipseStylusShape"></xref> class.
+remarks: "The following example demonstrates how to create an <xref:System.Windows.Ink.EllipseStylusShape> and pass it to the <xref:System.Windows.Ink.StrokeCollection.GetIncrementalStrokeHitTester%2A> method to erase a portion of a <xref:System.Windows.Ink.Stroke>. This example assumes that there is a <xref:System.Windows.Ink.IncrementalStrokeHitTester> called `eraseTester` and that its <xref:System.Windows.Ink.IncrementalStrokeHitTester.StrokeHit> event has been connected to the event handler defined in this example. To create a control that enables a user to erase ink, see [How to: Erase Ink on a Custom Control](~/docs/framework/wpf/advanced/how-to-erase-ink-on-a-custom-control.md).  \n  \n [!code-csharp[InkEraser#4](~/samples/snippets/csharp/VS_Snippets_Wpf/InkEraser/CSharp/InkEraser.cs#4)]\n [!code-vb[InkEraser#4](~/samples/snippets/visualbasic/VS_Snippets_Wpf/InkEraser/VisualBasic/InkEraser.vb#4)]"
+uid: System.Windows.Ink.EllipseStylusShape.#ctor*
+---

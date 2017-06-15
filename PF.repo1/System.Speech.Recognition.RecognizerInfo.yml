@@ -1,0 +1,644 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Speech.Recognition.RecognizerInfo
+  commentId: T:System.Speech.Recognition.RecognizerInfo
+  id: RecognizerInfo
+  children:
+  - System.Speech.Recognition.RecognizerInfo.AdditionalInfo
+  - System.Speech.Recognition.RecognizerInfo.Culture
+  - System.Speech.Recognition.RecognizerInfo.Description
+  - System.Speech.Recognition.RecognizerInfo.Dispose
+  - System.Speech.Recognition.RecognizerInfo.Id
+  - System.Speech.Recognition.RecognizerInfo.Name
+  - System.Speech.Recognition.RecognizerInfo.SupportedAudioFormats
+  langs:
+  - csharp
+  name: RecognizerInfo
+  nameWithType: RecognizerInfo
+  fullName: System.Speech.Recognition.RecognizerInfo
+  type: Class
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Represents information about a <xref href="System.Speech.Recognition.SpeechRecognizer"></xref> or <xref href="System.Speech.Recognition.SpeechRecognitionEngine"></xref> instance.
+  remarks: "You can obtain identifying information for an initialized recognition engine using <xref:System.Speech.Recognition.SpeechRecognizer.RecognizerInfo%2A?displayProperty=fullName> for a <xref:System.Speech.Recognition.SpeechRecognizer> object or <xref:System.Speech.Recognition.SpeechRecognitionEngine.RecognizerInfo%2A?displayProperty=fullName> for a <xref:System.Speech.Recognition.SpeechRecognitionEngine> object.  \n  \n The information returned in instances of <xref:System.Speech.Recognition.RecognizerInfo> obtained from a <xref:System.Speech.Recognition.SpeechRecognizer> is determined by the settings in the **Speech Properties** member of the **Control Panel**.  \n  \n You can use instances of <xref:System.Speech.Recognition.RecognizerInfo> to construct a specific configuration of <xref:System.Speech.Recognition.SpeechRecognitionEngine> using the <xref:System.Speech.Recognition.SpeechRecognitionEngine.%23ctor%28System.Speech.Recognition.RecognizerInfo%29> constructor.  \n  \n The static method <xref:System.Speech.Recognition.SpeechRecognitionEngine.InstalledRecognizers%2A> returns a list of all available <xref:System.Speech.Recognition.SpeechRecognitionEngine> configurations as <xref:System.Speech.Recognition.RecognizerInfo> instances."
+  example:
+  - "The following example validates a given <xref:System.Globalization.CultureInfo> and identifier string against the permitted <xref:System.Speech.Recognition.SpeechRecognitionEngine> configurations, expressed as a list of <xref:System.Speech.Recognition.RecognizerInfo> objects.  \n  \n If the <xref:System.Globalization.CultureInfo> and identifier string are valid, the example creates a new instance of <xref:System.Speech.Recognition.SpeechRecognitionEngine> using the <xref:System.Speech.Recognition.RecognizerInfo> instance as an argument.  \n  \n```csharp  \n  \nprivate SpeechRecognitionEngine SelectRecognizer(CultureInfo requiredCulture, string requiredId)   \n{  \n  // Select based on a specific recognizer configuration  \n  SpeechRecognitionEngine speechRecognitionEngine=null;  \n  foreach (RecognizerInfo config in SpeechRecognitionEngine.InstalledRecognizers())   \n  {  \n    if (config.Culture.Equals(requiredCulture) && config.Id== requiredId)   \n    {  \n      speechRecognitionEngine = new SpeechRecognitionEngine(config);  \n      break;  \n    }  \n  }  \n  return speechRecognitionEngine;  \n}  \n```"
+  syntax:
+    content: 'public class RecognizerInfo : IDisposable'
+  inheritance:
+  - System.Object
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/RecognizerInfo.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.RecognizerInfo.AdditionalInfo
+  commentId: P:System.Speech.Recognition.RecognizerInfo.AdditionalInfo
+  id: AdditionalInfo
+  parent: System.Speech.Recognition.RecognizerInfo
+  langs:
+  - csharp
+  name: AdditionalInfo
+  nameWithType: RecognizerInfo.AdditionalInfo
+  fullName: RecognizerInfo.AdditionalInfo
+  type: Property
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Gets additional information about a <xref href="System.Speech.Recognition.SpeechRecognizer"></xref> or <xref href="System.Speech.Recognition.SpeechRecognitionEngine"></xref> instance.
+  remarks: ''
+  example:
+  - "The example below implements a button click which displays all the information in a <xref:System.Speech.Recognition.RecognizerInfo> object in a <xref:System.Windows.Forms.MessageBox>.  \n  \n The key/value pairs contained in the <xref:System.Collections.Generic.IDictionary%602> instance returned by <xref:System.Speech.Recognition.RecognizerInfo.AdditionalInfo%2A> are concatenated into a text table.  \n  \n```csharp  \nprivate void recognizerInfoButton_Click(object sender, EventArgs e)   \n{  \n  RecognizerInfo info = _recognizer.RecognizerInfo;  \n  string AudioFormats = \"\";  \n  foreach (SpeechAudioFormatInfo fmt in info.SupportedAudioFormats)   \n  {  \n    AudioFormats += String.Format(\"       {0}\\n\", fmt.EncodingFormat.ToString());  \n  }  \n  string AdditionalInfo = \"\";  \n  foreach (string key in info.AdditionalInfo.Keys)   \n  {  \n    AdditionalInfo += String.Format(\"      {0}: {1}\\n\", key, info.AdditionalInfo[key]);  \n  }  \n  MessageBox.Show(String.Format(  \n                     \"Name:                 {0 } \\n\" +  \n                     \"Description:          {1} \\n\" +  \n                     \"SupportedAudioFormats:\\n\" +  \n                     \" {2} \" +  \n                     \"Culture:              {3} \\n\" +  \n                     \"AdditionalInfo:       \\n\" +  \n                     \" {4}\\n\",  \n                     info.Name.ToString(),  \n                     info.Description.ToString(),  \n                     AudioFormats,  \n                     info.Culture.ToString(),  \n                     AdditionalInfo));  \n}  \n```"
+  syntax:
+    content: public System.Collections.Generic.IDictionary<string,string> AdditionalInfo { get; }
+    return:
+      type: System.Collections.Generic.IDictionary{System.String,System.String}
+      description: Returns an instance of <xref href="System.Collections.Generic.IDictionary`2"></xref> containing information about the configuration of a <xref href="System.Speech.Recognition.SpeechRecognizer"></xref> or <xref href="System.Speech.Recognition.SpeechRecognitionEngine"></xref> object.
+  overload: System.Speech.Recognition.RecognizerInfo.AdditionalInfo*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/RecognizerInfo.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.RecognizerInfo.Culture
+  commentId: P:System.Speech.Recognition.RecognizerInfo.Culture
+  id: Culture
+  parent: System.Speech.Recognition.RecognizerInfo
+  langs:
+  - csharp
+  name: Culture
+  nameWithType: RecognizerInfo.Culture
+  fullName: RecognizerInfo.Culture
+  type: Property
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Gets the culture supported by a <xref href="System.Speech.Recognition.SpeechRecognizer"></xref> or <xref href="System.Speech.Recognition.SpeechRecognitionEngine"></xref> instance.
+  remarks: A <xref:System.Globalization.CultureInfo> object can include the name of the culture, the associated language, the country/region, the calendar used, and how to format dates and sort strings.
+  example:
+  - "The following example implements a button click that displays all the information in a <xref:System.Speech.Recognition.RecognizerInfo> instance. The example uses the <xref:System.Speech.Recognition.RecognizerInfo.Culture%2A> property to obtain the identifying string for the <xref:System.Globalization.CultureInfo> used by the recognition engine configuration.  \n  \n```csharp  \nprivate void recognizerInfoButton_Click(object sender, EventArgs e)   \n{  \n  RecognizerInfo info = _recognizer.RecognizerInfo;  \n  string AudioFormats = \"\";  \n  foreach (SpeechAudioFormatInfo fmt in info.SupportedAudioFormats)   \n  {  \n    AudioFormats += String.Format(\"       {0}\\n\", fmt.EncodingFormat.ToString());  \n  }  \n  string AdditionalInfo = \"\";  \n  foreach (string key in info.AdditionalInfo.Keys)   \n  {  \n    AdditionalInfo += String.Format(\"      {0}: {1}\\n\", key, info.AdditionalInfo[key]);  \n  }  \n  MessageBox.Show(String.Format(  \n                     \"Name:                 {0 }\\n\" +  \n                     \"Description:          {1} \\n\" +  \n                     \"SupportedAudioFormats:\\n\" +  \n                     \"{2} \" +  \n                     \"Culture:              {3} \\n\" +  \n                     \"AdditionalInfo:       \\n\" +  \n                     \" {4}\\n\",  \n                     info.Name.ToString(),  \n                     info.Description.ToString(),  \n                     AudioFormats,  \n                     info.Culture.ToString(),  \n                     AdditionalInfo));  \n}  \n```"
+  syntax:
+    content: public System.Globalization.CultureInfo Culture { get; }
+    return:
+      type: System.Globalization.CultureInfo
+      description: Returns information about the culture supported by a given <xref href="System.Speech.Recognition.SpeechRecognizer"></xref> or <xref href="System.Speech.Recognition.SpeechRecognitionEngine"></xref> instance.
+  overload: System.Speech.Recognition.RecognizerInfo.Culture*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/RecognizerInfo.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.RecognizerInfo.Description
+  commentId: P:System.Speech.Recognition.RecognizerInfo.Description
+  id: Description
+  parent: System.Speech.Recognition.RecognizerInfo
+  langs:
+  - csharp
+  name: Description
+  nameWithType: RecognizerInfo.Description
+  fullName: RecognizerInfo.Description
+  type: Property
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Gets the description of a <xref href="System.Speech.Recognition.SpeechRecognizer"></xref> or <xref href="System.Speech.Recognition.SpeechRecognitionEngine"></xref> instance.
+  remarks: ''
+  example:
+  - "The following example below implements a button click that displays all the information in a <xref:System.Speech.Recognition.RecognizerInfo> instance. The example uses the <xref:System.Speech.Recognition.RecognizerInfo.Description%2A> property to obtain the description of a speech recognition engine configuration, and then displays it in a <xref:System.Windows.Forms.MessageBox>.  \n  \n```csharp  \nprivate void recognizerInfoButton_Click(object sender, EventArgs e)   \n{  \n  RecognizerInfo info = _recognizer.RecognizerInfo;  \n  string AudioFormats = \"\";  \n  foreach (SpeechAudioFormatInfo fmt in info.SupportedAudioFormats)   \n  {  \n    AudioFormats += String.Format(\"       {0}\\n\", fmt.EncodingFormat.ToString());  \n  }  \n  string AdditionalInfo = \"\";  \n  foreach (string key in info.AdditionalInfo.Keys)   \n  {  \n    AdditionalInfo += String.Format(\"      {0}: {1}\\n\", key, info.AdditionalInfo[key]);  \n  }  \n  MessageBox.Show(String.Format(  \n                     \"Name:                 {0 }\\n\" +  \n                     \"Description:          {1} \\n\" +  \n                     \"SupportedAudioFormats:\\n\" +  \n                     \"{2} \" +  \n                     \"Culture:              {3} \\n\" +  \n                     \"AdditionalInfo:       \\n\" +  \n                     \" {4}\\n\",  \n                     info.Name.ToString(),  \n                     info.Description.ToString(),  \n                     AudioFormats,  \n                     info.Culture.ToString(),  \n                     AdditionalInfo));  \n}  \n```"
+  syntax:
+    content: public string Description { get; }
+    return:
+      type: System.String
+      description: Returns a `string` that describes the configuration for a specific <xref href="System.Speech.Recognition.SpeechRecognizer"></xref> or <xref href="System.Speech.Recognition.SpeechRecognitionEngine"></xref> instance.
+  overload: System.Speech.Recognition.RecognizerInfo.Description*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/RecognizerInfo.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.RecognizerInfo.Dispose
+  commentId: M:System.Speech.Recognition.RecognizerInfo.Dispose
+  id: Dispose
+  parent: System.Speech.Recognition.RecognizerInfo
+  langs:
+  - csharp
+  name: Dispose()
+  nameWithType: RecognizerInfo.Dispose()
+  fullName: RecognizerInfo.Dispose()
+  type: Method
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Disposes the <code>RecognizerInfo</code> object.
+  syntax:
+    content: public void Dispose ();
+    parameters: []
+  overload: System.Speech.Recognition.RecognizerInfo.Dispose*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/RecognizerInfo.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.RecognizerInfo.Id
+  commentId: P:System.Speech.Recognition.RecognizerInfo.Id
+  id: Id
+  parent: System.Speech.Recognition.RecognizerInfo
+  langs:
+  - csharp
+  name: Id
+  nameWithType: RecognizerInfo.Id
+  fullName: RecognizerInfo.Id
+  type: Property
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Gets the identifier of a <xref href="System.Speech.Recognition.SpeechRecognizer"></xref> or <xref href="System.Speech.Recognition.SpeechRecognitionEngine"></xref> instance.
+  remarks: The identifier returned by the <xref:System.Speech.Recognition.RecognizerInfo.Id%2A> property is the same as the token name of the recognition engine in the Windows registry.
+  example:
+  - "The following example implements a button click that displays all the information in a <xref:System.Speech.Recognition.RecognizerInfo> instance. The example uses the <xref:System.Speech.Recognition.RecognizerInfo.Id%2A> property to obtain the identifier string of a recognition engine configuration, and then displays it in a <xref:System.Windows.Forms.MessageBox>.  \n  \n```  \nprivate void recognizerInfoButton_Click(object sender, EventArgs e)   \n{  \n  RecognizerInfo info = _recognizer.RecognizerInfo;  \n  string AudioFormats = \"\";  \n  foreach (SpeechAudioFormatInfo fmt in info.SupportedAudioFormats)   \n  {  \n    AudioFormats += String.Format(\"       {0}\\n\",  fmt.EncodingFormat.ToString());  \n  }  \n  string AdditionalInfo = \"\";  \n  foreach (string key in info.AdditionalInfo.Keys)   \n  {  \n    AdditionalInfo += String.Format(\"      {0}: {1}\\n\", key, info.AdditionalInfo[key]);  \n  }  \n  MessageBox.Show(String.Format(  \n                           \"Name:                 {0 }\\n\" +  \n                           \"Description:          {1} \\n\" +  \n                           \"SupportedAudioFormats:\\n\" +  \n                           \"{2} \" +  \n                           \"Culture:              {3} \\n\" +  \n                           \"AdditionalInfo:       \\n\" +  \n                           \" {4}\\n\",  \n                           info.Name.ToString(),  \n                           info.Description.ToString(),  \n                           AudioFormats,  \n                           info.Culture.ToString(),  \n                           AdditionalInfo));  \n}  \n```"
+  syntax:
+    content: public string Id { get; }
+    return:
+      type: System.String
+      description: Returns the identifier for a specific <xref href="System.Speech.Recognition.SpeechRecognizer"></xref> or <xref href="System.Speech.Recognition.SpeechRecognitionEngine"></xref> instance.
+  overload: System.Speech.Recognition.RecognizerInfo.Id*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/RecognizerInfo.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.RecognizerInfo.Name
+  commentId: P:System.Speech.Recognition.RecognizerInfo.Name
+  id: Name
+  parent: System.Speech.Recognition.RecognizerInfo
+  langs:
+  - csharp
+  name: Name
+  nameWithType: RecognizerInfo.Name
+  fullName: RecognizerInfo.Name
+  type: Property
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Gets the friendly name of a <xref href="System.Speech.Recognition.SpeechRecognizer"></xref> or <xref href="System.Speech.Recognition.SpeechRecognitionEngine"></xref> instance.
+  remarks: ''
+  example:
+  - "The following example implements a button click that displays all the information in a <xref:System.Speech.Recognition.RecognizerInfo> instance. The example uses the <xref:System.Speech.Recognition.RecognizerInfo.Name%2A> property to obtain the friendly name of a recognition engine configuration, and then displays it in a <xref:System.Windows.Forms.MessageBox>.  \n  \n```  \nprivate void recognizerInfoButton_Click(object sender, EventArgs e)   \n{  \n  RecognizerInfo info = _recognizer.RecognizerInfo;  \n  string AudioFormats = \"\";  \n  foreach (SpeechAudioFormatInfo fmt in info.SupportedAudioFormats)   \n  {  \n    AudioFormats += String.Format(\"       {0}\\n\", fmt.EncodingFormat.ToString());  \n  }  \n  string AdditionalInfo = \"\";  \n  foreach (string key in info.AdditionalInfo.Keys)   \n  {  \n    AdditionalInfo += String.Format(\"      {0}: {1}\\n\", key, info.AdditionalInfo[key]);  \n  }  \n  MessageBox.Show(String.Format(  \n                           \"Name:                 {0 }\\n\" +  \n                           \"Description:          {1} \\n\" +  \n                           \"SupportedAudioFormats:\\n\" +  \n                           \"{2} \" +  \n                           \"Culture:              {3} \\n\" +  \n                           \"AdditionalInfo:       \\n\" +  \n                           \" {4}\\n\",  \n                           info.Name.ToString(),  \n                           info.Description.ToString(),  \n                           AudioFormats,  \n                           info.Culture.ToString(),  \n                           AdditionalInfo));  \n}  \n```"
+  syntax:
+    content: public string Name { get; }
+    return:
+      type: System.String
+      description: Returns the friendly name for a specific <xref href="System.Speech.Recognition.SpeechRecognizer"></xref> or <xref href="System.Speech.Recognition.SpeechRecognitionEngine"></xref> instance.
+  overload: System.Speech.Recognition.RecognizerInfo.Name*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/RecognizerInfo.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.RecognizerInfo.SupportedAudioFormats
+  commentId: P:System.Speech.Recognition.RecognizerInfo.SupportedAudioFormats
+  id: SupportedAudioFormats
+  parent: System.Speech.Recognition.RecognizerInfo
+  langs:
+  - csharp
+  name: SupportedAudioFormats
+  nameWithType: RecognizerInfo.SupportedAudioFormats
+  fullName: RecognizerInfo.SupportedAudioFormats
+  type: Property
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Gets the audio formats supported by a <xref href="System.Speech.Recognition.SpeechRecognizer"></xref> or <xref href="System.Speech.Recognition.SpeechRecognitionEngine"></xref> instance.
+  remarks: ''
+  example:
+  - "The following example implements a button click that displays all the information in a <xref:System.Speech.Recognition.RecognizerInfo> instance. The example uses the <xref:System.Speech.Recognition.RecognizerInfo.SupportedAudioFormats%2A> property to obtain the encoding formats supported by a recognition engine configuration, and then displays it in a <xref:System.Windows.Forms.MessageBox>.  \n  \n```  \nprivate void recognizerInfoButton_Click(object sender, EventArgs e)   \n{  \n  RecognizerInfo info = _recognizer.RecognizerInfo;  \n  string AudioFormats = \"\";  \n  foreach (SpeechAudioFormatInfo fmt in info.SupportedAudioFormats)   \n  {  \n    AudioFormats += String.Format(\"       {0}\\n\", fmt.EncodingFormat.ToString());  \n  }  \n  string AdditionalInfo = \"\";  \n  foreach (string key in info.AdditionalInfo.Keys)   \n  {  \n    AdditionalInfo += String.Format(\"      {0}: {1}\\n\", key, info.AdditionalInfo[key]);  \n  }  \n  MessageBox.Show(String.Format(  \n                           \"Name:                 {0 }\\n\" +  \n                           \"Description:          {1} \\n\" +  \n                           \"SupportedAudioFormats:\\n\" +  \n                           \"{2} \" +  \n                           \"Culture:              {3} \\n\" +  \n                           \"AdditionalInfo:       \\n\" +  \n                           \" {4}\\n\",  \n                           info.Name.ToString(),  \n                           info.Description.ToString(),  \n                           AudioFormats,  \n                           info.Culture.ToString(),  \n                           AdditionalInfo));  \n}  \n```"
+  syntax:
+    content: public System.Collections.ObjectModel.ReadOnlyCollection<System.Speech.AudioFormat.SpeechAudioFormatInfo> SupportedAudioFormats { get; }
+    return:
+      type: System.Collections.ObjectModel.ReadOnlyCollection{System.Speech.AudioFormat.SpeechAudioFormatInfo}
+      description: Returns a list of audio formats supported by a specific <xref href="System.Speech.Recognition.SpeechRecognizer"></xref> or <xref href="System.Speech.Recognition.SpeechRecognitionEngine"></xref> instance.
+  overload: System.Speech.Recognition.RecognizerInfo.SupportedAudioFormats*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/RecognizerInfo.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Speech.Recognition.RecognizerInfo.AdditionalInfo
+  parent: System.Speech.Recognition.RecognizerInfo
+  isExternal: false
+  name: AdditionalInfo
+  nameWithType: RecognizerInfo.AdditionalInfo
+  fullName: RecognizerInfo.AdditionalInfo
+- uid: System.Collections.Generic.IDictionary`2
+  name: IDictionary<TKey,TValue>
+  nameWithType: IDictionary<TKey,TValue>
+  fullName: System.Collections.Generic.IDictionary<TKey,TValue>
+- uid: System.String
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Collections.Generic.IDictionary{System.String,System.String}
+  parent: System.Collections.Generic
+  isExternal: false
+  name: IDictionary<String,String>
+  nameWithType: IDictionary<String,String>
+  fullName: System.Collections.Generic.IDictionary<System.String,System.String>
+  spec.csharp:
+  - uid: System.Collections.Generic.IDictionary`2
+    name: IDictionary
+    nameWithType: IDictionary
+    fullName: System.Collections.Generic.IDictionary
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+  - name: ','
+    nameWithType: ','
+    fullName: ','
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Speech.Recognition.RecognizerInfo.Culture
+  parent: System.Speech.Recognition.RecognizerInfo
+  isExternal: false
+  name: Culture
+  nameWithType: RecognizerInfo.Culture
+  fullName: RecognizerInfo.Culture
+- uid: System.Globalization.CultureInfo
+  parent: System.Globalization
+  isExternal: false
+  name: CultureInfo
+  nameWithType: CultureInfo
+  fullName: System.Globalization.CultureInfo
+- uid: System.Speech.Recognition.RecognizerInfo.Description
+  parent: System.Speech.Recognition.RecognizerInfo
+  isExternal: false
+  name: Description
+  nameWithType: RecognizerInfo.Description
+  fullName: RecognizerInfo.Description
+- uid: System.Speech.Recognition.RecognizerInfo.Dispose
+  parent: System.Speech.Recognition.RecognizerInfo
+  isExternal: false
+  name: Dispose()
+  nameWithType: RecognizerInfo.Dispose()
+  fullName: RecognizerInfo.Dispose()
+- uid: System.Speech.Recognition.RecognizerInfo.Id
+  parent: System.Speech.Recognition.RecognizerInfo
+  isExternal: false
+  name: Id
+  nameWithType: RecognizerInfo.Id
+  fullName: RecognizerInfo.Id
+- uid: System.Speech.Recognition.RecognizerInfo.Name
+  parent: System.Speech.Recognition.RecognizerInfo
+  isExternal: false
+  name: Name
+  nameWithType: RecognizerInfo.Name
+  fullName: RecognizerInfo.Name
+- uid: System.Speech.Recognition.RecognizerInfo.SupportedAudioFormats
+  parent: System.Speech.Recognition.RecognizerInfo
+  isExternal: false
+  name: SupportedAudioFormats
+  nameWithType: RecognizerInfo.SupportedAudioFormats
+  fullName: RecognizerInfo.SupportedAudioFormats
+- uid: System.Collections.ObjectModel.ReadOnlyCollection`1
+  name: ReadOnlyCollection<T>
+  nameWithType: ReadOnlyCollection<T>
+  fullName: System.Collections.ObjectModel.ReadOnlyCollection<T>
+- uid: System.Speech.AudioFormat.SpeechAudioFormatInfo
+  name: SpeechAudioFormatInfo
+  nameWithType: SpeechAudioFormatInfo
+  fullName: System.Speech.AudioFormat.SpeechAudioFormatInfo
+- uid: System.Collections.ObjectModel.ReadOnlyCollection{System.Speech.AudioFormat.SpeechAudioFormatInfo}
+  parent: System.Collections.ObjectModel
+  isExternal: false
+  name: ReadOnlyCollection<SpeechAudioFormatInfo>
+  nameWithType: ReadOnlyCollection<SpeechAudioFormatInfo>
+  fullName: System.Collections.ObjectModel.ReadOnlyCollection<System.Speech.AudioFormat.SpeechAudioFormatInfo>
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ReadOnlyCollection`1
+    name: ReadOnlyCollection
+    nameWithType: ReadOnlyCollection
+    fullName: System.Collections.ObjectModel.ReadOnlyCollection
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Speech.AudioFormat.SpeechAudioFormatInfo
+    name: SpeechAudioFormatInfo
+    nameWithType: SpeechAudioFormatInfo
+    fullName: System.Speech.AudioFormat.SpeechAudioFormatInfo
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Speech.Recognition.RecognizerInfo.AdditionalInfo*
+  parent: System.Speech.Recognition.RecognizerInfo
+  isExternal: false
+  name: AdditionalInfo
+  nameWithType: RecognizerInfo.AdditionalInfo
+  fullName: RecognizerInfo.AdditionalInfo
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/RecognizerInfo.xml
+- uid: System.Speech.Recognition.RecognizerInfo.Culture*
+  parent: System.Speech.Recognition.RecognizerInfo
+  isExternal: false
+  name: Culture
+  nameWithType: RecognizerInfo.Culture
+  fullName: RecognizerInfo.Culture
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/RecognizerInfo.xml
+- uid: System.Speech.Recognition.RecognizerInfo.Description*
+  parent: System.Speech.Recognition.RecognizerInfo
+  isExternal: false
+  name: Description
+  nameWithType: RecognizerInfo.Description
+  fullName: RecognizerInfo.Description
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/RecognizerInfo.xml
+- uid: System.Speech.Recognition.RecognizerInfo.Dispose*
+  parent: System.Speech.Recognition.RecognizerInfo
+  isExternal: false
+  name: Dispose
+  nameWithType: RecognizerInfo.Dispose
+  fullName: RecognizerInfo.Dispose
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/RecognizerInfo.xml
+- uid: System.Speech.Recognition.RecognizerInfo.Id*
+  parent: System.Speech.Recognition.RecognizerInfo
+  isExternal: false
+  name: Id
+  nameWithType: RecognizerInfo.Id
+  fullName: RecognizerInfo.Id
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/RecognizerInfo.xml
+- uid: System.Speech.Recognition.RecognizerInfo.Name*
+  parent: System.Speech.Recognition.RecognizerInfo
+  isExternal: false
+  name: Name
+  nameWithType: RecognizerInfo.Name
+  fullName: RecognizerInfo.Name
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/RecognizerInfo.xml
+- uid: System.Speech.Recognition.RecognizerInfo.SupportedAudioFormats*
+  parent: System.Speech.Recognition.RecognizerInfo
+  isExternal: false
+  name: SupportedAudioFormats
+  nameWithType: RecognizerInfo.SupportedAudioFormats
+  fullName: RecognizerInfo.SupportedAudioFormats
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/RecognizerInfo.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.IDisposable
+  parent: System
+  isExternal: false
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable

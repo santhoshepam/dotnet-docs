@@ -1,0 +1,2078 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Windows.Forms.BindingManagerBase
+  commentId: T:System.Windows.Forms.BindingManagerBase
+  id: BindingManagerBase
+  children:
+  - System.Windows.Forms.BindingManagerBase.#ctor
+  - System.Windows.Forms.BindingManagerBase.AddNew
+  - System.Windows.Forms.BindingManagerBase.BindingComplete
+  - System.Windows.Forms.BindingManagerBase.Bindings
+  - System.Windows.Forms.BindingManagerBase.CancelCurrentEdit
+  - System.Windows.Forms.BindingManagerBase.Count
+  - System.Windows.Forms.BindingManagerBase.Current
+  - System.Windows.Forms.BindingManagerBase.CurrentChanged
+  - System.Windows.Forms.BindingManagerBase.CurrentItemChanged
+  - System.Windows.Forms.BindingManagerBase.DataError
+  - System.Windows.Forms.BindingManagerBase.EndCurrentEdit
+  - System.Windows.Forms.BindingManagerBase.GetItemProperties
+  - System.Windows.Forms.BindingManagerBase.GetItemProperties(System.Collections.ArrayList,System.Collections.ArrayList)
+  - System.Windows.Forms.BindingManagerBase.GetItemProperties(System.Type,System.Int32,System.Collections.ArrayList,System.Collections.ArrayList)
+  - System.Windows.Forms.BindingManagerBase.GetListName(System.Collections.ArrayList)
+  - System.Windows.Forms.BindingManagerBase.IsBindingSuspended
+  - System.Windows.Forms.BindingManagerBase.OnBindingComplete(System.Windows.Forms.BindingCompleteEventArgs)
+  - System.Windows.Forms.BindingManagerBase.OnCurrentChanged(System.EventArgs)
+  - System.Windows.Forms.BindingManagerBase.onCurrentChangedHandler
+  - System.Windows.Forms.BindingManagerBase.OnCurrentItemChanged(System.EventArgs)
+  - System.Windows.Forms.BindingManagerBase.OnDataError(System.Exception)
+  - System.Windows.Forms.BindingManagerBase.onPositionChangedHandler
+  - System.Windows.Forms.BindingManagerBase.Position
+  - System.Windows.Forms.BindingManagerBase.PositionChanged
+  - System.Windows.Forms.BindingManagerBase.PullData
+  - System.Windows.Forms.BindingManagerBase.PushData
+  - System.Windows.Forms.BindingManagerBase.RemoveAt(System.Int32)
+  - System.Windows.Forms.BindingManagerBase.ResumeBinding
+  - System.Windows.Forms.BindingManagerBase.SuspendBinding
+  - System.Windows.Forms.BindingManagerBase.UpdateIsBinding
+  langs:
+  - csharp
+  name: BindingManagerBase
+  nameWithType: BindingManagerBase
+  fullName: System.Windows.Forms.BindingManagerBase
+  type: Class
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Manages all <xref href="System.Windows.Forms.Binding"></xref> objects that are bound to the same data source and data member. This class is abstract.
+  remarks: "The <xref:System.Windows.Forms.BindingManagerBase> enables the synchronization of data-bound controls on a Windows Form that are bound to the same data source. (For more information about simple binding a control to a data source, see the <xref:System.Windows.Forms.Binding> class.) For example, suppose that a form contains two <xref:System.Windows.Forms.TextBox> controls that are bound to the same data source but to different columns. The data source might be a <xref:System.Data.DataTable> that contains customer names, while the columns might contain the first and last names. The two controls must be synchronized in order to display the correct first and last names together for the same customer. The <xref:System.Windows.Forms.CurrencyManager>, which inherits from the <xref:System.Windows.Forms.BindingManagerBase> class, accomplishes this synchronization by maintaining a pointer to the current item in the data source. The <xref:System.Windows.Forms.TextBox> controls are bound to the current item so they display the information for the same row. When the current item changes, the <xref:System.Windows.Forms.CurrencyManager> notifies all the bound controls so that they can refresh their data. Furthermore, you can set the <xref:System.Windows.Forms.BindingManagerBase.Position%2A> property to specify the row in the <xref:System.Data.DataTable> that the controls point to. To determine how many rows exist in the data source, use the <xref:System.Windows.Forms.BindingManagerBase.Count%2A> property.  \n  \n The <xref:System.Windows.Forms.CurrencyManager> is necessary because data sources do not necessarily maintain a current-item pointer. For instance, arrays and <xref:System.Collections.ArrayList> objects can be data sources, but they do not have a property that returns the current item. To get the current item, use the <xref:System.Windows.Forms.BindingManagerBase.Current%2A> property.  \n  \n The <xref:System.Windows.Forms.PropertyManager> also inherits from the <xref:System.Windows.Forms.BindingManagerBase>, and it is used to maintain the current property of an object, rather than the property of a current object in a data source. For this reason, trying to set the <xref:System.Windows.Forms.BindingManagerBase.Position%2A> or <xref:System.Windows.Forms.BindingManagerBase.Count%2A> property for a <xref:System.Windows.Forms.PropertyManager> has no effect.  \n  \n To create a <xref:System.Windows.Forms.BindingManagerBase>, use the <xref:System.Windows.Forms.BindingContext> class, which returns either a <xref:System.Windows.Forms.CurrencyManager> or a <xref:System.Windows.Forms.PropertyManager>, depending on the data source being managed.  \n  \n Solutions programmers are encouraged to bind controls directly to a <xref:System.Windows.Forms.BindingSource> component, which acts as both a data source and data connector to the actual target data source. <xref:System.Windows.Forms.BindingSource> greatly simplifies both simple and complex data binding, including managing currency between the control and its target."
+  example:
+  - "The following code example uses the <xref:System.Windows.Forms.BindingContext> to return a <xref:System.Windows.Forms.BindingManagerBase> for a specific data source. (The example assumes you have declared `myBindingManagerBase` in the Declarations section of the module.) The example then adds event delegates to the <xref:System.Windows.Forms.BindingManagerBase.CurrentChanged> and <xref:System.Windows.Forms.BindingManagerBase.PositionChanged> events. Lastly, the example contains four methods (`MoveNext`, `MovePrevious`, `MoveFirst`, and `MoveLast`) that increment or decrement the <xref:System.Windows.Forms.BindingManagerBase.Position%2A> property, and set the <xref:System.Windows.Forms.BindingManagerBase.Position%2A> to the first or last row in the list. The last row in the list is determined by using the <xref:System.Windows.Forms.BindingManagerBase.Count%2A> property.  \n  \n [!code-cpp[Classic BindingManagerBase Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic BindingManagerBase Example/CPP/source.cpp#1)]\n [!code-csharp[Classic BindingManagerBase Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic BindingManagerBase Example/CS/source.cs#1)]\n [!code-vb[Classic BindingManagerBase Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic BindingManagerBase Example/VB/source.vb#1)]"
+  syntax:
+    content: public abstract class BindingManagerBase
+  inheritance:
+  - System.Object
+  derivedClasses:
+  - System.Windows.Forms.CurrencyManager
+  - System.Windows.Forms.PropertyManager
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.#ctor
+  commentId: M:System.Windows.Forms.BindingManagerBase.#ctor
+  id: '#ctor'
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: BindingManagerBase()
+  nameWithType: BindingManagerBase.BindingManagerBase()
+  fullName: BindingManagerBase.BindingManagerBase()
+  type: Constructor
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Initializes a new instance of the <xref href="System.Windows.Forms.BindingManagerBase"></xref> class.
+  remarks: The default constructor sets the <xref:System.Windows.Forms.BindingManagerBase.Bindings%2A> property to `null`.
+  syntax:
+    content: public BindingManagerBase ();
+    parameters: []
+  overload: System.Windows.Forms.BindingManagerBase.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.AddNew
+  commentId: M:System.Windows.Forms.BindingManagerBase.AddNew
+  id: AddNew
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: AddNew()
+  nameWithType: BindingManagerBase.AddNew()
+  fullName: BindingManagerBase.AddNew()
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: When overridden in a derived class, adds a new item to the underlying list.
+  remarks: "The <xref:System.Windows.Forms.BindingManagerBase.AddNew%2A> method adds a new item to the underlying list by using the default constructor for that item's type. <xref:System.Windows.Forms.BindingManagerBase.AddNew%2A> is intended primarily to be used by programmers adding complex data-binding support to their custom component.  \n  \n <xref:System.Windows.Forms.BindingManagerBase.AddNew%2A> is commonly implemented using the following pattern that allows application programmers to inject their own code for creating customized items:  \n  \n1.  <xref:System.Windows.Forms.BindingManagerBase.AddNew%2A> raises the <xref:System.Windows.Forms.BindingSource.AddingNew> event.  \n  \n2.  The programmer can supply a custom item by handling the <xref:System.Windows.Forms.BindingSource.AddingNew> event and setting the <xref:System.ComponentModel.AddingNewEventArgs.NewObject%2A> property of the <xref:System.ComponentModel.AddingNewEventArgs> parameter to the new item. Otherwise, the component should create an item using the default constructor.  \n  \n3.  If the data source does not implement the <xref:System.ComponentModel.IEditableObject> interface, the item is immediately added to the data source and underlying list. If this interface is supported, then the addition is transacted by the <xref:System.Windows.Forms.BindingManagerBase.CancelCurrentEdit%2A> and <xref:System.Windows.Forms.BindingManagerBase.EndCurrentEdit%2A> methods."
+  syntax:
+    content: public abstract void AddNew ();
+    parameters: []
+  overload: System.Windows.Forms.BindingManagerBase.AddNew*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.BindingComplete
+  commentId: E:System.Windows.Forms.BindingManagerBase.BindingComplete
+  id: BindingComplete
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: BindingComplete
+  nameWithType: BindingManagerBase.BindingComplete
+  fullName: BindingManagerBase.BindingComplete
+  type: Event
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Occurs at the completion of a data-binding operation.
+  remarks: "The <xref:System.Windows.Forms.BindingManagerBase.BindingComplete> event occurs after the completion of a data-binding operation, which may include the following:  \n  \n-   Pushing information from the data source into the property of its bound control.  \n  \n-   Pulling information from a bound control into its associated data source.  \n  \n Note that this event is raised regardless of the completion status of the binding operation, although this status can be determined by examining the <xref:System.Windows.Forms.BindingCompleteEventArgs.BindingCompleteState%2A> property of the <xref:System.Windows.Forms.BindingCompleteEventArgs> parameter associated with the event. <xref:System.Windows.Forms.BindingCompleteEventArgs> may also contain error and exception information. For example, a binding operation that attempts to push a null value from a data source into a <xref:System.Windows.Forms.DateTimePicker> control will generate an exception, since a <xref:System.DateTime> cannot be `null`. In this case, although the binding operation does not successfully complete, the <xref:System.Windows.Forms.BindingManagerBase.BindingComplete> event will be raised, and the event will contain information on the failed binding attempt."
+  example:
+  - "The following code example demonstrates how to handle the <xref:System.Windows.Forms.BindingManagerBase.BindingComplete> event and ensure multiple controls bound to the same data source remain synchronized when one of the control values is changed. To run this example, paste the code into a Windows Form and call the `InitializeControlsAndData` method from the form's constructor or <xref:System.Windows.Forms.Form.Load> event-handling method.  \n  \n [!code-csharp[System.Windows.Forms.BindingSourceMultipleControls#11](~/samples/snippets/csharp/VS_Snippets_Winforms/System.Windows.Forms.BindingSourceMultipleControls/CS/Form1.cs#11)]\n [!code-vb[System.Windows.Forms.BindingSourceMultipleControls#11](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.Windows.Forms.BindingSourceMultipleControls/VB/Form1.vb#11)]"
+  syntax:
+    content: public event System.Windows.Forms.BindingCompleteEventHandler BindingComplete;
+    return:
+      type: System.Windows.Forms.BindingCompleteEventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.Bindings
+  commentId: P:System.Windows.Forms.BindingManagerBase.Bindings
+  id: Bindings
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: Bindings
+  nameWithType: BindingManagerBase.Bindings
+  fullName: BindingManagerBase.Bindings
+  type: Property
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Gets the collection of bindings being managed.
+  remarks: ''
+  example:
+  - "The following code example gets the <xref:System.Windows.Forms.BindingManagerBase> for a specific data source. The example then uses the <xref:System.Windows.Forms.BindingManagerBase.Bindings%2A> property to print information about each control bound to the same data source.  \n  \n [!code-cpp[Classic BindingManagerBase.Bindings Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic BindingManagerBase.Bindings Example/CPP/source.cpp#1)]\n [!code-csharp[Classic BindingManagerBase.Bindings Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic BindingManagerBase.Bindings Example/CS/source.cs#1)]\n [!code-vb[Classic BindingManagerBase.Bindings Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic BindingManagerBase.Bindings Example/VB/source.vb#1)]"
+  syntax:
+    content: public System.Windows.Forms.BindingsCollection Bindings { get; }
+    return:
+      type: System.Windows.Forms.BindingsCollection
+      description: A <xref href="System.Windows.Forms.BindingsCollection"></xref> that contains the <xref href="System.Windows.Forms.Binding"></xref> objects managed by this <xref href="System.Windows.Forms.BindingManagerBase"></xref>.
+  overload: System.Windows.Forms.BindingManagerBase.Bindings*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.CancelCurrentEdit
+  commentId: M:System.Windows.Forms.BindingManagerBase.CancelCurrentEdit
+  id: CancelCurrentEdit
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: CancelCurrentEdit()
+  nameWithType: BindingManagerBase.CancelCurrentEdit()
+  fullName: BindingManagerBase.CancelCurrentEdit()
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: When overridden in a derived class, cancels the current edit.
+  remarks: "This method is supported only if the data source implements the <xref:System.ComponentModel.IEditableObject> interface. If the object does not implement the <xref:System.ComponentModel.IEditableObject> interface, changes made to the data will not be discarded.  \n  \n Calling the <xref:System.Windows.Forms.BindingManagerBase.CancelCurrentEdit%2A> method causes the <xref:System.Windows.Forms.Binding.Format> event to occur."
+  example:
+  - "The following code example demonstrates both the <xref:System.Windows.Forms.BindingManagerBase.CancelCurrentEdit%2A> and the <xref:System.Windows.Forms.BindingManagerBase.EndCurrentEdit%2A> methods. When you call the <xref:System.Windows.Forms.BindingManagerBase.CancelCurrentEdit%2A> methods, changes made to the data are discarded. When you call the <xref:System.Windows.Forms.BindingManagerBase.EndCurrentEdit%2A> method, the changes are kept.  \n  \n [!code-cpp[BindingManagerBase.CancelCurrentEdit Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/BindingManagerBase.CancelCurrentEdit Example/CPP/canceledit.cpp#1)]\n [!code-csharp[BindingManagerBase.CancelCurrentEdit Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/BindingManagerBase.CancelCurrentEdit Example/CS/canceledit.cs#1)]\n [!code-vb[BindingManagerBase.CancelCurrentEdit Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/BindingManagerBase.CancelCurrentEdit Example/VB/canceledit.vb#1)]"
+  syntax:
+    content: public abstract void CancelCurrentEdit ();
+    parameters: []
+  overload: System.Windows.Forms.BindingManagerBase.CancelCurrentEdit*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Forms.BindingManagerBase.Count
+  commentId: P:System.Windows.Forms.BindingManagerBase.Count
+  id: Count
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: Count
+  nameWithType: BindingManagerBase.Count
+  fullName: BindingManagerBase.Count
+  type: Property
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: When overridden in a derived class, gets the number of rows managed by the <xref href="System.Windows.Forms.BindingManagerBase"></xref>.
+  remarks: Use the <xref:System.Windows.Forms.BindingManagerBase.Count%2A> property to determine the last item in the list of rows maintained by the <xref:System.Windows.Forms.BindingManagerBase>. To go to the last item, set the <xref:System.Windows.Forms.BindingManagerBase.Position%2A> property to the <xref:System.Windows.Forms.BindingManagerBase.Count%2A> property value minus 1.
+  example:
+  - "The following code example shows four methods that set the <xref:System.Windows.Forms.BindingManagerBase.Position%2A> property. The `MoveNext` method increments the property by 1. The `MovePrevious` method decrements the property by 1. The `MoveFirst` method sets the property to 0. The `MoveLast` method sets the property to the value of the <xref:System.Windows.Forms.BindingManagerBase.Count%2A> property minus 1.  \n  \n [!code-cpp[Classic BindingManagerBase.Count Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic BindingManagerBase.Count Example/CPP/source.cpp#1)]\n [!code-csharp[Classic BindingManagerBase.Count Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic BindingManagerBase.Count Example/CS/source.cs#1)]\n [!code-vb[Classic BindingManagerBase.Count Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic BindingManagerBase.Count Example/VB/source.vb#1)]"
+  syntax:
+    content: public abstract int Count { get; }
+    return:
+      type: System.Int32
+      description: The number of rows managed by the <xref href="System.Windows.Forms.BindingManagerBase"></xref>.
+  overload: System.Windows.Forms.BindingManagerBase.Count*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.Current
+  commentId: P:System.Windows.Forms.BindingManagerBase.Current
+  id: Current
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: Current
+  nameWithType: BindingManagerBase.Current
+  fullName: BindingManagerBase.Current
+  type: Property
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: When overridden in a derived class, gets the current object.
+  remarks: "The <xref:System.Windows.Forms.BindingManagerBase.Current%2A> object contains the value of the current item in the data source. To use the value of the current item, you must cast the item to the <xref:System.Type> of the object contained by the <xref:System.Windows.Forms.Binding.DataSource%2A>. For example, a <xref:System.Data.DataTable> contains <xref:System.Data.DataRowView> objects. To determine the type of the current object, use the <xref:System.Object.GetType%2A> and <xref:System.Type.ToString%2A> methods.  \n  \n> [!NOTE]\n>  When the <xref:System.Windows.Forms.Binding.DataSource%2A> is a <xref:System.Data.DataSet>, <xref:System.Data.DataViewManager>, or <xref:System.Data.DataTable>, you are actually binding to a <xref:System.Data.DataView>. Consequently, each <xref:System.Windows.Forms.BindingManagerBase.Current%2A> object is a <xref:System.Data.DataRowView> object."
+  example:
+  - "The following code example prints the value of the <xref:System.Windows.Forms.BindingManagerBase.Current%2A> object in a <xref:System.Windows.Forms.BindingManagerBase> in the <xref:System.Windows.Forms.BindingManagerBase.CurrentChanged> event. The example assumes the data source is a <xref:System.Data.DataTable> containing a <xref:System.Data.DataColumn> named `CustName`.  \n  \n [!code-cpp[Classic BindingManagerBase.Current Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic BindingManagerBase.Current Example/CPP/source.cpp#1)]\n [!code-csharp[Classic BindingManagerBase.Current Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic BindingManagerBase.Current Example/CS/source.cs#1)]\n [!code-vb[Classic BindingManagerBase.Current Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic BindingManagerBase.Current Example/VB/source.vb#1)]"
+  syntax:
+    content: public abstract object Current { get; }
+    return:
+      type: System.Object
+      description: An <xref href="System.Object"></xref> that represents the current object.
+  overload: System.Windows.Forms.BindingManagerBase.Current*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.CurrentChanged
+  commentId: E:System.Windows.Forms.BindingManagerBase.CurrentChanged
+  id: CurrentChanged
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: CurrentChanged
+  nameWithType: BindingManagerBase.CurrentChanged
+  fullName: BindingManagerBase.CurrentChanged
+  type: Event
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Occurs when the currently bound item changes.
+  remarks: "The <xref:System.Windows.Forms.BindingManagerBase.CurrentChanged> event is raised whenever the <xref:System.Windows.Forms.BindingManagerBase.Current%2A> property changes or the <xref:System.Windows.Forms.BindingManagerBase.CurrentItemChanged> event occurs.  \n  \n For more information about handling events, see [Events](http://msdn.microsoft.com/library/b6f65241-e0ad-4590-a99f-200ce741bb1f)."
+  example:
+  - "The following code example prints the value of the <xref:System.Windows.Forms.BindingManagerBase.Current%2A> object in a <xref:System.Windows.Forms.BindingManagerBase> in the <xref:System.Windows.Forms.BindingManagerBase.CurrentChanged> event. The example assumes the data source is a <xref:System.Data.DataTable> containing a <xref:System.Data.DataColumn> named `CustName`.  \n  \n [!code-cpp[Classic BindingManagerBase.Current Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic BindingManagerBase.Current Example/CPP/source.cpp#1)]\n [!code-csharp[Classic BindingManagerBase.Current Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic BindingManagerBase.Current Example/CS/source.cs#1)]\n [!code-vb[Classic BindingManagerBase.Current Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic BindingManagerBase.Current Example/VB/source.vb#1)]"
+  syntax:
+    content: public event EventHandler CurrentChanged;
+    return:
+      type: System.EventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.CurrentItemChanged
+  commentId: E:System.Windows.Forms.BindingManagerBase.CurrentItemChanged
+  id: CurrentItemChanged
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: CurrentItemChanged
+  nameWithType: BindingManagerBase.CurrentItemChanged
+  fullName: BindingManagerBase.CurrentItemChanged
+  type: Event
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Occurs when the state of the currently bound item changes.
+  remarks: The <xref:System.Windows.Forms.BindingManagerBase.CurrentItemChanged> event occurs whenever there is a change in the state in the currently bound item. This can occur if one of the properties of this item is changed or if the item itself is replaced or moved.
+  example:
+  - "The following code example demonstrates the use of this member. In the example, an event handler reports on the occurrence of the <xref:System.Windows.Forms.BindingManagerBase.CurrentItemChanged> event. This report helps you to learn when the event occurs and can assist you in debugging. To report on multiple events or on events that occur frequently, consider replacing <xref:System.Windows.Forms.MessageBox.Show%2A?displayProperty=fullName> with <xref:System.Console.WriteLine%2A?displayProperty=fullName> or appending the message to a multiline <xref:System.Windows.Forms.TextBox>.  \n  \n To run the example code, paste it into a project that contains an instance of a type that inherits from <xref:System.Windows.Forms.BindingManagerBase>, such as a <xref:System.Windows.Forms.PropertyManager> or <xref:System.Windows.Forms.CurrencyManager>. Then name the instance `BindingManagerBase1` and ensure that the event handler is associated with the <xref:System.Windows.Forms.BindingManagerBase.CurrentItemChanged> event.  \n  \n [!code-csharp[System.Windows.Forms.EventExamples#82](~/samples/snippets/csharp/VS_Snippets_Winforms/System.Windows.Forms.EventExamples/CS/EventExamples.cs#82)]\n [!code-vb[System.Windows.Forms.EventExamples#82](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.Windows.Forms.EventExamples/VB/EventExamples.vb#82)]"
+  syntax:
+    content: public event EventHandler CurrentItemChanged;
+    return:
+      type: System.EventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Forms.BindingManagerBase.DataError
+  commentId: E:System.Windows.Forms.BindingManagerBase.DataError
+  id: DataError
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: DataError
+  nameWithType: BindingManagerBase.DataError
+  fullName: BindingManagerBase.DataError
+  type: Event
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Occurs when an <xref href="System.Exception"></xref> is silently handled by the <xref href="System.Windows.Forms.BindingManagerBase"></xref>.
+  remarks: "This event is informational and reports Common Language Specification (CLS)-compliant exceptions only. To determine what type of exception occurred, handle this event and check the <xref:System.Windows.Forms.BindingManagerDataErrorEventArgs.Exception%2A> property of the <xref:System.Windows.Forms.BindingManagerDataErrorEventArgs>.  \n  \n For more information about handling events, see [Events](http://msdn.microsoft.com/library/b6f65241-e0ad-4590-a99f-200ce741bb1f)."
+  example:
+  - "The following code example demonstrates the use of this member. In the example, an event handler reports on the occurrence of the <xref:System.Windows.Forms.BindingManagerBase.DataError> event. This report helps you to learn when the event occurs and can assist you in debugging. To report on multiple events or on events that occur frequently, consider replacing <xref:System.Windows.Forms.MessageBox.Show%2A?displayProperty=fullName> with <xref:System.Console.WriteLine%2A?displayProperty=fullName> or appending the message to a multiline <xref:System.Windows.Forms.TextBox>.  \n  \n To run the example code, paste it into a project that contains an instance of a type that inherits from <xref:System.Windows.Forms.BindingManagerBase>, such as a <xref:System.Windows.Forms.PropertyManager> or <xref:System.Windows.Forms.CurrencyManager>. Then name the instance `BindingManagerBase1` and ensure that the event handler is associated with the <xref:System.Windows.Forms.BindingManagerBase.DataError> event.  \n  \n [!code-csharp[System.Windows.Forms.EventExamples#83](~/samples/snippets/csharp/VS_Snippets_Winforms/System.Windows.Forms.EventExamples/CS/EventExamples.cs#83)]\n [!code-vb[System.Windows.Forms.EventExamples#83](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.Windows.Forms.EventExamples/VB/EventExamples.vb#83)]"
+  syntax:
+    content: public event System.Windows.Forms.BindingManagerDataErrorEventHandler DataError;
+    return:
+      type: System.Windows.Forms.BindingManagerDataErrorEventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.EndCurrentEdit
+  commentId: M:System.Windows.Forms.BindingManagerBase.EndCurrentEdit
+  id: EndCurrentEdit
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: EndCurrentEdit()
+  nameWithType: BindingManagerBase.EndCurrentEdit()
+  fullName: BindingManagerBase.EndCurrentEdit()
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: When overridden in a derived class, ends the current edit.
+  remarks: This method is supported only if the data source implements the <xref:System.ComponentModel.IEditableObject> interface. In that case, changes will be saved. If the object does not implement the <xref:System.ComponentModel.IEditableObject> interface, changes made to the data will not be saved.
+  example:
+  - "The following code example demonstrates both the <xref:System.Windows.Forms.BindingManagerBase.CancelCurrentEdit%2A> and the <xref:System.Windows.Forms.BindingManagerBase.EndCurrentEdit%2A> methods. When you call the <xref:System.Windows.Forms.BindingManagerBase.CancelCurrentEdit%2A> methods, changes made to the data are discarded. When you call the <xref:System.Windows.Forms.BindingManagerBase.EndCurrentEdit%2A> method, the changes are kept.  \n  \n [!code-cpp[BindingManagerBase.CancelCurrentEdit Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/BindingManagerBase.CancelCurrentEdit Example/CPP/canceledit.cpp#1)]\n [!code-csharp[BindingManagerBase.CancelCurrentEdit Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/BindingManagerBase.CancelCurrentEdit Example/CS/canceledit.cs#1)]\n [!code-vb[BindingManagerBase.CancelCurrentEdit Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/BindingManagerBase.CancelCurrentEdit Example/VB/canceledit.vb#1)]"
+  syntax:
+    content: public abstract void EndCurrentEdit ();
+    parameters: []
+  overload: System.Windows.Forms.BindingManagerBase.EndCurrentEdit*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.GetItemProperties
+  commentId: M:System.Windows.Forms.BindingManagerBase.GetItemProperties
+  id: GetItemProperties
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: GetItemProperties()
+  nameWithType: BindingManagerBase.GetItemProperties()
+  fullName: BindingManagerBase.GetItemProperties()
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: When overridden in a derived class, gets the collection of property descriptors for the binding.
+  remarks: ''
+  example:
+  - "The following code example uses the <xref:System.Windows.Forms.BindingManagerBase.GetItemProperties%2A> method to return a <xref:System.ComponentModel.PropertyDescriptorCollection>. The example prints the <xref:System.ComponentModel.MemberDescriptor.Name%2A> and value of the current <xref:System.Data.DataColumn> using the <xref:System.ComponentModel.PropertyDescriptor.GetValue%2A> method of the <xref:System.ComponentModel.PropertyDescriptor>.  \n  \n [!code-cpp[Classic BindingManagerBase.GetItemProperties Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic BindingManagerBase.GetItemProperties Example/CPP/source.cpp#1)]\n [!code-csharp[Classic BindingManagerBase.GetItemProperties Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic BindingManagerBase.GetItemProperties Example/CS/source.cs#1)]\n [!code-vb[Classic BindingManagerBase.GetItemProperties Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic BindingManagerBase.GetItemProperties Example/VB/source.vb#1)]"
+  syntax:
+    content: public virtual System.ComponentModel.PropertyDescriptorCollection GetItemProperties ();
+    parameters: []
+    return:
+      type: System.ComponentModel.PropertyDescriptorCollection
+      description: A <xref href="System.ComponentModel.PropertyDescriptorCollection"></xref> that represents the property descriptors for the binding.
+  overload: System.Windows.Forms.BindingManagerBase.GetItemProperties*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.GetItemProperties(System.Collections.ArrayList,System.Collections.ArrayList)
+  commentId: M:System.Windows.Forms.BindingManagerBase.GetItemProperties(System.Collections.ArrayList,System.Collections.ArrayList)
+  id: GetItemProperties(System.Collections.ArrayList,System.Collections.ArrayList)
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: GetItemProperties(ArrayList, ArrayList)
+  nameWithType: BindingManagerBase.GetItemProperties(ArrayList, ArrayList)
+  fullName: BindingManagerBase.GetItemProperties(ArrayList, ArrayList)
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Gets the collection of property descriptors for the binding using the specified <xref href="System.Collections.ArrayList"></xref>.
+  remarks: This method is used by developers creating data-bound controls.
+  syntax:
+    content: protected virtual System.ComponentModel.PropertyDescriptorCollection GetItemProperties (System.Collections.ArrayList dataSources, System.Collections.ArrayList listAccessors);
+    parameters:
+    - id: dataSources
+      type: System.Collections.ArrayList
+      description: An <xref href="System.Collections.ArrayList"></xref> containing the data sources.
+    - id: listAccessors
+      type: System.Collections.ArrayList
+      description: An <xref href="System.Collections.ArrayList"></xref> containing the table's bound properties.
+    return:
+      type: System.ComponentModel.PropertyDescriptorCollection
+      description: A <xref href="System.ComponentModel.PropertyDescriptorCollection"></xref> that represents the property descriptors for the binding.
+  overload: System.Windows.Forms.BindingManagerBase.GetItemProperties*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.GetItemProperties(System.Type,System.Int32,System.Collections.ArrayList,System.Collections.ArrayList)
+  commentId: M:System.Windows.Forms.BindingManagerBase.GetItemProperties(System.Type,System.Int32,System.Collections.ArrayList,System.Collections.ArrayList)
+  id: GetItemProperties(System.Type,System.Int32,System.Collections.ArrayList,System.Collections.ArrayList)
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: GetItemProperties(Type, Int32, ArrayList, ArrayList)
+  nameWithType: BindingManagerBase.GetItemProperties(Type, Int32, ArrayList, ArrayList)
+  fullName: BindingManagerBase.GetItemProperties(Type, Int32, ArrayList, ArrayList)
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Gets the list of properties of the items managed by this <xref href="System.Windows.Forms.BindingManagerBase"></xref>.
+  remarks: This overload is used by developers to create data-bound controls.
+  example:
+  - "The following code example uses the <xref:System.Windows.Forms.BindingManagerBase.GetItemProperties%2A> method to return a <xref:System.ComponentModel.PropertyDescriptorCollection> for a <xref:System.Windows.Forms.BindingManagerBase>. The example then prints out the <xref:System.ComponentModel.MemberDescriptor.Name%2A> and <xref:System.ComponentModel.PropertyDescriptor.PropertyType%2A> of each <xref:System.ComponentModel.PropertyDescriptor> in the collection.  \n  \n [!code-cpp[Classic BindingManagerBase.GetItemProperties2 Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic BindingManagerBase.GetItemProperties2 Example/CPP/source.cpp#1)]\n [!code-csharp[Classic BindingManagerBase.GetItemProperties2 Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic BindingManagerBase.GetItemProperties2 Example/CS/source.cs#1)]\n [!code-vb[Classic BindingManagerBase.GetItemProperties2 Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic BindingManagerBase.GetItemProperties2 Example/VB/source.vb#1)]"
+  syntax:
+    content: protected virtual System.ComponentModel.PropertyDescriptorCollection GetItemProperties (Type listType, int offset, System.Collections.ArrayList dataSources, System.Collections.ArrayList listAccessors);
+    parameters:
+    - id: listType
+      type: System.Type
+      description: The <xref href="System.Type"></xref> of the bound list.
+    - id: offset
+      type: System.Int32
+      description: A counter used to recursively call the method.
+    - id: dataSources
+      type: System.Collections.ArrayList
+      description: An <xref href="System.Collections.ArrayList"></xref> containing the data sources.
+    - id: listAccessors
+      type: System.Collections.ArrayList
+      description: An <xref href="System.Collections.ArrayList"></xref> containing the table's bound properties.
+    return:
+      type: System.ComponentModel.PropertyDescriptorCollection
+      description: A <xref href="System.ComponentModel.PropertyDescriptorCollection"></xref> that represents the property descriptors for the binding.
+  overload: System.Windows.Forms.BindingManagerBase.GetItemProperties*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.GetListName(System.Collections.ArrayList)
+  commentId: M:System.Windows.Forms.BindingManagerBase.GetListName(System.Collections.ArrayList)
+  id: GetListName(System.Collections.ArrayList)
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: GetListName(ArrayList)
+  nameWithType: BindingManagerBase.GetListName(ArrayList)
+  fullName: BindingManagerBase.GetListName(ArrayList)
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: When overridden in a derived class, gets the name of the list supplying the data for the binding.
+  syntax:
+    content: protected abstract string GetListName (System.Collections.ArrayList listAccessors);
+    parameters:
+    - id: listAccessors
+      type: System.Collections.ArrayList
+      description: An <xref href="System.Collections.ArrayList"></xref> containing the table's bound properties.
+    return:
+      type: System.String
+      description: The name of the list supplying the data for the binding.
+  overload: System.Windows.Forms.BindingManagerBase.GetListName*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.IsBindingSuspended
+  commentId: P:System.Windows.Forms.BindingManagerBase.IsBindingSuspended
+  id: IsBindingSuspended
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: IsBindingSuspended
+  nameWithType: BindingManagerBase.IsBindingSuspended
+  fullName: BindingManagerBase.IsBindingSuspended
+  type: Property
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Gets a value indicating whether binding is suspended.
+  syntax:
+    content: public bool IsBindingSuspended { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if binding is suspended; otherwise, `false`.'
+  overload: System.Windows.Forms.BindingManagerBase.IsBindingSuspended*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.OnBindingComplete(System.Windows.Forms.BindingCompleteEventArgs)
+  commentId: M:System.Windows.Forms.BindingManagerBase.OnBindingComplete(System.Windows.Forms.BindingCompleteEventArgs)
+  id: OnBindingComplete(System.Windows.Forms.BindingCompleteEventArgs)
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: OnBindingComplete(BindingCompleteEventArgs)
+  nameWithType: BindingManagerBase.OnBindingComplete(BindingCompleteEventArgs)
+  fullName: BindingManagerBase.OnBindingComplete(BindingCompleteEventArgs)
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Raises the <xref href="System.Windows.Forms.BindingManagerBase.BindingComplete"></xref> event.
+  remarks: "Raising an event invokes the event handler through a delegate. For more information, see [Events](http://msdn.microsoft.com/library/b6f65241-e0ad-4590-a99f-200ce741bb1f).  \n  \n The <xref:System.Windows.Forms.BindingManagerBase.OnBindingComplete%2A> method also allows derived classes to handle the event without attaching a delegate. This is the preferred technique for handling the event in a derived class."
+  syntax:
+    content: protected void OnBindingComplete (System.Windows.Forms.BindingCompleteEventArgs args);
+    parameters:
+    - id: args
+      type: System.Windows.Forms.BindingCompleteEventArgs
+      description: A <xref href="System.Windows.Forms.BindingCompleteEventArgs"></xref> that contains the event data.
+  overload: System.Windows.Forms.BindingManagerBase.OnBindingComplete*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.OnCurrentChanged(System.EventArgs)
+  commentId: M:System.Windows.Forms.BindingManagerBase.OnCurrentChanged(System.EventArgs)
+  id: OnCurrentChanged(System.EventArgs)
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: OnCurrentChanged(EventArgs)
+  nameWithType: BindingManagerBase.OnCurrentChanged(EventArgs)
+  fullName: BindingManagerBase.OnCurrentChanged(EventArgs)
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Raises the <xref href="System.Windows.Forms.BindingManagerBase.CurrentChanged"></xref> event.
+  remarks: "Raising an event invokes the event handler through a delegate. For more information, see [Events](http://msdn.microsoft.com/library/b6f65241-e0ad-4590-a99f-200ce741bb1f).  \n  \n The <xref:System.Windows.Forms.BindingManagerBase.OnCurrentChanged%2A> method also allows derived classes to handle the event without attaching a delegate. This is the preferred technique for handling the event in a derived class."
+  syntax:
+    content: protected abstract void OnCurrentChanged (EventArgs e);
+    parameters:
+    - id: e
+      type: System.EventArgs
+      description: The <xref href="System.EventArgs"></xref> that contains the event data.
+  overload: System.Windows.Forms.BindingManagerBase.OnCurrentChanged*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.onCurrentChangedHandler
+  commentId: F:System.Windows.Forms.BindingManagerBase.onCurrentChangedHandler
+  id: onCurrentChangedHandler
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: onCurrentChangedHandler
+  nameWithType: BindingManagerBase.onCurrentChangedHandler
+  fullName: BindingManagerBase.onCurrentChangedHandler
+  type: Field
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Specifies the event handler for the <xref href="System.Windows.Forms.BindingManagerBase.CurrentChanged"></xref> event.
+  syntax:
+    content: protected EventHandler onCurrentChangedHandler;
+    return:
+      type: System.EventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.OnCurrentItemChanged(System.EventArgs)
+  commentId: M:System.Windows.Forms.BindingManagerBase.OnCurrentItemChanged(System.EventArgs)
+  id: OnCurrentItemChanged(System.EventArgs)
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: OnCurrentItemChanged(EventArgs)
+  nameWithType: BindingManagerBase.OnCurrentItemChanged(EventArgs)
+  fullName: BindingManagerBase.OnCurrentItemChanged(EventArgs)
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Raises the <xref href="System.Windows.Forms.BindingManagerBase.CurrentItemChanged"></xref> event.
+  remarks: "Raising an event invokes the event handler through a delegate. For more information, see [Events](http://msdn.microsoft.com/library/b6f65241-e0ad-4590-a99f-200ce741bb1f).  \n  \n The <xref:System.Windows.Forms.BindingManagerBase.OnCurrentItemChanged%2A> method also allows derived classes to handle the event without attaching a delegate. This is the preferred technique for handling the event in a derived class."
+  syntax:
+    content: protected abstract void OnCurrentItemChanged (EventArgs e);
+    parameters:
+    - id: e
+      type: System.EventArgs
+      description: The <xref href="System.EventArgs"></xref> that contains the event data.
+  overload: System.Windows.Forms.BindingManagerBase.OnCurrentItemChanged*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.OnDataError(System.Exception)
+  commentId: M:System.Windows.Forms.BindingManagerBase.OnDataError(System.Exception)
+  id: OnDataError(System.Exception)
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: OnDataError(Exception)
+  nameWithType: BindingManagerBase.OnDataError(Exception)
+  fullName: BindingManagerBase.OnDataError(Exception)
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Raises the <xref href="System.Windows.Forms.BindingManagerBase.DataError"></xref> event.
+  remarks: "Raising an event invokes the event handler through a delegate. For more information, see [Events](http://msdn.microsoft.com/library/b6f65241-e0ad-4590-a99f-200ce741bb1f).  \n  \n The <xref:System.Windows.Forms.BindingManagerBase.OnDataError%2A> method also allows derived classes to handle the event without attaching a delegate. This is the preferred technique for handling the event in a derived class."
+  syntax:
+    content: protected void OnDataError (Exception e);
+    parameters:
+    - id: e
+      type: System.Exception
+      description: An <xref href="System.Exception"></xref> that caused the <xref href="System.Windows.Forms.BindingManagerBase.DataError"></xref> event to occur.
+  overload: System.Windows.Forms.BindingManagerBase.OnDataError*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.onPositionChangedHandler
+  commentId: F:System.Windows.Forms.BindingManagerBase.onPositionChangedHandler
+  id: onPositionChangedHandler
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: onPositionChangedHandler
+  nameWithType: BindingManagerBase.onPositionChangedHandler
+  fullName: BindingManagerBase.onPositionChangedHandler
+  type: Field
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Specifies the event handler for the <xref href="System.Windows.Forms.BindingManagerBase.PositionChanged"></xref> event.
+  syntax:
+    content: protected EventHandler onPositionChangedHandler;
+    return:
+      type: System.EventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.Position
+  commentId: P:System.Windows.Forms.BindingManagerBase.Position
+  id: Position
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: Position
+  nameWithType: BindingManagerBase.Position
+  fullName: BindingManagerBase.Position
+  type: Property
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: When overridden in a derived class, gets or sets the position in the underlying list that controls bound to this data source point to.
+  remarks: "Use the <xref:System.Windows.Forms.BindingManagerBase.Position%2A> property to iterate through the underlying list maintained by the <xref:System.Windows.Forms.BindingManagerBase>. To go to the first item, set the <xref:System.Windows.Forms.BindingManagerBase.Position%2A> to 0. To go to the end of the list, set the <xref:System.Windows.Forms.BindingManagerBase.Position%2A> to the value of the <xref:System.Windows.Forms.BindingManagerBase.Count%2A> property minus 1.  \n  \n The <xref:System.Windows.Forms.BindingManagerBase.PositionChanged> event occurs when the <xref:System.Windows.Forms.BindingManagerBase.Position%2A> property value changes."
+  example:
+  - "The following code example shows four methods that set the <xref:System.Windows.Forms.BindingManagerBase.Position%2A> property. The `MoveNext` method increments the property by 1. The `MovePrevious` method decrements the property by 1. The `MoveFirst` method sets the property to 0, and the `MoveLast` method sets the property to the value of the <xref:System.Windows.Forms.BindingManagerBase.Count%2A> property minus 1.  \n  \n [!code-cpp[Classic BindingManagerBase.Count Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic BindingManagerBase.Count Example/CPP/source.cpp#1)]\n [!code-csharp[Classic BindingManagerBase.Count Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic BindingManagerBase.Count Example/CS/source.cs#1)]\n [!code-vb[Classic BindingManagerBase.Count Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic BindingManagerBase.Count Example/VB/source.vb#1)]"
+  syntax:
+    content: public abstract int Position { get; set; }
+    return:
+      type: System.Int32
+      description: A zero-based index that specifies a position in the underlying list.
+  overload: System.Windows.Forms.BindingManagerBase.Position*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.PositionChanged
+  commentId: E:System.Windows.Forms.BindingManagerBase.PositionChanged
+  id: PositionChanged
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: PositionChanged
+  nameWithType: BindingManagerBase.PositionChanged
+  fullName: BindingManagerBase.PositionChanged
+  type: Event
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Occurs after the value of the <xref href="System.Windows.Forms.BindingManagerBase.Position"></xref> property has changed.
+  remarks: For more information about handling events, see [Events](http://msdn.microsoft.com/library/b6f65241-e0ad-4590-a99f-200ce741bb1f).
+  example:
+  - "The following code example creates a <xref:System.Windows.Forms.Binding>, and then adds it to a collection of <xref:System.Windows.Forms.Binding> objects for a <xref:System.Windows.Forms.TextBox> control. The example then gets the <xref:System.Windows.Forms.BindingManagerBase> for the data source and adds a delegate to the <xref:System.Windows.Forms.BindingManagerBase.PositionChanged> event.  \n  \n [!code-cpp[Classic BindingManagerBase.PositionChanged Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic BindingManagerBase.PositionChanged Example/CPP/source.cpp#1)]\n [!code-csharp[Classic BindingManagerBase.PositionChanged Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic BindingManagerBase.PositionChanged Example/CS/source.cs#1)]\n [!code-vb[Classic BindingManagerBase.PositionChanged Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic BindingManagerBase.PositionChanged Example/VB/source.vb#1)]"
+  syntax:
+    content: public event EventHandler PositionChanged;
+    return:
+      type: System.EventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.PullData
+  commentId: M:System.Windows.Forms.BindingManagerBase.PullData
+  id: PullData
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: PullData()
+  nameWithType: BindingManagerBase.PullData()
+  fullName: BindingManagerBase.PullData()
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Pulls data from the data-bound control into the data source, returning no information.
+  remarks: "The <xref:System.Windows.Forms.BindingManagerBase.PullData%2A> method is a programmatic way to pull information from the data-bound control back into the data source. It is not required for standard operation of a control, since normally a control automatically updates its bound data source when focus leaves it.  \n  \n <xref:System.Windows.Forms.BindingManagerBase.PullData%2A> raises the <xref:System.Windows.Forms.BindingManagerBase.BindingComplete> event and change events on the data source as appropriate."
+  syntax:
+    content: protected void PullData ();
+    parameters: []
+  overload: System.Windows.Forms.BindingManagerBase.PullData*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.PushData
+  commentId: M:System.Windows.Forms.BindingManagerBase.PushData
+  id: PushData
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: PushData()
+  nameWithType: BindingManagerBase.PushData()
+  fullName: BindingManagerBase.PushData()
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Pushes data from the data source into the data-bound control, returning no information.
+  remarks: "The <xref:System.Windows.Forms.BindingManagerBase.PushData%2A> method is a programmatic way to push information from the data source into the data-bound control. This method is not required if the data source implements the <xref:System.ComponentModel.IBindingList?displayProperty=fullName> interface, because the <xref:System.ComponentModel.IBindingList.ListChanged?displayProperty=fullName> event should automatically cause the control to be updated through its currency manager.  \n  \n If this method is issued when a <xref:System.Windows.Forms.BindingManagerBase.PullData%2A> operation is being performed, the <xref:System.Windows.Forms.BindingManagerBase.PushData%2A> method returns immediately with a value of `true`."
+  syntax:
+    content: protected void PushData ();
+    parameters: []
+  overload: System.Windows.Forms.BindingManagerBase.PushData*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.RemoveAt(System.Int32)
+  commentId: M:System.Windows.Forms.BindingManagerBase.RemoveAt(System.Int32)
+  id: RemoveAt(System.Int32)
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: RemoveAt(Int32)
+  nameWithType: BindingManagerBase.RemoveAt(Int32)
+  fullName: BindingManagerBase.RemoveAt(Int32)
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: When overridden in a derived class, deletes the row at the specified index from the underlying list.
+  remarks: "The <xref:System.Windows.Forms.BindingManagerBase.RemoveAt%2A> method relies on the underlying data source to determine how the method behaves. (See the <xref:System.Windows.Forms.Binding> class for a list of supported data sources.) For classes that implement <xref:System.Collections.IList>, <xref:System.ComponentModel.IBindingList>, or <xref:System.ComponentModel.ITypedList>, as well as strongly typed classes that implement <xref:System.Collections.IList>, the <xref:System.Windows.Forms.BindingManagerBase.RemoveAt%2A> method actually deletes the row in the underlying list instead of removing its contents.  \n  \n If the underlying list implements the <xref:System.ComponentModel.IBindingList> interface, the <xref:System.ComponentModel.IBindingList.AllowRemove%2A> property must return `true`. If the underlying list implements the <xref:System.Collections.IList> interface, the <xref:System.Collections.IList.IsFixedSize%2A> property must return `false`."
+  example:
+  - >-
+    [!code-cpp[BindingManagerBase_RemoveAt#1](~/samples/snippets/cpp/VS_Snippets_Winforms/BindingManagerBase_RemoveAt/CPP/bindingmanagerbase_removeat.cpp#1)]
+     [!code-csharp[BindingManagerBase_RemoveAt#1](~/samples/snippets/csharp/VS_Snippets_Winforms/BindingManagerBase_RemoveAt/CS/bindingmanagerbase_removeat.cs#1)]
+     [!code-vb[BindingManagerBase_RemoveAt#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/BindingManagerBase_RemoveAt/VB/bindingmanagerbase_removeat.vb#1)]
+  syntax:
+    content: public abstract void RemoveAt (int index);
+    parameters:
+    - id: index
+      type: System.Int32
+      description: The index of the row to delete.
+  overload: System.Windows.Forms.BindingManagerBase.RemoveAt*
+  exceptions:
+  - type: System.IndexOutOfRangeException
+    commentId: T:System.IndexOutOfRangeException
+    description: There is no row at the specified <code>index</code>.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.ResumeBinding
+  commentId: M:System.Windows.Forms.BindingManagerBase.ResumeBinding
+  id: ResumeBinding
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: ResumeBinding()
+  nameWithType: BindingManagerBase.ResumeBinding()
+  fullName: BindingManagerBase.ResumeBinding()
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: When overridden in a derived class, resumes data binding.
+  remarks: <xref:System.Windows.Forms.BindingManagerBase.SuspendBinding%2A> and <xref:System.Windows.Forms.BindingManagerBase.ResumeBinding%2A> are two methods that allow the temporary suspension and resumption of data binding. You would typically suspend data binding if the user must be allowed to edit data fields before validation occurs. For example, the user might need to change a field to be in accordance with a second field; otherwise, validating the first field would cause the second field to be in error.
+  example:
+  - >-
+    [!code-cpp[BindingManagerBase_Suspend_Resume_Binding#2](~/samples/snippets/cpp/VS_Snippets_Winforms/BindingManagerBase_Suspend_Resume_Binding/CPP/bindingmanagerbase_suspend_resume_binding.cpp#2)]
+     [!code-csharp[BindingManagerBase_Suspend_Resume_Binding#2](~/samples/snippets/csharp/VS_Snippets_Winforms/BindingManagerBase_Suspend_Resume_Binding/CS/bindingmanagerbase_suspend_resume_binding.cs#2)]
+     [!code-vb[BindingManagerBase_Suspend_Resume_Binding#2](~/samples/snippets/visualbasic/VS_Snippets_Winforms/BindingManagerBase_Suspend_Resume_Binding/VB/bindingmanagerbase_suspend_resume_binding.vb#2)]
+  syntax:
+    content: public abstract void ResumeBinding ();
+    parameters: []
+  overload: System.Windows.Forms.BindingManagerBase.ResumeBinding*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.SuspendBinding
+  commentId: M:System.Windows.Forms.BindingManagerBase.SuspendBinding
+  id: SuspendBinding
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: SuspendBinding()
+  nameWithType: BindingManagerBase.SuspendBinding()
+  fullName: BindingManagerBase.SuspendBinding()
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: When overridden in a derived class, suspends data binding.
+  remarks: <xref:System.Windows.Forms.BindingManagerBase.SuspendBinding%2A> and <xref:System.Windows.Forms.BindingManagerBase.ResumeBinding%2A> are two methods that allow the temporary suspension and resumption of data binding. You would typically suspend data binding if the user must be allowed to edit data fields before validation occurs. For example, the user might need to change a field to be in accordance with a second field; otherwise, validating the first field would cause the second field to be in error.
+  example:
+  - >-
+    [!code-cpp[BindingManagerBase_Suspend_Resume_Binding#2](~/samples/snippets/cpp/VS_Snippets_Winforms/BindingManagerBase_Suspend_Resume_Binding/CPP/bindingmanagerbase_suspend_resume_binding.cpp#2)]
+     [!code-csharp[BindingManagerBase_Suspend_Resume_Binding#2](~/samples/snippets/csharp/VS_Snippets_Winforms/BindingManagerBase_Suspend_Resume_Binding/CS/bindingmanagerbase_suspend_resume_binding.cs#2)]
+     [!code-vb[BindingManagerBase_Suspend_Resume_Binding#2](~/samples/snippets/visualbasic/VS_Snippets_Winforms/BindingManagerBase_Suspend_Resume_Binding/VB/bindingmanagerbase_suspend_resume_binding.vb#2)]
+  syntax:
+    content: public abstract void SuspendBinding ();
+    parameters: []
+  overload: System.Windows.Forms.BindingManagerBase.SuspendBinding*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingManagerBase.UpdateIsBinding
+  commentId: M:System.Windows.Forms.BindingManagerBase.UpdateIsBinding
+  id: UpdateIsBinding
+  parent: System.Windows.Forms.BindingManagerBase
+  langs:
+  - csharp
+  name: UpdateIsBinding()
+  nameWithType: BindingManagerBase.UpdateIsBinding()
+  fullName: BindingManagerBase.UpdateIsBinding()
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: When overridden in a derived class, updates the binding.
+  remarks: The <xref:System.Windows.Forms.BindingManagerBase.UpdateIsBinding%2A> method updates the data binding between the bound control and its data source. For complex data-binding scenarios, it also resets the current position to the beginning of the underlying list.
+  syntax:
+    content: protected abstract void UpdateIsBinding ();
+    parameters: []
+  overload: System.Windows.Forms.BindingManagerBase.UpdateIsBinding*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.IndexOutOfRangeException
+  parent: System
+  isExternal: false
+  name: IndexOutOfRangeException
+  nameWithType: IndexOutOfRangeException
+  fullName: System.IndexOutOfRangeException
+- uid: System.Windows.Forms.BindingManagerBase.#ctor
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: BindingManagerBase()
+  nameWithType: BindingManagerBase.BindingManagerBase()
+  fullName: BindingManagerBase.BindingManagerBase()
+- uid: System.Windows.Forms.BindingManagerBase.AddNew
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: AddNew()
+  nameWithType: BindingManagerBase.AddNew()
+  fullName: BindingManagerBase.AddNew()
+- uid: System.Windows.Forms.BindingManagerBase.BindingComplete
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: BindingComplete
+  nameWithType: BindingManagerBase.BindingComplete
+  fullName: BindingManagerBase.BindingComplete
+- uid: System.Windows.Forms.BindingCompleteEventHandler
+  parent: System.Windows.Forms
+  isExternal: false
+  name: BindingCompleteEventHandler
+  nameWithType: BindingCompleteEventHandler
+  fullName: System.Windows.Forms.BindingCompleteEventHandler
+- uid: System.Windows.Forms.BindingManagerBase.Bindings
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: Bindings
+  nameWithType: BindingManagerBase.Bindings
+  fullName: BindingManagerBase.Bindings
+- uid: System.Windows.Forms.BindingsCollection
+  parent: System.Windows.Forms
+  isExternal: false
+  name: BindingsCollection
+  nameWithType: BindingsCollection
+  fullName: System.Windows.Forms.BindingsCollection
+- uid: System.Windows.Forms.BindingManagerBase.CancelCurrentEdit
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: CancelCurrentEdit()
+  nameWithType: BindingManagerBase.CancelCurrentEdit()
+  fullName: BindingManagerBase.CancelCurrentEdit()
+- uid: System.Windows.Forms.BindingManagerBase.Count
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: Count
+  nameWithType: BindingManagerBase.Count
+  fullName: BindingManagerBase.Count
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Windows.Forms.BindingManagerBase.Current
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: Current
+  nameWithType: BindingManagerBase.Current
+  fullName: BindingManagerBase.Current
+- uid: System.Windows.Forms.BindingManagerBase.CurrentChanged
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: CurrentChanged
+  nameWithType: BindingManagerBase.CurrentChanged
+  fullName: BindingManagerBase.CurrentChanged
+- uid: System.EventHandler
+  parent: System
+  isExternal: false
+  name: EventHandler
+  nameWithType: EventHandler
+  fullName: System.EventHandler
+- uid: System.Windows.Forms.BindingManagerBase.CurrentItemChanged
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: CurrentItemChanged
+  nameWithType: BindingManagerBase.CurrentItemChanged
+  fullName: BindingManagerBase.CurrentItemChanged
+- uid: System.Windows.Forms.BindingManagerBase.DataError
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: DataError
+  nameWithType: BindingManagerBase.DataError
+  fullName: BindingManagerBase.DataError
+- uid: System.Windows.Forms.BindingManagerDataErrorEventHandler
+  parent: System.Windows.Forms
+  isExternal: false
+  name: BindingManagerDataErrorEventHandler
+  nameWithType: BindingManagerDataErrorEventHandler
+  fullName: System.Windows.Forms.BindingManagerDataErrorEventHandler
+- uid: System.Windows.Forms.BindingManagerBase.EndCurrentEdit
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: EndCurrentEdit()
+  nameWithType: BindingManagerBase.EndCurrentEdit()
+  fullName: BindingManagerBase.EndCurrentEdit()
+- uid: System.Windows.Forms.BindingManagerBase.GetItemProperties
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: GetItemProperties()
+  nameWithType: BindingManagerBase.GetItemProperties()
+  fullName: BindingManagerBase.GetItemProperties()
+- uid: System.ComponentModel.PropertyDescriptorCollection
+  parent: System.ComponentModel
+  isExternal: false
+  name: PropertyDescriptorCollection
+  nameWithType: PropertyDescriptorCollection
+  fullName: System.ComponentModel.PropertyDescriptorCollection
+- uid: System.Windows.Forms.BindingManagerBase.GetItemProperties(System.Collections.ArrayList,System.Collections.ArrayList)
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: GetItemProperties(ArrayList, ArrayList)
+  nameWithType: BindingManagerBase.GetItemProperties(ArrayList, ArrayList)
+  fullName: BindingManagerBase.GetItemProperties(ArrayList, ArrayList)
+- uid: System.Collections.ArrayList
+  parent: System.Collections
+  isExternal: false
+  name: ArrayList
+  nameWithType: ArrayList
+  fullName: System.Collections.ArrayList
+- uid: System.Windows.Forms.BindingManagerBase.GetItemProperties(System.Type,System.Int32,System.Collections.ArrayList,System.Collections.ArrayList)
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: GetItemProperties(Type, Int32, ArrayList, ArrayList)
+  nameWithType: BindingManagerBase.GetItemProperties(Type, Int32, ArrayList, ArrayList)
+  fullName: BindingManagerBase.GetItemProperties(Type, Int32, ArrayList, ArrayList)
+- uid: System.Type
+  parent: System
+  isExternal: false
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: System.Windows.Forms.BindingManagerBase.GetListName(System.Collections.ArrayList)
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: GetListName(ArrayList)
+  nameWithType: BindingManagerBase.GetListName(ArrayList)
+  fullName: BindingManagerBase.GetListName(ArrayList)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Windows.Forms.BindingManagerBase.IsBindingSuspended
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: IsBindingSuspended
+  nameWithType: BindingManagerBase.IsBindingSuspended
+  fullName: BindingManagerBase.IsBindingSuspended
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Windows.Forms.BindingManagerBase.OnBindingComplete(System.Windows.Forms.BindingCompleteEventArgs)
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: OnBindingComplete(BindingCompleteEventArgs)
+  nameWithType: BindingManagerBase.OnBindingComplete(BindingCompleteEventArgs)
+  fullName: BindingManagerBase.OnBindingComplete(BindingCompleteEventArgs)
+- uid: System.Windows.Forms.BindingCompleteEventArgs
+  parent: System.Windows.Forms
+  isExternal: false
+  name: BindingCompleteEventArgs
+  nameWithType: BindingCompleteEventArgs
+  fullName: System.Windows.Forms.BindingCompleteEventArgs
+- uid: System.Windows.Forms.BindingManagerBase.OnCurrentChanged(System.EventArgs)
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: OnCurrentChanged(EventArgs)
+  nameWithType: BindingManagerBase.OnCurrentChanged(EventArgs)
+  fullName: BindingManagerBase.OnCurrentChanged(EventArgs)
+- uid: System.EventArgs
+  parent: System
+  isExternal: false
+  name: EventArgs
+  nameWithType: EventArgs
+  fullName: System.EventArgs
+- uid: System.Windows.Forms.BindingManagerBase.onCurrentChangedHandler
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: onCurrentChangedHandler
+  nameWithType: BindingManagerBase.onCurrentChangedHandler
+  fullName: BindingManagerBase.onCurrentChangedHandler
+- uid: System.Windows.Forms.BindingManagerBase.OnCurrentItemChanged(System.EventArgs)
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: OnCurrentItemChanged(EventArgs)
+  nameWithType: BindingManagerBase.OnCurrentItemChanged(EventArgs)
+  fullName: BindingManagerBase.OnCurrentItemChanged(EventArgs)
+- uid: System.Windows.Forms.BindingManagerBase.OnDataError(System.Exception)
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: OnDataError(Exception)
+  nameWithType: BindingManagerBase.OnDataError(Exception)
+  fullName: BindingManagerBase.OnDataError(Exception)
+- uid: System.Exception
+  parent: System
+  isExternal: false
+  name: Exception
+  nameWithType: Exception
+  fullName: System.Exception
+- uid: System.Windows.Forms.BindingManagerBase.onPositionChangedHandler
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: onPositionChangedHandler
+  nameWithType: BindingManagerBase.onPositionChangedHandler
+  fullName: BindingManagerBase.onPositionChangedHandler
+- uid: System.Windows.Forms.BindingManagerBase.Position
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: Position
+  nameWithType: BindingManagerBase.Position
+  fullName: BindingManagerBase.Position
+- uid: System.Windows.Forms.BindingManagerBase.PositionChanged
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: PositionChanged
+  nameWithType: BindingManagerBase.PositionChanged
+  fullName: BindingManagerBase.PositionChanged
+- uid: System.Windows.Forms.BindingManagerBase.PullData
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: PullData()
+  nameWithType: BindingManagerBase.PullData()
+  fullName: BindingManagerBase.PullData()
+- uid: System.Windows.Forms.BindingManagerBase.PushData
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: PushData()
+  nameWithType: BindingManagerBase.PushData()
+  fullName: BindingManagerBase.PushData()
+- uid: System.Windows.Forms.BindingManagerBase.RemoveAt(System.Int32)
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: RemoveAt(Int32)
+  nameWithType: BindingManagerBase.RemoveAt(Int32)
+  fullName: BindingManagerBase.RemoveAt(Int32)
+- uid: System.Windows.Forms.BindingManagerBase.ResumeBinding
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: ResumeBinding()
+  nameWithType: BindingManagerBase.ResumeBinding()
+  fullName: BindingManagerBase.ResumeBinding()
+- uid: System.Windows.Forms.BindingManagerBase.SuspendBinding
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: SuspendBinding()
+  nameWithType: BindingManagerBase.SuspendBinding()
+  fullName: BindingManagerBase.SuspendBinding()
+- uid: System.Windows.Forms.BindingManagerBase.UpdateIsBinding
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: UpdateIsBinding()
+  nameWithType: BindingManagerBase.UpdateIsBinding()
+  fullName: BindingManagerBase.UpdateIsBinding()
+- uid: System.Windows.Forms.BindingManagerBase.#ctor*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: BindingManagerBase
+  nameWithType: BindingManagerBase.BindingManagerBase
+  fullName: BindingManagerBase.BindingManagerBase
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.AddNew*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: AddNew
+  nameWithType: BindingManagerBase.AddNew
+  fullName: BindingManagerBase.AddNew
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.Bindings*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: Bindings
+  nameWithType: BindingManagerBase.Bindings
+  fullName: BindingManagerBase.Bindings
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.CancelCurrentEdit*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: CancelCurrentEdit
+  nameWithType: BindingManagerBase.CancelCurrentEdit
+  fullName: BindingManagerBase.CancelCurrentEdit
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.Count*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: Count
+  nameWithType: BindingManagerBase.Count
+  fullName: BindingManagerBase.Count
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.Current*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: Current
+  nameWithType: BindingManagerBase.Current
+  fullName: BindingManagerBase.Current
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.EndCurrentEdit*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: EndCurrentEdit
+  nameWithType: BindingManagerBase.EndCurrentEdit
+  fullName: BindingManagerBase.EndCurrentEdit
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.GetItemProperties*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: GetItemProperties
+  nameWithType: BindingManagerBase.GetItemProperties
+  fullName: BindingManagerBase.GetItemProperties
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.GetListName*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: GetListName
+  nameWithType: BindingManagerBase.GetListName
+  fullName: BindingManagerBase.GetListName
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.IsBindingSuspended*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: IsBindingSuspended
+  nameWithType: BindingManagerBase.IsBindingSuspended
+  fullName: BindingManagerBase.IsBindingSuspended
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.OnBindingComplete*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: OnBindingComplete
+  nameWithType: BindingManagerBase.OnBindingComplete
+  fullName: BindingManagerBase.OnBindingComplete
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.OnCurrentChanged*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: OnCurrentChanged
+  nameWithType: BindingManagerBase.OnCurrentChanged
+  fullName: BindingManagerBase.OnCurrentChanged
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.OnCurrentItemChanged*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: OnCurrentItemChanged
+  nameWithType: BindingManagerBase.OnCurrentItemChanged
+  fullName: BindingManagerBase.OnCurrentItemChanged
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.OnDataError*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: OnDataError
+  nameWithType: BindingManagerBase.OnDataError
+  fullName: BindingManagerBase.OnDataError
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.Position*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: Position
+  nameWithType: BindingManagerBase.Position
+  fullName: BindingManagerBase.Position
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.PullData*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: PullData
+  nameWithType: BindingManagerBase.PullData
+  fullName: BindingManagerBase.PullData
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.PushData*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: PushData
+  nameWithType: BindingManagerBase.PushData
+  fullName: BindingManagerBase.PushData
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.RemoveAt*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: RemoveAt
+  nameWithType: BindingManagerBase.RemoveAt
+  fullName: BindingManagerBase.RemoveAt
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.ResumeBinding*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: ResumeBinding
+  nameWithType: BindingManagerBase.ResumeBinding
+  fullName: BindingManagerBase.ResumeBinding
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.SuspendBinding*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: SuspendBinding
+  nameWithType: BindingManagerBase.SuspendBinding
+  fullName: BindingManagerBase.SuspendBinding
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Windows.Forms.BindingManagerBase.UpdateIsBinding*
+  parent: System.Windows.Forms.BindingManagerBase
+  isExternal: false
+  name: UpdateIsBinding
+  nameWithType: BindingManagerBase.UpdateIsBinding
+  fullName: BindingManagerBase.UpdateIsBinding
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingManagerBase.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

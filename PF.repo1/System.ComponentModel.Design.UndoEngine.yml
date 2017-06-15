@@ -1,0 +1,1064 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.ComponentModel.Design.UndoEngine
+  commentId: T:System.ComponentModel.Design.UndoEngine
+  id: UndoEngine
+  children:
+  - System.ComponentModel.Design.UndoEngine.#ctor(System.IServiceProvider)
+  - System.ComponentModel.Design.UndoEngine.AddUndoUnit(System.ComponentModel.Design.UndoEngine.UndoUnit)
+  - System.ComponentModel.Design.UndoEngine.CreateUndoUnit(System.String,System.Boolean)
+  - System.ComponentModel.Design.UndoEngine.DiscardUndoUnit(System.ComponentModel.Design.UndoEngine.UndoUnit)
+  - System.ComponentModel.Design.UndoEngine.Dispose
+  - System.ComponentModel.Design.UndoEngine.Dispose(System.Boolean)
+  - System.ComponentModel.Design.UndoEngine.Enabled
+  - System.ComponentModel.Design.UndoEngine.GetRequiredService(System.Type)
+  - System.ComponentModel.Design.UndoEngine.GetService(System.Type)
+  - System.ComponentModel.Design.UndoEngine.OnUndoing(System.EventArgs)
+  - System.ComponentModel.Design.UndoEngine.OnUndone(System.EventArgs)
+  - System.ComponentModel.Design.UndoEngine.Undoing
+  - System.ComponentModel.Design.UndoEngine.UndoInProgress
+  - System.ComponentModel.Design.UndoEngine.Undone
+  langs:
+  - csharp
+  name: UndoEngine
+  nameWithType: UndoEngine
+  fullName: System.ComponentModel.Design.UndoEngine
+  type: Class
+  assemblies:
+  - System.Design
+  namespace: System.ComponentModel.Design
+  summary: Specifies generic undo/redo functionality at design time.
+  remarks: "The <xref:System.ComponentModel.Design.UndoEngine> abstract class provides a default implementation of undo functionality at design time. An undo unit represents a single unit of undoable work. This unit is added to a stack and the user can then walk the stack to undo each action. Undo units typically are designed to toggle, which means that calling undo twice returns the application to its starting state.  \n  \n The <xref:System.ComponentModel.Design.UndoEngine> class takes advantage of the following characteristics of objects running within the designer:  \n  \n-   All interesting objects can be persisted to some format by the designer loader.  \n  \n-   All objects raise property-change notifications when a property is changed.  \n  \n-   <xref:System.ComponentModel.Design.IDesignerHost> offers the idea of transactions, which can be used to fabricate an undo action that spans multiple smaller actions.  \n  \n With these features, <xref:System.ComponentModel.Design.UndoEngine> can fabricate any undo units it needs automatically.  \n  \n> [!NOTE]\n>  Do not change property values directly. The <xref:System.ComponentModel.Design.UndoEngine> class requires you to use the appropriate <xref:System.ComponentModel.TypeDescriptor> to change property values.  \n  \n <xref:System.ComponentModel.Design.UndoEngine> monitors for change notifications to create undo units, and the units themselves consist of serialized object states. The following table shows the services that must be available when <xref:System.ComponentModel.Design.UndoEngine> is created.  \n  \n|Service|Description|  \n|-------------|-----------------|  \n|<xref:System.ComponentModel.Design.Serialization.ComponentSerializationService>|Saves property and object values for a component before and after a change is made.|  \n|<xref:System.ComponentModel.Design.IComponentChangeService>|Notifies the undo engine of changes made to components.|  \n|<xref:System.ComponentModel.Design.IDesignerHost>|Used to track transactions.|  \n  \n> [!NOTE]\n>  Because the <xref:System.ComponentModel.Design.UndoEngine> class requires <xref:System.ComponentModel.Design.Serialization.ComponentSerializationService> and <xref:System.ComponentModel.Design.IComponentChangeService>, it is available only at design time.  \n  \n The undo engine tracks transactions and creates a single undo unit that encompasses a transaction. As a result, the undo engine has control over the duration of an undoable action. Also, because transactions can be named, undoable actions inherit their names from the current transaction. If no transaction is available and a change is reported, the undo engine creates an undo name based on the type of change (for example, \"Change property 'Text'\")."
+  syntax:
+    content: 'public abstract class UndoEngine : IDisposable'
+  inheritance:
+  - System.Object
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.UndoEngine.#ctor(System.IServiceProvider)
+  commentId: M:System.ComponentModel.Design.UndoEngine.#ctor(System.IServiceProvider)
+  id: '#ctor(System.IServiceProvider)'
+  parent: System.ComponentModel.Design.UndoEngine
+  langs:
+  - csharp
+  name: UndoEngine(IServiceProvider)
+  nameWithType: UndoEngine.UndoEngine(IServiceProvider)
+  fullName: UndoEngine.UndoEngine(IServiceProvider)
+  type: Constructor
+  assemblies:
+  - System.Design
+  namespace: System.ComponentModel.Design
+  summary: Initializes a new instance of the <xref href="System.ComponentModel.Design.UndoEngine"></xref> class.
+  remarks: The <xref:System.ComponentModel.Design.UndoEngine> requires several services from the `provider` parameter to be useful.
+  syntax:
+    content: protected UndoEngine (IServiceProvider provider);
+    parameters:
+    - id: provider
+      type: System.IServiceProvider
+      description: A parenting service provider.
+  overload: System.ComponentModel.Design.UndoEngine.#ctor*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>provider</code> is `null`.
+  - type: System.NotSupportedException
+    commentId: T:System.NotSupportedException
+    description: A required service cannot be found. See <xref href="System.ComponentModel.Design.UndoEngine"></xref> for required services. If you have removed this service, ensure that you provide a replacement.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.UndoEngine.AddUndoUnit(System.ComponentModel.Design.UndoEngine.UndoUnit)
+  commentId: M:System.ComponentModel.Design.UndoEngine.AddUndoUnit(System.ComponentModel.Design.UndoEngine.UndoUnit)
+  id: AddUndoUnit(System.ComponentModel.Design.UndoEngine.UndoUnit)
+  parent: System.ComponentModel.Design.UndoEngine
+  langs:
+  - csharp
+  name: AddUndoUnit(UndoEngine+UndoUnit)
+  nameWithType: UndoEngine.AddUndoUnit(UndoEngine+UndoUnit)
+  fullName: UndoEngine.AddUndoUnit(UndoEngine+UndoUnit)
+  type: Method
+  assemblies:
+  - System.Design
+  namespace: System.ComponentModel.Design
+  summary: Adds an <xref href="System.ComponentModel.Design.UndoEngine.UndoUnit"></xref> to the undo stack.
+  remarks: Create the `unit` parameter by calling the <xref:System.ComponentModel.Design.UndoEngine.CreateUndoUnit%2A> method.
+  syntax:
+    content: protected abstract void AddUndoUnit (System.ComponentModel.Design.UndoEngine.UndoUnit unit);
+    parameters:
+    - id: unit
+      type: System.ComponentModel.Design.UndoEngine+UndoUnit
+      description: The undo unit to add
+  overload: System.ComponentModel.Design.UndoEngine.AddUndoUnit*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.UndoEngine.CreateUndoUnit(System.String,System.Boolean)
+  commentId: M:System.ComponentModel.Design.UndoEngine.CreateUndoUnit(System.String,System.Boolean)
+  id: CreateUndoUnit(System.String,System.Boolean)
+  parent: System.ComponentModel.Design.UndoEngine
+  langs:
+  - csharp
+  name: CreateUndoUnit(String, Boolean)
+  nameWithType: UndoEngine.CreateUndoUnit(String, Boolean)
+  fullName: UndoEngine.CreateUndoUnit(String, Boolean)
+  type: Method
+  assemblies:
+  - System.Design
+  namespace: System.ComponentModel.Design
+  summary: Creates a new <xref href="System.ComponentModel.Design.UndoEngine.UndoUnit"></xref>.
+  remarks: "The default implementation of the <xref:System.ComponentModel.Design.UndoEngine.CreateUndoUnit%2A> method simply returns a new <xref:System.ComponentModel.Design.UndoEngine.UndoUnit>.  \n  \n By default, <xref:System.ComponentModel.Design.UndoEngine> does nothing with the `primary` parameter, but some implementations of undo, such as those involving the COM `Microsoft.VisualStudio.OLE.Interop.IOleParentUndoUnit` design pattern, may need to identify the difference between a primary unit and its children."
+  syntax:
+    content: protected virtual System.ComponentModel.Design.UndoEngine.UndoUnit CreateUndoUnit (string name, bool primary);
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the unit to create.
+    - id: primary
+      type: System.Boolean
+      description: '`true` to create the first of a series of nested units; `false` to create subsequent nested units.'
+    return:
+      type: System.ComponentModel.Design.UndoEngine+UndoUnit
+      description: A new <xref href="System.ComponentModel.Design.UndoEngine.UndoUnit"></xref> with a specified name.
+  overload: System.ComponentModel.Design.UndoEngine.CreateUndoUnit*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.UndoEngine.DiscardUndoUnit(System.ComponentModel.Design.UndoEngine.UndoUnit)
+  commentId: M:System.ComponentModel.Design.UndoEngine.DiscardUndoUnit(System.ComponentModel.Design.UndoEngine.UndoUnit)
+  id: DiscardUndoUnit(System.ComponentModel.Design.UndoEngine.UndoUnit)
+  parent: System.ComponentModel.Design.UndoEngine
+  langs:
+  - csharp
+  name: DiscardUndoUnit(UndoEngine+UndoUnit)
+  nameWithType: UndoEngine.DiscardUndoUnit(UndoEngine+UndoUnit)
+  fullName: UndoEngine.DiscardUndoUnit(UndoEngine+UndoUnit)
+  type: Method
+  assemblies:
+  - System.Design
+  namespace: System.ComponentModel.Design
+  summary: Discards an <xref href="System.ComponentModel.Design.UndoEngine.UndoUnit"></xref>.
+  remarks: Before the <xref:System.ComponentModel.Design.UndoEngine.DiscardUndoUnit%2A> method is called, the undo unit is closed and then undone.
+  syntax:
+    content: protected virtual void DiscardUndoUnit (System.ComponentModel.Design.UndoEngine.UndoUnit unit);
+    parameters:
+    - id: unit
+      type: System.ComponentModel.Design.UndoEngine+UndoUnit
+      description: The unit to discard.
+  overload: System.ComponentModel.Design.UndoEngine.DiscardUndoUnit*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.UndoEngine.Dispose
+  commentId: M:System.ComponentModel.Design.UndoEngine.Dispose
+  id: Dispose
+  parent: System.ComponentModel.Design.UndoEngine
+  langs:
+  - csharp
+  name: Dispose()
+  nameWithType: UndoEngine.Dispose()
+  fullName: UndoEngine.Dispose()
+  type: Method
+  assemblies:
+  - System.Design
+  namespace: System.ComponentModel.Design
+  summary: Releases all resources used by the <xref href="System.ComponentModel.Design.UndoEngine"></xref>.
+  syntax:
+    content: public void Dispose ();
+    parameters: []
+  overload: System.ComponentModel.Design.UndoEngine.Dispose*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.UndoEngine.Dispose(System.Boolean)
+  commentId: M:System.ComponentModel.Design.UndoEngine.Dispose(System.Boolean)
+  id: Dispose(System.Boolean)
+  parent: System.ComponentModel.Design.UndoEngine
+  langs:
+  - csharp
+  name: Dispose(Boolean)
+  nameWithType: UndoEngine.Dispose(Boolean)
+  fullName: UndoEngine.Dispose(Boolean)
+  type: Method
+  assemblies:
+  - System.Design
+  namespace: System.ComponentModel.Design
+  summary: Releases the unmanaged resources used by the <xref href="System.ComponentModel.Design.UndoEngine"></xref> and optionally releases the managed resources.
+  syntax:
+    content: protected virtual void Dispose (bool disposing);
+    parameters:
+    - id: disposing
+      type: System.Boolean
+      description: '`true` to release both managed and unmanaged resources; `false` to release only unmanaged resources.'
+  overload: System.ComponentModel.Design.UndoEngine.Dispose*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.UndoEngine.Enabled
+  commentId: P:System.ComponentModel.Design.UndoEngine.Enabled
+  id: Enabled
+  parent: System.ComponentModel.Design.UndoEngine
+  langs:
+  - csharp
+  name: Enabled
+  nameWithType: UndoEngine.Enabled
+  fullName: UndoEngine.Enabled
+  type: Property
+  assemblies:
+  - System.Design
+  namespace: System.ComponentModel.Design
+  summary: Enables or disables the <xref href="System.ComponentModel.Design.UndoEngine"></xref>.
+  syntax:
+    content: public bool Enabled { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if the <xref href="System.ComponentModel.Design.UndoEngine"></xref> is enabled; otherwise, `false`.'
+  overload: System.ComponentModel.Design.UndoEngine.Enabled*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.UndoEngine.GetRequiredService(System.Type)
+  commentId: M:System.ComponentModel.Design.UndoEngine.GetRequiredService(System.Type)
+  id: GetRequiredService(System.Type)
+  parent: System.ComponentModel.Design.UndoEngine
+  langs:
+  - csharp
+  name: GetRequiredService(Type)
+  nameWithType: UndoEngine.GetRequiredService(Type)
+  fullName: UndoEngine.GetRequiredService(Type)
+  type: Method
+  assemblies:
+  - System.Design
+  namespace: System.ComponentModel.Design
+  summary: Gets the requested service.
+  syntax:
+    content: protected object GetRequiredService (Type serviceType);
+    parameters:
+    - id: serviceType
+      type: System.Type
+      description: The type of service to retrieve.
+    return:
+      type: System.Object
+      description: The requested service, if found.
+  overload: System.ComponentModel.Design.UndoEngine.GetRequiredService*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>serviceType</code> is `null`.
+  - type: System.NotSupportedException
+    commentId: T:System.NotSupportedException
+    description: <code>serviceType</code> is required but cannot be found. If you have removed this service, ensure that you provide a replacement.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.UndoEngine.GetService(System.Type)
+  commentId: M:System.ComponentModel.Design.UndoEngine.GetService(System.Type)
+  id: GetService(System.Type)
+  parent: System.ComponentModel.Design.UndoEngine
+  langs:
+  - csharp
+  name: GetService(Type)
+  nameWithType: UndoEngine.GetService(Type)
+  fullName: UndoEngine.GetService(Type)
+  type: Method
+  assemblies:
+  - System.Design
+  namespace: System.ComponentModel.Design
+  summary: Gets the requested service.
+  syntax:
+    content: protected object GetService (Type serviceType);
+    parameters:
+    - id: serviceType
+      type: System.Type
+      description: The type of service to retrieve.
+    return:
+      type: System.Object
+      description: The requested service, or `null` if the requested service is not found.
+  overload: System.ComponentModel.Design.UndoEngine.GetService*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>serviceType</code> is `null`.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.UndoEngine.OnUndoing(System.EventArgs)
+  commentId: M:System.ComponentModel.Design.UndoEngine.OnUndoing(System.EventArgs)
+  id: OnUndoing(System.EventArgs)
+  parent: System.ComponentModel.Design.UndoEngine
+  langs:
+  - csharp
+  name: OnUndoing(EventArgs)
+  nameWithType: UndoEngine.OnUndoing(EventArgs)
+  fullName: UndoEngine.OnUndoing(EventArgs)
+  type: Method
+  assemblies:
+  - System.Design
+  namespace: System.ComponentModel.Design
+  summary: Raises the <xref href="System.ComponentModel.Design.UndoEngine.Undoing"></xref> event.
+  syntax:
+    content: protected virtual void OnUndoing (EventArgs e);
+    parameters:
+    - id: e
+      type: System.EventArgs
+      description: An <xref href="System.EventArgs"></xref> that contains the event data.
+  overload: System.ComponentModel.Design.UndoEngine.OnUndoing*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.UndoEngine.OnUndone(System.EventArgs)
+  commentId: M:System.ComponentModel.Design.UndoEngine.OnUndone(System.EventArgs)
+  id: OnUndone(System.EventArgs)
+  parent: System.ComponentModel.Design.UndoEngine
+  langs:
+  - csharp
+  name: OnUndone(EventArgs)
+  nameWithType: UndoEngine.OnUndone(EventArgs)
+  fullName: UndoEngine.OnUndone(EventArgs)
+  type: Method
+  assemblies:
+  - System.Design
+  namespace: System.ComponentModel.Design
+  summary: Raises the <xref href="System.ComponentModel.Design.UndoEngine.Undone"></xref> event.
+  syntax:
+    content: protected virtual void OnUndone (EventArgs e);
+    parameters:
+    - id: e
+      type: System.EventArgs
+      description: An <xref href="System.EventArgs"></xref> that contains the event data.
+  overload: System.ComponentModel.Design.UndoEngine.OnUndone*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.UndoEngine.Undoing
+  commentId: E:System.ComponentModel.Design.UndoEngine.Undoing
+  id: Undoing
+  parent: System.ComponentModel.Design.UndoEngine
+  langs:
+  - csharp
+  name: Undoing
+  nameWithType: UndoEngine.Undoing
+  fullName: UndoEngine.Undoing
+  type: Event
+  assemblies:
+  - System.Design
+  namespace: System.ComponentModel.Design
+  summary: Occurs immediately before an undo action is performed.
+  syntax:
+    content: public event EventHandler Undoing;
+    return:
+      type: System.EventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.UndoEngine.UndoInProgress
+  commentId: P:System.ComponentModel.Design.UndoEngine.UndoInProgress
+  id: UndoInProgress
+  parent: System.ComponentModel.Design.UndoEngine
+  langs:
+  - csharp
+  name: UndoInProgress
+  nameWithType: UndoEngine.UndoInProgress
+  fullName: UndoEngine.UndoInProgress
+  type: Property
+  assemblies:
+  - System.Design
+  namespace: System.ComponentModel.Design
+  summary: Indicates if an undo action is in progress.
+  syntax:
+    content: public bool UndoInProgress { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if an undo action is in progress; otherwise, `false`.'
+  overload: System.ComponentModel.Design.UndoEngine.UndoInProgress*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.UndoEngine.Undone
+  commentId: E:System.ComponentModel.Design.UndoEngine.Undone
+  id: Undone
+  parent: System.ComponentModel.Design.UndoEngine
+  langs:
+  - csharp
+  name: Undone
+  nameWithType: UndoEngine.Undone
+  fullName: UndoEngine.Undone
+  type: Event
+  assemblies:
+  - System.Design
+  namespace: System.ComponentModel.Design
+  summary: Occurs immediately after an undo action is performed.
+  remarks: The <xref:System.ComponentModel.Design.UndoEngine.Undone> event is always raised, even if an exception is thrown.
+  syntax:
+    content: public event EventHandler Undone;
+    return:
+      type: System.EventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.NotSupportedException
+  parent: System
+  isExternal: false
+  name: NotSupportedException
+  nameWithType: NotSupportedException
+  fullName: System.NotSupportedException
+- uid: System.ComponentModel.Design.UndoEngine.#ctor(System.IServiceProvider)
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: UndoEngine(IServiceProvider)
+  nameWithType: UndoEngine.UndoEngine(IServiceProvider)
+  fullName: UndoEngine.UndoEngine(IServiceProvider)
+- uid: System.IServiceProvider
+  parent: System
+  isExternal: false
+  name: IServiceProvider
+  nameWithType: IServiceProvider
+  fullName: System.IServiceProvider
+- uid: System.ComponentModel.Design.UndoEngine.AddUndoUnit(System.ComponentModel.Design.UndoEngine.UndoUnit)
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: AddUndoUnit(UndoEngine+UndoUnit)
+  nameWithType: UndoEngine.AddUndoUnit(UndoEngine+UndoUnit)
+  fullName: UndoEngine.AddUndoUnit(UndoEngine+UndoUnit)
+- uid: System.ComponentModel.Design.UndoEngine
+  parent: System.ComponentModel.Design
+  isExternal: false
+  name: UndoEngine
+  nameWithType: UndoEngine
+  fullName: System.ComponentModel.Design.UndoEngine+UndoUnit
+- uid: System.ComponentModel.Design.UndoEngine.CreateUndoUnit(System.String,System.Boolean)
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: CreateUndoUnit(String, Boolean)
+  nameWithType: UndoEngine.CreateUndoUnit(String, Boolean)
+  fullName: UndoEngine.CreateUndoUnit(String, Boolean)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.ComponentModel.Design.UndoEngine.DiscardUndoUnit(System.ComponentModel.Design.UndoEngine.UndoUnit)
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: DiscardUndoUnit(UndoEngine+UndoUnit)
+  nameWithType: UndoEngine.DiscardUndoUnit(UndoEngine+UndoUnit)
+  fullName: UndoEngine.DiscardUndoUnit(UndoEngine+UndoUnit)
+- uid: System.ComponentModel.Design.UndoEngine.Dispose
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: Dispose()
+  nameWithType: UndoEngine.Dispose()
+  fullName: UndoEngine.Dispose()
+- uid: System.ComponentModel.Design.UndoEngine.Dispose(System.Boolean)
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: Dispose(Boolean)
+  nameWithType: UndoEngine.Dispose(Boolean)
+  fullName: UndoEngine.Dispose(Boolean)
+- uid: System.ComponentModel.Design.UndoEngine.Enabled
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: Enabled
+  nameWithType: UndoEngine.Enabled
+  fullName: UndoEngine.Enabled
+- uid: System.ComponentModel.Design.UndoEngine.GetRequiredService(System.Type)
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: GetRequiredService(Type)
+  nameWithType: UndoEngine.GetRequiredService(Type)
+  fullName: UndoEngine.GetRequiredService(Type)
+- uid: System.Type
+  parent: System
+  isExternal: false
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: System.ComponentModel.Design.UndoEngine.GetService(System.Type)
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: GetService(Type)
+  nameWithType: UndoEngine.GetService(Type)
+  fullName: UndoEngine.GetService(Type)
+- uid: System.ComponentModel.Design.UndoEngine.OnUndoing(System.EventArgs)
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: OnUndoing(EventArgs)
+  nameWithType: UndoEngine.OnUndoing(EventArgs)
+  fullName: UndoEngine.OnUndoing(EventArgs)
+- uid: System.EventArgs
+  parent: System
+  isExternal: false
+  name: EventArgs
+  nameWithType: EventArgs
+  fullName: System.EventArgs
+- uid: System.ComponentModel.Design.UndoEngine.OnUndone(System.EventArgs)
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: OnUndone(EventArgs)
+  nameWithType: UndoEngine.OnUndone(EventArgs)
+  fullName: UndoEngine.OnUndone(EventArgs)
+- uid: System.ComponentModel.Design.UndoEngine.Undoing
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: Undoing
+  nameWithType: UndoEngine.Undoing
+  fullName: UndoEngine.Undoing
+- uid: System.EventHandler
+  parent: System
+  isExternal: false
+  name: EventHandler
+  nameWithType: EventHandler
+  fullName: System.EventHandler
+- uid: System.ComponentModel.Design.UndoEngine.UndoInProgress
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: UndoInProgress
+  nameWithType: UndoEngine.UndoInProgress
+  fullName: UndoEngine.UndoInProgress
+- uid: System.ComponentModel.Design.UndoEngine.Undone
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: Undone
+  nameWithType: UndoEngine.Undone
+  fullName: UndoEngine.Undone
+- uid: System.ComponentModel.Design.UndoEngine.#ctor*
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: UndoEngine
+  nameWithType: UndoEngine.UndoEngine
+  fullName: UndoEngine.UndoEngine
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+- uid: System.ComponentModel.Design.UndoEngine.AddUndoUnit*
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: AddUndoUnit
+  nameWithType: UndoEngine.AddUndoUnit
+  fullName: UndoEngine.AddUndoUnit
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+- uid: System.ComponentModel.Design.UndoEngine.CreateUndoUnit*
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: CreateUndoUnit
+  nameWithType: UndoEngine.CreateUndoUnit
+  fullName: UndoEngine.CreateUndoUnit
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+- uid: System.ComponentModel.Design.UndoEngine.DiscardUndoUnit*
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: DiscardUndoUnit
+  nameWithType: UndoEngine.DiscardUndoUnit
+  fullName: UndoEngine.DiscardUndoUnit
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+- uid: System.ComponentModel.Design.UndoEngine.Dispose*
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: Dispose
+  nameWithType: UndoEngine.Dispose
+  fullName: UndoEngine.Dispose
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+- uid: System.ComponentModel.Design.UndoEngine.Enabled*
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: Enabled
+  nameWithType: UndoEngine.Enabled
+  fullName: UndoEngine.Enabled
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+- uid: System.ComponentModel.Design.UndoEngine.GetRequiredService*
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: GetRequiredService
+  nameWithType: UndoEngine.GetRequiredService
+  fullName: UndoEngine.GetRequiredService
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+- uid: System.ComponentModel.Design.UndoEngine.GetService*
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: GetService
+  nameWithType: UndoEngine.GetService
+  fullName: UndoEngine.GetService
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+- uid: System.ComponentModel.Design.UndoEngine.OnUndoing*
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: OnUndoing
+  nameWithType: UndoEngine.OnUndoing
+  fullName: UndoEngine.OnUndoing
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+- uid: System.ComponentModel.Design.UndoEngine.OnUndone*
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: OnUndone
+  nameWithType: UndoEngine.OnUndone
+  fullName: UndoEngine.OnUndone
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+- uid: System.ComponentModel.Design.UndoEngine.UndoInProgress*
+  parent: System.ComponentModel.Design.UndoEngine
+  isExternal: false
+  name: UndoInProgress
+  nameWithType: UndoEngine.UndoInProgress
+  fullName: UndoEngine.UndoInProgress
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/UndoEngine.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.IDisposable
+  parent: System
+  isExternal: false
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable

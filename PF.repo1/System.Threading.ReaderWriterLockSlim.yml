@@ -1,0 +1,2981 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Threading.ReaderWriterLockSlim
+  commentId: T:System.Threading.ReaderWriterLockSlim
+  id: ReaderWriterLockSlim
+  children:
+  - System.Threading.ReaderWriterLockSlim.#ctor
+  - System.Threading.ReaderWriterLockSlim.#ctor(System.Threading.LockRecursionPolicy)
+  - System.Threading.ReaderWriterLockSlim.CurrentReadCount
+  - System.Threading.ReaderWriterLockSlim.Dispose
+  - System.Threading.ReaderWriterLockSlim.EnterReadLock
+  - System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock
+  - System.Threading.ReaderWriterLockSlim.EnterWriteLock
+  - System.Threading.ReaderWriterLockSlim.ExitReadLock
+  - System.Threading.ReaderWriterLockSlim.ExitUpgradeableReadLock
+  - System.Threading.ReaderWriterLockSlim.ExitWriteLock
+  - System.Threading.ReaderWriterLockSlim.IsReadLockHeld
+  - System.Threading.ReaderWriterLockSlim.IsUpgradeableReadLockHeld
+  - System.Threading.ReaderWriterLockSlim.IsWriteLockHeld
+  - System.Threading.ReaderWriterLockSlim.RecursionPolicy
+  - System.Threading.ReaderWriterLockSlim.RecursiveReadCount
+  - System.Threading.ReaderWriterLockSlim.RecursiveUpgradeCount
+  - System.Threading.ReaderWriterLockSlim.RecursiveWriteCount
+  - System.Threading.ReaderWriterLockSlim.TryEnterReadLock(System.Int32)
+  - System.Threading.ReaderWriterLockSlim.TryEnterReadLock(System.TimeSpan)
+  - System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock(System.Int32)
+  - System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock(System.TimeSpan)
+  - System.Threading.ReaderWriterLockSlim.TryEnterWriteLock(System.Int32)
+  - System.Threading.ReaderWriterLockSlim.TryEnterWriteLock(System.TimeSpan)
+  - System.Threading.ReaderWriterLockSlim.WaitingReadCount
+  - System.Threading.ReaderWriterLockSlim.WaitingUpgradeCount
+  - System.Threading.ReaderWriterLockSlim.WaitingWriteCount
+  langs:
+  - csharp
+  name: ReaderWriterLockSlim
+  nameWithType: ReaderWriterLockSlim
+  fullName: System.Threading.ReaderWriterLockSlim
+  type: Class
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Represents a lock that is used to manage access to a resource, allowing multiple threads for reading or exclusive access for writing.
+  remarks: "Use <xref:System.Threading.ReaderWriterLockSlim> to protect a resource that is read by multiple threads and written to by one thread at a time. <xref:System.Threading.ReaderWriterLockSlim> allows multiple threads to be in read mode, allows one thread to be in write mode with exclusive ownership of the lock, and allows one thread that has read access to be in upgradeable read mode, from which the thread can upgrade to write mode without having to relinquish its read access to the resource.  \n  \n> [!NOTE]\n>  <xref:System.Threading.ReaderWriterLockSlim> is similar to <xref:System.Threading.ReaderWriterLock>, but it has simplified rules for recursion and for upgrading and downgrading lock state. <xref:System.Threading.ReaderWriterLockSlim>avoids many cases of potential deadlock. In addition, the performance of <xref:System.Threading.ReaderWriterLockSlim> is significantly better than <xref:System.Threading.ReaderWriterLock>. <xref:System.Threading.ReaderWriterLockSlim> is recommended for all new development.  \n  \n By default, new instances of <xref:System.Threading.ReaderWriterLockSlim> are created with the <xref:System.Threading.LockRecursionPolicy?displayProperty=fullName> flag and do not allow recursion. This default policy is recommended for all new development, because recursion introduces unnecessary complications and makes your code more prone to deadlocks. To simplify migration from existing projects that use <xref:System.Threading.Monitor> or <xref:System.Threading.ReaderWriterLock>, you can use the <xref:System.Threading.LockRecursionPolicy?displayProperty=fullName> flag to create instances of <xref:System.Threading.ReaderWriterLockSlim> that allow recursion.  \n  \n A thread can enter the lock in three modes: read mode, write mode, and upgradeable read mode. (In the rest of this topic, \"upgradeable read mode\" is referred to as \"upgradeable mode\", and the phrase \"enter `x` mode\" is used in preference to the longer phrase \"enter the lock in `x` mode\".)  \n  \n Regardless of recursion policy, only one thread can be in write mode at any time. When a thread is in write mode, no other thread can enter the lock in any mode. Only one thread can be in upgradeable mode at any time. Any number of threads can be in read mode, and there can be one thread in upgradeable mode while other threads are in read mode.  \n  \n> [!IMPORTANT]\n>  This type implements the <xref:System.IDisposable> interface. When you have finished using the type, you should dispose of it either directly or indirectly. To dispose of the type directly, call its <xref:System.IDisposable.Dispose%2A> method in a `try`/`catch` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the \"Using an Object that Implements IDisposable\" section in the <xref:System.IDisposable> interface topic.  \n  \n <xref:System.Threading.ReaderWriterLockSlim> has managed thread affinity; that is, each <xref:System.Threading.Thread> object must make its own method calls to enter and exit lock modes. No thread can change the mode of another thread.  \n  \n If a <xref:System.Threading.ReaderWriterLockSlim> does not allow recursion, a thread that tries to enter the lock can block for several reasons:  \n  \n-   A thread that tries to enter read mode blocks if there are threads waiting to enter write mode or if there is a single thread in write mode.  \n  \n    > [!NOTE]\n    >  Blocking new readers when writers are queued is a lock fairness policy that favors writers. The current fairness policy balances fairness to readers and writers, to promote throughput in the most common scenarios. Future versions of the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] may introduce new fairness policies.  \n  \n-   A thread that tries to enter upgradeable mode blocks if there is already a thread in upgradeable mode, if there are threads waiting to enter write mode, or if there is a single thread in write mode.  \n  \n-   A thread that tries to enter write mode blocks if there is a thread in any of the three modes.  \n  \n## Upgrading and Downgrading Locks  \n Upgradeable mode is intended for cases where a thread usually reads from the protected resource, but might need to write to it if some condition is met. A thread that has entered a <xref:System.Threading.ReaderWriterLockSlim> in upgradeable mode has read access to the protected resource, and can upgrade to write mode by calling the <xref:System.Threading.ReaderWriterLockSlim.EnterWriteLock%2A> or <xref:System.Threading.ReaderWriterLockSlim.TryEnterWriteLock%2A> methods. Because there can be only one thread in upgradeable mode at a time, upgrading to write mode cannot deadlock when recursion is not allowed, which is the default policy.  \n  \n> [!IMPORTANT]\n>  Regardless of recursion policy, a thread that initially entered read mode is not allowed to upgrade to upgradeable mode or write mode, because that pattern creates a strong probability of deadlocks. For example, if two threads in read mode both try to enter write mode, they will deadlock. Upgradeable mode is designed to avoid such deadlocks.  \n  \n If there are other threads in read mode, the thread that is upgrading blocks. While the thread is blocked, other threads that try to enter read mode are blocked. When all threads have exited from read mode, the blocked upgradeable thread enters write mode. If there are other threads waiting to enter write mode, they remain blocked, because the single thread that is in upgradeable mode prevents them from gaining exclusive access to the resource.  \n  \n When the thread in upgradeable mode exits write mode, other threads that are waiting to enter read mode can do so, unless there are threads waiting to enter write mode. The thread in upgradeable mode can upgrade and downgrade indefinitely, as long as it is the only thread that writes to the protected resource.  \n  \n> [!IMPORTANT]\n>  If you allow multiple threads to enter write mode or upgradeable mode, you must not allow one thread to monopolize upgradeable mode. Otherwise, threads that try to enter write mode directly will be blocked indefinitely, and while they are blocked, other threads will be unable to enter read mode.  \n  \n A thread in upgradeable mode can downgrade to read mode by first calling the <xref:System.Threading.ReaderWriterLockSlim.EnterReadLock%2A> method and then calling the <xref:System.Threading.ReaderWriterLockSlim.ExitUpgradeableReadLock%2A> method. This downgrade pattern is allowed for all lock recursion policies, even <xref:System.Threading.LockRecursionPolicy.NoRecursion>.  \n  \n After downgrading to read mode, a thread cannot reenter upgradeable mode until it has exited from read mode.  \n  \n## Entering the Lock Recursively  \n You can create a <xref:System.Threading.ReaderWriterLockSlim> that supports recursive lock entry by using the <xref:System.Threading.ReaderWriterLockSlim.%23ctor%28System.Threading.LockRecursionPolicy%29> constructor that specifies lock policy, and specifying <xref:System.Threading.LockRecursionPolicy?displayProperty=fullName>.  \n  \n> [!NOTE]\n>  The use of recursion is not recommended for new development, because it introduces unnecessary complications and makes your code more prone to deadlocks.  \n  \n For a <xref:System.Threading.ReaderWriterLockSlim> that allows recursion, the following can be said about the modes a thread can enter:  \n  \n-   A thread in read mode can enter read mode recursively, but cannot enter write mode or upgradeable mode. If it tries to do this, a <xref:System.Threading.LockRecursionException> is thrown. Entering read mode and then entering write mode or upgradeable mode is a pattern with a strong probability of deadlocks, so it is not allowed. As discussed earlier, upgradeable mode is provided for cases where it is necessary to upgrade a lock.  \n  \n-   A thread in upgradeable mode can enter write mode and/or read mode, and can enter any of the three modes recursively. However, an attempt to enter write mode blocks if there are other threads in read mode.  \n  \n-   A thread in write mode can enter read mode and/or upgradeable mode, and can enter any of the three modes recursively.  \n  \n-   A thread that has not entered the lock can enter any mode. This attempt can block for the same reasons as an attempt to enter a non-recursive lock.  \n  \n A thread can exit the modes it has entered in any order, as long as it exits each mode exactly as many times as it entered that mode. If a thread tries to exit a mode too many times, or to exit a mode it has not entered, a <xref:System.Threading.SynchronizationLockException> is thrown.  \n  \n## Lock States  \n You may find it useful to think of the lock in terms of its states. A <xref:System.Threading.ReaderWriterLockSlim> can be in one of four states: not entered, read, upgrade, and write.  \n  \n-   Not entered: In this state, no threads have entered the lock (or all threads have exited the lock).  \n  \n-   Read: In this state, one or more threads have entered the lock for read access to the protected resource.  \n  \n    > [!NOTE]\n    >  A thread can enter the lock in read mode by using the <xref:System.Threading.ReaderWriterLockSlim.EnterReadLock%2A> or <xref:System.Threading.ReaderWriterLockSlim.TryEnterReadLock%2A> methods, or by downgrading from upgradeable mode.  \n  \n-   Upgrade: In this state, one thread has entered the lock for read access with the option to upgrade to write access (that is, in upgradeable mode), and zero or more threads have entered the lock for read access. No more than one thread at a time can enter the lock with the option to upgrade; additional threads that try to enter upgradeable mode are blocked.  \n  \n-   Write: In this state, one thread has entered the lock for write access to the protected resource. That thread has exclusive possession of the lock. Any other thread that tries to enter the lock for any reason is blocked.  \n  \n The following table describes the transitions between lock states, for locks that do not allow recursion, when a thread `t` takes the action described in the leftmost column. At the time it takes the action, `t` has no mode. (The special case where `t` is in upgradeable mode is described in the table footnotes.) The top row describes the starting state of the lock. The cells describe what happens to the thread, and show changes to the lock state in parentheses.  \n  \n||Not entered (N)|Read (R)|Upgrade (U)|Write (W)|  \n|-|-----------------------|----------------|-------------------|-----------------|  \n|`t` enters read mode|`t` enters (R).|`t` blocks if threads are waiting for write mode; otherwise, `t` enters.|`t` blocks if threads are waiting for write mode; otherwise, `t` enters.<sup>1</sup>|`t` blocks.|  \n|`t` enters upgradeable mode|`t` enters (U).|`t` blocks if threads are waiting for write mode or upgrade mode; otherwise, `t` enters (U).|`t` blocks.|`t` blocks.|  \n|`t` enters write mode|`t` enters (W).|`t` blocks.|`t` blocks.<sup>2</sup>|`t` blocks.|  \n  \n <sup>1</sup> If `t` starts out in upgradeable mode, it enters read mode. This action never blocks. The lock state does not change. (The thread can then complete a downgrade to read mode by exiting upgradeable mode.)  \n  \n <sup>2</sup> If `t` starts out in upgradeable mode, it blocks if there are threads in read mode. Otherwise it upgrades to write mode. The lock state changes to Write (W). If `t` blocks because there are threads in read mode, it enters write mode as soon as the last thread exits read mode, even if there are threads waiting to enter write mode.  \n  \n When a state change occurs because a thread exits the lock, the next thread to be awakened is selected as follows:  \n  \n-   First, a thread that is waiting for write mode and is already in upgradeable mode (there can be at most one such thread).  \n  \n-   Failing that, a thread that is waiting for write mode.  \n  \n-   Failing that, a thread that is waiting for upgradeable mode.  \n  \n-   Failing that, all threads that are waiting for read mode.  \n  \n The subsequent state of the lock is always Write (W) in the first two cases and Upgrade (U) in the third case, regardless of the state of the lock when the exiting thread triggered the state change. In the last case, the state of the lock is Upgrade (U) if there is a thread in upgradeable mode after the state change, and Read (R) otherwise, regardless of the prior state."
+  example:
+  - "The following example shows a simple synchronized cache that holds strings with integer keys. An instance of <xref:System.Threading.ReaderWriterLockSlim> is used to synchronize access to the <xref:System.Collections.Generic.Dictionary%602> that serves as the inner cache.  \n  \n The example includes simple methods to add to the cache, delete from the cache, and read from the cache. To demonstrate time-outs, the example includes a method that adds to the cache only if it can do so within a specified time-out.  \n  \n To demonstrate upgradeable mode, the example includes a method that retrieves the value associated with a key and compares it with a new value. If the value is unchanged, the method returns a status indicating no change. It no value is found for the key, the key/value pair is inserted. If the value has changed, it is updated. Upgradeable mode allows the thread to upgrade from read access to write access as needed, without the risk of deadlocks.  \n  \n The example includes a nested enumeration that specifies the return values for the method that demonstrates upgradeable mode.  \n  \n The example uses the default constructor to create the lock, so recursion is not allowed. Programming the <xref:System.Threading.ReaderWriterLockSlim> is simpler and less prone to error when the lock does not allow recursion.  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs#11)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb#11)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#12](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs#12)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#12](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb#12)]  \n  \n The following code then uses the `SynchronizedCache` object to store a dictionary of vegetable names. It creates three tasks. The first writes the names of vegetables stored in an array to a `SynchronizedCache` instance. The second and third task display the names of the vegetables, the first in ascending order (from low index to high index), the second in descending order. The final task searches for the string \"cucumber\" and, when it finds it, calls the <xref:System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock%2A> method  to substitute the string \"green bean\".  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs#11)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb#11)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#13](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs#13)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#13](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb#13)]"
+  syntax:
+    content: 'public class ReaderWriterLockSlim : IDisposable'
+  inheritance:
+  - System.Object
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.#ctor
+  commentId: M:System.Threading.ReaderWriterLockSlim.#ctor
+  id: '#ctor'
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: ReaderWriterLockSlim()
+  nameWithType: ReaderWriterLockSlim.ReaderWriterLockSlim()
+  fullName: ReaderWriterLockSlim.ReaderWriterLockSlim()
+  type: Constructor
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Initializes a new instance of the <xref href="System.Threading.ReaderWriterLockSlim"></xref> class with default property values.
+  remarks: "A <xref:System.Threading.ReaderWriterLockSlim> that is initialized with this constructor does not allow recursion. That is, the <xref:System.Threading.ReaderWriterLockSlim.RecursionPolicy%2A> property returns <xref:System.Threading.LockRecursionPolicy?displayProperty=fullName>.  \n  \n For more information about recursion policy and its effects, see the <xref:System.Threading.LockRecursionPolicy> enumeration and the <xref:System.Threading.ReaderWriterLockSlim> class."
+  example:
+  - "The following example shows a simple synchronized cache that holds strings with integer keys. An instance of <xref:System.Threading.ReaderWriterLockSlim> is used to synchronize access to the <xref:System.Collections.Generic.Dictionary%602> that serves as the inner cache. The parameterless constructor is used to create the lock.  \n  \n The example includes simple methods to add to the cache, delete from the cache, and read from the cache. To demonstrate time-outs, the example includes a method that adds to the cache only if it can do so within a specified time-out.  \n  \n To demonstrate upgradeable mode, the example includes a method that retrieves the value associated with a key and compares it with a new value. If the value is unchanged, the method returns a status indicating no change. It no value is found for the key, the key/value pair is inserted. If the value has changed, it is updated. Upgradeable mode allows the thread to upgrade from read access to write access as needed, without the risk of deadlocks.  \n  \n The example includes a nested enumeration that specifies the return values for the method that demonstrates upgradeable mode.  \n  \n The example uses the default constructor to create the lock, so recursion is not allowed. Programming the <xref:System.Threading.ReaderWriterLockSlim> is simpler and less prone to error when the lock does not allow recursion.  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs#11)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb#11)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#12](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs#12)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#12](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb#12)]  \n  \n The following code then uses the `SynchronizedCache` object to store a dictionary of vegetable names. It creates three tasks. The first writes the names of vegetables stored in an array to a `SynchronizedCache` instance. The second and third task display the names of the vegetables, the first in ascending order (from low index to high index), the second in descending order. The final task searches for the string \"cucumber\" and, when it finds it, calls the <xref:System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock%2A> method  to substitute the string \"green bean\".  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs#11)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb#11)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#13](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/classexample1.cs#13)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#13](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/classexample1.vb#13)]"
+  syntax:
+    content: public ReaderWriterLockSlim ();
+    parameters: []
+  overload: System.Threading.ReaderWriterLockSlim.#ctor*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.#ctor(System.Threading.LockRecursionPolicy)
+  commentId: M:System.Threading.ReaderWriterLockSlim.#ctor(System.Threading.LockRecursionPolicy)
+  id: '#ctor(System.Threading.LockRecursionPolicy)'
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: ReaderWriterLockSlim(LockRecursionPolicy)
+  nameWithType: ReaderWriterLockSlim.ReaderWriterLockSlim(LockRecursionPolicy)
+  fullName: ReaderWriterLockSlim.ReaderWriterLockSlim(LockRecursionPolicy)
+  type: Constructor
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Initializes a new instance of the <xref href="System.Threading.ReaderWriterLockSlim"></xref> class, specifying the lock recursion policy.
+  remarks: "Recursion policy determines the restrictions on threads that enter the lock more than once. For example, if a lock was created with <xref:System.Threading.LockRecursionPolicy?displayProperty=fullName> and a thread has entered the lock in read mode, <xref:System.Threading.LockRecursionException> is thrown if the thread tries to reenter the lock in read mode. Similarly, if a thread has entered the lock in write mode, <xref:System.Threading.LockRecursionException> is thrown if the thread tries to reenter the lock in any mode.  \n  \n> [!NOTE]\n>  A thread in upgradeable mode can upgrade to write mode or downgrade to read mode regardless of the lock recursion policy setting.  \n  \n Regardless of recursion policy, a thread that initially entered read mode is not allowed to upgrade to upgradeable mode or write mode, because that pattern creates a strong probability of deadlocks.  \n  \n For more information about recursion policy and its effects, see the <xref:System.Threading.LockRecursionPolicy> enumeration and the <xref:System.Threading.ReaderWriterLockSlim> class."
+  example:
+  - "The following example shows two exception scenarios, one that depends on the <xref:System.Threading.LockRecursionPolicy> setting and one that does not.  \n  \n In the first scenario, the thread enters read mode and then tries to enter read mode recursively. If the <xref:System.Threading.ReaderWriterLockSlim> is created by using the default constructor, which sets recursion policy to <xref:System.Threading.LockRecursionPolicy?displayProperty=fullName>, an exception is thrown. If <xref:System.Threading.LockRecursionPolicy?displayProperty=fullName> is used to create the <xref:System.Threading.ReaderWriterLockSlim>, no exception is thrown.  \n  \n In the second scenario, the thread enters read mode and then tries to enter write mode. <xref:System.Threading.LockRecursionException> is thrown regardless of the lock recursion policy.  \n  \n[!code-csharp[System.Threading.LockRecursionPolicy#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/cs/ClassExample1.cs#11)] \n[!code-vb[System.Threading.LockRecursionPolicy#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/vb/ClassExample1.vb#11)]   \n[!code-csharp[System.Threading.LockRecursionPolicy#12](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/cs/ClassExample1.cs#12)] \n[!code-vb[System.Threading.LockRecursionPolicy#12](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/vb/ClassExample1.vb#12)]  \n  \n The following code then uses the `SynchronizedCache` object to store a dictionary of vegetable names. It creates three tasks. The first writes the names of vegetables stored in an array to a `SynchronizedCache` instance. The second and third task display the names of the vegetables, the first in ascending order (from low index to high index), the second in descending order. The final task searches for the string \"cucumber\" and, when it finds it, calls the <xref:System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock%2A> method  to substitute the string \"green bean\".  \n  \n[!code-csharp[System.Threading.LockRecursionPolicy#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/cs/ClassExample1.cs#11)] \n[!code-vb[System.Threading.LockRecursionPolicy#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/vb/ClassExample1.vb#11)]   \n[!code-csharp[System.Threading.LockRecursionPolicy#13](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/cs/ClassExample1.cs#13)] \n[!code-vb[System.Threading.LockRecursionPolicy#13](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.LockRecursionPolicy/vb/ClassExample1.vb#13)]"
+  syntax:
+    content: public ReaderWriterLockSlim (System.Threading.LockRecursionPolicy recursionPolicy);
+    parameters:
+    - id: recursionPolicy
+      type: System.Threading.LockRecursionPolicy
+      description: One of the enumeration values that specifies the lock recursion policy.
+  overload: System.Threading.ReaderWriterLockSlim.#ctor*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.CurrentReadCount
+  commentId: P:System.Threading.ReaderWriterLockSlim.CurrentReadCount
+  id: CurrentReadCount
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: CurrentReadCount
+  nameWithType: ReaderWriterLockSlim.CurrentReadCount
+  fullName: ReaderWriterLockSlim.CurrentReadCount
+  type: Property
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Gets the total number of unique threads that have entered the lock in read mode.
+  remarks: "A thread is counted only once, even if the lock allows recursion and the thread has entered read mode multiple times.  \n  \n Use this property only for debugging, profiling, and logging purposes, and not to control the behavior of an algorithm. The results can change as soon as they have been calculated. Therefore, it is not safe to make decisions based on this property."
+  example:
+  - "The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.CurrentReadCount%2A> property to generate an event log entry if the number of threads in read mode exceeds a threshold.  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#1)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#1)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#2)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Aux#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#2)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#11](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#11)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Aux#11](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#11)]"
+  syntax:
+    content: public int CurrentReadCount { get; }
+    return:
+      type: System.Int32
+      description: The number of unique threads that have entered the lock in read mode.
+  overload: System.Threading.ReaderWriterLockSlim.CurrentReadCount*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.Dispose
+  commentId: M:System.Threading.ReaderWriterLockSlim.Dispose
+  id: Dispose
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: Dispose()
+  nameWithType: ReaderWriterLockSlim.Dispose()
+  fullName: ReaderWriterLockSlim.Dispose()
+  type: Method
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Releases all resources used by the current instance of the <xref href="System.Threading.ReaderWriterLockSlim"></xref> class.
+  remarks: "Call <xref:System.Threading.ReaderWriterLockSlim.Dispose%2A> when you are finished using the <xref:System.Threading.ReaderWriterLockSlim>. The <xref:System.Threading.ReaderWriterLockSlim.Dispose%2A> method leaves the <xref:System.Threading.ReaderWriterLockSlim> in an unusable state. After calling <xref:System.Threading.ReaderWriterLockSlim.Dispose%2A>, you must release all references to the <xref:System.Threading.ReaderWriterLockSlim> so the garbage collector can reclaim the memory that the <xref:System.Threading.ReaderWriterLockSlim> was occupying. For more information, see [Cleaning Up Unmanaged Resources](~/docs/standard/garbage-collection/unmanaged.md) and [Implementing a Dispose Method](~/docs/standard/garbage-collection/implementing-dispose.md).  \n  \n> [!NOTE]\n>  Always call <xref:System.Threading.ReaderWriterLockSlim.Dispose%2A> before you release your last reference to the <xref:System.Threading.ReaderWriterLockSlim> object."
+  syntax:
+    content: public void Dispose ();
+    parameters: []
+  overload: System.Threading.ReaderWriterLockSlim.Dispose*
+  exceptions:
+  - type: System.Threading.SynchronizationLockException
+    commentId: T:System.Threading.SynchronizationLockException
+    description: "<xref href=\"System.Threading.ReaderWriterLockSlim.WaitingReadCount\"></xref> is greater than zero.  \n  \n -or-  \n  \n <xref href=\"System.Threading.ReaderWriterLockSlim.WaitingUpgradeCount\"></xref> is greater than zero.  \n  \n -or-  \n  \n <xref href=\"System.Threading.ReaderWriterLockSlim.WaitingWriteCount\"></xref> is greater than zero."
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.EnterReadLock
+  commentId: M:System.Threading.ReaderWriterLockSlim.EnterReadLock
+  id: EnterReadLock
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: EnterReadLock()
+  nameWithType: ReaderWriterLockSlim.EnterReadLock()
+  fullName: ReaderWriterLockSlim.EnterReadLock()
+  type: Method
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Tries to enter the lock in read mode.
+  remarks: "This method blocks until the calling thread enters the lock, and therefore might never return. Use the <xref:System.Threading.ReaderWriterLockSlim.TryEnterReadLock%2A> method to block for a specified interval, and then return if the calling thread has not entered read mode during that interval.  \n  \n Multiple threads can enter read mode at the same time.  \n  \n If one or more threads are waiting to enter write mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.EnterReadLock%2A> method blocks until those threads have either timed out or entered write mode and then exited from it.  \n  \n> [!NOTE]\n>  If a lock allows recursion, a thread that has entered the lock in read mode can enter read mode recursively, even if other threads are waiting to enter write mode.  \n  \n At most one thread can be in upgradeable mode while other threads are in read mode. If additional threads are waiting to enter upgradeable mode, and there are no threads waiting to enter write mode, threads that call the <xref:System.Threading.ReaderWriterLockSlim.EnterReadLock%2A> method enter read mode immediately and do not block."
+  example:
+  - "The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.EnterReadLock%2A> method to enter the lock in read mode. The method shown in the example retrieves the value associated with a key. If the key is not found, the exception thrown by the inner <xref:System.Collections.Generic.Dictionary%602> is allowed to terminate the method. A `finally` block is used to execute the <xref:System.Threading.ReaderWriterLockSlim.ExitReadLock%2A> method, ensuring that the caller exits read mode.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLockSlim> class.  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#2)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#3)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#3)]"
+  syntax:
+    content: public void EnterReadLock ();
+    parameters: []
+  overload: System.Threading.ReaderWriterLockSlim.EnterReadLock*
+  exceptions:
+  - type: System.Threading.LockRecursionException
+    commentId: T:System.Threading.LockRecursionException
+    description: "The current thread cannot acquire the write lock when it holds the read lock.  \n  \n -or-  \n  \n The <xref href=\"System.Threading.ReaderWriterLockSlim.RecursionPolicy\"></xref> property is <xref href=\"System.Threading.LockRecursionPolicy.NoRecursion\"></xref>, and the current thread has attempted to acquire the read lock when it already holds the read lock.  \n  \n -or-  \n  \n The <xref href=\"System.Threading.ReaderWriterLockSlim.RecursionPolicy\"></xref> property is <xref href=\"System.Threading.LockRecursionPolicy.NoRecursion\"></xref>, and the current thread has attempted to acquire the read lock when it already holds the write lock.  \n  \n -or-  \n  \n The recursion number would exceed the capacity of the counter. This limit is so large that applications should never encounter this exception."
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The <xref href="System.Threading.ReaderWriterLockSlim"></xref> object has been disposed.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock
+  commentId: M:System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock
+  id: EnterUpgradeableReadLock
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: EnterUpgradeableReadLock()
+  nameWithType: ReaderWriterLockSlim.EnterUpgradeableReadLock()
+  fullName: ReaderWriterLockSlim.EnterUpgradeableReadLock()
+  type: Method
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Tries to enter the lock in upgradeable mode.
+  remarks: "This method blocks until the calling thread enters the lock, and therefore might never return. Use the <xref:System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock%2A> method to block for a specified interval, and then return if the calling thread has not entered upgradeable mode during that interval.  \n  \n Use upgradeable mode when a thread usually accesses the resource that is protected by the <xref:System.Threading.ReaderWriterLockSlim> in read mode, but may need to enter write mode if certain conditions are met. A thread in upgradeable mode can downgrade to read mode or upgrade to write mode.  \n  \n Only one thread can enter upgradeable mode at any given time. If a thread is in upgradeable mode, and there are no threads waiting to enter write mode, any number of other threads can enter read mode, even if there are threads waiting to enter upgradeable mode.  \n  \n If one or more threads are waiting to enter write mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock%2A> method blocks until those threads have either timed out or entered write mode and then exited from it.  \n  \n> [!NOTE]\n>  If a lock allows recursion, a thread that has entered the lock in upgradeable mode can enter upgradeable mode recursively, even if other threads are waiting to enter write mode."
+  example:
+  - "The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock%2A> method to enter the lock in upgradeable mode. A `finally` block is used to execute the <xref:System.Threading.ReaderWriterLockSlim.ExitUpgradeableReadLock%2A> method, ensuring that the caller exits upgradeable mode.  \n  \n The method shown in the example retrieves the value associated with a key and compares it with a new value. If the value is unchanged, the method returns a status indicating no change. It no value is found for the key, the key/value pair is inserted. If the value has changed, it is updated. Upgradeable mode allows the thread to upgrade the read lock as needed, without risk of deadlocks.  \n  \n The example uses the default constructor to create the lock, so recursion is not allowed. Programming the <xref:System.Threading.ReaderWriterLockSlim> is simpler and less prone to error when the lock does not allow recursion.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLockSlim> class.  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#2)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#6)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#6)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#10](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#10)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#10](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#10)]"
+  syntax:
+    content: public void EnterUpgradeableReadLock ();
+    parameters: []
+  overload: System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock*
+  exceptions:
+  - type: System.Threading.LockRecursionException
+    commentId: T:System.Threading.LockRecursionException
+    description: "The <xref href=\"System.Threading.ReaderWriterLockSlim.RecursionPolicy\"></xref> property is <xref href=\"System.Threading.LockRecursionPolicy.NoRecursion\"></xref> and the current thread has already entered the lock in any mode.  \n  \n -or-  \n  \n The current thread has entered read mode, so trying to enter upgradeable mode would create the possibility of a deadlock.  \n  \n -or-  \n  \n The recursion number would exceed the capacity of the counter. The limit is so large that applications should never encounter it."
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The <xref href="System.Threading.ReaderWriterLockSlim"></xref> object has been disposed.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.EnterWriteLock
+  commentId: M:System.Threading.ReaderWriterLockSlim.EnterWriteLock
+  id: EnterWriteLock
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: EnterWriteLock()
+  nameWithType: ReaderWriterLockSlim.EnterWriteLock()
+  fullName: ReaderWriterLockSlim.EnterWriteLock()
+  type: Method
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Tries to enter the lock in write mode.
+  remarks: "This method blocks until the calling thread enters the lock, and therefore might never return. Use the <xref:System.Threading.ReaderWriterLockSlim.TryEnterWriteLock%2A> method to block for a specified interval, and then return if the calling thread has not entered write mode during that interval.  \n  \n If other threads have entered the lock in read mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.EnterWriteLock%2A> method blocks until those threads have exited read mode. When there are threads waiting to enter write mode, additional threads that try to enter read mode or upgradeable mode block until all the threads waiting to enter write mode have either timed out or entered write mode and then exited from it.  \n  \n> [!NOTE]\n>  If a lock allows recursion, a thread that has entered the lock in write mode can enter write mode recursively, even if other threads are waiting to enter write mode."
+  example:
+  - "The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.EnterWriteLock%2A> method to enter the lock in write mode. The method shown in the example adds a new key/value pair to the synchronized cache. If the key is already in the cache, the exception thrown by the inner <xref:System.Collections.Generic.Dictionary%602> is allowed to terminate the method. A `finally` block is used to execute the <xref:System.Threading.ReaderWriterLockSlim.ExitWriteLock%2A> method, ensuring that the caller exits write mode.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLockSlim> class.  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#2)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#4)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#4)]"
+  syntax:
+    content: public void EnterWriteLock ();
+    parameters: []
+  overload: System.Threading.ReaderWriterLockSlim.EnterWriteLock*
+  exceptions:
+  - type: System.Threading.LockRecursionException
+    commentId: T:System.Threading.LockRecursionException
+    description: "The <xref href=\"System.Threading.ReaderWriterLockSlim.RecursionPolicy\"></xref> property is <xref href=\"System.Threading.LockRecursionPolicy.NoRecursion\"></xref> and the current thread has already entered the lock in any mode.  \n  \n -or-  \n  \n The current thread has entered read mode, so trying to enter the lock in write mode would create the possibility of a deadlock.  \n  \n -or-  \n  \n The recursion number would exceed the capacity of the counter. The limit is so large that applications should never encounter it."
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The <xref href="System.Threading.ReaderWriterLockSlim"></xref> object has been disposed.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.ExitReadLock
+  commentId: M:System.Threading.ReaderWriterLockSlim.ExitReadLock
+  id: ExitReadLock
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: ExitReadLock()
+  nameWithType: ReaderWriterLockSlim.ExitReadLock()
+  fullName: ReaderWriterLockSlim.ExitReadLock()
+  type: Method
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Reduces the recursion count for read mode, and exits read mode if the resulting count is 0 (zero).
+  remarks: "This method is not sensitive to recursion order. For example, if a thread enters a lock in upgradeable mode and then enters the lock in read mode, the order in which the thread exits the two modes does not matter. If a lock allows recursion, a thread can enter the lock in write mode and then enter it recursively in read mode; the order in which the thread exits read mode and write mode does not matter.  \n  \n Exiting the lock might signal other waiting threads."
+  example:
+  - "The following example shows how to use a `finally` block to execute the <xref:System.Threading.ReaderWriterLockSlim.ExitReadLock%2A> method, ensuring that the caller exits read mode. The method shown in the example retrieves the value associated with a key. If the key is not found, the exception thrown by the inner <xref:System.Collections.Generic.Dictionary%602> is allowed to terminate the method. The <xref:System.Threading.ReaderWriterLockSlim.EnterReadLock%2A> method is used to enter read mode.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLockSlim> class.  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#2)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#3)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#3)]"
+  syntax:
+    content: public void ExitReadLock ();
+    parameters: []
+  overload: System.Threading.ReaderWriterLockSlim.ExitReadLock*
+  exceptions:
+  - type: System.Threading.SynchronizationLockException
+    commentId: T:System.Threading.SynchronizationLockException
+    description: The current thread has not entered the lock in read mode.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.ExitUpgradeableReadLock
+  commentId: M:System.Threading.ReaderWriterLockSlim.ExitUpgradeableReadLock
+  id: ExitUpgradeableReadLock
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: ExitUpgradeableReadLock()
+  nameWithType: ReaderWriterLockSlim.ExitUpgradeableReadLock()
+  fullName: ReaderWriterLockSlim.ExitUpgradeableReadLock()
+  type: Method
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Reduces the recursion count for upgradeable mode, and exits upgradeable mode if the resulting count is 0 (zero).
+  remarks: "This method is not sensitive to recursion order. For example, if a thread enters a lock in upgradeable mode and then enters the lock in write mode, the order in which the thread exits the two modes does not matter. If a lock allows recursion, a thread can enter the lock in write mode and then enter it recursively in upgradeable mode; the order in which the thread exits upgradeable mode and write mode does not matter.  \n  \n Exiting the lock might signal other waiting threads."
+  example:
+  - "The following example shows how to use a `finally` block to execute the <xref:System.Threading.ReaderWriterLockSlim.ExitUpgradeableReadLock%2A> method, ensuring that the caller exits upgradeable mode.  \n  \n The method shown in the example retrieves the value associated with a key and compares it with a new value. If the value is unchanged, the method returns a status indicating no change. It no value is found for the key, the key/value pair is inserted. If the value has changed, it is updated. Upgradeable mode allows the thread to upgrade the read lock as needed, without risk of deadlocks.  \n  \n The example uses the default constructor to create the lock, so recursion is not allowed. Programming the <xref:System.Threading.ReaderWriterLockSlim> is simpler and less prone to error when the lock does not allow recursion.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLockSlim> class.  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#2)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#6)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#6)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#10](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#10)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#10](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#10)]"
+  syntax:
+    content: public void ExitUpgradeableReadLock ();
+    parameters: []
+  overload: System.Threading.ReaderWriterLockSlim.ExitUpgradeableReadLock*
+  exceptions:
+  - type: System.Threading.SynchronizationLockException
+    commentId: T:System.Threading.SynchronizationLockException
+    description: The current thread has not entered the lock in upgradeable mode.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.ExitWriteLock
+  commentId: M:System.Threading.ReaderWriterLockSlim.ExitWriteLock
+  id: ExitWriteLock
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: ExitWriteLock()
+  nameWithType: ReaderWriterLockSlim.ExitWriteLock()
+  fullName: ReaderWriterLockSlim.ExitWriteLock()
+  type: Method
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Reduces the recursion count for write mode, and exits write mode if the resulting count is 0 (zero).
+  remarks: "This method is not sensitive to recursion order. For example, if a thread enters a lock in upgradeable mode and then enters the lock in write mode, the order in which the thread exits the two modes does not matter. If a lock allows recursion, a thread can enter the lock in write mode and then enter it recursively in read mode; the order in which the thread exits read mode and write mode does not matter.  \n  \n Exiting the lock might signal other waiting threads."
+  example:
+  - "The following example shows how to use a `finally` block to execute the <xref:System.Threading.ReaderWriterLockSlim.ExitWriteLock%2A> method, ensuring that the caller exits write mode. The method shown in the example adds a new key/value pair to the synchronized cache. If the key is already in the cache, the exception thrown by the inner <xref:System.Collections.Generic.Dictionary%602> is allowed to terminate the method. The <xref:System.Threading.ReaderWriterLockSlim.EnterWriteLock%2A> method is used to enter the lock in write mode.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLockSlim> class.  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#2)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#4)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#4)]"
+  syntax:
+    content: public void ExitWriteLock ();
+    parameters: []
+  overload: System.Threading.ReaderWriterLockSlim.ExitWriteLock*
+  exceptions:
+  - type: System.Threading.SynchronizationLockException
+    commentId: T:System.Threading.SynchronizationLockException
+    description: The current thread has not entered the lock in write mode.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.IsReadLockHeld
+  commentId: P:System.Threading.ReaderWriterLockSlim.IsReadLockHeld
+  id: IsReadLockHeld
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: IsReadLockHeld
+  nameWithType: ReaderWriterLockSlim.IsReadLockHeld
+  fullName: ReaderWriterLockSlim.IsReadLockHeld
+  type: Property
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Gets a value that indicates whether the current thread has entered the lock in read mode.
+  remarks: This property is intended for use in asserts or for other debugging purposes. Do not use it to control the flow of program execution.
+  example:
+  - "The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.IsReadLockHeld%2A> property to generate an assert if the current thread has entered read mode unexpectedly.  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#1)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#1)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#21](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#21)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Aux#21](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#21)]"
+  syntax:
+    content: public bool IsReadLockHeld { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the current thread has entered read mode; otherwise, `false`.'
+  overload: System.Threading.ReaderWriterLockSlim.IsReadLockHeld*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.IsUpgradeableReadLockHeld
+  commentId: P:System.Threading.ReaderWriterLockSlim.IsUpgradeableReadLockHeld
+  id: IsUpgradeableReadLockHeld
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: IsUpgradeableReadLockHeld
+  nameWithType: ReaderWriterLockSlim.IsUpgradeableReadLockHeld
+  fullName: ReaderWriterLockSlim.IsUpgradeableReadLockHeld
+  type: Property
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Gets a value that indicates whether the current thread has entered the lock in upgradeable mode.
+  remarks: This property is intended for use in asserts or for other debugging purposes. Do not use it to control the flow of program execution.
+  example:
+  - "The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.IsUpgradeableReadLockHeld%2A> property to generate an assert if the current thread has entered upgradeable mode unexpectedly.  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#1)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#1)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#22](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#22)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Aux#22](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#22)]"
+  syntax:
+    content: public bool IsUpgradeableReadLockHeld { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the current thread has entered upgradeable mode; otherwise, `false`.'
+  overload: System.Threading.ReaderWriterLockSlim.IsUpgradeableReadLockHeld*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.IsWriteLockHeld
+  commentId: P:System.Threading.ReaderWriterLockSlim.IsWriteLockHeld
+  id: IsWriteLockHeld
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: IsWriteLockHeld
+  nameWithType: ReaderWriterLockSlim.IsWriteLockHeld
+  fullName: ReaderWriterLockSlim.IsWriteLockHeld
+  type: Property
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Gets a value that indicates whether the current thread has entered the lock in write mode.
+  remarks: This property is intended for use in asserts or for other debugging purposes. Do not use it to control the flow of program execution.
+  example:
+  - "The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.IsWriteLockHeld%2A> property to generate an assert if the current thread has entered write mode unexpectedly.  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#1)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#1)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#23](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#23)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Aux#23](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#23)]"
+  syntax:
+    content: public bool IsWriteLockHeld { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the current thread has entered write mode; otherwise, `false`.'
+  overload: System.Threading.ReaderWriterLockSlim.IsWriteLockHeld*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.RecursionPolicy
+  commentId: P:System.Threading.ReaderWriterLockSlim.RecursionPolicy
+  id: RecursionPolicy
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: RecursionPolicy
+  nameWithType: ReaderWriterLockSlim.RecursionPolicy
+  fullName: ReaderWriterLockSlim.RecursionPolicy
+  type: Property
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Gets a value that indicates the recursion policy for the current <xref href="System.Threading.ReaderWriterLockSlim"></xref> object.
+  remarks: "Recursion policy determines the restrictions on threads that enter the lock more than once. For example, if a lock was created with <xref:System.Threading.LockRecursionPolicy?displayProperty=fullName> and a thread has entered the lock in read mode, <xref:System.Threading.LockRecursionException> is thrown if the thread tries to reenter the lock in read mode.  \n  \n> [!NOTE]\n>  A thread in upgradeable mode can upgrade to write mode or downgrade to read mode regardless of the lock recursion policy setting.  \n  \n Regardless of recursion policy, a thread that initially entered read mode is not allowed to upgrade to upgradeable mode or write mode, because that pattern creates a strong probability of deadlocks.  \n  \n For more information about recursion policy and its effects, see the <xref:System.Threading.LockRecursionPolicy> enumeration and the <xref:System.Threading.ReaderWriterLockSlim> class."
+  syntax:
+    content: public System.Threading.LockRecursionPolicy RecursionPolicy { get; }
+    return:
+      type: System.Threading.LockRecursionPolicy
+      description: One of the enumeration values that specifies the lock recursion policy.
+  overload: System.Threading.ReaderWriterLockSlim.RecursionPolicy*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.RecursiveReadCount
+  commentId: P:System.Threading.ReaderWriterLockSlim.RecursiveReadCount
+  id: RecursiveReadCount
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: RecursiveReadCount
+  nameWithType: ReaderWriterLockSlim.RecursiveReadCount
+  fullName: ReaderWriterLockSlim.RecursiveReadCount
+  type: Property
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Gets the number of times the current thread has entered the lock in read mode, as an indication of recursion.
+  remarks: Use this property only for debugging, profiling, and logging purposes, and not to control the behavior of an algorithm. The results can change as soon as they have been calculated. Therefore, it is not safe to make decisions based on this property.
+  syntax:
+    content: public int RecursiveReadCount { get; }
+    return:
+      type: System.Int32
+      description: 0 (zero) if the current thread has not entered read mode, 1 if the thread has entered read mode but has not entered it recursively, or *n* if the thread has entered the lock recursively *n* - 1 times.
+  overload: System.Threading.ReaderWriterLockSlim.RecursiveReadCount*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.RecursiveUpgradeCount
+  commentId: P:System.Threading.ReaderWriterLockSlim.RecursiveUpgradeCount
+  id: RecursiveUpgradeCount
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: RecursiveUpgradeCount
+  nameWithType: ReaderWriterLockSlim.RecursiveUpgradeCount
+  fullName: ReaderWriterLockSlim.RecursiveUpgradeCount
+  type: Property
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Gets the number of times the current thread has entered the lock in upgradeable mode, as an indication of recursion.
+  remarks: Use this property only for debugging, profiling, and logging purposes, and not to control the behavior of an algorithm. The results can change as soon as they have been calculated. Therefore, it is not safe to make decisions based on this property.
+  syntax:
+    content: public int RecursiveUpgradeCount { get; }
+    return:
+      type: System.Int32
+      description: 0 if the current thread has not entered upgradeable mode, 1 if the thread has entered upgradeable mode but has not entered it recursively, or *n* if the thread has entered upgradeable mode recursively *n* - 1 times.
+  overload: System.Threading.ReaderWriterLockSlim.RecursiveUpgradeCount*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.RecursiveWriteCount
+  commentId: P:System.Threading.ReaderWriterLockSlim.RecursiveWriteCount
+  id: RecursiveWriteCount
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: RecursiveWriteCount
+  nameWithType: ReaderWriterLockSlim.RecursiveWriteCount
+  fullName: ReaderWriterLockSlim.RecursiveWriteCount
+  type: Property
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Gets the number of times the current thread has entered the lock in write mode, as an indication of recursion.
+  remarks: Use this property only for debugging, profiling, and logging purposes, and not to control the behavior of an algorithm. The results can change as soon as they have been calculated. Therefore, it is not safe to make decisions based on this property.
+  syntax:
+    content: public int RecursiveWriteCount { get; }
+    return:
+      type: System.Int32
+      description: 0 if the current thread has not entered write mode, 1 if the thread has entered write mode but has not entered it recursively, or *n* if the thread has entered write mode recursively *n* - 1 times.
+  overload: System.Threading.ReaderWriterLockSlim.RecursiveWriteCount*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.TryEnterReadLock(System.Int32)
+  commentId: M:System.Threading.ReaderWriterLockSlim.TryEnterReadLock(System.Int32)
+  id: TryEnterReadLock(System.Int32)
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: TryEnterReadLock(Int32)
+  nameWithType: ReaderWriterLockSlim.TryEnterReadLock(Int32)
+  fullName: ReaderWriterLockSlim.TryEnterReadLock(Int32)
+  type: Method
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Tries to enter the lock in read mode, with an optional integer time-out.
+  remarks: "If `millisecondsTimeout` is 0 (zero), this method checks the lock state and returns `false` immediately if the desired state is unavailable.  \n  \n Multiple threads can enter read mode at the same time.  \n  \n If one or more threads are waiting to enter write mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.TryEnterReadLock%2A> method blocks until those threads have either timed out or entered write mode and then exited from it, or until the calling thread's own time-out interval expires.  \n  \n> [!NOTE]\n>  If a lock allows recursion, a thread that has entered the lock in read mode can enter read mode recursively, even if other threads are waiting to enter write mode.  \n  \n One thread can be in upgradeable mode while other threads are in read mode. If additional threads are waiting to enter upgradeable mode, and there are no threads waiting to enter write mode, threads that call the <xref:System.Threading.ReaderWriterLockSlim.TryEnterReadLock%2A> method enter read mode immediately and do not block."
+  syntax:
+    content: public bool TryEnterReadLock (int millisecondsTimeout);
+    parameters:
+    - id: millisecondsTimeout
+      type: System.Int32
+      description: The number of milliseconds to wait, or -1 (<xref href="System.Threading.Timeout.Infinite"></xref>) to wait indefinitely.
+    return:
+      type: System.Boolean
+      description: '`true` if the calling thread entered read mode, otherwise, `false`.'
+  overload: System.Threading.ReaderWriterLockSlim.TryEnterReadLock*
+  exceptions:
+  - type: System.Threading.LockRecursionException
+    commentId: T:System.Threading.LockRecursionException
+    description: "The <xref href=\"System.Threading.ReaderWriterLockSlim.RecursionPolicy\"></xref> property is <xref href=\"System.Threading.LockRecursionPolicy.NoRecursion\"></xref> and the current thread has already entered the lock.  \n  \n -or-  \n  \n The recursion number would exceed the capacity of the counter. The limit is so large that applications should never encounter it."
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The value of <code>millisecondsTimeout</code> is negative, but it is not equal to <xref href="System.Threading.Timeout.Infinite"></xref> (-1), which is the only negative value allowed.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The <xref href="System.Threading.ReaderWriterLockSlim"></xref> object has been disposed.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.TryEnterReadLock(System.TimeSpan)
+  commentId: M:System.Threading.ReaderWriterLockSlim.TryEnterReadLock(System.TimeSpan)
+  id: TryEnterReadLock(System.TimeSpan)
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: TryEnterReadLock(TimeSpan)
+  nameWithType: ReaderWriterLockSlim.TryEnterReadLock(TimeSpan)
+  fullName: ReaderWriterLockSlim.TryEnterReadLock(TimeSpan)
+  type: Method
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Tries to enter the lock in read mode, with an optional time-out.
+  remarks: "If `timeout` is 0 (zero), this method checks the lock state and returns `false` immediately if the desired state is unavailable.  \n  \n Multiple threads can enter the lock in read mode at the same time.  \n  \n If one or more threads are queued to enter write mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.TryEnterReadLock%2A> method blocks until those threads have either timed out or entered write mode and then exited from it, or until the calling thread's own time-out interval expires.  \n  \n> [!NOTE]\n>  If a lock allows recursion, a thread that has entered the lock in read mode can enter read mode recursively, even if other threads are waiting to enter write mode.  \n  \n One thread can be in upgradeable mode while other threads are in read mode. If additional threads are waiting to enter upgradeable mode, and there are no threads waiting to enter write mode, threads that call the <xref:System.Threading.ReaderWriterLockSlim.TryEnterReadLock%2A> method enter read mode immediately and do not block."
+  syntax:
+    content: public bool TryEnterReadLock (TimeSpan timeout);
+    parameters:
+    - id: timeout
+      type: System.TimeSpan
+      description: The interval to wait, or -1 milliseconds to wait indefinitely.
+    return:
+      type: System.Boolean
+      description: '`true` if the calling thread entered read mode, otherwise, `false`.'
+  overload: System.Threading.ReaderWriterLockSlim.TryEnterReadLock*
+  exceptions:
+  - type: System.Threading.LockRecursionException
+    commentId: T:System.Threading.LockRecursionException
+    description: "The <xref href=\"System.Threading.ReaderWriterLockSlim.RecursionPolicy\"></xref> property is <xref href=\"System.Threading.LockRecursionPolicy.NoRecursion\"></xref> and the current thread has already entered the lock.  \n  \n -or-  \n  \n The recursion number would exceed the capacity of the counter. The limit is so large that applications should never encounter it."
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: "The value of <code>timeout</code> is negative, but it is not equal to -1 milliseconds, which is the only negative value allowed.  \n  \n -or-  \n  \n The value of <code>timeout</code> is greater than <xref href=\"System.Int32.MaxValue\"></xref> milliseconds."
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The <xref href="System.Threading.ReaderWriterLockSlim"></xref> object has been disposed.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock(System.Int32)
+  commentId: M:System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock(System.Int32)
+  id: TryEnterUpgradeableReadLock(System.Int32)
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: TryEnterUpgradeableReadLock(Int32)
+  nameWithType: ReaderWriterLockSlim.TryEnterUpgradeableReadLock(Int32)
+  fullName: ReaderWriterLockSlim.TryEnterUpgradeableReadLock(Int32)
+  type: Method
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Tries to enter the lock in upgradeable mode, with an optional time-out.
+  remarks: "If `millisecondsTimeout` is 0 (zero), this method checks the lock state and returns `false` immediately if the desired state is unavailable.  \n  \n Use upgradeable mode when a thread usually accesses the resource that is protected by the <xref:System.Threading.ReaderWriterLockSlim> in read mode, but may need to enter write mode if certain conditions are met. A thread in upgradeable mode can upgrade to write mode or downgrade to read mode.  \n  \n Only one thread can enter a lock in upgradeable mode at any given time. If a thread is in upgradeable mode, and there are no threads waiting to enter write mode, any number of other threads can enter read mode, even if there are threads waiting to enter upgradeable mode.  \n  \n If one or more threads are waiting to enter write mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock%2A> method blocks until those threads have either timed out or entered write mode and then exited from it, or until the calling thread's own time-out interval expires.  \n  \n> [!NOTE]\n>  If a lock allows recursion, a thread that has entered the lock in upgradeable mode can enter upgradeable mode recursively, even if other threads are waiting to enter write mode."
+  syntax:
+    content: public bool TryEnterUpgradeableReadLock (int millisecondsTimeout);
+    parameters:
+    - id: millisecondsTimeout
+      type: System.Int32
+      description: The number of milliseconds to wait, or -1 (<xref href="System.Threading.Timeout.Infinite"></xref>) to wait indefinitely.
+    return:
+      type: System.Boolean
+      description: '`true` if the calling thread entered upgradeable mode, otherwise, `false`.'
+  overload: System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock*
+  exceptions:
+  - type: System.Threading.LockRecursionException
+    commentId: T:System.Threading.LockRecursionException
+    description: "The <xref href=\"System.Threading.ReaderWriterLockSlim.RecursionPolicy\"></xref> property is <xref href=\"System.Threading.LockRecursionPolicy.NoRecursion\"></xref> and the current thread has already entered the lock.  \n  \n -or-  \n  \n The current thread initially entered the lock in read mode, and therefore trying to enter upgradeable mode would create the possibility of a deadlock.  \n  \n -or-  \n  \n The recursion number would exceed the capacity of the counter. The limit is so large that applications should never encounter it."
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The value of <code>millisecondsTimeout</code> is negative, but it is not equal to <xref href="System.Threading.Timeout.Infinite"></xref> (-1), which is the only negative value allowed.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The <xref href="System.Threading.ReaderWriterLockSlim"></xref> object has been disposed.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock(System.TimeSpan)
+  commentId: M:System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock(System.TimeSpan)
+  id: TryEnterUpgradeableReadLock(System.TimeSpan)
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: TryEnterUpgradeableReadLock(TimeSpan)
+  nameWithType: ReaderWriterLockSlim.TryEnterUpgradeableReadLock(TimeSpan)
+  fullName: ReaderWriterLockSlim.TryEnterUpgradeableReadLock(TimeSpan)
+  type: Method
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Tries to enter the lock in upgradeable mode, with an optional time-out.
+  remarks: "If `timeout` is 0 (zero), this method checks the lock state and returns `false` immediately if the desired state is unavailable.  \n  \n Use upgradeable mode when a thread usually accesses the resource protected by the <xref:System.Threading.ReaderWriterLockSlim> in read mode, but may need to enter write mode if certain conditions are met. A thread in upgradeable mode can upgrade to write mode or downgrade to read mode.  \n  \n Only one thread can enter a lock in upgradeable mode at any given time. If a thread is in upgradeable mode, and there are no threads waiting to enter write mode, any number of other threads can enter read mode, even if there are threads waiting to enter upgradeable mode.  \n  \n If one or more threads are waiting to enter write mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock%2A> method blocks until those threads have either timed out or entered write mode and then exited from it, or until the calling thread's own time-out interval expires.  \n  \n> [!NOTE]\n>  If a lock allows recursion, a thread that has entered the lock in upgradeable mode can enter upgradeable mode recursively, even if other threads are waiting to enter write mode."
+  syntax:
+    content: public bool TryEnterUpgradeableReadLock (TimeSpan timeout);
+    parameters:
+    - id: timeout
+      type: System.TimeSpan
+      description: The interval to wait, or -1 milliseconds to wait indefinitely.
+    return:
+      type: System.Boolean
+      description: '`true` if the calling thread entered upgradeable mode, otherwise, `false`.'
+  overload: System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock*
+  exceptions:
+  - type: System.Threading.LockRecursionException
+    commentId: T:System.Threading.LockRecursionException
+    description: "The <xref href=\"System.Threading.ReaderWriterLockSlim.RecursionPolicy\"></xref> property is <xref href=\"System.Threading.LockRecursionPolicy.NoRecursion\"></xref> and the current thread has already entered the lock.  \n  \n -or-  \n  \n The current thread initially entered the lock in read mode, and therefore trying to enter upgradeable mode would create the possibility of a deadlock.  \n  \n -or-  \n  \n The recursion number would exceed the capacity of the counter. The limit is so large that applications should never encounter it."
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: "The value of <code>timeout</code> is negative, but it is not equal to -1 milliseconds, which is the only negative value allowed.  \n  \n -or-  \n  \n The value of <code>timeout</code> is greater than <xref href=\"System.Int32.MaxValue\"></xref> milliseconds."
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The <xref href="System.Threading.ReaderWriterLockSlim"></xref> object has been disposed.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.TryEnterWriteLock(System.Int32)
+  commentId: M:System.Threading.ReaderWriterLockSlim.TryEnterWriteLock(System.Int32)
+  id: TryEnterWriteLock(System.Int32)
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: TryEnterWriteLock(Int32)
+  nameWithType: ReaderWriterLockSlim.TryEnterWriteLock(Int32)
+  fullName: ReaderWriterLockSlim.TryEnterWriteLock(Int32)
+  type: Method
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Tries to enter the lock in write mode, with an optional time-out.
+  remarks: "If `millisecondsTimeout` is 0 (zero), this method checks the lock state and returns `false` immediately if the desired state is unavailable.  \n  \n If other threads have entered the lock in read mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.TryEnterWriteLock%2A> method blocks until those threads have exited read mode or until the time-out interval has elapsed. While threads are blocked waiting to enter write mode, additional threads that try to enter read mode or upgradeable mode block until all the threads waiting to enter write mode have either timed out or entered write mode and then exited from it.  \n  \n> [!NOTE]\n>  If a lock allows recursion, a thread that has entered the lock in write mode can enter write mode recursively, even if other threads are waiting to enter write mode."
+  example:
+  - "The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.TryEnterWriteLock%2A> method to enter the lock in write mode, with a time-out. The method shown in the example adds a new key/value pair to the synchronized cache. If the specified time-out interval elapses before the thread enters the lock, the method returns `false`. The method returns `true` if the key/value pair is added.  \n  \n If the key is already in the cache, the exception thrown by the inner <xref:System.Collections.Generic.Dictionary%602> is allowed to terminate the method. A `finally` block is used to execute the <xref:System.Threading.ReaderWriterLockSlim.ExitWriteLock%2A> method, ensuring that the caller exits the lock.  \n  \n This code is part of a larger example provided for the <xref:System.Threading.ReaderWriterLockSlim> class.  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#2)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#2)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Shadow#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/cs/source.cs#5)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Shadow#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Shadow/vb/source.vb#5)]"
+  syntax:
+    content: public bool TryEnterWriteLock (int millisecondsTimeout);
+    parameters:
+    - id: millisecondsTimeout
+      type: System.Int32
+      description: The number of milliseconds to wait, or -1 (<xref href="System.Threading.Timeout.Infinite"></xref>) to wait indefinitely.
+    return:
+      type: System.Boolean
+      description: '`true` if the calling thread entered write mode, otherwise, `false`.'
+  overload: System.Threading.ReaderWriterLockSlim.TryEnterWriteLock*
+  exceptions:
+  - type: System.Threading.LockRecursionException
+    commentId: T:System.Threading.LockRecursionException
+    description: "The <xref href=\"System.Threading.ReaderWriterLockSlim.RecursionPolicy\"></xref> property is <xref href=\"System.Threading.LockRecursionPolicy.NoRecursion\"></xref> and the current thread has already entered the lock.  \n  \n -or-  \n  \n The current thread initially entered the lock in read mode, and therefore trying to enter write mode would create the possibility of a deadlock.  \n  \n -or-  \n  \n The recursion number would exceed the capacity of the counter. The limit is so large that applications should never encounter it."
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The value of <code>millisecondsTimeout</code> is negative, but it is not equal to <xref href="System.Threading.Timeout.Infinite"></xref> (-1), which is the only negative value allowed.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The <xref href="System.Threading.ReaderWriterLockSlim"></xref> object has been disposed.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.TryEnterWriteLock(System.TimeSpan)
+  commentId: M:System.Threading.ReaderWriterLockSlim.TryEnterWriteLock(System.TimeSpan)
+  id: TryEnterWriteLock(System.TimeSpan)
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: TryEnterWriteLock(TimeSpan)
+  nameWithType: ReaderWriterLockSlim.TryEnterWriteLock(TimeSpan)
+  fullName: ReaderWriterLockSlim.TryEnterWriteLock(TimeSpan)
+  type: Method
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Tries to enter the lock in write mode, with an optional time-out.
+  remarks: "If `timeout` is 0 (zero), this method checks the lock state and returns `false` immediately if the desired state is unavailable.  \n  \n If other threads have entered the lock in read mode, a thread that calls the <xref:System.Threading.ReaderWriterLockSlim.TryEnterWriteLock%2A> method blocks until those threads have exited read mode or until the time-out interval has elapsed. While threads are blocked waiting to enter write mode, additional threads that try to enter read mode or upgradeable mode block until all the threads waiting to enter write mode have either timed out or entered write mode and then exited from it.  \n  \n> [!NOTE]\n>  If a lock allows recursion, a thread that has entered the lock in write mode can enter write mode recursively, even if other threads are waiting to enter write mode."
+  syntax:
+    content: public bool TryEnterWriteLock (TimeSpan timeout);
+    parameters:
+    - id: timeout
+      type: System.TimeSpan
+      description: The interval to wait, or -1 milliseconds to wait indefinitely.
+    return:
+      type: System.Boolean
+      description: '`true` if the calling thread entered write mode, otherwise, `false`.'
+  overload: System.Threading.ReaderWriterLockSlim.TryEnterWriteLock*
+  exceptions:
+  - type: System.Threading.LockRecursionException
+    commentId: T:System.Threading.LockRecursionException
+    description: "The <xref href=\"System.Threading.ReaderWriterLockSlim.RecursionPolicy\"></xref> property is <xref href=\"System.Threading.LockRecursionPolicy.NoRecursion\"></xref> and the current thread has already entered the lock.  \n  \n -or-  \n  \n The current thread initially entered the lock in read mode, and therefore trying to enter write mode would create the possibility of a deadlock.  \n  \n -or-  \n  \n The recursion number would exceed the capacity of the counter. The limit is so large that applications should never encounter it."
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: "The value of <code>timeout</code> is negative, but it is not equal to -1 milliseconds, which is the only negative value allowed.  \n  \n -or-  \n  \n The value of <code>timeout</code> is greater than <xref href=\"System.Int32.MaxValue\"></xref> milliseconds."
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The <xref href="System.Threading.ReaderWriterLockSlim"></xref> object has been disposed.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.WaitingReadCount
+  commentId: P:System.Threading.ReaderWriterLockSlim.WaitingReadCount
+  id: WaitingReadCount
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: WaitingReadCount
+  nameWithType: ReaderWriterLockSlim.WaitingReadCount
+  fullName: ReaderWriterLockSlim.WaitingReadCount
+  type: Property
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Gets the total number of threads that are waiting to enter the lock in read mode.
+  remarks: Use this property only for debugging, profiling, and logging purposes, and not to control the behavior of an algorithm. The results can change as soon as they have been calculated. Therefore, it is not safe to make decisions based on this property.
+  example:
+  - "The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.WaitingReadCount%2A> property to generate an event log entry if the number of threads that are blocked, waiting to enter read mode, exceeds a threshold.  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#1)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#1)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#31](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#31)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Aux#31](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#31)]"
+  syntax:
+    content: public int WaitingReadCount { get; }
+    return:
+      type: System.Int32
+      description: The total number of threads that are waiting to enter read mode.
+  overload: System.Threading.ReaderWriterLockSlim.WaitingReadCount*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.WaitingUpgradeCount
+  commentId: P:System.Threading.ReaderWriterLockSlim.WaitingUpgradeCount
+  id: WaitingUpgradeCount
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: WaitingUpgradeCount
+  nameWithType: ReaderWriterLockSlim.WaitingUpgradeCount
+  fullName: ReaderWriterLockSlim.WaitingUpgradeCount
+  type: Property
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Gets the total number of threads that are waiting to enter the lock in upgradeable mode.
+  remarks: Use this property only for debugging, profiling, and logging purposes, and not to control the behavior of an algorithm. The results can change as soon as they have been calculated. Therefore, it is not safe to make decisions based on this property.
+  example:
+  - "The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.WaitingUpgradeCount%2A> property to generate an event log entry if the number of threads that are blocked, waiting to enter upgradeable mode, exceeds a threshold.  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#1)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#1)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#33](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#33)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Aux#33](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#33)]"
+  syntax:
+    content: public int WaitingUpgradeCount { get; }
+    return:
+      type: System.Int32
+      description: The total number of threads that are waiting to enter upgradeable mode.
+  overload: System.Threading.ReaderWriterLockSlim.WaitingUpgradeCount*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.ReaderWriterLockSlim.WaitingWriteCount
+  commentId: P:System.Threading.ReaderWriterLockSlim.WaitingWriteCount
+  id: WaitingWriteCount
+  parent: System.Threading.ReaderWriterLockSlim
+  langs:
+  - csharp
+  name: WaitingWriteCount
+  nameWithType: ReaderWriterLockSlim.WaitingWriteCount
+  fullName: ReaderWriterLockSlim.WaitingWriteCount
+  type: Property
+  assemblies:
+  - System.Threading
+  - System.Core
+  - netstandard
+  namespace: System.Threading
+  summary: Gets the total number of threads that are waiting to enter the lock in write mode.
+  remarks: Use this property only for debugging, profiling, and logging purposes, and not to control the behavior of an algorithm. The results can change as soon as they have been calculated. Therefore, it is not safe to make decisions based on this property.
+  example:
+  - "The following example shows how to use the <xref:System.Threading.ReaderWriterLockSlim.WaitingWriteCount%2A> property to generate an event log entry if the number of threads that are blocked, waiting to enter write mode, exceeds a threshold.  \n  \n [!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#1)]\n [!code-vb[System.Threading.ReaderWriterLockSlim_Aux#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#1)]  \n[!code-csharp[System.Threading.ReaderWriterLockSlim_Aux#32](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/cs/source.cs#32)]\n[!code-vb[System.Threading.ReaderWriterLockSlim_Aux#32](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.ReaderWriterLockSlim_Aux/vb/source.vb#32)]"
+  syntax:
+    content: public int WaitingWriteCount { get; }
+    return:
+      type: System.Int32
+      description: The total number of threads that are waiting to enter write mode.
+  overload: System.Threading.ReaderWriterLockSlim.WaitingWriteCount*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Threading.SynchronizationLockException
+  parent: System.Threading
+  isExternal: false
+  name: SynchronizationLockException
+  nameWithType: SynchronizationLockException
+  fullName: System.Threading.SynchronizationLockException
+- uid: System.Threading.LockRecursionException
+  parent: System.Threading
+  isExternal: false
+  name: LockRecursionException
+  nameWithType: LockRecursionException
+  fullName: System.Threading.LockRecursionException
+- uid: System.ObjectDisposedException
+  parent: System
+  isExternal: false
+  name: ObjectDisposedException
+  nameWithType: ObjectDisposedException
+  fullName: System.ObjectDisposedException
+- uid: System.ArgumentOutOfRangeException
+  parent: System
+  isExternal: false
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: System.Threading.ReaderWriterLockSlim.#ctor
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: ReaderWriterLockSlim()
+  nameWithType: ReaderWriterLockSlim.ReaderWriterLockSlim()
+  fullName: ReaderWriterLockSlim.ReaderWriterLockSlim()
+- uid: System.Threading.ReaderWriterLockSlim.#ctor(System.Threading.LockRecursionPolicy)
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: ReaderWriterLockSlim(LockRecursionPolicy)
+  nameWithType: ReaderWriterLockSlim.ReaderWriterLockSlim(LockRecursionPolicy)
+  fullName: ReaderWriterLockSlim.ReaderWriterLockSlim(LockRecursionPolicy)
+- uid: System.Threading.LockRecursionPolicy
+  parent: System.Threading
+  isExternal: false
+  name: LockRecursionPolicy
+  nameWithType: LockRecursionPolicy
+  fullName: System.Threading.LockRecursionPolicy
+- uid: System.Threading.ReaderWriterLockSlim.CurrentReadCount
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: CurrentReadCount
+  nameWithType: ReaderWriterLockSlim.CurrentReadCount
+  fullName: ReaderWriterLockSlim.CurrentReadCount
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Threading.ReaderWriterLockSlim.Dispose
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: Dispose()
+  nameWithType: ReaderWriterLockSlim.Dispose()
+  fullName: ReaderWriterLockSlim.Dispose()
+- uid: System.Threading.ReaderWriterLockSlim.EnterReadLock
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: EnterReadLock()
+  nameWithType: ReaderWriterLockSlim.EnterReadLock()
+  fullName: ReaderWriterLockSlim.EnterReadLock()
+- uid: System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: EnterUpgradeableReadLock()
+  nameWithType: ReaderWriterLockSlim.EnterUpgradeableReadLock()
+  fullName: ReaderWriterLockSlim.EnterUpgradeableReadLock()
+- uid: System.Threading.ReaderWriterLockSlim.EnterWriteLock
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: EnterWriteLock()
+  nameWithType: ReaderWriterLockSlim.EnterWriteLock()
+  fullName: ReaderWriterLockSlim.EnterWriteLock()
+- uid: System.Threading.ReaderWriterLockSlim.ExitReadLock
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: ExitReadLock()
+  nameWithType: ReaderWriterLockSlim.ExitReadLock()
+  fullName: ReaderWriterLockSlim.ExitReadLock()
+- uid: System.Threading.ReaderWriterLockSlim.ExitUpgradeableReadLock
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: ExitUpgradeableReadLock()
+  nameWithType: ReaderWriterLockSlim.ExitUpgradeableReadLock()
+  fullName: ReaderWriterLockSlim.ExitUpgradeableReadLock()
+- uid: System.Threading.ReaderWriterLockSlim.ExitWriteLock
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: ExitWriteLock()
+  nameWithType: ReaderWriterLockSlim.ExitWriteLock()
+  fullName: ReaderWriterLockSlim.ExitWriteLock()
+- uid: System.Threading.ReaderWriterLockSlim.IsReadLockHeld
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: IsReadLockHeld
+  nameWithType: ReaderWriterLockSlim.IsReadLockHeld
+  fullName: ReaderWriterLockSlim.IsReadLockHeld
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Threading.ReaderWriterLockSlim.IsUpgradeableReadLockHeld
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: IsUpgradeableReadLockHeld
+  nameWithType: ReaderWriterLockSlim.IsUpgradeableReadLockHeld
+  fullName: ReaderWriterLockSlim.IsUpgradeableReadLockHeld
+- uid: System.Threading.ReaderWriterLockSlim.IsWriteLockHeld
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: IsWriteLockHeld
+  nameWithType: ReaderWriterLockSlim.IsWriteLockHeld
+  fullName: ReaderWriterLockSlim.IsWriteLockHeld
+- uid: System.Threading.ReaderWriterLockSlim.RecursionPolicy
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: RecursionPolicy
+  nameWithType: ReaderWriterLockSlim.RecursionPolicy
+  fullName: ReaderWriterLockSlim.RecursionPolicy
+- uid: System.Threading.ReaderWriterLockSlim.RecursiveReadCount
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: RecursiveReadCount
+  nameWithType: ReaderWriterLockSlim.RecursiveReadCount
+  fullName: ReaderWriterLockSlim.RecursiveReadCount
+- uid: System.Threading.ReaderWriterLockSlim.RecursiveUpgradeCount
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: RecursiveUpgradeCount
+  nameWithType: ReaderWriterLockSlim.RecursiveUpgradeCount
+  fullName: ReaderWriterLockSlim.RecursiveUpgradeCount
+- uid: System.Threading.ReaderWriterLockSlim.RecursiveWriteCount
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: RecursiveWriteCount
+  nameWithType: ReaderWriterLockSlim.RecursiveWriteCount
+  fullName: ReaderWriterLockSlim.RecursiveWriteCount
+- uid: System.Threading.ReaderWriterLockSlim.TryEnterReadLock(System.Int32)
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: TryEnterReadLock(Int32)
+  nameWithType: ReaderWriterLockSlim.TryEnterReadLock(Int32)
+  fullName: ReaderWriterLockSlim.TryEnterReadLock(Int32)
+- uid: System.Threading.ReaderWriterLockSlim.TryEnterReadLock(System.TimeSpan)
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: TryEnterReadLock(TimeSpan)
+  nameWithType: ReaderWriterLockSlim.TryEnterReadLock(TimeSpan)
+  fullName: ReaderWriterLockSlim.TryEnterReadLock(TimeSpan)
+- uid: System.TimeSpan
+  parent: System
+  isExternal: false
+  name: TimeSpan
+  nameWithType: TimeSpan
+  fullName: System.TimeSpan
+- uid: System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock(System.Int32)
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: TryEnterUpgradeableReadLock(Int32)
+  nameWithType: ReaderWriterLockSlim.TryEnterUpgradeableReadLock(Int32)
+  fullName: ReaderWriterLockSlim.TryEnterUpgradeableReadLock(Int32)
+- uid: System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock(System.TimeSpan)
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: TryEnterUpgradeableReadLock(TimeSpan)
+  nameWithType: ReaderWriterLockSlim.TryEnterUpgradeableReadLock(TimeSpan)
+  fullName: ReaderWriterLockSlim.TryEnterUpgradeableReadLock(TimeSpan)
+- uid: System.Threading.ReaderWriterLockSlim.TryEnterWriteLock(System.Int32)
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: TryEnterWriteLock(Int32)
+  nameWithType: ReaderWriterLockSlim.TryEnterWriteLock(Int32)
+  fullName: ReaderWriterLockSlim.TryEnterWriteLock(Int32)
+- uid: System.Threading.ReaderWriterLockSlim.TryEnterWriteLock(System.TimeSpan)
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: TryEnterWriteLock(TimeSpan)
+  nameWithType: ReaderWriterLockSlim.TryEnterWriteLock(TimeSpan)
+  fullName: ReaderWriterLockSlim.TryEnterWriteLock(TimeSpan)
+- uid: System.Threading.ReaderWriterLockSlim.WaitingReadCount
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: WaitingReadCount
+  nameWithType: ReaderWriterLockSlim.WaitingReadCount
+  fullName: ReaderWriterLockSlim.WaitingReadCount
+- uid: System.Threading.ReaderWriterLockSlim.WaitingUpgradeCount
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: WaitingUpgradeCount
+  nameWithType: ReaderWriterLockSlim.WaitingUpgradeCount
+  fullName: ReaderWriterLockSlim.WaitingUpgradeCount
+- uid: System.Threading.ReaderWriterLockSlim.WaitingWriteCount
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: WaitingWriteCount
+  nameWithType: ReaderWriterLockSlim.WaitingWriteCount
+  fullName: ReaderWriterLockSlim.WaitingWriteCount
+- uid: System.Threading.ReaderWriterLockSlim.#ctor*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: ReaderWriterLockSlim
+  nameWithType: ReaderWriterLockSlim.ReaderWriterLockSlim
+  fullName: ReaderWriterLockSlim.ReaderWriterLockSlim
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.CurrentReadCount*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: CurrentReadCount
+  nameWithType: ReaderWriterLockSlim.CurrentReadCount
+  fullName: ReaderWriterLockSlim.CurrentReadCount
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.Dispose*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: Dispose
+  nameWithType: ReaderWriterLockSlim.Dispose
+  fullName: ReaderWriterLockSlim.Dispose
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.EnterReadLock*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: EnterReadLock
+  nameWithType: ReaderWriterLockSlim.EnterReadLock
+  fullName: ReaderWriterLockSlim.EnterReadLock
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: EnterUpgradeableReadLock
+  nameWithType: ReaderWriterLockSlim.EnterUpgradeableReadLock
+  fullName: ReaderWriterLockSlim.EnterUpgradeableReadLock
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.EnterWriteLock*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: EnterWriteLock
+  nameWithType: ReaderWriterLockSlim.EnterWriteLock
+  fullName: ReaderWriterLockSlim.EnterWriteLock
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.ExitReadLock*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: ExitReadLock
+  nameWithType: ReaderWriterLockSlim.ExitReadLock
+  fullName: ReaderWriterLockSlim.ExitReadLock
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.ExitUpgradeableReadLock*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: ExitUpgradeableReadLock
+  nameWithType: ReaderWriterLockSlim.ExitUpgradeableReadLock
+  fullName: ReaderWriterLockSlim.ExitUpgradeableReadLock
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.ExitWriteLock*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: ExitWriteLock
+  nameWithType: ReaderWriterLockSlim.ExitWriteLock
+  fullName: ReaderWriterLockSlim.ExitWriteLock
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.IsReadLockHeld*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: IsReadLockHeld
+  nameWithType: ReaderWriterLockSlim.IsReadLockHeld
+  fullName: ReaderWriterLockSlim.IsReadLockHeld
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.IsUpgradeableReadLockHeld*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: IsUpgradeableReadLockHeld
+  nameWithType: ReaderWriterLockSlim.IsUpgradeableReadLockHeld
+  fullName: ReaderWriterLockSlim.IsUpgradeableReadLockHeld
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.IsWriteLockHeld*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: IsWriteLockHeld
+  nameWithType: ReaderWriterLockSlim.IsWriteLockHeld
+  fullName: ReaderWriterLockSlim.IsWriteLockHeld
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.RecursionPolicy*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: RecursionPolicy
+  nameWithType: ReaderWriterLockSlim.RecursionPolicy
+  fullName: ReaderWriterLockSlim.RecursionPolicy
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.RecursiveReadCount*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: RecursiveReadCount
+  nameWithType: ReaderWriterLockSlim.RecursiveReadCount
+  fullName: ReaderWriterLockSlim.RecursiveReadCount
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.RecursiveUpgradeCount*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: RecursiveUpgradeCount
+  nameWithType: ReaderWriterLockSlim.RecursiveUpgradeCount
+  fullName: ReaderWriterLockSlim.RecursiveUpgradeCount
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.RecursiveWriteCount*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: RecursiveWriteCount
+  nameWithType: ReaderWriterLockSlim.RecursiveWriteCount
+  fullName: ReaderWriterLockSlim.RecursiveWriteCount
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.TryEnterReadLock*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: TryEnterReadLock
+  nameWithType: ReaderWriterLockSlim.TryEnterReadLock
+  fullName: ReaderWriterLockSlim.TryEnterReadLock
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.TryEnterUpgradeableReadLock*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: TryEnterUpgradeableReadLock
+  nameWithType: ReaderWriterLockSlim.TryEnterUpgradeableReadLock
+  fullName: ReaderWriterLockSlim.TryEnterUpgradeableReadLock
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.TryEnterWriteLock*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: TryEnterWriteLock
+  nameWithType: ReaderWriterLockSlim.TryEnterWriteLock
+  fullName: ReaderWriterLockSlim.TryEnterWriteLock
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.WaitingReadCount*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: WaitingReadCount
+  nameWithType: ReaderWriterLockSlim.WaitingReadCount
+  fullName: ReaderWriterLockSlim.WaitingReadCount
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.WaitingUpgradeCount*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: WaitingUpgradeCount
+  nameWithType: ReaderWriterLockSlim.WaitingUpgradeCount
+  fullName: ReaderWriterLockSlim.WaitingUpgradeCount
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Threading.ReaderWriterLockSlim.WaitingWriteCount*
+  parent: System.Threading.ReaderWriterLockSlim
+  isExternal: false
+  name: WaitingWriteCount
+  nameWithType: ReaderWriterLockSlim.WaitingWriteCount
+  fullName: ReaderWriterLockSlim.WaitingWriteCount
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/ReaderWriterLockSlim.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.IDisposable
+  parent: System
+  isExternal: false
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable

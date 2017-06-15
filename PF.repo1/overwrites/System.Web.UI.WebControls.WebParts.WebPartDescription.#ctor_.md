@@ -1,0 +1,5 @@
+---
+summary: Initializes a new instance of the class that contains information about a specific <xref href="System.Web.UI.WebControls.WebParts.WebPart"></xref> control.
+remarks: The overloads for the <xref:System.Web.UI.WebControls.WebParts.WebPartDescription.%23ctor%2A> constructor each return a new instance of the <xref:System.Web.UI.WebControls.WebParts.WebPartDescription> class, which contains information about a specific <xref:System.Web.UI.WebControls.WebParts.WebPart> control. The difference between the overloads is the scenario in which the new instance is created. In some cases, when the application has an available instance of a <xref:System.Web.UI.WebControls.WebParts.WebPart> control, the <xref:System.Web.UI.WebControls.WebParts.WebPartDescription.%23ctor%2A> constructor is used. When the application does not have a control instance, as is the case when a control description file is being imported through the <xref:System.Web.UI.WebControls.WebParts.ImportCatalogPart> control, the <xref:System.Web.UI.WebControls.WebParts.WebPartDescription.%23ctor%2A> constructor is used.
+uid: System.Web.UI.WebControls.WebParts.WebPartDescription.#ctor*
+---

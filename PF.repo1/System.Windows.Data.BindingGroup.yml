@@ -1,0 +1,1693 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Windows.Data.BindingGroup
+  commentId: T:System.Windows.Data.BindingGroup
+  id: BindingGroup
+  children:
+  - System.Windows.Data.BindingGroup.#ctor
+  - System.Windows.Data.BindingGroup.BeginEdit
+  - System.Windows.Data.BindingGroup.BindingExpressions
+  - System.Windows.Data.BindingGroup.CancelEdit
+  - System.Windows.Data.BindingGroup.CanRestoreValues
+  - System.Windows.Data.BindingGroup.CommitEdit
+  - System.Windows.Data.BindingGroup.GetValue(System.Object,System.String)
+  - System.Windows.Data.BindingGroup.HasValidationError
+  - System.Windows.Data.BindingGroup.IsDirty
+  - System.Windows.Data.BindingGroup.Items
+  - System.Windows.Data.BindingGroup.Name
+  - System.Windows.Data.BindingGroup.NotifyOnValidationError
+  - System.Windows.Data.BindingGroup.Owner
+  - System.Windows.Data.BindingGroup.SharesProposedValues
+  - System.Windows.Data.BindingGroup.TryGetValue(System.Object,System.String,System.Object@)
+  - System.Windows.Data.BindingGroup.UpdateSources
+  - System.Windows.Data.BindingGroup.ValidatesOnNotifyDataError
+  - System.Windows.Data.BindingGroup.ValidateWithoutUpdate
+  - System.Windows.Data.BindingGroup.ValidationErrors
+  - System.Windows.Data.BindingGroup.ValidationRules
+  langs:
+  - csharp
+  name: BindingGroup
+  nameWithType: BindingGroup
+  fullName: System.Windows.Data.BindingGroup
+  type: Class
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Contains a collection of bindings and <xref href="System.Windows.Controls.ValidationRule"></xref> objects that are used to validate an object.
+  remarks: "A <xref:System.Windows.Data.BindingGroup> creates a relationship between multiple bindings, which can be validated and updated together. For example, suppose that an application prompts the user to enter an address. The application then populates an object of type `Address`, which has the properties, `Street`, `City`, `ZipCode`, and `Country`, with the values that the user provided. The application has a panel that contains four <xref:System.Windows.Controls.TextBox> controls, each of which is data bound to one of the object’s properties. You can use a <xref:System.Windows.Controls.ValidationRule> in a <xref:System.Windows.Data.BindingGroup> to validate the `Address` object. If the bindings participate in the same <xref:System.Windows.Data.BindingGroup>, you can ensure that the zip-code is valid for the country of the address.  \n  \n You set the <xref:System.Windows.FrameworkElement.BindingGroup%2A> property on <xref:System.Windows.FrameworkElement> or <xref:System.Windows.FrameworkContentElement>. Child elements inherit the <xref:System.Windows.Data.BindingGroup> from their parent elements, just as with any other inheritable property. A binding on a descendent element is added to a <xref:System.Windows.Data.BindingGroup> if one of the following situations occurs:  \n  \n-   The binding's source and the <xref:System.Windows.FrameworkElement.DataContext%2A> of the element that has the <xref:System.Windows.Data.BindingGroup> are the same object and the <xref:System.Windows.Data.BindingBase.BindingGroupName%2A> property is not set.  \n  \n-   The <xref:System.Windows.Data.BindingBase.BindingGroupName%2A> property of the binding is equal to the <xref:System.Windows.Data.BindingGroup.Name%2A> of the <xref:System.Windows.FrameworkContentElement.BindingGroup%2A> and they are not explicitly set to `null`.  \n  \n In the example of the address, suppose that the <xref:System.Windows.FrameworkElement.DataContext%2A> of the <xref:System.Windows.Controls.Panel> is set to the object of type `Address`. The binding for each <xref:System.Windows.Controls.TextBox> is added to the <xref:System.Windows.Data.BindingGroup> of the panel.  \n  \n You add <xref:System.Windows.Controls.ValidationRule> objects to a <xref:System.Windows.Data.BindingGroup>. The <xref:System.Windows.Data.BindingGroup> is passed as the first parameter of the <xref:System.Windows.Controls.ValidationRule.Validate%2A> method when the <xref:System.Windows.Controls.ValidationRule> runs. You can use the <xref:System.Windows.Data.BindingGroup.TryGetValue%2A> or <xref:System.Windows.Data.BindingGroup.GetValue%28System.Object%2CSystem.String%29> method on that <xref:System.Windows.Data.BindingGroup> to get the proposed values of the object, and the <xref:System.Windows.Data.BindingGroup.Items%2A> property to get the sources of the bindings.  \n  \n A <xref:System.Windows.Data.BindingGroup> updates the sources of the binding at the same time instead of each binding being updated separately. When you call one of the methods to validate the data (<xref:System.Windows.Data.BindingGroup.ValidateWithoutUpdate%2A>, <xref:System.Windows.Data.BindingGroup.UpdateSources%2A>, or <xref:System.Windows.Data.BindingGroup.CommitEdit%2A>), the binding for each <xref:System.Windows.Controls.TextBox> in the example is validated and potentially updated. When a binding is part of a <xref:System.Windows.Data.BindingGroup>, the source of the binding is not updated until you call <xref:System.Windows.Data.BindingGroup.UpdateSources%2A> or <xref:System.Windows.Data.BindingGroup.CommitEdit%2A> on the <xref:System.Windows.Data.BindingGroup>, unless you explicitly set the <xref:System.Windows.Data.Binding.UpdateSourceTrigger%2A> property."
+  example:
+  - "The following examples create an application that prompts the user to enter the description and price of an item and the date that the offer expires. The application displays the current information for the item below the form. The user can submit or cancel the changes.  \n  \n The application does the following to achieve this behavior.  \n  \n-   Creates a <xref:System.Windows.Data.BindingGroup> and adds it the root <xref:System.Windows.Controls.StackPanel> when it creates the [!INCLUDE[TLA#tla_ui](~/includes/tlasharptla-ui-md.md)] of the application.  \n  \n-   Calls <xref:System.Windows.Data.BindingGroup.BeginEdit%2A>, <xref:System.Windows.Data.BindingGroup.CommitEdit%2A>, and <xref:System.Windows.Data.BindingGroup.CancelEdit%2A> in the application's logic to enable rolling back changes.  \n  \n-   Calls <xref:System.Windows.Data.BindingGroup.TryGetValue%2A> in a <xref:System.Windows.Controls.ValidationRule.Validate%2A> method to get the user's input and then check that an item over 100 dollars is available for at least seven days.  \n  \n The following example creates the [!INCLUDE[TLA#tla_ui](~/includes/tlasharptla-ui-md.md)] of the application. The root <xref:System.Windows.Controls.StackPanel> has a <xref:System.Windows.Data.BindingGroup> that contains a <xref:System.Windows.Controls.ValidationRule> that validates the item, as described previously. The binding objects on the `Price` property and the `OfferExpires` property become part of the <xref:System.Windows.Data.BindingGroup> and each binding has a <xref:System.Windows.Controls.ValidationRule> to make sure that price and date, respectively, are valid values. The validation rules for the individual properties run before the <xref:System.Windows.Controls.ValidationRule> on the <xref:System.Windows.Data.BindingGroup>.  \n  \n [!code-xml[BindingGroupSnippets#WindowLayout](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Window1.xaml#windowlayout)]  \n  \n The following example shows the event handlers for the application. When the user clicks the Submit button, the application calls <xref:System.Windows.Data.BindingGroup.CommitEdit%2A> to run each <xref:System.Windows.Controls.ValidationRule> that is associated with the <xref:System.Windows.Data.BindingGroup>. If each <xref:System.Windows.Controls.ValidationRule> succeeds, <xref:System.Windows.Data.BindingGroup.CommitEdit%2A> saves the values to the object and ends the edit transaction. If <xref:System.Windows.Data.BindingGroup.CommitEdit%2A> is successful, the application begins another edit transaction. When a <xref:System.Windows.Controls.ValidationRule> fails, the <xref:System.Windows.Controls.Validation.Error?displayProperty=fullName> event occurs because the application set <xref:System.Windows.Data.BindingGroup.NotifyOnValidationError%2A> to `true` on the <xref:System.Windows.Data.BindingGroup> (in the previous example). `ItemError` handles the <xref:System.Windows.Controls.Validation.Error?displayProperty=fullName> event and displays information about the validation error to the user. The example also handles the <xref:System.Windows.FrameworkElement.Loaded> event for the <xref:System.Windows.Controls.StackPanel> and the <xref:System.Windows.Controls.Primitives.ButtonBase.Click> event for the **Cancel** button.  \n  \n [!code-csharp[BindingGroupSnippets#WindowLogic](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Window1.xaml.cs#windowlogic)]\n [!code-vb[BindingGroupSnippets#WindowLogic](~/samples/snippets/visualbasic/VS_Snippets_Wpf/BindingGroupSnippets/visualbasic/window1.xaml.vb#windowlogic)]  \n  \n The following example shows the custom <xref:System.Windows.Controls.ValidationRule> `ValidateDateAndPrice`, which was added to the <xref:System.Windows.Data.BindingGroup> in the first example. The <xref:System.Windows.Controls.ValidationRule> uses the <xref:System.Windows.Data.BindingGroup> in its <xref:System.Windows.Controls.ValidationRule.Validate%2A> method to get the values the user entered into the form, and checks that if an item is over 100 dollars, it will be available for at least seven days.  \n  \n [!code-csharp[BindingGroupSnippets#ValidateObject](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Data.cs#validateobject)]\n [!code-vb[BindingGroupSnippets#ValidateObject](~/samples/snippets/visualbasic/VS_Snippets_Wpf/BindingGroupSnippets/visualbasic/data.vb#validateobject)]"
+  syntax:
+    content: 'public class BindingGroup : System.Windows.DependencyObject'
+  inheritance:
+  - System.Object
+  - System.Windows.Threading.DispatcherObject
+  - System.Windows.DependencyObject
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  - System.Windows.DependencyObject.ClearValue(System.Windows.DependencyProperty)
+  - System.Windows.DependencyObject.ClearValue(System.Windows.DependencyPropertyKey)
+  - System.Windows.DependencyObject.CoerceValue(System.Windows.DependencyProperty)
+  - System.Windows.DependencyObject.DependencyObjectType
+  - System.Windows.DependencyObject.Equals(System.Object)
+  - System.Windows.DependencyObject.GetHashCode
+  - System.Windows.DependencyObject.GetLocalValueEnumerator
+  - System.Windows.DependencyObject.GetValue(System.Windows.DependencyProperty)
+  - System.Windows.DependencyObject.InvalidateProperty(System.Windows.DependencyProperty)
+  - System.Windows.DependencyObject.IsSealed
+  - System.Windows.DependencyObject.OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs)
+  - System.Windows.DependencyObject.ReadLocalValue(System.Windows.DependencyProperty)
+  - System.Windows.DependencyObject.SetCurrentValue(System.Windows.DependencyProperty,System.Object)
+  - System.Windows.DependencyObject.SetValue(System.Windows.DependencyProperty,System.Object)
+  - System.Windows.DependencyObject.SetValue(System.Windows.DependencyPropertyKey,System.Object)
+  - System.Windows.DependencyObject.ShouldSerializeProperty(System.Windows.DependencyProperty)
+  - System.Windows.Threading.DispatcherObject.CheckAccess
+  - System.Windows.Threading.DispatcherObject.Dispatcher
+  - System.Windows.Threading.DispatcherObject.VerifyAccess
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Data.BindingGroup.#ctor
+  commentId: M:System.Windows.Data.BindingGroup.#ctor
+  id: '#ctor'
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: BindingGroup()
+  nameWithType: BindingGroup.BindingGroup()
+  fullName: BindingGroup.BindingGroup()
+  type: Constructor
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Initializes a new instance of the <xref href="System.Windows.Data.BindingGroup"></xref> class.
+  syntax:
+    content: public BindingGroup ();
+    parameters: []
+  overload: System.Windows.Data.BindingGroup.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Data.BindingGroup.BeginEdit
+  commentId: M:System.Windows.Data.BindingGroup.BeginEdit
+  id: BeginEdit
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: BeginEdit()
+  nameWithType: BindingGroup.BeginEdit()
+  fullName: BindingGroup.BeginEdit()
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Begins an edit transaction on the sources in the <xref href="System.Windows.Data.BindingGroup"></xref>.
+  remarks: "If the sources in the <xref:System.Windows.Data.BindingGroup> support discarding pending changes, you can call <xref:System.Windows.Data.BindingGroup.BeginEdit%2A> to begin the edit transaction, call <xref:System.Windows.Data.BindingGroup.CommitEdit%2A> to save the pending changes, call <xref:System.Windows.Data.BindingGroup.CancelEdit%2A> to discard the pending changes.  \n  \n For each object in <xref:System.Windows.Data.BindingGroup.Items%2A> that implements <xref:System.ComponentModel.IEditableObject>, <xref:System.Windows.Data.BindingGroup.BeginEdit%2A> calls <xref:System.ComponentModel.IEditableObject.BeginEdit%2A?displayProperty=fullName>"
+  example:
+  - "The following example calls <xref:System.Windows.Data.BindingGroup.BeginEdit%2A> when a window loads to begin the edit transaction.  \n  \n [!code-csharp[BindingGroupSnippets#BeginEdit](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Window1.xaml.cs#beginedit)]\n [!code-vb[BindingGroupSnippets#BeginEdit](~/samples/snippets/visualbasic/VS_Snippets_Wpf/BindingGroupSnippets/visualbasic/window1.xaml.vb#beginedit)]"
+  syntax:
+    content: public void BeginEdit ();
+    parameters: []
+  overload: System.Windows.Data.BindingGroup.BeginEdit*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Data.BindingGroup.BindingExpressions
+  commentId: P:System.Windows.Data.BindingGroup.BindingExpressions
+  id: BindingExpressions
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: BindingExpressions
+  nameWithType: BindingGroup.BindingExpressions
+  fullName: BindingGroup.BindingExpressions
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Gets a collection of <xref href="System.Windows.Data.BindingExpression"></xref> objects that contains information for each Binding in the <xref href="System.Windows.Data.BindingGroup"></xref>.
+  remarks: "A <xref:System.Windows.Data.BindingExpression> belongs to a <xref:System.Windows.Data.BindingGroup> if one of the following cases occurs:  \n  \n-   The binding's source and the <xref:System.Windows.FrameworkElement.DataContext%2A> of the element that has the <xref:System.Windows.Data.BindingGroup> are the same object and the <xref:System.Windows.Data.BindingBase.BindingGroupName%2A> is not set.  \n  \n-   The <xref:System.Windows.Data.BindingBase.BindingGroupName%2A> property of the binding and the <xref:System.Windows.Data.BindingGroup.Name%2A> of the <xref:System.Windows.Data.BindingGroup> are set to the same non-null value and the <xref:System.Windows.Data.BindingGroup> belongs to a parent element of the binding's target element.  \n  \n-   You add a <xref:System.Windows.Data.BindingExpression> to <xref:System.Windows.Data.BindingGroup.BindingExpressions%2A>."
+  syntax:
+    content: public System.Collections.ObjectModel.Collection<System.Windows.Data.BindingExpressionBase> BindingExpressions { get; }
+    return:
+      type: System.Collections.ObjectModel.Collection{System.Windows.Data.BindingExpressionBase}
+      description: A collection of <xref href="System.Windows.Data.BindingExpression"></xref> objects that contains information for each binding in the <xref href="System.Windows.Data.BindingGroup"></xref>.
+  overload: System.Windows.Data.BindingGroup.BindingExpressions*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Data.BindingGroup.CancelEdit
+  commentId: M:System.Windows.Data.BindingGroup.CancelEdit
+  id: CancelEdit
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: CancelEdit()
+  nameWithType: BindingGroup.CancelEdit()
+  fullName: BindingGroup.CancelEdit()
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Ends the edit transaction and discards the pending changes.
+  remarks: "This method causes the sources to discard the pending changes, if a source object is capable of doing so and end the edit transaction. Then the method updates the target properties with the saved source values.  \n  \n For each object in <xref:System.Windows.Data.BindingGroup.Items%2A> that implements <xref:System.ComponentModel.IEditableObject>, <xref:System.Windows.Data.BindingGroup.CancelEdit%2A> calls <xref:System.ComponentModel.IEditableObject.CancelEdit%2A?displayProperty=fullName>"
+  example:
+  - "The following example calls <xref:System.Windows.Data.BindingGroup.CancelEdit%2A> to discard the pending changes and then calls <xref:System.Windows.Data.BindingGroup.BeginEdit%2A> to prepare the source to be re-edited.  \n  \n [!code-csharp[BindingGroupSnippets#CancelEdit](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Window1.xaml.cs#canceledit)]\n [!code-vb[BindingGroupSnippets#CancelEdit](~/samples/snippets/visualbasic/VS_Snippets_Wpf/BindingGroupSnippets/visualbasic/window1.xaml.vb#canceledit)]"
+  syntax:
+    content: public void CancelEdit ();
+    parameters: []
+  overload: System.Windows.Data.BindingGroup.CancelEdit*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Data.BindingGroup.CanRestoreValues
+  commentId: P:System.Windows.Data.BindingGroup.CanRestoreValues
+  id: CanRestoreValues
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: CanRestoreValues
+  nameWithType: BindingGroup.CanRestoreValues
+  fullName: BindingGroup.CanRestoreValues
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Gets whether each source in the binding can discard pending changes and restore the original values.
+  remarks: A source can discard pending changes if it implements <xref:System.ComponentModel.IEditableObject>.
+  syntax:
+    content: public bool CanRestoreValues { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if each source in the binding can discard pending changes and restore the original values; otherwise, `false`.'
+  overload: System.Windows.Data.BindingGroup.CanRestoreValues*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Data.BindingGroup.CommitEdit
+  commentId: M:System.Windows.Data.BindingGroup.CommitEdit
+  id: CommitEdit
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: CommitEdit()
+  nameWithType: BindingGroup.CommitEdit()
+  fullName: BindingGroup.CommitEdit()
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Runs all the <xref href="System.Windows.Controls.ValidationRule"></xref> objects and updates the binding sources if all validation rules succeed.
+  remarks: "If every <xref:System.Windows.Controls.ValidationRule> succeeds, this method causes the sources to commit the pending changes and end the edit transaction, if a source object is capable of doing so.  \n  \n For each object in <xref:System.Windows.Data.BindingGroup.Items%2A> that implements <xref:System.ComponentModel.IEditableObject>, <xref:System.Windows.Data.BindingGroup.CommitEdit%2A> calls <xref:System.ComponentModel.IEditableObject.EndEdit%2A?displayProperty=fullName>"
+  example:
+  - "The following example calls <xref:System.Windows.Data.BindingGroup.CommitEdit%2A> to save the pending changes and then calls <xref:System.Windows.Data.BindingGroup.BeginEdit%2A> to prepare the source to be re-edited.  \n  \n [!code-csharp[BindingGroupSnippets#BeginEdit](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Window1.xaml.cs#beginedit)]\n [!code-vb[BindingGroupSnippets#BeginEdit](~/samples/snippets/visualbasic/VS_Snippets_Wpf/BindingGroupSnippets/visualbasic/window1.xaml.vb#beginedit)]"
+  syntax:
+    content: public bool CommitEdit ();
+    parameters: []
+    return:
+      type: System.Boolean
+      description: '`true` if every <xref href="System.Windows.Controls.ValidationRule"></xref> succeeds and the values are committed to the sources; otherwise, `false`.'
+  overload: System.Windows.Data.BindingGroup.CommitEdit*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Data.BindingGroup.GetValue(System.Object,System.String)
+  commentId: M:System.Windows.Data.BindingGroup.GetValue(System.Object,System.String)
+  id: GetValue(System.Object,System.String)
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: GetValue(Object, String)
+  nameWithType: BindingGroup.GetValue(Object, String)
+  fullName: BindingGroup.GetValue(Object, String)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Returns the proposed value for the specified property and item.
+  remarks: Use this method in the <xref:System.Windows.Controls.ValidationRule.Validate%2A?displayProperty=fullName> method to get the value to be committed to the source. The type of the return value depends on the stage at which the <xref:System.Windows.Controls.ValidationRule> occurs. For example, if a <xref:System.Windows.Controls.TextBox> is data bound to a property of type integer and the <xref:System.Windows.Controls.ValidationRule> that calls <xref:System.Windows.Data.BindingGroup.GetValue%28System.Object%2CSystem.String%29> has its <xref:System.Windows.Controls.ValidationRule.ValidationStep%2A> set to <xref:System.Windows.Controls.ValidationStep.RawProposedValue>, the method returns a string. If the <xref:System.Windows.Controls.ValidationRule> has its <xref:System.Windows.Controls.ValidationRule.ValidationStep%2A> set to <xref:System.Windows.Controls.ValidationStep.ConvertedProposedValue>, the method returns whatever type that is returned by the binding's converter. In this example, <xref:System.Windows.Data.BindingGroup.GetValue%28System.Object%2CSystem.String%29> usually returns an integer.
+  example:
+  - "The following example is part of an application that prompts the user to enter multiple customers and assign a sales representative to each customer. The application checks that the sales representative and the customer belong to the same region. The example shows the <xref:System.Windows.Controls.ValidationRule.Validate%2A> method, which uses the <xref:System.Windows.Data.BindingGroup.GetValue%28System.Object%2CSystem.String%29> method to get values that the customer entered.  \n  \n [!code-csharp[BindingGroupSnippets#ItemBindGroupValidationRule](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Window2.xaml.cs#itembindgroupvalidationrule)]\n [!code-vb[BindingGroupSnippets#ItemBindGroupValidationRule](~/samples/snippets/visualbasic/VS_Snippets_Wpf/BindingGroupSnippets/visualbasic/window2.xaml.vb#itembindgroupvalidationrule)]"
+  syntax:
+    content: public object GetValue (object item, string propertyName);
+    parameters:
+    - id: item
+      type: System.Object
+      description: The object that contains the specified property.
+    - id: propertyName
+      type: System.String
+      description: The property whose proposed value to get.
+    return:
+      type: System.Object
+      description: The proposed property value.
+  overload: System.Windows.Data.BindingGroup.GetValue*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: There is not a binding for the specified item and property.
+  - type: System.Windows.Data.ValueUnavailableException
+    commentId: T:System.Windows.Data.ValueUnavailableException
+    description: The value of the specified property is not available, due to a conversion error or because an earlier validation rule failed.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Data.BindingGroup.HasValidationError
+  commentId: P:System.Windows.Data.BindingGroup.HasValidationError
+  id: HasValidationError
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: HasValidationError
+  nameWithType: BindingGroup.HasValidationError
+  fullName: BindingGroup.HasValidationError
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Gets a value that indicates whether the <xref href="System.Windows.Data.BindingGroup"></xref> has a failed validation rule.
+  syntax:
+    content: public bool HasValidationError { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the <xref href="System.Windows.Data.BindingGroup"></xref> has a failed validation rule; otherwise, `false`.'
+  overload: System.Windows.Data.BindingGroup.HasValidationError*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Data.BindingGroup.IsDirty
+  commentId: P:System.Windows.Data.BindingGroup.IsDirty
+  id: IsDirty
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: IsDirty
+  nameWithType: BindingGroup.IsDirty
+  fullName: BindingGroup.IsDirty
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Gets or sets a value that indicates whether the <xref href="System.Windows.Data.BindingGroup"></xref> contains a proposed value that has not been written to the source.
+  syntax:
+    content: public bool IsDirty { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the <xref href="System.Windows.Data.BindingGroup"></xref> contains a proposed value that has not been written to the source; otherwise, `false`.'
+  overload: System.Windows.Data.BindingGroup.IsDirty*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Data.BindingGroup.Items
+  commentId: P:System.Windows.Data.BindingGroup.Items
+  id: Items
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: Items
+  nameWithType: BindingGroup.Items
+  fullName: BindingGroup.Items
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Gets the sources that are used by the Binding objects in the <xref href="System.Windows.Data.BindingGroup"></xref>.
+  remarks: "Each object that is used as a source is added into the <xref:System.Windows.Data.BindingGroup.Items%2A> property once, even if the object is used as the source for multiple bindings. Often, there is just one item in <xref:System.Windows.Data.BindingGroup.Items%2A>, which is the object that is the <xref:System.Windows.FrameworkElement.DataContext%2A> of the element that uses the <xref:System.Windows.Data.BindingGroup>. It is possible for a <xref:System.Windows.Data.BindingGroup> to have multiple sources, however. For example, if Binding objects share the same <xref:System.Windows.Data.BindingBase.BindingGroupName%2A> but use different source objects, each object that is used as a source is in <xref:System.Windows.Data.BindingGroup.Items%2A>.  \n  \n There can also be multiple objects in <xref:System.Windows.Data.BindingGroup.Items%2A> if the path of a Binding resolves to a nested property of the source. For example, suppose a <xref:System.Windows.Controls.TextBox> control's binding is a part of a <xref:System.Windows.Data.BindingGroup> and its <xref:System.Windows.FrameworkElement.DataContext%2A> is a `Customer` object, which has a property of type `Address`. If the <xref:System.Windows.Data.Binding.Path%2A> of the <xref:System.Windows.Data.Binding> is the `Address.ZipCode` property, the `Address` is added to the <xref:System.Windows.Data.BindingGroup.Items%2A> property."
+  example:
+  - "The following examples are part of an application that checks whether the user has set the properties of two objects to equal values. The first example creates two <xref:System.Windows.Controls.TextBox> controls, each of which are data bound to a different source. The binding of the first <xref:System.Windows.Controls.TextBox> gets its source, `object1`, from the <xref:System.Windows.FrameworkElement.DataContext%2A> of the <xref:System.Windows.Controls.TextBox> control's parent element (the <xref:System.Windows.Controls.StackPanel>). On the second <xref:System.Windows.Controls.TextBox>, the source of the binding is set to `object2`. The example also creates a <xref:System.Windows.Controls.Label> that displays validation errors.  \n  \n [!code-xml[BindingGroupSnippets#BindingGroupName](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Window3.xaml#bindinggroupname)]  \n[!code-xml[BindingGroupSnippets#ValidationAdornerSite](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Window3.xaml#validationadornersite)]  \n  \n The following example shows the <xref:System.Windows.Controls.ValidationRule> that the previous example uses. In the <xref:System.Windows.Controls.ValidationRule.Validate%2A> method, the example gets each source object from the <xref:System.Windows.Data.BindingGroup> and checks whether the properties of the objects are equal.  \n  \n [!code-csharp[BindingGroupSnippets#BindingGroupNameValidationRule](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Window3.xaml.cs#bindinggroupnamevalidationrule)]\n [!code-vb[BindingGroupSnippets#BindingGroupNameValidationRule](~/samples/snippets/visualbasic/VS_Snippets_Wpf/BindingGroupSnippets/visualbasic/window3.xaml.vb#bindinggroupnamevalidationrule)]"
+  syntax:
+    content: public System.Collections.IList Items { get; }
+    return:
+      type: System.Collections.IList
+      description: The sources that are used by the Binding objects in the <xref href="System.Windows.Data.BindingGroup"></xref>.
+  overload: System.Windows.Data.BindingGroup.Items*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Data.BindingGroup.Name
+  commentId: P:System.Windows.Data.BindingGroup.Name
+  id: Name
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: Name
+  nameWithType: BindingGroup.Name
+  fullName: BindingGroup.Name
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Gets or sets the name that identifies the <xref href="System.Windows.Data.BindingGroup"></xref>, which can be used to include and exclude Binding objects in the <xref href="System.Windows.Data.BindingGroup"></xref>.
+  remarks: "If <xref:System.Windows.Data.BindingGroup.Name%2A> is `null`, bindings that have a source that is the same object as the <xref:System.Windows.FrameworkElement.DataContext%2A> of the element that has the <xref:System.Windows.Data.BindingGroup> participate in the <xref:System.Windows.Data.BindingGroup>.  \n  \n You can include bindings that have a source that is different from the <xref:System.Windows.FrameworkElement.DataContext%2A> of the parent element that has the <xref:System.Windows.Data.BindingGroup> by setting <xref:System.Windows.Data.BindingGroup.Name%2A> of the <xref:System.Windows.Data.BindingGroup> and the <xref:System.Windows.Data.BindingBase.BindingGroupName%2A> property of a binding to the same value. You can exclude bindings that have the same source as <xref:System.Windows.FrameworkElement.DataContext%2A> of the parent element that has the <xref:System.Windows.Data.BindingGroup> by setting <xref:System.Windows.Data.BindingGroup.Name%2A> of the <xref:System.Windows.Data.BindingGroup> and the <xref:System.Windows.Data.BindingBase.BindingGroupName%2A> property of a binding to different values."
+  example:
+  - "The following examples are part of an application that checks whether the user has set the properties of two objects to equal values. The first example creates two <xref:System.Windows.Controls.TextBox> controls, each of which are data bound to a different source. The binding of the first <xref:System.Windows.Controls.TextBox> is part of the <xref:System.Windows.Data.BindingGroup> because the <xref:System.Windows.Controls.TextBox> inherits the <xref:System.Windows.FrameworkElement.DataContext%2A> and <xref:System.Windows.Data.BindingGroup> from its parent <xref:System.Windows.Controls.StackPanel>.  \n  \n The binding on the second <xref:System.Windows.Controls.TextBox> is part of the <xref:System.Windows.Data.BindingGroup> because the <xref:System.Windows.Data.BindingGroup.Name%2A> of the <xref:System.Windows.Data.BindingGroup> and the <xref:System.Windows.Data.BindingBase.BindingGroupName%2A> of the <xref:System.Windows.Data.Binding> are both set to `bindingGroup`.  \n  \n [!code-xml[BindingGroupSnippets#BindingGroupName](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Window3.xaml#bindinggroupname)]  \n[!code-xml[BindingGroupSnippets#ValidationAdornerSite](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Window3.xaml#validationadornersite)]  \n  \n The following example shows the <xref:System.Windows.Controls.ValidationRule> that the previous example uses. In the <xref:System.Windows.Controls.ValidationRule.Validate%2A> method, the example gets each source object from the <xref:System.Windows.Data.BindingGroup> and checks whether the properties of the objects are equal.  \n  \n [!code-csharp[BindingGroupSnippets#BindingGroupNameValidationRule](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Window3.xaml.cs#bindinggroupnamevalidationrule)]\n [!code-vb[BindingGroupSnippets#BindingGroupNameValidationRule](~/samples/snippets/visualbasic/VS_Snippets_Wpf/BindingGroupSnippets/visualbasic/window3.xaml.vb#bindinggroupnamevalidationrule)]"
+  syntax:
+    content: public string Name { get; set; }
+    return:
+      type: System.String
+      description: The name that identifies the <xref href="System.Windows.Data.BindingGroup"></xref>.
+  overload: System.Windows.Data.BindingGroup.Name*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Data.BindingGroup.NotifyOnValidationError
+  commentId: P:System.Windows.Data.BindingGroup.NotifyOnValidationError
+  id: NotifyOnValidationError
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: NotifyOnValidationError
+  nameWithType: BindingGroup.NotifyOnValidationError
+  fullName: BindingGroup.NotifyOnValidationError
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Gets or sets whether the <xref href="System.Windows.Controls.Validation.Error"></xref> event occurs when the state of a <xref href="System.Windows.Controls.ValidationRule"></xref> changes.
+  remarks: The <xref:System.Windows.Controls.Validation.Error?displayProperty=fullName> attached event occurs on the element that has the <xref:System.Windows.Data.BindingGroup>.
+  example:
+  - "The following example creates a <xref:System.Windows.Data.BindingGroup> and sets <xref:System.Windows.Data.BindingGroup.NotifyOnValidationError%2A> to `true` so that the application can handle the <xref:System.Windows.Controls.Validation.Error?displayProperty=fullName> event when a <xref:System.Windows.Controls.ValidationRule> fails.  \n  \n [!code-xml[BindingGroupSnippets#BindingGroup](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Window1.xaml#bindinggroup)]  \n  \n The following example handles the <xref:System.Windows.Controls.Validation.Error?displayProperty=fullName> event.  \n  \n [!code-csharp[BindingGroupSnippets#ErrorHandler](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Window1.xaml.cs#errorhandler)]\n [!code-vb[BindingGroupSnippets#ErrorHandler](~/samples/snippets/visualbasic/VS_Snippets_Wpf/BindingGroupSnippets/visualbasic/window1.xaml.vb#errorhandler)]"
+  syntax:
+    content: public bool NotifyOnValidationError { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if the <xref href="System.Windows.Controls.Validation.Error"></xref> event occurs when the state of a <xref href="System.Windows.Controls.ValidationRule"></xref> changes; otherwise, `false`. The default is `false`.'
+  overload: System.Windows.Data.BindingGroup.NotifyOnValidationError*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Data.BindingGroup.Owner
+  commentId: P:System.Windows.Data.BindingGroup.Owner
+  id: Owner
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: Owner
+  nameWithType: BindingGroup.Owner
+  fullName: BindingGroup.Owner
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Gets the object that this <xref href="System.Windows.Data.BindingGroup"></xref> is assigned to.
+  syntax:
+    content: public System.Windows.DependencyObject Owner { get; }
+    return:
+      type: System.Windows.DependencyObject
+      description: The object that this <xref href="System.Windows.Data.BindingGroup"></xref> is assigned to.
+  overload: System.Windows.Data.BindingGroup.Owner*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Data.BindingGroup.SharesProposedValues
+  commentId: P:System.Windows.Data.BindingGroup.SharesProposedValues
+  id: SharesProposedValues
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: SharesProposedValues
+  nameWithType: BindingGroup.SharesProposedValues
+  fullName: BindingGroup.SharesProposedValues
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Gets or sets a value that indicates whether the <xref href="System.Windows.Data.BindingGroup"></xref> reuses target values that have not been committed to the source.
+  remarks: "A proposed value is a value that has been changed on the target of a binding, but has not been committed to the source. For example, suppose that there is a two-way binding on a <xref:System.Windows.Controls.TextBox> and the <xref:System.Windows.Data.Binding.UpdateSourceTrigger%2A> property is set to <xref:System.Windows.Data.UpdateSourceTrigger.Explicit>. If the user changes the value of the <xref:System.Windows.Controls.TextBox>, the proposed value is the value that is in the <xref:System.Windows.Controls.TextBox> before it is committed to source.  \n  \n When <xref:System.Windows.Data.BindingGroup.SharesProposedValues%2A> is `true`, the <xref:System.Windows.Data.BindingGroup> uses the proposed value when one binding leaves the BindingGroup and another Binding with the same source joins the BindingGroup.  For example, suppose that an application enables a user to edit multiple fields and update the source object by clicking a button. When a field is not being edited, the application displays it in a <xref:System.Windows.Controls.TextBlock>. When the user begins to edit a field, the application replaces the <xref:System.Windows.Controls.TextBlock> with a <xref:System.Windows.Controls.TextBox>. When the user finishes editing that field, the application replaces the <xref:System.Windows.Controls.TextBox> with a <xref:System.Windows.Controls.TextBlock>. Because the source is not updated until the user clicks the button, there must be a way for the <xref:System.Windows.Controls.TextBlock> to display the proposed value. By setting <xref:System.Windows.Data.BindingGroup.SharesProposedValues%2A> to `true`, the application will display the user's changes to a field even when the source has not been updated."
+  syntax:
+    content: public bool SharesProposedValues { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if the <xref href="System.Windows.Data.BindingGroup"></xref> reuses target values that have not been committed to the source; otherwise, `false`. The default is `false`.'
+  overload: System.Windows.Data.BindingGroup.SharesProposedValues*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Data.BindingGroup.TryGetValue(System.Object,System.String,System.Object@)
+  commentId: M:System.Windows.Data.BindingGroup.TryGetValue(System.Object,System.String,System.Object@)
+  id: TryGetValue(System.Object,System.String,System.Object@)
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: TryGetValue(Object, String, Object)
+  nameWithType: BindingGroup.TryGetValue(Object, String, Object)
+  fullName: BindingGroup.TryGetValue(Object, String, Object)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Attempts to get the proposed value for the specified property and item.
+  remarks: "<xref:System.Windows.Data.BindingGroup.TryGetValue%2A> returns `false` if there is not a binding for the specified item and property or if the value of the specified property is not available, due to a conversion error or because an earlier validation rule failed.  \n  \n Use this method in the <xref:System.Windows.Controls.ValidationRule.Validate%2A?displayProperty=fullName> method to get the value to be committed to the source. The type `value` depends on the stage at which the <xref:System.Windows.Controls.ValidationRule> occurs. For example, if a <xref:System.Windows.Controls.TextBox> is data bound to a property of type integer, `value` is a string if the <xref:System.Windows.Controls.ValidationRule> that calls <xref:System.Windows.Data.BindingGroup.TryGetValue%2A> has its <xref:System.Windows.Controls.ValidationRule.ValidationStep%2A> set to <xref:System.Windows.Controls.ValidationStep.RawProposedValue>. If the <xref:System.Windows.Controls.ValidationRule> has its <xref:System.Windows.Controls.ValidationRule.ValidationStep%2A> set to <xref:System.Windows.Controls.ValidationStep.ConvertedProposedValue>, the type of `value` is whatever type that is returned by the binding's converter. In this example, `value` is usually an integer."
+  example:
+  - "The following example creates a custom <xref:System.Windows.Controls.ValidationRule> named `ValidateDateAndPrice`. In the <xref:System.Windows.Controls.ValidationRule.Validate%2A> method, the example uses the <xref:System.Windows.Data.BindingGroup.TryGetValue%2A> method and the <xref:System.Windows.Data.BindingGroup.Items%2A> property to get the values the user entered into the form. Then the example checks that if an item is over 100 dollars, it will be available for at least seven days. This example is part of a larger example on the <xref:System.Windows.Data.BindingGroup> class  \n  \n [!code-csharp[BindingGroupSnippets#ValidateObject](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Data.cs#validateobject)]\n [!code-vb[BindingGroupSnippets#ValidateObject](~/samples/snippets/visualbasic/VS_Snippets_Wpf/BindingGroupSnippets/visualbasic/data.vb#validateobject)]"
+  syntax:
+    content: public bool TryGetValue (object item, string propertyName, out object value);
+    parameters:
+    - id: item
+      type: System.Object
+      description: The object that contains the specified property.
+    - id: propertyName
+      type: System.String
+      description: The property whose proposed value to get.
+    - id: value
+      type: System.Object
+      description: When this method returns, contains an object that represents the proposed property value. This parameter is passed uninitialized.
+    return:
+      type: System.Boolean
+      description: '`true` if value is the proposed value for the specified property; otherwise, `false`.'
+  overload: System.Windows.Data.BindingGroup.TryGetValue*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Data.BindingGroup.UpdateSources
+  commentId: M:System.Windows.Data.BindingGroup.UpdateSources
+  id: UpdateSources
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: UpdateSources()
+  nameWithType: BindingGroup.UpdateSources()
+  fullName: BindingGroup.UpdateSources()
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Runs the converter on the binding and the <xref href="System.Windows.Controls.ValidationRule"></xref> objects that have the <xref href="System.Windows.Controls.ValidationRule.ValidationStep"></xref> property set to <xref href="System.Windows.Controls.ValidationStep.RawProposedValue"></xref>, <xref href="System.Windows.Controls.ValidationStep.ConvertedProposedValue"></xref>, or <xref href="System.Windows.Controls.ValidationStep.UpdatedValue"></xref> and saves the values of the targets to the source objects if all the validation rules succeed.
+  remarks: This method updates the source if every <xref:System.Windows.Controls.ValidationRule> succeeds, but it does not cause the sources to commit the pending changes and end the edit transaction. That is, if the source object implements <xref:System.ComponentModel.IEditableObject>. Calling this method does not cause <xref:System.ComponentModel.IEditableObject.EndEdit%2A> to be called. Use the <xref:System.Windows.Data.BindingGroup.CommitEdit%2A> method to have the sources commit the pending changes.
+  example:
+  - "The following example is part of an application that prompts the user to enter multiple customers and assign a sales representative to each customer. The application checks that the sales representative and the customer belong to the same region. The example calls <xref:System.Windows.Data.BindingGroup.UpdateSources%2A> to validate the bindings and save the values to the source if all the validation rules succeed.  \n  \n [!code-csharp[BindingGroupSnippets#UpdateSources](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Window2.xaml.cs#updatesources)]\n [!code-vb[BindingGroupSnippets#UpdateSources](~/samples/snippets/visualbasic/VS_Snippets_Wpf/BindingGroupSnippets/visualbasic/window2.xaml.vb#updatesources)]"
+  syntax:
+    content: public bool UpdateSources ();
+    parameters: []
+    return:
+      type: System.Boolean
+      description: '`true` if all validation rules succeed; otherwise, `false`.'
+  overload: System.Windows.Data.BindingGroup.UpdateSources*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Data.BindingGroup.ValidatesOnNotifyDataError
+  commentId: P:System.Windows.Data.BindingGroup.ValidatesOnNotifyDataError
+  id: ValidatesOnNotifyDataError
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: ValidatesOnNotifyDataError
+  nameWithType: BindingGroup.ValidatesOnNotifyDataError
+  fullName: BindingGroup.ValidatesOnNotifyDataError
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Gets or sets a value that indicates whether to include the <xref href="System.Windows.Controls.NotifyDataErrorValidationRule"></xref>.
+  remarks: When <xref:System.Windows.Data.BindingGroup.ValidatesOnNotifyDataError%2A> is `true`, the binding checks for and reports errors that are raised by a data source that implements <xref:System.ComponentModel.INotifyDataErrorInfo>.
+  syntax:
+    content: public bool ValidatesOnNotifyDataError { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` to include the <xref href="System.Windows.Controls.NotifyDataErrorValidationRule"></xref>; otherwise, `false`. The default is `true`.'
+  overload: System.Windows.Data.BindingGroup.ValidatesOnNotifyDataError*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Data.BindingGroup.ValidateWithoutUpdate
+  commentId: M:System.Windows.Data.BindingGroup.ValidateWithoutUpdate
+  id: ValidateWithoutUpdate
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: ValidateWithoutUpdate()
+  nameWithType: BindingGroup.ValidateWithoutUpdate()
+  fullName: BindingGroup.ValidateWithoutUpdate()
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Runs the converter on the binding and the <xref href="System.Windows.Controls.ValidationRule"></xref> objects that have the <xref href="System.Windows.Controls.ValidationRule.ValidationStep"></xref> property set to <xref href="System.Windows.Controls.ValidationStep.RawProposedValue"></xref> or <xref href="System.Windows.Controls.ValidationStep.ConvertedProposedValue"></xref>.
+  remarks: The sources are not updated when you call this method.
+  syntax:
+    content: public bool ValidateWithoutUpdate ();
+    parameters: []
+    return:
+      type: System.Boolean
+      description: '`true` if the validation rules succeed; otherwise, `false`.'
+  overload: System.Windows.Data.BindingGroup.ValidateWithoutUpdate*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Data.BindingGroup.ValidationErrors
+  commentId: P:System.Windows.Data.BindingGroup.ValidationErrors
+  id: ValidationErrors
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: ValidationErrors
+  nameWithType: BindingGroup.ValidationErrors
+  fullName: BindingGroup.ValidationErrors
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Gets a collection of <xref href="System.Windows.Controls.ValidationError"></xref> objects that caused the <xref href="System.Windows.Data.BindingGroup"></xref> to be invalid.
+  syntax:
+    content: public System.Collections.ObjectModel.ReadOnlyCollection<System.Windows.Controls.ValidationError> ValidationErrors { get; }
+    return:
+      type: System.Collections.ObjectModel.ReadOnlyCollection{System.Windows.Controls.ValidationError}
+      description: A collection of <xref href="System.Windows.Controls.ValidationError"></xref> objects that caused <xref href="System.Windows.Data.BindingGroup"></xref> to be invalid.  The value is `null` if there are no errors.
+  overload: System.Windows.Data.BindingGroup.ValidationErrors*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Data.BindingGroup.ValidationRules
+  commentId: P:System.Windows.Data.BindingGroup.ValidationRules
+  id: ValidationRules
+  parent: System.Windows.Data.BindingGroup
+  langs:
+  - csharp
+  name: ValidationRules
+  nameWithType: BindingGroup.ValidationRules
+  fullName: BindingGroup.ValidationRules
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Data
+  summary: Gets a collection of <xref href="System.Windows.Controls.ValidationRule"></xref> objects that validate the source objects in the <xref href="System.Windows.Data.BindingGroup"></xref>.
+  remarks: When a <xref:System.Windows.Controls.ValidationRule> is added to a <xref:System.Windows.Data.BindingGroup>, the <xref:System.Windows.Data.BindingGroup> is passed in as the first parameter of the <xref:System.Windows.Controls.ValidationRule.Validate%2A> method. You can get the proposed values of the object by using the <xref:System.Windows.Data.BindingGroup.TryGetValue%2A> or <xref:System.Windows.Data.BindingGroup.GetValue%28System.Object%2CSystem.String%29> method. You can get the objects that are the sources of the bindings from the <xref:System.Windows.Data.BindingGroup.Items%2A> property.
+  example:
+  - "The following example adds the custom <xref:System.Windows.Controls.ValidationRule>, `ValidateDateAndPrice`, to the <xref:System.Windows.Data.BindingGroup>.  \n  \n [!code-xml[BindingGroupSnippets#BindingGroup](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Window1.xaml#bindinggroup)]  \n  \n The following example shows the `ValidateDateAndPrice` class. The <xref:System.Windows.Controls.ValidationRule.Validate%2A> method uses the <xref:System.Windows.Data.BindingGroup> to get the values the user entered into the form, and checks that if an item is over 100 dollars, it will be available for at least seven days.  \n  \n [!code-csharp[BindingGroupSnippets#ValidateObject](~/samples/snippets/csharp/VS_Snippets_Wpf/BindingGroupSnippets/CSharp/Data.cs#validateobject)]\n [!code-vb[BindingGroupSnippets#ValidateObject](~/samples/snippets/visualbasic/VS_Snippets_Wpf/BindingGroupSnippets/visualbasic/data.vb#validateobject)]"
+  syntax:
+    content: public System.Collections.ObjectModel.Collection<System.Windows.Controls.ValidationRule> ValidationRules { get; }
+    return:
+      type: System.Collections.ObjectModel.Collection{System.Windows.Controls.ValidationRule}
+      description: A collection of <xref href="System.Windows.Controls.ValidationRule"></xref> objects that validate the source objects in the <xref href="System.Windows.Data.BindingGroup"></xref>.
+  overload: System.Windows.Data.BindingGroup.ValidationRules*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+references:
+- uid: System.Windows.DependencyObject
+  parent: System.Windows
+  isExternal: false
+  name: DependencyObject
+  nameWithType: DependencyObject
+  fullName: System.Windows.DependencyObject
+- uid: System.InvalidOperationException
+  parent: System
+  isExternal: false
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.Windows.Data.ValueUnavailableException
+  parent: System.Windows.Data
+  isExternal: false
+  name: ValueUnavailableException
+  nameWithType: ValueUnavailableException
+  fullName: System.Windows.Data.ValueUnavailableException
+- uid: System.Windows.Data.BindingGroup.#ctor
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: BindingGroup()
+  nameWithType: BindingGroup.BindingGroup()
+  fullName: BindingGroup.BindingGroup()
+- uid: System.Windows.Data.BindingGroup.BeginEdit
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: BeginEdit()
+  nameWithType: BindingGroup.BeginEdit()
+  fullName: BindingGroup.BeginEdit()
+- uid: System.Windows.Data.BindingGroup.BindingExpressions
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: BindingExpressions
+  nameWithType: BindingGroup.BindingExpressions
+  fullName: BindingGroup.BindingExpressions
+- uid: System.Collections.ObjectModel.Collection`1
+  name: Collection<T>
+  nameWithType: Collection<T>
+  fullName: System.Collections.ObjectModel.Collection<T>
+- uid: System.Windows.Data.BindingExpressionBase
+  name: BindingExpressionBase
+  nameWithType: BindingExpressionBase
+  fullName: System.Windows.Data.BindingExpressionBase
+- uid: System.Collections.ObjectModel.Collection{System.Windows.Data.BindingExpressionBase}
+  parent: System.Collections.ObjectModel
+  isExternal: false
+  name: Collection<BindingExpressionBase>
+  nameWithType: Collection<BindingExpressionBase>
+  fullName: System.Collections.ObjectModel.Collection<System.Windows.Data.BindingExpressionBase>
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection`1
+    name: Collection
+    nameWithType: Collection
+    fullName: System.Collections.ObjectModel.Collection
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Windows.Data.BindingExpressionBase
+    name: BindingExpressionBase
+    nameWithType: BindingExpressionBase
+    fullName: System.Windows.Data.BindingExpressionBase
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Windows.Data.BindingGroup.CancelEdit
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: CancelEdit()
+  nameWithType: BindingGroup.CancelEdit()
+  fullName: BindingGroup.CancelEdit()
+- uid: System.Windows.Data.BindingGroup.CanRestoreValues
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: CanRestoreValues
+  nameWithType: BindingGroup.CanRestoreValues
+  fullName: BindingGroup.CanRestoreValues
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Windows.Data.BindingGroup.CommitEdit
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: CommitEdit()
+  nameWithType: BindingGroup.CommitEdit()
+  fullName: BindingGroup.CommitEdit()
+- uid: System.Windows.Data.BindingGroup.GetValue(System.Object,System.String)
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: GetValue(Object, String)
+  nameWithType: BindingGroup.GetValue(Object, String)
+  fullName: BindingGroup.GetValue(Object, String)
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Windows.Data.BindingGroup.HasValidationError
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: HasValidationError
+  nameWithType: BindingGroup.HasValidationError
+  fullName: BindingGroup.HasValidationError
+- uid: System.Windows.Data.BindingGroup.IsDirty
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: IsDirty
+  nameWithType: BindingGroup.IsDirty
+  fullName: BindingGroup.IsDirty
+- uid: System.Windows.Data.BindingGroup.Items
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: Items
+  nameWithType: BindingGroup.Items
+  fullName: BindingGroup.Items
+- uid: System.Collections.IList
+  parent: System.Collections
+  isExternal: false
+  name: IList
+  nameWithType: IList
+  fullName: System.Collections.IList
+- uid: System.Windows.Data.BindingGroup.Name
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: Name
+  nameWithType: BindingGroup.Name
+  fullName: BindingGroup.Name
+- uid: System.Windows.Data.BindingGroup.NotifyOnValidationError
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: NotifyOnValidationError
+  nameWithType: BindingGroup.NotifyOnValidationError
+  fullName: BindingGroup.NotifyOnValidationError
+- uid: System.Windows.Data.BindingGroup.Owner
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: Owner
+  nameWithType: BindingGroup.Owner
+  fullName: BindingGroup.Owner
+- uid: System.Windows.Data.BindingGroup.SharesProposedValues
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: SharesProposedValues
+  nameWithType: BindingGroup.SharesProposedValues
+  fullName: BindingGroup.SharesProposedValues
+- uid: System.Windows.Data.BindingGroup.TryGetValue(System.Object,System.String,System.Object@)
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: TryGetValue(Object, String, Object)
+  nameWithType: BindingGroup.TryGetValue(Object, String, Object)
+  fullName: BindingGroup.TryGetValue(Object, String, Object)
+- uid: System.Windows.Data.BindingGroup.UpdateSources
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: UpdateSources()
+  nameWithType: BindingGroup.UpdateSources()
+  fullName: BindingGroup.UpdateSources()
+- uid: System.Windows.Data.BindingGroup.ValidatesOnNotifyDataError
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: ValidatesOnNotifyDataError
+  nameWithType: BindingGroup.ValidatesOnNotifyDataError
+  fullName: BindingGroup.ValidatesOnNotifyDataError
+- uid: System.Windows.Data.BindingGroup.ValidateWithoutUpdate
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: ValidateWithoutUpdate()
+  nameWithType: BindingGroup.ValidateWithoutUpdate()
+  fullName: BindingGroup.ValidateWithoutUpdate()
+- uid: System.Windows.Data.BindingGroup.ValidationErrors
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: ValidationErrors
+  nameWithType: BindingGroup.ValidationErrors
+  fullName: BindingGroup.ValidationErrors
+- uid: System.Collections.ObjectModel.ReadOnlyCollection`1
+  name: ReadOnlyCollection<T>
+  nameWithType: ReadOnlyCollection<T>
+  fullName: System.Collections.ObjectModel.ReadOnlyCollection<T>
+- uid: System.Windows.Controls.ValidationError
+  name: ValidationError
+  nameWithType: ValidationError
+  fullName: System.Windows.Controls.ValidationError
+- uid: System.Collections.ObjectModel.ReadOnlyCollection{System.Windows.Controls.ValidationError}
+  parent: System.Collections.ObjectModel
+  isExternal: false
+  name: ReadOnlyCollection<ValidationError>
+  nameWithType: ReadOnlyCollection<ValidationError>
+  fullName: System.Collections.ObjectModel.ReadOnlyCollection<System.Windows.Controls.ValidationError>
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ReadOnlyCollection`1
+    name: ReadOnlyCollection
+    nameWithType: ReadOnlyCollection
+    fullName: System.Collections.ObjectModel.ReadOnlyCollection
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Windows.Controls.ValidationError
+    name: ValidationError
+    nameWithType: ValidationError
+    fullName: System.Windows.Controls.ValidationError
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Windows.Data.BindingGroup.ValidationRules
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: ValidationRules
+  nameWithType: BindingGroup.ValidationRules
+  fullName: BindingGroup.ValidationRules
+- uid: System.Windows.Controls.ValidationRule
+  name: ValidationRule
+  nameWithType: ValidationRule
+  fullName: System.Windows.Controls.ValidationRule
+- uid: System.Collections.ObjectModel.Collection{System.Windows.Controls.ValidationRule}
+  parent: System.Collections.ObjectModel
+  isExternal: false
+  name: Collection<ValidationRule>
+  nameWithType: Collection<ValidationRule>
+  fullName: System.Collections.ObjectModel.Collection<System.Windows.Controls.ValidationRule>
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection`1
+    name: Collection
+    nameWithType: Collection
+    fullName: System.Collections.ObjectModel.Collection
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Windows.Controls.ValidationRule
+    name: ValidationRule
+    nameWithType: ValidationRule
+    fullName: System.Windows.Controls.ValidationRule
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Windows.Data.BindingGroup.#ctor*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: BindingGroup
+  nameWithType: BindingGroup.BindingGroup
+  fullName: BindingGroup.BindingGroup
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.BeginEdit*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: BeginEdit
+  nameWithType: BindingGroup.BeginEdit
+  fullName: BindingGroup.BeginEdit
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.BindingExpressions*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: BindingExpressions
+  nameWithType: BindingGroup.BindingExpressions
+  fullName: BindingGroup.BindingExpressions
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.CancelEdit*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: CancelEdit
+  nameWithType: BindingGroup.CancelEdit
+  fullName: BindingGroup.CancelEdit
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.CanRestoreValues*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: CanRestoreValues
+  nameWithType: BindingGroup.CanRestoreValues
+  fullName: BindingGroup.CanRestoreValues
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.CommitEdit*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: CommitEdit
+  nameWithType: BindingGroup.CommitEdit
+  fullName: BindingGroup.CommitEdit
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.GetValue*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: GetValue
+  nameWithType: BindingGroup.GetValue
+  fullName: BindingGroup.GetValue
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.HasValidationError*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: HasValidationError
+  nameWithType: BindingGroup.HasValidationError
+  fullName: BindingGroup.HasValidationError
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.IsDirty*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: IsDirty
+  nameWithType: BindingGroup.IsDirty
+  fullName: BindingGroup.IsDirty
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.Items*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: Items
+  nameWithType: BindingGroup.Items
+  fullName: BindingGroup.Items
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.Name*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: Name
+  nameWithType: BindingGroup.Name
+  fullName: BindingGroup.Name
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.NotifyOnValidationError*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: NotifyOnValidationError
+  nameWithType: BindingGroup.NotifyOnValidationError
+  fullName: BindingGroup.NotifyOnValidationError
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.Owner*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: Owner
+  nameWithType: BindingGroup.Owner
+  fullName: BindingGroup.Owner
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.SharesProposedValues*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: SharesProposedValues
+  nameWithType: BindingGroup.SharesProposedValues
+  fullName: BindingGroup.SharesProposedValues
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.TryGetValue*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: TryGetValue
+  nameWithType: BindingGroup.TryGetValue
+  fullName: BindingGroup.TryGetValue
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.UpdateSources*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: UpdateSources
+  nameWithType: BindingGroup.UpdateSources
+  fullName: BindingGroup.UpdateSources
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.ValidatesOnNotifyDataError*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: ValidatesOnNotifyDataError
+  nameWithType: BindingGroup.ValidatesOnNotifyDataError
+  fullName: BindingGroup.ValidatesOnNotifyDataError
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.ValidateWithoutUpdate*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: ValidateWithoutUpdate
+  nameWithType: BindingGroup.ValidateWithoutUpdate
+  fullName: BindingGroup.ValidateWithoutUpdate
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.ValidationErrors*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: ValidationErrors
+  nameWithType: BindingGroup.ValidationErrors
+  fullName: BindingGroup.ValidationErrors
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.Data.BindingGroup.ValidationRules*
+  parent: System.Windows.Data.BindingGroup
+  isExternal: false
+  name: ValidationRules
+  nameWithType: BindingGroup.ValidationRules
+  fullName: BindingGroup.ValidationRules
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Data/BindingGroup.xml
+- uid: System.Windows.DependencyObject.Equals(System.Object)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: DependencyObject.Equals(Object)
+  fullName: DependencyObject.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Windows.DependencyObject.GetHashCode
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: DependencyObject.GetHashCode()
+  fullName: DependencyObject.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Windows.Threading.DispatcherObject.CheckAccess
+  parent: System.Windows.Threading.DispatcherObject
+  isExternal: false
+  name: CheckAccess()
+  nameWithType: DispatcherObject.CheckAccess()
+  fullName: DispatcherObject.CheckAccess()
+- uid: System.Windows.Threading.DispatcherObject.Dispatcher
+  parent: System.Windows.Threading.DispatcherObject
+  isExternal: false
+  name: Dispatcher
+  nameWithType: DispatcherObject.Dispatcher
+  fullName: DispatcherObject.Dispatcher
+- uid: System.Windows.Threading.DispatcherObject.VerifyAccess
+  parent: System.Windows.Threading.DispatcherObject
+  isExternal: false
+  name: VerifyAccess()
+  nameWithType: DispatcherObject.VerifyAccess()
+  fullName: DispatcherObject.VerifyAccess()
+- uid: System.Windows.DependencyObject.ClearValue(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: ClearValue(DependencyProperty)
+  nameWithType: DependencyObject.ClearValue(DependencyProperty)
+  fullName: DependencyObject.ClearValue(DependencyProperty)
+- uid: System.Windows.DependencyObject.ClearValue(System.Windows.DependencyPropertyKey)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: ClearValue(DependencyPropertyKey)
+  nameWithType: DependencyObject.ClearValue(DependencyPropertyKey)
+  fullName: DependencyObject.ClearValue(DependencyPropertyKey)
+- uid: System.Windows.DependencyObject.CoerceValue(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: CoerceValue(DependencyProperty)
+  nameWithType: DependencyObject.CoerceValue(DependencyProperty)
+  fullName: DependencyObject.CoerceValue(DependencyProperty)
+- uid: System.Windows.DependencyObject.DependencyObjectType
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: DependencyObjectType
+  nameWithType: DependencyObject.DependencyObjectType
+  fullName: DependencyObject.DependencyObjectType
+- uid: System.Windows.DependencyObject.GetLocalValueEnumerator
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: GetLocalValueEnumerator()
+  nameWithType: DependencyObject.GetLocalValueEnumerator()
+  fullName: DependencyObject.GetLocalValueEnumerator()
+- uid: System.Windows.DependencyObject.GetValue(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: GetValue(DependencyProperty)
+  nameWithType: DependencyObject.GetValue(DependencyProperty)
+  fullName: DependencyObject.GetValue(DependencyProperty)
+- uid: System.Windows.DependencyObject.InvalidateProperty(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: InvalidateProperty(DependencyProperty)
+  nameWithType: DependencyObject.InvalidateProperty(DependencyProperty)
+  fullName: DependencyObject.InvalidateProperty(DependencyProperty)
+- uid: System.Windows.DependencyObject.IsSealed
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: IsSealed
+  nameWithType: DependencyObject.IsSealed
+  fullName: DependencyObject.IsSealed
+- uid: System.Windows.DependencyObject.OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: OnPropertyChanged(DependencyPropertyChangedEventArgs)
+  nameWithType: DependencyObject.OnPropertyChanged(DependencyPropertyChangedEventArgs)
+  fullName: DependencyObject.OnPropertyChanged(DependencyPropertyChangedEventArgs)
+- uid: System.Windows.DependencyObject.ReadLocalValue(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: ReadLocalValue(DependencyProperty)
+  nameWithType: DependencyObject.ReadLocalValue(DependencyProperty)
+  fullName: DependencyObject.ReadLocalValue(DependencyProperty)
+- uid: System.Windows.DependencyObject.SetCurrentValue(System.Windows.DependencyProperty,System.Object)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: SetCurrentValue(DependencyProperty, Object)
+  nameWithType: DependencyObject.SetCurrentValue(DependencyProperty, Object)
+  fullName: DependencyObject.SetCurrentValue(DependencyProperty, Object)
+- uid: System.Windows.DependencyObject.SetValue(System.Windows.DependencyProperty,System.Object)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: SetValue(DependencyProperty, Object)
+  nameWithType: DependencyObject.SetValue(DependencyProperty, Object)
+  fullName: DependencyObject.SetValue(DependencyProperty, Object)
+- uid: System.Windows.DependencyObject.SetValue(System.Windows.DependencyPropertyKey,System.Object)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: SetValue(DependencyPropertyKey, Object)
+  nameWithType: DependencyObject.SetValue(DependencyPropertyKey, Object)
+  fullName: DependencyObject.SetValue(DependencyPropertyKey, Object)
+- uid: System.Windows.DependencyObject.ShouldSerializeProperty(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: ShouldSerializeProperty(DependencyProperty)
+  nameWithType: DependencyObject.ShouldSerializeProperty(DependencyProperty)
+  fullName: DependencyObject.ShouldSerializeProperty(DependencyProperty)

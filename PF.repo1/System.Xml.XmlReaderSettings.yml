@@ -1,0 +1,2484 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Xml.XmlReaderSettings
+  commentId: T:System.Xml.XmlReaderSettings
+  id: XmlReaderSettings
+  children:
+  - System.Xml.XmlReaderSettings.#ctor
+  - System.Xml.XmlReaderSettings.#ctor(System.Xml.XmlResolver)
+  - System.Xml.XmlReaderSettings.Async
+  - System.Xml.XmlReaderSettings.CheckCharacters
+  - System.Xml.XmlReaderSettings.Clone
+  - System.Xml.XmlReaderSettings.CloseInput
+  - System.Xml.XmlReaderSettings.ConformanceLevel
+  - System.Xml.XmlReaderSettings.DtdProcessing
+  - System.Xml.XmlReaderSettings.IgnoreComments
+  - System.Xml.XmlReaderSettings.IgnoreProcessingInstructions
+  - System.Xml.XmlReaderSettings.IgnoreWhitespace
+  - System.Xml.XmlReaderSettings.LineNumberOffset
+  - System.Xml.XmlReaderSettings.LinePositionOffset
+  - System.Xml.XmlReaderSettings.MaxCharactersFromEntities
+  - System.Xml.XmlReaderSettings.MaxCharactersInDocument
+  - System.Xml.XmlReaderSettings.NameTable
+  - System.Xml.XmlReaderSettings.ProhibitDtd
+  - System.Xml.XmlReaderSettings.Reset
+  - System.Xml.XmlReaderSettings.Schemas
+  - System.Xml.XmlReaderSettings.ValidationEventHandler
+  - System.Xml.XmlReaderSettings.ValidationFlags
+  - System.Xml.XmlReaderSettings.ValidationType
+  - System.Xml.XmlReaderSettings.XmlResolver
+  langs:
+  - csharp
+  name: XmlReaderSettings
+  nameWithType: XmlReaderSettings
+  fullName: System.Xml.XmlReaderSettings
+  type: Class
+  assemblies:
+  - System.Xml.ReaderWriter
+  - System.Xml
+  - netstandard
+  namespace: System.Xml
+  summary: Specifies a set of features to support on the <xref href="System.Xml.XmlReader"></xref> object created by the <xref href="System.Xml.XmlReader.Create*"></xref> method.
+  remarks: "You use the <xref:System.Xml.XmlReader.Create%2A> method to obtain <xref:System.Xml.XmlReader> instances. This method uses the <xref:System.Xml.XmlReaderSettings> class to specify which features to implement in the <xref:System.Xml.XmlReader> object it creates.  \n  \n See the Remarks sections of the <xref:System.Xml.XmlReader> and <xref:System.Xml.XmlReader.Create%2A> reference pages for information about which settings to use for conformance checks, validation, and other common scenarios. See the <xref:System.Xml.XmlReaderSettings.%23ctor> constructor for a list of default settings.  \n  \n## Security considerations  \n Consider the following when using the <xref:System.Xml.XmlReaderSettings> class.  \n  \n-   The <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> and <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> validation flags of an <xref:System.Xml.XmlReaderSettings> object are not set by default. When these flags are set, the <xref:System.Xml.XmlReaderSettings.XmlResolver%2A> of the <xref:System.Xml.XmlReaderSettings> object is used to resolve schema locations encountered in the instance document in the <xref:System.Xml.XmlReader>. If the <xref:System.Xml.XmlReaderSettings.XmlResolver%2A> object is `null`, schema locations are not resolved even if the <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> and <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> validation flags are set.  \n  \n-   Schemas added during validation add new types and can change the validation outcome of the document being validated. As a result, external schemas should only be resolved from trusted sources.  \n  \n-   Validation error messages may expose sensitive content model information. Validation error and warning messages are handled using the <xref:System.Xml.Schema.ValidationEventHandler> delegate, or are exposed as an <xref:System.Xml.Schema.XmlSchemaValidationException> if no event handler is provided to the <xref:System.Xml.XmlReaderSettings> object (validation warnings do not cause an <xref:System.Xml.Schema.XmlSchemaValidationException> to be thrown). This content model information should not be exposed in untrusted scenarios. Validation warning messages are suppressed by default and can be reported by setting the <xref:System.Xml.Schema.XmlSchemaValidationFlags.ReportValidationWarnings> flag.  \n  \n-   The <xref:System.Xml.Schema.XmlSchemaException.SourceUri%2A> property of an <xref:System.Xml.Schema.XmlSchemaValidationException> returns the URI path to the schema file that caused the exception. The <xref:System.Xml.Schema.XmlSchemaException.SourceUri%2A> property should not be exposed in untrusted scenarios.  \n  \n-   Disabling the <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessIdentityConstraints> flag (enabled by default) is recommended when validating, untrusted, large XML documents in high availability scenarios against a schema with identity constraints over a large part of the document.  \n  \n-   <xref:System.Xml.XmlReaderSettings> objects can contain sensitive information such as user credentials. You should be careful when caching <xref:System.Xml.XmlReaderSettings> objects, or when passing the <xref:System.Xml.XmlReaderSettings> object from one component to another.  \n  \n-   DTD processing is disabled by default. If you enable DTD processing, you need to be aware of including DTDs from untrusted sources and possible denial of service attacks. Use the <xref:System.Xml.XmlSecureResolver> to restrict the resources that the <xref:System.Xml.XmlReader> can access.  \n  \n-   Do not accept supporting components, such as <xref:System.Xml.NameTable>, <xref:System.Xml.XmlNamespaceManager>, and <xref:System.Xml.XmlResolver> objects, from an untrusted source.  \n  \n-   Memory usage of an application that uses <xref:System.Xml.XmlReader> may have a correlation to the size of the parsed XML document. One form of denial of service attack is when excessively large XML documents are submitted to be parsed. You can limit the size of the document that can be parsed by setting the <xref:System.Xml.XmlReaderSettings.MaxCharactersInDocument%2A> property and then limit the number of characters that result from expanding entities by setting the <xref:System.Xml.XmlReaderSettings.MaxCharactersFromEntities%2A> property."
+  example:
+  - "The following example creates an <xref:System.Xml.XmlReader> that uses an <xref:System.Xml.XmlUrlResolver> with the necessary credentials.  \n  \n [!code-csharp[XmlReader.Create#2](~/samples/snippets/csharp/VS_Snippets_Data/XmlReader.Create/CS/XmlReader_Create.cs#2)]\n [!code-vb[XmlReader.Create#2](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlReader.Create/VB/XmlReader_Create.vb#2)]"
+  syntax:
+    content: public sealed class XmlReaderSettings
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.#ctor
+  commentId: M:System.Xml.XmlReaderSettings.#ctor
+  id: '#ctor'
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: XmlReaderSettings()
+  nameWithType: XmlReaderSettings.XmlReaderSettings()
+  fullName: XmlReaderSettings.XmlReaderSettings()
+  type: Constructor
+  assemblies:
+  - System.Xml.ReaderWriter
+  - System.Xml
+  - netstandard
+  namespace: System.Xml
+  summary: Initializes a new instance of the <xref href="System.Xml.XmlReaderSettings"></xref> class.
+  remarks: "The following table shows initial property values for an instance of <xref:System.Xml.XmlReaderSettings>.  \n  \n|Property|Initial value|  \n|--------------|-------------------|  \n|<xref:System.Xml.XmlReaderSettings.Async%2A>|`false`.|  \n|<xref:System.Xml.XmlReaderSettings.CheckCharacters%2A>|`true`.|  \n|<xref:System.Xml.XmlReaderSettings.ConformanceLevel%2A>|<xref:System.Xml.ConformanceLevel.Document>.|  \n|<xref:System.Xml.XmlReaderSettings.IgnoreComments%2A>|`false`.|  \n|<xref:System.Xml.XmlReaderSettings.IgnoreProcessingInstructions%2A>|`false`.|  \n|<xref:System.Xml.XmlReaderSettings.IgnoreWhitespace%2A>|`false`.|  \n|<xref:System.Xml.XmlReaderSettings.LineNumberOffset%2A>|0.|  \n|<xref:System.Xml.XmlReaderSettings.LinePositionOffset%2A>|0.|  \n|<xref:System.Xml.XmlReaderSettings.MaxCharactersFromEntities%2A>|0 (there is no limit on the number of characters that result from expanding entities).|  \n|<xref:System.Xml.XmlReaderSettings.MaxCharactersInDocument%2A>|0 (there is no limit on the size of the XML document).|  \n|<xref:System.Xml.XmlReaderSettings.NameTable%2A>|`null`.|  \n|<xref:System.Xml.XmlTextReader.DtdProcessing%2A>|<xref:System.Xml.DtdProcessing.Prohibit>|  \n|<xref:System.Xml.XmlReaderSettings.ProhibitDtd%2A>|`true`. This property is obsolete. Use <xref:System.Xml.XmlTextReader.DtdProcessing%2A> instead. If you had set <xref:System.Xml.XmlReaderSettings.ProhibitDtd%2A> to its default value `true` set <xref:System.Xml.XmlTextReader.DtdProcessing%2A> to `Prohibit`. If you had set <xref:System.Xml.XmlReaderSettings.ProhibitDtd%2A> to `false` set <xref:System.Xml.XmlTextReader.DtdProcessing%2A> to `Parse`.|  \n|<xref:System.Xml.XmlReaderSettings.Schemas%2A>|An empty <xref:System.Xml.Schema.XmlSchemaSet> object.|  \n|<xref:System.Xml.XmlReaderSettings.ValidationFlags%2A>|<xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessIdentityConstraints>.|  \n|<xref:System.Xml.XmlReaderSettings.ValidationType%2A>|<xref:System.Xml.ValidationType.None>.|  \n|<xref:System.Xml.XmlReaderSettings.XmlResolver%2A>|A new <xref:System.Xml.XmlUrlResolver> object.|"
+  example:
+  - "The following creates a settings object that can be used to construct a reader that strips processing instructions, comments, and insignificant white space.  \n  \n [!code-cpp[XmlReaderSettings.cctor#1](~/samples/snippets/cpp/VS_Snippets_Data/XmlReaderSettings.cctor/CPP/XmlReaderSettings.cctor.cpp#1)]\n [!code-csharp[XmlReaderSettings.cctor#1](~/samples/snippets/csharp/VS_Snippets_Data/XmlReaderSettings.cctor/CS/factory_rdr_cctor2.cs#1)]\n [!code-vb[XmlReaderSettings.cctor#1](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlReaderSettings.cctor/VB/factory_rdr_cctor2.vb#1)]"
+  syntax:
+    content: public XmlReaderSettings ();
+    parameters: []
+  overload: System.Xml.XmlReaderSettings.#ctor*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.#ctor(System.Xml.XmlResolver)
+  commentId: M:System.Xml.XmlReaderSettings.#ctor(System.Xml.XmlResolver)
+  id: '#ctor(System.Xml.XmlResolver)'
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: XmlReaderSettings(XmlResolver)
+  nameWithType: XmlReaderSettings.XmlReaderSettings(XmlResolver)
+  fullName: XmlReaderSettings.XmlReaderSettings(XmlResolver)
+  type: Constructor
+  assemblies:
+  - System.Xml
+  namespace: System.Xml
+  summary: Initializes a new instance of the <xref href="System.Xml.XmlReaderSettings"></xref> class.
+  syntax:
+    content: >-
+      [System.Obsolete("This API supports the .NET Framework infrastructure and is not intended to be used directly from your code.", true)]
+
+      public XmlReaderSettings (System.Xml.XmlResolver resolver);
+    parameters:
+    - id: resolver
+      type: System.Xml.XmlResolver
+      description: The XML resolver.
+  overload: System.Xml.XmlReaderSettings.#ctor*
+  exceptions: []
+  attributes:
+  - type: System.ObsoleteAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.Async
+  commentId: P:System.Xml.XmlReaderSettings.Async
+  id: Async
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: Async
+  nameWithType: XmlReaderSettings.Async
+  fullName: XmlReaderSettings.Async
+  type: Property
+  assemblies:
+  - System.Xml.ReaderWriter
+  - System.Xml
+  - netstandard
+  namespace: System.Xml
+  summary: Gets or sets whether asynchronous <xref href="System.Xml.XmlReader"></xref> methods can be used on a particular <xref href="System.Xml.XmlReader"></xref> instance.
+  remarks: "You must set this value to `true` when you create a new <xref:System.Xml.XmlReader> instance if you want to use asynchronous <xref:System.Xml.XmlReader> methods on that instance. After the <xref:System.Xml.XmlReader> instance is created, the <xref:System.Xml.XmlReaderSettings.Async%2A> property is read-only. The default value of this property is `false`.  \n  \n This flag is ignored by the <xref:System.Xml.XmlReader.Create%2A?displayProperty=fullName> overload. This means that if you create a new <xref:System.Xml.XmlReader> based on an existing <xref:System.Xml.XmlReader>, the async behavior depends on the input <xref:System.Xml.XmlReader>, and you cannot use the <xref:System.Xml.XmlReaderSettings.Async%2A> flag to change the async behavior."
+  syntax:
+    content: public bool Async { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if asynchronous methods can be used; otherwise, `false`.'
+  overload: System.Xml.XmlReaderSettings.Async*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.CheckCharacters
+  commentId: P:System.Xml.XmlReaderSettings.CheckCharacters
+  id: CheckCharacters
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: CheckCharacters
+  nameWithType: XmlReaderSettings.CheckCharacters
+  fullName: XmlReaderSettings.CheckCharacters
+  type: Property
+  assemblies:
+  - System.Xml.ReaderWriter
+  - System.Xml
+  - netstandard
+  namespace: System.Xml
+  summary: Gets or sets a value indicating whether to do character checking.
+  remarks: "This property instructs the XML reader to check characters in the XML data it's reading and throw an <xref:System.Xml.XmlException> if any characters are outside the range of legal XML characters. When character checking is enabled, you are ensured the following:  \n  \n-   Characters are within the range of legal XML characters, as defined by the [2.2 Characters](http://www.w3.org/TR/2006/REC-xml-20060816/#charsets) section of the W3C XML 1.0 Recommendation.  \n  \n-   All XML names are valid, as defined by the [2.3 Common Syntactic Constructs](http://www.w3.org/TR/2006/REC-xml-20060816/#NT-Name) section of the W3C XML 1.0 Recommendation.  \n  \n When this property is set to `true`, which is the default setting, an <xref:System.Xml.XmlException> exception is thrown if the XML file contains illegal characters or invalid XML names (for example, an element name starts with a number)."
+  syntax:
+    content: public bool CheckCharacters { get; set; }
+    return:
+      type: System.Boolean
+      description: "`true` to do character checking; otherwise `false`. The default is `true`.  \n  \n <block subset=\"none\" type=\"note\"><p>  \n If the <xref href=\"System.Xml.XmlReader\"></xref> is processing text data, it always checks that the XML names and text content are valid, regardless of the property setting. Setting <xref href=\"System.Xml.XmlReaderSettings.CheckCharacters\"></xref> to `false` turns off character checking for character entity references.  \n  \n</p></block>"
+  overload: System.Xml.XmlReaderSettings.CheckCharacters*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.Clone
+  commentId: M:System.Xml.XmlReaderSettings.Clone
+  id: Clone
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: Clone()
+  nameWithType: XmlReaderSettings.Clone()
+  fullName: XmlReaderSettings.Clone()
+  type: Method
+  assemblies:
+  - System.Xml.ReaderWriter
+  - System.Xml
+  - netstandard
+  namespace: System.Xml
+  summary: Creates a copy of the <xref href="System.Xml.XmlReaderSettings"></xref> instance.
+  remarks: The cloned <xref:System.Xml.XmlReaderSettings> object can be modified without affecting the settings on the original object.
+  syntax:
+    content: public System.Xml.XmlReaderSettings Clone ();
+    parameters: []
+    return:
+      type: System.Xml.XmlReaderSettings
+      description: The cloned <xref href="System.Xml.XmlReaderSettings"></xref> object.
+  overload: System.Xml.XmlReaderSettings.Clone*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.CloseInput
+  commentId: P:System.Xml.XmlReaderSettings.CloseInput
+  id: CloseInput
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: CloseInput
+  nameWithType: XmlReaderSettings.CloseInput
+  fullName: XmlReaderSettings.CloseInput
+  type: Property
+  assemblies:
+  - System.Xml.ReaderWriter
+  - System.Xml
+  - netstandard
+  namespace: System.Xml
+  summary: Gets or sets a value indicating whether the underlying stream or <xref href="System.IO.TextReader"></xref> should be closed when the reader is closed.
+  remarks: This setting is used when a stream or <xref:System.IO.TextReader> is passed to the <xref:System.Xml.XmlReader.Create%2A> method. If a stream is created by the reader for its own processing, such as when the reader is created with a URI or when it opens an external document type definition, it is always closed when the reader is closed.
+  syntax:
+    content: public bool CloseInput { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` to close the underlying stream or <xref href="System.IO.TextReader"></xref> when the reader is closed; otherwise `false`. The default is `false`.'
+  overload: System.Xml.XmlReaderSettings.CloseInput*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.ConformanceLevel
+  commentId: P:System.Xml.XmlReaderSettings.ConformanceLevel
+  id: ConformanceLevel
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: ConformanceLevel
+  nameWithType: XmlReaderSettings.ConformanceLevel
+  fullName: XmlReaderSettings.ConformanceLevel
+  type: Property
+  assemblies:
+  - System.Xml.ReaderWriter
+  - System.Xml
+  - netstandard
+  namespace: System.Xml
+  summary: Gets or sets the level of conformance which the <xref href="System.Xml.XmlReader"></xref> will comply.
+  remarks: "XML readers that are created by the <xref:System.Xml.XmlReader.Create%2A> method meet the following compliance requirements by default:  \n  \n-   New lines and attribute value are normalized according to the W3C [XML 1.0 Recommendation](http://www.w3.org/TR/2006/REC-xml-20060816/).  \n  \n-   All entities are automatically expanded.  \n  \n-   Default attributes declared in the document type definition are always added even when the reader does not validate.  \n  \n-   Declaration of XML prefix mapped to the correct XML namespace URI is allowed.  \n  \n-   The notation names in a single `NotationType` attribute declaration and `NmTokens` in a single `Enumeration` attribute declaration are distinct.  \n  \n You can use the <xref:System.Xml.XmlReaderSettings.ConformanceLevel%2A> property to check and guarantee that the stream being read complies with the rules for a well-formed XML 1.0 document or document fragment. If the data doesn't comply, an <xref:System.Xml.XmlException> exception is thrown. The default is <xref:System.Xml.ConformanceLevel?displayProperty=fullName> (document-level conformance).  \n  \n The three conformance levels are:  \n  \n|Setting|Description|  \n|-------------|-----------------|  \n|<xref:System.Xml.ConformanceLevel.Document>|Ensures that the XML data conforms to the rules for a well-formed XML 1.0 document. This level of checking ensures that any processor can consume the stream being read as an [well-formed XML 1.0 document](http://www.w3.org/TR/2006/REC-xml-20060816/#sec-well-formed).<br /><br /> The reader checks for the following:<br /><br /> -   The top-level item must not have any nodes other than XML Declaration, document type definition (DTD), element, comment, white space, or processing instruction.<br />-   The XML data must have exactly one top-level element node.|  \n|<xref:System.Xml.ConformanceLevel.Fragment>|Ensures that the XML data conforms to the rules for a well-formed XML 1.0 document fragment.<br /><br /> This setting accepts XML data with multiple root elements, or text nodes at the top-level. This level of checking ensures that any processor can consume the stream being read as an [external parsed entity](http://www.w3.org/TR/2006/REC-xml-20060816/#wf-entities).|  \n|<xref:System.Xml.ConformanceLevel.Auto>|Specifies that the reader should determine the level of conformance checking based on the incoming data.<br /><br /> Document conformance checking is applied if the XML data contains DTD information.<br /><br /> Fragment conformance checking is applied if the XML data contains one of following:<br /><br /> -   Text, CDATA, or entity reference node at the root level.<br />-   More than one element at the root level.<br />-   No element at the root level.<br /><br /> An <xref:System.Xml.XmlException> is thrown if there is a conflict, such as when there is a text node and a DTD at the root level.<br /><br /> This setting can be used in wrapping scenarios when the <xref:System.Xml.XmlReader.Create%2A> method is used to add additional features to an existing <xref:System.Xml.XmlReader>. In this case, <xref:System.Xml.ConformanceLevel?displayProperty=fullName> does not add any new conformance checking. Conformance checking is left to the <xref:System.Xml.XmlReader> that is being wrapped.|  \n  \n> [!NOTE]\n>  The XML 1.0 recommendation requires document-level conformance when a DTD is present. Therefore, if the reader is configured to support <xref:System.Xml.ConformanceLevel?displayProperty=fullName>, but the XML data contains a document type definition (DTD), an <xref:System.Xml.XmlException> is thrown.  \n  \n Here's how the reader handles specific conformance violations depending on the setting of the <xref:System.Xml.XmlReaderSettings.ConformanceLevel%2A> property:  \n  \n|Condition|<xref:System.Xml.ConformanceLevel.Document>|<xref:System.Xml.ConformanceLevel.Fragment>|<xref:System.Xml.ConformanceLevel.Auto>|  \n|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|  \n|Text or a typed value appears at the top level.|<xref:System.Xml.XmlException> is thrown.|Not considered a violation for this setting.|Not considered a violation for this setting.|  \n|Multiple elements or no element appear at the top level.|<xref:System.Xml.XmlException> is thrown.|Not considered a violation for this setting.|Not considered a violation for this setting.|  \n|Top-level item is white space.|Not considered a violation for this setting.|Not considered a violation for this setting.|Not considered a violation for this setting.|  \n|Top-level item is an attribute (recognized as a text node).|<xref:System.Xml.XmlException> is thrown.|Not considered a violation for this setting.|Not considered a violation for this setting.|  \n|Multiple, contiguous text nodes are found.|Not considered a violation for this setting.|Not considered a violation for this setting.|Not considered a violation for this setting.|  \n|The same namespace prefix is declared twice in the same local scope.|<xref:System.Xml.XmlException> is thrown.|<xref:System.Xml.XmlException> is thrown.|<xref:System.Xml.XmlException> is thrown.|  \n|The namespace in an element or attribute doesn't exist in the local scope.|<xref:System.Xml.XmlException> is thrown.|<xref:System.Xml.XmlException> is thrown.|<xref:System.Xml.XmlException> is thrown.|  \n|Data contains a prefix-namespace mismatch.|<xref:System.Xml.XmlException> is thrown.|<xref:System.Xml.XmlException> is thrown.|<xref:System.Xml.XmlException> is thrown.|  \n|`xml:space` attribute contains an invalid value.|<xref:System.Xml.XmlException> is thrown.|<xref:System.Xml.XmlException> is thrown.|<xref:System.Xml.XmlException> is thrown.|  \n|An invalid name is encountered.|<xref:System.Xml.XmlException> is thrown.|<xref:System.Xml.XmlException> is thrown.|<xref:System.Xml.XmlException> is thrown.|  \n|The `xml` prefix isn't matched to the http://www.w3.org/XML/1998/namespace URI.|<xref:System.Xml.XmlException> is thrown.|<xref:System.Xml.XmlException> is thrown.|<xref:System.Xml.XmlException> is thrown.|"
+  example:
+  - "The following example creates an <xref:System.Xml.XmlReader> object that reads an XML fragment.  \n  \n [!code-csharp[XmlReader.Create#1](~/samples/snippets/csharp/VS_Snippets_Data/XmlReader.Create/CS/XmlReader_Create.cs#1)]\n [!code-vb[XmlReader.Create#1](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlReader.Create/VB/XmlReader_Create.vb#1)]"
+  syntax:
+    content: public System.Xml.ConformanceLevel ConformanceLevel { get; set; }
+    return:
+      type: System.Xml.ConformanceLevel
+      description: One of the enumeration values that specifies the level of conformance that the XML reader will enforce. The default is <xref href="System.Xml.ConformanceLevel.Document"></xref>.
+  overload: System.Xml.XmlReaderSettings.ConformanceLevel*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.DtdProcessing
+  commentId: P:System.Xml.XmlReaderSettings.DtdProcessing
+  id: DtdProcessing
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: DtdProcessing
+  nameWithType: XmlReaderSettings.DtdProcessing
+  fullName: XmlReaderSettings.DtdProcessing
+  type: Property
+  assemblies:
+  - System.Xml.ReaderWriter
+  - System.Xml
+  - netstandard
+  namespace: System.Xml
+  summary: Gets or sets a value that determines the processing of DTDs.
+  remarks: "Document type definition (DTD) validation is implemented by using the validity constraints defined in the W3C [Extensible Markup Language (XML) 1.0 (fourth edition) recommendation](http://www.w3.org/TR/2006/REC-xml-20060816/). DTDs use a formal grammar to describe the structure and syntax of compliant XML documents; they specify the content and values allowed for the XML document.  \n  \n This property can have one of the following values:  \n  \n-   <xref:System.Xml.DtdProcessing?displayProperty=fullName> to enable DTD processing.  \n  \n-   <xref:System.Xml.DtdProcessing?displayProperty=fullName> to throw an <xref:System.Xml.XmlException> exception when a DTD is encountered.  \n  \n-   <xref:System.Xml.DtdProcessing?displayProperty=fullName> to disable DTD processing without warnings or exceptions.  \n  \n To perform validation against a DTD, the <xref:System.Xml.XmlReader> uses the DTD defined in the DOCTYPE declaration of an XML document. The DOCTYPE declaration can either point to an inline DTD or can be a reference to an external DTD file. To validate an XML file against a DTD:  \n  \n-   Set the <xref:System.Xml.XmlReaderSettings.DtdProcessing%2A?displayProperty=fullName> property to `DtdProcessing.Parse.`  \n  \n-   Set the <xref:System.Xml.XmlReaderSettings.ValidationType%2A?displayProperty=fullName> property to `ValidationType.DTD`.  \n  \n-   If the DTD is an external file stored on a network resource that requires authentication, pass an <xref:System.Xml.XmlResolver> object with the necessary credentials to the <xref:System.Xml.XmlReader.Create%2A> method.  \n  \n> [!IMPORTANT]\n>  If the <xref:System.Xml.XmlReaderSettings.DtdProcessing%2A> property is set to <xref:System.Xml.DtdProcessing?displayProperty=fullName>, the <xref:System.Xml.XmlReader> will not report the DTDs. This means that the DTD/DOCTYPE will be lost on output."
+  example:
+  - "The following example validates an XML file using a DTD file.  \n  \n [!code-cpp[XmlReaderSettings.DtdValidate#1](~/samples/snippets/cpp/VS_Snippets_Data/XmlReaderSettings.DtdValidate/CPP/XmlReaderSettings.DtdValidate.cpp#1)]\n [!code-csharp[XmlReaderSettings.DtdValidate#1](~/samples/snippets/csharp/VS_Snippets_Data/XmlReaderSettings.DtdValidate/CS/validdtd.cs#1)]\n [!code-vb[XmlReaderSettings.DtdValidate#1](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlReaderSettings.DtdValidate/VB/validdtd.vb#1)]  \n  \n## Input  \n The example uses the `itemDTD.xml` file as input.  \n  \n [!code-xml[XmlReaderSettings.DtdValidate#2](~/samples/snippets/xml/VS_Snippets_Data/XmlReaderSettings.DtdValidate/XML/itemDTD.xml#2)]"
+  syntax:
+    content: public System.Xml.DtdProcessing DtdProcessing { get; set; }
+    return:
+      type: System.Xml.DtdProcessing
+      description: One of the enumeration values that determines the processing of DTDs. The default is <xref href="System.Xml.DtdProcessing.Prohibit"></xref>.
+  overload: System.Xml.XmlReaderSettings.DtdProcessing*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.IgnoreComments
+  commentId: P:System.Xml.XmlReaderSettings.IgnoreComments
+  id: IgnoreComments
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: IgnoreComments
+  nameWithType: XmlReaderSettings.IgnoreComments
+  fullName: XmlReaderSettings.IgnoreComments
+  type: Property
+  assemblies:
+  - System.Xml.ReaderWriter
+  - System.Xml
+  - netstandard
+  namespace: System.Xml
+  summary: Gets or sets a value indicating whether to ignore comments.
+  remarks: Setting this property to `true` can result in multiple contiguous text nodes being returned from the reader. This does not affect validation.
+  example:
+  - "The following creates a settings object that can be used to construct a reader that strips processing instructions, comments, and insignificant white space.  \n  \n [!code-cpp[XmlReaderSettings.cctor#1](~/samples/snippets/cpp/VS_Snippets_Data/XmlReaderSettings.cctor/CPP/XmlReaderSettings.cctor.cpp#1)]\n [!code-csharp[XmlReaderSettings.cctor#1](~/samples/snippets/csharp/VS_Snippets_Data/XmlReaderSettings.cctor/CS/factory_rdr_cctor2.cs#1)]\n [!code-vb[XmlReaderSettings.cctor#1](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlReaderSettings.cctor/VB/factory_rdr_cctor2.vb#1)]"
+  syntax:
+    content: public bool IgnoreComments { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` to ignore comments; otherwise `false`. The default is `false`.'
+  overload: System.Xml.XmlReaderSettings.IgnoreComments*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.IgnoreProcessingInstructions
+  commentId: P:System.Xml.XmlReaderSettings.IgnoreProcessingInstructions
+  id: IgnoreProcessingInstructions
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: IgnoreProcessingInstructions
+  nameWithType: XmlReaderSettings.IgnoreProcessingInstructions
+  fullName: XmlReaderSettings.IgnoreProcessingInstructions
+  type: Property
+  assemblies:
+  - System.Xml.ReaderWriter
+  - System.Xml
+  - netstandard
+  namespace: System.Xml
+  summary: Gets or sets a value indicating whether to ignore processing instructions.
+  remarks: Setting this property to `true` can result in multiple contiguous text nodes being returned from the reader. This does not affect validation.
+  example:
+  - "The following creates a settings object that can be used to construct a reader that strips processing instructions, comments, and insignificant white space.  \n  \n [!code-cpp[XmlReaderSettings.cctor#1](~/samples/snippets/cpp/VS_Snippets_Data/XmlReaderSettings.cctor/CPP/XmlReaderSettings.cctor.cpp#1)]\n [!code-csharp[XmlReaderSettings.cctor#1](~/samples/snippets/csharp/VS_Snippets_Data/XmlReaderSettings.cctor/CS/factory_rdr_cctor2.cs#1)]\n [!code-vb[XmlReaderSettings.cctor#1](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlReaderSettings.cctor/VB/factory_rdr_cctor2.vb#1)]"
+  syntax:
+    content: public bool IgnoreProcessingInstructions { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` to ignore processing instructions; otherwise `false`. The default is `false`.'
+  overload: System.Xml.XmlReaderSettings.IgnoreProcessingInstructions*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.IgnoreWhitespace
+  commentId: P:System.Xml.XmlReaderSettings.IgnoreWhitespace
+  id: IgnoreWhitespace
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: IgnoreWhitespace
+  nameWithType: XmlReaderSettings.IgnoreWhitespace
+  fullName: XmlReaderSettings.IgnoreWhitespace
+  type: Property
+  assemblies:
+  - System.Xml.ReaderWriter
+  - System.Xml
+  - netstandard
+  namespace: System.Xml
+  summary: Gets or sets a value indicating whether to ignore insignificant white space.
+  remarks: "White space that is not considered to be significant includes spaces, tabs, and blank lines used to set apart the markup for greater readability. An example of this is white space in element content.  \n  \n This property setting does not affect white space between markup in a mixed content mode, or white space that occurs within the scope of an `xml:space='preserve'` attribute."
+  example:
+  - "The following creates a settings object that can be used to construct a reader that strips processing instructions, comments, and insignificant white space.  \n  \n [!code-cpp[XmlReaderSettings.cctor#1](~/samples/snippets/cpp/VS_Snippets_Data/XmlReaderSettings.cctor/CPP/XmlReaderSettings.cctor.cpp#1)]\n [!code-csharp[XmlReaderSettings.cctor#1](~/samples/snippets/csharp/VS_Snippets_Data/XmlReaderSettings.cctor/CS/factory_rdr_cctor2.cs#1)]\n [!code-vb[XmlReaderSettings.cctor#1](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlReaderSettings.cctor/VB/factory_rdr_cctor2.vb#1)]"
+  syntax:
+    content: public bool IgnoreWhitespace { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` to ignore white space; otherwise `false`. The default is `false`.'
+  overload: System.Xml.XmlReaderSettings.IgnoreWhitespace*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.LineNumberOffset
+  commentId: P:System.Xml.XmlReaderSettings.LineNumberOffset
+  id: LineNumberOffset
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: LineNumberOffset
+  nameWithType: XmlReaderSettings.LineNumberOffset
+  fullName: XmlReaderSettings.LineNumberOffset
+  type: Property
+  assemblies:
+  - System.Xml.ReaderWriter
+  - System.Xml
+  - netstandard
+  namespace: System.Xml
+  summary: Gets or sets line number offset of the <xref href="System.Xml.XmlReader"></xref> object.
+  remarks: The <xref:System.Xml.XmlReaderSettings.LineNumberOffset%2A> setting determines the point where the <xref:System.Xml.IXmlLineInfo.LineNumber%2A> property starts counting. This is useful if your XML data is embedded within a larger document. For example, if your XML data were embedded in a larger document, and your data started on line 101 of the document, you may want to specify that the reader start at line 100. Therefore, if the reader threw an exception while parsing the first line of the XML, it would report the line number as line 101, rather than line 1.
+  syntax:
+    content: public int LineNumberOffset { get; set; }
+    return:
+      type: System.Int32
+      description: The line number offset. The default is 0.
+  overload: System.Xml.XmlReaderSettings.LineNumberOffset*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.LinePositionOffset
+  commentId: P:System.Xml.XmlReaderSettings.LinePositionOffset
+  id: LinePositionOffset
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: LinePositionOffset
+  nameWithType: XmlReaderSettings.LinePositionOffset
+  fullName: XmlReaderSettings.LinePositionOffset
+  type: Property
+  assemblies:
+  - System.Xml.ReaderWriter
+  - System.Xml
+  - netstandard
+  namespace: System.Xml
+  summary: Gets or sets line position offset of the <xref href="System.Xml.XmlReader"></xref> object.
+  remarks: The <xref:System.Xml.XmlReaderSettings.LinePositionOffset%2A> setting determines the point where the <xref:System.Xml.IXmlLineInfo.LinePosition%2A> property starts counting. This is useful if your XML data is embedded within a larger document and there is no new line at the beginning of the XML. In this case, if the reader throws an exception while parsing the XML, you want it to return the line position relative to the main document, not just relative to the XML fragment.
+  syntax:
+    content: public int LinePositionOffset { get; set; }
+    return:
+      type: System.Int32
+      description: The line position offset. The default is 0.
+  overload: System.Xml.XmlReaderSettings.LinePositionOffset*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.MaxCharactersFromEntities
+  commentId: P:System.Xml.XmlReaderSettings.MaxCharactersFromEntities
+  id: MaxCharactersFromEntities
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: MaxCharactersFromEntities
+  nameWithType: XmlReaderSettings.MaxCharactersFromEntities
+  fullName: XmlReaderSettings.MaxCharactersFromEntities
+  type: Property
+  assemblies:
+  - System.Xml.ReaderWriter
+  - System.Xml
+  - netstandard
+  namespace: System.Xml
+  summary: Gets or sets a value indicating the maximum allowable number of characters in a document that result from expanding entities.
+  remarks: "A zero (0) value means no limits on the number of characters that result from expanding entities. A non-zero value specifies the maximum number of characters that can result from expanding entities.  \n  \n If the reader attempts to read a document that contains entities such that the expanded size will exceed this property, an <xref:System.Xml.XmlException> will be thrown.  \n  \n This property allows you to mitigate denial of service attacks where the attacker submits XML documents that attempt to exceed memory limits via expanding entities. By limiting the characters that result from expanded entities, you can detect the attack and recover reliably."
+  example:
+  - "The following code sets this property, and then attempts to parse a document that contains an entity that expands to a size greater than the set limit. In a real world scenario, you would set this limit to a value large enough to handle valid documents, yet small enough to limit the threat from malicious documents.  \n  \n```csharp  \nstring markup =  \n@\"<!DOCTYPE Root [  \n  <!ENTITY anEntity \"\"Expands to more than 30 characters\"\">  \n  <!ELEMENT Root (#PCDATA)>  \n]>  \n<Root>Content &anEntity;</Root>\";  \n  \nXmlReaderSettings settings = new XmlReaderSettings();  \nsettings.DtdProcessing = DtdProcessing.Parse;  \nsettings.ValidationType = ValidationType.DTD;  \nsettings.MaxCharactersFromEntities = 30;  \n  \ntry  \n{  \n    XmlReader reader = XmlReader.Create(new StringReader(markup), settings);  \n    while (reader.Read()) { }  \n}  \ncatch (XmlException ex)  \n{  \n    Console.WriteLine(ex.Message);  \n}  \n```  \n  \n```vb  \nDim markup As String = _  \n    \"<!DOCTYPE Root [\" + Environment.NewLine + _  \n    \"  <!ENTITY anEntity \"\"Expands to more than 30 characters\"\">\" + Environment.NewLine + _  \n    \"  <!ELEMENT Root (#PCDATA)>\" + Environment.NewLine + _  \n    \"]>\" + Environment.NewLine + _  \n    \"<Root>Content &anEntity;</Root>\"  \n  \nDim settings As XmlReaderSettings = New XmlReaderSettings()  \nsettings.DtdProcessing = DtdProcessing.Parse;  \nsettings.ValidationType = ValidationType.DTD  \nsettings.MaxCharactersFromEntities = 30  \n  \nTry  \n    Dim reader As XmlReader = XmlReader.Create(New StringReader(markup), settings)  \n    While (reader.Read())  \n    End While  \nCatch ex As XmlException  \n    Console.WriteLine(ex.Message)  \nEnd Try  \n```  \n  \n This example produces the following output:  \n  \n```  \nThere is an error in XML document (MaxCharactersFromEntities, ).  \n```"
+  syntax:
+    content: public long MaxCharactersFromEntities { get; set; }
+    return:
+      type: System.Int64
+      description: The maximum allowable number of characters from expanded entities. The default is 0.
+  overload: System.Xml.XmlReaderSettings.MaxCharactersFromEntities*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.MaxCharactersInDocument
+  commentId: P:System.Xml.XmlReaderSettings.MaxCharactersInDocument
+  id: MaxCharactersInDocument
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: MaxCharactersInDocument
+  nameWithType: XmlReaderSettings.MaxCharactersInDocument
+  fullName: XmlReaderSettings.MaxCharactersInDocument
+  type: Property
+  assemblies:
+  - System.Xml.ReaderWriter
+  - System.Xml
+  - netstandard
+  namespace: System.Xml
+  summary: Gets or sets a value indicating the maximum allowable number of characters in an XML document. A zero (0) value means no limits on the size of the XML document. A non-zero value specifies the maximum size, in characters.
+  remarks: "A zero (0) value means no limits on the number of characters in the parsed document. A non-zero value specifies the maximum number of characters that can be parsed.  \n  \n The maximum character count for the document includes the count of characters that result from expanded entities.  \n  \n If the reader attempts to read a document with a size that exceeds this property, an <xref:System.Xml.XmlException> will be thrown.  \n  \n This property allows you to mitigate denial of service attacks where the attacker submits extremely large XML documents. By limiting the size of a document, you can detect the attack and recover reliably."
+  example:
+  - "The following code sets this property, and then attempts to parse a document larger than the limit. In a real world scenario, you would set this limit to a value large enough to handle valid documents, yet small enough to limit the threat from malicious documents.  \n  \n```csharp  \nstring markup = \"<Root>Content</Root>\";  \n  \nXmlReaderSettings settings = new XmlReaderSettings();  \nsettings.MaxCharactersInDocument = 10;  \n  \ntry  \n{  \n    XmlReader reader = XmlReader.Create(new StringReader(markup), settings);  \n    while (reader.Read()) { }  \n}  \ncatch (XmlException ex)  \n{  \n    Console.WriteLine(ex.Message);  \n}  \n```  \n  \n```vb  \nDim markup As String = \"<Root>Content</Root>\"  \n  \nDim settings As XmlReaderSettings = New XmlReaderSettings()  \nsettings.MaxCharactersInDocument = 10  \n  \nTry  \n    Dim reader As XmlReader = XmlReader.Create(New StringReader(markup), settings)  \n    While (reader.Read())  \n    End While  \nCatch ex As XmlException  \n    Console.WriteLine(ex.Message)  \nEnd Try  \n```  \n  \n This code produces the following output:  \n  \n```  \nThere is an error in XML document (MaxCharactersInDocument, ).  \n```"
+  syntax:
+    content: public long MaxCharactersInDocument { get; set; }
+    return:
+      type: System.Int64
+      description: The maximum allowable number of characters in an XML document. The default is 0.
+  overload: System.Xml.XmlReaderSettings.MaxCharactersInDocument*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.NameTable
+  commentId: P:System.Xml.XmlReaderSettings.NameTable
+  id: NameTable
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: NameTable
+  nameWithType: XmlReaderSettings.NameTable
+  fullName: XmlReaderSettings.NameTable
+  type: Property
+  assemblies:
+  - System.Xml.ReaderWriter
+  - System.Xml
+  - netstandard
+  namespace: System.Xml
+  summary: Gets or sets the <xref href="System.Xml.XmlNameTable"></xref> used for atomized string comparisons.
+  remarks: "Set this property to an <xref:System.Xml.XmlNameTable> instance if you want to share a common name table among all the created <xref:System.Xml.XmlReader> instances.  \n  \n> [!NOTE]\n>  The <xref:System.Xml.NameTable> class is not thread-safe. Therefore it cannot be shared between <xref:System.Xml.XmlReader> objects that run simultaneously in different threads."
+  syntax:
+    content: public System.Xml.XmlNameTable NameTable { get; set; }
+    return:
+      type: System.Xml.XmlNameTable
+      description: "The <xref href=\"System.Xml.XmlNameTable\"></xref> that stores all the atomized strings used by all <xref href=\"System.Xml.XmlReader\"></xref> instances created using this <xref href=\"System.Xml.XmlReaderSettings\"></xref> object.  \n  \n The default is `null`. The created <xref href=\"System.Xml.XmlReader\"></xref> instance will use a new empty <xref href=\"System.Xml.NameTable\"></xref> if this value is `null`."
+  overload: System.Xml.XmlReaderSettings.NameTable*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.ProhibitDtd
+  commentId: P:System.Xml.XmlReaderSettings.ProhibitDtd
+  id: ProhibitDtd
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: ProhibitDtd
+  nameWithType: XmlReaderSettings.ProhibitDtd
+  fullName: XmlReaderSettings.ProhibitDtd
+  type: Property
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Gets or sets a value indicating whether to prohibit document type definition (DTD) processing. This property is obsolete. Use <xref href="System.Xml.XmlTextReader.DtdProcessing"></xref> instead.
+  remarks: "When set to `true`, the <xref:System.Xml.XmlReader> throws an <xref:System.Xml.XmlException> when any DTD content is encountered. Do not enable DTD processing if you are concerned about Denial of Service issues or if you are dealing with untrusted sources.  \n  \n If you have DTD processing enabled, you can use the <xref:System.Xml.XmlSecureResolver> to restrict the resources that the <xref:System.Xml.XmlReader> can access. You can also design your application so that the XML processing is memory and time constrained. For example, configure time-out limits in your ASP.NET application.  \n  \n This property is obsolete. Use <xref:System.Xml.XmlTextReader.DtdProcessing%2A> instead. If you had set <xref:System.Xml.XmlReaderSettings.ProhibitDtd%2A> to its default value `true` set <xref:System.Xml.XmlTextReader.DtdProcessing%2A> to `Prohibit`. If you had set <xref:System.Xml.XmlReaderSettings.ProhibitDtd%2A> to `false` set <xref:System.Xml.XmlTextReader.DtdProcessing%2A> to `Parse`."
+  example:
+  - "The following example validates data using a DTD.  \n  \n [!code-cpp[XmlReaderSettings.DtdValidate#1](~/samples/snippets/cpp/VS_Snippets_Data/XmlReaderSettings.DtdValidate/CPP/XmlReaderSettings.DtdValidate.cpp#1)]\n [!code-csharp[XmlReaderSettings.DtdValidate#1](~/samples/snippets/csharp/VS_Snippets_Data/XmlReaderSettings.DtdValidate/CS/validdtd.cs#1)]\n [!code-vb[XmlReaderSettings.DtdValidate#1](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlReaderSettings.DtdValidate/VB/validdtd.vb#1)]  \n  \n The example uses the itemDTD.xml file as input.  \n  \n [!code-xml[XmlReaderSettings.DtdValidate#2](~/samples/snippets/xml/VS_Snippets_Data/XmlReaderSettings.DtdValidate/XML/itemDTD.xml#2)]"
+  syntax:
+    content: >-
+      [System.Obsolete("Use XmlReaderSettings.DtdProcessing property instead.")]
+
+      public bool ProhibitDtd { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` to prohibit DTD processing; otherwise `false`. The default is `true`.'
+  overload: System.Xml.XmlReaderSettings.ProhibitDtd*
+  exceptions: []
+  attributes:
+  - type: System.ObsoleteAttribute
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.Reset
+  commentId: M:System.Xml.XmlReaderSettings.Reset
+  id: Reset
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: Reset()
+  nameWithType: XmlReaderSettings.Reset()
+  fullName: XmlReaderSettings.Reset()
+  type: Method
+  assemblies:
+  - System.Xml.ReaderWriter
+  - System.Xml
+  - netstandard
+  namespace: System.Xml
+  summary: Resets the members of the settings class to their default values.
+  remarks: "The following table shows initial property values for an instance of <xref:System.Xml.XmlReaderSettings>.  \n  \n|Property|Initial Value|  \n|--------------|-------------------|  \n|<xref:System.Xml.XmlReaderSettings.Async%2A>|`false`.|  \n|<xref:System.Xml.XmlReaderSettings.CheckCharacters%2A>|`true`.|  \n|<xref:System.Xml.XmlReaderSettings.ConformanceLevel%2A>|<xref:System.Xml.ConformanceLevel.Document>.|  \n|<xref:System.Xml.XmlReaderSettings.IgnoreComments%2A>|`false`.|  \n|<xref:System.Xml.XmlReaderSettings.IgnoreProcessingInstructions%2A>|`false`.|  \n|<xref:System.Xml.XmlReaderSettings.IgnoreWhitespace%2A>|`false`.|  \n|<xref:System.Xml.XmlReaderSettings.LineNumberOffset%2A>|0.|  \n|<xref:System.Xml.XmlReaderSettings.LinePositionOffset%2A>|0.|  \n|<xref:System.Xml.XmlReaderSettings.MaxCharactersFromEntities%2A>|0 (there is no limit on the number of characters that result from expanding entities).|  \n|<xref:System.Xml.XmlReaderSettings.MaxCharactersInDocument%2A>|0 (there is no limit on the size of the XML document).|  \n|<xref:System.Xml.XmlReaderSettings.NameTable%2A>|`null`.|  \n|<xref:System.Xml.XmlTextReader.DtdProcessing%2A>|<xref:System.Xml.DtdProcessing.Prohibit>|  \n|<xref:System.Xml.XmlReaderSettings.ProhibitDtd%2A>|`true`. This property is obsolete. Use <xref:System.Xml.XmlTextReader.DtdProcessing%2A> instead. If you had set <xref:System.Xml.XmlReaderSettings.ProhibitDtd%2A> to its default value `true` set <xref:System.Xml.XmlTextReader.DtdProcessing%2A> to `Prohibit`. If you had set <xref:System.Xml.XmlReaderSettings.ProhibitDtd%2A> to `false` set <xref:System.Xml.XmlTextReader.DtdProcessing%2A> to `Parse`.|  \n|<xref:System.Xml.XmlReaderSettings.Schemas%2A>|An empty <xref:System.Xml.Schema.XmlSchemaSet> object.|  \n|<xref:System.Xml.XmlReaderSettings.ValidationFlags%2A>|<xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessIdentityConstraints>.|  \n|<xref:System.Xml.XmlReaderSettings.ValidationType%2A>|<xref:System.Xml.ValidationType.None>.|  \n|<xref:System.Xml.XmlReaderSettings.XmlResolver%2A>|A new <xref:System.Xml.XmlUrlResolver> object.|"
+  syntax:
+    content: public void Reset ();
+    parameters: []
+  overload: System.Xml.XmlReaderSettings.Reset*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.Schemas
+  commentId: P:System.Xml.XmlReaderSettings.Schemas
+  id: Schemas
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: Schemas
+  nameWithType: XmlReaderSettings.Schemas
+  fullName: XmlReaderSettings.Schemas
+  type: Property
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Gets or sets the <xref href="System.Xml.Schema.XmlSchemaSet"></xref> to use when performing schema validation.
+  remarks: "> [!IMPORTANT]\n>  -   Do not use schemas from unknown or untrusted sources or locations. Doing so will compromise the security of your code.  \n> -   XML schemas (including inline schemas) are inherently vulnerable to denial of service attacks; do not accept them in untrusted scenarios.  \n> -   Schema validation error messages and exceptions may expose sensitive information about the content model or URI paths to the schema file. Be careful not to expose this information to untrusted callers.  \n> -   For additional information, see the \"Security considerations\" section.  \n  \n The <xref:System.Xml.Schema.XmlSchemaSet> class only supports XML Schema definition language (XSD) schemas. <xref:System.Xml.XmlReader> instances created by the <xref:System.Xml.XmlReader.Create%2A> method cannot be configured to enable XML-Data Reduced (XDR) schema validation.  \n  \n## Security considerations  \n  \n-   Do not use schemas from unknown or untrusted sources. Doing so will compromise the security of your code. The <xref:System.Xml.XmlUrlResolver> class is used to resolve external schemas by default. To disable resolution of include, import, and redefine elements of a schema, set the <xref:System.Xml.Schema.XmlSchemaSet.XmlResolver%2A?displayProperty=fullName> property to `null`.  \n  \n-   Exceptions raised as a result of using the <xref:System.Xml.Schema.XmlSchemaSet> class, such as the <xref:System.Xml.Schema.XmlSchemaException> class may contain sensitive information that should not be exposed in untrusted scenarios. For example, the <xref:System.Xml.Schema.XmlSchemaException.SourceUri%2A> property of an <xref:System.Xml.Schema.XmlSchemaException> returns the URI path to the schema file that caused the exception. The <xref:System.Xml.Schema.XmlSchemaException.SourceUri%2A> property should not be exposed in untrusted scenarios. Exceptions should be properly handled so that this sensitive information is not exposed in untrusted scenarios."
+  example:
+  - "The example below uses the <xref:System.Xml.XmlReaderSettings> object and the <xref:System.Xml.XmlReader.Create%2A?displayProperty=fullName> method to associate a schema with an XML document. The schema is added to the <xref:System.Xml.XmlReaderSettings.Schemas%2A> property of the <xref:System.Xml.XmlReaderSettings> object. The value of the <xref:System.Xml.XmlReaderSettings.Schemas%2A> property is an <xref:System.Xml.Schema.XmlSchemaSet> object. The schema is used to validate that the XML document conforms to the schema content model. Schema validation errors and warnings are handled by the <xref:System.Xml.XmlReaderSettings.ValidationEventHandler> defined in the <xref:System.Xml.XmlReaderSettings> object.  \n  \n [!code-cpp[XmlSchemaSetOverall Example#1](~/samples/snippets/cpp/VS_Snippets_Data/XmlSchemaSetOverall Example/CPP/xmlschemasetexample.cpp#1)]\n [!code-csharp[XmlSchemaSetOverall Example#1](~/samples/snippets/csharp/VS_Snippets_Data/XmlSchemaSetOverall Example/CS/xmlschemasetexample.cs#1)]\n [!code-vb[XmlSchemaSetOverall Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlSchemaSetOverall Example/VB/xmlschemasetexample.vb#1)]  \n  \n The example uses the books.xml file as input.  \n  \n [!code-xml[XmlSchemaSetOverall Example#2](~/samples/snippets/xml/VS_Snippets_Data/XmlSchemaSetOverall Example/XML/books.xml#2)]  \n  \n The example uses the books.xsd file as an input.  \n  \n [!code-xml[XmlSchemaSetOverall Example#3](~/samples/snippets/xml/VS_Snippets_Data/XmlSchemaSetOverall Example/XML/books.xsd#3)]"
+  syntax:
+    content: public System.Xml.Schema.XmlSchemaSet Schemas { get; set; }
+    return:
+      type: System.Xml.Schema.XmlSchemaSet
+      description: The <xref href="System.Xml.Schema.XmlSchemaSet"></xref> to use when performing schema validation. The default is an empty <xref href="System.Xml.Schema.XmlSchemaSet"></xref> object.
+  overload: System.Xml.XmlReaderSettings.Schemas*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.ValidationEventHandler
+  commentId: E:System.Xml.XmlReaderSettings.ValidationEventHandler
+  id: ValidationEventHandler
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: ValidationEventHandler
+  nameWithType: XmlReaderSettings.ValidationEventHandler
+  fullName: XmlReaderSettings.ValidationEventHandler
+  type: Event
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Occurs when the reader encounters validation errors.
+  remarks: "These events occur while reading an XML instance document if the <xref:System.Xml.XmlReaderSettings.ValidationType%2A> is set to either <xref:System.Xml.ValidationType.DTD> or <xref:System.Xml.ValidationType.Schema>. If the <xref:System.Xml.Schema.XmlSchemaValidationFlags.ReportValidationWarnings> setting has been enabled on the <xref:System.Xml.XmlReaderSettings.ValidationFlags%2A> property these events also occur when any validation warnings are encountered.  \n  \n If the reader is configured for validation and no validation event handler has been set, an <xref:System.Xml.Schema.XmlSchemaValidationException> is thrown for all validation errors. (Validation warnings do not cause an <xref:System.Xml.Schema.XmlSchemaValidationException> to be thrown).  \n  \n> [!IMPORTANT]\n>  Validation error messages may expose sensitive content model information. Validation error and warning messages are handled using the <xref:System.Xml.Schema.ValidationEventHandler> delegate, or are exposed as an <xref:System.Xml.Schema.XmlSchemaValidationException> if no event handler is provided to the <xref:System.Xml.XmlReaderSettings> object (validation warnings do not cause an <xref:System.Xml.Schema.XmlSchemaValidationException> to be thrown). This content model information should not be exposed in untrusted scenarios. Validation warning messages are suppressed by default and can be reported by setting the <xref:System.Xml.Schema.XmlSchemaValidationFlags.ReportValidationWarnings> flag.  \n>   \n>  The <xref:System.Xml.Schema.XmlSchemaException.SourceUri%2A> property of an <xref:System.Xml.Schema.XmlSchemaValidationException> returns the URI path to the schema file that caused the exception. The <xref:System.Xml.Schema.XmlSchemaException.SourceUri%2A> property should not be exposed in untrusted scenarios."
+  example:
+  - "The following example shows the settings to specify to create a reader that validates using an inline schema and that also displays validation warnings. The validation event handler uses the <xref:System.Xml.Schema.XmlSeverityType> enumeration to differentiate between warnings and errors.  \n  \n [!code-csharp[XmlReaderSettings.IgnoreInlineSchema#1](~/samples/snippets/csharp/VS_Snippets_Data/XmlReaderSettings.IgnoreInlineSchema/CS/factory_rdr_cctor.cs#1)]\n [!code-vb[XmlReaderSettings.IgnoreInlineSchema#1](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlReaderSettings.IgnoreInlineSchema/VB/factory_rdr_cctor.vb#1)]"
+  syntax:
+    content: public event System.Xml.Schema.ValidationEventHandler ValidationEventHandler;
+    return:
+      type: System.Xml.Schema.ValidationEventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.ValidationFlags
+  commentId: P:System.Xml.XmlReaderSettings.ValidationFlags
+  id: ValidationFlags
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: ValidationFlags
+  nameWithType: XmlReaderSettings.ValidationFlags
+  fullName: XmlReaderSettings.ValidationFlags
+  type: Property
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Gets or sets a value indicating the schema validation settings. This setting applies to <xref href="System.Xml.XmlReader"></xref> objects that validate schemas (<xref href="System.Xml.XmlReaderSettings.ValidationType"></xref> property set to `ValidationType.Schema`).
+  remarks: "> [!IMPORTANT]\n>  The <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> and <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> validation flags of an <xref:System.Xml.XmlReaderSettings> object are not set by default. When these flags are set, the <xref:System.Xml.XmlReaderSettings.XmlResolver%2A> of the <xref:System.Xml.XmlReaderSettings> object is used to resolve schema locations encountered in the instance document in the <xref:System.Xml.XmlReader>. If the <xref:System.Xml.XmlReaderSettings.XmlResolver%2A> object is `null`, schema locations are not resolved even if the <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> and <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> validation flags are set.  \n>   \n>  Schemas added during validation add new types and can change the validation outcome of the document being validated. As a result, external schemas should only be resolved from trusted sources.  \n>   \n>  Disabling the <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessIdentityConstraints> flag (enabled by default) is recommended when validating, untrusted, large XML documents in high availability scenarios against a schema with identity constraints over a large part of the document."
+  example:
+  - "The following example validates an XML file against an inline XML Schema by enabling the <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> setting. The XML reader is configured to display validation warnings, sp you also see the expected warning on the root element.  \n  \n [!code-csharp[XmlReaderSettings.IgnoreInlineSchema#1](~/samples/snippets/csharp/VS_Snippets_Data/XmlReaderSettings.IgnoreInlineSchema/CS/factory_rdr_cctor.cs#1)]\n [!code-vb[XmlReaderSettings.IgnoreInlineSchema#1](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlReaderSettings.IgnoreInlineSchema/VB/factory_rdr_cctor.vb#1)]  \n  \n## Input  \n The example uses the inlineSchema.xml file as input.  \n  \n [!code-xml[XmlReaderSettings.IgnoreInlineSchema#3](~/samples/snippets/xml/VS_Snippets_Data/XmlReaderSettings.IgnoreInlineSchema/XML/inlineSchema.xml#3)]  \n  \n## Output  \n Warning:   Matching schema not found. No validation occurred. Could not find schema information for the element 'root'.  \n  \n Validation error:   The element 'xsdHeadCount:HeadCount' has invalid child element 'division'. Expected 'ID'."
+  syntax:
+    content: public System.Xml.Schema.XmlSchemaValidationFlags ValidationFlags { get; set; }
+    return:
+      type: System.Xml.Schema.XmlSchemaValidationFlags
+      description: A bitwise combination of enumeration values that specify validation options. <xref href="System.Xml.Schema.XmlSchemaValidationFlags.ProcessIdentityConstraints"></xref> and <xref href="System.Xml.Schema.XmlSchemaValidationFlags.AllowXmlAttributes"></xref> are enabled by default. <xref href="System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema"></xref>, <xref href="System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation"></xref>, and <xref href="System.Xml.Schema.XmlSchemaValidationFlags.ReportValidationWarnings"></xref> are disabled by default.
+  overload: System.Xml.XmlReaderSettings.ValidationFlags*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.ValidationType
+  commentId: P:System.Xml.XmlReaderSettings.ValidationType
+  id: ValidationType
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: ValidationType
+  nameWithType: XmlReaderSettings.ValidationType
+  fullName: XmlReaderSettings.ValidationType
+  type: Property
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Gets or sets a value indicating whether the <xref href="System.Xml.XmlReader"></xref> will perform validation or type assignment when reading.
+  remarks: "The following table describes the <xref:System.Xml.ValidationType> values.  \n  \n> [!NOTE]\n>  The <xref:System.Xml.ValidationType.Auto> and <xref:System.Xml.ValidationType.XDR> enumeration values are obsolete in .NET Framework version 2.0.  \n  \n|ValidationType|Description|  \n|--------------------|-----------------|  \n|`DTD`|Validation is performed using a document type definition (DTD). **Note:**  The <xref:System.Xml.XmlReaderSettings.DtdProcessing%2A> property must also be set to <xref:System.Xml.DtdProcessing.Parse>.|  \n|`None`|The <xref:System.Xml.XmlReader> does not validate data, or perform any type assignment.|  \n|`Schema`|Validation and type assignment is performed using an XML Schema definition language (XSD) schema. The reader accesses the XML Schema using the following:<br /><br /> -   Uses the <xref:System.Xml.XmlReaderSettings.Schemas%2A> property to access the <xref:System.Xml.Schema.XmlSchemaSet> object associated with this reader.<br />-   Uses the in-line schema contained in the XML instance document. (The <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> option must be enabled.)<br />-   Uses the XML Schema specified by schema location hints (`xsi:schemaLocation` or `xsi:noNamespaceSchemaLocation` attribute) found in the XML instance document. (The <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> option must be enabled.)|"
+  example:
+  - "The following example validates using a schema stored in the <xref:System.Xml.Schema.XmlSchemaSet>.  \n  \n [!code-cpp[XmlReader_Validate_SchemaSet#1](~/samples/snippets/cpp/VS_Snippets_Data/XmlReader_Validate_SchemaSet/CPP/XmlReader_Validate_SchemaSet.cpp#1)]\n [!code-csharp[XmlReader_Validate_SchemaSet#1](~/samples/snippets/csharp/VS_Snippets_Data/XmlReader_Validate_SchemaSet/CS/validschemaset.cs#1)]\n [!code-vb[XmlReader_Validate_SchemaSet#1](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlReader_Validate_SchemaSet/VB/validschemaset.vb#1)]  \n  \n The sample uses the following input files:  \n  \n `booksSchemaFail.xml`  \n  \n [!code-xml[XmlReader_Validate_SchemaSet#2](~/samples/snippets/xml/VS_Snippets_Data/XmlReader_Validate_SchemaSet/XML/booksschemafail.xml#2)]  \n  \n `books.xsd`  \n  \n [!code-xml[XmlReader_Validate_SchemaSet#3](~/samples/snippets/xml/VS_Snippets_Data/XmlReader_Validate_SchemaSet/XML/books.xsd#3)]"
+  syntax:
+    content: public System.Xml.ValidationType ValidationType { get; set; }
+    return:
+      type: System.Xml.ValidationType
+      description: One of the <xref href="System.Xml.ValidationType"></xref> values that indicates whether XmlReader will perform validation or type assignment when reading. The default is `ValidationType.None`.
+  overload: System.Xml.XmlReaderSettings.ValidationType*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlReaderSettings.XmlResolver
+  commentId: P:System.Xml.XmlReaderSettings.XmlResolver
+  id: XmlResolver
+  parent: System.Xml.XmlReaderSettings
+  langs:
+  - csharp
+  name: XmlResolver
+  nameWithType: XmlReaderSettings.XmlResolver
+  fullName: XmlReaderSettings.XmlResolver
+  type: Property
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Sets the <xref href="System.Xml.XmlResolver"></xref> used to access external documents.
+  remarks: "The <xref:System.Xml.XmlResolver> is used to locate and open an XML instance document, or to locate and open any external resources referenced by the XML instance document. This can include entities, DTD, or schemas. The <xref:System.Xml.XmlResolver.Credentials%2A?displayProperty=fullName> property can be used to specify any credentials required for network authentication.  \n  \n> [!IMPORTANT]\n>  Because the <xref:System.Xml.XmlReaderSettings.XmlResolver%2A> can contain sensitive information such as user credentials, you should be careful when caching <xref:System.Xml.XmlReaderSettings> objects, or when passing the <xref:System.Xml.XmlReaderSettings> object from one component to another.  \n>   \n>  An <xref:System.Xml.XmlSecureResolver> can be used to access external documents. The <xref:System.Xml.XmlSecureResolver> class helps to secure another implementation of <xref:System.Xml.XmlResolver> by wrapping the <xref:System.Xml.XmlResolver> object and restricting the resources that the underlying <xref:System.Xml.XmlResolver> has access to.  \n>   \n>  The <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> and <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> validation flags of an <xref:System.Xml.XmlReaderSettings> object are not set by default. When these flags are set, the <xref:System.Xml.XmlReaderSettings.XmlResolver%2A> of the <xref:System.Xml.XmlReaderSettings> object is used to resolve schema locations encountered in the instance document in the <xref:System.Xml.XmlReader>. If the <xref:System.Xml.XmlReaderSettings.XmlResolver%2A> object is `null`, schema locations are not resolved even if the <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessInlineSchema> and <xref:System.Xml.Schema.XmlSchemaValidationFlags.ProcessSchemaLocation> validation flags are set.  \n>   \n>  Schemas added during validation add new types and can change the validation outcome of the document being validated. As a result, external schemas should only be resolved from trusted sources."
+  example:
+  - "The following example creates an <xref:System.Xml.XmlReader> that uses an <xref:System.Xml.XmlSecureResolver> with default credentials.  \n  \n [!code-csharp[XmlReader.Create#10](~/samples/snippets/csharp/VS_Snippets_Data/XmlReader.Create/CS/XmlReader_Create.cs#10)]\n [!code-vb[XmlReader.Create#10](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlReader.Create/VB/XmlReader_Create.vb#10)]"
+  syntax:
+    content: public System.Xml.XmlResolver XmlResolver { set; }
+    return:
+      type: System.Xml.XmlResolver
+      description: An <xref href="System.Xml.XmlResolver"></xref> used to access external documents. If set to `null`, an <xref href="System.Xml.XmlException"></xref> is thrown when the <xref href="System.Xml.XmlReader"></xref> tries to access an external resource. The default is a new <xref href="System.Xml.XmlUrlResolver"></xref> with no credentials.  Starting with the .NET Framework 4.5.2, this setting has a default value of `null`.
+  overload: System.Xml.XmlReaderSettings.XmlResolver*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Xml.XmlReaderSettings.#ctor
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: XmlReaderSettings()
+  nameWithType: XmlReaderSettings.XmlReaderSettings()
+  fullName: XmlReaderSettings.XmlReaderSettings()
+- uid: System.Xml.XmlReaderSettings.#ctor(System.Xml.XmlResolver)
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: XmlReaderSettings(XmlResolver)
+  nameWithType: XmlReaderSettings.XmlReaderSettings(XmlResolver)
+  fullName: XmlReaderSettings.XmlReaderSettings(XmlResolver)
+- uid: System.Xml.XmlResolver
+  parent: System.Xml
+  isExternal: false
+  name: XmlResolver
+  nameWithType: XmlResolver
+  fullName: System.Xml.XmlResolver
+- uid: System.Xml.XmlReaderSettings.Async
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: Async
+  nameWithType: XmlReaderSettings.Async
+  fullName: XmlReaderSettings.Async
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Xml.XmlReaderSettings.CheckCharacters
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: CheckCharacters
+  nameWithType: XmlReaderSettings.CheckCharacters
+  fullName: XmlReaderSettings.CheckCharacters
+- uid: System.Xml.XmlReaderSettings.Clone
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: Clone()
+  nameWithType: XmlReaderSettings.Clone()
+  fullName: XmlReaderSettings.Clone()
+- uid: System.Xml.XmlReaderSettings
+  parent: System.Xml
+  isExternal: false
+  name: XmlReaderSettings
+  nameWithType: XmlReaderSettings
+  fullName: System.Xml.XmlReaderSettings
+- uid: System.Xml.XmlReaderSettings.CloseInput
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: CloseInput
+  nameWithType: XmlReaderSettings.CloseInput
+  fullName: XmlReaderSettings.CloseInput
+- uid: System.Xml.XmlReaderSettings.ConformanceLevel
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: ConformanceLevel
+  nameWithType: XmlReaderSettings.ConformanceLevel
+  fullName: XmlReaderSettings.ConformanceLevel
+- uid: System.Xml.ConformanceLevel
+  parent: System.Xml
+  isExternal: false
+  name: ConformanceLevel
+  nameWithType: ConformanceLevel
+  fullName: System.Xml.ConformanceLevel
+- uid: System.Xml.XmlReaderSettings.DtdProcessing
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: DtdProcessing
+  nameWithType: XmlReaderSettings.DtdProcessing
+  fullName: XmlReaderSettings.DtdProcessing
+- uid: System.Xml.DtdProcessing
+  parent: System.Xml
+  isExternal: false
+  name: DtdProcessing
+  nameWithType: DtdProcessing
+  fullName: System.Xml.DtdProcessing
+- uid: System.Xml.XmlReaderSettings.IgnoreComments
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: IgnoreComments
+  nameWithType: XmlReaderSettings.IgnoreComments
+  fullName: XmlReaderSettings.IgnoreComments
+- uid: System.Xml.XmlReaderSettings.IgnoreProcessingInstructions
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: IgnoreProcessingInstructions
+  nameWithType: XmlReaderSettings.IgnoreProcessingInstructions
+  fullName: XmlReaderSettings.IgnoreProcessingInstructions
+- uid: System.Xml.XmlReaderSettings.IgnoreWhitespace
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: IgnoreWhitespace
+  nameWithType: XmlReaderSettings.IgnoreWhitespace
+  fullName: XmlReaderSettings.IgnoreWhitespace
+- uid: System.Xml.XmlReaderSettings.LineNumberOffset
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: LineNumberOffset
+  nameWithType: XmlReaderSettings.LineNumberOffset
+  fullName: XmlReaderSettings.LineNumberOffset
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Xml.XmlReaderSettings.LinePositionOffset
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: LinePositionOffset
+  nameWithType: XmlReaderSettings.LinePositionOffset
+  fullName: XmlReaderSettings.LinePositionOffset
+- uid: System.Xml.XmlReaderSettings.MaxCharactersFromEntities
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: MaxCharactersFromEntities
+  nameWithType: XmlReaderSettings.MaxCharactersFromEntities
+  fullName: XmlReaderSettings.MaxCharactersFromEntities
+- uid: System.Int64
+  parent: System
+  isExternal: false
+  name: Int64
+  nameWithType: Int64
+  fullName: System.Int64
+- uid: System.Xml.XmlReaderSettings.MaxCharactersInDocument
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: MaxCharactersInDocument
+  nameWithType: XmlReaderSettings.MaxCharactersInDocument
+  fullName: XmlReaderSettings.MaxCharactersInDocument
+- uid: System.Xml.XmlReaderSettings.NameTable
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: NameTable
+  nameWithType: XmlReaderSettings.NameTable
+  fullName: XmlReaderSettings.NameTable
+- uid: System.Xml.XmlNameTable
+  parent: System.Xml
+  isExternal: false
+  name: XmlNameTable
+  nameWithType: XmlNameTable
+  fullName: System.Xml.XmlNameTable
+- uid: System.Xml.XmlReaderSettings.ProhibitDtd
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: ProhibitDtd
+  nameWithType: XmlReaderSettings.ProhibitDtd
+  fullName: XmlReaderSettings.ProhibitDtd
+- uid: System.Xml.XmlReaderSettings.Reset
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: Reset()
+  nameWithType: XmlReaderSettings.Reset()
+  fullName: XmlReaderSettings.Reset()
+- uid: System.Xml.XmlReaderSettings.Schemas
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: Schemas
+  nameWithType: XmlReaderSettings.Schemas
+  fullName: XmlReaderSettings.Schemas
+- uid: System.Xml.Schema.XmlSchemaSet
+  parent: System.Xml.Schema
+  isExternal: false
+  name: XmlSchemaSet
+  nameWithType: XmlSchemaSet
+  fullName: System.Xml.Schema.XmlSchemaSet
+- uid: System.Xml.XmlReaderSettings.ValidationEventHandler
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: ValidationEventHandler
+  nameWithType: XmlReaderSettings.ValidationEventHandler
+  fullName: XmlReaderSettings.ValidationEventHandler
+- uid: System.Xml.Schema.ValidationEventHandler
+  parent: System.Xml.Schema
+  isExternal: false
+  name: ValidationEventHandler
+  nameWithType: ValidationEventHandler
+  fullName: System.Xml.Schema.ValidationEventHandler
+- uid: System.Xml.XmlReaderSettings.ValidationFlags
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: ValidationFlags
+  nameWithType: XmlReaderSettings.ValidationFlags
+  fullName: XmlReaderSettings.ValidationFlags
+- uid: System.Xml.Schema.XmlSchemaValidationFlags
+  parent: System.Xml.Schema
+  isExternal: false
+  name: XmlSchemaValidationFlags
+  nameWithType: XmlSchemaValidationFlags
+  fullName: System.Xml.Schema.XmlSchemaValidationFlags
+- uid: System.Xml.XmlReaderSettings.ValidationType
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: ValidationType
+  nameWithType: XmlReaderSettings.ValidationType
+  fullName: XmlReaderSettings.ValidationType
+- uid: System.Xml.ValidationType
+  parent: System.Xml
+  isExternal: false
+  name: ValidationType
+  nameWithType: ValidationType
+  fullName: System.Xml.ValidationType
+- uid: System.Xml.XmlReaderSettings.XmlResolver
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: XmlResolver
+  nameWithType: XmlReaderSettings.XmlResolver
+  fullName: XmlReaderSettings.XmlResolver
+- uid: System.Xml.XmlReaderSettings.#ctor*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: XmlReaderSettings
+  nameWithType: XmlReaderSettings.XmlReaderSettings
+  fullName: XmlReaderSettings.XmlReaderSettings
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.Async*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: Async
+  nameWithType: XmlReaderSettings.Async
+  fullName: XmlReaderSettings.Async
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.CheckCharacters*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: CheckCharacters
+  nameWithType: XmlReaderSettings.CheckCharacters
+  fullName: XmlReaderSettings.CheckCharacters
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.Clone*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: Clone
+  nameWithType: XmlReaderSettings.Clone
+  fullName: XmlReaderSettings.Clone
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.CloseInput*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: CloseInput
+  nameWithType: XmlReaderSettings.CloseInput
+  fullName: XmlReaderSettings.CloseInput
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.ConformanceLevel*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: ConformanceLevel
+  nameWithType: XmlReaderSettings.ConformanceLevel
+  fullName: XmlReaderSettings.ConformanceLevel
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.DtdProcessing*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: DtdProcessing
+  nameWithType: XmlReaderSettings.DtdProcessing
+  fullName: XmlReaderSettings.DtdProcessing
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.IgnoreComments*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: IgnoreComments
+  nameWithType: XmlReaderSettings.IgnoreComments
+  fullName: XmlReaderSettings.IgnoreComments
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.IgnoreProcessingInstructions*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: IgnoreProcessingInstructions
+  nameWithType: XmlReaderSettings.IgnoreProcessingInstructions
+  fullName: XmlReaderSettings.IgnoreProcessingInstructions
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.IgnoreWhitespace*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: IgnoreWhitespace
+  nameWithType: XmlReaderSettings.IgnoreWhitespace
+  fullName: XmlReaderSettings.IgnoreWhitespace
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.LineNumberOffset*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: LineNumberOffset
+  nameWithType: XmlReaderSettings.LineNumberOffset
+  fullName: XmlReaderSettings.LineNumberOffset
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.LinePositionOffset*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: LinePositionOffset
+  nameWithType: XmlReaderSettings.LinePositionOffset
+  fullName: XmlReaderSettings.LinePositionOffset
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.MaxCharactersFromEntities*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: MaxCharactersFromEntities
+  nameWithType: XmlReaderSettings.MaxCharactersFromEntities
+  fullName: XmlReaderSettings.MaxCharactersFromEntities
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.MaxCharactersInDocument*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: MaxCharactersInDocument
+  nameWithType: XmlReaderSettings.MaxCharactersInDocument
+  fullName: XmlReaderSettings.MaxCharactersInDocument
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.NameTable*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: NameTable
+  nameWithType: XmlReaderSettings.NameTable
+  fullName: XmlReaderSettings.NameTable
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.ProhibitDtd*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: ProhibitDtd
+  nameWithType: XmlReaderSettings.ProhibitDtd
+  fullName: XmlReaderSettings.ProhibitDtd
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.Reset*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: Reset
+  nameWithType: XmlReaderSettings.Reset
+  fullName: XmlReaderSettings.Reset
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.Schemas*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: Schemas
+  nameWithType: XmlReaderSettings.Schemas
+  fullName: XmlReaderSettings.Schemas
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.ValidationFlags*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: ValidationFlags
+  nameWithType: XmlReaderSettings.ValidationFlags
+  fullName: XmlReaderSettings.ValidationFlags
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.ValidationType*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: ValidationType
+  nameWithType: XmlReaderSettings.ValidationType
+  fullName: XmlReaderSettings.ValidationType
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Xml.XmlReaderSettings.XmlResolver*
+  parent: System.Xml.XmlReaderSettings
+  isExternal: false
+  name: XmlResolver
+  nameWithType: XmlReaderSettings.XmlResolver
+  fullName: XmlReaderSettings.XmlResolver
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlReaderSettings.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

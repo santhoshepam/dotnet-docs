@@ -1,0 +1,316 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.ComponentModel.AsyncOperationManager
+  commentId: T:System.ComponentModel.AsyncOperationManager
+  id: AsyncOperationManager
+  children:
+  - System.ComponentModel.AsyncOperationManager.CreateOperation(System.Object)
+  - System.ComponentModel.AsyncOperationManager.SynchronizationContext
+  langs:
+  - csharp
+  name: AsyncOperationManager
+  nameWithType: AsyncOperationManager
+  fullName: System.ComponentModel.AsyncOperationManager
+  type: Class
+  assemblies:
+  - System.ComponentModel.EventBasedAsync
+  - System
+  - netstandard
+  namespace: System.ComponentModel
+  summary: Provides concurrency management for classes that support asynchronous method calls. This class cannot be inherited.
+  remarks: "If your class needs to provide asynchronous behavior according to the [Event-based Asynchronous Pattern Overview](~/docs/standard/asynchronous-programming-patterns/event-based-asynchronous-pattern-overview.md), you will encounter a number of concurrency management issues. Among these is the requirement to ensure that event handlers are called on a thread or context that is appropriate for the application model (for example, Windows Forms applications, [!INCLUDE[vstecasp](~/includes/vstecasp-md.md)] applications, console applications, and so on). The <xref:System.ComponentModel.AsyncOperationManager> provides a convenient way to create a class that runs properly under all application models supported by the [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)].  \n  \n The <xref:System.ComponentModel.AsyncOperationManager> class has one method, <xref:System.ComponentModel.AsyncOperationManager.CreateOperation%2A>, which returns an <xref:System.ComponentModel.AsyncOperation?displayProperty=fullName> that can be used to track the duration of a particular asynchronous task. The <xref:System.ComponentModel.AsyncOperation?displayProperty=fullName> for a task can be used to alert clients when a task completes. It can also be used to post progress updates and incremental results without terminating the operation.  \n  \n For more information about implementing asynchronous classes, see [Implementing the Event-based Asynchronous Pattern](~/docs/standard/asynchronous-programming-patterns/implementing-the-event-based-asynchronous-pattern.md)."
+  example:
+  - "The following code example demonstrates using the <xref:System.ComponentModel.AsyncOperationManager> class to create a class that supports asynchronous operations for any application model. It shows how to implement a class that tests a number to determine whether it is prime. This calculation can be time consuming, so it is done on a separate thread. Progress reports, incremental results, and completion notifications are handled by the <xref:System.ComponentModel.AsyncOperation> class, which ensures that the client's event handlers are called on the proper thread or context.  \n  \n For a full code listing, see [How to: Implement a Component That Supports the Event-based Asynchronous Pattern](http://msdn.microsoft.com/library/3c1aa4d4-da87-4a03-b812-3d167b8c57cf). For a full code listing of a client form, see [How to: Implement a Client of the Event-based Asynchronous Pattern](~/docs/standard/asynchronous-programming-patterns/how-to-implement-a-client-of-the-event-based-asynchronous-pattern.md).  \n  \n [!code-csharp[System.ComponentModel.AsyncOperationManager#3](~/samples/snippets/csharp/VS_Snippets_Winforms/System.ComponentModel.AsyncOperationManager/CS/primenumbercalculatormain.cs#3)]\n [!code-vb[System.ComponentModel.AsyncOperationManager#3](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.ComponentModel.AsyncOperationManager/VB/primenumbercalculatormain.vb#3)]"
+  syntax:
+    content: public static class AsyncOperationManager
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel/AsyncOperationManager.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.AsyncOperationManager.CreateOperation(System.Object)
+  commentId: M:System.ComponentModel.AsyncOperationManager.CreateOperation(System.Object)
+  id: CreateOperation(System.Object)
+  parent: System.ComponentModel.AsyncOperationManager
+  langs:
+  - csharp
+  name: CreateOperation(Object)
+  nameWithType: AsyncOperationManager.CreateOperation(Object)
+  fullName: AsyncOperationManager.CreateOperation(Object)
+  type: Method
+  assemblies:
+  - System.ComponentModel.EventBasedAsync
+  - System
+  - netstandard
+  namespace: System.ComponentModel
+  summary: Returns an <xref href="System.ComponentModel.AsyncOperation"></xref> for tracking the duration of a particular asynchronous operation.
+  remarks: "The <xref:System.ComponentModel.AsyncOperationManager.CreateOperation%2A> method returns an <xref:System.ComponentModel.AsyncOperation?displayProperty=fullName> that you can use to track the duration of a particular asynchronous operation and to alert the application model when the operation completes. You can also use it to post progress updates and incremental results without terminating the operation. The <xref:System.ComponentModel.AsyncOperation?displayProperty=fullName> will correctly marshal these calls to the appropriate thread or context for the application model.  \n  \n If you implement a class that supports the Event-based Asynchronous Pattern, your class should call <xref:System.ComponentModel.AsyncOperationManager.CreateOperation%2A> each time your *MethodName*`Async` method is called. The client application that makes calls to the method can use the `userSuppliedState` parameter to uniquely identify each invocation, so as to distinguish events raised during the execution of the asynchronous operation.  \n  \n> [!CAUTION]\n>  Client code must provide a unique value for the `userSuppliedState` parameter. Non-unique task IDs may cause your implementation to report progress and other events incorrectly. Your code should check for a non-unique task ID and throw an <xref:System.ArgumentException?displayProperty=fullName> if one is detected.  \n  \n Your code should track every <xref:System.ComponentModel.AsyncOperation?displayProperty=fullName> returned by <xref:System.ComponentModel.AsyncOperationManager.CreateOperation%2A> and use the object in the corresponding underlying asynchronous operation to post updates and terminate the operation. This tracking can be as simple as passing the <xref:System.ComponentModel.AsyncOperation?displayProperty=fullName> as a parameter among delegates. In more sophisticated designs, your class can maintain a collection of <xref:System.ComponentModel.AsyncOperation?displayProperty=fullName> objects, adding objects when tasks are started and removing them when tasks are completed or canceled. This approach allows you to check for unique `userSuppliedState` parameter values, and is the method you should use when working with classes that support multiple concurrent invocations.  \n  \n For more information about implementing asynchronous classes, see [Implementing the Event-based Asynchronous Pattern](~/docs/standard/asynchronous-programming-patterns/implementing-the-event-based-asynchronous-pattern.md)."
+  example:
+  - "The following code example demonstrates using the <xref:System.ComponentModel.AsyncOperationManager.CreateOperation%2A> method to create an <xref:System.ComponentModel.AsyncOperation?displayProperty=fullName> for tracking the duration of asynchronous operations. This code example is part of a larger example provided for the <xref:System.ComponentModel.AsyncOperationManager> class.  \n  \n [!code-csharp[System.ComponentModel.AsyncOperationManager#3](~/samples/snippets/csharp/VS_Snippets_Winforms/System.ComponentModel.AsyncOperationManager/CS/primenumbercalculatormain.cs#3)]\n [!code-vb[System.ComponentModel.AsyncOperationManager#3](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.ComponentModel.AsyncOperationManager/VB/primenumbercalculatormain.vb#3)]"
+  syntax:
+    content: public static System.ComponentModel.AsyncOperation CreateOperation (object userSuppliedState);
+    parameters:
+    - id: userSuppliedState
+      type: System.Object
+      description: An object used to associate a piece of client state, such as a task ID, with a particular asynchronous operation.
+    return:
+      type: System.ComponentModel.AsyncOperation
+      description: An <xref href="System.ComponentModel.AsyncOperation"></xref> that you can use to track the duration of an asynchronous method invocation.
+  overload: System.ComponentModel.AsyncOperationManager.CreateOperation*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel/AsyncOperationManager.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.AsyncOperationManager.SynchronizationContext
+  commentId: P:System.ComponentModel.AsyncOperationManager.SynchronizationContext
+  id: SynchronizationContext
+  parent: System.ComponentModel.AsyncOperationManager
+  langs:
+  - csharp
+  name: SynchronizationContext
+  nameWithType: AsyncOperationManager.SynchronizationContext
+  fullName: AsyncOperationManager.SynchronizationContext
+  type: Property
+  assemblies:
+  - System.ComponentModel.EventBasedAsync
+  - System
+  - netstandard
+  namespace: System.ComponentModel
+  summary: Gets or sets the synchronization context for the asynchronous operation.
+  remarks: "The default implementation is the free-threaded implementation.  \n  \n A thread should set the <xref:System.ComponentModel.AsyncOperationManager.SynchronizationContext%2A> property to `null` to release the free-threaded factory when it is done, or else its factory will never be disposed."
+  syntax:
+    content: public static System.Threading.SynchronizationContext SynchronizationContext { get; set; }
+    return:
+      type: System.Threading.SynchronizationContext
+      description: The synchronization context for the asynchronous operation.
+  overload: System.ComponentModel.AsyncOperationManager.SynchronizationContext*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel/AsyncOperationManager.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ComponentModel.AsyncOperationManager.CreateOperation(System.Object)
+  parent: System.ComponentModel.AsyncOperationManager
+  isExternal: false
+  name: CreateOperation(Object)
+  nameWithType: AsyncOperationManager.CreateOperation(Object)
+  fullName: AsyncOperationManager.CreateOperation(Object)
+- uid: System.ComponentModel.AsyncOperation
+  parent: System.ComponentModel
+  isExternal: false
+  name: AsyncOperation
+  nameWithType: AsyncOperation
+  fullName: System.ComponentModel.AsyncOperation
+- uid: System.ComponentModel.AsyncOperationManager.SynchronizationContext
+  parent: System.ComponentModel.AsyncOperationManager
+  isExternal: false
+  name: SynchronizationContext
+  nameWithType: AsyncOperationManager.SynchronizationContext
+  fullName: AsyncOperationManager.SynchronizationContext
+- uid: System.Threading.SynchronizationContext
+  parent: System.Threading
+  isExternal: false
+  name: SynchronizationContext
+  nameWithType: SynchronizationContext
+  fullName: System.Threading.SynchronizationContext
+- uid: System.ComponentModel.AsyncOperationManager.CreateOperation*
+  parent: System.ComponentModel.AsyncOperationManager
+  isExternal: false
+  name: CreateOperation
+  nameWithType: AsyncOperationManager.CreateOperation
+  fullName: AsyncOperationManager.CreateOperation
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel/AsyncOperationManager.xml
+- uid: System.ComponentModel.AsyncOperationManager.SynchronizationContext*
+  parent: System.ComponentModel.AsyncOperationManager
+  isExternal: false
+  name: SynchronizationContext
+  nameWithType: AsyncOperationManager.SynchronizationContext
+  fullName: AsyncOperationManager.SynchronizationContext
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel/AsyncOperationManager.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

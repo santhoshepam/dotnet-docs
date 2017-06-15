@@ -1,0 +1,228 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.IdentityModel.Policy.IAuthorizationPolicy
+  commentId: T:System.IdentityModel.Policy.IAuthorizationPolicy
+  id: IAuthorizationPolicy
+  children:
+  - System.IdentityModel.Policy.IAuthorizationPolicy.Evaluate(System.IdentityModel.Policy.EvaluationContext,System.Object@)
+  - System.IdentityModel.Policy.IAuthorizationPolicy.Issuer
+  langs:
+  - csharp
+  name: IAuthorizationPolicy
+  nameWithType: IAuthorizationPolicy
+  fullName: System.IdentityModel.Policy.IAuthorizationPolicy
+  type: Interface
+  assemblies:
+  - System.IdentityModel
+  namespace: System.IdentityModel.Policy
+  summary: Defines a set of rules for authorizing a user, given a set of claims.
+  remarks: "Implement the <xref:System.IdentityModel.Policy.IAuthorizationPolicy> interface to add or map one set of claims to another. An authorization policy examines a set of claims and adds additional claims based on the current set. For example, an authorization policy might evaluate a claim that contains the date of birth and add a claim that asserts that the user is over 21 years old and add an Over21 claim to the <xref:System.IdentityModel.Policy.EvaluationContext>.  \n  \n Classes that implement the <xref:System.IdentityModel.Policy.IAuthorizationPolicy> interface do not authorize users, but they enable the <xref:System.ServiceModel.ServiceAuthorizationManager> class to do so. The <xref:System.ServiceModel.ServiceAuthorizationManager> calls the <xref:System.IdentityModel.Policy.IAuthorizationPolicy.Evaluate%2A> method for each authorization policy in effect. The <xref:System.IdentityModel.Policy.IAuthorizationPolicy.Evaluate%2A> method determines whether additional claims should be added for the user, based on the current context. An authorization policy's <xref:System.IdentityModel.Policy.IAuthorizationPolicy.Evaluate%2A> method may be called multiple times, as claims are added to the <xref:System.IdentityModel.Policy.EvaluationContext> by other authorization policies. When all authorization policies in effect are done, the <xref:System.ServiceModel.ServiceAuthorizationManager> class makes authorization decisions based upon the final set of claims. The <xref:System.ServiceModel.ServiceAuthorizationManager> class then creates an <xref:System.IdentityModel.Policy.AuthorizationContext> that contains an immutable set of claims that reflects these authorization decisions."
+  example:
+  - >-
+    [!code-csharp[C_IAuthorizationPolicy#1](~/samples/snippets/csharp/VS_Snippets_CFX/c_iauthorizationpolicy/cs/service.cs#1)]
+     [!code-vb[C_IAuthorizationPolicy#1](~/samples/snippets/visualbasic/VS_Snippets_CFX/c_iauthorizationpolicy/vb/myauthorizationpolicy.vb#1)]
+  syntax:
+    content: 'public interface IAuthorizationPolicy : System.IdentityModel.Policy.IAuthorizationComponent'
+  implements:
+  - System.IdentityModel.Policy.IAuthorizationComponent
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IdentityModel.Policy/IAuthorizationPolicy.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IdentityModel.Policy.IAuthorizationPolicy.Evaluate(System.IdentityModel.Policy.EvaluationContext,System.Object@)
+  commentId: M:System.IdentityModel.Policy.IAuthorizationPolicy.Evaluate(System.IdentityModel.Policy.EvaluationContext,System.Object@)
+  id: Evaluate(System.IdentityModel.Policy.EvaluationContext,System.Object@)
+  parent: System.IdentityModel.Policy.IAuthorizationPolicy
+  langs:
+  - csharp
+  name: Evaluate(EvaluationContext, Object)
+  nameWithType: IAuthorizationPolicy.Evaluate(EvaluationContext, Object)
+  fullName: IAuthorizationPolicy.Evaluate(EvaluationContext, Object)
+  type: Method
+  assemblies:
+  - System.IdentityModel
+  namespace: System.IdentityModel.Policy
+  summary: Evaluates whether a user meets the requirements for this authorization policy.
+  remarks: "> [!NOTE]\n>  Implementers of the <xref:System.IdentityModel.Policy.IAuthorizationPolicy> interface should expect the <xref:System.IdentityModel.Policy.IAuthorizationPolicy.Evaluate%2A> method to be called multiple times by different threads.  \n  \n Implementers of the <xref:System.IdentityModel.Policy.IAuthorizationPolicy> interface can use the `state` parameter to track state between calls to the <xref:System.IdentityModel.Policy.IAuthorizationPolicy.Evaluate%2A> method. If a state object is set inside a given call to the <xref:System.IdentityModel.Policy.IAuthorizationPolicy.Evaluate%2A> method, the same object instance is passed to each and every subsequent call to the <xref:System.IdentityModel.Policy.IAuthorizationPolicy.Evaluate%2A> method in the current evaluation process."
+  example:
+  - >-
+    [!code-csharp[C_IAuthorizationPolicy#2](~/samples/snippets/csharp/VS_Snippets_CFX/c_iauthorizationpolicy/cs/service.cs#2)]
+     [!code-vb[C_IAuthorizationPolicy#2](~/samples/snippets/visualbasic/VS_Snippets_CFX/c_iauthorizationpolicy/vb/myauthorizationpolicy.vb#2)]
+  syntax:
+    content: public bool Evaluate (System.IdentityModel.Policy.EvaluationContext evaluationContext, ref object state);
+    parameters:
+    - id: evaluationContext
+      type: System.IdentityModel.Policy.EvaluationContext
+      description: An <xref href="System.IdentityModel.Policy.EvaluationContext"></xref> that contains the claim set that the authorization policy evaluates.
+    - id: state
+      type: System.Object
+      description: A <xref href="System.Object"></xref>, passed by reference that represents the custom state for this authorization policy.
+    return:
+      type: System.Boolean
+      description: '`false` if the <xref href="System.IdentityModel.Policy.IAuthorizationPolicy.Evaluate(System.IdentityModel.Policy.EvaluationContext,System.Object@)"></xref> method for this authorization policy must be called if additional claims are added by other authorization policies to <code>evaluationContext</code>; otherwise, `true` to state no additional evaluation is required by this authorization policy.'
+  overload: System.IdentityModel.Policy.IAuthorizationPolicy.Evaluate*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IdentityModel.Policy/IAuthorizationPolicy.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IdentityModel.Policy.IAuthorizationPolicy.Issuer
+  commentId: P:System.IdentityModel.Policy.IAuthorizationPolicy.Issuer
+  id: Issuer
+  parent: System.IdentityModel.Policy.IAuthorizationPolicy
+  langs:
+  - csharp
+  name: Issuer
+  nameWithType: IAuthorizationPolicy.Issuer
+  fullName: IAuthorizationPolicy.Issuer
+  type: Property
+  assemblies:
+  - System.IdentityModel
+  namespace: System.IdentityModel.Policy
+  summary: Gets a claim set that represents the issuer of the authorization policy.
+  syntax:
+    content: public System.IdentityModel.Claims.ClaimSet Issuer { get; }
+    return:
+      type: System.IdentityModel.Claims.ClaimSet
+      description: A <xref href="System.IdentityModel.Claims.ClaimSet"></xref> that represents the issuer of the authorization policy.
+  overload: System.IdentityModel.Policy.IAuthorizationPolicy.Issuer*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IdentityModel.Policy/IAuthorizationPolicy.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+references:
+- uid: System.IdentityModel.Policy.IAuthorizationPolicy.Evaluate(System.IdentityModel.Policy.EvaluationContext,System.Object@)
+  parent: System.IdentityModel.Policy.IAuthorizationPolicy
+  isExternal: false
+  name: Evaluate(EvaluationContext, Object)
+  nameWithType: IAuthorizationPolicy.Evaluate(EvaluationContext, Object)
+  fullName: IAuthorizationPolicy.Evaluate(EvaluationContext, Object)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.IdentityModel.Policy.EvaluationContext
+  parent: System.IdentityModel.Policy
+  isExternal: false
+  name: EvaluationContext
+  nameWithType: EvaluationContext
+  fullName: System.IdentityModel.Policy.EvaluationContext
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.IdentityModel.Policy.IAuthorizationPolicy.Issuer
+  parent: System.IdentityModel.Policy.IAuthorizationPolicy
+  isExternal: false
+  name: Issuer
+  nameWithType: IAuthorizationPolicy.Issuer
+  fullName: IAuthorizationPolicy.Issuer
+- uid: System.IdentityModel.Claims.ClaimSet
+  parent: System.IdentityModel.Claims
+  isExternal: false
+  name: ClaimSet
+  nameWithType: ClaimSet
+  fullName: System.IdentityModel.Claims.ClaimSet
+- uid: System.IdentityModel.Policy.IAuthorizationPolicy.Evaluate*
+  parent: System.IdentityModel.Policy.IAuthorizationPolicy
+  isExternal: false
+  name: Evaluate
+  nameWithType: IAuthorizationPolicy.Evaluate
+  fullName: IAuthorizationPolicy.Evaluate
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IdentityModel.Policy/IAuthorizationPolicy.xml
+- uid: System.IdentityModel.Policy.IAuthorizationPolicy.Issuer*
+  parent: System.IdentityModel.Policy.IAuthorizationPolicy
+  isExternal: false
+  name: Issuer
+  nameWithType: IAuthorizationPolicy.Issuer
+  fullName: IAuthorizationPolicy.Issuer
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IdentityModel.Policy/IAuthorizationPolicy.xml
+- uid: System.IdentityModel.Policy.IAuthorizationComponent
+  parent: System.IdentityModel.Policy
+  isExternal: false
+  name: IAuthorizationComponent
+  nameWithType: IAuthorizationComponent
+  fullName: System.IdentityModel.Policy.IAuthorizationComponent

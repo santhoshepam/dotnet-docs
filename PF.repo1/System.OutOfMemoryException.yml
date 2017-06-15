@@ -1,0 +1,576 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.OutOfMemoryException
+  commentId: T:System.OutOfMemoryException
+  id: OutOfMemoryException
+  children:
+  - System.OutOfMemoryException.#ctor
+  - System.OutOfMemoryException.#ctor(System.String)
+  - System.OutOfMemoryException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  - System.OutOfMemoryException.#ctor(System.String,System.Exception)
+  langs:
+  - csharp
+  name: OutOfMemoryException
+  nameWithType: OutOfMemoryException
+  fullName: System.OutOfMemoryException
+  type: Class
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: The exception that is thrown when there is not enough memory to continue the execution of a program.
+  remarks: "An <xref:System.OutOfMemoryException> exception has two major causes:  \n  \n-   You are attempting to expand a <xref:System.Text.StringBuilder> object beyond the length defined by its <xref:System.Text.StringBuilder.MaxCapacity%2A?displayProperty=fullName> property.  \n  \n-   The common language runtime cannot allocate enough contiguous memory to successfully perform an operation. This exception can be thrown by any property assignment or method call that requires a memory allocation. For more information on the cause of the <xref:System.OutOfMemoryException> exception, see [\"Out of Memory\" Does Not Refer to Physical Memory](http://blogs.msdn.com/b/ericlippert/archive/2009/06/08/out-of-memory-does-not-refer-to-physical-memory.aspx).  \n  \n     This type of <xref:System.OutOfMemoryException> exception represents a catastrophic failure. If you choose to handle the exception, you should include a `catch` block that calls the <xref:System.Environment.FailFast%2A?displayProperty=fullName> method to terminate your app and add an entry to the system event log, as the following example does.  \n  \n     [!code-csharp[System.OutOfMemoryException#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.outofmemoryexception/cs/failfast1.cs#2)]\n     [!code-vb[System.OutOfMemoryException#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.outofmemoryexception/vb/failfast1.vb#2)]  \n  \n Some of the conditions under which the exception is thrown and the actions you can take to eliminate it include the following:  \n  \n You are calling the <xref:System.Text.StringBuilder.Insert%2A?displayProperty=fullName> method.  \n You are attempting to increase the length of a <xref:System.Text.StringBuilder> object beyond the size specified by its <xref:System.Text.StringBuilder.MaxCapacity%2A?displayProperty=fullName> property. The following example illustrates the <xref:System.OutOfMemoryException> exception thrown by a call to the <xref:System.Text.StringBuilder.Insert%28System.Int32%2CSystem.String%2CSystem.Int32%29?displayProperty=fullName> method when the example tries to insert a string that would cause the object's <xref:System.Text.StringBuilder.Length%2A> property to exceed its maximum capacity.  \n  \n [!code-csharp[System.OutOfMemoryException#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.outofmemoryexception/cs/sb_example1.cs#1)]\n [!code-vb[System.OutOfMemoryException#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.outofmemoryexception/vb/sb_example1.vb#1)]  \n  \n You can do either of the following to address the error:  \n  \n-   Replace the call to the <xref:System.Text.StringBuilder.%23ctor%28System.Int32%2CSystem.Int32%29?displayProperty=fullName> constructor with a call any other <xref:System.Text.StringBuilder> constructor overload. The maximum capacity of your <xref:System.Text.StringBuilder> object will be set to its default value, which is <xref:System.Int32.MaxValue?displayProperty=fullName>.  \n  \n-   Call the <xref:System.Text.StringBuilder.%23ctor%28System.Int32%2CSystem.Int32%29?displayProperty=fullName> constructor with a `maxCapacity` value that is large enough to accommodate any expansions to the <xref:System.Text.StringBuilder> object.  \n  \n Your app runs as a 32-bit process.  \n 32-bit processes can allocate a maximum of 2GB of virtual user-mode memory on 32-bit systems, and 4GB of virtual user-mode memory on 64-bit systems. This can make it more difficult for the common language runtime to allocate sufficient contiguous memory when a large allocation is needed. In contrast, 64-bit processes can allocate up to 8TB of virtual memory. To address this exception, recompile your app to target a 64-bit platform. For information on targeting specific platforms in Visual Studio, see [How to: Configure Projects to Target Platforms](http://msdn.microsoft.com/library/845302fc-273d-4f81-820a-7296ce91bd76).  \n  \n Your app is leaking unmanaged resources  \n Although the garbage collector is able to free memory allocated to managed types, it does not manage memory allocated to unmanaged resources such as operating system handles (including handles to files, memory-mapped files, pipes, registry keys, and wait handles) and memory blocks allocated directly by Windows API calls or by calls to memory allocation functions such as `malloc`. Types that consume unmanaged resources implement the <xref:System.IDisposable> interface.  \n  \n If you are consuming a type that uses unmanaged resources, you should be sure to call its <xref:System.IDisposable.Dispose%2A?displayProperty=fullName> method when you have finished using it. (Some types also implement a `Close` method that is identical in function to a `Dispose` method.) For more information, see the [Using Objects That Implement IDisposable](~/docs/standard/garbage-collection/using-objects.md) topic.  \n  \n If you have created a type that uses unmanaged resources, make sure that you have implemented the Dispose pattern and, if necessary, supplied a finalizer. For more information, see the [Dispose Pattern](~/docs/standard/design-guidelines/dispose-pattern.md), [Implementing a Dispose Method](~/docs/standard/garbage-collection/implementing-dispose.md), and <xref:System.Object.Finalize%2A?displayProperty=fullName> topics.  \n  \n You are attempting to create a large array in a 64-bit process.  \n By default, the common language runtime does not allow single objects whose size exceeds 2GB. To override this default, you can use the  configuration file setting to enable arrays whose total size exceeds 2 GB.  \n  \n You are working with very large sets of data (such as arrays, collections, or database data sets) in memory.  \n When data structures or data sets that reside in memory become so large that the common language runtime is unable to allocate enough contiguous memory for them, an <xref:System.OutOfMemoryException> exception results.  \n  \n To prevent the <xref:System.OutOfMemoryException> exceptions, you must modify your application so that less data is resident in memory, or the data is divided into segments that require smaller memory allocations. For example:  \n  \n-   If you are retrieving all of the data from a database and then filtering it in your app to minimize trips to the server, you should modify your queries to return only the subset of data that your app needs. When working with large tables, multiple queries are almost always more efficient than retrieving all of the data in a single table and then manipulating it.  \n  \n-   If you are executing queries that users create dynamically, you should ensure that the number of records returned by the query is limited.  \n  \n-   If you are using large arrays or other collection objects whose size results in an <xref:System.OutOfMemoryException> exception, you should modify your application to work the data in subsets rather than to work with it all at once.  \n  \n The following example gets a array that consists of 200 million floating-point values and then calculates their mean. The output from the example shows that, because the example stores the entire array in memory before it calculates the mean, an <xref:System.OutOfMemoryException> is is thrown.  \n  \n [!code-csharp[System.OutOfMemoryException#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.outofmemoryexception/cs/data1.cs#3)]\n [!code-vb[System.OutOfMemoryException#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.outofmemoryexception/vb/data1.vb#3)]  \n  \n The following example eliminates the <xref:System.OutOfMemoryException> exception by processing the incoming data without storing the entire data set in memory, serializing the data to a file if necessary to permit further processing (these lines are commented out in the example, since in this case they produce a file whose size is greater than 1GB), and returning the calculated mean and the number of cases to the calling routine.  \n  \n [!code-csharp[System.OutOfMemoryException#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.outofmemoryexception/cs/data2.cs#4)]\n [!code-vb[System.OutOfMemoryException#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.outofmemoryexception/vb/data2.vb#4)]  \n  \n You are repeatedly concatenating large strings.  \n Because strings are immutable, each string concatenation operation creates a new string. The impact for small strings, or for a small number of concatenation operations, is negligible. But for large strings or a very large number of concatenation operations, string concatenation can lead to a large number of memory allocations and memory fragmentation, poor performance, and possibly <xref:System.OutOfMemoryException> exceptions.  \n  \n When concatenating large strings or performing a large number of concatenation operations, you should use the <xref:System.Text.StringBuilder> class instead of the <xref:System.String> class. When you have finished manipulating the string, convert the <xref:System.Text.StringBuilder> instance to a string by calling the <xref:System.Text.StringBuilder.ToString%2A?displayProperty=fullName> method.  \n  \n You pin a large number of objects in memory.  \n Pinning a large number of objects in memory for long periods can make it difficult for the garbage collector to allocate contiguous blocks of memory. If you've pinned a large number of objects in memory, for example by using the `fixed` statement in C# or by calling the <xref:System.Runtime.InteropServices.GCHandle.Alloc%28System.Object%2CSystem.Runtime.InteropServices.GCHandleType%29?displayProperty=fullName> method with a handle type of <xref:System.Runtime.InteropServices.GCHandleType?displayProperty=fullName>, you can do the following to address the <xref:System.OutOfMemoryException> exception.  \n  \n-   Evaluate whether each object really needs to be pinned,  \n  \n-   Ensure that each object is unpinned as soon as possible.  \n  \n-   Make sure that each call to the <xref:System.Runtime.InteropServices.GCHandle.Alloc%28System.Object%2CSystem.Runtime.InteropServices.GCHandleType%29?displayProperty=fullName> method to pin memory has a corresponding call to the <xref:System.Runtime.InteropServices.GCHandle.Free%2A?displayProperty=fullName> method to unpin that memory.  \n  \n The following Microsoft intermediate (MSIL) instructions throw an <xref:System.OutOfMemoryException> exception:  \n  \n-   [box](http://msdn.microsoft.com/library/system.reflection.emit.opcodes.box.aspx)  \n  \n-   [newarr](http://msdn.microsoft.com/library/system.reflection.emit.opcodes.newarr.aspx)  \n  \n-   [newobj](http://msdn.microsoft.com/library/system.reflection.emit.opcodes.newobj.aspx)newobj  \n  \n <xref:System.OutOfMemoryException> uses the HRESULT `COR_E_OUTOFMEMORY`, which has the value 0x8007000E.  \n  \n For a list of initial property values for an instance of <xref:System.OutOfMemoryException>, see the <xref:System.OutOfMemoryException.%23ctor%2A> constructors.  \n  \n> [!NOTE]\n>  The value of the inherited <xref:System.Exception.Data%2A> property is always `null`."
+  syntax:
+    content: >-
+      [System.Runtime.InteropServices.ComVisible(true)]
+
+      public class OutOfMemoryException : SystemException
+  inheritance:
+  - System.Object
+  - System.Exception
+  derivedClasses:
+  - System.InsufficientMemoryException
+  implements: []
+  inheritedMembers:
+  - System.Exception.Data
+  - System.Exception.GetBaseException
+  - System.Exception.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  - System.Exception.GetType
+  - System.Exception.HelpLink
+  - System.Exception.HResult
+  - System.Exception.InnerException
+  - System.Exception.Message
+  - System.Exception.SerializeObjectState
+  - System.Exception.Source
+  - System.Exception.StackTrace
+  - System.Exception.TargetSite
+  - System.Exception.ToString
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  attributes:
+  - type: System.Runtime.InteropServices.ComVisibleAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/OutOfMemoryException.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.OutOfMemoryException.#ctor
+  commentId: M:System.OutOfMemoryException.#ctor
+  id: '#ctor'
+  parent: System.OutOfMemoryException
+  langs:
+  - csharp
+  name: OutOfMemoryException()
+  nameWithType: OutOfMemoryException.OutOfMemoryException()
+  fullName: OutOfMemoryException.OutOfMemoryException()
+  type: Constructor
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Initializes a new instance of the <xref href="System.OutOfMemoryException"></xref> class.
+  remarks: "This constructor initializes the <xref:System.Exception.Message%2A> property of the new instance to a system-supplied message that describes the error, such as \"There was not enough memory to continue the execution of the program.\" This message takes into account the current system culture.  \n  \n The following table shows the initial property values for an instance of <xref:System.OutOfMemoryException>.  \n  \n|Property|Value|  \n|--------------|-----------|  \n|<xref:System.Exception.InnerException%2A>|`null`.|  \n|<xref:System.Exception.Message%2A>|The localized error message string.|"
+  syntax:
+    content: public OutOfMemoryException ();
+    parameters: []
+  overload: System.OutOfMemoryException.#ctor*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/OutOfMemoryException.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.OutOfMemoryException.#ctor(System.String)
+  commentId: M:System.OutOfMemoryException.#ctor(System.String)
+  id: '#ctor(System.String)'
+  parent: System.OutOfMemoryException
+  langs:
+  - csharp
+  name: OutOfMemoryException(String)
+  nameWithType: OutOfMemoryException.OutOfMemoryException(String)
+  fullName: OutOfMemoryException.OutOfMemoryException(String)
+  type: Constructor
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Initializes a new instance of the <xref href="System.OutOfMemoryException"></xref> class with a specified error message.
+  remarks: "The content of the `message` parameter is intended to be understood by humans. The caller of this constructor is required to ensure that this string has been localized for the current system culture.  \n  \n The following table shows the initial property values for an instance of <xref:System.OutOfMemoryException>.  \n  \n|Property|Value|  \n|--------------|-----------|  \n|<xref:System.Exception.InnerException%2A>|A null reference (`Nothing` in Visual Basic).|  \n|<xref:System.Exception.Message%2A>|The error message string.|"
+  syntax:
+    content: public OutOfMemoryException (string message);
+    parameters:
+    - id: message
+      type: System.String
+      description: The message that describes the error.
+  overload: System.OutOfMemoryException.#ctor*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/OutOfMemoryException.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.OutOfMemoryException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  commentId: M:System.OutOfMemoryException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  id: '#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)'
+  parent: System.OutOfMemoryException
+  langs:
+  - csharp
+  name: OutOfMemoryException(SerializationInfo, StreamingContext)
+  nameWithType: OutOfMemoryException.OutOfMemoryException(SerializationInfo, StreamingContext)
+  fullName: OutOfMemoryException.OutOfMemoryException(SerializationInfo, StreamingContext)
+  type: Constructor
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Initializes a new instance of the <xref href="System.OutOfMemoryException"></xref> class with serialized data.
+  remarks: This constructor is called during deserialization to reconstitute the exception object transmitted over a stream. For more information, see [XML and SOAP Serialization](~/docs/framework/serialization/xml-and-soap-serialization.md).
+  syntax:
+    content: protected OutOfMemoryException (System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+    parameters:
+    - id: info
+      type: System.Runtime.Serialization.SerializationInfo
+      description: The object that holds the serialized object data.
+    - id: context
+      type: System.Runtime.Serialization.StreamingContext
+      description: The contextual information about the source or destination.
+  overload: System.OutOfMemoryException.#ctor*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/OutOfMemoryException.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.OutOfMemoryException.#ctor(System.String,System.Exception)
+  commentId: M:System.OutOfMemoryException.#ctor(System.String,System.Exception)
+  id: '#ctor(System.String,System.Exception)'
+  parent: System.OutOfMemoryException
+  langs:
+  - csharp
+  name: OutOfMemoryException(String, Exception)
+  nameWithType: OutOfMemoryException.OutOfMemoryException(String, Exception)
+  fullName: OutOfMemoryException.OutOfMemoryException(String, Exception)
+  type: Constructor
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Initializes a new instance of the <xref href="System.OutOfMemoryException"></xref> class with a specified error message and a reference to the inner exception that is the cause of this exception.
+  remarks: "An exception that is thrown as a direct result of a previous exception can include a reference to the previous exception in the <xref:System.Exception.InnerException%2A> property. The <xref:System.Exception.InnerException%2A> property returns the same value that is passed into the constructor, or a null reference (`Nothing` in Visual Basic) if the <xref:System.Exception.InnerException%2A> property does not supply the inner exception value to the constructor.  \n  \n The following table shows the initial property values for an instance of <xref:System.OutOfMemoryException>.  \n  \n|Property|Value|  \n|--------------|-----------|  \n|<xref:System.Exception.InnerException%2A>|The inner exception reference.|  \n|<xref:System.Exception.Message%2A>|The error message string.|"
+  syntax:
+    content: public OutOfMemoryException (string message, Exception innerException);
+    parameters:
+    - id: message
+      type: System.String
+      description: The error message that explains the reason for the exception.
+    - id: innerException
+      type: System.Exception
+      description: The exception that is the cause of the current exception. If the <code>innerException</code> parameter is not a null reference (`Nothing` in Visual Basic), the current exception is raised in a `catch` block that handles the inner exception.
+  overload: System.OutOfMemoryException.#ctor*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/OutOfMemoryException.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+references:
+- uid: System.Exception
+  parent: System
+  isExternal: false
+  name: Exception
+  nameWithType: Exception
+  fullName: System.Exception
+- uid: System.OutOfMemoryException.#ctor
+  parent: System.OutOfMemoryException
+  isExternal: false
+  name: OutOfMemoryException()
+  nameWithType: OutOfMemoryException.OutOfMemoryException()
+  fullName: OutOfMemoryException.OutOfMemoryException()
+- uid: System.OutOfMemoryException.#ctor(System.String)
+  parent: System.OutOfMemoryException
+  isExternal: false
+  name: OutOfMemoryException(String)
+  nameWithType: OutOfMemoryException.OutOfMemoryException(String)
+  fullName: OutOfMemoryException.OutOfMemoryException(String)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.OutOfMemoryException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  parent: System.OutOfMemoryException
+  isExternal: false
+  name: OutOfMemoryException(SerializationInfo, StreamingContext)
+  nameWithType: OutOfMemoryException.OutOfMemoryException(SerializationInfo, StreamingContext)
+  fullName: OutOfMemoryException.OutOfMemoryException(SerializationInfo, StreamingContext)
+- uid: System.Runtime.Serialization.SerializationInfo
+  parent: System.Runtime.Serialization
+  isExternal: false
+  name: SerializationInfo
+  nameWithType: SerializationInfo
+  fullName: System.Runtime.Serialization.SerializationInfo
+- uid: System.Runtime.Serialization.StreamingContext
+  parent: System.Runtime.Serialization
+  isExternal: false
+  name: StreamingContext
+  nameWithType: StreamingContext
+  fullName: System.Runtime.Serialization.StreamingContext
+- uid: System.OutOfMemoryException.#ctor(System.String,System.Exception)
+  parent: System.OutOfMemoryException
+  isExternal: false
+  name: OutOfMemoryException(String, Exception)
+  nameWithType: OutOfMemoryException.OutOfMemoryException(String, Exception)
+  fullName: OutOfMemoryException.OutOfMemoryException(String, Exception)
+- uid: System.OutOfMemoryException.#ctor*
+  parent: System.OutOfMemoryException
+  isExternal: false
+  name: OutOfMemoryException
+  nameWithType: OutOfMemoryException.OutOfMemoryException
+  fullName: OutOfMemoryException.OutOfMemoryException
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/OutOfMemoryException.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Exception.GetType
+  parent: System.Exception
+  isExternal: false
+  name: GetType()
+  nameWithType: Exception.GetType()
+  fullName: Exception.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Exception.ToString
+  parent: System.Exception
+  isExternal: false
+  name: ToString()
+  nameWithType: Exception.ToString()
+  fullName: Exception.ToString()
+- uid: System.Exception.Data
+  parent: System.Exception
+  isExternal: false
+  name: Data
+  nameWithType: Exception.Data
+  fullName: Exception.Data
+- uid: System.Exception.GetBaseException
+  parent: System.Exception
+  isExternal: false
+  name: GetBaseException()
+  nameWithType: Exception.GetBaseException()
+  fullName: Exception.GetBaseException()
+- uid: System.Exception.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  parent: System.Exception
+  isExternal: false
+  name: GetObjectData(SerializationInfo, StreamingContext)
+  nameWithType: Exception.GetObjectData(SerializationInfo, StreamingContext)
+  fullName: Exception.GetObjectData(SerializationInfo, StreamingContext)
+- uid: System.Exception.HelpLink
+  parent: System.Exception
+  isExternal: false
+  name: HelpLink
+  nameWithType: Exception.HelpLink
+  fullName: Exception.HelpLink
+- uid: System.Exception.HResult
+  parent: System.Exception
+  isExternal: false
+  name: HResult
+  nameWithType: Exception.HResult
+  fullName: Exception.HResult
+- uid: System.Exception.InnerException
+  parent: System.Exception
+  isExternal: false
+  name: InnerException
+  nameWithType: Exception.InnerException
+  fullName: Exception.InnerException
+- uid: System.Exception.Message
+  parent: System.Exception
+  isExternal: false
+  name: Message
+  nameWithType: Exception.Message
+  fullName: Exception.Message
+- uid: System.Exception.SerializeObjectState
+  parent: System.Exception
+  isExternal: false
+  name: SerializeObjectState
+  nameWithType: Exception.SerializeObjectState
+  fullName: Exception.SerializeObjectState
+- uid: System.Exception.Source
+  parent: System.Exception
+  isExternal: false
+  name: Source
+  nameWithType: Exception.Source
+  fullName: Exception.Source
+- uid: System.Exception.StackTrace
+  parent: System.Exception
+  isExternal: false
+  name: StackTrace
+  nameWithType: Exception.StackTrace
+  fullName: Exception.StackTrace
+- uid: System.Exception.TargetSite
+  parent: System.Exception
+  isExternal: false
+  name: TargetSite
+  nameWithType: Exception.TargetSite
+  fullName: Exception.TargetSite

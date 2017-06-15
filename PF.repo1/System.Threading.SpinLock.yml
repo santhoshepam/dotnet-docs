@@ -1,0 +1,1187 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Threading.SpinLock
+  commentId: T:System.Threading.SpinLock
+  id: SpinLock
+  children:
+  - System.Threading.SpinLock.#ctor(System.Boolean)
+  - System.Threading.SpinLock.Enter(System.Boolean@)
+  - System.Threading.SpinLock.Exit
+  - System.Threading.SpinLock.Exit(System.Boolean)
+  - System.Threading.SpinLock.IsHeld
+  - System.Threading.SpinLock.IsHeldByCurrentThread
+  - System.Threading.SpinLock.IsThreadOwnerTrackingEnabled
+  - System.Threading.SpinLock.TryEnter(System.Boolean@)
+  - System.Threading.SpinLock.TryEnter(System.Int32,System.Boolean@)
+  - System.Threading.SpinLock.TryEnter(System.TimeSpan,System.Boolean@)
+  langs:
+  - csharp
+  name: SpinLock
+  nameWithType: SpinLock
+  fullName: System.Threading.SpinLock
+  type: Struct
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Provides a mutual exclusion lock primitive where a thread trying to acquire the lock waits in a loop repeatedly checking until the lock becomes available.
+  remarks: "For an example of how to use a Spin Lock, see [How to: Use SpinLock for Low-Level Synchronization](~/docs/standard/threading/how-to-use-spinlock-for-low-level-synchronization.md).  \n  \n Spin locks can be used for leaf-level locks where the object allocation implied by using a <xref:System.Threading.Monitor>, in size or due to garbage collection pressure, is overly expensive. A spin lock can be useful in to avoid blocking; however, if you expect a significant amount of blocking, you should probably not use spin locks due to excessive spinning. Spinning can be beneficial when locks are fine-grained and large in number (for example, a lock per node in a linked list) and also when lock hold-times are always extremely short. In general, while holding a spin lock, one should avoid any of these actions:  \n  \n-   blocking,  \n  \n-   calling anything that itself may block,  \n  \n-   holding more than one spin lock at once,  \n  \n-   making dynamically dispatched calls (interface and virtuals),  \n  \n-   making statically dispatched calls into any code one doesn't own, or  \n  \n-   allocating memory.  \n  \n <xref:System.Threading.SpinLock> should only be used after you have been determined that doing so will improve an application's performance. It is also important to note that <xref:System.Threading.SpinLock> is a value type, for performance reasons. For this reason, you must be very careful not to accidentally copy a <xref:System.Threading.SpinLock> instance, as the two instances (the original and the copy) would then be completely independent of one another, which would likely lead to erroneous behavior of the application. If a <xref:System.Threading.SpinLock> instance must be passed around, it should be passed by reference rather than by value.  \n  \n Do not store <xref:System.Threading.SpinLock> instances in readonly fields."
+  example:
+  - "The following example shows how to use a <xref:System.Threading.SpinLock>:  \n  \n [!code-csharp[System.Threading.SpinLock#01](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.spinlock/cs/spinlock.cs#01)]\n [!code-vb[System.Threading.SpinLock#01](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.spinlock/vb/spinlock.vb#01)]"
+  syntax:
+    content: >-
+      [System.Runtime.InteropServices.ComVisible(false)]
+
+      public struct SpinLock
+  inheritance:
+  - System.Object
+  - System.ValueType
+  implements: []
+  attributes:
+  - type: System.Runtime.InteropServices.ComVisibleAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.SpinLock.#ctor(System.Boolean)
+  commentId: M:System.Threading.SpinLock.#ctor(System.Boolean)
+  id: '#ctor(System.Boolean)'
+  parent: System.Threading.SpinLock
+  langs:
+  - csharp
+  name: SpinLock(Boolean)
+  nameWithType: SpinLock.SpinLock(Boolean)
+  fullName: SpinLock.SpinLock(Boolean)
+  type: Constructor
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Initializes a new instance of the <xref href="System.Threading.SpinLock"></xref> structure with the option to track thread IDs to improve debugging.
+  remarks: The default constructor for <xref:System.Threading.SpinLock> tracks thread ownership.
+  example:
+  - "The following example demonstrates how a SpinLock may be used.  \n  \n```  \n// C#  \npublic class MyType  \n{  \n    private SpinLock _spinLock = new SpinLock();  \n  \n    public void DoWork()  \n    {  \n        bool lockTaken = false;   \n        try  \n        {  \n           _spinLock.Enter(ref lockTaken);  \n           // do work here protected by the lock  \n        }  \n        finally  \n        {  \n            if (lockTaken) _spinLock.Exit();  \n        }  \n    }  \n}  \n```  \n  \n```  \n' Visual Basic  \n  \nClass MyType  \n   Private _spinLock As New SpinLock()  \n  \n   Public Sub DoWork()  \n      Dim lockTaken As Boolean = False  \n      Try  \n         _spinLock.Enter(lockTaken)  \n         ' do work here protected by the lock  \n      Finally  \n         If lockTaken Then _spinLock.Exit()  \n      End Try  \n   End Sub  \nEnd Class  \n```"
+  syntax:
+    content: public SpinLock (bool enableThreadOwnerTracking);
+    parameters:
+    - id: enableThreadOwnerTracking
+      type: System.Boolean
+      description: Whether to capture and use thread IDs for debugging purposes.
+  overload: System.Threading.SpinLock.#ctor*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.SpinLock.Enter(System.Boolean@)
+  commentId: M:System.Threading.SpinLock.Enter(System.Boolean@)
+  id: Enter(System.Boolean@)
+  parent: System.Threading.SpinLock
+  langs:
+  - csharp
+  name: Enter(Boolean)
+  nameWithType: SpinLock.Enter(Boolean)
+  fullName: SpinLock.Enter(Boolean)
+  type: Method
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Acquires the lock in a reliable manner, such that even if an exception occurs within the method call, <code>lockTaken</code> can be examined reliably to determine whether the lock was acquired.
+  remarks: "<xref:System.Threading.SpinLock> is a non-reentrant lock, meaning that if a thread holds the lock, it is not allowed to enter the lock again. If thread ownership tracking is enabled (whether it's enabled is available through <xref:System.Threading.SpinLock.IsThreadOwnerTrackingEnabled%2A>), an exception will be thrown when a thread tries to re-enter a lock it already holds. However, if thread ownership tracking is disabled, attempting to enter a lock already held will result in deadlock.  \n  \n If you call <xref:System.Threading.SpinLock.Exit%2A> without having first called <xref:System.Threading.SpinLock.Enter%2A> the internal state of the <xref:System.Threading.SpinLock> can become corrupted."
+  syntax:
+    content: public void Enter (ref bool lockTaken);
+    parameters:
+    - id: lockTaken
+      type: System.Boolean
+      description: True if the lock is acquired; otherwise, false. <code>lockTaken</code> must be initialized to false prior to calling this method.
+  overload: System.Threading.SpinLock.Enter*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The <code>lockTaken</code> argument must be initialized to false prior to calling Enter.
+  - type: System.Threading.LockRecursionException
+    commentId: T:System.Threading.LockRecursionException
+    description: Thread ownership tracking is enabled, and the current thread has already acquired this lock.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.SpinLock.Exit
+  commentId: M:System.Threading.SpinLock.Exit
+  id: Exit
+  parent: System.Threading.SpinLock
+  langs:
+  - csharp
+  name: Exit()
+  nameWithType: SpinLock.Exit()
+  fullName: SpinLock.Exit()
+  type: Method
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Releases the lock.
+  remarks: "The default overload of <xref:System.Threading.SpinLock.Exit%2A> provides the same behavior as if calling <xref:System.Threading.SpinLock.Exit%2A> using true as the argument.  \n  \n If you call <xref:System.Threading.SpinLock.Exit%2A> without having first called <xref:System.Threading.SpinLock.Enter%2A> the internal state of the <xref:System.Threading.SpinLock> can become corrupted."
+  syntax:
+    content: public void Exit ();
+    parameters: []
+  overload: System.Threading.SpinLock.Exit*
+  exceptions:
+  - type: System.Threading.SynchronizationLockException
+    commentId: T:System.Threading.SynchronizationLockException
+    description: Thread ownership tracking is enabled, and the current thread is not the owner of this lock.
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.SpinLock.Exit(System.Boolean)
+  commentId: M:System.Threading.SpinLock.Exit(System.Boolean)
+  id: Exit(System.Boolean)
+  parent: System.Threading.SpinLock
+  langs:
+  - csharp
+  name: Exit(Boolean)
+  nameWithType: SpinLock.Exit(Boolean)
+  fullName: SpinLock.Exit(Boolean)
+  type: Method
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Releases the lock.
+  remarks: "Calling <xref:System.Threading.SpinLock.Exit%2A> with the `useMemoryBarrier` argument set to true will improve the fairness of the lock at the expense of some performance. The default <xref:System.Threading.SpinLock.Exit%2A> overload behaves as if specifying true for `useMemoryBarrier`.  \n  \n If you call <xref:System.Threading.SpinLock.Exit%2A> without having first called <xref:System.Threading.SpinLock.Enter%2A> the internal state of the <xref:System.Threading.SpinLock> can become corrupted."
+  syntax:
+    content: public void Exit (bool useMemoryBarrier);
+    parameters:
+    - id: useMemoryBarrier
+      type: System.Boolean
+      description: A Boolean value that indicates whether a memory fence should be issued in order to immediately publish the exit operation to other threads.
+  overload: System.Threading.SpinLock.Exit*
+  exceptions:
+  - type: System.Threading.SynchronizationLockException
+    commentId: T:System.Threading.SynchronizationLockException
+    description: Thread ownership tracking is enabled, and the current thread is not the owner of this lock.
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.SpinLock.IsHeld
+  commentId: P:System.Threading.SpinLock.IsHeld
+  id: IsHeld
+  parent: System.Threading.SpinLock
+  langs:
+  - csharp
+  name: IsHeld
+  nameWithType: SpinLock.IsHeld
+  fullName: SpinLock.IsHeld
+  type: Property
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Gets whether the lock is currently held by any thread.
+  syntax:
+    content: >-
+      [get: System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)]
+
+      public bool IsHeld { get; }
+    return:
+      type: System.Boolean
+      description: true if the lock is currently held by any thread; otherwise false.
+  overload: System.Threading.SpinLock.IsHeld*
+  exceptions: []
+  attributes:
+  - type: 'get: System.Runtime.ConstrainedExecution.ReliabilityContract'
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.SpinLock.IsHeldByCurrentThread
+  commentId: P:System.Threading.SpinLock.IsHeldByCurrentThread
+  id: IsHeldByCurrentThread
+  parent: System.Threading.SpinLock
+  langs:
+  - csharp
+  name: IsHeldByCurrentThread
+  nameWithType: SpinLock.IsHeldByCurrentThread
+  fullName: SpinLock.IsHeldByCurrentThread
+  type: Property
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Gets whether the lock is held by the current thread.
+  remarks: If the lock was initialized to track owner threads, this will return whether the lock is acquired by the current thread. It is invalid to use this property when the lock was initialized to not track thread ownership.
+  syntax:
+    content: >-
+      [get: System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)]
+
+      public bool IsHeldByCurrentThread { get; }
+    return:
+      type: System.Boolean
+      description: true if the lock is held by the current thread; otherwise false.
+  overload: System.Threading.SpinLock.IsHeldByCurrentThread*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: Thread ownership tracking is disabled.
+  attributes:
+  - type: 'get: System.Runtime.ConstrainedExecution.ReliabilityContract'
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.SpinLock.IsThreadOwnerTrackingEnabled
+  commentId: P:System.Threading.SpinLock.IsThreadOwnerTrackingEnabled
+  id: IsThreadOwnerTrackingEnabled
+  parent: System.Threading.SpinLock
+  langs:
+  - csharp
+  name: IsThreadOwnerTrackingEnabled
+  nameWithType: SpinLock.IsThreadOwnerTrackingEnabled
+  fullName: SpinLock.IsThreadOwnerTrackingEnabled
+  type: Property
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Gets whether thread ownership tracking is enabled for this instance.
+  syntax:
+    content: >-
+      [get: System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)]
+
+      public bool IsThreadOwnerTrackingEnabled { get; }
+    return:
+      type: System.Boolean
+      description: true if thread ownership tracking is enabled for this instance; otherwise false.
+  overload: System.Threading.SpinLock.IsThreadOwnerTrackingEnabled*
+  exceptions: []
+  attributes:
+  - type: 'get: System.Runtime.ConstrainedExecution.ReliabilityContract'
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.SpinLock.TryEnter(System.Boolean@)
+  commentId: M:System.Threading.SpinLock.TryEnter(System.Boolean@)
+  id: TryEnter(System.Boolean@)
+  parent: System.Threading.SpinLock
+  langs:
+  - csharp
+  name: TryEnter(Boolean)
+  nameWithType: SpinLock.TryEnter(Boolean)
+  fullName: SpinLock.TryEnter(Boolean)
+  type: Method
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Attempts to acquire the lock in a reliable manner, such that even if an exception occurs within the method call, <code>lockTaken</code> can be examined reliably to determine whether the lock was acquired.
+  remarks: Unlike <xref:System.Threading.SpinLock.Enter%2A>, TryEnter will not block waiting for the lock to be available. If the lock is not available when TryEnter is called, it will return immediately without any further spinning.
+  syntax:
+    content: public void TryEnter (ref bool lockTaken);
+    parameters:
+    - id: lockTaken
+      type: System.Boolean
+      description: True if the lock is acquired; otherwise, false. <code>lockTaken</code> must be initialized to false prior to calling this method.
+  overload: System.Threading.SpinLock.TryEnter*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The <code>lockTaken</code> argument must be initialized to false prior to calling TryEnter.
+  - type: System.Threading.LockRecursionException
+    commentId: T:System.Threading.LockRecursionException
+    description: Thread ownership tracking is enabled, and the current thread has already acquired this lock.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.SpinLock.TryEnter(System.Int32,System.Boolean@)
+  commentId: M:System.Threading.SpinLock.TryEnter(System.Int32,System.Boolean@)
+  id: TryEnter(System.Int32,System.Boolean@)
+  parent: System.Threading.SpinLock
+  langs:
+  - csharp
+  name: TryEnter(Int32, Boolean)
+  nameWithType: SpinLock.TryEnter(Int32, Boolean)
+  fullName: SpinLock.TryEnter(Int32, Boolean)
+  type: Method
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Attempts to acquire the lock in a reliable manner, such that even if an exception occurs within the method call, <code>lockTaken</code> can be examined reliably to determine whether the lock was acquired.
+  remarks: Unlike <xref:System.Threading.SpinLock.Enter%2A>, TryEnter will not block indefinitely waiting for the lock to be available. It will block until either the lock is available or until the `millisecondsTimeout` has expired.
+  syntax:
+    content: public void TryEnter (int millisecondsTimeout, ref bool lockTaken);
+    parameters:
+    - id: millisecondsTimeout
+      type: System.Int32
+      description: The number of milliseconds to wait, or <xref href="System.Threading.Timeout.Infinite"></xref> (-1) to wait indefinitely.
+    - id: lockTaken
+      type: System.Boolean
+      description: True if the lock is acquired; otherwise, false. <code>lockTaken</code> must be initialized to false prior to calling this method.
+  overload: System.Threading.SpinLock.TryEnter*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>millisecondsTimeout</code> is a negative number other than -1, which represents an infinite time-out.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The <code>lockTaken</code> argument must be initialized to false prior to calling TryEnter.
+  - type: System.Threading.LockRecursionException
+    commentId: T:System.Threading.LockRecursionException
+    description: Thread ownership tracking is enabled, and the current thread has already acquired this lock.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.SpinLock.TryEnter(System.TimeSpan,System.Boolean@)
+  commentId: M:System.Threading.SpinLock.TryEnter(System.TimeSpan,System.Boolean@)
+  id: TryEnter(System.TimeSpan,System.Boolean@)
+  parent: System.Threading.SpinLock
+  langs:
+  - csharp
+  name: TryEnter(TimeSpan, Boolean)
+  nameWithType: SpinLock.TryEnter(TimeSpan, Boolean)
+  fullName: SpinLock.TryEnter(TimeSpan, Boolean)
+  type: Method
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Attempts to acquire the lock in a reliable manner, such that even if an exception occurs within the method call, <code>lockTaken</code> can be examined reliably to determine whether the lock was acquired.
+  remarks: Unlike <xref:System.Threading.SpinLock.Enter%2A>, TryEnter will not block indefinitely waiting for the lock to be available. It will block until either the lock is available or until the `timeout` has expired.
+  syntax:
+    content: public void TryEnter (TimeSpan timeout, ref bool lockTaken);
+    parameters:
+    - id: timeout
+      type: System.TimeSpan
+      description: A <xref href="System.TimeSpan"></xref> that represents the number of milliseconds to wait, or a <xref href="System.TimeSpan"></xref> that represents -1 milliseconds to wait indefinitely.
+    - id: lockTaken
+      type: System.Boolean
+      description: True if the lock is acquired; otherwise, false. <code>lockTaken</code> must be initialized to false prior to calling this method.
+  overload: System.Threading.SpinLock.TryEnter*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>timeout</code> is a negative number other than -1 milliseconds, which represents an infinite time-out -or- timeout is greater than <xref href="System.Int32.MaxValue"></xref> milliseconds.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The <code>lockTaken</code> argument must be initialized to false prior to calling TryEnter.
+  - type: System.Threading.LockRecursionException
+    commentId: T:System.Threading.LockRecursionException
+    description: Thread ownership tracking is enabled, and the current thread has already acquired this lock.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+references:
+- uid: System.ValueType
+  parent: System
+  isExternal: false
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.Threading.LockRecursionException
+  parent: System.Threading
+  isExternal: false
+  name: LockRecursionException
+  nameWithType: LockRecursionException
+  fullName: System.Threading.LockRecursionException
+- uid: System.Threading.SynchronizationLockException
+  parent: System.Threading
+  isExternal: false
+  name: SynchronizationLockException
+  nameWithType: SynchronizationLockException
+  fullName: System.Threading.SynchronizationLockException
+- uid: System.InvalidOperationException
+  parent: System
+  isExternal: false
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.ArgumentOutOfRangeException
+  parent: System
+  isExternal: false
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: System.Threading.SpinLock.#ctor(System.Boolean)
+  parent: System.Threading.SpinLock
+  isExternal: false
+  name: SpinLock(Boolean)
+  nameWithType: SpinLock.SpinLock(Boolean)
+  fullName: SpinLock.SpinLock(Boolean)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Threading.SpinLock.Enter(System.Boolean@)
+  parent: System.Threading.SpinLock
+  isExternal: false
+  name: Enter(Boolean)
+  nameWithType: SpinLock.Enter(Boolean)
+  fullName: SpinLock.Enter(Boolean)
+- uid: System.Threading.SpinLock.Exit
+  parent: System.Threading.SpinLock
+  isExternal: false
+  name: Exit()
+  nameWithType: SpinLock.Exit()
+  fullName: SpinLock.Exit()
+- uid: System.Threading.SpinLock.Exit(System.Boolean)
+  parent: System.Threading.SpinLock
+  isExternal: false
+  name: Exit(Boolean)
+  nameWithType: SpinLock.Exit(Boolean)
+  fullName: SpinLock.Exit(Boolean)
+- uid: System.Threading.SpinLock.IsHeld
+  parent: System.Threading.SpinLock
+  isExternal: false
+  name: IsHeld
+  nameWithType: SpinLock.IsHeld
+  fullName: SpinLock.IsHeld
+- uid: System.Threading.SpinLock.IsHeldByCurrentThread
+  parent: System.Threading.SpinLock
+  isExternal: false
+  name: IsHeldByCurrentThread
+  nameWithType: SpinLock.IsHeldByCurrentThread
+  fullName: SpinLock.IsHeldByCurrentThread
+- uid: System.Threading.SpinLock.IsThreadOwnerTrackingEnabled
+  parent: System.Threading.SpinLock
+  isExternal: false
+  name: IsThreadOwnerTrackingEnabled
+  nameWithType: SpinLock.IsThreadOwnerTrackingEnabled
+  fullName: SpinLock.IsThreadOwnerTrackingEnabled
+- uid: System.Threading.SpinLock.TryEnter(System.Boolean@)
+  parent: System.Threading.SpinLock
+  isExternal: false
+  name: TryEnter(Boolean)
+  nameWithType: SpinLock.TryEnter(Boolean)
+  fullName: SpinLock.TryEnter(Boolean)
+- uid: System.Threading.SpinLock.TryEnter(System.Int32,System.Boolean@)
+  parent: System.Threading.SpinLock
+  isExternal: false
+  name: TryEnter(Int32, Boolean)
+  nameWithType: SpinLock.TryEnter(Int32, Boolean)
+  fullName: SpinLock.TryEnter(Int32, Boolean)
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Threading.SpinLock.TryEnter(System.TimeSpan,System.Boolean@)
+  parent: System.Threading.SpinLock
+  isExternal: false
+  name: TryEnter(TimeSpan, Boolean)
+  nameWithType: SpinLock.TryEnter(TimeSpan, Boolean)
+  fullName: SpinLock.TryEnter(TimeSpan, Boolean)
+- uid: System.TimeSpan
+  parent: System
+  isExternal: false
+  name: TimeSpan
+  nameWithType: TimeSpan
+  fullName: System.TimeSpan
+- uid: System.Threading.SpinLock.#ctor*
+  parent: System.Threading.SpinLock
+  isExternal: false
+  name: SpinLock
+  nameWithType: SpinLock.SpinLock
+  fullName: SpinLock.SpinLock
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml
+- uid: System.Threading.SpinLock.Enter*
+  parent: System.Threading.SpinLock
+  isExternal: false
+  name: Enter
+  nameWithType: SpinLock.Enter
+  fullName: SpinLock.Enter
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml
+- uid: System.Threading.SpinLock.Exit*
+  parent: System.Threading.SpinLock
+  isExternal: false
+  name: Exit
+  nameWithType: SpinLock.Exit
+  fullName: SpinLock.Exit
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml
+- uid: System.Threading.SpinLock.IsHeld*
+  parent: System.Threading.SpinLock
+  isExternal: false
+  name: IsHeld
+  nameWithType: SpinLock.IsHeld
+  fullName: SpinLock.IsHeld
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml
+- uid: System.Threading.SpinLock.IsHeldByCurrentThread*
+  parent: System.Threading.SpinLock
+  isExternal: false
+  name: IsHeldByCurrentThread
+  nameWithType: SpinLock.IsHeldByCurrentThread
+  fullName: SpinLock.IsHeldByCurrentThread
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml
+- uid: System.Threading.SpinLock.IsThreadOwnerTrackingEnabled*
+  parent: System.Threading.SpinLock
+  isExternal: false
+  name: IsThreadOwnerTrackingEnabled
+  nameWithType: SpinLock.IsThreadOwnerTrackingEnabled
+  fullName: SpinLock.IsThreadOwnerTrackingEnabled
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml
+- uid: System.Threading.SpinLock.TryEnter*
+  parent: System.Threading.SpinLock
+  isExternal: false
+  name: TryEnter
+  nameWithType: SpinLock.TryEnter
+  fullName: SpinLock.TryEnter
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/SpinLock.xml

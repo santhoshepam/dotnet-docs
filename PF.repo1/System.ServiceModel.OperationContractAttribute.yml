@@ -1,0 +1,1194 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.ServiceModel.OperationContractAttribute
+  commentId: T:System.ServiceModel.OperationContractAttribute
+  id: OperationContractAttribute
+  children:
+  - System.ServiceModel.OperationContractAttribute.#ctor
+  - System.ServiceModel.OperationContractAttribute.Action
+  - System.ServiceModel.OperationContractAttribute.AsyncPattern
+  - System.ServiceModel.OperationContractAttribute.HasProtectionLevel
+  - System.ServiceModel.OperationContractAttribute.IsInitiating
+  - System.ServiceModel.OperationContractAttribute.IsOneWay
+  - System.ServiceModel.OperationContractAttribute.IsTerminating
+  - System.ServiceModel.OperationContractAttribute.Name
+  - System.ServiceModel.OperationContractAttribute.ProtectionLevel
+  - System.ServiceModel.OperationContractAttribute.ReplyAction
+  langs:
+  - csharp
+  name: OperationContractAttribute
+  nameWithType: OperationContractAttribute
+  fullName: System.ServiceModel.OperationContractAttribute
+  type: Class
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Indicates that a method defines an operation that is part of a service contract in a Windows Communication Foundation (WCF) application.
+  remarks: "Apply the <xref:System.ServiceModel.OperationContractAttribute> to a method to indicate that the method implements a service operation as part of a service contract (specified by a <xref:System.ServiceModel.ServiceContractAttribute> attribute).  \n  \n Use the <xref:System.ServiceModel.OperationContractAttribute> properties to control the structure of the operation and the values expressed in metadata:  \n  \n-   The <xref:System.ServiceModel.OperationContractAttribute.Action%2A> property specifies the action that uniquely identifies this operation. [!INCLUDE[indigo2](~/includes/indigo2-md.md)] dispatches request messages to methods based on their action.  \n  \n-   The <xref:System.ServiceModel.OperationContractAttribute.AsyncPattern%2A> property indicates that the operation is implemented or can be called asynchronously using a Begin/End method pair.  \n  \n-   The <xref:System.ServiceModel.OperationContractAttribute.HasProtectionLevel%2A> property indicates whether the <xref:System.ServiceModel.OperationContractAttribute.ProtectionLevel%2A> property has been explicitly set.  \n  \n-   The <xref:System.ServiceModel.OperationContractAttribute.IsOneWay%2A> property indicates that the operation only consists of a single input message. The operation has no associated output message.  \n  \n-   The <xref:System.ServiceModel.OperationContractAttribute.IsInitiating%2A> property specifies whether this operation can be the initial operation in a session.  \n  \n-   The <xref:System.ServiceModel.OperationContractAttribute.IsTerminating%2A> property specifies whether [!INCLUDE[indigo2](~/includes/indigo2-md.md)] attempts to terminate the current session after the operation completes.  \n  \n-   The <xref:System.ServiceModel.OperationContractAttribute.ProtectionLevel%2A> property specifies the message-level security that an operation requires at run time.  \n  \n-   The <xref:System.ServiceModel.OperationContractAttribute.ReplyAction%2A> property specifies the action of the reply message for the operation.  \n  \n The <xref:System.ServiceModel.OperationContractAttribute> attribute declares that a method is an operation in a service contract. Only methods attributed with the <xref:System.ServiceModel.OperationContractAttribute> are exposed as service operations. A service contract without any methods marked with the <xref:System.ServiceModel.OperationContractAttribute> exposes no operations.  \n  \n The <xref:System.ServiceModel.OperationContractAttribute.AsyncPattern%2A> property indicates that a pair of `Begin`\\<*methodName*> and `End`\\<*methodName*> methods form a single operation implemented asynchronously (whether on the client or the service). The ability of a service to implement operations asynchronously is a service implementation detail and is not exposed in metadata (such as Web Services Description Language (WSDL)).  \n  \n Similarly, clients can choose to invoke operations asynchronously independent of how the service method is implemented. Calling service operations asynchronously in the client is recommended when a service method takes some time but must return information directly to the client. For details, see <xref:System.ServiceModel.OperationContractAttribute.AsyncPattern%2A>.  \n  \n The <xref:System.ServiceModel.OperationContractAttribute.IsOneWay%2A> property indicates that a method does not return any value at all, including an empty underlying response message. This type of method is useful for notifications or event-style communication. Methods of this kind cannot return a reply message so the method's declaration must return `void`.  \n  \n> [!IMPORTANT]\n>  When programmatically retrieving the information store in this attribute, use the <xref:System.ServiceModel.Description.ContractDescription> class instead of reflection.  \n  \n> [!NOTE]\n>  If the <xref:System.ServiceModel.OperationContractAttribute.IsOneWay%2A> property is set to `false`, (the default), even methods that return `void` are two-way methods at the underlying message level. In this case, the infrastructure creates and sends an empty message to indicate to the caller that the method has returned. Using this approach enables the application and the infrastructure to send error information (such as a SOAP fault) back to the client. Setting <xref:System.ServiceModel.OperationContractAttribute.IsOneWay%2A> to `true` is the only way to prevent the creation and dispatch of a reply message. For more information, see [One-Way Services](~/docs/framework/wcf/feature-details/one-way-services.md).  \n  \n The <xref:System.ServiceModel.OperationContractAttribute.Action%2A> and <xref:System.ServiceModel.OperationContractAttribute.ReplyAction%2A> properties can be used not only to modify the default action of SOAP messages but also to create handlers for unrecognized messages or to disable adding actions for direct message programming. Use the <xref:System.ServiceModel.OperationContractAttribute.IsInitiating%2A> property to prevent clients from calling a particular service operation prior to other operations. Use the <xref:System.ServiceModel.OperationContractAttribute.IsTerminating%2A> property to have [!INCLUDE[indigo2](~/includes/indigo2-md.md)] close the channel after clients call a particular service operation. For more information, see [Using Sessions](~/docs/framework/wcf/using-sessions.md).  \n  \n The <xref:System.ServiceModel.OperationContractAttribute.ProtectionLevel%2A> property enables you to specify on the operation contract whether the operation messages are signed, encrypted, or signed and encrypted. If a binding cannot provide the security level required by the contract, an exception is thrown at run time. For more information, see <xref:System.ServiceModel.OperationContractAttribute.ProtectionLevel%2A> and [Understanding Protection Level](~/docs/framework/wcf/understanding-protection-level.md)."
+  example:
+  - "The following code example shows a simple service contract with one operation.  \n  \n [!code-csharp[OperationContractAttribute#1](~/samples/snippets/csharp/VS_Snippets_CFX/operationcontractattribute/cs/services.cs#1)]\n [!code-vb[OperationContractAttribute#1](~/samples/snippets/visualbasic/VS_Snippets_CFX/operationcontractattribute/vb/services.vb#1)]  \n  \n The following example is a service that implements an implicit service contract that specifies three operations. Two of the operations are two-way operations, which return underlying response messages to the caller no matter what the return value is. The third operation receives a call, an underlying inbound message, but returns no underlying response message.  \n  \n```csharp  \n[ServiceContractAttribute]  \npublic class OneAndTwoWay  \n{  \n  // The client waits until a response message appears.  \n  [OperationContractAttribute]  \n  public int MethodOne (int x, out int y)  \n  {  \n    y = 34;  \n    return 0;  \n  }  \n  \n  // The client waits until an empty response message appears.  \n  [OperationContractAttribute]  \n  public void MethodTwo (int x)  \n  {  \n    return;  \n  }  \n  \n  // The client returns as soon as an outbound message  \n  // is dispatched to the service; no response  \n  // message is generated or sent from the service.  \n  [OperationContractAttribute(IsOneWay=true)]  \n  public void MethodThree (int x)  \n  {  \n    return;  \n  }  \n}  \n```"
+  syntax:
+    content: >-
+      [System.AttributeUsage(System.AttributeTargets.Method)]
+
+      public sealed class OperationContractAttribute : Attribute
+  inheritance:
+  - System.Object
+  - System.Attribute
+  implements: []
+  inheritedMembers:
+  - System.Attribute.Equals(System.Object)
+  - System.Attribute.GetCustomAttribute(System.Reflection.Assembly,System.Type)
+  - System.Attribute.GetCustomAttribute(System.Reflection.Assembly,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttribute(System.Reflection.MemberInfo,System.Type)
+  - System.Attribute.GetCustomAttribute(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttribute(System.Reflection.Module,System.Type)
+  - System.Attribute.GetCustomAttribute(System.Reflection.Module,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttribute(System.Reflection.ParameterInfo,System.Type)
+  - System.Attribute.GetCustomAttribute(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Assembly)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Type)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo)
+  - System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Type)
+  - System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Module)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Type)
+  - System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Type,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo)
+  - System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Boolean)
+  - System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Type)
+  - System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  - System.Attribute.GetHashCode
+  - System.Attribute.IsDefaultAttribute
+  - System.Attribute.IsDefined(System.Reflection.Assembly,System.Type)
+  - System.Attribute.IsDefined(System.Reflection.Assembly,System.Type,System.Boolean)
+  - System.Attribute.IsDefined(System.Reflection.MemberInfo,System.Type)
+  - System.Attribute.IsDefined(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  - System.Attribute.IsDefined(System.Reflection.Module,System.Type)
+  - System.Attribute.IsDefined(System.Reflection.Module,System.Type,System.Boolean)
+  - System.Attribute.IsDefined(System.Reflection.ParameterInfo,System.Type)
+  - System.Attribute.IsDefined(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  - System.Attribute.Match(System.Object)
+  - System.Attribute.System#Runtime#InteropServices#_Attribute#GetIDsOfNames(System.Guid@,System.IntPtr,System.UInt32,System.UInt32,System.IntPtr)
+  - System.Attribute.System#Runtime#InteropServices#_Attribute#GetTypeInfo(System.UInt32,System.UInt32,System.IntPtr)
+  - System.Attribute.System#Runtime#InteropServices#_Attribute#GetTypeInfoCount(System.UInt32@)
+  - System.Attribute.System#Runtime#InteropServices#_Attribute#Invoke(System.UInt32,System.Guid@,System.UInt32,System.Int16,System.IntPtr,System.IntPtr,System.IntPtr,System.IntPtr)
+  - System.Attribute.TypeId
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: System.AttributeUsageAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.OperationContractAttribute.#ctor
+  commentId: M:System.ServiceModel.OperationContractAttribute.#ctor
+  id: '#ctor'
+  parent: System.ServiceModel.OperationContractAttribute
+  langs:
+  - csharp
+  name: OperationContractAttribute()
+  nameWithType: OperationContractAttribute.OperationContractAttribute()
+  fullName: OperationContractAttribute.OperationContractAttribute()
+  type: Constructor
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Initializes a new instance of the <xref href="System.ServiceModel.OperationContractAttribute"></xref> class.
+  syntax:
+    content: public OperationContractAttribute ();
+    parameters: []
+  overload: System.ServiceModel.OperationContractAttribute.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.OperationContractAttribute.Action
+  commentId: P:System.ServiceModel.OperationContractAttribute.Action
+  id: Action
+  parent: System.ServiceModel.OperationContractAttribute
+  langs:
+  - csharp
+  name: Action
+  nameWithType: OperationContractAttribute.Action
+  fullName: OperationContractAttribute.Action
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Gets or sets the WS-Addressing action of the request message.
+  remarks: "Use the <xref:System.ServiceModel.OperationContractAttribute.Action%2A>property to control the action of the method's input message. Because [!INCLUDE[indigo2](~/includes/indigo2-md.md)] uses this action to dispatch an incoming message to the appropriate method, messages used within a contract operation must have unique actions. The default action value is a combination of the contract namespace (the default value is \"http://tempuri.org/\"), the contract name (interface name or the class name, if no explicit service interface is used), the operation name, and an additional string (\"Response\") if the message is a correlated response. You can override this default with the <xref:System.ServiceModel.OperationContractAttribute.Action%2A> property.  \n  \n To indicate that a service operation handles all messages that the service receives but cannot be directed to a service operation, specify the value \"*\" (an asterisk). This type of operation, called an unmatched message handler, must have one of following method signatures, or a <xref:System.InvalidOperationException> is thrown:  \n  \n-   The service operation can take only a <xref:System.ServiceModel.Channels.Message> object and return a <xref:System.ServiceModel.Channels.Message> object.  \n  \n-   The service operation can take only a <xref:System.ServiceModel.Channels.Message> object and return nothing (that is, return `void`).  \n  \n> [!NOTE]\n>  A service contract can have only one service operation with the <xref:System.ServiceModel.OperationContractAttribute.Action%2A> property set to \"*\". Any group of service contracts hosted at the same listenUri that a service class implements can have many service operations with the <xref:System.ServiceModel.OperationContractAttribute.Action%2A> property set to \"\\*\" when the <xref:System.ServiceModel.OperationContractAttribute.IsInitiating%2A> property is set to `false`. However, only one of those service operations can have the <xref:System.ServiceModel.OperationContractAttribute.Action%2A> property set to \"\\*\" and the <xref:System.ServiceModel.OperationContractAttribute.IsInitiating%2A> property set to true. For more details, see <xref:System.ServiceModel.OperationContractAttribute.IsInitiating%2A>."
+  example:
+  - "The following example is a service that uses the <xref:System.ServiceModel.OperationContractAttribute.Action%2A> and <xref:System.ServiceModel.OperationContractAttribute.ReplyAction%2A> properties to explicitly control the SOAP actions of both the input and output (or reply) messages, and the <xref:System.ServiceModel.OperationContractAttribute.Name%2A> property to control the name of the operation in metadata. Finally, the application also uses an <xref:System.ServiceModel.OperationContractAttribute.Action%2A> value of \"*\" to indicate a method that handles unrecognized messages.  \n  \n [!code-csharp[OperationContractAttribute_Properties#1](~/samples/snippets/csharp/VS_Snippets_CFX/operationcontractattribute_properties/cs/services.cs#1)]\n [!code-vb[OperationContractAttribute_Properties#1](~/samples/snippets/visualbasic/VS_Snippets_CFX/operationcontractattribute_properties/vb/services.vb#1)]  \n  \n A service that implements this contract sends messages that look like the following example:  \n  \n [!code-csharp[OperationContractAttribute_Properties#2](~/samples/snippets/csharp/VS_Snippets_CFX/operationcontractattribute_properties/cs/services.cs#2)]"
+  syntax:
+    content: public string Action { get; set; }
+    return:
+      type: System.String
+      description: The action to use in generating the WS-Addressing Action header.
+  overload: System.ServiceModel.OperationContractAttribute.Action*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The value is `null`.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.OperationContractAttribute.AsyncPattern
+  commentId: P:System.ServiceModel.OperationContractAttribute.AsyncPattern
+  id: AsyncPattern
+  parent: System.ServiceModel.OperationContractAttribute
+  langs:
+  - csharp
+  name: AsyncPattern
+  nameWithType: OperationContractAttribute.AsyncPattern
+  fullName: OperationContractAttribute.AsyncPattern
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Indicates that an operation is implemented asynchronously using a `Begin`<*methodName*> and `End`<*methodName*> method pair in a service contract.
+  remarks: "Use the <xref:System.ServiceModel.OperationContractAttribute.AsyncPattern%2A> property to build service operations that can be called asynchronously on the server, the client, or both. The <xref:System.ServiceModel.OperationContractAttribute.AsyncPattern%2A> property informs the runtime that a `Begin` method has a matched `End` method that conforms to the .NET Framework asynchronous method design pattern. Building server asynchronous methods that implement a service operation increases server scalability and performance without affecting the clients of the service, and is recommended when a service operation must return something to the client after performing a lengthy operation that can be performed asynchronously.  \n  \n Clients remain unaffected because the asynchronous method pair on the server is an implementation detail that does not affect the underlying Web Services Description Language (WSDL) description of the operation. Such methods appear to clients as a single operation with `<input>` and correlated `<output>` messages. [!INCLUDE[indigo2](~/includes/indigo2-md.md)] automatically routes inbound messages to the `Begin`\\<*methodName*> method and routes the results of the `End`\\<*methodName*> call to the outbound message. Client channels, therefore, can represent the method pair as either a single synchronous operation or as an asynchronous operation pair. In no case does the client representation affect the asynchronous implementation on the server in any way.  \n  \n Client contracts can use the <xref:System.ServiceModel.OperationContractAttribute.AsyncPattern%2A> property to indicate an asynchronous method pair that the client can use to invoke the operation asynchronously. Typically, client applications use the [ServiceModel Metadata Utility Tool (Svcutil.exe)](~/docs/framework/wcf/servicemodel-metadata-utility-tool-svcutil-exe.md) tool and the `/async` option to generate a `Begin`\\<*methodName*> and `End`\\<*methodName*> method pair that the client can use to invoke the operation asynchronously.  \n  \n> [!NOTE]\n>  If a service operation has both an asynchronous and a synchronous version, the default behavior on the service is to invoke the synchronous version."
+  example:
+  - "The following code example shows a client channel to a service contract that includes both a synchronous version of `Add` and an asynchronous version. If the contract interface is used on the client, both the `BeginAdd` and the `Add` operation invoke a method on the server that may or may not be synchronous. If the contract is used to implement the service, the default is that incoming requests are dispatched to the synchronous method.  \n  \n```csharp  \n[ServiceContract]  \npublic interface IAddTwoNumbers  \n{  \n    // If the asynchronous method pair  \n    // appears on the client channel, the client can call   \n    // them asynchronously to prevent blocking.  \n    [OperationContract (AsyncPattern=true)]  \n    IAsyncResult BeginAdd(int a, int b, AsyncCallback cb, AsyncState s);  \n  \n    [OperationContract]  \n    int EndAdd(IAsyncResult r);  \n  \n    // This is a synchronous version of the BeginAdd/EndAdd pair.  \n    // It appears in the client channel code by default.   \n    [OperationContract]  \n    int Add(int a, int b);  \n   }  \n```"
+  syntax:
+    content: public bool AsyncPattern { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if the `Begin`<*methodName*>method is matched by an `End`<*methodName*> method and can be treated by the infrastructure as an operation that is implemented as an asynchronous method pair on the service interface; otherwise, `false`. The default is `false`.'
+  overload: System.ServiceModel.OperationContractAttribute.AsyncPattern*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.OperationContractAttribute.HasProtectionLevel
+  commentId: P:System.ServiceModel.OperationContractAttribute.HasProtectionLevel
+  id: HasProtectionLevel
+  parent: System.ServiceModel.OperationContractAttribute
+  langs:
+  - csharp
+  name: HasProtectionLevel
+  nameWithType: OperationContractAttribute.HasProtectionLevel
+  fullName: OperationContractAttribute.HasProtectionLevel
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Gets a value that indicates whether the messages for this operation must be encrypted, signed, or both.
+  remarks: Use the <xref:System.ServiceModel.OperationContractAttribute.HasProtectionLevel%2A> property to determine whether a specific protection level is required by the messages of this operation.
+  syntax:
+    content: public bool HasProtectionLevel { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the <xref href="System.ServiceModel.OperationContractAttribute.ProtectionLevel"></xref> property is set to a value other than <xref href="System.Net.Security.ProtectionLevel.None"></xref>; otherwise, `false`. The default is `false`.'
+  overload: System.ServiceModel.OperationContractAttribute.HasProtectionLevel*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.OperationContractAttribute.IsInitiating
+  commentId: P:System.ServiceModel.OperationContractAttribute.IsInitiating
+  id: IsInitiating
+  parent: System.ServiceModel.OperationContractAttribute
+  langs:
+  - csharp
+  name: IsInitiating
+  nameWithType: OperationContractAttribute.IsInitiating
+  fullName: OperationContractAttribute.IsInitiating
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Gets or sets a value that indicates whether the method implements an operation that can initiate a session on the server (if such a session exists).
+  remarks: "The <xref:System.ServiceModel.OperationContractAttribute.IsInitiating%2A> property controls whether an operation can be the first operation called when a session is created.  \n  \n> [!NOTE]\n>  The value of <xref:System.ServiceModel.ServiceContractAttribute.SessionMode%2A?displayProperty=fullName> must be either <xref:System.ServiceModel.SessionMode.Allowed> or <xref:System.ServiceModel.SessionMode.Required> and the binding used must require or allow sessions for the <xref:System.ServiceModel.OperationContractAttribute.IsInitiating%2A> property to work properly.  \n  \n The default is `true`, which means that an operation can be the first one called on a channel. Subsequent calls to the initiating method have no effect, other than to call the method. No other sessions are created. If the contract does not make use of a session, setting <xref:System.ServiceModel.OperationContractAttribute.IsInitiating%2A> to `false` is ignored.  \n  \n Typically, you set <xref:System.ServiceModel.OperationContractAttribute.IsInitiating%2A> to `false` to force clients to call another method on the service before they can invoke this one. For example, if your service has a series of operations that depend on an order ID number, you can set <xref:System.ServiceModel.OperationContractAttribute.IsInitiating%2A> to `true` for a `GetOrderId` service operation and set all remaining service operations to `false`. This ensures that each new client obtains an order ID prior to using the other methods exposed by the service.  \n  \n> [!NOTE]\n>  There is an interaction between <xref:System.ServiceModel.OperationContractAttribute.IsInitiating%2A> and the <xref:System.ServiceModel.OperationContractAttribute.Action%2A> property. A service contract can have only one service operation with the <xref:System.ServiceModel.OperationContractAttribute.Action%2A> property set to \"*\". Any group of service contracts hosted at the same listen URI that a service class implements can have many service operations with the <xref:System.ServiceModel.OperationContractAttribute.Action%2A> property set to \"\\*\" when the <xref:System.ServiceModel.OperationContractAttribute.IsInitiating%2A> property is set to `false`. However, only one of those service methods can have the <xref:System.ServiceModel.OperationContractAttribute.Action%2A> property set to \"\\*\" and the <xref:System.ServiceModel.OperationContractAttribute.IsInitiating%2A> property set to `true`.  \n  \n If a service receives a message for a non-initiating operation, the service returns an ActionNotSupported SOAP fault. The client experiences this as an <xref:System.ServiceModel.FaultException>. If a client calls a non-initiating operation first, the client runtime throws an <xref:System.InvalidOperationException?displayProperty=fullName>.  \n  \n For more information, see [Using Sessions](~/docs/framework/wcf/using-sessions.md)."
+  example:
+  - "The following example is a service that implements a service contract that specifies three methods. The service requires a session. If a caller's first call is to any operation other than `MethodOne`, the channel is refused and an exception is thrown. When a caller initiates a session by calling `MethodOne`, that caller can terminate the communication session at any time by calling `MethodThree`. `MethodTwo` can be called any number of times during a session.  \n  \n```csharp  \n[ServiceContract(SessionMode=SessionMode.Required)]  \npublic class InitializeAndTerminateService  \n{  \n  [OperationContract(  \n    IsOneWay=true,  \n    IsInitiating=true,  \n    IsTerminating=false  \n  )]  \n  public void MethodOne()  \n  {  \n    return;  \n  }  \n  \n  [OperationContract(  \n    IsInitiating=false,  \n    IsTerminating=false  \n  )]  \n  public int MethodTwo(int x, out int y)  \n  {  \n    y = 34;  \n    return 0;  \n  }  \n  \n  [OperationContract(  \n    IsOneWay=true,  \n    IsInitiating=false,  \n    IsTerminating=true  \n  )]  \n  public void MethodThree()  \n  {  \n    return;  \n  }  \n}  \n```"
+  syntax:
+    content: public bool IsInitiating { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if the operation is permitted to initiate a session on the server, otherwise, `false`. The default is `true`.'
+  overload: System.ServiceModel.OperationContractAttribute.IsInitiating*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.OperationContractAttribute.IsOneWay
+  commentId: P:System.ServiceModel.OperationContractAttribute.IsOneWay
+  id: IsOneWay
+  parent: System.ServiceModel.OperationContractAttribute
+  langs:
+  - csharp
+  name: IsOneWay
+  nameWithType: OperationContractAttribute.IsOneWay
+  fullName: OperationContractAttribute.IsOneWay
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Gets or sets a value that indicates whether an operation returns a reply message.
+  remarks: "Use the <xref:System.ServiceModel.OperationContractAttribute.IsOneWay%2A> property to indicate that an operation does not return a reply message. This type of operation is useful for notifications or event-style communication, especially in two-way communication. Without waiting for an underlying response message, callers of one-way operations have no direct way to detect a failure in processing the request message. (Service applications that use reliable channels and one-way operations can detect a message delivery failure at the channel level. For details, see [Reliable Sessions Overview](~/docs/framework/wcf/feature-details/reliable-sessions-overview.md).)  \n  \n In duplex (or two-way) service-oriented applications in which the client and server communicate with each other independently, a client channel can use the <xref:System.ServiceModel.OperationContractAttribute.IsOneWay%2A> property on its methods to indicate that the service can make one-way calls to the client that the client can treat as events. No return call or message is generated because the service does not expect any response message.  \n  \n If the <xref:System.ServiceModel.OperationContractAttribute.IsOneWay%2A> property is set to `false` (the default), even methods that return `void` result in a reply message. In this case, the infrastructure creates and sends an empty message to indicate to the caller that the method has returned. (Using this approach enables the infrastructure to send SOAP faults back to the client.) Setting <xref:System.ServiceModel.OperationContractAttribute.IsOneWay%2A> to `true` is the only way to cancel the creation and dispatch of a response message.  \n  \n One-way methods must not return a value or have `ref` or `out` parameters; otherwise a <xref:System.InvalidOperationException?displayProperty=fullName> exception is thrown.  \n  \n Specifying that an operation is a one-way operation means only that there is no response message. It is possible to block if a connection cannot be made, or the outbound message is very large, or if the service cannot read inbound information fast enough. If a client requires a non-blocking call, generate <xref:System.ServiceModel.OperationContractAttribute.AsyncPattern%2A> operations. For more information, see [One-Way Services](~/docs/framework/wcf/feature-details/one-way-services.md) and [Accessing Services Using a WCF Client](~/docs/framework/wcf/feature-details/accessing-services-using-a-client.md)."
+  example:
+  - "The following example is a service that implements a service contract that specifies three operations. Two of the methods implement two-way operations, which return underlying response messages to the caller no matter what the return value is. The third method implements an operation that receives a call (an underlying inbound message) but returns no underlying response message.  \n  \n```csharp  \n[ServiceContract]  \npublic class OneAndTwoWay  \n{  \n  // The client waits until a response message appears.  \n  [OperationContract]  \n  public int MethodOne (int x, out int y)  \n  {  \n    y = 34;  \n    return 0;  \n  }  \n  \n  // The client waits until an empty response message appears.  \n  [OperationContract]  \n  public void MethodTwo (int x)  \n  {  \n    return;  \n  }  \n  \n  // The client returns as soon as an outbound message  \n  // is queued for dispatch to the service; no response  \n  // message is generated or sent.  \n  [OperationContract(IsOneWay=true)]  \n  public void MethodThree (int x)  \n  {  \n    return;  \n  }  \n}  \n```"
+  syntax:
+    content: public bool IsOneWay { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if this method receives a request message and returns no reply message; otherwise, `false`. The default is `false`.'
+  overload: System.ServiceModel.OperationContractAttribute.IsOneWay*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.OperationContractAttribute.IsTerminating
+  commentId: P:System.ServiceModel.OperationContractAttribute.IsTerminating
+  id: IsTerminating
+  parent: System.ServiceModel.OperationContractAttribute
+  langs:
+  - csharp
+  name: IsTerminating
+  nameWithType: OperationContractAttribute.IsTerminating
+  fullName: OperationContractAttribute.IsTerminating
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Gets or sets a value that indicates whether the service operation causes the server to close the session after the reply message, if any, is sent.
+  remarks: "Use the <xref:System.ServiceModel.OperationContractAttribute.IsTerminating%2A> property to indicate that calling a service operation terminates the communication session.  \n  \n In a client application, a value of <xref:System.ServiceModel.OperationContractAttribute.IsTerminating%2A> set to `true` instructs [!INCLUDE[indigo2](~/includes/indigo2-md.md)] to close the channel after the reply arrives.  \n  \n In a service, a timer is set and the channel aborts if the client does not close the channel within that period.  \n  \n For more information about using this property with sessions, see [Using Sessions](~/docs/framework/wcf/using-sessions.md).  \n  \n> [!NOTE]\n>  If a caller is listening for the <xref:System.ServiceModel.OperationContext.OperationCompleted?displayProperty=fullName> event for an <xref:System.ServiceModel.OperationContractAttribute.IsTerminating%2A?displayProperty=fullName> operation, it is possible to block when the response is received. The proper way to handle this is to schedule work on another thread when <xref:System.ServiceModel.OperationContext.OperationCompleted> is raised and then immediately return from that event handler."
+  example:
+  - "The following example is a service that implements a service contract that specifies three operations. The service requires a stateful connection. If a caller's first call is to any operation other than `MethodOne`, the channel is refused and an exception is thrown. When a caller initiates a session by calling `MethodOne`, that caller can terminate the communication session at any time by calling `MethodThree`. `MethodTwo` can be called any number of times during a session.  \n  \n```csharp  \n[ServiceContractAttribute(SessionMode=SessionMode.Required)]  \npublic class InitializeAndTerminateService  \n{  \n  [OperationContract(  \n    IsOneWay=true,  \n    IsInitiating=true,  \n    IsTerminating=false  \n  )]  \n  public void MethodOne()  \n  {  \n    return;  \n  }  \n  \n  [OperationContract(  \n    IsInitiating=false,  \n    IsTerminating=false  \n  )]  \n  public int MethodTwo(int x, out int y)  \n  {  \n    y = 34;  \n    return 0;  \n  }  \n  \n  [OperationContract(  \n    IsOneWay=true,  \n    IsInitiating=false  \n    IsTerminating=true  \n  )]  \n  public void MethodThree()  \n  {  \n    return;  \n  }  \n}  \n```"
+  syntax:
+    content: public bool IsTerminating { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if the operation causes the server to close the session, otherwise, `false`. The default is `false`.'
+  overload: System.ServiceModel.OperationContractAttribute.IsTerminating*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.OperationContractAttribute.Name
+  commentId: P:System.ServiceModel.OperationContractAttribute.Name
+  id: Name
+  parent: System.ServiceModel.OperationContractAttribute
+  langs:
+  - csharp
+  name: Name
+  nameWithType: OperationContractAttribute.Name
+  fullName: OperationContractAttribute.Name
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Gets or sets the name of the operation.
+  remarks: Use the <xref:System.ServiceModel.OperationContractAttribute.Name%2A> property to override the <`operation`> element name in WSDL. The default operation name is the name of the implementing method.
+  example:
+  - "The following code example uses the <xref:System.ServiceModel.OperationContractAttribute.Name%2A> property to declare the name of the operation as exposed in metadata.  \n  \n [!code-csharp[OperationContractAttribute_Properties#1](~/samples/snippets/csharp/VS_Snippets_CFX/operationcontractattribute_properties/cs/services.cs#1)]\n [!code-vb[OperationContractAttribute_Properties#1](~/samples/snippets/visualbasic/VS_Snippets_CFX/operationcontractattribute_properties/vb/services.vb#1)]"
+  syntax:
+    content: public string Name { get; set; }
+    return:
+      type: System.String
+      description: The name of the operation.
+  overload: System.ServiceModel.OperationContractAttribute.Name*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <xref href="System.ServiceModel.OperationContractAttribute.Name"></xref> is `null`.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The value is an empty string.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.OperationContractAttribute.ProtectionLevel
+  commentId: P:System.ServiceModel.OperationContractAttribute.ProtectionLevel
+  id: ProtectionLevel
+  parent: System.ServiceModel.OperationContractAttribute
+  langs:
+  - csharp
+  name: ProtectionLevel
+  nameWithType: OperationContractAttribute.ProtectionLevel
+  fullName: OperationContractAttribute.ProtectionLevel
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Gets or sets a value that specifies whether the messages of an operation must be encrypted, signed, or both.
+  remarks: "Use the <xref:System.ServiceModel.OperationContractAttribute.ProtectionLevel%2A> property to control whether the messages of an operation must be encrypted, signed, or both. The value set here is the default value for all messages specified for this operation unless a narrower scope overrides this value.  \n  \n It is important to remember that the protection behavior at runtime is the combination of the protection-level values set on the following properties. These properties have a hierarchical structure. Setting the outermost value establishes the default setting for all narrower scopes unless a different value for a narrower scope is explicitly set. In this case, the outer value remains the default for all narrower scopes with the exception of that specifically set.  \n  \n For example, if <xref:System.ServiceModel.ServiceContractAttribute.ProtectionLevel%2A?displayProperty=fullName> is set to <xref:System.Net.Security.ProtectionLevel?displayProperty=fullName> and no other narrower scopes have protection level settings, all messages in an operation contract are encrypted and signed. If, however, one of those operations has the <xref:System.ServiceModel.OperationContractAttribute.ProtectionLevel%2A> set to <xref:System.Net.Security.ProtectionLevel?displayProperty=fullName>, then the messages for that operation are signed but all other messages in the contract are encrypted and signed.  \n  \n For details about protection levels and their assumptions and scopes, see [Understanding Protection Level](~/docs/framework/wcf/understanding-protection-level.md).  \n  \n The scopes at which these values are set are:  \n  \n <xref:System.ServiceModel.ServiceContractAttribute.ProtectionLevel%2A?displayProperty=fullName>  \n  \n <xref:System.ServiceModel.OperationContractAttribute.ProtectionLevel%2A?displayProperty=fullName>  \n  \n <xref:System.ServiceModel.FaultContractAttribute.ProtectionLevel%2A?displayProperty=fullName>  \n  \n <xref:System.ServiceModel.MessageContractAttribute.ProtectionLevel%2A?displayProperty=fullName>  \n  \n The <xref:System.ServiceModel.MessageContractMemberAttribute.ProtectionLevel%2A?displayProperty=fullName> property on <xref:System.ServiceModel.MessageHeaderAttribute?displayProperty=fullName>.  \n  \n The <xref:System.ServiceModel.MessageContractMemberAttribute.ProtectionLevel%2A?displayProperty=fullName> property on <xref:System.ServiceModel.MessageBodyMemberAttribute?displayProperty=fullName>.  \n  \n When there is no protection level explicitly specified on the contract and the underlying binding supports security (whether at the transport or message level), the effective protection level for the whole contract is <xref:System.Net.Security.ProtectionLevel?displayProperty=fullName>. If the binding does not support security (such as <xref:System.ServiceModel.BasicHttpBinding>), the effective <xref:System.Net.Security.ProtectionLevel?displayProperty=fullName> is <xref:System.Net.Security.ProtectionLevel?displayProperty=fullName> for the whole contract. The result is that depending upon the endpoint binding, clients can require different message or transport level security protection even when the contract specifies <xref:System.Net.Security.ProtectionLevel?displayProperty=fullName>."
+  syntax:
+    content: public System.Net.Security.ProtectionLevel ProtectionLevel { get; set; }
+    return:
+      type: System.Net.Security.ProtectionLevel
+      description: One of the <xref href="System.Net.Security.ProtectionLevel"></xref> values. The default is <xref href="System.Net.Security.ProtectionLevel.None"></xref>.
+  overload: System.ServiceModel.OperationContractAttribute.ProtectionLevel*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The value is not one of the <xref href="System.Net.Security.ProtectionLevel"></xref> values.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.OperationContractAttribute.ReplyAction
+  commentId: P:System.ServiceModel.OperationContractAttribute.ReplyAction
+  id: ReplyAction
+  parent: System.ServiceModel.OperationContractAttribute
+  langs:
+  - csharp
+  name: ReplyAction
+  nameWithType: OperationContractAttribute.ReplyAction
+  fullName: OperationContractAttribute.ReplyAction
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Gets or sets the value of the SOAP action for the reply message of the operation.
+  remarks: In addition to specifying a particular value for the action header of the reply message, you can also specify the string "*" (an asterisk). Specifying an asterisk in the service instructs [!INCLUDE[indigo2](~/includes/indigo2-md.md)] not to add a reply action to the message, which is useful if you are programming against messages directly. Specifying an asterisk in a client application instructs [!INCLUDE[indigo2](~/includes/indigo2-md.md)] not to validate the reply action.
+  example:
+  - "The following example is a service that uses the <xref:System.ServiceModel.OperationContractAttribute.Action%2A> and <xref:System.ServiceModel.OperationContractAttribute.ReplyAction%2A> properties to explicitly control the SOAP actions of both the input and output (or reply) messages. It also uses the <xref:System.ServiceModel.OperationContractAttribute.Name%2A> property to declare the name of the operation as exposed in metadata.  \n  \n [!code-csharp[OperationContractAttribute_Properties#1](~/samples/snippets/csharp/VS_Snippets_CFX/operationcontractattribute_properties/cs/services.cs#1)]\n [!code-vb[OperationContractAttribute_Properties#1](~/samples/snippets/visualbasic/VS_Snippets_CFX/operationcontractattribute_properties/vb/services.vb#1)]"
+  syntax:
+    content: public string ReplyAction { get; set; }
+    return:
+      type: System.String
+      description: The value of the SOAP action for the reply message.
+  overload: System.ServiceModel.OperationContractAttribute.ReplyAction*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <xref href="System.ServiceModel.OperationContractAttribute.ReplyAction"></xref> is `null`.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+references:
+- uid: System.Attribute
+  parent: System
+  isExternal: false
+  name: Attribute
+  nameWithType: Attribute
+  fullName: System.Attribute
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.ArgumentOutOfRangeException
+  parent: System
+  isExternal: false
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: System.ServiceModel.OperationContractAttribute.#ctor
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: OperationContractAttribute()
+  nameWithType: OperationContractAttribute.OperationContractAttribute()
+  fullName: OperationContractAttribute.OperationContractAttribute()
+- uid: System.ServiceModel.OperationContractAttribute.Action
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: Action
+  nameWithType: OperationContractAttribute.Action
+  fullName: OperationContractAttribute.Action
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.ServiceModel.OperationContractAttribute.AsyncPattern
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: AsyncPattern
+  nameWithType: OperationContractAttribute.AsyncPattern
+  fullName: OperationContractAttribute.AsyncPattern
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.ServiceModel.OperationContractAttribute.HasProtectionLevel
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: HasProtectionLevel
+  nameWithType: OperationContractAttribute.HasProtectionLevel
+  fullName: OperationContractAttribute.HasProtectionLevel
+- uid: System.ServiceModel.OperationContractAttribute.IsInitiating
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: IsInitiating
+  nameWithType: OperationContractAttribute.IsInitiating
+  fullName: OperationContractAttribute.IsInitiating
+- uid: System.ServiceModel.OperationContractAttribute.IsOneWay
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: IsOneWay
+  nameWithType: OperationContractAttribute.IsOneWay
+  fullName: OperationContractAttribute.IsOneWay
+- uid: System.ServiceModel.OperationContractAttribute.IsTerminating
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: IsTerminating
+  nameWithType: OperationContractAttribute.IsTerminating
+  fullName: OperationContractAttribute.IsTerminating
+- uid: System.ServiceModel.OperationContractAttribute.Name
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: Name
+  nameWithType: OperationContractAttribute.Name
+  fullName: OperationContractAttribute.Name
+- uid: System.ServiceModel.OperationContractAttribute.ProtectionLevel
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: ProtectionLevel
+  nameWithType: OperationContractAttribute.ProtectionLevel
+  fullName: OperationContractAttribute.ProtectionLevel
+- uid: System.Net.Security.ProtectionLevel
+  parent: System.Net.Security
+  isExternal: false
+  name: ProtectionLevel
+  nameWithType: ProtectionLevel
+  fullName: System.Net.Security.ProtectionLevel
+- uid: System.ServiceModel.OperationContractAttribute.ReplyAction
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: ReplyAction
+  nameWithType: OperationContractAttribute.ReplyAction
+  fullName: OperationContractAttribute.ReplyAction
+- uid: System.ServiceModel.OperationContractAttribute.#ctor*
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: OperationContractAttribute
+  nameWithType: OperationContractAttribute.OperationContractAttribute
+  fullName: OperationContractAttribute.OperationContractAttribute
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+- uid: System.ServiceModel.OperationContractAttribute.Action*
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: Action
+  nameWithType: OperationContractAttribute.Action
+  fullName: OperationContractAttribute.Action
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+- uid: System.ServiceModel.OperationContractAttribute.AsyncPattern*
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: AsyncPattern
+  nameWithType: OperationContractAttribute.AsyncPattern
+  fullName: OperationContractAttribute.AsyncPattern
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+- uid: System.ServiceModel.OperationContractAttribute.HasProtectionLevel*
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: HasProtectionLevel
+  nameWithType: OperationContractAttribute.HasProtectionLevel
+  fullName: OperationContractAttribute.HasProtectionLevel
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+- uid: System.ServiceModel.OperationContractAttribute.IsInitiating*
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: IsInitiating
+  nameWithType: OperationContractAttribute.IsInitiating
+  fullName: OperationContractAttribute.IsInitiating
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+- uid: System.ServiceModel.OperationContractAttribute.IsOneWay*
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: IsOneWay
+  nameWithType: OperationContractAttribute.IsOneWay
+  fullName: OperationContractAttribute.IsOneWay
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+- uid: System.ServiceModel.OperationContractAttribute.IsTerminating*
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: IsTerminating
+  nameWithType: OperationContractAttribute.IsTerminating
+  fullName: OperationContractAttribute.IsTerminating
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+- uid: System.ServiceModel.OperationContractAttribute.Name*
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: Name
+  nameWithType: OperationContractAttribute.Name
+  fullName: OperationContractAttribute.Name
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+- uid: System.ServiceModel.OperationContractAttribute.ProtectionLevel*
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: ProtectionLevel
+  nameWithType: OperationContractAttribute.ProtectionLevel
+  fullName: OperationContractAttribute.ProtectionLevel
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+- uid: System.ServiceModel.OperationContractAttribute.ReplyAction*
+  parent: System.ServiceModel.OperationContractAttribute
+  isExternal: false
+  name: ReplyAction
+  nameWithType: OperationContractAttribute.ReplyAction
+  fullName: OperationContractAttribute.ReplyAction
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/OperationContractAttribute.xml
+- uid: System.Attribute.Equals(System.Object)
+  parent: System.Attribute
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Attribute.Equals(Object)
+  fullName: Attribute.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Attribute.GetHashCode
+  parent: System.Attribute
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Attribute.GetHashCode()
+  fullName: Attribute.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(ParameterInfo, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttribute(ParameterInfo, Type, Boolean)
+  fullName: Attribute.GetCustomAttribute(ParameterInfo, Type, Boolean)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(MemberInfo, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttribute(MemberInfo, Type, Boolean)
+  fullName: Attribute.GetCustomAttribute(MemberInfo, Type, Boolean)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.Assembly,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(Assembly, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttribute(Assembly, Type, Boolean)
+  fullName: Attribute.GetCustomAttribute(Assembly, Type, Boolean)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.Module,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(Module, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttribute(Module, Type, Boolean)
+  fullName: Attribute.GetCustomAttribute(Module, Type, Boolean)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.Module,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(Module, Type)
+  nameWithType: Attribute.GetCustomAttribute(Module, Type)
+  fullName: Attribute.GetCustomAttribute(Module, Type)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.MemberInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(MemberInfo, Type)
+  nameWithType: Attribute.GetCustomAttribute(MemberInfo, Type)
+  fullName: Attribute.GetCustomAttribute(MemberInfo, Type)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.Assembly,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(Assembly, Type)
+  nameWithType: Attribute.GetCustomAttribute(Assembly, Type)
+  fullName: Attribute.GetCustomAttribute(Assembly, Type)
+- uid: System.Attribute.GetCustomAttribute(System.Reflection.ParameterInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttribute(ParameterInfo, Type)
+  nameWithType: Attribute.GetCustomAttribute(ParameterInfo, Type)
+  fullName: Attribute.GetCustomAttribute(ParameterInfo, Type)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Module, Type)
+  nameWithType: Attribute.GetCustomAttributes(Module, Type)
+  fullName: Attribute.GetCustomAttributes(Module, Type)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(ParameterInfo, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(ParameterInfo, Type, Boolean)
+  fullName: Attribute.GetCustomAttributes(ParameterInfo, Type, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Module, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(Module, Type, Boolean)
+  fullName: Attribute.GetCustomAttributes(Module, Type, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(MemberInfo, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(MemberInfo, Type, Boolean)
+  fullName: Attribute.GetCustomAttributes(MemberInfo, Type, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Assembly, Type, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(Assembly, Type, Boolean)
+  fullName: Attribute.GetCustomAttributes(Assembly, Type, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(ParameterInfo, Type)
+  nameWithType: Attribute.GetCustomAttributes(ParameterInfo, Type)
+  fullName: Attribute.GetCustomAttributes(ParameterInfo, Type)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Module,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Module, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(Module, Boolean)
+  fullName: Attribute.GetCustomAttributes(Module, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(ParameterInfo, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(ParameterInfo, Boolean)
+  fullName: Attribute.GetCustomAttributes(ParameterInfo, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(MemberInfo, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(MemberInfo, Boolean)
+  fullName: Attribute.GetCustomAttributes(MemberInfo, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Assembly, Type)
+  nameWithType: Attribute.GetCustomAttributes(Assembly, Type)
+  fullName: Attribute.GetCustomAttributes(Assembly, Type)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Assembly,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Assembly, Boolean)
+  nameWithType: Attribute.GetCustomAttributes(Assembly, Boolean)
+  fullName: Attribute.GetCustomAttributes(Assembly, Boolean)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.ParameterInfo)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(ParameterInfo)
+  nameWithType: Attribute.GetCustomAttributes(ParameterInfo)
+  fullName: Attribute.GetCustomAttributes(ParameterInfo)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Module)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Module)
+  nameWithType: Attribute.GetCustomAttributes(Module)
+  fullName: Attribute.GetCustomAttributes(Module)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(MemberInfo)
+  nameWithType: Attribute.GetCustomAttributes(MemberInfo)
+  fullName: Attribute.GetCustomAttributes(MemberInfo)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.Assembly)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(Assembly)
+  nameWithType: Attribute.GetCustomAttributes(Assembly)
+  fullName: Attribute.GetCustomAttributes(Assembly)
+- uid: System.Attribute.GetCustomAttributes(System.Reflection.MemberInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: GetCustomAttributes(MemberInfo, Type)
+  nameWithType: Attribute.GetCustomAttributes(MemberInfo, Type)
+  fullName: Attribute.GetCustomAttributes(MemberInfo, Type)
+- uid: System.Attribute.IsDefaultAttribute
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefaultAttribute()
+  nameWithType: Attribute.IsDefaultAttribute()
+  fullName: Attribute.IsDefaultAttribute()
+- uid: System.Attribute.IsDefined(System.Reflection.ParameterInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(ParameterInfo, Type, Boolean)
+  nameWithType: Attribute.IsDefined(ParameterInfo, Type, Boolean)
+  fullName: Attribute.IsDefined(ParameterInfo, Type, Boolean)
+- uid: System.Attribute.IsDefined(System.Reflection.Module,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(Module, Type, Boolean)
+  nameWithType: Attribute.IsDefined(Module, Type, Boolean)
+  fullName: Attribute.IsDefined(Module, Type, Boolean)
+- uid: System.Attribute.IsDefined(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(MemberInfo, Type, Boolean)
+  nameWithType: Attribute.IsDefined(MemberInfo, Type, Boolean)
+  fullName: Attribute.IsDefined(MemberInfo, Type, Boolean)
+- uid: System.Attribute.IsDefined(System.Reflection.Assembly,System.Type,System.Boolean)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(Assembly, Type, Boolean)
+  nameWithType: Attribute.IsDefined(Assembly, Type, Boolean)
+  fullName: Attribute.IsDefined(Assembly, Type, Boolean)
+- uid: System.Attribute.IsDefined(System.Reflection.MemberInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(MemberInfo, Type)
+  nameWithType: Attribute.IsDefined(MemberInfo, Type)
+  fullName: Attribute.IsDefined(MemberInfo, Type)
+- uid: System.Attribute.IsDefined(System.Reflection.Module,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(Module, Type)
+  nameWithType: Attribute.IsDefined(Module, Type)
+  fullName: Attribute.IsDefined(Module, Type)
+- uid: System.Attribute.IsDefined(System.Reflection.Assembly,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(Assembly, Type)
+  nameWithType: Attribute.IsDefined(Assembly, Type)
+  fullName: Attribute.IsDefined(Assembly, Type)
+- uid: System.Attribute.IsDefined(System.Reflection.ParameterInfo,System.Type)
+  parent: System.Attribute
+  isExternal: false
+  name: IsDefined(ParameterInfo, Type)
+  nameWithType: Attribute.IsDefined(ParameterInfo, Type)
+  fullName: Attribute.IsDefined(ParameterInfo, Type)
+- uid: System.Attribute.Match(System.Object)
+  parent: System.Attribute
+  isExternal: false
+  name: Match(Object)
+  nameWithType: Attribute.Match(Object)
+  fullName: Attribute.Match(Object)
+- uid: System.Attribute.TypeId
+  parent: System.Attribute
+  isExternal: false
+  name: TypeId
+  nameWithType: Attribute.TypeId
+  fullName: Attribute.TypeId
+- uid: System.Attribute.System#Runtime#InteropServices#_Attribute#GetIDsOfNames(System.Guid@,System.IntPtr,System.UInt32,System.UInt32,System.IntPtr)
+  parent: System.Attribute
+  isExternal: false
+  name: _Attribute.GetIDsOfNames(Guid, IntPtr, UInt32, UInt32, IntPtr)
+  nameWithType: Attribute._Attribute.GetIDsOfNames(Guid, IntPtr, UInt32, UInt32, IntPtr)
+  fullName: Attribute._Attribute.GetIDsOfNames(Guid, IntPtr, UInt32, UInt32, IntPtr)
+- uid: System.Attribute.System#Runtime#InteropServices#_Attribute#GetTypeInfo(System.UInt32,System.UInt32,System.IntPtr)
+  parent: System.Attribute
+  isExternal: false
+  name: _Attribute.GetTypeInfo(UInt32, UInt32, IntPtr)
+  nameWithType: Attribute._Attribute.GetTypeInfo(UInt32, UInt32, IntPtr)
+  fullName: Attribute._Attribute.GetTypeInfo(UInt32, UInt32, IntPtr)
+- uid: System.Attribute.System#Runtime#InteropServices#_Attribute#GetTypeInfoCount(System.UInt32@)
+  parent: System.Attribute
+  isExternal: false
+  name: _Attribute.GetTypeInfoCount(UInt32)
+  nameWithType: Attribute._Attribute.GetTypeInfoCount(UInt32)
+  fullName: Attribute._Attribute.GetTypeInfoCount(UInt32)
+- uid: System.Attribute.System#Runtime#InteropServices#_Attribute#Invoke(System.UInt32,System.Guid@,System.UInt32,System.Int16,System.IntPtr,System.IntPtr,System.IntPtr,System.IntPtr)
+  parent: System.Attribute
+  isExternal: false
+  name: _Attribute.Invoke(UInt32, Guid, UInt32, Int16, IntPtr, IntPtr, IntPtr, IntPtr)
+  nameWithType: Attribute._Attribute.Invoke(UInt32, Guid, UInt32, Int16, IntPtr, IntPtr, IntPtr, IntPtr)
+  fullName: Attribute._Attribute.Invoke(UInt32, Guid, UInt32, Int16, IntPtr, IntPtr, IntPtr, IntPtr)

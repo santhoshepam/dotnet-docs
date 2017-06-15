@@ -1,0 +1,402 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.ServiceModel.Description.IOperationBehavior
+  commentId: T:System.ServiceModel.Description.IOperationBehavior
+  id: IOperationBehavior
+  children:
+  - System.ServiceModel.Description.IOperationBehavior.AddBindingParameters(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Channels.BindingParameterCollection)
+  - System.ServiceModel.Description.IOperationBehavior.ApplyClientBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.ClientOperation)
+  - System.ServiceModel.Description.IOperationBehavior.ApplyDispatchBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.DispatchOperation)
+  - System.ServiceModel.Description.IOperationBehavior.Validate(System.ServiceModel.Description.OperationDescription)
+  langs:
+  - csharp
+  name: IOperationBehavior
+  nameWithType: IOperationBehavior
+  fullName: System.ServiceModel.Description.IOperationBehavior
+  type: Interface
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Implements methods that can be used to extend run-time behavior for an operation in either a service or client application.
+  remarks: "Implement the <xref:System.ServiceModel.Description.IOperationBehavior> interface to modify, examine, or extend some aspect of operation-wide execution at the application level for either client or service applications.  \n  \n-   Use the <xref:System.ServiceModel.Description.IOperationBehavior.AddBindingParameters%2A> method to pass custom data at runtime to enable bindings to support custom behavior.  \n  \n-   Use the <xref:System.ServiceModel.Description.IOperationBehavior.ApplyClientBehavior%2A> method to modify, examine, or insert extensions to a client dispatcher in a client application.  \n  \n-   Use the <xref:System.ServiceModel.Description.IOperationBehavior.ApplyDispatchBehavior%2A> method to modify, examine, or insert extensions to operation-wide execution in a service application.  \n  \n-   Use the <xref:System.ServiceModel.Description.IOperationBehavior.Validate%2A> method to confirm that a <xref:System.ServiceModel.Description.OperationDescription> meets specific requirements. This can be used to ensure that an operation has a certain configuration setting enabled, supports a particular feature and other requirements.  \n  \n <xref:System.ServiceModel.Description.IOperationBehavior> objects can make use of any of these methods, but often only one is important; in such cases, the unused methods can return, performing no action.  \n  \n> [!NOTE]\n>  All of the <xref:System.ServiceModel.Description.IOperationBehavior> methods pass an <xref:System.ServiceModel.Description.OperationDescription> object as a parameter. This parameter is for examination only; if you modify the <xref:System.ServiceModel.Description.OperationDescription> object the execution behavior is undefined.  \n  \n <xref:System.ServiceModel.Description.IOperationBehavior> objects are typically used to access the various properties of the <xref:System.ServiceModel.Dispatcher.DispatchOperation?displayProperty=fullName> object in a service application and the <xref:System.ServiceModel.Dispatcher.ClientOperation?displayProperty=fullName> object in a client application.  \n  \n Typically, the developer first reviews the extensibility points to determine which customization option suits the application scenario and then implements the customization at the appropriate scope. For example, <xref:System.ServiceModel.Description.IServiceBehavior?displayProperty=fullName> objects can insert customizations for all messages in an entire service and <xref:System.ServiceModel.Description.IContractBehavior?displayProperty=fullName> objects can insert customizations for all messages across a specific contract, and so on. For a description of the various properties and customizations available, see [Extending ServiceHost and the Service Model Layer](~/docs/framework/wcf/extending/extending-servicehost-and-the-service-model-layer.md).  \n  \n Once a customization has been decided upon (and the customization interface implemented if necessary) and the <xref:System.ServiceModel.Description.IOperationBehavior> is the appropriate scope of customization, the customization must be inserted into the [!INCLUDE[indigo1](~/includes/indigo1-md.md)] runtime by implementing <xref:System.ServiceModel.Description.IOperationBehavior> and adding the operation behavior to the runtime.  \n  \n There are two ways to add the <xref:System.ServiceModel.Description.IOperationBehavior> to the runtime:  \n  \n-   Programmatically add the custom operation behavior to the <xref:System.ServiceModel.Description.OperationDescription.Behaviors%2A?displayProperty=fullName> property prior to the opening of the service host (in a service application) or the channel factory (in a client application).  \n  \n-   Add the behavior using a custom attribute.  \n  \n To perform the service customization task for which it is intended, the <xref:System.ServiceModel.Description.IOperationBehavior> object must be added to the <xref:System.ServiceModel.Description.OperationDescription.Behaviors%2A?displayProperty=fullName> property prior to the construction of the service runtime, which occurs when <xref:System.ServiceModel.ICommunicationObject.Open%2A?displayProperty=fullName> method is called on <xref:System.ServiceModel.ServiceHost?displayProperty=fullName>. To perform a client customization task, the <xref:System.ServiceModel.Description.IOperationBehavior> object must be added to the <xref:System.ServiceModel.Description.OperationDescription.Behaviors%2A?displayProperty=fullName> property before calling the <xref:System.ServiceModel.ChannelFactory%601.CreateChannel%2A?displayProperty=fullName> method or the <xref:System.ServiceModel.ICommunicationObject.Open%2A?displayProperty=fullName> method on <xref:System.ServiceModel.ChannelFactory%601>.  \n  \n Although the operation behavior is designed for easy access to the runtime at the scope of an individual operation, you can access the runtime at a larger scope by accessing the parent runtime object."
+  example:
+  - "The following code example shows an implementation of <xref:System.ServiceModel.Dispatcher.IParameterInspector?displayProperty=fullName> that writes to the console when the inspector is invoked on an operation. This customization can only be attached to the <xref:System.ServiceModel.Dispatcher.DispatchOperation?displayProperty=fullName> or <xref:System.ServiceModel.Dispatcher.ClientOperation?displayProperty=fullName> and is therefore usually inserted by an operation behavior.  \n  \n [!code-csharp[Interceptors#4](~/samples/snippets/csharp/VS_Snippets_CFX/interceptors/cs/interceptors.cs#4)]\n [!code-vb[Interceptors#4](~/samples/snippets/visualbasic/VS_Snippets_CFX/interceptors/vb/interceptors.vb#4)]  \n  \n The following code example shows how the operation behavior attaches the parameter inspector to the runtime.  \n  \n [!code-csharp[Interceptors#6](~/samples/snippets/csharp/VS_Snippets_CFX/interceptors/cs/insertingbehaviors.cs#6)]\n [!code-vb[Interceptors#6](~/samples/snippets/visualbasic/VS_Snippets_CFX/interceptors/vb/insertingbehaviors.vb#6)]"
+  syntax:
+    content: public interface IOperationBehavior
+  derivedClasses:
+  - System.ServiceModel.OperationBehaviorAttribute
+  - System.ServiceModel.ReceiveContextEnabledAttribute
+  - System.ServiceModel.TransactionFlowAttribute
+  - System.ServiceModel.Description.DataContractSerializerOperationBehavior
+  - System.ServiceModel.Description.DurableOperationAttribute
+  - System.ServiceModel.Description.XmlSerializerOperationBehavior
+  - System.ServiceModel.Web.AspNetCacheProfileAttribute
+  - System.ServiceModel.Web.WebGetAttribute
+  - System.ServiceModel.Web.WebInvokeAttribute
+  implements: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IOperationBehavior.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Description.IOperationBehavior.AddBindingParameters(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Channels.BindingParameterCollection)
+  commentId: M:System.ServiceModel.Description.IOperationBehavior.AddBindingParameters(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Channels.BindingParameterCollection)
+  id: AddBindingParameters(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Description.IOperationBehavior
+  langs:
+  - csharp
+  name: AddBindingParameters(OperationDescription, BindingParameterCollection)
+  nameWithType: IOperationBehavior.AddBindingParameters(OperationDescription, BindingParameterCollection)
+  fullName: IOperationBehavior.AddBindingParameters(OperationDescription, BindingParameterCollection)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Implement to pass data at runtime to bindings to support custom behavior.
+  remarks: Implement the <xref:System.ServiceModel.Description.IOperationBehavior.AddBindingParameters%2A> method to provide binding elements with the extra objects they require to support the operation behavior. When binding parameters are added here, the binding can locate and process these objects when the channel listener or channel factory is created. Typically, you implement the <xref:System.ServiceModel.Description.IOperationBehavior.AddBindingParameters%2A> method to pass information about the operation to a custom binding element so that it can build a supporting channel correctly. Return no value if no modifications are required.
+  syntax:
+    content: public void AddBindingParameters (System.ServiceModel.Description.OperationDescription operationDescription, System.ServiceModel.Channels.BindingParameterCollection bindingParameters);
+    parameters:
+    - id: operationDescription
+      type: System.ServiceModel.Description.OperationDescription
+      description: The operation being examined. Use for examination only. If the operation description is modified, the results are undefined.
+    - id: bindingParameters
+      type: System.ServiceModel.Channels.BindingParameterCollection
+      description: The collection of objects that binding elements require to support the behavior.
+  overload: System.ServiceModel.Description.IOperationBehavior.AddBindingParameters*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IOperationBehavior.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Description.IOperationBehavior.ApplyClientBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.ClientOperation)
+  commentId: M:System.ServiceModel.Description.IOperationBehavior.ApplyClientBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.ClientOperation)
+  id: ApplyClientBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.ClientOperation)
+  parent: System.ServiceModel.Description.IOperationBehavior
+  langs:
+  - csharp
+  name: ApplyClientBehavior(OperationDescription, ClientOperation)
+  nameWithType: IOperationBehavior.ApplyClientBehavior(OperationDescription, ClientOperation)
+  fullName: IOperationBehavior.ApplyClientBehavior(OperationDescription, ClientOperation)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Implements a modification or extension of the client across an operation.
+  remarks: "Implement the <xref:System.ServiceModel.Description.IOperationBehavior.ApplyClientBehavior%2A> method to view, modify, or add a custom extension to the client runtime across all messages used with a specific operation. For details about what customizations you can do with a client run-time object, see <xref:System.ServiceModel.Dispatcher.ClientRuntime> and <xref:System.ServiceModel.Dispatcher.ClientOperation>.  \n  \n It is recommended that the <xref:System.ServiceModel.Description.IOperationBehavior.ApplyClientBehavior%2A> method throw a <xref:System.NotImplementedException> if the behavior is only intended for use in a service application."
+  example:
+  - "The following code example shows an implementation of <xref:System.ServiceModel.Dispatcher.IParameterInspector?displayProperty=fullName> that writes to the console when the inspector is invoked on an operation. This customization can only be attached to the <xref:System.ServiceModel.Dispatcher.DispatchOperation?displayProperty=fullName> or <xref:System.ServiceModel.Dispatcher.ClientOperation?displayProperty=fullName> and is therefore usually inserted by an operation behavior.  \n  \n [!code-csharp[Interceptors#4](~/samples/snippets/csharp/VS_Snippets_CFX/interceptors/cs/interceptors.cs#4)]\n [!code-vb[Interceptors#4](~/samples/snippets/visualbasic/VS_Snippets_CFX/interceptors/vb/interceptors.vb#4)]  \n  \n The following code example shows how the operation behavior attaches the parameter inspector to the runtime.  \n  \n [!code-csharp[Interceptors#6](~/samples/snippets/csharp/VS_Snippets_CFX/interceptors/cs/insertingbehaviors.cs#6)]\n [!code-vb[Interceptors#6](~/samples/snippets/visualbasic/VS_Snippets_CFX/interceptors/vb/insertingbehaviors.vb#6)]"
+  syntax:
+    content: public void ApplyClientBehavior (System.ServiceModel.Description.OperationDescription operationDescription, System.ServiceModel.Dispatcher.ClientOperation clientOperation);
+    parameters:
+    - id: operationDescription
+      type: System.ServiceModel.Description.OperationDescription
+      description: The operation being examined. Use for examination only. If the operation description is modified, the results are undefined.
+    - id: clientOperation
+      type: System.ServiceModel.Dispatcher.ClientOperation
+      description: The run-time object that exposes customization properties for the operation described by <code>operationDescription</code>.
+  overload: System.ServiceModel.Description.IOperationBehavior.ApplyClientBehavior*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IOperationBehavior.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Description.IOperationBehavior.ApplyDispatchBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.DispatchOperation)
+  commentId: M:System.ServiceModel.Description.IOperationBehavior.ApplyDispatchBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.DispatchOperation)
+  id: ApplyDispatchBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.DispatchOperation)
+  parent: System.ServiceModel.Description.IOperationBehavior
+  langs:
+  - csharp
+  name: ApplyDispatchBehavior(OperationDescription, DispatchOperation)
+  nameWithType: IOperationBehavior.ApplyDispatchBehavior(OperationDescription, DispatchOperation)
+  fullName: IOperationBehavior.ApplyDispatchBehavior(OperationDescription, DispatchOperation)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Implements a modification or extension of the service across an operation.
+  remarks: "Implement the <xref:System.ServiceModel.Description.IOperationBehavior.ApplyDispatchBehavior%2A> method to view, modify, or extend the service runtime across all messages or for a specific operation. For details about what customizations you can do in a service application, see <xref:System.ServiceModel.Dispatcher.DispatchRuntime?displayProperty=fullName> and <xref:System.ServiceModel.Dispatcher.DispatchOperation?displayProperty=fullName>.  \n  \n It is recommended that the <xref:System.ServiceModel.Description.IOperationBehavior.ApplyDispatchBehavior%2A> method throw a <xref:System.NotImplementedException> exception if the behavior is only intended for use in a client application."
+  example:
+  - "The following code example shows an implementation of <xref:System.ServiceModel.Dispatcher.IParameterInspector?displayProperty=fullName> that writes to the console when the inspector is invoked on an operation. This customization can only be attached to the <xref:System.ServiceModel.Dispatcher.DispatchOperation?displayProperty=fullName> or <xref:System.ServiceModel.Dispatcher.ClientOperation?displayProperty=fullName> and is therefore usually inserted by an operation behavior.  \n  \n [!code-csharp[Interceptors#4](~/samples/snippets/csharp/VS_Snippets_CFX/interceptors/cs/interceptors.cs#4)]\n [!code-vb[Interceptors#4](~/samples/snippets/visualbasic/VS_Snippets_CFX/interceptors/vb/interceptors.vb#4)]  \n  \n The following code example shows how the operation behavior attaches the parameter inspector to the runtime.  \n  \n [!code-csharp[Interceptors#6](~/samples/snippets/csharp/VS_Snippets_CFX/interceptors/cs/insertingbehaviors.cs#6)]\n [!code-vb[Interceptors#6](~/samples/snippets/visualbasic/VS_Snippets_CFX/interceptors/vb/insertingbehaviors.vb#6)]"
+  syntax:
+    content: public void ApplyDispatchBehavior (System.ServiceModel.Description.OperationDescription operationDescription, System.ServiceModel.Dispatcher.DispatchOperation dispatchOperation);
+    parameters:
+    - id: operationDescription
+      type: System.ServiceModel.Description.OperationDescription
+      description: The operation being examined. Use for examination only. If the operation description is modified, the results are undefined.
+    - id: dispatchOperation
+      type: System.ServiceModel.Dispatcher.DispatchOperation
+      description: The run-time object that exposes customization properties for the operation described by <code>operationDescription</code>.
+  overload: System.ServiceModel.Description.IOperationBehavior.ApplyDispatchBehavior*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IOperationBehavior.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Description.IOperationBehavior.Validate(System.ServiceModel.Description.OperationDescription)
+  commentId: M:System.ServiceModel.Description.IOperationBehavior.Validate(System.ServiceModel.Description.OperationDescription)
+  id: Validate(System.ServiceModel.Description.OperationDescription)
+  parent: System.ServiceModel.Description.IOperationBehavior
+  langs:
+  - csharp
+  name: Validate(OperationDescription)
+  nameWithType: IOperationBehavior.Validate(OperationDescription)
+  fullName: IOperationBehavior.Validate(OperationDescription)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Implement to confirm that the operation meets some intended criteria.
+  remarks: "Implement the <xref:System.ServiceModel.Description.IOperationBehavior.Validate%2A> method to examine the structure to confirm any set of criteria. It is not necessary to perform any customizations in <xref:System.ServiceModel.Description.IOperationBehavior.ApplyClientBehavior%2A> or <xref:System.ServiceModel.Description.IOperationBehavior.ApplyDispatchBehavior%2A> to make use of this method. If the operation passes validation, return; otherwise, throw an exception.  \n  \n For example, the <xref:System.ServiceModel.Description.IOperationBehavior.Validate%2A> method can be use to ensure that an operation is authorized."
+  syntax:
+    content: public void Validate (System.ServiceModel.Description.OperationDescription operationDescription);
+    parameters:
+    - id: operationDescription
+      type: System.ServiceModel.Description.OperationDescription
+      description: The operation being examined. Use for examination only. If the operation description is modified, the results are undefined.
+  overload: System.ServiceModel.Description.IOperationBehavior.Validate*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IOperationBehavior.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+references:
+- uid: System.ServiceModel.Description.IOperationBehavior.AddBindingParameters(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Description.IOperationBehavior
+  isExternal: false
+  name: AddBindingParameters(OperationDescription, BindingParameterCollection)
+  nameWithType: IOperationBehavior.AddBindingParameters(OperationDescription, BindingParameterCollection)
+  fullName: IOperationBehavior.AddBindingParameters(OperationDescription, BindingParameterCollection)
+- uid: System.ServiceModel.Description.OperationDescription
+  parent: System.ServiceModel.Description
+  isExternal: false
+  name: OperationDescription
+  nameWithType: OperationDescription
+  fullName: System.ServiceModel.Description.OperationDescription
+- uid: System.ServiceModel.Channels.BindingParameterCollection
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: BindingParameterCollection
+  nameWithType: BindingParameterCollection
+  fullName: System.ServiceModel.Channels.BindingParameterCollection
+- uid: System.ServiceModel.Description.IOperationBehavior.ApplyClientBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.ClientOperation)
+  parent: System.ServiceModel.Description.IOperationBehavior
+  isExternal: false
+  name: ApplyClientBehavior(OperationDescription, ClientOperation)
+  nameWithType: IOperationBehavior.ApplyClientBehavior(OperationDescription, ClientOperation)
+  fullName: IOperationBehavior.ApplyClientBehavior(OperationDescription, ClientOperation)
+- uid: System.ServiceModel.Dispatcher.ClientOperation
+  parent: System.ServiceModel.Dispatcher
+  isExternal: false
+  name: ClientOperation
+  nameWithType: ClientOperation
+  fullName: System.ServiceModel.Dispatcher.ClientOperation
+- uid: System.ServiceModel.Description.IOperationBehavior.ApplyDispatchBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.DispatchOperation)
+  parent: System.ServiceModel.Description.IOperationBehavior
+  isExternal: false
+  name: ApplyDispatchBehavior(OperationDescription, DispatchOperation)
+  nameWithType: IOperationBehavior.ApplyDispatchBehavior(OperationDescription, DispatchOperation)
+  fullName: IOperationBehavior.ApplyDispatchBehavior(OperationDescription, DispatchOperation)
+- uid: System.ServiceModel.Dispatcher.DispatchOperation
+  parent: System.ServiceModel.Dispatcher
+  isExternal: false
+  name: DispatchOperation
+  nameWithType: DispatchOperation
+  fullName: System.ServiceModel.Dispatcher.DispatchOperation
+- uid: System.ServiceModel.Description.IOperationBehavior.Validate(System.ServiceModel.Description.OperationDescription)
+  parent: System.ServiceModel.Description.IOperationBehavior
+  isExternal: false
+  name: Validate(OperationDescription)
+  nameWithType: IOperationBehavior.Validate(OperationDescription)
+  fullName: IOperationBehavior.Validate(OperationDescription)
+- uid: System.ServiceModel.Description.IOperationBehavior.AddBindingParameters*
+  parent: System.ServiceModel.Description.IOperationBehavior
+  isExternal: false
+  name: AddBindingParameters
+  nameWithType: IOperationBehavior.AddBindingParameters
+  fullName: IOperationBehavior.AddBindingParameters
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IOperationBehavior.xml
+- uid: System.ServiceModel.Description.IOperationBehavior.ApplyClientBehavior*
+  parent: System.ServiceModel.Description.IOperationBehavior
+  isExternal: false
+  name: ApplyClientBehavior
+  nameWithType: IOperationBehavior.ApplyClientBehavior
+  fullName: IOperationBehavior.ApplyClientBehavior
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IOperationBehavior.xml
+- uid: System.ServiceModel.Description.IOperationBehavior.ApplyDispatchBehavior*
+  parent: System.ServiceModel.Description.IOperationBehavior
+  isExternal: false
+  name: ApplyDispatchBehavior
+  nameWithType: IOperationBehavior.ApplyDispatchBehavior
+  fullName: IOperationBehavior.ApplyDispatchBehavior
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IOperationBehavior.xml
+- uid: System.ServiceModel.Description.IOperationBehavior.Validate*
+  parent: System.ServiceModel.Description.IOperationBehavior
+  isExternal: false
+  name: Validate
+  nameWithType: IOperationBehavior.Validate
+  fullName: IOperationBehavior.Validate
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IOperationBehavior.xml

@@ -1,0 +1,1945 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Xml.Linq.XObject
+  commentId: T:System.Xml.Linq.XObject
+  id: XObject
+  children:
+  - System.Xml.Linq.XObject.AddAnnotation(System.Object)
+  - System.Xml.Linq.XObject.Annotation(System.Type)
+  - System.Xml.Linq.XObject.Annotation``1
+  - System.Xml.Linq.XObject.Annotations(System.Type)
+  - System.Xml.Linq.XObject.Annotations``1
+  - System.Xml.Linq.XObject.BaseUri
+  - System.Xml.Linq.XObject.Changed
+  - System.Xml.Linq.XObject.Changing
+  - System.Xml.Linq.XObject.Document
+  - System.Xml.Linq.XObject.NodeType
+  - System.Xml.Linq.XObject.Parent
+  - System.Xml.Linq.XObject.RemoveAnnotations(System.Type)
+  - System.Xml.Linq.XObject.RemoveAnnotations``1
+  - System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#HasLineInfo
+  - System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#LineNumber
+  - System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#LinePosition
+  langs:
+  - csharp
+  name: XObject
+  nameWithType: XObject
+  fullName: System.Xml.Linq.XObject
+  type: Class
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Represents a node or an attribute in an XML tree.
+  remarks: "This class is the abstract common base class for <xref:System.Xml.Linq.XNode> and <xref:System.Xml.Linq.XAttribute>. It provides some basic functionality that is common to both classes, such as annotations, and raising events when nodes have changed.  \n  \n Note that annotations are not part of the XML infoset; they are not serialized or deserialized."
+  syntax:
+    content: 'public abstract class XObject : System.Xml.IXmlLineInfo'
+  inheritance:
+  - System.Object
+  derivedClasses:
+  - System.Xml.Linq.XAttribute
+  - System.Xml.Linq.XNode
+  implements:
+  - System.Xml.IXmlLineInfo
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XObject.AddAnnotation(System.Object)
+  commentId: M:System.Xml.Linq.XObject.AddAnnotation(System.Object)
+  id: AddAnnotation(System.Object)
+  parent: System.Xml.Linq.XObject
+  langs:
+  - csharp
+  name: AddAnnotation(Object)
+  nameWithType: XObject.AddAnnotation(Object)
+  fullName: XObject.AddAnnotation(Object)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Adds an object to the annotation list of this <xref href="System.Xml.Linq.XObject"></xref>.
+  remarks: Note that annotations are not part of the infoset; they are not persisted, or displayed by <xref:System.Xml.Linq.XNode.ToString%2A>. Also, if you import an XML Namespace into your VB project and call AddAnnotation with the SaveOptions.OmitDuplicateNamespaces enumeration value, then only one element will contain the XML Namespace attribute instead of every element. For more information, see [Removing duplicate namespaces in XML Literals](http://blogs.msdn.com/b/vbteam/archive/2010/06/09/removing-duplicate-namespaces-in-xml-literals-shyam-namboodiripad.aspx).
+  example:
+  - "The following example adds an annotation to an <xref:System.Xml.Linq.XElement>.  \n  \n```csharp  \n  \n                public class MyAnnotation {  \n    private string tag;  \n    public string Tag {get{return tag;} set{tag=value;}}  \n    public MyAnnotation(string tag) {  \n        this.tag = tag;  \n    }  \n}  \n  \npublic class Program {  \n    public static void Main(string[] args) {     \n        MyAnnotation ma = new MyAnnotation(\"T1\");  \n        XElement root = new XElement(\"Root\", \"content\");  \n        root.AddAnnotation(ma);  \n  \n        MyAnnotation ma2 = (MyAnnotation)root.Annotation<MyAnnotation>();  \n        Console.WriteLine(ma2.Tag);  \n    }  \n}  \n```  \n  \n```vb  \n  \n                Public Class MyAnnotation  \n    Private _tag As String  \n  \n    Property Tag() As String  \n        Get  \n            Return Me._tag  \n        End Get  \n        Set(ByVal Value As String)  \n            Me._tag = Value  \n        End Set  \n    End Property  \n  \n    Public Sub New(ByVal tag As String)  \n        Me._tag = tag  \n    End Sub  \nEnd Class  \n  \nModule Module1  \n    Sub Main()  \n        Dim ma As MyAnnotation = New MyAnnotation(\"T1\")  \n        Dim root As XElement = <Root>content</Root>  \n        root.AddAnnotation(ma)  \n  \n        Dim ma2 As MyAnnotation = DirectCast(root.Annotation(Of MyAnnotation)(), MyAnnotation)  \n        Console.WriteLine(ma2.Tag)  \n    End Sub  \n  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \nT1  \n```"
+  syntax:
+    content: public void AddAnnotation (object annotation);
+    parameters:
+    - id: annotation
+      type: System.Object
+      description: An <xref href="System.Object"></xref> that contains the annotation to add.
+  overload: System.Xml.Linq.XObject.AddAnnotation*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XObject.Annotation(System.Type)
+  commentId: M:System.Xml.Linq.XObject.Annotation(System.Type)
+  id: Annotation(System.Type)
+  parent: System.Xml.Linq.XObject
+  langs:
+  - csharp
+  name: Annotation(Type)
+  nameWithType: XObject.Annotation(Type)
+  fullName: XObject.Annotation(Type)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets the first annotation object of the specified type from this <xref href="System.Xml.Linq.XObject"></xref>.
+  remarks: ''
+  example:
+  - "The following example adds an annotation to an <xref:System.Xml.Linq.XElement>. It then retrieves the annotation, specifying the type to retrieve.  \n  \n```csharp  \n  \n                public class MyAnnotation {  \n    private string tag;  \n    public string Tag {get{return tag;} set{tag=value;}}  \n    public MyAnnotation(string tag) {  \n        this.tag = tag;  \n    }  \n}  \n  \npublic class Program {  \n    public static void Main(string[] args) {     \n        MyAnnotation ma = new MyAnnotation(\"T1\");  \n        XElement root = new XElement(\"Root\", \"content\");  \n        root.AddAnnotation(ma);  \n  \n        MyAnnotation ma2 = (MyAnnotation)root.Annotation(typeof(MyAnnotation));  \n        Console.WriteLine(ma2.Tag);  \n    }  \n}  \n```  \n  \n```vb  \n  \n                Public Class MyAnnotation  \n    Private _tag As String  \n  \n    Property Tag() As String  \n        Get  \n            Return Me._tag  \n        End Get  \n        Set(ByVal Value As String)  \n            Me._tag = Value  \n        End Set  \n    End Property  \n  \n    Public Sub New(ByVal tag As String)  \n        Me._tag = tag  \n    End Sub  \nEnd Class  \n  \nModule Module1  \n    Sub Main()  \n        Dim ma As MyAnnotation = New MyAnnotation(\"T1\")  \n        Dim root As XElement = <Root>content</Root>  \n        root.AddAnnotation(ma)  \n  \n        Dim ma2 As MyAnnotation = DirectCast(root.Annotation(GetType(MyAnnotation)), MyAnnotation)  \n        Console.WriteLine(ma2.Tag)  \n    End Sub  \n  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \nT1  \n```"
+  syntax:
+    content: public object Annotation (Type type);
+    parameters:
+    - id: type
+      type: System.Type
+      description: The <xref href="System.Type"></xref> of the annotation to retrieve.
+    return:
+      type: System.Object
+      description: The <xref href="System.Object"></xref> that contains the first annotation object that matches the specified type, or `null` if no annotation is of the specified type.
+  overload: System.Xml.Linq.XObject.Annotation*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XObject.Annotation``1
+  commentId: M:System.Xml.Linq.XObject.Annotation``1
+  id: Annotation``1
+  parent: System.Xml.Linq.XObject
+  langs:
+  - csharp
+  name: Annotation<T>()
+  nameWithType: XObject.Annotation<T>()
+  fullName: XObject.Annotation<T>()
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Get the first annotation object of the specified type from this <xref href="System.Xml.Linq.XObject"></xref>.
+  remarks: ''
+  example:
+  - "The following example adds an annotation to an element, and then retrieves it through this method.  \n  \n```csharp  \n  \n                public class MyAnnotation {  \n    private string tag;  \n    public string Tag {get{return tag;} set{tag=value;}}  \n    public MyAnnotation(string tag) {  \n        this.tag = tag;  \n    }  \n}  \n  \npublic class Program {  \n    public static void Main(string[] args) {     \n        MyAnnotation ma = new MyAnnotation(\"T1\");  \n        XElement root = new XElement(\"Root\", \"content\");  \n        root.AddAnnotation(ma);  \n  \n        MyAnnotation ma2 = root.Annotation<MyAnnotation>();  \n        Console.WriteLine(ma2.Tag);  \n    }  \n}  \n```  \n  \n```vb  \n  \n                Public Class MyAnnotation  \n    Private _tag As String  \n  \n    Property Tag() As String  \n        Get  \n            Return Me._tag  \n        End Get  \n        Set(ByVal Value As String)  \n            Me._tag = Value  \n        End Set  \n    End Property  \n  \n    Public Sub New(ByVal tag As String)  \n        Me._tag = tag  \n    End Sub  \nEnd Class  \n  \nModule Module1  \n    Sub Main()  \n        Dim ma As MyAnnotation = New MyAnnotation(\"T1\")  \n        Dim root As XElement = <Root>content</Root>  \n        root.AddAnnotation(ma)  \n  \n        Dim ma2 As MyAnnotation = root.Annotation(Of MyAnnotation)()  \n        Console.WriteLine(ma2.Tag)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \nT1  \n```"
+  syntax:
+    content: 'public T Annotation<T> () where T : class;'
+    parameters: []
+    typeParameters:
+    - id: T
+      description: The type of the annotation to retrieve.
+    return:
+      type: T
+      description: The first annotation object that matches the specified type, or `null` if no annotation is of the specified type.
+  overload: System.Xml.Linq.XObject.Annotation``1*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XObject.Annotations(System.Type)
+  commentId: M:System.Xml.Linq.XObject.Annotations(System.Type)
+  id: Annotations(System.Type)
+  parent: System.Xml.Linq.XObject
+  langs:
+  - csharp
+  name: Annotations(Type)
+  nameWithType: XObject.Annotations(Type)
+  fullName: XObject.Annotations(Type)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets a collection of annotations of the specified type for this <xref href="System.Xml.Linq.XObject"></xref>.
+  remarks: ''
+  example:
+  - "The following example adds some annotations to an <xref:System.Xml.Linq.XElement>, then retrieves a collection of annotations by using this method.  \n  \n```csharp  \n  \n                public class MyAnnotation  \n{  \n    private string tag;  \n    public string Tag { get { return tag; } set { tag = value; } }  \n    public MyAnnotation(string tag)  \n    {  \n        this.tag = tag;  \n    }  \n}  \n  \nclass Program  \n{  \n    static void Main(string[] args)  \n    {  \n        XElement root = new XElement(\"Root\", \"content\");  \n        root.AddAnnotation(new MyAnnotation(\"T1\"));  \n        root.AddAnnotation(new MyAnnotation(\"T2\"));  \n        root.AddAnnotation(\"abc\");  \n        root.AddAnnotation(\"def\");  \n  \n        IEnumerable<object> annotationList;  \n        annotationList = root.Annotations(typeof(MyAnnotation));  \n        foreach (object ma in annotationList)  \n            Console.WriteLine(((MyAnnotation)ma).Tag);  \n        Console.WriteLine(\"----\");  \n  \n        IEnumerable<object> stringAnnotationList;  \n        stringAnnotationList = root.Annotations(typeof(string));  \n        foreach (object str in stringAnnotationList)  \n            Console.WriteLine((string)str);  \n    }  \n}  \n```  \n  \n```vb  \n  \n                Public Class MyAnnotation  \n    Private _tag As String  \n  \n    Property Tag() As String  \n        Get  \n            Return Me._tag  \n        End Get  \n        Set(ByVal Value As String)  \n            Me._tag = Value  \n        End Set  \n    End Property  \n  \n    Public Sub New(ByVal tag As String)  \n        Me._tag = tag  \n    End Sub  \nEnd Class  \n  \nModule Module1  \n    Sub Main()  \n        Dim root As XElement = <Root>content</Root>  \n        root.AddAnnotation(New MyAnnotation(\"T1\"))  \n        root.AddAnnotation(New MyAnnotation(\"T2\"))  \n        root.AddAnnotation(\"abc\")  \n        root.AddAnnotation(\"def\")  \n  \n        Dim annotationList As IEnumerable(Of Object)  \n        annotationList = root.Annotations(GetType(MyAnnotation))  \n        For Each ma As MyAnnotation In annotationList  \n            Console.WriteLine(ma.Tag)  \n        Next  \n  \n        Console.WriteLine(\"----\")  \n  \n        Dim stringAnnotationList As IEnumerable(Of Object)  \n        stringAnnotationList = root.Annotations(GetType(String))  \n        For Each str As String In stringAnnotationList  \n            Console.WriteLine(str)  \n        Next  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \n                T1  \nT2  \n----  \nabc  \ndef  \n```"
+  syntax:
+    content: public System.Collections.Generic.IEnumerable<object> Annotations (Type type);
+    parameters:
+    - id: type
+      type: System.Type
+      description: The <xref href="System.Type"></xref> of the annotations to retrieve.
+    return:
+      type: System.Collections.Generic.IEnumerable{System.Object}
+      description: An <xref href="System.Collections.Generic.IEnumerable`1"></xref> of <xref href="System.Object"></xref> that contains the annotations that match the specified type for this <xref href="System.Xml.Linq.XObject"></xref>.
+  overload: System.Xml.Linq.XObject.Annotations*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XObject.Annotations``1
+  commentId: M:System.Xml.Linq.XObject.Annotations``1
+  id: Annotations``1
+  parent: System.Xml.Linq.XObject
+  langs:
+  - csharp
+  name: Annotations<T>()
+  nameWithType: XObject.Annotations<T>()
+  fullName: XObject.Annotations<T>()
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets a collection of annotations of the specified type for this <xref href="System.Xml.Linq.XObject"></xref>.
+  remarks: ''
+  example:
+  - "The following example uses this method to retrieve annotations on an element.  \n  \n```csharp  \n  \n                public class MyAnnotation {  \n    private string tag;  \n    public string Tag {get{return tag;} set{tag=value;}}  \n    public MyAnnotation(string tag) {  \n        this.tag = tag;  \n    }  \n}  \n  \nclass Program {  \n    static void Main(string[] args) {     \n        XElement root = new XElement(\"Root\", \"content\");  \n        root.AddAnnotation(new MyAnnotation(\"T1\"));  \n        root.AddAnnotation(new MyAnnotation(\"T2\"));  \n        root.AddAnnotation(\"abc\");  \n        root.AddAnnotation(\"def\");  \n  \n        IEnumerable<MyAnnotation> annotationList;  \n        annotationList = root.Annotations<MyAnnotation>();  \n        foreach (MyAnnotation ma in annotationList)  \n            Console.WriteLine(ma.Tag);  \n        Console.WriteLine(\"----\");  \n  \n        IEnumerable<string> stringAnnotationList;  \n        stringAnnotationList = root.Annotations<string>();  \n        foreach (string str in stringAnnotationList)  \n            Console.WriteLine(str);  \n    }  \n}  \n```  \n  \n```vb  \n  \n                Public Class MyAnnotation  \n    Private _tag As String  \n  \n    Property Tag() As String  \n        Get  \n            Return Me._tag  \n        End Get  \n        Set(ByVal Value As String)  \n            Me._tag = Value  \n        End Set  \n    End Property  \n  \n    Public Sub New(ByVal tag As String)  \n        Me._tag = tag  \n    End Sub  \nEnd Class  \n  \nModule Module1  \n    Sub Main()  \n        Dim root As XElement = <Root>content</Root>  \n        root.AddAnnotation(New MyAnnotation(\"T1\"))  \n        root.AddAnnotation(New MyAnnotation(\"T2\"))  \n        root.AddAnnotation(\"abc\")  \n        root.AddAnnotation(\"def\")  \n  \n        Dim annotationList As IEnumerable(Of MyAnnotation)  \n        annotationList = root.Annotations(Of MyAnnotation)()  \n        For Each ma As MyAnnotation In annotationList  \n            Console.WriteLine(ma.Tag)  \n        Next  \n        Console.WriteLine(\"----\")  \n  \n        Dim stringAnnotationList As IEnumerable(Of String)  \n        stringAnnotationList = root.Annotations(Of String)()  \n        For Each str As String In stringAnnotationList  \n            Console.WriteLine(str)  \n        Next  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \n                T1  \nT2  \n----  \nabc  \ndef  \n```"
+  syntax:
+    content: 'public System.Collections.Generic.IEnumerable<T> Annotations<T> () where T : class;'
+    parameters: []
+    typeParameters:
+    - id: T
+      description: The type of the annotations to retrieve.
+    return:
+      type: System.Collections.Generic.IEnumerable`1
+      description: An <xref href="System.Collections.Generic.IEnumerable`1"></xref> that contains the annotations for this <xref href="System.Xml.Linq.XObject"></xref>.
+  overload: System.Xml.Linq.XObject.Annotations``1*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XObject.BaseUri
+  commentId: P:System.Xml.Linq.XObject.BaseUri
+  id: BaseUri
+  parent: System.Xml.Linq.XObject
+  langs:
+  - csharp
+  name: BaseUri
+  nameWithType: XObject.BaseUri
+  fullName: XObject.BaseUri
+  type: Property
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets the base URI for this <xref href="System.Xml.Linq.XObject"></xref>.
+  remarks: "Using LINQ to XML, you can deserialize XML in a number of fashions. You can parse it from a string, load it from a file, or read it from a <xref:System.IO.TextReader> or an <xref:System.Xml.XmlReader>. In all of these cases, LINQ to XML uses one or another of the concrete subclasses of <xref:System.Xml.XmlReader>.  \n  \n Sometimes the <xref:System.Xml.XmlReader> has the base URI, and sometimes it does not. For instance, when loading from a file, the <xref:System.Xml.XmlReader> knows the base URI, but when reading from an <xref:System.Xml.XmlReader> that was created because of calling the <xref:System.Xml.Linq.XElement.Parse%2A> method, there is no possibility of the <xref:System.Xml.XmlReader> reporting a base URI; the XML was in a string.  \n  \n If, when parsing or loading the XML, you specify <xref:System.Xml.Linq.LoadOptions.SetBaseUri>, LINQ to XML will request the base URI for each node as the <xref:System.Xml.XmlReader> returns the node. If the reader has the base URI, LINQ to XML will save the information with the LINQ to XML node. This property returns that information. If the underlying <xref:System.Xml.XmlReader> does not have the base URI, then this property will return an empty string.  \n  \n Setting <xref:System.Xml.Linq.LoadOptions.SetBaseUri> when loading an XML tree will result in slower parsing.  \n  \n When setting the base URI for an XML tree, LINQ to XML puts an annotation on the root of the tree. This property is a computed property, and navigates up the tree to find the base URI."
+  example:
+  - "The following example loads the base URI and line information as it loads the file. It then prints the base URI and the line information.  \n  \n This example uses the following XML document: [Sample XML File: Typical Purchase Order (LINQ to XML)](http://msdn.microsoft.com/library/0606c09f-6e43-4f8d-95c8-e8e2e08d2348).  \n  \n```csharp  \n  \n                XElement po = XElement.Load(\"PurchaseOrder.xml\",  \n    LoadOptions.SetBaseUri | LoadOptions.SetLineInfo);  \nstring[] splitUri = po.BaseUri.Split('/');  \nConsole.WriteLine(\"BaseUri: {0}\", splitUri[splitUri.Length - 1]);  \nConsole.WriteLine();  \nConsole.WriteLine(\"{0}{1}{2}\",  \n    \"Element Name\".PadRight(20),  \n    \"Line\".PadRight(5),  \n    \"Position\");  \nConsole.WriteLine(\"{0}{1}{2}\",  \n    \"------------\".PadRight(20),  \n    \"----\".PadRight(5),  \n    \"--------\");  \nforeach (XElement e in po.DescendantsAndSelf())  \n    Console.WriteLine(\"{0}{1}{2}\",  \n        (\"\".PadRight(e.Ancestors().Count() * 2) + e.Name).PadRight(20),  \n        ((IXmlLineInfo)e).LineNumber.ToString().PadRight(5),  \n        ((IXmlLineInfo)e).LinePosition);  \n```  \n  \n```vb  \n  \n                Dim po As XElement = XElement.Load(\"PurchaseOrder.xml\", LoadOptions.SetBaseUri Or LoadOptions.SetLineInfo)  \nDim splitUri() As String = po.BaseUri.Split(\"/\"c)  \nConsole.WriteLine(\"BaseUri: {0}\", splitUri(splitUri.Length - 1))  \nConsole.WriteLine()  \nConsole.WriteLine(\"{0}{1}{2}\", _  \n    \"Element Name\".PadRight(20), _  \n    \"Line\".PadRight(5), _  \n    \"Position\")  \nConsole.WriteLine(\"{0}{1}{2}\", _  \n    \"------------\".PadRight(20), _  \n    \"----\".PadRight(5), _  \n    \"--------\")  \nFor Each e As XElement In po.DescendantsAndSelf()  \n    Console.WriteLine(\"{0}{1}{2}\", _  \n        (\"\".PadRight(e.Ancestors().Count() * 2) & e.Name.ToString).PadRight(20), _  \n        DirectCast(e, IXmlLineInfo).LineNumber.ToString().PadRight(5), _  \n        DirectCast(e, IXmlLineInfo).LinePosition)  \nNext  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \n                BaseUri: PurchaseOrder.xml  \n  \nElement Name        Line Position  \n------------        ---- --------  \nPurchaseOrder       2    2  \n  Address           3    4  \n    Name            4    6  \n    Street          5    6  \n    City            6    6  \n    State           7    6  \n    Zip             8    6  \n    Country         9    6  \n  Address           11   4  \n    Name            12   6  \n    Street          13   6  \n    City            14   6  \n    State           15   6  \n    Zip             16   6  \n    Country         17   6  \n  DeliveryNotes     19   4  \n  Items             20   4  \n    Item            21   6  \n      ProductName   22   8  \n      Quantity      23   8  \n      USPrice       24   8  \n      Comment       25   8  \n    Item            27   6  \n      ProductName   28   8  \n      Quantity      29   8  \n      USPrice       30   8  \n      ShipDate      31   8  \n```"
+  syntax:
+    content: public string BaseUri { get; }
+    return:
+      type: System.String
+      description: A <xref href="System.String"></xref> that contains the base URI for this <xref href="System.Xml.Linq.XObject"></xref>.
+  overload: System.Xml.Linq.XObject.BaseUri*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XObject.Changed
+  commentId: E:System.Xml.Linq.XObject.Changed
+  id: Changed
+  parent: System.Xml.Linq.XObject
+  langs:
+  - csharp
+  name: Changed
+  nameWithType: XObject.Changed
+  fullName: XObject.Changed
+  type: Event
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Raised when this <xref href="System.Xml.Linq.XObject"></xref> or any of its descendants have changed.
+  remarks: "Events are raised only when an XML tree is modified, not when it is constructed. This is because you have to add an event handler to an event before you can receive events, and you cannot add an event handler before you have a reference to an <xref:System.Xml.Linq.XObject>. You cannot get a reference to an <xref:System.Xml.Linq.XObject> before the XML tree is constructed. This means that during functional construction of an XML tree, you will not receive events.  \n  \n You should be careful when modifying an XML tree within one of these events, because doing this might lead to unexpected results. For example, if you receive a <xref:System.Xml.Linq.XObject.Changing> event, and while the event is being processed you remove the node from the tree, you might not receive the <xref:System.Xml.Linq.XObject.Changed> event. When an event is being processed, it is valid to modify an XML tree other than the one that contains the node that is receiving the event; it is even valid to modify the same tree provided the modifications do not affect the specific nodes on which the event was raised. However, if you modify the area of the tree that contains the node receiving the event, the events that you receive and the impact to the tree are undefined."
+  example:
+  - "The following example adds an event handler to the root element of an XML tree. It then modifies the tree, causing LINQ to XML to raise some events.  \n  \n```csharp  \n  \n                XElement root = new XElement(\"Root\", \"content\");  \nroot.Changing += new EventHandler<XObjectChangeEventArgs>(  \n    (sender, cea) =>  \n    {  \n        Console.WriteLine(\"Changing event raised\");  \n        XElement xSender = (XElement)sender;  \n        Console.WriteLine(\"  Sender: {0}\", xSender.Name);  \n        Console.WriteLine(\"  ObjectChange: {0}\", cea.ObjectChange);  \n    }  \n);  \nroot.Changed += new EventHandler<XObjectChangeEventArgs>(  \n    (sender, cea) =>  \n    {  \n        Console.WriteLine(\"Changed event raised\");  \n        XElement xSender = (XElement)sender;  \n        Console.WriteLine(\"  Sender: {0}\", xSender.Name);  \n        Console.WriteLine(\"  ObjectChange: {0}\", cea.ObjectChange);  \n    }  \n);  \nroot.Add(new XElement(\"Child\", \"child content\"));  \n```  \n  \n```vb  \n  \n                Module Module1  \n    WithEvents root As XElement = <Root>content</Root>  \n  \n    Sub Main()  \n        root.Add(<Child>child content</Child>)  \n    End Sub  \n  \n    Private Sub root_Changing( _  \n            ByVal sender As Object, _  \n            ByVal e As XObjectChangeEventArgs) _  \n            Handles root.Changing  \n        Dim xSender As XElement = DirectCast(sender, XElement)  \n        Console.WriteLine(\"Changing event raised\")  \n        Console.WriteLine(\"  Sender: {0}\", xSender.Name)  \n        Console.WriteLine(\"  ObjectChange: {0}\", e.ObjectChange)  \n    End Sub  \n  \n    Private Sub root_Changed( _  \n            ByVal sender As Object, _  \n            ByVal e As XObjectChangeEventArgs) _  \n            Handles root.Changed  \n        Dim xSender As XElement = DirectCast(sender, XElement)  \n        Console.WriteLine(\"Changed event raised\")  \n        Console.WriteLine(\"  Sender: {0}\", xSender.Name)  \n        Console.WriteLine(\"  ObjectChange: {0}\", e.ObjectChange)  \n    End Sub  \nEnd Module  \n  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \n                Changing event raised  \n  Sender: Child  \n  ObjectChange: Add  \nChanged event raised  \n  Sender: Child  \n  ObjectChange: Add  \n```  \n  \n Events are useful when you want to maintain some aggregate information in an XML tree. For example, you may want maintain an invoice total that is the sum of the line items of the invoice. This example uses events to maintain the total of all of the child elements under the complex element `Items`.  \n  \n```csharp  \n  \n                XElement root = new XElement(\"Root\",  \n    new XElement(\"Total\", 0),  \n    new XElement(\"Items\")  \n);  \nXElement total = root.Element(\"Total\");  \nXElement items = root.Element(\"Items\");  \nitems.Changed += (object sender, XObjectChangeEventArgs cea) =>  \n{  \n    switch (cea.ObjectChange)  \n    {  \n        case XObjectChange.Add:  \n            if (sender is XElement)  \n                total.Value = ((int)total + (int)(XElement)sender).ToString();  \n            if (sender is XText)  \n                total.Value = ((int)total + (int)((XText)sender).Parent).ToString();  \n            break;  \n        case XObjectChange.Remove:  \n            if (sender is XElement)  \n                total.Value = ((int)total - (int)(XElement)sender).ToString();  \n            if (sender is XText)  \n                total.Value = ((int)total - Int32.Parse(((XText)sender).Value)).ToString();  \n            break;  \n    }  \n    Console.WriteLine(\"Changed {0} {1}\", sender.GetType().ToString(), cea.ObjectChange.ToString());  \n};  \nitems.SetElementValue(\"Item1\", 25);  \nitems.SetElementValue(\"Item2\", 50);  \nitems.SetElementValue(\"Item2\", 75);  \nitems.SetElementValue(\"Item3\", 133);  \nitems.SetElementValue(\"Item1\", null);  \nitems.SetElementValue(\"Item4\", 100);  \nConsole.WriteLine(\"Total:{0}\", (int)total);  \nConsole.WriteLine(root);  \n```  \n  \n```vb  \n  \n                Module Module1  \n    Private total As XElement = Nothing  \n    Private WithEvents items As XElement = Nothing  \n    Private root As XElement = _  \n            <Root>  \n                <Total>0</Total>  \n                <Items></Items>  \n            </Root>  \n  \n    Sub Main()  \n        total = root.<Total>(0)  \n        items = root.<Items>(0)  \n        items.SetElementValue(\"Item1\", 25)  \n        items.SetElementValue(\"Item2\", 50)  \n        items.SetElementValue(\"Item2\", 75)  \n        items.SetElementValue(\"Item3\", 133)  \n        items.SetElementValue(\"Item1\", Nothing)  \n        items.SetElementValue(\"Item4\", 100)  \n        Console.WriteLine(\"Total:{0}\", CInt(total))  \n        Console.WriteLine(root)  \n    End Sub  \n  \n    Private Sub XObjectChanged( _  \n            ByVal sender As Object, _  \n            ByVal cea As XObjectChangeEventArgs) _  \n            Handles items.Changed  \n        Select Case cea.ObjectChange  \n            Case XObjectChange.Add  \n                If sender.GetType() Is GetType(XElement) Then  \n                    total.Value = CStr(CInt(total.Value) + _  \n                            CInt((DirectCast(sender, XElement)).Value))  \n                End If  \n                If sender.GetType() Is GetType(XText) Then  \n                    total.Value = CStr(CInt(total.Value) + _  \n                            CInt((DirectCast(sender, XText)).Value))  \n                End If  \n            Case XObjectChange.Remove  \n                If sender.GetType() Is GetType(XElement) Then  \n                    total.Value = CStr(CInt(total.Value) - _  \n                            CInt((DirectCast(sender, XElement)).Value))  \n                End If  \n                If sender.GetType() Is GetType(XText) Then  \n                    total.Value = CStr(CInt(total.Value) - _  \n                            CInt((DirectCast(sender, XText)).Value))  \n                End If  \n        End Select  \n        Console.WriteLine(\"Changed {0} {1}\", _  \n                            sender.GetType().ToString(), _  \n                            cea.ObjectChange.ToString())  \n    End Sub  \nEnd Module  \n  \n```  \n  \n This code produces the following output:  \n  \n```  \n  \n                Changed System.Xml.Linq.XElement Add  \nChanged System.Xml.Linq.XElement Add  \nChanged System.Xml.Linq.XText Remove  \nChanged System.Xml.Linq.XText Add  \nChanged System.Xml.Linq.XElement Add  \nChanged System.Xml.Linq.XElement Remove  \nChanged System.Xml.Linq.XElement Add  \nTotal:308  \n<Root>  \n  <Total>308</Total>  \n  <Items>  \n    <Item2>75</Item2>  \n    <Item3>133</Item3>  \n    <Item4>100</Item4>  \n  </Items>  \n</Root>  \n```"
+  syntax:
+    content: public event EventHandler<System.Xml.Linq.XObjectChangeEventArgs> Changed;
+    return:
+      type: System.EventHandler{System.Xml.Linq.XObjectChangeEventArgs}
+      description: ''
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XObject.Changing
+  commentId: E:System.Xml.Linq.XObject.Changing
+  id: Changing
+  parent: System.Xml.Linq.XObject
+  langs:
+  - csharp
+  name: Changing
+  nameWithType: XObject.Changing
+  fullName: XObject.Changing
+  type: Event
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Raised when this <xref href="System.Xml.Linq.XObject"></xref> or any of its descendants are about to change.
+  remarks: "Events are raised only from modification of an XML tree, not from construction of an XML tree. You have to add an event handler to an event before you can receive events, and you can't add an event handler before you have a reference to an <xref:System.Xml.Linq.XObject>. You can't get a reference to an <xref:System.Xml.Linq.XObject> before the XML tree is constructed. This means that during functional construction of an XML tree, you will not receive events.  \n  \n You should be careful when modifying an XML tree within one of these events, because doing this might lead to unexpected results. For example, if you receive a <xref:System.Xml.Linq.XObject.Changing> event, and while the event is being processed you remove the node from the tree, you might not receive the <xref:System.Xml.Linq.XObject.Changed> event. When an event is being processed, it is valid to modify an XML tree other than the one that contains the node that is receiving the event; it is even valid to modify the same tree provided the modifications do not affect the specific nodes on which the event was raised. However, if you modify the area of the tree that contains the node receiving the event, the events that you receive and the impact to the tree are undefined."
+  example:
+  - "The following example adds an event handler to the root element of an XML tree. It then modifies the tree, causing LINQ to XML to raise some events.  \n  \n```csharp  \n  \n                XElement root = new XElement(\"Root\", \"content\");  \nroot.Changing += new EventHandler<XObjectChangeEventArgs>(  \n    (sender, cea) =>  \n    {  \n        Console.WriteLine(\"Changing event raised\");  \n        XElement xSender = (XElement)sender;  \n        Console.WriteLine(\"  Sender: {0}\", xSender.Name);  \n        Console.WriteLine(\"  ObjectChange: {0}\", cea.ObjectChange);  \n    }  \n);  \nroot.Changed += new EventHandler<XObjectChangeEventArgs>(  \n    (sender, cea) =>  \n    {  \n        Console.WriteLine(\"Changed event raised\");  \n        XElement xSender = (XElement)sender;  \n        Console.WriteLine(\"  Sender: {0}\", xSender.Name);  \n        Console.WriteLine(\"  ObjectChange: {0}\", cea.ObjectChange);  \n    }  \n);  \nroot.Add(new XElement(\"Child\", \"child content\"));  \n```  \n  \n```vb  \n  \n                Module Module1  \n    WithEvents root As XElement = <Root>content</Root>  \n  \n    Sub Main()  \n        root.Add(<Child>child content</Child>)  \n    End Sub  \n  \n    Private Sub root_Changing( _  \n            ByVal sender As Object, _  \n            ByVal e As XObjectChangeEventArgs) _  \n            Handles root.Changing  \n        Dim xSender As XElement = CType(sender, XElement)  \n        Console.WriteLine(\"Changing event raised\")  \n        Console.WriteLine(\"  Sender: {0}\", xSender.Name)  \n        Console.WriteLine(\"  ObjectChange: {0}\", e.ObjectChange)  \n    End Sub  \n  \n    Private Sub root_Changed( _  \n            ByVal sender As Object, _  \n            ByVal e As XObjectChangeEventArgs) _  \n            Handles root.Changed  \n        Dim xSender As XElement = CType(sender, XElement)  \n        Console.WriteLine(\"Changed event raised\")  \n        Console.WriteLine(\"  Sender: {0}\", xSender.Name)  \n        Console.WriteLine(\"  ObjectChange: {0}\", e.ObjectChange)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \n                Changing event raised  \n  Sender: Child  \n  ObjectChange: Add  \nChanged event raised  \n  Sender: Child  \n  ObjectChange: Add  \n```"
+  syntax:
+    content: public event EventHandler<System.Xml.Linq.XObjectChangeEventArgs> Changing;
+    return:
+      type: System.EventHandler{System.Xml.Linq.XObjectChangeEventArgs}
+      description: ''
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XObject.Document
+  commentId: P:System.Xml.Linq.XObject.Document
+  id: Document
+  parent: System.Xml.Linq.XObject
+  langs:
+  - csharp
+  name: Document
+  nameWithType: XObject.Document
+  fullName: XObject.Document
+  type: Property
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets the <xref href="System.Xml.Linq.XDocument"></xref> for this <xref href="System.Xml.Linq.XObject"></xref>.
+  remarks: ''
+  example:
+  - "The following example creates a document with some complex content. It then uses this property to retrieve the document for the `Child` element.  \n  \n```csharp  \n  \n                XDocument doc = new XDocument(  \n    new XComment(\"A comment in the document.\"),  \n    new XElement(\"Root\",  \n        new XElement(\"Child\", \"content\")  \n    )  \n);  \nXElement child = doc.Descendants(\"Child\").First();  \nXDocument documentOfChild = child.Document;  \nConsole.WriteLine(documentOfChild.FirstNode);  \n```  \n  \n```vb  \n  \n                Dim doc As XDocument = _  \n        <?xml version=\"1.0\"?>  \n        <!--A comment in the document.-->  \n        <Root>  \n            <Child>content</Child>  \n         </Root>  \nDim child As XElement = doc.Descendants(\"Child\").First()  \nDim documentOfChild As XDocument = child.Document  \nConsole.WriteLine(documentOfChild.FirstNode)  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \n<!--A comment in the document.-->  \n```"
+  syntax:
+    content: public System.Xml.Linq.XDocument Document { get; }
+    return:
+      type: System.Xml.Linq.XDocument
+      description: The <xref href="System.Xml.Linq.XDocument"></xref> for this <xref href="System.Xml.Linq.XObject"></xref>.
+  overload: System.Xml.Linq.XObject.Document*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XObject.NodeType
+  commentId: P:System.Xml.Linq.XObject.NodeType
+  id: NodeType
+  parent: System.Xml.Linq.XObject
+  langs:
+  - csharp
+  name: NodeType
+  nameWithType: XObject.NodeType
+  fullName: XObject.NodeType
+  type: Property
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets the node type for this <xref href="System.Xml.Linq.XObject"></xref>.
+  remarks: Because all classes that derive from <xref:System.Xml.Linq.XObject> contain a <xref:System.Xml.Linq.XObject.NodeType%2A> property, you can write code that operates on collections of concrete subclass of <xref:System.Xml.Linq.XObject>. Your code can then test for the node type of each node in the collection.
+  example:
+  - "The following example uses this method to retrieve the node type for a variety of nodes.  \n  \n```csharp  \n  \n                // Note that XNode uses XmlNodeType, which is in the System.Xml namespace.  \nXDocument xmlTree = new XDocument(  \n    new XComment(\"a comment\"),  \n    new XProcessingInstruction(\"xml-stylesheet\", \"type=\\\"text/xsl\\\" href=\\\"hello.xsl\\\"\"),  \n    new XElement(\"Root\",  \n        new XAttribute(\"Att\", \"attContent\"),  \n        new XElement(\"Child1\",  \n            new XCData(\"CDATA content\")  \n        ),  \n        new XElement(\"Child2\",  \n            new XText(\"Text content\")  \n        )  \n    )  \n);  \n  \nforeach (XNode node in xmlTree.DescendantNodes())  \n{  \n    Console.WriteLine(node.NodeType);  \n    if (node.NodeType == XmlNodeType.Element)  \n    {  \n        foreach (XAttribute att in ((XElement)node).Attributes())  \n            Console.WriteLine(att.NodeType);  \n    }  \n}  \n```  \n  \n```vb  \n  \n                ' Note that XNode uses XmlNodeType, which is in the System.Xml  namespace.  \nDim xmlTree As XDocument = _   \n    <?xml version=\"1.0\"?>  \n    <!--a comment-->  \n    <?xml-stylesheet type=\"text/xsl\" href=\"hello.xsl\"?>  \n    <Root Att=\"attContent\">  \n        <Child1><![CDATA[CDATA content]]></Child1>  \n        <Child2>Text content</Child2>  \n     </Root>  \n  \nFor Each node As XNode In xmlTree.DescendantNodes  \n    Console.WriteLine(node.NodeType.ToString())  \n    If node.NodeType = XmlNodeType.Element Then  \n        For Each att In DirectCast(node, XElement).Attributes  \n            Console.WriteLine(att.NodeType.ToString())  \n        Next  \n    End If  \nNext  \n  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \n                Comment  \nProcessingInstruction  \nElement  \nAttribute  \nElement  \nCDATA  \nElement  \nText  \n```"
+  syntax:
+    content: public abstract System.Xml.XmlNodeType NodeType { get; }
+    return:
+      type: System.Xml.XmlNodeType
+      description: The node type for this <xref href="System.Xml.Linq.XObject"></xref>.
+  overload: System.Xml.Linq.XObject.NodeType*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XObject.Parent
+  commentId: P:System.Xml.Linq.XObject.Parent
+  id: Parent
+  parent: System.Xml.Linq.XObject
+  langs:
+  - csharp
+  name: Parent
+  nameWithType: XObject.Parent
+  fullName: XObject.Parent
+  type: Property
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets the parent <xref href="System.Xml.Linq.XElement"></xref> of this <xref href="System.Xml.Linq.XObject"></xref>.
+  remarks: "If this <xref:System.Xml.Linq.XObject> has no parent element, this property returns `null`.  \n  \n> [!NOTE]\n>  This property returns the parent element, and as children nodes of an <xref:System.Xml.Linq.XDocument> have no parent element, this property returns `null` for them."
+  example:
+  - "The following example uses this method.  \n  \n```csharp  \n  \n                XDocument doc = new XDocument(  \n    new XComment(\"A comment in the document.\"),  \n    new XElement(\"Root\",  \n        new XElement(\"Child\", \"content\")  \n    )  \n);  \nXElement child = doc.Descendants(\"Child\").First();  \nXElement root = child.Parent;  \nConsole.WriteLine(root.Name);  \n```  \n  \n```vb  \n  \n                Dim doc As XDocument = _   \n    <?xml version=\"1.0\"?>  \n    <!--A comment in the document.-->  \n    <Root>  \n        <Child>content</Child>  \n    </Root>  \nDim child As XElement = doc.Descendants(\"Child\").First()  \nDim root As XElement = child.Parent  \nConsole.WriteLine(root.Name)  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \nRoot  \n```"
+  syntax:
+    content: public System.Xml.Linq.XElement Parent { get; }
+    return:
+      type: System.Xml.Linq.XElement
+      description: The parent <xref href="System.Xml.Linq.XElement"></xref> of this <xref href="System.Xml.Linq.XObject"></xref>.
+  overload: System.Xml.Linq.XObject.Parent*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XObject.RemoveAnnotations(System.Type)
+  commentId: M:System.Xml.Linq.XObject.RemoveAnnotations(System.Type)
+  id: RemoveAnnotations(System.Type)
+  parent: System.Xml.Linq.XObject
+  langs:
+  - csharp
+  name: RemoveAnnotations(Type)
+  nameWithType: XObject.RemoveAnnotations(Type)
+  fullName: XObject.RemoveAnnotations(Type)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Removes the annotations of the specified type from this <xref href="System.Xml.Linq.XObject"></xref>.
+  remarks: ''
+  example:
+  - "The following example creates an element with four annotations on it. It then uses this method to remove two of them.  \n  \n```csharp  \n  \n                public class MyAnnotation {  \n    private string tag;  \n    public string Tag {get{return tag;} set{tag=value;}}  \n    public MyAnnotation(string tag) {  \n        this.tag = tag;  \n    }  \n}  \n  \nclass Program  \n{  \n    static void Main(string[] args)  \n    {     \n        XElement root = new XElement(\"Root\", \"content\");  \n        root.AddAnnotation(new MyAnnotation(\"T1\"));  \n        root.AddAnnotation(new MyAnnotation(\"T2\"));  \n        root.AddAnnotation(\"abc\");  \n        root.AddAnnotation(\"def\");  \n  \n        Console.WriteLine(\"Count before removing: {0}\", root.Annotations<object>().Count());  \n        root.RemoveAnnotations(typeof(MyAnnotation));  \n        Console.WriteLine(\"Count after removing: {0}\", root.Annotations<object>().Count());  \n    }  \n}  \n```  \n  \n```vb  \n  \n                Public Class MyAnnotation  \n    Private _tag As String  \n  \n    Property Tag() As String  \n        Get  \n            Return Me._tag  \n        End Get  \n        Set(ByVal Value As String)  \n            Me._tag = Value  \n        End Set  \n    End Property  \n  \n    Public Sub New(ByVal tag As String)  \n        Me._tag = tag  \n    End Sub  \nEnd Class  \n  \nModule Module1  \n    Sub Main()  \n        Dim root As XElement = <Root>content</Root>  \n        root.AddAnnotation(New MyAnnotation(\"T1\"))  \n        root.AddAnnotation(New MyAnnotation(\"T2\"))  \n        root.AddAnnotation(\"abc\")  \n        root.AddAnnotation(\"def\")  \n  \n        Console.WriteLine(\"Count before removing: {0}\", root.Annotations(Of Object)().Count())  \n        root.RemoveAnnotations(GetType(MyAnnotation))  \n        Console.WriteLine(\"Count after removing: {0}\", root.Annotations(Of Object)().Count())  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \n                Count before removing: 4  \nCount after removing: 2  \n```"
+  syntax:
+    content: public void RemoveAnnotations (Type type);
+    parameters:
+    - id: type
+      type: System.Type
+      description: The <xref href="System.Type"></xref> of annotations to remove.
+  overload: System.Xml.Linq.XObject.RemoveAnnotations*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XObject.RemoveAnnotations``1
+  commentId: M:System.Xml.Linq.XObject.RemoveAnnotations``1
+  id: RemoveAnnotations``1
+  parent: System.Xml.Linq.XObject
+  langs:
+  - csharp
+  name: RemoveAnnotations<T>()
+  nameWithType: XObject.RemoveAnnotations<T>()
+  fullName: XObject.RemoveAnnotations<T>()
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Removes the annotations of the specified type from this <xref href="System.Xml.Linq.XObject"></xref>.
+  remarks: ''
+  example:
+  - "The following example creates an element with four annotations on it. It then uses this method to remove two of them.  \n  \n```csharp  \n  \n                public class MyAnnotation {  \n    private string tag;  \n    public string Tag {get{return tag;} set{tag=value;}}  \n    public MyAnnotation(string tag) {  \n        this.tag = tag;  \n    }  \n}  \n  \nclass Program {  \n    static void Main(string[] args) {     \n        XElement root = new XElement(\"Root\", \"content\");  \n        root.AddAnnotation(new MyAnnotation(\"T1\"));  \n        root.AddAnnotation(new MyAnnotation(\"T2\"));  \n        root.AddAnnotation(\"abc\");  \n        root.AddAnnotation(\"def\");  \n  \n        Console.WriteLine(\"Count before removing: {0}\", root.Annotations<object>().Count());  \n        root.RemoveAnnotations<MyAnnotation>();  \n        Console.WriteLine(\"Count after removing: {0}\", root.Annotations<object>().Count());  \n    }  \n}  \n```  \n  \n```vb  \n  \n                Public Class MyAnnotation  \n    Private _tag As String  \n  \n    Property Tag() As String  \n        Get  \n            Return Me._tag  \n        End Get  \n        Set(ByVal Value As String)  \n            Me._tag = Value  \n        End Set  \n    End Property  \n  \n    Public Sub New(ByVal tag As String)  \n        Me._tag = tag  \n    End Sub  \nEnd Class  \n  \nModule Module1  \n    Sub Main()  \n        Dim root As XElement = <Root>content</Root>  \n        root.AddAnnotation(New MyAnnotation(\"T1\"))  \n        root.AddAnnotation(New MyAnnotation(\"T2\"))  \n        root.AddAnnotation(\"abc\")  \n        root.AddAnnotation(\"def\")  \n  \n        Console.WriteLine(\"Count before removing: {0}\", root.Annotations(Of Object)().Count())  \n        root.RemoveAnnotations(Of MyAnnotation)()  \n        Console.WriteLine(\"Count after removing: {0}\", root.Annotations(Of Object)().Count())  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \n                Count before removing: 4  \nCount after removing: 2  \n```"
+  syntax:
+    content: 'public void RemoveAnnotations<T> () where T : class;'
+    parameters: []
+    typeParameters:
+    - id: T
+      description: The type of annotations to remove.
+  overload: System.Xml.Linq.XObject.RemoveAnnotations``1*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#HasLineInfo
+  commentId: M:System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#HasLineInfo
+  id: System#Xml#IXmlLineInfo#HasLineInfo
+  isEii: true
+  parent: System.Xml.Linq.XObject
+  langs:
+  - csharp
+  name: IXmlLineInfo.HasLineInfo()
+  nameWithType: XObject.IXmlLineInfo.HasLineInfo()
+  fullName: XObject.IXmlLineInfo.HasLineInfo()
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets a value indicating whether or not this <xref href="System.Xml.Linq.XObject"></xref> has line information.
+  remarks: "You can call this method to determine whether the <xref:System.Xml.Linq.XObject> contains valid line information.  \n  \n This method is an explicit interface member implementation of a method in the <xref:System.Xml.IXmlLineInfo> interface, so in order to call this method, it is necessary to cast to <xref:System.Xml.IXmlLineInfo>."
+  example:
+  - "This example loads a small XML tree from a file, setting the options to set base URI and retain line information. It then adds another element that does not have line information. It then prints the line information for each element in the tree.  \n  \n```csharp  \n  \n                string markup = @\"<Root>  \n    <Child1 />  \n    <Child2 />  \n    <Child4 />  \n</Root>\";  \n  \nFile.WriteAllText(\"Test.xml\", markup);  \n  \nXElement po = XElement.Load(\"Test.xml\",  \n    LoadOptions.SetBaseUri | LoadOptions.SetLineInfo);  \n  \n// add a node to the tree.  \n// the newly added node will not have line information.  \npo.Element(\"Child2\").AddAfterSelf(new XElement(\"Child3\"));  \n  \nstring[] splitUri = po.BaseUri.Split('/');  \nConsole.WriteLine(\"BaseUri: {0}\", splitUri[splitUri.Length - 1]);  \nConsole.WriteLine();  \nConsole.WriteLine(\"{0}{1}{2}\",  \n    \"Element Name\".PadRight(20),  \n    \"Line\".PadRight(5),  \n    \"Position\");  \nConsole.WriteLine(\"{0}{1}{2}\",  \n    \"------------\".PadRight(20),  \n    \"----\".PadRight(5),  \n    \"--------\");  \nforeach (XElement e in po.DescendantsAndSelf())  \n    Console.WriteLine(\"{0}{1}{2}\",  \n        (\"\".PadRight(e.Ancestors().Count() * 2) + e.Name).PadRight(20),  \n        ((IXmlLineInfo)e).HasLineInfo() ?  \n            ((IXmlLineInfo)e).LineNumber.ToString().PadRight(5) :  \n            \"\",  \n        ((IXmlLineInfo)e).HasLineInfo() ?  \n            ((IXmlLineInfo)e).LinePosition.ToString() :  \n            \"No Line Information\");  \n```  \n  \n```vb  \n  \n                Dim markup As String = _  \n    \"<Root>\" & Environment.NewLine & _  \n    \"    <Child1 />\" & Environment.NewLine & _  \n    \"    <Child2 />\" & Environment.NewLine & _  \n    \"    <Child4 />\" & Environment.NewLine & _  \n    \"</Root>\"  \n  \nFile.WriteAllText(\"Test.xml\", markup)  \n  \nDim po As XElement = XElement.Load(\"Test.xml\", LoadOptions.SetBaseUri Or LoadOptions.SetLineInfo)  \n  \n' add a node to the tree.  \n' the newly added node will not have line information.  \npo.Element(\"Child2\").AddAfterSelf(New XElement(\"Child3\"))  \n  \nDim splitUri() As String = po.BaseUri.Split(\"/\"c)  \nConsole.WriteLine(\"BaseUri: {0}\", splitUri(splitUri.Length - 1))  \nConsole.WriteLine()  \nConsole.WriteLine(\"{0}{1}{2}\", _  \n    \"Element Name\".PadRight(20), _  \n    \"Line\".PadRight(5), _  \n    \"Position\")  \nConsole.WriteLine(\"{0}{1}{2}\", _  \n    \"------------\".PadRight(20), _  \n    \"----\".PadRight(5), _  \n    \"--------\")  \nFor Each e As XElement In po.DescendantsAndSelf()  \n    Console.WriteLine(\"{0}{1}{2}\", _  \n        (\"\".PadRight(e.Ancestors().Count() * 2) & e.Name.ToString).PadRight(20), _  \n        IIf(DirectCast(e, IXmlLineInfo).HasLineInfo(), _  \n            DirectCast(e, IXmlLineInfo).LineNumber.ToString().PadRight(5), _  \n            \"\"), _  \n        IIf(DirectCast(e, IXmlLineInfo).HasLineInfo(), _  \n            DirectCast(e, IXmlLineInfo).LinePosition.ToString(), _  \n            \"No Line Information\"))  \nNext  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \n                BaseUri: Test.xml  \n  \nElement Name        Line Position  \n------------        ---- --------  \nRoot                1    2  \n  Child1            2    6  \n  Child2            3    6  \n  Child3            No Line Information  \n  Child4            4    6  \n```"
+  syntax:
+    content: bool IXmlLineInfo.HasLineInfo ();
+    parameters: []
+    return:
+      type: System.Boolean
+      description: '`true` if the <xref href="System.Xml.Linq.XObject"></xref> has line information, otherwise `false`.'
+  overload: System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#HasLineInfo*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#LineNumber
+  commentId: P:System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#LineNumber
+  id: System#Xml#IXmlLineInfo#LineNumber
+  isEii: true
+  parent: System.Xml.Linq.XObject
+  langs:
+  - csharp
+  name: IXmlLineInfo.LineNumber
+  nameWithType: XObject.IXmlLineInfo.LineNumber
+  fullName: XObject.IXmlLineInfo.LineNumber
+  type: Property
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets the line number that the underlying <xref href="System.Xml.XmlReader"></xref> reported for this <xref href="System.Xml.Linq.XObject"></xref>.
+  remarks: This method is an explicit interface member implementation of a method in the <xref:System.Xml.IXmlLineInfo> interface, so in order to call this method, it is necessary to cast to <xref:System.Xml.IXmlLineInfo>.
+  example:
+  - "This example loads a small XML tree from a file, setting the options to set base URI and retain line information. It then adds another element that does not have line information. It then prints the line information for each element in the tree.  \n  \n```csharp  \n  \n                string markup = @\"<Root>  \n    <Child1 />  \n    <Child2 />  \n    <Child4 />  \n</Root>\";  \n  \nFile.WriteAllText(\"Test.xml\", markup);  \n  \nXElement po = XElement.Load(\"Test.xml\",  \n    LoadOptions.SetBaseUri | LoadOptions.SetLineInfo);  \n  \n// add a node to the tree.  \n// the newly added node will not have line information.  \npo.Element(\"Child2\").AddAfterSelf(new XElement(\"Child3\"));  \n  \nstring[] splitUri = po.BaseUri.Split('/');  \nConsole.WriteLine(\"BaseUri: {0}\", splitUri[splitUri.Length - 1]);  \nConsole.WriteLine();  \nConsole.WriteLine(\"{0}{1}{2}\",  \n    \"Element Name\".PadRight(20),  \n    \"Line\".PadRight(5),  \n    \"Position\");  \nConsole.WriteLine(\"{0}{1}{2}\",  \n    \"------------\".PadRight(20),  \n    \"----\".PadRight(5),  \n    \"--------\");  \nforeach (XElement e in po.DescendantsAndSelf())  \n    Console.WriteLine(\"{0}{1}{2}\",  \n        (\"\".PadRight(e.Ancestors().Count() * 2) + e.Name).PadRight(20),  \n        ((IXmlLineInfo)e).HasLineInfo() ?  \n            ((IXmlLineInfo)e).LineNumber.ToString().PadRight(5) :  \n            \"\",  \n        ((IXmlLineInfo)e).HasLineInfo() ?  \n            ((IXmlLineInfo)e).LinePosition.ToString() :  \n            \"No Line Information\");  \n```  \n  \n```vb  \n  \n                Dim markup As String = _  \n    \"<Root>\" & Environment.NewLine & _  \n    \"    <Child1 />\" & Environment.NewLine & _  \n    \"    <Child2 />\" & Environment.NewLine & _  \n    \"    <Child4 />\" & Environment.NewLine & _  \n    \"</Root>\"  \n  \nFile.WriteAllText(\"Test.xml\", markup)  \n  \nDim po As XElement = XElement.Load(\"Test.xml\", LoadOptions.SetBaseUri Or LoadOptions.SetLineInfo)  \n  \n' add a node to the tree.  \n' the newly added node will not have line information.  \npo.Element(\"Child2\").AddAfterSelf(New XElement(\"Child3\"))  \n  \nDim splitUri() As String = po.BaseUri.Split(\"/\"c)  \nConsole.WriteLine(\"BaseUri: {0}\", splitUri(splitUri.Length - 1))  \nConsole.WriteLine()  \nConsole.WriteLine(\"{0}{1}{2}\", _  \n    \"Element Name\".PadRight(20), _  \n    \"Line\".PadRight(5), _  \n    \"Position\")  \nConsole.WriteLine(\"{0}{1}{2}\", _  \n    \"------------\".PadRight(20), _  \n    \"----\".PadRight(5), _  \n    \"--------\")  \nFor Each e As XElement In po.DescendantsAndSelf()  \n    Console.WriteLine(\"{0}{1}{2}\", _  \n        (\"\".PadRight(e.Ancestors().Count() * 2) & e.Name.ToString).PadRight(20), _  \n        IIf(DirectCast(e, IXmlLineInfo).HasLineInfo(), _  \n            DirectCast(e, IXmlLineInfo).LineNumber.ToString().PadRight(5), _  \n            \"\"), _  \n        IIf(DirectCast(e, IXmlLineInfo).HasLineInfo(), _  \n            DirectCast(e, IXmlLineInfo).LinePosition.ToString(), _  \n            \"No Line Information\"))  \nNext  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \n                BaseUri: Test.xml  \n  \nElement Name        Line Position  \n------------        ---- --------  \nRoot                1    2  \n  Child1            2    6  \n  Child2            3    6  \n  Child3            No Line Information  \n  Child4            4    6  \n```"
+  syntax:
+    content: int System.Xml.IXmlLineInfo.LineNumber { get; }
+    return:
+      type: System.Int32
+      description: An <xref href="System.Int32"></xref> that contains the line number reported by the <xref href="System.Xml.XmlReader"></xref> for this <xref href="System.Xml.Linq.XObject"></xref>.
+  overload: System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#LineNumber*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#LinePosition
+  commentId: P:System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#LinePosition
+  id: System#Xml#IXmlLineInfo#LinePosition
+  isEii: true
+  parent: System.Xml.Linq.XObject
+  langs:
+  - csharp
+  name: IXmlLineInfo.LinePosition
+  nameWithType: XObject.IXmlLineInfo.LinePosition
+  fullName: XObject.IXmlLineInfo.LinePosition
+  type: Property
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets the line position that the underlying <xref href="System.Xml.XmlReader"></xref> reported for this <xref href="System.Xml.Linq.XObject"></xref>.
+  remarks: This method is an explicit interface member implementation of a method in the <xref:System.Xml.IXmlLineInfo> interface, so in order to call this method, it is necessary to cast to <xref:System.Xml.IXmlLineInfo>.
+  example:
+  - "This example loads a small XML tree from a file, setting the options to set base URI and retain line information. It then adds another element that does not have line information. It then prints the line information for each element in the tree.  \n  \n```csharp  \n  \n                string markup = @\"<Root>  \n    <Child1 />  \n    <Child2 />  \n    <Child4 />  \n</Root>\";  \n  \nFile.WriteAllText(\"Test.xml\", markup);  \n  \nXElement po = XElement.Load(\"Test.xml\",  \n    LoadOptions.SetBaseUri | LoadOptions.SetLineInfo);  \n  \n// add a node to the tree.  \n// the newly added node will not have line information.  \npo.Element(\"Child2\").AddAfterSelf(new XElement(\"Child3\"));  \n  \nstring[] splitUri = po.BaseUri.Split('/');  \nConsole.WriteLine(\"BaseUri: {0}\", splitUri[splitUri.Length - 1]);  \nConsole.WriteLine();  \nConsole.WriteLine(\"{0}{1}{2}\",  \n    \"Element Name\".PadRight(20),  \n    \"Line\".PadRight(5),  \n    \"Position\");  \nConsole.WriteLine(\"{0}{1}{2}\",  \n    \"------------\".PadRight(20),  \n    \"----\".PadRight(5),  \n    \"--------\");  \nforeach (XElement e in po.DescendantsAndSelf())  \n    Console.WriteLine(\"{0}{1}{2}\",  \n        (\"\".PadRight(e.Ancestors().Count() * 2) + e.Name).PadRight(20),  \n        ((IXmlLineInfo)e).HasLineInfo() ?  \n            ((IXmlLineInfo)e).LineNumber.ToString().PadRight(5) :  \n            \"\",  \n        ((IXmlLineInfo)e).HasLineInfo() ?  \n            ((IXmlLineInfo)e).LinePosition.ToString() :  \n            \"No Line Information\");  \n```  \n  \n```vb  \n  \n                Dim markup As String = _  \n    \"<Root>\" & Environment.NewLine & _  \n    \"    <Child1 />\" & Environment.NewLine & _  \n    \"    <Child2 />\" & Environment.NewLine & _  \n    \"    <Child4 />\" & Environment.NewLine & _  \n    \"</Root>\"  \n  \nFile.WriteAllText(\"Test.xml\", markup)  \n  \nDim po As XElement = XElement.Load(\"Test.xml\", LoadOptions.SetBaseUri Or LoadOptions.SetLineInfo)  \n  \n' add a node to the tree.  \n' the newly added node will not have line information.  \npo.Element(\"Child2\").AddAfterSelf(New XElement(\"Child3\"))  \n  \nDim splitUri() As String = po.BaseUri.Split(\"/\"c)  \nConsole.WriteLine(\"BaseUri: {0}\", splitUri(splitUri.Length - 1))  \nConsole.WriteLine()  \nConsole.WriteLine(\"{0}{1}{2}\", _  \n    \"Element Name\".PadRight(20), _  \n    \"Line\".PadRight(5), _  \n    \"Position\")  \nConsole.WriteLine(\"{0}{1}{2}\", _  \n    \"------------\".PadRight(20), _  \n    \"----\".PadRight(5), _  \n    \"--------\")  \nFor Each e As XElement In po.DescendantsAndSelf()  \n    Console.WriteLine(\"{0}{1}{2}\", _  \n        (\"\".PadRight(e.Ancestors().Count() * 2) & e.Name.ToString).PadRight(20), _  \n        IIf(DirectCast(e, IXmlLineInfo).HasLineInfo(), _  \n            DirectCast(e, IXmlLineInfo).LineNumber.ToString().PadRight(5), _  \n            \"\"), _  \n        IIf(DirectCast(e, IXmlLineInfo).HasLineInfo(), _  \n            DirectCast(e, IXmlLineInfo).LinePosition.ToString(), _  \n            \"No Line Information\"))  \nNext  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \n                BaseUri: Test.xml  \n  \nElement Name        Line Position  \n------------        ---- --------  \nRoot                1    2  \n  Child1            2    6  \n  Child2            3    6  \n  Child3            No Line Information  \n  Child4            4    6  \n```"
+  syntax:
+    content: int System.Xml.IXmlLineInfo.LinePosition { get; }
+    return:
+      type: System.Int32
+      description: An <xref href="System.Int32"></xref> that contains the line position reported by the <xref href="System.Xml.XmlReader"></xref> for this <xref href="System.Xml.Linq.XObject"></xref>.
+  overload: System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#LinePosition*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Xml.Linq.XObject.AddAnnotation(System.Object)
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: AddAnnotation(Object)
+  nameWithType: XObject.AddAnnotation(Object)
+  fullName: XObject.AddAnnotation(Object)
+- uid: System.Xml.Linq.XObject.Annotation(System.Type)
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: Annotation(Type)
+  nameWithType: XObject.Annotation(Type)
+  fullName: XObject.Annotation(Type)
+- uid: System.Type
+  parent: System
+  isExternal: false
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: System.Xml.Linq.XObject.Annotation``1
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: Annotation<T>()
+  nameWithType: XObject.Annotation<T>()
+  fullName: XObject.Annotation<T>()
+- uid: T
+  isExternal: true
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: System.Xml.Linq.XObject.Annotations(System.Type)
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: Annotations(Type)
+  nameWithType: XObject.Annotations(Type)
+  fullName: XObject.Annotations(Type)
+- uid: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+- uid: System.Collections.Generic.IEnumerable{System.Object}
+  parent: System.Collections.Generic
+  isExternal: false
+  name: IEnumerable<Object>
+  nameWithType: IEnumerable<Object>
+  fullName: System.Collections.Generic.IEnumerable<System.Object>
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Xml.Linq.XObject.Annotations``1
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: Annotations<T>()
+  nameWithType: XObject.Annotations<T>()
+  fullName: XObject.Annotations<T>()
+- uid: System.Xml.Linq.XObject.BaseUri
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: BaseUri
+  nameWithType: XObject.BaseUri
+  fullName: XObject.BaseUri
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Xml.Linq.XObject.Changed
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: Changed
+  nameWithType: XObject.Changed
+  fullName: XObject.Changed
+- uid: System.EventHandler`1
+  name: EventHandler<TEventArgs>
+  nameWithType: EventHandler<TEventArgs>
+  fullName: System.EventHandler<TEventArgs>
+- uid: System.Xml.Linq.XObjectChangeEventArgs
+  name: XObjectChangeEventArgs
+  nameWithType: XObjectChangeEventArgs
+  fullName: System.Xml.Linq.XObjectChangeEventArgs
+- uid: System.EventHandler{System.Xml.Linq.XObjectChangeEventArgs}
+  parent: System
+  isExternal: false
+  name: EventHandler<XObjectChangeEventArgs>
+  nameWithType: EventHandler<XObjectChangeEventArgs>
+  fullName: System.EventHandler<System.Xml.Linq.XObjectChangeEventArgs>
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Xml.Linq.XObjectChangeEventArgs
+    name: XObjectChangeEventArgs
+    nameWithType: XObjectChangeEventArgs
+    fullName: System.Xml.Linq.XObjectChangeEventArgs
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Xml.Linq.XObject.Changing
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: Changing
+  nameWithType: XObject.Changing
+  fullName: XObject.Changing
+- uid: System.Xml.Linq.XObject.Document
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: Document
+  nameWithType: XObject.Document
+  fullName: XObject.Document
+- uid: System.Xml.Linq.XDocument
+  parent: System.Xml.Linq
+  isExternal: false
+  name: XDocument
+  nameWithType: XDocument
+  fullName: System.Xml.Linq.XDocument
+- uid: System.Xml.Linq.XObject.NodeType
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: NodeType
+  nameWithType: XObject.NodeType
+  fullName: XObject.NodeType
+- uid: System.Xml.XmlNodeType
+  parent: System.Xml
+  isExternal: false
+  name: XmlNodeType
+  nameWithType: XmlNodeType
+  fullName: System.Xml.XmlNodeType
+- uid: System.Xml.Linq.XObject.Parent
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: Parent
+  nameWithType: XObject.Parent
+  fullName: XObject.Parent
+- uid: System.Xml.Linq.XElement
+  parent: System.Xml.Linq
+  isExternal: false
+  name: XElement
+  nameWithType: XElement
+  fullName: System.Xml.Linq.XElement
+- uid: System.Xml.Linq.XObject.RemoveAnnotations(System.Type)
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: RemoveAnnotations(Type)
+  nameWithType: XObject.RemoveAnnotations(Type)
+  fullName: XObject.RemoveAnnotations(Type)
+- uid: System.Xml.Linq.XObject.RemoveAnnotations``1
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: RemoveAnnotations<T>()
+  nameWithType: XObject.RemoveAnnotations<T>()
+  fullName: XObject.RemoveAnnotations<T>()
+- uid: System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#HasLineInfo
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: IXmlLineInfo.HasLineInfo()
+  nameWithType: XObject.IXmlLineInfo.HasLineInfo()
+  fullName: XObject.IXmlLineInfo.HasLineInfo()
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#LineNumber
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: IXmlLineInfo.LineNumber
+  nameWithType: XObject.IXmlLineInfo.LineNumber
+  fullName: XObject.IXmlLineInfo.LineNumber
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#LinePosition
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: IXmlLineInfo.LinePosition
+  nameWithType: XObject.IXmlLineInfo.LinePosition
+  fullName: XObject.IXmlLineInfo.LinePosition
+- uid: System.Xml.Linq.XObject.AddAnnotation*
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: AddAnnotation
+  nameWithType: XObject.AddAnnotation
+  fullName: XObject.AddAnnotation
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+- uid: System.Xml.Linq.XObject.Annotation*
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: Annotation
+  nameWithType: XObject.Annotation
+  fullName: XObject.Annotation
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+- uid: System.Xml.Linq.XObject.Annotation``1*
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: Annotation<T>
+  nameWithType: XObject.Annotation<T>
+  fullName: XObject.Annotation<T>
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+- uid: System.Xml.Linq.XObject.Annotations*
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: Annotations
+  nameWithType: XObject.Annotations
+  fullName: XObject.Annotations
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+- uid: System.Xml.Linq.XObject.Annotations``1*
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: Annotations<T>
+  nameWithType: XObject.Annotations<T>
+  fullName: XObject.Annotations<T>
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+- uid: System.Xml.Linq.XObject.BaseUri*
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: BaseUri
+  nameWithType: XObject.BaseUri
+  fullName: XObject.BaseUri
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+- uid: System.Xml.Linq.XObject.Document*
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: Document
+  nameWithType: XObject.Document
+  fullName: XObject.Document
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+- uid: System.Xml.Linq.XObject.NodeType*
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: NodeType
+  nameWithType: XObject.NodeType
+  fullName: XObject.NodeType
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+- uid: System.Xml.Linq.XObject.Parent*
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: Parent
+  nameWithType: XObject.Parent
+  fullName: XObject.Parent
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+- uid: System.Xml.Linq.XObject.RemoveAnnotations*
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: RemoveAnnotations
+  nameWithType: XObject.RemoveAnnotations
+  fullName: XObject.RemoveAnnotations
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+- uid: System.Xml.Linq.XObject.RemoveAnnotations``1*
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: RemoveAnnotations<T>
+  nameWithType: XObject.RemoveAnnotations<T>
+  fullName: XObject.RemoveAnnotations<T>
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+- uid: System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#HasLineInfo*
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: System.Xml.IXmlLineInfo.HasLineInfo
+  nameWithType: XObject.System.Xml.IXmlLineInfo.HasLineInfo
+  fullName: XObject.System.Xml.IXmlLineInfo.HasLineInfo
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+- uid: System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#LineNumber*
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: System.Xml.IXmlLineInfo.LineNumber
+  nameWithType: XObject.System.Xml.IXmlLineInfo.LineNumber
+  fullName: XObject.System.Xml.IXmlLineInfo.LineNumber
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+- uid: System.Xml.Linq.XObject.System#Xml#IXmlLineInfo#LinePosition*
+  parent: System.Xml.Linq.XObject
+  isExternal: false
+  name: System.Xml.IXmlLineInfo.LinePosition
+  nameWithType: XObject.System.Xml.IXmlLineInfo.LinePosition
+  fullName: XObject.System.Xml.IXmlLineInfo.LinePosition
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObject.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Xml.IXmlLineInfo
+  parent: System.Xml
+  isExternal: false
+  name: IXmlLineInfo
+  nameWithType: IXmlLineInfo
+  fullName: System.Xml.IXmlLineInfo

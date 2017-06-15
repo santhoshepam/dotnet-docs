@@ -1,0 +1,2489 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Web.UI.UpdatePanel
+  commentId: T:System.Web.UI.UpdatePanel
+  id: UpdatePanel
+  children:
+  - System.Web.UI.UpdatePanel.#ctor
+  - System.Web.UI.UpdatePanel.Attributes
+  - System.Web.UI.UpdatePanel.ChildrenAsTriggers
+  - System.Web.UI.UpdatePanel.ContentTemplate
+  - System.Web.UI.UpdatePanel.ContentTemplateContainer
+  - System.Web.UI.UpdatePanel.Controls
+  - System.Web.UI.UpdatePanel.CreateContentTemplateContainer
+  - System.Web.UI.UpdatePanel.CreateControlCollection
+  - System.Web.UI.UpdatePanel.Initialize
+  - System.Web.UI.UpdatePanel.IsInPartialRendering
+  - System.Web.UI.UpdatePanel.OnInit(System.EventArgs)
+  - System.Web.UI.UpdatePanel.OnLoad(System.EventArgs)
+  - System.Web.UI.UpdatePanel.OnPreRender(System.EventArgs)
+  - System.Web.UI.UpdatePanel.OnUnload(System.EventArgs)
+  - System.Web.UI.UpdatePanel.Render(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.UpdatePanel.RenderChildren(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.UpdatePanel.RenderMode
+  - System.Web.UI.UpdatePanel.RequiresUpdate
+  - System.Web.UI.UpdatePanel.Triggers
+  - System.Web.UI.UpdatePanel.Update
+  - System.Web.UI.UpdatePanel.UpdateMode
+  - System.Web.UI.UpdatePanel.System#Web#UI#IAttributeAccessor#GetAttribute(System.String)
+  - System.Web.UI.UpdatePanel.System#Web#UI#IAttributeAccessor#SetAttribute(System.String,System.String)
+  langs:
+  - csharp
+  name: UpdatePanel
+  nameWithType: UpdatePanel
+  fullName: System.Web.UI.UpdatePanel
+  type: Class
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Enables sections of a page to be partially rendered without a postback.
+  remarks: "In this topic:  \n  \n-   [Introduction](#introduction)  \n  \n-   [Refreshing UpdatePanel Content](#refreshing_updatepanel_content)  \n  \n-   [UpdatePanel Usage](#updatepanel_usage)  \n  \n-   [Applying Styles](#applying_styles)  \n  \n-   [Declarative Syntax](#declarative_syntax)  \n  \n<a name=\"introduction\"></a>   \n## Introduction  \n <xref:System.Web.UI.UpdatePanel> controls are a central part of AJAX functionality in ASP.NET. They are used with the <xref:System.Web.UI.ScriptManager> control to enable partial-page rendering. Partial-page rendering reduces the need for synchronous postbacks and complete page updates when only part of the page has to be updated. Partial-page rendering improves the user experience because it reduces the screen flicker that occurs during a full-page postback and improves Web page interactivity.  \n  \n<a name=\"refreshing_updatepanel_content\"></a>   \n## Refreshing UpdatePanel Content  \n When partial-page rendering is enabled, a control can perform a postback that updates the whole page or an asynchronous postback that updates the content of one or more <xref:System.Web.UI.UpdatePanel> controls. Whether a control causes an asynchronous postback and updates an <xref:System.Web.UI.UpdatePanel> control depends on the following:  \n  \n-   If the <xref:System.Web.UI.UpdatePanel.UpdateMode%2A> property of the <xref:System.Web.UI.UpdatePanel> control is set to <xref:System.Web.UI.UpdatePanelUpdateMode.Always>, the <xref:System.Web.UI.UpdatePanel> control's content is updated on every postback that originates from the page. This includes asynchronous postbacks from controls that are inside other <xref:System.Web.UI.UpdatePanel> controls and postbacks from controls that are not inside <xref:System.Web.UI.UpdatePanel> controls.  \n  \n-   If the <xref:System.Web.UI.UpdatePanel.UpdateMode%2A> property is set to <xref:System.Web.UI.UpdatePanelUpdateMode.Conditional>, the <xref:System.Web.UI.UpdatePanel> control's content is updated in the following circumstances:  \n  \n    -   When you call the <xref:System.Web.UI.UpdatePanel.Update%2A> method of the <xref:System.Web.UI.UpdatePanel> control explicitly.  \n  \n    -   When the <xref:System.Web.UI.UpdatePanel> control is nested inside another <xref:System.Web.UI.UpdatePanel> control, and the parent panel is updated.  \n  \n    -   When a postback is caused by a control that is defined as a trigger by using the `Triggers` property of the <xref:System.Web.UI.UpdatePanel> control. In this scenario, the control explicitly triggers an update of the panel content. The control can be either inside or outside the <xref:System.Web.UI.UpdatePanel> control that the trigger is associated with.  \n  \n    -   When the <xref:System.Web.UI.UpdatePanel.ChildrenAsTriggers%2A> property is set to `true` and a child control of the <xref:System.Web.UI.UpdatePanel> control causes a postback. Child controls of nested <xref:System.Web.UI.UpdatePanel> controls do not cause an update to the outer <xref:System.Web.UI.UpdatePanel> control unless they are explicitly defined as triggers.  \n  \n The combination of setting the <xref:System.Web.UI.UpdatePanel.ChildrenAsTriggers%2A> property to `false` and the <xref:System.Web.UI.UpdatePanel.UpdateMode%2A> property to <xref:System.Web.UI.UpdatePanelUpdateMode.Always> is not allowed and will throw an exception.  \n  \n When the <xref:System.Web.UI.UpdatePanel> control performs an asynchronous post, it adds a custom HTTP header. Some proxies remove this custom HTTP header. If this occurs, the server handles the request as a regular postback, which causes a client error. To resolve this issue, insert a custom form field when you perform asynchronous posts. Then check the header or the custom form field in server code.  \n  \n<a name=\"updatepanel_usage\"></a>   \n## UpdatePanel Usage  \n You can use multiple <xref:System.Web.UI.UpdatePanel> controls to update different page regions independently. When the page that contains one or more <xref:System.Web.UI.UpdatePanel> controls is first rendered, all the content of all <xref:System.Web.UI.UpdatePanel> controls are rendered and sent to the browser. On subsequent asynchronous postbacks, the content of each <xref:System.Web.UI.UpdatePanel> control might not be updated depending on the panel settings and on client or server logic for individual panels.  \n  \n You can also use <xref:System.Web.UI.UpdatePanel> controls in the following scenarios:  \n  \n-   In user controls.  \n  \n-   On master and content pages.  \n  \n-   Nested inside other <xref:System.Web.UI.UpdatePanel> controls.  \n  \n-   Inside templated controls such as the <xref:System.Web.UI.WebControls.GridView> or <xref:System.Web.UI.WebControls.Repeater> controls.  \n  \n <xref:System.Web.UI.UpdatePanel> controls can be added declaratively or programmatically.  \n  \n You can add an <xref:System.Web.UI.UpdatePanel> control programmatically, but you cannot add triggers programmatically. To create trigger-like behavior, you can register a control on the page as an asynchronous postback control. You do this by calling the <xref:System.Web.UI.ScriptManager.RegisterAsyncPostBackControl%2A> method of the <xref:System.Web.UI.ScriptManager> control. You can then create an event handler that runs in response to the asynchronous postback, and in the handler, call the <xref:System.Web.UI.UpdatePanel.Update%2A> method of the <xref:System.Web.UI.UpdatePanel> control.  \n  \n<a name=\"applying_styles\"></a>   \n## Applying Styles  \n The <xref:System.Web.UI.UpdatePanel> control accepts expando attributes. This lets you set a CSS class for the HTMLelements that the controls render. For example, you might create the markup shown in the following example:  \n  \n```  \n<asp:UpdatePanel runat=\"server\" class=\"myStyle\">  \n</asp:UpdatePanel>   \n```  \n  \n The markup in the previous example renders HTML similar to the following when the page runs:  \n  \n```  \n<div id=\"ctl00_MainContent_UpdatePanel1\" class=\"MyStyle\">  \n</div>  \n```  \n  \n<a name=\"declarative_syntax\"></a>   \n## Declarative Syntax  \n  \n```  \n<asp:UpdatePanel  \n    ChildrenAsTriggers=\"True|False\"  \n    EnableTheming=\"True|False\"  \n    EnableViewState=\"True|False\"  \n    ID=\"string\"  \n    OnDataBinding=\"DataBinding event handler\"  \n    OnDisposed=\"Disposed event handler\"  \n    OnInit=\"Init event handler\"  \n    OnLoad=\"Load event handler\"  \n    OnPreRender=\"PreRender event handler\"  \n    OnUnload=\"Unload event handler\"  \n    RenderMode=\"Block|Inline\"  \n    runat=\"server\"  \n    SkinID=\"string\"  \n    UpdateMode=\"Always|Conditional\"  \n    Visible=\"True|False\"  \n>  \n    <ContentTemplate>  \n        <!-- child controls -->  \n    </ContentTemplate>  \n    <Triggers>  \n        <asp:AsyncPostBackTrigger   \n            ControlID=\"string\"  \n            EventName=\"string\"  \n        />  \n        <asp:PostBackTrigger   \n            ControlID=\"string\"  \n        />  \n    </Triggers>  \n</asp:UpdatePanel>  \n```"
+  example:
+  - "The following examples show different uses of the <xref:System.Web.UI.UpdatePanel> control.  \n  \n **Controls Inside an UpdatePanel Control**  \n  \n The following example shows how to put controls inside an <xref:System.Web.UI.UpdatePanel> control to reduce screen flicker when you post to the server. In this example, a <xref:System.Web.UI.WebControls.Calendar> and a <xref:System.Web.UI.WebControls.DropDownList> control are inside an <xref:System.Web.UI.UpdatePanel> control. By default, the <xref:System.Web.UI.UpdatePanel.UpdateMode%2A> property is <xref:System.Web.UI.UpdatePanelUpdateMode.Always> and the <xref:System.Web.UI.UpdatePanel.ChildrenAsTriggers%2A> property is `true`. Therefore, child controls of the panel cause an asynchronous postback.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.UpdatePanel#1](~/samples/snippets/csharp/VS_Snippets_Atlas/System.Web.UI.UpdatePanel/CS/UpdatePanelExample1CS.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.UpdatePanel#1](~/samples/snippets/visualbasic/VS_Snippets_Atlas/System.Web.UI.UpdatePanel/VB/UpdatePanelExample1VB.aspx#1)]  -->  \n  \n **Master/Detail Scenario with UpdatePanel Controls**  \n  \n In the following example, an <xref:System.Web.UI.UpdatePanel> control is used in a master/detail scenario that shows orders and order details from the Northwind database. One <xref:System.Web.UI.UpdatePanel> control contains the <xref:System.Web.UI.WebControls.GridView> control that displays a list of orders. A second <xref:System.Web.UI.UpdatePanel> control contains a <xref:System.Web.UI.WebControls.DetailsView> control that displays the details of one order. When you select an order from the first table, details for that order are displayed in the second table. The second table is updated asynchronously based on the selection in the first table. The sorting and paging operations in the orders summary table also cause partial updates.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.UpdatePanel#2](~/samples/snippets/csharp/VS_Snippets_Atlas/System.Web.UI.UpdatePanel/CS/UpdatePanelExample2CS.aspx#2)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.UpdatePanel#2](~/samples/snippets/visualbasic/VS_Snippets_Atlas/System.Web.UI.UpdatePanel/VB/UpdatePanelExample2VB.aspx#2)]  -->  \n  \n If you put a <xref:System.Web.UI.WebControls.GridView> control inside an <xref:System.Web.UI.UpdatePanel> control, setting the <xref:System.Web.UI.WebControls.GridView> control's <xref:System.Web.UI.WebControls.GridView.EnableSortingAndPagingCallbacks%2A> property to `true` is not supported. However, because the <xref:System.Web.UI.UpdatePanel> control supports asynchronous postbacks, any postbacks that change the <xref:System.Web.UI.WebControls.GridView> control inside an <xref:System.Web.UI.UpdatePanel> control cause the same behavior as sorting and paging callbacks.  \n  \n **Using an UpdatePanel Control in a Template**  \n  \n In the following example, an <xref:System.Web.UI.UpdatePanel> control is used in the item template of a <xref:System.Web.UI.WebControls.GridView> control. <xref:System.Web.UI.UpdatePanel> controls in each data row are generated automatically. Each row's <xref:System.Web.UI.UpdatePanel> control contains a <xref:System.Web.UI.WebControls.Label> control to display the quantity of the item in that row and a <xref:System.Web.UI.WebControls.Button> control to decrease and increase the quantity.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.UpdatePanel#3](~/samples/snippets/csharp/VS_Snippets_Atlas/System.Web.UI.UpdatePanel/CS/UpdatePanelExample3CS.aspx#3)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.UpdatePanel#3](~/samples/snippets/visualbasic/VS_Snippets_Atlas/System.Web.UI.UpdatePanel/VB/UpdatePanelExample3VB.aspx#3)]  -->"
+  syntax:
+    content: >-
+      [System.Drawing.ToolboxBitmap(typeof(EmbeddedResourceFinder), "System.Web.Resources.UpdatePanel.bmp")]
+
+      public class UpdatePanel : System.Web.UI.Control, System.Web.UI.IAttributeAccessor
+  inheritance:
+  - System.Object
+  - System.Web.UI.Control
+  implements:
+  - System.Web.UI.IAttributeAccessor
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  - System.Web.UI.Control.Adapter
+  - System.Web.UI.Control.AddedControl(System.Web.UI.Control,System.Int32)
+  - System.Web.UI.Control.AddParsedSubObject(System.Object)
+  - System.Web.UI.Control.ApplyStyleSheetSkin(System.Web.UI.Page)
+  - System.Web.UI.Control.AppRelativeTemplateSourceDirectory
+  - System.Web.UI.Control.BeginRenderTracing(System.IO.TextWriter,System.Object)
+  - System.Web.UI.Control.BindingContainer
+  - System.Web.UI.Control.BuildProfileTree(System.String,System.Boolean)
+  - System.Web.UI.Control.ChildControlsCreated
+  - System.Web.UI.Control.ClearCachedClientID
+  - System.Web.UI.Control.ClearChildControlState
+  - System.Web.UI.Control.ClearChildState
+  - System.Web.UI.Control.ClearChildViewState
+  - System.Web.UI.Control.ClearEffectiveClientIDMode
+  - System.Web.UI.Control.ClientID
+  - System.Web.UI.Control.ClientIDMode
+  - System.Web.UI.Control.ClientIDSeparator
+  - System.Web.UI.Control.Context
+  - System.Web.UI.Control.CreateChildControls
+  - System.Web.UI.Control.DataBind
+  - System.Web.UI.Control.DataBind(System.Boolean)
+  - System.Web.UI.Control.DataBindChildren
+  - System.Web.UI.Control.DataBinding
+  - System.Web.UI.Control.DataItemContainer
+  - System.Web.UI.Control.DataKeysContainer
+  - System.Web.UI.Control.DesignMode
+  - System.Web.UI.Control.Dispose
+  - System.Web.UI.Control.Disposed
+  - System.Web.UI.Control.EnableTheming
+  - System.Web.UI.Control.EnableViewState
+  - System.Web.UI.Control.EndRenderTracing(System.IO.TextWriter,System.Object)
+  - System.Web.UI.Control.EnsureChildControls
+  - System.Web.UI.Control.EnsureID
+  - System.Web.UI.Control.Events
+  - System.Web.UI.Control.FindControl(System.String)
+  - System.Web.UI.Control.FindControl(System.String,System.Int32)
+  - System.Web.UI.Control.Focus
+  - System.Web.UI.Control.GetDesignModeState
+  - System.Web.UI.Control.GetRouteUrl(System.Object)
+  - System.Web.UI.Control.GetRouteUrl(System.String,System.Object)
+  - System.Web.UI.Control.GetRouteUrl(System.String,System.Web.Routing.RouteValueDictionary)
+  - System.Web.UI.Control.GetRouteUrl(System.Web.Routing.RouteValueDictionary)
+  - System.Web.UI.Control.GetUniqueIDRelativeTo(System.Web.UI.Control)
+  - System.Web.UI.Control.HasChildViewState
+  - System.Web.UI.Control.HasControls
+  - System.Web.UI.Control.HasEvents
+  - System.Web.UI.Control.ID
+  - System.Web.UI.Control.IdSeparator
+  - System.Web.UI.Control.Init
+  - System.Web.UI.Control.IsChildControlStateCleared
+  - System.Web.UI.Control.IsLiteralContent
+  - System.Web.UI.Control.IsTrackingViewState
+  - System.Web.UI.Control.IsViewStateEnabled
+  - System.Web.UI.Control.Load
+  - System.Web.UI.Control.LoadControlState(System.Object)
+  - System.Web.UI.Control.LoadViewState(System.Object)
+  - System.Web.UI.Control.LoadViewStateByID
+  - System.Web.UI.Control.MapPathSecure(System.String)
+  - System.Web.UI.Control.NamingContainer
+  - System.Web.UI.Control.OnBubbleEvent(System.Object,System.EventArgs)
+  - System.Web.UI.Control.OnDataBinding(System.EventArgs)
+  - System.Web.UI.Control.OpenFile(System.String)
+  - System.Web.UI.Control.Page
+  - System.Web.UI.Control.Parent
+  - System.Web.UI.Control.PreRender
+  - System.Web.UI.Control.RaiseBubbleEvent(System.Object,System.EventArgs)
+  - System.Web.UI.Control.RemovedControl(System.Web.UI.Control)
+  - System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter,System.Web.UI.Adapters.ControlAdapter)
+  - System.Web.UI.Control.RenderingCompatibility
+  - System.Web.UI.Control.ResolveAdapter
+  - System.Web.UI.Control.ResolveClientUrl(System.String)
+  - System.Web.UI.Control.ResolveUrl(System.String)
+  - System.Web.UI.Control.SaveControlState
+  - System.Web.UI.Control.SaveViewState
+  - System.Web.UI.Control.SetDesignModeState(System.Collections.IDictionary)
+  - System.Web.UI.Control.SetRenderMethodDelegate(System.Web.UI.RenderMethod)
+  - System.Web.UI.Control.SetTraceData(System.Object,System.Object)
+  - System.Web.UI.Control.SetTraceData(System.Object,System.Object,System.Object)
+  - System.Web.UI.Control.Site
+  - System.Web.UI.Control.SkinID
+  - System.Web.UI.Control.System#Web#UI#IControlBuilderAccessor#ControlBuilder
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#GetDesignModeState
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetDesignModeState(System.Collections.IDictionary)
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetOwnerControl(System.Web.UI.Control)
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#UserData
+  - System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#DataBindings
+  - System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#HasDataBindings
+  - System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#Expressions
+  - System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#HasExpressions
+  - System.Web.UI.Control.System#Web#UI#IParserAccessor#AddParsedSubObject(System.Object)
+  - System.Web.UI.Control.TemplateControl
+  - System.Web.UI.Control.TemplateSourceDirectory
+  - System.Web.UI.Control.TrackViewState
+  - System.Web.UI.Control.UniqueID
+  - System.Web.UI.Control.Unload
+  - System.Web.UI.Control.ValidateRequestMode
+  - System.Web.UI.Control.ViewState
+  - System.Web.UI.Control.ViewStateIgnoresCase
+  - System.Web.UI.Control.ViewStateMode
+  - System.Web.UI.Control.Visible
+  extensionMethods:
+  - System.Web.DynamicData.DynamicDataExtensions.FindDataSourceControl(System.Web.UI.Control)
+  - System.Web.DynamicData.DynamicDataExtensions.FindFieldTemplate(System.Web.UI.Control,System.String)
+  - System.Web.DynamicData.DynamicDataExtensions.FindMetaTable(System.Web.UI.Control)
+  attributes:
+  - type: System.Drawing.ToolboxBitmapAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.#ctor
+  commentId: M:System.Web.UI.UpdatePanel.#ctor
+  id: '#ctor'
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: UpdatePanel()
+  nameWithType: UpdatePanel.UpdatePanel()
+  fullName: UpdatePanel.UpdatePanel()
+  type: Constructor
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Initializes a new instance of the <xref href="System.Web.UI.UpdatePanel"></xref> class.
+  remarks: Use this constructor to initialize a new instance of the <xref:System.Web.UI.UpdatePanel> class. To dynamically add an <xref:System.Web.UI.UpdatePanel> control to a page, create a new <xref:System.Web.UI.UpdatePanel> instance and then add child controls to the control object that is exposed by the instance's <xref:System.Web.UI.UpdatePanel.ContentTemplateContainer%2A> property.
+  example:
+  - "The following example shows how to dynamically create an <xref:System.Web.UI.UpdatePanel> control and add it to a page. When you click the button inside the <xref:System.Web.UI.UpdatePanel> control, the message is refreshed with the date and time. Child controls are added by using the <xref:System.Web.UI.UpdatePanel.ContentTemplateContainer%2A> property.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.UpdatePanel.Constructor#1](~/samples/snippets/csharp/VS_Snippets_Atlas/System.Web.UI.UpdatePanel.Constructor/CS/UpdatePanelConstructorCS.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.UpdatePanel.Constructor#1](~/samples/snippets/visualbasic/VS_Snippets_Atlas/System.Web.UI.UpdatePanel.Constructor/VB/UpdatePanelConstructorVB.aspx#1)]  -->"
+  syntax:
+    content: public UpdatePanel ();
+    parameters: []
+  overload: System.Web.UI.UpdatePanel.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.Attributes
+  commentId: P:System.Web.UI.UpdatePanel.Attributes
+  id: Attributes
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: Attributes
+  nameWithType: UpdatePanel.Attributes
+  fullName: UpdatePanel.Attributes
+  type: Property
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Gets the cascading style sheet (CSS) attributes collection of the <xref href="System.Web.UI.UpdatePanel"></xref> control.
+  remarks: The <xref:System.Web.UI.UpdatePanel.Attributes%2A> property contains a collection of CSS style attributes that can be used in the enclosing `div` element of the <xref:System.Web.UI.UpdatePanel> control.
+  syntax:
+    content: >-
+      [System.ComponentModel.Browsable(false)]
+
+      [System.Web.WebSysDescription("WebControl_Attributes")]
+
+      public System.Web.UI.AttributeCollection Attributes { get; }
+    return:
+      type: System.Web.UI.AttributeCollection
+      description: The names of the CSS style rules in the attributes collection.
+  overload: System.Web.UI.UpdatePanel.Attributes*
+  exceptions: []
+  attributes:
+  - type: System.ComponentModel.BrowsableAttribute
+  - type: System.Web.WebSysDescription
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.ChildrenAsTriggers
+  commentId: P:System.Web.UI.UpdatePanel.ChildrenAsTriggers
+  id: ChildrenAsTriggers
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: ChildrenAsTriggers
+  nameWithType: UpdatePanel.ChildrenAsTriggers
+  fullName: UpdatePanel.ChildrenAsTriggers
+  type: Property
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Gets or sets a value that indicates whether postbacks from immediate child controls of an <xref href="System.Web.UI.UpdatePanel"></xref> control update the panel's content.
+  remarks: "Set the <xref:System.Web.UI.UpdatePanel.ChildrenAsTriggers%2A> property to `true` if you want postbacks from immediate child controls of the <xref:System.Web.UI.UpdatePanel> control to cause an update of the panel's content. Child controls of nested <xref:System.Web.UI.UpdatePanel> controls will not cause an update of the parent <xref:System.Web.UI.UpdatePanel> control's content unless you call the <xref:System.Web.UI.UpdatePanel.Update%2A> method explicitly or you define the child controls as triggers.  \n  \n> [!NOTE]\n>  When the <xref:System.Web.UI.UpdatePanel.UpdateMode%2A> property is set to <xref:System.Web.UI.UpdatePanelUpdateMode.Always> and the <xref:System.Web.UI.UpdatePanel.ChildrenAsTriggers%2A> property is set to `false`, an <xref:System.InvalidOperationException> exception is thrown during the <xref:System.Web.UI.UpdatePanel.OnPreRender%2A> method. This combination of properties is not allowed for the <xref:System.Web.UI.UpdatePanel> control.  \n  \n A scenario where you might set <xref:System.Web.UI.UpdatePanel.ChildrenAsTriggers%2A> to `false` is when you have two <xref:System.Web.UI.UpdatePanel> controls and you want a postback from the first panel to update the content of the second panel but not update its own content. For example, the first panel might be a list of products to buy and the second panel might be a shopping cart."
+  syntax:
+    content: public bool ChildrenAsTriggers { get; set; }
+    return:
+      type: System.Boolean
+      description: "`true` if postbacks from immediate child controls of the <xref href=\"System.Web.UI.UpdatePanel\"></xref> control update the panel's content; otherwise, `false`. The default is `true`."
+  overload: System.Web.UI.UpdatePanel.ChildrenAsTriggers*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.ContentTemplate
+  commentId: P:System.Web.UI.UpdatePanel.ContentTemplate
+  id: ContentTemplate
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: ContentTemplate
+  nameWithType: UpdatePanel.ContentTemplate
+  fullName: UpdatePanel.ContentTemplate
+  type: Property
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Gets or sets the template that defines the content of the <xref href="System.Web.UI.UpdatePanel"></xref> control.
+  remarks: "The <xref:System.Web.UI.UpdatePanel.ContentTemplate%2A> property contains the content that appears inside an <xref:System.Web.UI.UpdatePanel> control when it is rendered. You can create the template's content declaratively or programmatically. The content template of an <xref:System.Web.UI.UpdatePanel> control is a single-instance template. Therefore, the properties of the controls it contains can be accessed directly on the page without using the <xref:System.Web.UI.Page.FindControl%2A> method. For more information, see the <xref:System.Web.UI.TemplateInstanceAttribute> class overview.  \n  \n To add items to the <xref:System.Web.UI.UpdatePanel> control declaratively, add an `<ContentTemplate>` element between the opening and closing tags of the <xref:System.Web.UI.UpdatePanel> control. Inside the `<ContentTemplate>` element tags, declare other controls and HTML elements.  \n  \n To add items to the <xref:System.Web.UI.UpdatePanel> control dynamically, use the <xref:System.Web.UI.UpdatePanel.ContentTemplateContainer%2A> property, which enables you to add child controls without having to create a custom template that implements the <xref:System.Web.UI.ITemplate> interface."
+  syntax:
+    content: >-
+      [System.ComponentModel.Browsable(false)]
+
+      [System.Web.UI.PersistenceMode(System.Web.UI.PersistenceMode.InnerProperty)]
+
+      [System.Web.UI.TemplateInstance(System.Web.UI.TemplateInstance.Single)]
+
+      public System.Web.UI.ITemplate ContentTemplate { get; set; }
+    return:
+      type: System.Web.UI.ITemplate
+      description: An <xref href="System.Web.UI.ITemplate"></xref> instance that defines the content of the <xref href="System.Web.UI.UpdatePanel"></xref> control. The default is `null`.
+  overload: System.Web.UI.UpdatePanel.ContentTemplate*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The <xref href="System.Web.UI.UpdatePanel.ContentTemplate"></xref> property of the <xref href="System.Web.UI.UpdatePanel"></xref> control is set after an instance of the template is created or after the content template container is created.
+  attributes:
+  - type: System.ComponentModel.BrowsableAttribute
+  - type: System.Web.UI.PersistenceModeAttribute
+  - type: System.Web.UI.TemplateInstanceAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.ContentTemplateContainer
+  commentId: P:System.Web.UI.UpdatePanel.ContentTemplateContainer
+  id: ContentTemplateContainer
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: ContentTemplateContainer
+  nameWithType: UpdatePanel.ContentTemplateContainer
+  fullName: UpdatePanel.ContentTemplateContainer
+  type: Property
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Gets a control object to which you can programmatically add child controls.
+  remarks: The <xref:System.Web.UI.UpdatePanel.ContentTemplateContainer%2A> property enables you to programmatically add child controls to the <xref:System.Web.UI.UpdatePanel> control without having to define a custom template that inherits from the <xref:System.Web.UI.ITemplate> interface. If you are adding content to the <xref:System.Web.UI.UpdatePanel> control declaratively or through a designer, you should add content to the <xref:System.Web.UI.UpdatePanel.ContentTemplate%2A> property by using a `<ContentTemplate>` element.
+  example:
+  - "The following example shows how to programmatically specify the <xref:System.Web.UI.UpdatePanel.ContentTemplateContainer%2A> property of an <xref:System.Web.UI.UpdatePanel> control. The <xref:System.Web.UI.WebControls.Label.Text%2A> property of a <xref:System.Web.UI.WebControls.Label> control is set when `Button1` is clicked.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.UpdatePanel.Constructor#1](~/samples/snippets/csharp/VS_Snippets_Atlas/System.Web.UI.UpdatePanel.Constructor/CS/UpdatePanelConstructorCS.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.UpdatePanel.Constructor#1](~/samples/snippets/visualbasic/VS_Snippets_Atlas/System.Web.UI.UpdatePanel.Constructor/VB/UpdatePanelConstructorVB.aspx#1)]  -->"
+  syntax:
+    content: >-
+      [System.ComponentModel.Browsable(false)]
+
+      public System.Web.UI.Control ContentTemplateContainer { get; }
+    return:
+      type: System.Web.UI.Control
+      description: A <xref href="System.Web.UI.Control"></xref> object that defines the content of the <xref href="System.Web.UI.UpdatePanel"></xref> control.
+  overload: System.Web.UI.UpdatePanel.ContentTemplateContainer*
+  exceptions: []
+  attributes:
+  - type: System.ComponentModel.BrowsableAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.Controls
+  commentId: P:System.Web.UI.UpdatePanel.Controls
+  id: Controls
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: Controls
+  nameWithType: UpdatePanel.Controls
+  fullName: UpdatePanel.Controls
+  type: Property
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Gets the <xref href="System.Web.UI.ControlCollection"></xref> object that contains the child controls for the <xref href="System.Web.UI.UpdatePanel"></xref> control.
+  remarks: The <xref:System.Web.UI.UpdatePanel.Controls%2A> property is overridden from the base <xref:System.Web.UI.Control> class and sealed to prevent additional derivation. To add controls to the <xref:System.Web.UI.UpdatePanel> control declaratively, create a `<ContentTemplate>` element inside the <xref:System.Web.UI.UpdatePanel> control markup. To add controls to the <xref:System.Web.UI.UpdatePanel> control programmatically, use the <xref:System.Web.UI.UpdatePanel.ContentTemplateContainer%2A> property.
+  syntax:
+    content: public override sealed System.Web.UI.ControlCollection Controls { get; }
+    return:
+      type: System.Web.UI.ControlCollection
+      description: The collection of child controls for the <xref href="System.Web.UI.UpdatePanel"></xref> control.
+  overload: System.Web.UI.UpdatePanel.Controls*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The <xref href="System.Web.UI.ControlCollection.Add(System.Web.UI.Control)"></xref>, <xref href="System.Web.UI.ControlCollection.AddAt(System.Int32,System.Web.UI.Control)"></xref>, <xref href="System.Web.UI.ControlCollection.Clear"></xref>, <xref href="System.Web.UI.ControlCollection.Remove(System.Web.UI.Control)"></xref>, or <xref href="System.Web.UI.ControlCollection.RemoveAt(System.Int32)"></xref> method of the <xref href="System.Web.UI.ControlCollection"></xref> class has been called. To change the content of the <xref href="System.Web.UI.UpdatePanel"></xref> control, modify the child controls of the <xref href="System.Web.UI.UpdatePanel.ContentTemplateContainer"></xref> property.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.CreateContentTemplateContainer
+  commentId: M:System.Web.UI.UpdatePanel.CreateContentTemplateContainer
+  id: CreateContentTemplateContainer
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: CreateContentTemplateContainer()
+  nameWithType: UpdatePanel.CreateContentTemplateContainer()
+  fullName: UpdatePanel.CreateContentTemplateContainer()
+  type: Method
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Creates a <xref href="System.Web.UI.Control"></xref> object that acts as a container for child controls that define the <xref href="System.Web.UI.UpdatePanel"></xref> control's content.
+  remarks: This method is intended for use by control developers who want to extend the <xref:System.Web.UI.UpdatePanel> control. For example, in derived classes, you can provide a different root control that acts as a container for your <xref:System.Web.UI.UpdatePanel> control's content. The default implementation returns a <xref:System.Web.UI.Control> object.
+  example:
+  - "The following example shows how to override the <xref:System.Web.UI.UpdatePanel.CreateContentTemplateContainer%2A> method in a custom <xref:System.Web.UI.UpdatePanel> control to always render the `<fieldset>` and `<legend>` elements for the panel's content. The custom <xref:System.Web.UI.UpdatePanel> control defines a public property named `GroupingText` that is a string literal inside the `<legend>` element.  \n  \n A custom <xref:System.Web.UI.UpdatePanel> control named `CustomUpdatePanel` derives from <xref:System.Web.UI.UpdatePanel> and overrides the <xref:System.Web.UI.UpdatePanel.CreateContentTemplateContainer%2A> method. Put the `CustomUpdatePanel` class source code in the Web site's App_Code folder.  \n  \n [!code-csharp[System.Web.UI.UpdatePanel.CreateContentTemplateContainer#2](~/samples/snippets/csharp/VS_Snippets_Atlas/System.Web.UI.UpdatePanel.CreateContentTemplateContainer/CS/App_Code/CustomUpdatePanel.cs#2)]\n [!code-vb[System.Web.UI.UpdatePanel.CreateContentTemplateContainer#2](~/samples/snippets/visualbasic/VS_Snippets_Atlas/System.Web.UI.UpdatePanel.CreateContentTemplateContainer/VB/App_Code/CustomUpdatePanel.vb#2)]  \n  \n The custom <xref:System.Web.UI.UpdatePanel> control is used on the page just as the <xref:System.Web.UI.UpdatePanel> control is. The following example shows a page that contains the custom <xref:System.Web.UI.UpdatePanel> control.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.UpdatePanel.CreateContentTemplateContainer#1](~/samples/snippets/csharp/VS_Snippets_Atlas/System.Web.UI.UpdatePanel.CreateContentTemplateContainer/CS/UpdatePanelCreateContentTemplateContainerCS.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.UpdatePanel.CreateContentTemplateContainer#1](~/samples/snippets/visualbasic/VS_Snippets_Atlas/System.Web.UI.UpdatePanel.CreateContentTemplateContainer/VB/UpdatePanelCreateContentTemplateContainerVB.aspx#1)]  -->"
+  syntax:
+    content: protected virtual System.Web.UI.Control CreateContentTemplateContainer ();
+    parameters: []
+    return:
+      type: System.Web.UI.Control
+      description: A <xref href="System.Web.UI.Control"></xref> container for the <xref href="System.Web.UI.UpdatePanel"></xref> control's content.
+  overload: System.Web.UI.UpdatePanel.CreateContentTemplateContainer*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.CreateControlCollection
+  commentId: M:System.Web.UI.UpdatePanel.CreateControlCollection
+  id: CreateControlCollection
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: CreateControlCollection()
+  nameWithType: UpdatePanel.CreateControlCollection()
+  fullName: UpdatePanel.CreateControlCollection()
+  type: Method
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Returns the collection of all controls that are contained in the <xref href="System.Web.UI.UpdatePanel"></xref> control.
+  remarks: "The <xref:System.Web.UI.UpdatePanel.CreateControlCollection%2A> method is used by control developers.  \n  \n Because this method is protected and sealed, it is visible to classes that inherit from the <xref:System.Web.UI.UpdatePanel> class, but it cannot be overridden. This method overrides the base implementation to return a specialized <xref:System.Web.UI.ControlCollection> object that throws an <xref:System.InvalidOperationException> when the <xref:System.Web.UI.ControlCollection.Add%2A>, <xref:System.Web.UI.ControlCollection.AddAt%2A>, <xref:System.Web.UI.ControlCollection.Clear%2A>, <xref:System.Web.UI.ControlCollection.Remove%2A>, or <xref:System.Web.UI.ControlCollection.RemoveAt%2A> method of the <xref:System.Web.UI.ControlCollection> class is invoked. To change the content of the <xref:System.Web.UI.UpdatePanel> control, modify the child controls of the <xref:System.Web.UI.UpdatePanel.ContentTemplateContainer%2A> property."
+  syntax:
+    content: protected override sealed System.Web.UI.ControlCollection CreateControlCollection ();
+    parameters: []
+    return:
+      type: System.Web.UI.ControlCollection
+      description: A <xref href="System.Web.UI.ControlCollection"></xref> object that consists of all controls that define the content of the <xref href="System.Web.UI.UpdatePanel"></xref> control.
+  overload: System.Web.UI.UpdatePanel.CreateControlCollection*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.Initialize
+  commentId: M:System.Web.UI.UpdatePanel.Initialize
+  id: Initialize
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: Initialize()
+  nameWithType: UpdatePanel.Initialize()
+  fullName: UpdatePanel.Initialize()
+  type: Method
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Initializes the <xref href="System.Web.UI.UpdatePanel"></xref> control trigger collection if partial-page rendering is enabled.
+  remarks: If partial-page rendering is not enabled, the triggers that are defined in the <xref:System.Web.UI.UpdatePanel.Triggers%2A> property are not initialized because they have no effect. The <xref:System.Web.UI.ScriptManager.EnablePartialRendering%2A> property of the <xref:System.Web.UI.ScriptManager> control gets or sets a value that indicates whether partial-page rendering is enabled. The <xref:System.Web.UI.ScriptManager.SupportsPartialRendering%2A> property of the <xref:System.Web.UI.ScriptManager> control gets or sets a value that indicates whether partial-page rendering is supported.
+  syntax:
+    content: protected virtual void Initialize ();
+    parameters: []
+  overload: System.Web.UI.UpdatePanel.Initialize*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.IsInPartialRendering
+  commentId: P:System.Web.UI.UpdatePanel.IsInPartialRendering
+  id: IsInPartialRendering
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: IsInPartialRendering
+  nameWithType: UpdatePanel.IsInPartialRendering
+  fullName: UpdatePanel.IsInPartialRendering
+  type: Property
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Gets a value that indicates whether the <xref href="System.Web.UI.UpdatePanel"></xref> control is being updated as a result of an asynchronous postback.
+  remarks: The <xref:System.Web.UI.UpdatePanel.IsInPartialRendering%2A> property is intended for use by control developers who want to know when an <xref:System.Web.UI.UpdatePanel> control is being updated as a result of an asynchronous postback. In page development scenarios, use the <xref:System.Web.UI.ScriptManager.IsInAsyncPostBack%2A> property to determine whether a page is processing as a result of an asynchronous postback.
+  syntax:
+    content: >-
+      [System.ComponentModel.Browsable(false)]
+
+      public bool IsInPartialRendering { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the current <xref href="System.Web.UI.UpdatePanel"></xref> control is being updated as a result of an asynchronous postback; otherwise, `false`.'
+  overload: System.Web.UI.UpdatePanel.IsInPartialRendering*
+  exceptions: []
+  attributes:
+  - type: System.ComponentModel.BrowsableAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.OnInit(System.EventArgs)
+  commentId: M:System.Web.UI.UpdatePanel.OnInit(System.EventArgs)
+  id: OnInit(System.EventArgs)
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: OnInit(EventArgs)
+  nameWithType: UpdatePanel.OnInit(EventArgs)
+  fullName: UpdatePanel.OnInit(EventArgs)
+  type: Method
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Raises the <xref href="System.Web.UI.Control.Init"></xref> event.
+  remarks: "The <xref:System.Web.UI.UpdatePanel> control's <xref:System.Web.UI.UpdatePanel.ContentTemplate%2A> property is instantiated during the <xref:System.Web.UI.UpdatePanel.OnInit%2A> method.  \n  \n The <xref:System.Web.UI.UpdatePanel.OnInit%2A> method is used by control developers to extend the functionality of the <xref:System.Web.UI.UpdatePanel> control."
+  syntax:
+    content: protected override void OnInit (EventArgs e);
+    parameters:
+    - id: e
+      type: System.EventArgs
+      description: An <xref href="System.EventArgs"></xref> object that contains the event data.
+  overload: System.Web.UI.UpdatePanel.OnInit*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The <xref href="System.Web.UI.UpdatePanel.ContentTemplate"></xref> property is being defined when the <xref href="System.Web.UI.UpdatePanel.ContentTemplateContainer"></xref> property has already been created.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.OnLoad(System.EventArgs)
+  commentId: M:System.Web.UI.UpdatePanel.OnLoad(System.EventArgs)
+  id: OnLoad(System.EventArgs)
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: OnLoad(EventArgs)
+  nameWithType: UpdatePanel.OnLoad(EventArgs)
+  fullName: UpdatePanel.OnLoad(EventArgs)
+  type: Method
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Raises the <xref href="System.Web.UI.Control.Load"></xref> event for the <xref href="System.Web.UI.UpdatePanel"></xref> control and invokes the <xref href="System.Web.UI.UpdatePanel.Initialize"></xref> method when partial-page rendering is not enabled.
+  syntax:
+    content: protected override void OnLoad (EventArgs e);
+    parameters:
+    - id: e
+      type: System.EventArgs
+      description: An <xref href="System.EventArgs"></xref> object that contains the event data.
+  overload: System.Web.UI.UpdatePanel.OnLoad*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.OnPreRender(System.EventArgs)
+  commentId: M:System.Web.UI.UpdatePanel.OnPreRender(System.EventArgs)
+  id: OnPreRender(System.EventArgs)
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: OnPreRender(EventArgs)
+  nameWithType: UpdatePanel.OnPreRender(EventArgs)
+  fullName: UpdatePanel.OnPreRender(EventArgs)
+  type: Method
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Raises the <xref href="System.Web.UI.Control.PreRender"></xref> event.
+  remarks: The <xref:System.Web.UI.UpdatePanel.OnPreRender%2A> method is used by control developers to extend the functionality of the <xref:System.Web.UI.UpdatePanel> control.
+  syntax:
+    content: protected override void OnPreRender (EventArgs e);
+    parameters:
+    - id: e
+      type: System.EventArgs
+      description: An <xref href="System.EventArgs"></xref> object that contains the event data.
+  overload: System.Web.UI.UpdatePanel.OnPreRender*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The <xref href="System.Web.UI.UpdatePanel.ChildrenAsTriggers"></xref> property is set to `false`, and the <xref href="System.Web.UI.UpdatePanel.UpdateMode"></xref> property is set to <xref href="System.Web.UI.UpdatePanelUpdateMode.Always"></xref>.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.OnUnload(System.EventArgs)
+  commentId: M:System.Web.UI.UpdatePanel.OnUnload(System.EventArgs)
+  id: OnUnload(System.EventArgs)
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: OnUnload(EventArgs)
+  nameWithType: UpdatePanel.OnUnload(EventArgs)
+  fullName: UpdatePanel.OnUnload(EventArgs)
+  type: Method
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Raises the base <xref href="System.Web.UI.Control.Unload"></xref> event.
+  remarks: The <xref:System.Web.UI.UpdatePanel.OnUnload%2A> method is used by control developers to extend the functionality of the <xref:System.Web.UI.UpdatePanel> control
+  syntax:
+    content: protected override void OnUnload (EventArgs e);
+    parameters:
+    - id: e
+      type: System.EventArgs
+      description: An <xref href="System.EventArgs"></xref> object that contains event data.
+  overload: System.Web.UI.UpdatePanel.OnUnload*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.Render(System.Web.UI.HtmlTextWriter)
+  commentId: M:System.Web.UI.UpdatePanel.Render(System.Web.UI.HtmlTextWriter)
+  id: Render(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: Render(HtmlTextWriter)
+  nameWithType: UpdatePanel.Render(HtmlTextWriter)
+  fullName: UpdatePanel.Render(HtmlTextWriter)
+  type: Method
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Raises the <xref href="System.Web.UI.Control.Render(System.Web.UI.HtmlTextWriter)"></xref> event.
+  remarks: "The <xref:System.Web.UI.UpdatePanel.Render%2A> method is used by control developers to extend the functionality of the <xref:System.Web.UI.UpdatePanel> control.  \n  \n The <xref:System.Web.UI.UpdatePanel.Render%2A> method writes the rendered content of the <xref:System.Web.UI.UpdatePanel> control to the browser by using the supplied <xref:System.Web.UI.HtmlTextWriter> object. When you override the <xref:System.Web.UI.UpdatePanel.Render%2A> method in a derived class, make sure to call the <xref:System.Web.UI.UpdatePanel.Render%2A> method of the base class so that the child controls of the <xref:System.Web.UI.UpdatePanel> control are rendered."
+  syntax:
+    content: protected override void Render (System.Web.UI.HtmlTextWriter writer);
+    parameters:
+    - id: writer
+      type: System.Web.UI.HtmlTextWriter
+      description: An <xref href="System.Web.UI.HtmlTextWriter"></xref> object that represents the output stream for rendering HTML content.
+  overload: System.Web.UI.UpdatePanel.Render*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.RenderChildren(System.Web.UI.HtmlTextWriter)
+  commentId: M:System.Web.UI.UpdatePanel.RenderChildren(System.Web.UI.HtmlTextWriter)
+  id: RenderChildren(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: RenderChildren(HtmlTextWriter)
+  nameWithType: UpdatePanel.RenderChildren(HtmlTextWriter)
+  fullName: UpdatePanel.RenderChildren(HtmlTextWriter)
+  type: Method
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Raises the <xref href="System.Web.UI.UpdatePanel.RenderChildren(System.Web.UI.HtmlTextWriter)"></xref> event.
+  remarks: "The <xref:System.Web.UI.UpdatePanel.RenderChildren%2A> method is used by control developers to extend the functionality of the <xref:System.Web.UI.UpdatePanel> control.  \n  \n The <xref:System.Web.UI.UpdatePanel.RenderChildren%2A> method writes the rendered content of the <xref:System.Web.UI.UpdatePanel> control to the browser by using the supplied <xref:System.Web.UI.HtmlTextWriter> object. When you override the <xref:System.Web.UI.UpdatePanel.RenderChildren%2A> method in a derived class, make sure to call the <xref:System.Web.UI.UpdatePanel.RenderChildren%2A> method of the base class so that the child controls of the <xref:System.Web.UI.UpdatePanel> control are rendered."
+  syntax:
+    content: protected override void RenderChildren (System.Web.UI.HtmlTextWriter writer);
+    parameters:
+    - id: writer
+      type: System.Web.UI.HtmlTextWriter
+      description: An <xref href="System.Web.UI.HtmlTextWriter"></xref> object that represents the output stream for rendering HTML content.
+  overload: System.Web.UI.UpdatePanel.RenderChildren*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.RenderMode
+  commentId: P:System.Web.UI.UpdatePanel.RenderMode
+  id: RenderMode
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: RenderMode
+  nameWithType: UpdatePanel.RenderMode
+  fullName: UpdatePanel.RenderMode
+  type: Property
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Gets or sets a value that indicates whether an <xref href="System.Web.UI.UpdatePanel"></xref> control's content is enclosed in an HTML `<div>` or `<span>` element.
+  remarks: If the <xref:System.Web.UI.UpdatePanel.RenderMode%2A> property is set to <xref:System.Web.UI.UpdatePanelRenderMode.Inline>, the content of an <xref:System.Web.UI.UpdatePanel> control is rendered inside an HTML `<span>` element. If the <xref:System.Web.UI.UpdatePanel.RenderMode%2A> property is set to <xref:System.Web.UI.UpdatePanelRenderMode.Block>, it is rendered inside an HTML `<div>` element.
+  example:
+  - "The following example shows how to set the <xref:System.Web.UI.UpdatePanel.RenderMode%2A> property declaratively. The <xref:System.Web.UI.UpdatePanel> control named `UpdatePanel1` is rendered in an HTML `<span>` element. If the <xref:System.Web.UI.UpdatePanel.RenderMode%2A> property were set to <xref:System.Web.UI.UpdatePanelRenderMode.Block>, the resulting paragraph would appear disjointed because of the way in which the HTML `<div>` element is rendered.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.UpdatePanel.RenderMode#1](~/samples/snippets/csharp/VS_Snippets_Atlas/System.Web.UI.UpdatePanel.RenderMode/CS/UpdatePanelRenderModeCS.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.UpdatePanel.RenderMode#1](~/samples/snippets/visualbasic/VS_Snippets_Atlas/System.Web.UI.UpdatePanel.RenderMode/VB/UpdatePanelRenderModeVB.aspx#1)]  -->"
+  syntax:
+    content: public System.Web.UI.UpdatePanelRenderMode RenderMode { get; set; }
+    return:
+      type: System.Web.UI.UpdatePanelRenderMode
+      description: One of the <xref href="System.Web.UI.UpdatePanelRenderMode"></xref> values. The default is <xref href="System.Web.UI.UpdatePanelRenderMode.Block"></xref> so that the content of the panel is enclosed in an HTML `<div>` element.
+  overload: System.Web.UI.UpdatePanel.RenderMode*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.RequiresUpdate
+  commentId: P:System.Web.UI.UpdatePanel.RequiresUpdate
+  id: RequiresUpdate
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: RequiresUpdate
+  nameWithType: UpdatePanel.RequiresUpdate
+  fullName: UpdatePanel.RequiresUpdate
+  type: Property
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Gets a value that indicates whether the content of the <xref href="System.Web.UI.UpdatePanel"></xref> control will be updated.
+  remarks: "By default, the <xref:System.Web.UI.UpdatePanel.RequiresUpdate%2A> property returns `true` if the <xref:System.Web.UI.UpdatePanel.Update%2A> method was explicitly called or if the <xref:System.Web.UI.UpdatePanel.UpdateMode%2A> property is set to <xref:System.Web.UI.UpdatePanelUpdateMode.Always>.  \n  \n This property is intended for use by control developers who want to extend the <xref:System.Web.UI.UpdatePanel> control. For example, in derived classes, you might provide additional logic to determine whether an <xref:System.Web.UI.UpdatePanel> control should be updated."
+  syntax:
+    content: protected virtual bool RequiresUpdate { get; }
+    return:
+      type: System.Boolean
+      description: "`true` if the <xref href=\"System.Web.UI.UpdatePanel\"></xref> control's content will be updated; otherwise, `false`."
+  overload: System.Web.UI.UpdatePanel.RequiresUpdate*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.Triggers
+  commentId: P:System.Web.UI.UpdatePanel.Triggers
+  id: Triggers
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: Triggers
+  nameWithType: UpdatePanel.Triggers
+  fullName: UpdatePanel.Triggers
+  type: Property
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Gets an <xref href="System.Web.UI.UpdatePanelTriggerCollection"></xref> object that contains <xref href="System.Web.UI.AsyncPostBackTrigger"></xref> and <xref href="System.Web.UI.PostBackTrigger"></xref> objects that were registered declaratively for the <xref href="System.Web.UI.UpdatePanel"></xref> control.
+  remarks: "The <xref:System.Web.UI.UpdatePanel.Triggers%2A> property gets a collection of all the triggers that have been defined for the <xref:System.Web.UI.UpdatePanel> control. (You can define triggers declaratively by using the **UpdatePanelTrigger Collection Editor** dialog box in the designer or by using the `<Triggers>` element of the <xref:System.Web.UI.UpdatePanel> control.) The collection includes <xref:System.Web.UI.AsyncPostBackTrigger> and <xref:System.Web.UI.PostBackTrigger> objects.  \n  \n Declarative triggers that are defined in the <xref:System.Web.UI.UpdatePanel.Triggers%2A> collection are not tracked in view state.  \n  \n When a control that is a naming container is used as a trigger, all its child controls that cause postback behave as triggers."
+  syntax:
+    content: >-
+      [System.Web.UI.PersistenceMode(System.Web.UI.PersistenceMode.InnerProperty)]
+
+      public System.Web.UI.UpdatePanelTriggerCollection Triggers { get; }
+    return:
+      type: System.Web.UI.UpdatePanelTriggerCollection
+      description: A collection of objects of type <xref href="System.Web.UI.AsyncPostBackTrigger"></xref> and <xref href="System.Web.UI.PostBackTrigger"></xref>.
+  overload: System.Web.UI.UpdatePanel.Triggers*
+  exceptions: []
+  attributes:
+  - type: System.Web.UI.PersistenceModeAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.Update
+  commentId: M:System.Web.UI.UpdatePanel.Update
+  id: Update
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: Update()
+  nameWithType: UpdatePanel.Update()
+  fullName: UpdatePanel.Update()
+  type: Method
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Causes an update of the content of an <xref href="System.Web.UI.UpdatePanel"></xref> control.
+  remarks: "If the page is enabled for partial-page rendering, when you invoke the <xref:System.Web.UI.UpdatePanel.Update%2A> method, the <xref:System.Web.UI.UpdatePanel> control's content is updated in the browser. Call the <xref:System.Web.UI.UpdatePanel.Update%2A> method if you have server code that must execute to determine whether an <xref:System.Web.UI.UpdatePanel> control should be updated. If you plan to use the <xref:System.Web.UI.UpdatePanel.Update%2A> method, set the <xref:System.Web.UI.UpdatePanel.UpdateMode%2A> property to <xref:System.Web.UI.UpdatePanelUpdateMode.Conditional>. If you want the decision to update the panel in server logic, make sure that the <xref:System.Web.UI.UpdatePanel.ChildrenAsTriggers%2A> property is `false` and that no explicit triggers are defined for the panel.  \n  \n In a typical page development scenario, if you define triggers or if the <xref:System.Web.UI.UpdatePanel.ChildrenAsTriggers%2A> property is `true` for the <xref:System.Web.UI.UpdatePanel> control, the <xref:System.Web.UI.UpdatePanel.Update%2A> method is automatically called during the page life cycle.  \n  \n If the <xref:System.Web.UI.UpdatePanel.ContentTemplate%2A> property is not defined for the <xref:System.Web.UI.UpdatePanel> control, no updates of the panel will occur."
+  example:
+  - "The following example uses the <xref:System.Web.UI.UpdatePanel.Update%2A> method to update the content of an <xref:System.Web.UI.UpdatePanel> control when more than five seconds have elapsed since the last update.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.UpdatePanel.UpdateMode#1](~/samples/snippets/csharp/VS_Snippets_Atlas/System.Web.UI.UpdatePanel.UpdateMode/CS/UpdatePanelUpdateModeCS.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.UpdatePanel.UpdateMode#1](~/samples/snippets/visualbasic/VS_Snippets_Atlas/System.Web.UI.UpdatePanel.UpdateMode/VB/UpdatePanelUpdateModeVB.aspx#1)]  -->"
+  syntax:
+    content: public void Update ();
+    parameters: []
+  overload: System.Web.UI.UpdatePanel.Update*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: "The <xref href=\"System.Web.UI.UpdatePanel.UpdateMode\"></xref> property is set to <xref href=\"System.Web.UI.UpdatePanelUpdateMode.Always\"></xref>.  \n  \n \\- or –  \n  \n The <xref href=\"System.Web.UI.UpdatePanel.Update\"></xref> method is called during or after the page's <xref href=\"System.Web.UI.Page.Render(System.Web.UI.HtmlTextWriter)\"></xref> event."
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.UpdateMode
+  commentId: P:System.Web.UI.UpdatePanel.UpdateMode
+  id: UpdateMode
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: UpdateMode
+  nameWithType: UpdatePanel.UpdateMode
+  fullName: UpdatePanel.UpdateMode
+  type: Property
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Gets or sets a value that indicates when an <xref href="System.Web.UI.UpdatePanel"></xref> control's content is updated.
+  remarks: "When an <xref:System.Web.UI.UpdatePanel> control is not inside another <xref:System.Web.UI.UpdatePanel> control, the panel is updated according to the settings of the <xref:System.Web.UI.UpdatePanel.UpdateMode%2A> and <xref:System.Web.UI.UpdatePanel.ChildrenAsTriggers%2A> properties, together with the collection of triggers. When an <xref:System.Web.UI.UpdatePanel> control is inside another <xref:System.Web.UI.UpdatePanel> control, the child panel is automatically updated when the parent panel is updated.  \n  \n The content of an <xref:System.Web.UI.UpdatePanel> control is updated in the following circumstances:  \n  \n-   If the <xref:System.Web.UI.UpdatePanel.UpdateMode%2A> property is set to <xref:System.Web.UI.UpdatePanelUpdateMode.Always>, the <xref:System.Web.UI.UpdatePanel> control's content is updated on every postback that originates from anywhere on the page. This includes asynchronous postbacks from controls that are inside other <xref:System.Web.UI.UpdatePanel> controls and postbacks from controls that are not inside <xref:System.Web.UI.UpdatePanel> controls.  \n  \n-   If the <xref:System.Web.UI.UpdatePanel> control is nested inside another <xref:System.Web.UI.UpdatePanel> control and the parent update panel is updated.  \n  \n-   If the <xref:System.Web.UI.UpdatePanel.UpdateMode%2A> property is set to <xref:System.Web.UI.UpdatePanelUpdateMode.Conditional>, and one of the following conditions occurs:  \n  \n    -   You call the <xref:System.Web.UI.UpdatePanel.Update%2A> method of the <xref:System.Web.UI.UpdatePanel> control explicitly.  \n  \n    -   The postback is caused by a control that is defined as a trigger by using the <xref:System.Web.UI.UpdatePanel.Triggers%2A> property of the <xref:System.Web.UI.UpdatePanel> control. In this scenario, the control explicitly triggers an update of the panel content. The control can be either inside or outside the <xref:System.Web.UI.UpdatePanel> control that defines the trigger.  \n  \n    -   The <xref:System.Web.UI.UpdatePanel.ChildrenAsTriggers%2A> property is set to `true` and a child control of the <xref:System.Web.UI.UpdatePanel> control causes a postback. A child control of a nested <xref:System.Web.UI.UpdatePanel> control does not cause an update to the outer <xref:System.Web.UI.UpdatePanel> control unless it is explicitly defined as a trigger."
+  example:
+  - "The following example shows how to use the <xref:System.Web.UI.UpdatePanel.UpdateMode%2A> property. The example declares two <xref:System.Web.UI.UpdatePanel> controls. In the first panel, the <xref:System.Web.UI.UpdatePanel.UpdateMode%2A> property is set to <xref:System.Web.UI.UpdatePanelUpdateMode.Conditional>. In the second panel, <xref:System.Web.UI.UpdatePanel.UpdateMode%2A> is set to <xref:System.Web.UI.UpdatePanelUpdateMode.Always>. A button outside both panels is registered as an asynchronous postback control by calling the <xref:System.Web.UI.ScriptManager.RegisterAsyncPostBackControl%2A> method of the <xref:System.Web.UI.ScriptManager> control. In the button's `Click` event handler, the <xref:System.Web.UI.UpdatePanel.Update%2A> method of the first panel is called if more than five seconds have elapsed since its last update. In this scenario, the panel’s content is updated only if the last panel refresh was more than five seconds ago. The content of the second panel is always updated.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.UpdatePanel.UpdateMode#1](~/samples/snippets/csharp/VS_Snippets_Atlas/System.Web.UI.UpdatePanel.UpdateMode/CS/UpdatePanelUpdateModeCS.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.UpdatePanel.UpdateMode#1](~/samples/snippets/visualbasic/VS_Snippets_Atlas/System.Web.UI.UpdatePanel.UpdateMode/VB/UpdatePanelUpdateModeVB.aspx#1)]  -->"
+  syntax:
+    content: public System.Web.UI.UpdatePanelUpdateMode UpdateMode { get; set; }
+    return:
+      type: System.Web.UI.UpdatePanelUpdateMode
+      description: One of the <xref href="System.Web.UI.UpdatePanelUpdateMode"></xref> values. The default is <xref href="System.Web.UI.UpdatePanelUpdateMode.Always"></xref>.
+  overload: System.Web.UI.UpdatePanel.UpdateMode*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The specified type is not one of the <xref href="System.Web.UI.UpdatePanelUpdateMode"></xref> values.
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.System#Web#UI#IAttributeAccessor#GetAttribute(System.String)
+  commentId: M:System.Web.UI.UpdatePanel.System#Web#UI#IAttributeAccessor#GetAttribute(System.String)
+  id: System#Web#UI#IAttributeAccessor#GetAttribute(System.String)
+  isEii: true
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: IAttributeAccessor.GetAttribute(String)
+  nameWithType: UpdatePanel.IAttributeAccessor.GetAttribute(String)
+  fullName: UpdatePanel.IAttributeAccessor.GetAttribute(String)
+  type: Method
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Returns an attribute of a Web control by using a specified name.
+  remarks: This member is an explicit interface member implementation. It can be used only when the <xref:System.Web.UI.UpdatePanel> instance is cast to an <xref:System.Web.UI.IAttributeAccessor> interface.
+  syntax:
+    content: string IAttributeAccessor.GetAttribute (string key);
+    parameters:
+    - id: key
+      type: System.String
+      description: The name of the attribute.
+    return:
+      type: System.String
+      description: The value of the attribute.
+  overload: System.Web.UI.UpdatePanel.System#Web#UI#IAttributeAccessor#GetAttribute*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.UpdatePanel.System#Web#UI#IAttributeAccessor#SetAttribute(System.String,System.String)
+  commentId: M:System.Web.UI.UpdatePanel.System#Web#UI#IAttributeAccessor#SetAttribute(System.String,System.String)
+  id: System#Web#UI#IAttributeAccessor#SetAttribute(System.String,System.String)
+  isEii: true
+  parent: System.Web.UI.UpdatePanel
+  langs:
+  - csharp
+  name: IAttributeAccessor.SetAttribute(String, String)
+  nameWithType: UpdatePanel.IAttributeAccessor.SetAttribute(String, String)
+  fullName: UpdatePanel.IAttributeAccessor.SetAttribute(String, String)
+  type: Method
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI
+  summary: Sets the value of the specified control attribute.
+  remarks: This member is an explicit interface member implementation. It can be used only when the <xref:System.Web.UI.UpdatePanel> instance is cast to an <xref:System.Web.UI.IAttributeAccessor> interface.
+  syntax:
+    content: void IAttributeAccessor.SetAttribute (string key, string value);
+    parameters:
+    - id: key
+      type: System.String
+      description: The name of the attribute to set.
+    - id: value
+      type: System.String
+      description: The value of the attribute to set.
+  overload: System.Web.UI.UpdatePanel.System#Web#UI#IAttributeAccessor#SetAttribute*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+references:
+- uid: System.Web.UI.Control
+  parent: System.Web.UI
+  isExternal: false
+  name: Control
+  nameWithType: Control
+  fullName: System.Web.UI.Control
+- uid: System.InvalidOperationException
+  parent: System
+  isExternal: false
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.ArgumentOutOfRangeException
+  parent: System
+  isExternal: false
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: System.Web.UI.UpdatePanel.#ctor
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: UpdatePanel()
+  nameWithType: UpdatePanel.UpdatePanel()
+  fullName: UpdatePanel.UpdatePanel()
+- uid: System.Web.UI.UpdatePanel.Attributes
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: Attributes
+  nameWithType: UpdatePanel.Attributes
+  fullName: UpdatePanel.Attributes
+- uid: System.Web.UI.AttributeCollection
+  parent: System.Web.UI
+  isExternal: false
+  name: AttributeCollection
+  nameWithType: AttributeCollection
+  fullName: System.Web.UI.AttributeCollection
+- uid: System.Web.UI.UpdatePanel.ChildrenAsTriggers
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: ChildrenAsTriggers
+  nameWithType: UpdatePanel.ChildrenAsTriggers
+  fullName: UpdatePanel.ChildrenAsTriggers
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Web.UI.UpdatePanel.ContentTemplate
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: ContentTemplate
+  nameWithType: UpdatePanel.ContentTemplate
+  fullName: UpdatePanel.ContentTemplate
+- uid: System.Web.UI.ITemplate
+  parent: System.Web.UI
+  isExternal: false
+  name: ITemplate
+  nameWithType: ITemplate
+  fullName: System.Web.UI.ITemplate
+- uid: System.Web.UI.UpdatePanel.ContentTemplateContainer
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: ContentTemplateContainer
+  nameWithType: UpdatePanel.ContentTemplateContainer
+  fullName: UpdatePanel.ContentTemplateContainer
+- uid: System.Web.UI.UpdatePanel.Controls
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: Controls
+  nameWithType: UpdatePanel.Controls
+  fullName: UpdatePanel.Controls
+- uid: System.Web.UI.ControlCollection
+  parent: System.Web.UI
+  isExternal: false
+  name: ControlCollection
+  nameWithType: ControlCollection
+  fullName: System.Web.UI.ControlCollection
+- uid: System.Web.UI.UpdatePanel.CreateContentTemplateContainer
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: CreateContentTemplateContainer()
+  nameWithType: UpdatePanel.CreateContentTemplateContainer()
+  fullName: UpdatePanel.CreateContentTemplateContainer()
+- uid: System.Web.UI.UpdatePanel.CreateControlCollection
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: CreateControlCollection()
+  nameWithType: UpdatePanel.CreateControlCollection()
+  fullName: UpdatePanel.CreateControlCollection()
+- uid: System.Web.UI.UpdatePanel.Initialize
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: Initialize()
+  nameWithType: UpdatePanel.Initialize()
+  fullName: UpdatePanel.Initialize()
+- uid: System.Web.UI.UpdatePanel.IsInPartialRendering
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: IsInPartialRendering
+  nameWithType: UpdatePanel.IsInPartialRendering
+  fullName: UpdatePanel.IsInPartialRendering
+- uid: System.Web.UI.UpdatePanel.OnInit(System.EventArgs)
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: OnInit(EventArgs)
+  nameWithType: UpdatePanel.OnInit(EventArgs)
+  fullName: UpdatePanel.OnInit(EventArgs)
+- uid: System.EventArgs
+  parent: System
+  isExternal: false
+  name: EventArgs
+  nameWithType: EventArgs
+  fullName: System.EventArgs
+- uid: System.Web.UI.UpdatePanel.OnLoad(System.EventArgs)
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: OnLoad(EventArgs)
+  nameWithType: UpdatePanel.OnLoad(EventArgs)
+  fullName: UpdatePanel.OnLoad(EventArgs)
+- uid: System.Web.UI.UpdatePanel.OnPreRender(System.EventArgs)
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: OnPreRender(EventArgs)
+  nameWithType: UpdatePanel.OnPreRender(EventArgs)
+  fullName: UpdatePanel.OnPreRender(EventArgs)
+- uid: System.Web.UI.UpdatePanel.OnUnload(System.EventArgs)
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: OnUnload(EventArgs)
+  nameWithType: UpdatePanel.OnUnload(EventArgs)
+  fullName: UpdatePanel.OnUnload(EventArgs)
+- uid: System.Web.UI.UpdatePanel.Render(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: Render(HtmlTextWriter)
+  nameWithType: UpdatePanel.Render(HtmlTextWriter)
+  fullName: UpdatePanel.Render(HtmlTextWriter)
+- uid: System.Web.UI.HtmlTextWriter
+  parent: System.Web.UI
+  isExternal: false
+  name: HtmlTextWriter
+  nameWithType: HtmlTextWriter
+  fullName: System.Web.UI.HtmlTextWriter
+- uid: System.Web.UI.UpdatePanel.RenderChildren(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: RenderChildren(HtmlTextWriter)
+  nameWithType: UpdatePanel.RenderChildren(HtmlTextWriter)
+  fullName: UpdatePanel.RenderChildren(HtmlTextWriter)
+- uid: System.Web.UI.UpdatePanel.RenderMode
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: RenderMode
+  nameWithType: UpdatePanel.RenderMode
+  fullName: UpdatePanel.RenderMode
+- uid: System.Web.UI.UpdatePanelRenderMode
+  parent: System.Web.UI
+  isExternal: false
+  name: UpdatePanelRenderMode
+  nameWithType: UpdatePanelRenderMode
+  fullName: System.Web.UI.UpdatePanelRenderMode
+- uid: System.Web.UI.UpdatePanel.RequiresUpdate
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: RequiresUpdate
+  nameWithType: UpdatePanel.RequiresUpdate
+  fullName: UpdatePanel.RequiresUpdate
+- uid: System.Web.UI.UpdatePanel.Triggers
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: Triggers
+  nameWithType: UpdatePanel.Triggers
+  fullName: UpdatePanel.Triggers
+- uid: System.Web.UI.UpdatePanelTriggerCollection
+  parent: System.Web.UI
+  isExternal: false
+  name: UpdatePanelTriggerCollection
+  nameWithType: UpdatePanelTriggerCollection
+  fullName: System.Web.UI.UpdatePanelTriggerCollection
+- uid: System.Web.UI.UpdatePanel.Update
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: Update()
+  nameWithType: UpdatePanel.Update()
+  fullName: UpdatePanel.Update()
+- uid: System.Web.UI.UpdatePanel.UpdateMode
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: UpdateMode
+  nameWithType: UpdatePanel.UpdateMode
+  fullName: UpdatePanel.UpdateMode
+- uid: System.Web.UI.UpdatePanelUpdateMode
+  parent: System.Web.UI
+  isExternal: false
+  name: UpdatePanelUpdateMode
+  nameWithType: UpdatePanelUpdateMode
+  fullName: System.Web.UI.UpdatePanelUpdateMode
+- uid: System.Web.UI.UpdatePanel.System#Web#UI#IAttributeAccessor#GetAttribute(System.String)
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: IAttributeAccessor.GetAttribute(String)
+  nameWithType: UpdatePanel.IAttributeAccessor.GetAttribute(String)
+  fullName: UpdatePanel.IAttributeAccessor.GetAttribute(String)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Web.UI.UpdatePanel.System#Web#UI#IAttributeAccessor#SetAttribute(System.String,System.String)
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: IAttributeAccessor.SetAttribute(String, String)
+  nameWithType: UpdatePanel.IAttributeAccessor.SetAttribute(String, String)
+  fullName: UpdatePanel.IAttributeAccessor.SetAttribute(String, String)
+- uid: System.Web.UI.UpdatePanel.#ctor*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: UpdatePanel
+  nameWithType: UpdatePanel.UpdatePanel
+  fullName: UpdatePanel.UpdatePanel
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.Attributes*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: Attributes
+  nameWithType: UpdatePanel.Attributes
+  fullName: UpdatePanel.Attributes
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.ChildrenAsTriggers*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: ChildrenAsTriggers
+  nameWithType: UpdatePanel.ChildrenAsTriggers
+  fullName: UpdatePanel.ChildrenAsTriggers
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.ContentTemplate*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: ContentTemplate
+  nameWithType: UpdatePanel.ContentTemplate
+  fullName: UpdatePanel.ContentTemplate
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.ContentTemplateContainer*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: ContentTemplateContainer
+  nameWithType: UpdatePanel.ContentTemplateContainer
+  fullName: UpdatePanel.ContentTemplateContainer
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.Controls*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: Controls
+  nameWithType: UpdatePanel.Controls
+  fullName: UpdatePanel.Controls
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.CreateContentTemplateContainer*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: CreateContentTemplateContainer
+  nameWithType: UpdatePanel.CreateContentTemplateContainer
+  fullName: UpdatePanel.CreateContentTemplateContainer
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.CreateControlCollection*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: CreateControlCollection
+  nameWithType: UpdatePanel.CreateControlCollection
+  fullName: UpdatePanel.CreateControlCollection
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.Initialize*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: Initialize
+  nameWithType: UpdatePanel.Initialize
+  fullName: UpdatePanel.Initialize
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.IsInPartialRendering*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: IsInPartialRendering
+  nameWithType: UpdatePanel.IsInPartialRendering
+  fullName: UpdatePanel.IsInPartialRendering
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.OnInit*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: OnInit
+  nameWithType: UpdatePanel.OnInit
+  fullName: UpdatePanel.OnInit
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.OnLoad*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: OnLoad
+  nameWithType: UpdatePanel.OnLoad
+  fullName: UpdatePanel.OnLoad
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.OnPreRender*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: OnPreRender
+  nameWithType: UpdatePanel.OnPreRender
+  fullName: UpdatePanel.OnPreRender
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.OnUnload*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: OnUnload
+  nameWithType: UpdatePanel.OnUnload
+  fullName: UpdatePanel.OnUnload
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.Render*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: Render
+  nameWithType: UpdatePanel.Render
+  fullName: UpdatePanel.Render
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.RenderChildren*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: RenderChildren
+  nameWithType: UpdatePanel.RenderChildren
+  fullName: UpdatePanel.RenderChildren
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.RenderMode*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: RenderMode
+  nameWithType: UpdatePanel.RenderMode
+  fullName: UpdatePanel.RenderMode
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.RequiresUpdate*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: RequiresUpdate
+  nameWithType: UpdatePanel.RequiresUpdate
+  fullName: UpdatePanel.RequiresUpdate
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.Triggers*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: Triggers
+  nameWithType: UpdatePanel.Triggers
+  fullName: UpdatePanel.Triggers
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.Update*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: Update
+  nameWithType: UpdatePanel.Update
+  fullName: UpdatePanel.Update
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.UpdateMode*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: UpdateMode
+  nameWithType: UpdatePanel.UpdateMode
+  fullName: UpdatePanel.UpdateMode
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.System#Web#UI#IAttributeAccessor#GetAttribute*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: System.Web.UI.IAttributeAccessor.GetAttribute
+  nameWithType: UpdatePanel.System.Web.UI.IAttributeAccessor.GetAttribute
+  fullName: UpdatePanel.System.Web.UI.IAttributeAccessor.GetAttribute
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Web.UI.UpdatePanel.System#Web#UI#IAttributeAccessor#SetAttribute*
+  parent: System.Web.UI.UpdatePanel
+  isExternal: false
+  name: System.Web.UI.IAttributeAccessor.SetAttribute
+  nameWithType: UpdatePanel.System.Web.UI.IAttributeAccessor.SetAttribute
+  fullName: UpdatePanel.System.Web.UI.IAttributeAccessor.SetAttribute
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI/UpdatePanel.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Web.UI.Control.Adapter
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Adapter
+  nameWithType: Control.Adapter
+  fullName: Control.Adapter
+- uid: System.Web.UI.Control.AddedControl(System.Web.UI.Control,System.Int32)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AddedControl(Control, Int32)
+  nameWithType: Control.AddedControl(Control, Int32)
+  fullName: Control.AddedControl(Control, Int32)
+- uid: System.Web.UI.Control.AddParsedSubObject(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AddParsedSubObject(Object)
+  nameWithType: Control.AddParsedSubObject(Object)
+  fullName: Control.AddParsedSubObject(Object)
+- uid: System.Web.UI.Control.ApplyStyleSheetSkin(System.Web.UI.Page)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ApplyStyleSheetSkin(Page)
+  nameWithType: Control.ApplyStyleSheetSkin(Page)
+  fullName: Control.ApplyStyleSheetSkin(Page)
+- uid: System.Web.UI.Control.AppRelativeTemplateSourceDirectory
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AppRelativeTemplateSourceDirectory
+  nameWithType: Control.AppRelativeTemplateSourceDirectory
+  fullName: Control.AppRelativeTemplateSourceDirectory
+- uid: System.Web.UI.Control.BeginRenderTracing(System.IO.TextWriter,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BeginRenderTracing(TextWriter, Object)
+  nameWithType: Control.BeginRenderTracing(TextWriter, Object)
+  fullName: Control.BeginRenderTracing(TextWriter, Object)
+- uid: System.Web.UI.Control.BindingContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BindingContainer
+  nameWithType: Control.BindingContainer
+  fullName: Control.BindingContainer
+- uid: System.Web.UI.Control.BuildProfileTree(System.String,System.Boolean)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BuildProfileTree(String, Boolean)
+  nameWithType: Control.BuildProfileTree(String, Boolean)
+  fullName: Control.BuildProfileTree(String, Boolean)
+- uid: System.Web.UI.Control.ChildControlsCreated
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ChildControlsCreated
+  nameWithType: Control.ChildControlsCreated
+  fullName: Control.ChildControlsCreated
+- uid: System.Web.UI.Control.ClearCachedClientID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearCachedClientID()
+  nameWithType: Control.ClearCachedClientID()
+  fullName: Control.ClearCachedClientID()
+- uid: System.Web.UI.Control.ClearChildControlState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildControlState()
+  nameWithType: Control.ClearChildControlState()
+  fullName: Control.ClearChildControlState()
+- uid: System.Web.UI.Control.ClearChildState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildState()
+  nameWithType: Control.ClearChildState()
+  fullName: Control.ClearChildState()
+- uid: System.Web.UI.Control.ClearChildViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildViewState()
+  nameWithType: Control.ClearChildViewState()
+  fullName: Control.ClearChildViewState()
+- uid: System.Web.UI.Control.ClearEffectiveClientIDMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearEffectiveClientIDMode()
+  nameWithType: Control.ClearEffectiveClientIDMode()
+  fullName: Control.ClearEffectiveClientIDMode()
+- uid: System.Web.UI.Control.ClientID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClientID
+  nameWithType: Control.ClientID
+  fullName: Control.ClientID
+- uid: System.Web.UI.Control.ClientIDMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClientIDMode
+  nameWithType: Control.ClientIDMode
+  fullName: Control.ClientIDMode
+- uid: System.Web.UI.Control.ClientIDSeparator
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClientIDSeparator
+  nameWithType: Control.ClientIDSeparator
+  fullName: Control.ClientIDSeparator
+- uid: System.Web.UI.Control.Context
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Context
+  nameWithType: Control.Context
+  fullName: Control.Context
+- uid: System.Web.UI.Control.CreateChildControls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: CreateChildControls()
+  nameWithType: Control.CreateChildControls()
+  fullName: Control.CreateChildControls()
+- uid: System.Web.UI.Control.DataBind
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBind()
+  nameWithType: Control.DataBind()
+  fullName: Control.DataBind()
+- uid: System.Web.UI.Control.DataBind(System.Boolean)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBind(Boolean)
+  nameWithType: Control.DataBind(Boolean)
+  fullName: Control.DataBind(Boolean)
+- uid: System.Web.UI.Control.DataBindChildren
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBindChildren()
+  nameWithType: Control.DataBindChildren()
+  fullName: Control.DataBindChildren()
+- uid: System.Web.UI.Control.DataBinding
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBinding
+  nameWithType: Control.DataBinding
+  fullName: Control.DataBinding
+- uid: System.Web.UI.Control.DataItemContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataItemContainer
+  nameWithType: Control.DataItemContainer
+  fullName: Control.DataItemContainer
+- uid: System.Web.UI.Control.DataKeysContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataKeysContainer
+  nameWithType: Control.DataKeysContainer
+  fullName: Control.DataKeysContainer
+- uid: System.Web.UI.Control.DesignMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DesignMode
+  nameWithType: Control.DesignMode
+  fullName: Control.DesignMode
+- uid: System.Web.UI.Control.Dispose
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Dispose()
+  nameWithType: Control.Dispose()
+  fullName: Control.Dispose()
+- uid: System.Web.UI.Control.Disposed
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Disposed
+  nameWithType: Control.Disposed
+  fullName: Control.Disposed
+- uid: System.Web.UI.Control.EnableTheming
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnableTheming
+  nameWithType: Control.EnableTheming
+  fullName: Control.EnableTheming
+- uid: System.Web.UI.Control.EnableViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnableViewState
+  nameWithType: Control.EnableViewState
+  fullName: Control.EnableViewState
+- uid: System.Web.UI.Control.EndRenderTracing(System.IO.TextWriter,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EndRenderTracing(TextWriter, Object)
+  nameWithType: Control.EndRenderTracing(TextWriter, Object)
+  fullName: Control.EndRenderTracing(TextWriter, Object)
+- uid: System.Web.UI.Control.EnsureChildControls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnsureChildControls()
+  nameWithType: Control.EnsureChildControls()
+  fullName: Control.EnsureChildControls()
+- uid: System.Web.UI.Control.EnsureID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnsureID()
+  nameWithType: Control.EnsureID()
+  fullName: Control.EnsureID()
+- uid: System.Web.UI.Control.Events
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Events
+  nameWithType: Control.Events
+  fullName: Control.Events
+- uid: System.Web.UI.Control.FindControl(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: FindControl(String)
+  nameWithType: Control.FindControl(String)
+  fullName: Control.FindControl(String)
+- uid: System.Web.UI.Control.FindControl(System.String,System.Int32)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: FindControl(String, Int32)
+  nameWithType: Control.FindControl(String, Int32)
+  fullName: Control.FindControl(String, Int32)
+- uid: System.Web.UI.Control.Focus
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Focus()
+  nameWithType: Control.Focus()
+  fullName: Control.Focus()
+- uid: System.Web.UI.Control.GetDesignModeState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetDesignModeState()
+  nameWithType: Control.GetDesignModeState()
+  fullName: Control.GetDesignModeState()
+- uid: System.Web.UI.Control.GetRouteUrl(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(Object)
+  nameWithType: Control.GetRouteUrl(Object)
+  fullName: Control.GetRouteUrl(Object)
+- uid: System.Web.UI.Control.GetRouteUrl(System.Web.Routing.RouteValueDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(RouteValueDictionary)
+  nameWithType: Control.GetRouteUrl(RouteValueDictionary)
+  fullName: Control.GetRouteUrl(RouteValueDictionary)
+- uid: System.Web.UI.Control.GetRouteUrl(System.String,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(String, Object)
+  nameWithType: Control.GetRouteUrl(String, Object)
+  fullName: Control.GetRouteUrl(String, Object)
+- uid: System.Web.UI.Control.GetRouteUrl(System.String,System.Web.Routing.RouteValueDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(String, RouteValueDictionary)
+  nameWithType: Control.GetRouteUrl(String, RouteValueDictionary)
+  fullName: Control.GetRouteUrl(String, RouteValueDictionary)
+- uid: System.Web.UI.Control.GetUniqueIDRelativeTo(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetUniqueIDRelativeTo(Control)
+  nameWithType: Control.GetUniqueIDRelativeTo(Control)
+  fullName: Control.GetUniqueIDRelativeTo(Control)
+- uid: System.Web.UI.Control.HasChildViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: HasChildViewState
+  nameWithType: Control.HasChildViewState
+  fullName: Control.HasChildViewState
+- uid: System.Web.UI.Control.HasControls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: HasControls()
+  nameWithType: Control.HasControls()
+  fullName: Control.HasControls()
+- uid: System.Web.UI.Control.HasEvents
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: HasEvents()
+  nameWithType: Control.HasEvents()
+  fullName: Control.HasEvents()
+- uid: System.Web.UI.Control.ID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ID
+  nameWithType: Control.ID
+  fullName: Control.ID
+- uid: System.Web.UI.Control.IdSeparator
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IdSeparator
+  nameWithType: Control.IdSeparator
+  fullName: Control.IdSeparator
+- uid: System.Web.UI.Control.Init
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Init
+  nameWithType: Control.Init
+  fullName: Control.Init
+- uid: System.Web.UI.Control.IsChildControlStateCleared
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsChildControlStateCleared
+  nameWithType: Control.IsChildControlStateCleared
+  fullName: Control.IsChildControlStateCleared
+- uid: System.Web.UI.Control.IsLiteralContent
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsLiteralContent()
+  nameWithType: Control.IsLiteralContent()
+  fullName: Control.IsLiteralContent()
+- uid: System.Web.UI.Control.IsTrackingViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsTrackingViewState
+  nameWithType: Control.IsTrackingViewState
+  fullName: Control.IsTrackingViewState
+- uid: System.Web.UI.Control.IsViewStateEnabled
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsViewStateEnabled
+  nameWithType: Control.IsViewStateEnabled
+  fullName: Control.IsViewStateEnabled
+- uid: System.Web.UI.Control.Load
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Load
+  nameWithType: Control.Load
+  fullName: Control.Load
+- uid: System.Web.UI.Control.LoadControlState(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: LoadControlState(Object)
+  nameWithType: Control.LoadControlState(Object)
+  fullName: Control.LoadControlState(Object)
+- uid: System.Web.UI.Control.LoadViewState(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: LoadViewState(Object)
+  nameWithType: Control.LoadViewState(Object)
+  fullName: Control.LoadViewState(Object)
+- uid: System.Web.UI.Control.LoadViewStateByID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: LoadViewStateByID
+  nameWithType: Control.LoadViewStateByID
+  fullName: Control.LoadViewStateByID
+- uid: System.Web.UI.Control.MapPathSecure(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: MapPathSecure(String)
+  nameWithType: Control.MapPathSecure(String)
+  fullName: Control.MapPathSecure(String)
+- uid: System.Web.UI.Control.NamingContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: NamingContainer
+  nameWithType: Control.NamingContainer
+  fullName: Control.NamingContainer
+- uid: System.Web.UI.Control.OnBubbleEvent(System.Object,System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnBubbleEvent(Object, EventArgs)
+  nameWithType: Control.OnBubbleEvent(Object, EventArgs)
+  fullName: Control.OnBubbleEvent(Object, EventArgs)
+- uid: System.Web.UI.Control.OnDataBinding(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnDataBinding(EventArgs)
+  nameWithType: Control.OnDataBinding(EventArgs)
+  fullName: Control.OnDataBinding(EventArgs)
+- uid: System.Web.UI.Control.OpenFile(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OpenFile(String)
+  nameWithType: Control.OpenFile(String)
+  fullName: Control.OpenFile(String)
+- uid: System.Web.UI.Control.Page
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Page
+  nameWithType: Control.Page
+  fullName: Control.Page
+- uid: System.Web.UI.Control.Parent
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Parent
+  nameWithType: Control.Parent
+  fullName: Control.Parent
+- uid: System.Web.UI.Control.PreRender
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: PreRender
+  nameWithType: Control.PreRender
+  fullName: Control.PreRender
+- uid: System.Web.UI.Control.RaiseBubbleEvent(System.Object,System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RaiseBubbleEvent(Object, EventArgs)
+  nameWithType: Control.RaiseBubbleEvent(Object, EventArgs)
+  fullName: Control.RaiseBubbleEvent(Object, EventArgs)
+- uid: System.Web.UI.Control.RemovedControl(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RemovedControl(Control)
+  nameWithType: Control.RemovedControl(Control)
+  fullName: Control.RemovedControl(Control)
+- uid: System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderControl(HtmlTextWriter)
+  nameWithType: Control.RenderControl(HtmlTextWriter)
+  fullName: Control.RenderControl(HtmlTextWriter)
+- uid: System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter,System.Web.UI.Adapters.ControlAdapter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderControl(HtmlTextWriter, ControlAdapter)
+  nameWithType: Control.RenderControl(HtmlTextWriter, ControlAdapter)
+  fullName: Control.RenderControl(HtmlTextWriter, ControlAdapter)
+- uid: System.Web.UI.Control.RenderingCompatibility
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderingCompatibility
+  nameWithType: Control.RenderingCompatibility
+  fullName: Control.RenderingCompatibility
+- uid: System.Web.UI.Control.ResolveAdapter
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveAdapter()
+  nameWithType: Control.ResolveAdapter()
+  fullName: Control.ResolveAdapter()
+- uid: System.Web.UI.Control.ResolveClientUrl(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveClientUrl(String)
+  nameWithType: Control.ResolveClientUrl(String)
+  fullName: Control.ResolveClientUrl(String)
+- uid: System.Web.UI.Control.ResolveUrl(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveUrl(String)
+  nameWithType: Control.ResolveUrl(String)
+  fullName: Control.ResolveUrl(String)
+- uid: System.Web.UI.Control.SaveControlState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SaveControlState()
+  nameWithType: Control.SaveControlState()
+  fullName: Control.SaveControlState()
+- uid: System.Web.UI.Control.SaveViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SaveViewState()
+  nameWithType: Control.SaveViewState()
+  fullName: Control.SaveViewState()
+- uid: System.Web.UI.Control.SetDesignModeState(System.Collections.IDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetDesignModeState(IDictionary)
+  nameWithType: Control.SetDesignModeState(IDictionary)
+  fullName: Control.SetDesignModeState(IDictionary)
+- uid: System.Web.UI.Control.SetRenderMethodDelegate(System.Web.UI.RenderMethod)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetRenderMethodDelegate(RenderMethod)
+  nameWithType: Control.SetRenderMethodDelegate(RenderMethod)
+  fullName: Control.SetRenderMethodDelegate(RenderMethod)
+- uid: System.Web.UI.Control.SetTraceData(System.Object,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetTraceData(Object, Object)
+  nameWithType: Control.SetTraceData(Object, Object)
+  fullName: Control.SetTraceData(Object, Object)
+- uid: System.Web.UI.Control.SetTraceData(System.Object,System.Object,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetTraceData(Object, Object, Object)
+  nameWithType: Control.SetTraceData(Object, Object, Object)
+  fullName: Control.SetTraceData(Object, Object, Object)
+- uid: System.Web.UI.Control.Site
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Site
+  nameWithType: Control.Site
+  fullName: Control.Site
+- uid: System.Web.UI.Control.SkinID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SkinID
+  nameWithType: Control.SkinID
+  fullName: Control.SkinID
+- uid: System.Web.UI.Control.TemplateControl
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: TemplateControl
+  nameWithType: Control.TemplateControl
+  fullName: Control.TemplateControl
+- uid: System.Web.UI.Control.TemplateSourceDirectory
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: TemplateSourceDirectory
+  nameWithType: Control.TemplateSourceDirectory
+  fullName: Control.TemplateSourceDirectory
+- uid: System.Web.UI.Control.TrackViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: TrackViewState()
+  nameWithType: Control.TrackViewState()
+  fullName: Control.TrackViewState()
+- uid: System.Web.UI.Control.UniqueID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: UniqueID
+  nameWithType: Control.UniqueID
+  fullName: Control.UniqueID
+- uid: System.Web.UI.Control.Unload
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Unload
+  nameWithType: Control.Unload
+  fullName: Control.Unload
+- uid: System.Web.UI.Control.ValidateRequestMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ValidateRequestMode
+  nameWithType: Control.ValidateRequestMode
+  fullName: Control.ValidateRequestMode
+- uid: System.Web.UI.Control.ViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewState
+  nameWithType: Control.ViewState
+  fullName: Control.ViewState
+- uid: System.Web.UI.Control.ViewStateIgnoresCase
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewStateIgnoresCase
+  nameWithType: Control.ViewStateIgnoresCase
+  fullName: Control.ViewStateIgnoresCase
+- uid: System.Web.UI.Control.ViewStateMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewStateMode
+  nameWithType: Control.ViewStateMode
+  fullName: Control.ViewStateMode
+- uid: System.Web.UI.Control.Visible
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Visible
+  nameWithType: Control.Visible
+  fullName: Control.Visible
+- uid: System.Web.UI.Control.System#Web#UI#IControlBuilderAccessor#ControlBuilder
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlBuilderAccessor.ControlBuilder
+  nameWithType: Control.IControlBuilderAccessor.ControlBuilder
+  fullName: Control.IControlBuilderAccessor.ControlBuilder
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#GetDesignModeState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.GetDesignModeState()
+  nameWithType: Control.IControlDesignerAccessor.GetDesignModeState()
+  fullName: Control.IControlDesignerAccessor.GetDesignModeState()
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetDesignModeState(System.Collections.IDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.SetDesignModeState(IDictionary)
+  nameWithType: Control.IControlDesignerAccessor.SetDesignModeState(IDictionary)
+  fullName: Control.IControlDesignerAccessor.SetDesignModeState(IDictionary)
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetOwnerControl(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.SetOwnerControl(Control)
+  nameWithType: Control.IControlDesignerAccessor.SetOwnerControl(Control)
+  fullName: Control.IControlDesignerAccessor.SetOwnerControl(Control)
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#UserData
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.UserData
+  nameWithType: Control.IControlDesignerAccessor.UserData
+  fullName: Control.IControlDesignerAccessor.UserData
+- uid: System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#DataBindings
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IDataBindingsAccessor.DataBindings
+  nameWithType: Control.IDataBindingsAccessor.DataBindings
+  fullName: Control.IDataBindingsAccessor.DataBindings
+- uid: System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#HasDataBindings
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IDataBindingsAccessor.HasDataBindings
+  nameWithType: Control.IDataBindingsAccessor.HasDataBindings
+  fullName: Control.IDataBindingsAccessor.HasDataBindings
+- uid: System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#Expressions
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IExpressionsAccessor.Expressions
+  nameWithType: Control.IExpressionsAccessor.Expressions
+  fullName: Control.IExpressionsAccessor.Expressions
+- uid: System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#HasExpressions
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IExpressionsAccessor.HasExpressions
+  nameWithType: Control.IExpressionsAccessor.HasExpressions
+  fullName: Control.IExpressionsAccessor.HasExpressions
+- uid: System.Web.UI.Control.System#Web#UI#IParserAccessor#AddParsedSubObject(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IParserAccessor.AddParsedSubObject(Object)
+  nameWithType: Control.IParserAccessor.AddParsedSubObject(Object)
+  fullName: Control.IParserAccessor.AddParsedSubObject(Object)
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindDataSourceControl(System.Web.UI.Control)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindDataSourceControl(Control)
+  nameWithType: DynamicDataExtensions.FindDataSourceControl(Control)
+  fullName: DynamicDataExtensions.FindDataSourceControl(Control)
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindFieldTemplate(System.Web.UI.Control,System.String)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindFieldTemplate(Control, String)
+  nameWithType: DynamicDataExtensions.FindFieldTemplate(Control, String)
+  fullName: DynamicDataExtensions.FindFieldTemplate(Control, String)
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindMetaTable(System.Web.UI.Control)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindMetaTable(Control)
+  nameWithType: DynamicDataExtensions.FindMetaTable(Control)
+  fullName: DynamicDataExtensions.FindMetaTable(Control)
+- uid: System.Web.UI.IAttributeAccessor
+  parent: System.Web.UI
+  isExternal: false
+  name: IAttributeAccessor
+  nameWithType: IAttributeAccessor
+  fullName: System.Web.UI.IAttributeAccessor

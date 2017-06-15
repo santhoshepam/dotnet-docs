@@ -1,0 +1,2225 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Windows.Interop.D3DImage
+  commentId: T:System.Windows.Interop.D3DImage
+  id: D3DImage
+  children:
+  - System.Windows.Interop.D3DImage.#ctor
+  - System.Windows.Interop.D3DImage.#ctor(System.Double,System.Double)
+  - System.Windows.Interop.D3DImage.AddDirtyRect(System.Windows.Int32Rect)
+  - System.Windows.Interop.D3DImage.Clone
+  - System.Windows.Interop.D3DImage.CloneCore(System.Windows.Freezable)
+  - System.Windows.Interop.D3DImage.CloneCurrentValue
+  - System.Windows.Interop.D3DImage.CloneCurrentValueCore(System.Windows.Freezable)
+  - System.Windows.Interop.D3DImage.CopyBackBuffer
+  - System.Windows.Interop.D3DImage.CreateInstanceCore
+  - System.Windows.Interop.D3DImage.Finalize
+  - System.Windows.Interop.D3DImage.FreezeCore(System.Boolean)
+  - System.Windows.Interop.D3DImage.GetAsFrozenCore(System.Windows.Freezable)
+  - System.Windows.Interop.D3DImage.GetCurrentValueAsFrozenCore(System.Windows.Freezable)
+  - System.Windows.Interop.D3DImage.Height
+  - System.Windows.Interop.D3DImage.IsFrontBufferAvailable
+  - System.Windows.Interop.D3DImage.IsFrontBufferAvailableChanged
+  - System.Windows.Interop.D3DImage.IsFrontBufferAvailableProperty
+  - System.Windows.Interop.D3DImage.Lock
+  - System.Windows.Interop.D3DImage.Metadata
+  - System.Windows.Interop.D3DImage.PixelHeight
+  - System.Windows.Interop.D3DImage.PixelWidth
+  - System.Windows.Interop.D3DImage.SetBackBuffer(System.Windows.Interop.D3DResourceType,System.IntPtr)
+  - System.Windows.Interop.D3DImage.SetBackBuffer(System.Windows.Interop.D3DResourceType,System.IntPtr,System.Boolean)
+  - System.Windows.Interop.D3DImage.TryLock(System.Windows.Duration)
+  - System.Windows.Interop.D3DImage.Unlock
+  - System.Windows.Interop.D3DImage.Width
+  langs:
+  - csharp
+  name: D3DImage
+  nameWithType: D3DImage
+  fullName: System.Windows.Interop.D3DImage
+  type: Class
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: An <xref href="System.Windows.Media.ImageSource"></xref> that displays a user-created Direct3D surface.
+  remarks: "Use the <xref:System.Windows.Interop.D3DImage> class to host Direct3D content in a Windows Presentation Foundation (WPF) application.  \n  \n Call the <xref:System.Windows.Interop.D3DImage.Lock%2A> method to change the Direct3D content displayed by the <xref:System.Windows.Interop.D3DImage>. Call the <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> method to assign a Direct3D surface to a <xref:System.Windows.Interop.D3DImage>. Call the <xref:System.Windows.Interop.D3DImage.AddDirtyRect%2A> method to track updates to the Direct3D surface. Call the <xref:System.Windows.Interop.D3DImage.Unlock%2A> method to display the changed areas.  \n  \n The <xref:System.Windows.Interop.D3DImage> class manages two display buffers, which are called the *back buffer* and the *front buffer*. The back buffer is your Direct3D surface.  Changes to the back buffer are copied forward to the front buffer when you call the <xref:System.Windows.Interop.D3DImage.Unlock%2A> method, where it is displayed on the hardware. Occasionally, the front buffer becomes unavailable. This lack of availability can be caused by screen locking, full-screen exclusive Direct3D applications, user-switching, or other system activities. When this occurs, your WPF application is notified by handling the <xref:System.Windows.Interop.D3DImage.IsFrontBufferAvailableChanged> event.  How your application responds to the front buffer becoming unavailable depends on whether WPF is enabled to fall back to software rendering. The <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> method has an overload that takes a parameter that specifies whether WPF falls back to software rendering.  \n  \n## Responding to an Unavailable Front Buffer when WPF Does not Fall Back to Software Rendering  \n When you call the <xref:System.Windows.Interop.D3DImage.SetBackBuffer%28System.Windows.Interop.D3DResourceType%2CSystem.IntPtr%29> overload or call the <xref:System.Windows.Interop.D3DImage.SetBackBuffer%28System.Windows.Interop.D3DResourceType%2CSystem.IntPtr%2CSystem.Boolean%29> overload with the `enableSoftwareFallback` parameter set to `false`, the rendering system releases its reference to the back buffer when the front buffer becomes unavailable and nothing is displayed. When the front buffer is available again, the rendering system raises the <xref:System.Windows.Interop.D3DImage.IsFrontBufferAvailableChanged> event to notify your WPF application.  You can create an event handler for the <xref:System.Windows.Interop.D3DImage.IsFrontBufferAvailableChanged> event to restart rendering again with a valid Direct3D surface. To restart rendering, you must call <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A>.  \n  \n## Responding to an Unavailable Front Buffer when WPF Falls Back to Software Rendering  \n When you call the <xref:System.Windows.Interop.D3DImage.SetBackBuffer%28System.Windows.Interop.D3DResourceType%2CSystem.IntPtr%2CSystem.Boolean%29> overload with the `enableSoftwareFallback` parameter set to `true`, the rendering system retains its reference to the back buffer when the front buffer becomes unavailable, so there is no need to call <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> when the front buffer is available again.  There may be situations where the user’s device becomes unavailable.  When that occurs, call <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> to release WPF’s reference to the back buffer.  If you need to reset your device, call <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> with the `backBuffer` parameter set to `null`, and then call <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> again with `backBuffer` set to a valid Direct3D surface.  \n  \n> [!NOTE]\n>  Performance depends greatly on the settings of the Direct3D surface. For more information, see [Performance Considerations for Direct3D9 and WPF Interoperability](~/docs/framework/wpf/advanced/performance-considerations-for-direct3d9-and-wpf-interoperability.md).  \n  \n> [!NOTE]\n>  The <xref:System.Windows.Interop.D3DImage> class does not display Direct3D content when WPF renders in software, such as over a Remote Desktop connection, unless you call <xref:System.Windows.Interop.D3DImage.SetBackBuffer%28System.Windows.Interop.D3DResourceType%2CSystem.IntPtr%2CSystem.Boolean%29> and specify `true` for the `enableSoftwareFallback` parameter."
+  example:
+  - "The following code example shows how to declare a <xref:System.Windows.Interop.D3DImage> in XAML. You must map the <xref:System.Windows.Interop> namespace, because it is not included in the default XAML namespaces. For more information, see [Walkthrough: Hosting Direct3D9 Content in WPF](~/docs/framework/wpf/advanced/walkthrough-hosting-direct3d9-content-in-wpf.md).  \n  \n [!code-xml[System.Windows.Interop.D3DImage#10](~/samples/snippets/csharp/VS_Snippets_Wpf/System.Windows.Interop.D3DImage/CS/window1.xaml#10)]"
+  syntax:
+    content: 'public class D3DImage : System.Windows.Media.ImageSource'
+  inheritance:
+  - System.Object
+  - System.Windows.Threading.DispatcherObject
+  - System.Windows.DependencyObject
+  - System.Windows.Freezable
+  - System.Windows.Media.Animation.Animatable
+  - System.Windows.Media.ImageSource
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Windows.DependencyObject.ClearValue(System.Windows.DependencyProperty)
+  - System.Windows.DependencyObject.ClearValue(System.Windows.DependencyPropertyKey)
+  - System.Windows.DependencyObject.CoerceValue(System.Windows.DependencyProperty)
+  - System.Windows.DependencyObject.DependencyObjectType
+  - System.Windows.DependencyObject.Equals(System.Object)
+  - System.Windows.DependencyObject.GetHashCode
+  - System.Windows.DependencyObject.GetLocalValueEnumerator
+  - System.Windows.DependencyObject.GetValue(System.Windows.DependencyProperty)
+  - System.Windows.DependencyObject.InvalidateProperty(System.Windows.DependencyProperty)
+  - System.Windows.DependencyObject.IsSealed
+  - System.Windows.DependencyObject.ReadLocalValue(System.Windows.DependencyProperty)
+  - System.Windows.DependencyObject.SetCurrentValue(System.Windows.DependencyProperty,System.Object)
+  - System.Windows.DependencyObject.SetValue(System.Windows.DependencyProperty,System.Object)
+  - System.Windows.DependencyObject.SetValue(System.Windows.DependencyPropertyKey,System.Object)
+  - System.Windows.DependencyObject.ShouldSerializeProperty(System.Windows.DependencyProperty)
+  - System.Windows.Freezable.CanFreeze
+  - System.Windows.Freezable.Changed
+  - System.Windows.Freezable.CreateInstance
+  - System.Windows.Freezable.Freeze
+  - System.Windows.Freezable.Freeze(System.Windows.Freezable,System.Boolean)
+  - System.Windows.Freezable.GetAsFrozen
+  - System.Windows.Freezable.GetCurrentValueAsFrozen
+  - System.Windows.Freezable.IsFrozen
+  - System.Windows.Freezable.OnChanged
+  - System.Windows.Freezable.OnFreezablePropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyObject)
+  - System.Windows.Freezable.OnFreezablePropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyObject,System.Windows.DependencyProperty)
+  - System.Windows.Freezable.OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs)
+  - System.Windows.Freezable.ReadPreamble
+  - System.Windows.Freezable.WritePostscript
+  - System.Windows.Freezable.WritePreamble
+  - System.Windows.Media.Animation.Animatable.ApplyAnimationClock(System.Windows.DependencyProperty,System.Windows.Media.Animation.AnimationClock)
+  - System.Windows.Media.Animation.Animatable.ApplyAnimationClock(System.Windows.DependencyProperty,System.Windows.Media.Animation.AnimationClock,System.Windows.Media.Animation.HandoffBehavior)
+  - System.Windows.Media.Animation.Animatable.BeginAnimation(System.Windows.DependencyProperty,System.Windows.Media.Animation.AnimationTimeline)
+  - System.Windows.Media.Animation.Animatable.BeginAnimation(System.Windows.DependencyProperty,System.Windows.Media.Animation.AnimationTimeline,System.Windows.Media.Animation.HandoffBehavior)
+  - System.Windows.Media.Animation.Animatable.GetAnimationBaseValue(System.Windows.DependencyProperty)
+  - System.Windows.Media.Animation.Animatable.HasAnimatedProperties
+  - System.Windows.Media.Animation.Animatable.ShouldSerializeStoredWeakReference(System.Windows.DependencyObject)
+  - System.Windows.Media.ImageSource.PixelsToDIPs(System.Double,System.Int32)
+  - System.Windows.Media.ImageSource.System#IFormattable#ToString(System.String,System.IFormatProvider)
+  - System.Windows.Media.ImageSource.ToString
+  - System.Windows.Media.ImageSource.ToString(System.IFormatProvider)
+  - System.Windows.Threading.DispatcherObject.CheckAccess
+  - System.Windows.Threading.DispatcherObject.Dispatcher
+  - System.Windows.Threading.DispatcherObject.VerifyAccess
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Interop.D3DImage.#ctor
+  commentId: M:System.Windows.Interop.D3DImage.#ctor
+  id: '#ctor'
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: D3DImage()
+  nameWithType: D3DImage.D3DImage()
+  fullName: D3DImage.D3DImage()
+  type: Constructor
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Initializes a new instance of the <xref href="System.Windows.Interop.D3DImage"></xref> class.
+  remarks: The default display resolution is 1/96th inch.
+  syntax:
+    content: public D3DImage ();
+    parameters: []
+  overload: System.Windows.Interop.D3DImage.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.#ctor(System.Double,System.Double)
+  commentId: M:System.Windows.Interop.D3DImage.#ctor(System.Double,System.Double)
+  id: '#ctor(System.Double,System.Double)'
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: D3DImage(Double, Double)
+  nameWithType: D3DImage.D3DImage(Double, Double)
+  fullName: D3DImage.D3DImage(Double, Double)
+  type: Constructor
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Initializes a new instance of the <xref href="System.Windows.Interop.D3DImage"></xref> class with the specified display resolution.
+  remarks: The default display resolution is 1/96th inch.
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public D3DImage (double dpiX, double dpiY);
+    parameters:
+    - id: dpiX
+      type: System.Double
+      description: The display resolution on the x-axis.
+    - id: dpiY
+      type: System.Double
+      description: The display resolution on the y-axis.
+  overload: System.Windows.Interop.D3DImage.#ctor*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>dpiX</code> or <code>dpiY</code> is less than zero.
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Interop.D3DImage.AddDirtyRect(System.Windows.Int32Rect)
+  commentId: M:System.Windows.Interop.D3DImage.AddDirtyRect(System.Windows.Int32Rect)
+  id: AddDirtyRect(System.Windows.Int32Rect)
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: AddDirtyRect(Int32Rect)
+  nameWithType: D3DImage.AddDirtyRect(Int32Rect)
+  fullName: D3DImage.AddDirtyRect(Int32Rect)
+  type: Method
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Specifies the area of the back buffer that changed.
+  remarks: "Call the <xref:System.Windows.Interop.D3DImage.AddDirtyRect%2A> method to indicate changes your code has made to the back buffer. To be rendered, the changed area on the back buffer must have a corresponding changed area on the <xref:System.Windows.Interop.D3DImage>.  \n  \n Call the <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> and <xref:System.Windows.Interop.D3DImage.Lock%2A> methods before calling the <xref:System.Windows.Interop.D3DImage.AddDirtyRect%2A> method.  \n  \n Call the <xref:System.Windows.Interop.D3DImage.Unlock%2A> method to copy the changed areas to the front buffer.  \n  \n> [!NOTE]\n>  After a few calls to the <xref:System.Windows.Interop.D3DImage.AddDirtyRect%2A> method, the changed areas are merged into a single area. This means you must have valid data outside of the changed areas."
+  example:
+  - "The following code example shows how to call the <xref:System.Windows.Interop.D3DImage.AddDirtyRect%2A> method to specify the changed region in the back buffer. For more information, see [Walkthrough: Hosting Direct3D9 Content in WPF](~/docs/framework/wpf/advanced/walkthrough-hosting-direct3d9-content-in-wpf.md).  \n  \n [!code-csharp[System.Windows.Interop.D3DImage#3](~/samples/snippets/csharp/VS_Snippets_Wpf/System.Windows.Interop.D3DImage/CS/window1.xaml.cs#3)]"
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public void AddDirtyRect (System.Windows.Int32Rect dirtyRect);
+    parameters:
+    - id: dirtyRect
+      type: System.Windows.Int32Rect
+      description: An <xref href="System.Windows.Int32Rect"></xref> that represents the area that changed.
+  overload: System.Windows.Interop.D3DImage.AddDirtyRect*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: "The bitmap has not been locked by a call to the <xref href=\"System.Windows.Interop.D3DImage.Lock\"></xref> or <xref href=\"System.Windows.Interop.D3DImage.TryLock(System.Windows.Duration)\"></xref> methods.  \n  \n -or-  \n  \n The back buffer has not been assigned by a call to the <xref href=\"System.Windows.Interop.D3DImage.SetBackBuffer(System.Windows.Interop.D3DResourceType,System.IntPtr)\"></xref> method."
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: "One or more of the following conditions is true.  \n  \n <code>dirtyRect.X</code> < 0  \n  \n <code>dirtyRect.Y</code> < 0  \n  \n <code>dirtyRect.Width</code> < 0 or <code>dirtyRect.Width</code> > <xref href=\"System.Windows.Interop.D3DImage.PixelWidth\"></xref><code>dirtyRect.Height</code> < 0 or <code>dirtyRect.Height</code> > <xref href=\"System.Windows.Interop.D3DImage.PixelHeight\"></xref>"
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.Clone
+  commentId: M:System.Windows.Interop.D3DImage.Clone
+  id: Clone
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: Clone()
+  nameWithType: D3DImage.Clone()
+  fullName: D3DImage.Clone()
+  type: Method
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Creates a modifiable clone of this <xref href="System.Windows.Interop.D3DImage"></xref> object, making deep copies of this object's values. When copying dependency properties, this method copies resource references and data bindings (which may no longer resolve), but not animations or their current values.
+  remarks: "This method is used to produce modifiable copies of frozen <xref:System.Windows.Freezable> objects (or any <xref:System.Windows.Freezable> object). For convenience, this method shadows the inherited version with a strongly typed implementation.  \n  \n For more information, see <xref:System.Windows.Freezable.Clone%2A?displayProperty=fullName>."
+  syntax:
+    content: public System.Windows.Interop.D3DImage Clone ();
+    parameters: []
+    return:
+      type: System.Windows.Interop.D3DImage
+      description: A modifiable clone of the current object. The cloned object's <xref href="System.Windows.Freezable.IsFrozen"></xref> property will be `false` even if the source's <xref href="System.Windows.Freezable.IsFrozen"></xref> property was `true.`
+  overload: System.Windows.Interop.D3DImage.Clone*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.CloneCore(System.Windows.Freezable)
+  commentId: M:System.Windows.Interop.D3DImage.CloneCore(System.Windows.Freezable)
+  id: CloneCore(System.Windows.Freezable)
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: CloneCore(Freezable)
+  nameWithType: D3DImage.CloneCore(Freezable)
+  fullName: D3DImage.CloneCore(Freezable)
+  type: Method
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Makes the instance a clone (deep copy) of the specified <xref href="System.Windows.Freezable"></xref> using base (non-animated) property values.
+  syntax:
+    content: protected override void CloneCore (System.Windows.Freezable sourceFreezable);
+    parameters:
+    - id: sourceFreezable
+      type: System.Windows.Freezable
+      description: The object to clone.
+  overload: System.Windows.Interop.D3DImage.CloneCore*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.CloneCurrentValue
+  commentId: M:System.Windows.Interop.D3DImage.CloneCurrentValue
+  id: CloneCurrentValue
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: CloneCurrentValue()
+  nameWithType: D3DImage.CloneCurrentValue()
+  fullName: D3DImage.CloneCurrentValue()
+  type: Method
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Creates a modifiable clone of this <xref href="System.Windows.Interop.D3DImage"></xref> object, making deep copies of this object's current values. Resource references, data bindings, and animations are not copied, but their current values are copied.
+  remarks: "This method is used to produce modifiable copies of frozen <xref:System.Windows.Freezable> objects (or any <xref:System.Windows.Freezable> object). For convenience, this method shadows the inherited version with a strongly typed implementation.  \n  \n For more information, see <xref:System.Windows.Freezable.CloneCurrentValue%2A?displayProperty=fullName>."
+  syntax:
+    content: public System.Windows.Interop.D3DImage CloneCurrentValue ();
+    parameters: []
+    return:
+      type: System.Windows.Interop.D3DImage
+      description: A modifiable clone of the current object. The cloned object's <xref href="System.Windows.Freezable.IsFrozen"></xref> property will be `false` even if the source's <xref href="System.Windows.Freezable.IsFrozen"></xref> property was `true`.
+  overload: System.Windows.Interop.D3DImage.CloneCurrentValue*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Interop.D3DImage.CloneCurrentValueCore(System.Windows.Freezable)
+  commentId: M:System.Windows.Interop.D3DImage.CloneCurrentValueCore(System.Windows.Freezable)
+  id: CloneCurrentValueCore(System.Windows.Freezable)
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: CloneCurrentValueCore(Freezable)
+  nameWithType: D3DImage.CloneCurrentValueCore(Freezable)
+  fullName: D3DImage.CloneCurrentValueCore(Freezable)
+  type: Method
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Makes the instance a modifiable clone (deep copy) of the specified <xref href="System.Windows.Freezable"></xref> using current property values.
+  syntax:
+    content: protected override void CloneCurrentValueCore (System.Windows.Freezable sourceFreezable);
+    parameters:
+    - id: sourceFreezable
+      type: System.Windows.Freezable
+      description: The <xref href="System.Windows.Freezable"></xref> to be cloned.
+  overload: System.Windows.Interop.D3DImage.CloneCurrentValueCore*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.CopyBackBuffer
+  commentId: M:System.Windows.Interop.D3DImage.CopyBackBuffer
+  id: CopyBackBuffer
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: CopyBackBuffer()
+  nameWithType: D3DImage.CopyBackBuffer()
+  fullName: D3DImage.CopyBackBuffer()
+  type: Method
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Creates a software copy of the <xref href="System.Windows.Interop.D3DImage"></xref>.
+  remarks: "The <xref:System.Windows.Interop.D3DImage.CopyBackBuffer%2A> method is called by clients such as the printing system and the <xref:System.Windows.Media.Imaging.RenderTargetBitmap> class.  \n  \n Optionally override the <xref:System.Windows.Interop.D3DImage.CopyBackBuffer%2A> method to implement custom logic and return a different <xref:System.Windows.Media.Imaging.BitmapSource>. For example, you can return a placeholder <xref:System.Windows.Media.Imaging.BitmapSource> if the default <xref:System.Windows.Interop.D3DImage.CopyBackBuffer%2A> implementation returns `null`."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      [System.Security.SecurityTreatAsSafe]
+
+      protected virtual System.Windows.Media.Imaging.BitmapSource CopyBackBuffer ();
+    parameters: []
+    return:
+      type: System.Windows.Media.Imaging.BitmapSource
+      description: A <xref href="System.Windows.Media.Imaging.BitmapSource"></xref> that is a software copy of the current state of the back buffer; otherwise, `null` if the back buffer cannot be read.
+  overload: System.Windows.Interop.D3DImage.CopyBackBuffer*
+  exceptions: []
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  - type: System.Security.SecurityTreatAsSafeAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.CreateInstanceCore
+  commentId: M:System.Windows.Interop.D3DImage.CreateInstanceCore
+  id: CreateInstanceCore
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: CreateInstanceCore()
+  nameWithType: D3DImage.CreateInstanceCore()
+  fullName: D3DImage.CreateInstanceCore()
+  type: Method
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: When implemented in a derived class, creates a new instance of the <xref href="System.Windows.Interop.D3DImage"></xref> derived class.
+  remarks: If you derive from the <xref:System.Windows.Interop.D3DImage> class, you must override the <xref:System.Windows.Interop.D3DImage.CreateInstanceCore%2A> method to enable correct cloning. The default implementation performs a `return new D3DImage()`, which will not be correct if the instance is a different class.
+  syntax:
+    content: protected override System.Windows.Freezable CreateInstanceCore ();
+    parameters: []
+    return:
+      type: System.Windows.Freezable
+      description: The new instance.
+  overload: System.Windows.Interop.D3DImage.CreateInstanceCore*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.Finalize
+  commentId: M:System.Windows.Interop.D3DImage.Finalize
+  id: Finalize
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: Finalize()
+  nameWithType: D3DImage.Finalize()
+  fullName: D3DImage.Finalize()
+  type: Method
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Frees resources and performs other cleanup operations before the <xref href="System.Windows.Interop.D3DImage"></xref> is reclaimed by garbage collection.
+  remarks: "This method overrides <xref:System.Object.Finalize%2A>. Application code should not call this method; an object's `Finalize` method is automatically invoked during garbage collection, unless finalization by the garbage collector has been disabled by a call to the <xref:System.GC.SuppressFinalize%2A> method.  \n  \n For more information, see [Finalize Methods and Destructors](http://msdn.microsoft.com/en-us/fd376774-1643-499b-869e-9546a3aeea70), [Cleaning Up Unmanaged Resources](~/docs/standard/garbage-collection/unmanaged.md), and [Overriding the Finalize Method](http://msdn.microsoft.com/en-us/8026cb68-fe93-43fc-96c1-c09ad7d64cd3)."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      [System.Security.SecurityTreatAsSafe]
+
+      ~D3DImage ();
+    parameters: []
+  overload: System.Windows.Interop.D3DImage.Finalize*
+  exceptions: []
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  - type: System.Security.SecurityTreatAsSafeAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.FreezeCore(System.Boolean)
+  commentId: M:System.Windows.Interop.D3DImage.FreezeCore(System.Boolean)
+  id: FreezeCore(System.Boolean)
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: FreezeCore(Boolean)
+  nameWithType: D3DImage.FreezeCore(Boolean)
+  fullName: D3DImage.FreezeCore(Boolean)
+  type: Method
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Makes the <xref href="System.Windows.Interop.D3DImage"></xref> unmodifiable or determines whether it can be made unmodifiable.
+  remarks: The <xref:System.Windows.Interop.D3DImage> class does not allow freezing because changes are always possible due to front buffer availability.
+  syntax:
+    content: protected override sealed bool FreezeCore (bool isChecking);
+    parameters:
+    - id: isChecking
+      type: System.Boolean
+      description: Has no effect.
+    return:
+      type: System.Boolean
+      description: '`false` in all cases.'
+  overload: System.Windows.Interop.D3DImage.FreezeCore*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.GetAsFrozenCore(System.Windows.Freezable)
+  commentId: M:System.Windows.Interop.D3DImage.GetAsFrozenCore(System.Windows.Freezable)
+  id: GetAsFrozenCore(System.Windows.Freezable)
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: GetAsFrozenCore(Freezable)
+  nameWithType: D3DImage.GetAsFrozenCore(Freezable)
+  fullName: D3DImage.GetAsFrozenCore(Freezable)
+  type: Method
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Makes the instance a frozen clone of the specified <xref href="System.Windows.Freezable"></xref> using base (non-animated) property values.
+  syntax:
+    content: protected override void GetAsFrozenCore (System.Windows.Freezable sourceFreezable);
+    parameters:
+    - id: sourceFreezable
+      type: System.Windows.Freezable
+      description: The instance to copy.
+  overload: System.Windows.Interop.D3DImage.GetAsFrozenCore*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Interop.D3DImage.GetCurrentValueAsFrozenCore(System.Windows.Freezable)
+  commentId: M:System.Windows.Interop.D3DImage.GetCurrentValueAsFrozenCore(System.Windows.Freezable)
+  id: GetCurrentValueAsFrozenCore(System.Windows.Freezable)
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: GetCurrentValueAsFrozenCore(Freezable)
+  nameWithType: D3DImage.GetCurrentValueAsFrozenCore(Freezable)
+  fullName: D3DImage.GetCurrentValueAsFrozenCore(Freezable)
+  type: Method
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Makes the current instance a frozen clone of the specified <xref href="System.Windows.Freezable"></xref>. If the object has animated dependency properties, their current animated values are copied.
+  syntax:
+    content: protected override void GetCurrentValueAsFrozenCore (System.Windows.Freezable sourceFreezable);
+    parameters:
+    - id: sourceFreezable
+      type: System.Windows.Freezable
+      description: The <xref href="System.Windows.Freezable"></xref> to copy and freeze.
+  overload: System.Windows.Interop.D3DImage.GetCurrentValueAsFrozenCore*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.Height
+  commentId: P:System.Windows.Interop.D3DImage.Height
+  id: Height
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: Height
+  nameWithType: D3DImage.Height
+  fullName: D3DImage.Height
+  type: Property
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Gets the height of the <xref href="System.Windows.Interop.D3DImage"></xref>.
+  remarks: The value of <xref:System.Windows.Interop.D3DImage.Height%2A> can change when a new back buffer is assigned by a call to the <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> method.
+  syntax:
+    content: public override sealed double Height { get; }
+    return:
+      type: System.Double
+      description: The height of the <xref href="System.Windows.Interop.D3DImage"></xref>, in measure units. A measure unit is 1/96th inch.
+  overload: System.Windows.Interop.D3DImage.Height*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Interop.D3DImage.IsFrontBufferAvailable
+  commentId: P:System.Windows.Interop.D3DImage.IsFrontBufferAvailable
+  id: IsFrontBufferAvailable
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: IsFrontBufferAvailable
+  nameWithType: D3DImage.IsFrontBufferAvailable
+  fullName: D3DImage.IsFrontBufferAvailable
+  type: Property
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Gets a value that indicates whether a front buffer exists.
+  remarks: "Occasionally, the front buffer becomes unavailable. This lack of availability can be caused by screen locking, full-screen exclusive Direct3D applications, user-switching, or other system activities. When this occurs, your WPF application is notified by handling the <xref:System.Windows.Interop.D3DImage.IsFrontBufferAvailableChanged> event.  How your application responds to the front buffer becoming unavailable depends on whether WPF is enabled to fall back to software rendering. The <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> method has an overload that takes a parameter that specifies whether WPF falls back to software rendering. For more information, see the remarks in the <xref:System.Windows.Interop.D3DImage> class.  \n  \n<a name=\"dependencyPropertyInfo_IsFrontBufferAvailable\"></a>   \n## Dependency Property Information  \n  \n|||  \n|-|-|  \n|Identifier field|<xref:System.Windows.Interop.D3DImage.IsFrontBufferAvailableProperty>|  \n|Metadata properties set to `true`|None|"
+  example:
+  - "The following code example shows how to check the <xref:System.Windows.Interop.D3DImage.IsFrontBufferAvailable%2A> property when rendering the composition target. For more information, see [Walkthrough: Hosting Direct3D9 Content in WPF](~/docs/framework/wpf/advanced/walkthrough-hosting-direct3d9-content-in-wpf.md).  \n  \n [!code-csharp[System.Windows.Interop.D3DImage#2](~/samples/snippets/csharp/VS_Snippets_Wpf/System.Windows.Interop.D3DImage/CS/window1.xaml.cs#2)]"
+  syntax:
+    content: public bool IsFrontBufferAvailable { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if a front buffer exists; otherwise, `false`.'
+  overload: System.Windows.Interop.D3DImage.IsFrontBufferAvailable*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.IsFrontBufferAvailableChanged
+  commentId: E:System.Windows.Interop.D3DImage.IsFrontBufferAvailableChanged
+  id: IsFrontBufferAvailableChanged
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: IsFrontBufferAvailableChanged
+  nameWithType: D3DImage.IsFrontBufferAvailableChanged
+  fullName: D3DImage.IsFrontBufferAvailableChanged
+  type: Event
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Occurs when the <xref href="System.Windows.Interop.D3DImage.IsFrontBufferAvailable"></xref> property changes.
+  remarks: Handle the <xref:System.Windows.Interop.D3DImage.IsFrontBufferAvailableChanged> to be notified when the status of the front buffer changes. How your application responds to the front buffer becoming unavailable depends on whether WPF is enabled to fall back to software rendering. The <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> method has an overload that takes a parameter that specifies whether WPF falls back to software rendering. For more information, see the remarks in the <xref:System.Windows.Interop.D3DImage> class.
+  syntax:
+    content: public event System.Windows.DependencyPropertyChangedEventHandler IsFrontBufferAvailableChanged;
+    return:
+      type: System.Windows.DependencyPropertyChangedEventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.IsFrontBufferAvailableProperty
+  commentId: F:System.Windows.Interop.D3DImage.IsFrontBufferAvailableProperty
+  id: IsFrontBufferAvailableProperty
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: IsFrontBufferAvailableProperty
+  nameWithType: D3DImage.IsFrontBufferAvailableProperty
+  fullName: D3DImage.IsFrontBufferAvailableProperty
+  type: Field
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Identifies the <xref href="System.Windows.Interop.D3DImage.IsFrontBufferAvailable"></xref> dependency property.
+  syntax:
+    content: public static readonly System.Windows.DependencyProperty IsFrontBufferAvailableProperty;
+    return:
+      type: System.Windows.DependencyProperty
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.Lock
+  commentId: M:System.Windows.Interop.D3DImage.Lock
+  id: Lock
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: Lock()
+  nameWithType: D3DImage.Lock()
+  fullName: D3DImage.Lock()
+  type: Method
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Locks the <xref href="System.Windows.Interop.D3DImage"></xref> and enables operations on the back buffer.
+  remarks: "Call the <xref:System.Windows.Interop.D3DImage.Lock%2A> method to change the back buffer by calling the <xref:System.Windows.Interop.D3DImage.AddDirtyRect%2A> and <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> methods. While the <xref:System.Windows.Interop.D3DImage> is locked, your application can also render to the Direct3D surface assigned to the back buffer.  \n  \n> [!NOTE]\n>  The <xref:System.Windows.Interop.D3DImage.Lock%2A> method blocks when the rendering system is reading the back buffer to update the front buffer. Use the <xref:System.Windows.Interop.D3DImage.TryLock%2A> method to avoid blocking indefinitely."
+  example:
+  - "The following code example shows how to call the <xref:System.Windows.Interop.D3DImage.Lock%2A> method to enable updates to the back buffer. For more information, see [Walkthrough: Hosting Direct3D9 Content in WPF](~/docs/framework/wpf/advanced/walkthrough-hosting-direct3d9-content-in-wpf.md).  \n  \n [!code-csharp[System.Windows.Interop.D3DImage#3](~/samples/snippets/csharp/VS_Snippets_Wpf/System.Windows.Interop.D3DImage/CS/window1.xaml.cs#3)]"
+  syntax:
+    content: public void Lock ();
+    parameters: []
+  overload: System.Windows.Interop.D3DImage.Lock*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The lock count equals <xref href="System.UInt32.MaxValue"></xref>.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.Metadata
+  commentId: P:System.Windows.Interop.D3DImage.Metadata
+  id: Metadata
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: Metadata
+  nameWithType: D3DImage.Metadata
+  fullName: D3DImage.Metadata
+  type: Property
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Gets the metadata associated with the image source.
+  syntax:
+    content: public override sealed System.Windows.Media.ImageMetadata Metadata { get; }
+    return:
+      type: System.Windows.Media.ImageMetadata
+      description: '`null` in all cases.'
+  overload: System.Windows.Interop.D3DImage.Metadata*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.PixelHeight
+  commentId: P:System.Windows.Interop.D3DImage.PixelHeight
+  id: PixelHeight
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: PixelHeight
+  nameWithType: D3DImage.PixelHeight
+  fullName: D3DImage.PixelHeight
+  type: Property
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Gets the height of the <xref href="System.Windows.Interop.D3DImage"></xref>, in pixels.
+  remarks: The value of <xref:System.Windows.Interop.D3DImage.PixelHeight%2A> can change when a new back buffer is assigned by a call to the <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> method.
+  example:
+  - "The following code example shows how to use the <xref:System.Windows.Interop.D3DImage.PixelHeight%2A> property to specify the changed region in the back buffer. For more information, see [Walkthrough: Hosting Direct3D9 Content in WPF](~/docs/framework/wpf/advanced/walkthrough-hosting-direct3d9-content-in-wpf.md).  \n  \n [!code-csharp[System.Windows.Interop.D3DImage#3](~/samples/snippets/csharp/VS_Snippets_Wpf/System.Windows.Interop.D3DImage/CS/window1.xaml.cs#3)]"
+  syntax:
+    content: public int PixelHeight { get; }
+    return:
+      type: System.Int32
+      description: The height of the <xref href="System.Windows.Interop.D3DImage"></xref>, in pixels.
+  overload: System.Windows.Interop.D3DImage.PixelHeight*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Interop.D3DImage.PixelWidth
+  commentId: P:System.Windows.Interop.D3DImage.PixelWidth
+  id: PixelWidth
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: PixelWidth
+  nameWithType: D3DImage.PixelWidth
+  fullName: D3DImage.PixelWidth
+  type: Property
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Gets the width of the <xref href="System.Windows.Interop.D3DImage"></xref>, in pixels.
+  remarks: The value of <xref:System.Windows.Interop.D3DImage.PixelWidth%2A> can change when a new back buffer is assigned by a call to the <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> method.
+  example:
+  - "The following code example shows how to use the <xref:System.Windows.Interop.D3DImage.PixelWidth%2A> property to specify the changed region in the back buffer. For more information, see [Walkthrough: Hosting Direct3D9 Content in WPF](~/docs/framework/wpf/advanced/walkthrough-hosting-direct3d9-content-in-wpf.md).  \n  \n [!code-csharp[System.Windows.Interop.D3DImage#3](~/samples/snippets/csharp/VS_Snippets_Wpf/System.Windows.Interop.D3DImage/CS/window1.xaml.cs#3)]"
+  syntax:
+    content: public int PixelWidth { get; }
+    return:
+      type: System.Int32
+      description: The width of the <xref href="System.Windows.Interop.D3DImage"></xref>, in pixels.
+  overload: System.Windows.Interop.D3DImage.PixelWidth*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Interop.D3DImage.SetBackBuffer(System.Windows.Interop.D3DResourceType,System.IntPtr)
+  commentId: M:System.Windows.Interop.D3DImage.SetBackBuffer(System.Windows.Interop.D3DResourceType,System.IntPtr)
+  id: SetBackBuffer(System.Windows.Interop.D3DResourceType,System.IntPtr)
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: SetBackBuffer(D3DResourceType, IntPtr)
+  nameWithType: D3DImage.SetBackBuffer(D3DResourceType, IntPtr)
+  fullName: D3DImage.SetBackBuffer(D3DResourceType, IntPtr)
+  type: Method
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Assigns a Direct3D surface as the source of the back buffer.
+  remarks: "Call the <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> method to assign a Direct3D surface to the back buffer.  \n  \n> [!NOTE]\n>  Performance depends greatly on the settings of the Direct3D surface. For more information, see [Performance Considerations for Direct3D9 and WPF Interoperability](~/docs/framework/wpf/advanced/performance-considerations-for-direct3d9-and-wpf-interoperability.md).  \n  \n Calling the <xref:System.Windows.Interop.D3DImage.SetBackBuffer%28System.Windows.Interop.D3DResourceType%2CSystem.IntPtr%29> overload is identical to calling the <xref:System.Windows.Interop.D3DImage.SetBackBuffer%28System.Windows.Interop.D3DResourceType%2CSystem.IntPtr%2CSystem.Boolean%29> overload with the `enableSoftwareFallback` parameter set to `false`. When you call <xref:System.Windows.Interop.D3DImage.SetBackBuffer%28System.Windows.Interop.D3DResourceType%2CSystem.IntPtr%29> or call <xref:System.Windows.Interop.D3DImage.SetBackBuffer%28System.Windows.Interop.D3DResourceType%2CSystem.IntPtr%2CSystem.Boolean%29> with the `enableSoftwareFallback` parameter set to `false`, the rendering system releases its reference to the back buffer when front buffer becomes unavailable and nothing is displayed. When the front buffer is available again, the rendering system raises the <xref:System.Windows.Interop.D3DImage.IsFrontBufferAvailableChanged> event to notify your WPF application.  You can create an event handler for the <xref:System.Windows.Interop.D3DImage.IsFrontBufferAvailableChanged> event to restart rendering again with a valid Direct3D surface. To restart rendering, you must call <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A>.  \n  \n The following list shows the required back buffer settings for the `IDirect3DSurface9` type.  \n  \n-   `D3DFMT_A8R8G8B8` or `D3DFMT_X8R8G8B8`  \n  \n-   `D3DUSAGE_RENDERTARGET`  \n  \n-   `D3DPOOL_DEFAULT`  \n  \n Multisampling is allowed on `IDirect3DSurface9Ex` surfaces only."
+  example:
+  - "The following code example shows how to call the <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> method to assign a Direct3D surface. For more information, see [Walkthrough: Hosting Direct3D9 Content in WPF](~/docs/framework/wpf/advanced/walkthrough-hosting-direct3d9-content-in-wpf.md).  \n  \n [!code-csharp[System.Windows.Interop.D3DImage#3](~/samples/snippets/csharp/VS_Snippets_Wpf/System.Windows.Interop.D3DImage/CS/window1.xaml.cs#3)]"
+  syntax:
+    content: public void SetBackBuffer (System.Windows.Interop.D3DResourceType backBufferType, IntPtr backBuffer);
+    parameters:
+    - id: backBufferType
+      type: System.Windows.Interop.D3DResourceType
+      description: The type of Direct3D surface. Must be a valid <xref href="System.Windows.Interop.D3DResourceType"></xref>.
+    - id: backBuffer
+      type: System.IntPtr
+      description: The Direct3D surface to assign as the back buffer.
+  overload: System.Windows.Interop.D3DImage.SetBackBuffer*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The <xref href="System.Windows.Interop.D3DImage"></xref> has not been locked by a call to the <xref href="System.Windows.Interop.D3DImage.Lock"></xref> or <xref href="System.Windows.Interop.D3DImage.TryLock(System.Windows.Duration)"></xref> methods.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>backBufferType</code> is not a valid <xref href="System.Windows.Interop.D3DResourceType"></xref>.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The creation parameters for <code>backBuffer</code> do not meet the requirements for the <code>backBufferType</code>-or-The <code>backBuffer</code> device is not valid.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.SetBackBuffer(System.Windows.Interop.D3DResourceType,System.IntPtr,System.Boolean)
+  commentId: M:System.Windows.Interop.D3DImage.SetBackBuffer(System.Windows.Interop.D3DResourceType,System.IntPtr,System.Boolean)
+  id: SetBackBuffer(System.Windows.Interop.D3DResourceType,System.IntPtr,System.Boolean)
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: SetBackBuffer(D3DResourceType, IntPtr, Boolean)
+  nameWithType: D3DImage.SetBackBuffer(D3DResourceType, IntPtr, Boolean)
+  fullName: D3DImage.SetBackBuffer(D3DResourceType, IntPtr, Boolean)
+  type: Method
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Assigns a Direct3D surface as the source of the back buffer.
+  remarks: "When you call the <xref:System.Windows.Interop.D3DImage.SetBackBuffer%28System.Windows.Interop.D3DResourceType%2CSystem.IntPtr%29> overload or call the <xref:System.Windows.Interop.D3DImage.SetBackBuffer%28System.Windows.Interop.D3DResourceType%2CSystem.IntPtr%2CSystem.Boolean%29> overload with the `enableSoftwareFallback` parameter set to `false`, the rendering system releases its reference to the back buffer when the front buffer becomes unavailable and nothing is displayed. When the front buffer is available again, the rendering system raises the <xref:System.Windows.Interop.D3DImage.IsFrontBufferAvailableChanged> event to notify your WPF application.  You can create an event handler for the <xref:System.Windows.Interop.D3DImage.IsFrontBufferAvailableChanged> event to restart rendering again with a valid Direct3D surface. To restart rendering, you must call <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A>.  \n  \n When you call <xref:System.Windows.Interop.D3DImage.SetBackBuffer%28System.Windows.Interop.D3DResourceType%2CSystem.IntPtr%2CSystem.Boolean%29> with the `enableSoftwareFallback` parameter set to `true`, the rendering system retains its reference to the back buffer when the front buffer becomes unavailable, so there is no need to call <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> when the front buffer is available again.  There may be situations where the user’s device becomes unavailable.  When that occurs, call <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> to release WPF’s reference to the back buffer.  If you need to reset your device, call <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> with `backBuffer` set to `null`, and then call <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> again with `backBuffer` set to a valid Direct3D surface.  \n  \n The following list shows the required back buffer settings for the `IDirect3DSurface9` type.  \n  \n-   `D3DFMT_A8R8G8B8` or `D3DFMT_X8R8G8B8`  \n  \n-   `D3DUSAGE_RENDERTARGET`  \n  \n-   `D3DPOOL_DEFAULT`  \n  \n Multisampling is allowed on `IDirect3DSurface9Ex` surfaces only."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public void SetBackBuffer (System.Windows.Interop.D3DResourceType backBufferType, IntPtr backBuffer, bool enableSoftwareFallback);
+    parameters:
+    - id: backBufferType
+      type: System.Windows.Interop.D3DResourceType
+      description: The type of Direct3D surface. Must be a valid <xref href="System.Windows.Interop.D3DResourceType"></xref>.
+    - id: backBuffer
+      type: System.IntPtr
+      description: The Direct3D surface to assign as the back buffer.
+    - id: enableSoftwareFallback
+      type: System.Boolean
+      description: '`true` to fall back on software rendering; otherwise, `false`.'
+  overload: System.Windows.Interop.D3DImage.SetBackBuffer*
+  exceptions: []
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Interop.D3DImage.TryLock(System.Windows.Duration)
+  commentId: M:System.Windows.Interop.D3DImage.TryLock(System.Windows.Duration)
+  id: TryLock(System.Windows.Duration)
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: TryLock(Duration)
+  nameWithType: D3DImage.TryLock(Duration)
+  fullName: D3DImage.TryLock(Duration)
+  type: Method
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Attempts to lock the <xref href="System.Windows.Interop.D3DImage"></xref> and waits for the specified duration.
+  syntax:
+    content: public bool TryLock (System.Windows.Duration timeout);
+    parameters:
+    - id: timeout
+      type: System.Windows.Duration
+      description: The duration to wait for the lock to be acquired.
+    return:
+      type: System.Boolean
+      description: '`true` if the lock was acquired; otherwise, `false`.'
+  overload: System.Windows.Interop.D3DImage.TryLock*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>timeout</code> is set to <xref href="System.Windows.Duration.Automatic"></xref>.
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The lock count equals <xref href="System.UInt32.MaxValue"></xref>.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.Unlock
+  commentId: M:System.Windows.Interop.D3DImage.Unlock
+  id: Unlock
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: Unlock()
+  nameWithType: D3DImage.Unlock()
+  fullName: D3DImage.Unlock()
+  type: Method
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Decrements the lock count for the <xref href="System.Windows.Interop.D3DImage"></xref>.
+  remarks: "When the lock count for the <xref:System.Windows.Interop.D3DImage> reaches zero, the <xref:System.Windows.Interop.D3DImage> is fully unlocked. The <xref:System.Windows.Interop.D3DImage> is marked for rendering if the image has changed areas that were specified by previous calls to the <xref:System.Windows.Interop.D3DImage.AddDirtyRect%2A> method.  \n  \n When the changes are committed and rendering occurs, additional calls to the <xref:System.Windows.Interop.D3DImage.Lock%2A> method block until the render thread has copied the contents of the back buffer to the front buffer. This synchronization avoids display artifacts, such as tearing.  \n  \n> [!NOTE]\n>  Do not update the Direct3D surface while the <xref:System.Windows.Interop.D3DImage> is unlocked."
+  example:
+  - "The following code example shows how to call the <xref:System.Windows.Interop.D3DImage.Unlock%2A> method to copy the updated back buffer to the front buffer. For more information, see [Walkthrough: Hosting Direct3D9 Content in WPF](~/docs/framework/wpf/advanced/walkthrough-hosting-direct3d9-content-in-wpf.md).  \n  \n [!code-csharp[System.Windows.Interop.D3DImage#3](~/samples/snippets/csharp/VS_Snippets_Wpf/System.Windows.Interop.D3DImage/CS/window1.xaml.cs#3)]"
+  syntax:
+    content: public void Unlock ();
+    parameters: []
+  overload: System.Windows.Interop.D3DImage.Unlock*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Interop.D3DImage.Width
+  commentId: P:System.Windows.Interop.D3DImage.Width
+  id: Width
+  parent: System.Windows.Interop.D3DImage
+  langs:
+  - csharp
+  name: Width
+  nameWithType: D3DImage.Width
+  fullName: D3DImage.Width
+  type: Property
+  assemblies:
+  - PresentationCore
+  namespace: System.Windows.Interop
+  summary: Gets the width of the <xref href="System.Windows.Interop.D3DImage"></xref>.
+  remarks: The value of <xref:System.Windows.Interop.D3DImage.Width%2A> can change when a new back buffer is assigned by a call to the <xref:System.Windows.Interop.D3DImage.SetBackBuffer%2A> method.
+  syntax:
+    content: public override sealed double Width { get; }
+    return:
+      type: System.Double
+      description: The width of the <xref href="System.Windows.Interop.D3DImage"></xref>, in measure units. A measure unit is 1/96th inch.
+  overload: System.Windows.Interop.D3DImage.Width*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+references:
+- uid: System.Windows.Media.ImageSource
+  parent: System.Windows.Media
+  isExternal: false
+  name: ImageSource
+  nameWithType: ImageSource
+  fullName: System.Windows.Media.ImageSource
+- uid: System.ArgumentOutOfRangeException
+  parent: System
+  isExternal: false
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: System.InvalidOperationException
+  parent: System
+  isExternal: false
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.Windows.Interop.D3DImage.#ctor
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: D3DImage()
+  nameWithType: D3DImage.D3DImage()
+  fullName: D3DImage.D3DImage()
+- uid: System.Windows.Interop.D3DImage.#ctor(System.Double,System.Double)
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: D3DImage(Double, Double)
+  nameWithType: D3DImage.D3DImage(Double, Double)
+  fullName: D3DImage.D3DImage(Double, Double)
+- uid: System.Double
+  parent: System
+  isExternal: false
+  name: Double
+  nameWithType: Double
+  fullName: System.Double
+- uid: System.Windows.Interop.D3DImage.AddDirtyRect(System.Windows.Int32Rect)
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: AddDirtyRect(Int32Rect)
+  nameWithType: D3DImage.AddDirtyRect(Int32Rect)
+  fullName: D3DImage.AddDirtyRect(Int32Rect)
+- uid: System.Windows.Int32Rect
+  parent: System.Windows
+  isExternal: false
+  name: Int32Rect
+  nameWithType: Int32Rect
+  fullName: System.Windows.Int32Rect
+- uid: System.Windows.Interop.D3DImage.Clone
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: Clone()
+  nameWithType: D3DImage.Clone()
+  fullName: D3DImage.Clone()
+- uid: System.Windows.Interop.D3DImage
+  parent: System.Windows.Interop
+  isExternal: false
+  name: D3DImage
+  nameWithType: D3DImage
+  fullName: System.Windows.Interop.D3DImage
+- uid: System.Windows.Interop.D3DImage.CloneCore(System.Windows.Freezable)
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: CloneCore(Freezable)
+  nameWithType: D3DImage.CloneCore(Freezable)
+  fullName: D3DImage.CloneCore(Freezable)
+- uid: System.Windows.Freezable
+  parent: System.Windows
+  isExternal: false
+  name: Freezable
+  nameWithType: Freezable
+  fullName: System.Windows.Freezable
+- uid: System.Windows.Interop.D3DImage.CloneCurrentValue
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: CloneCurrentValue()
+  nameWithType: D3DImage.CloneCurrentValue()
+  fullName: D3DImage.CloneCurrentValue()
+- uid: System.Windows.Interop.D3DImage.CloneCurrentValueCore(System.Windows.Freezable)
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: CloneCurrentValueCore(Freezable)
+  nameWithType: D3DImage.CloneCurrentValueCore(Freezable)
+  fullName: D3DImage.CloneCurrentValueCore(Freezable)
+- uid: System.Windows.Interop.D3DImage.CopyBackBuffer
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: CopyBackBuffer()
+  nameWithType: D3DImage.CopyBackBuffer()
+  fullName: D3DImage.CopyBackBuffer()
+- uid: System.Windows.Media.Imaging.BitmapSource
+  parent: System.Windows.Media.Imaging
+  isExternal: false
+  name: BitmapSource
+  nameWithType: BitmapSource
+  fullName: System.Windows.Media.Imaging.BitmapSource
+- uid: System.Windows.Interop.D3DImage.CreateInstanceCore
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: CreateInstanceCore()
+  nameWithType: D3DImage.CreateInstanceCore()
+  fullName: D3DImage.CreateInstanceCore()
+- uid: System.Windows.Interop.D3DImage.Finalize
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: Finalize()
+  nameWithType: D3DImage.Finalize()
+  fullName: D3DImage.Finalize()
+- uid: System.Windows.Interop.D3DImage.FreezeCore(System.Boolean)
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: FreezeCore(Boolean)
+  nameWithType: D3DImage.FreezeCore(Boolean)
+  fullName: D3DImage.FreezeCore(Boolean)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Windows.Interop.D3DImage.GetAsFrozenCore(System.Windows.Freezable)
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: GetAsFrozenCore(Freezable)
+  nameWithType: D3DImage.GetAsFrozenCore(Freezable)
+  fullName: D3DImage.GetAsFrozenCore(Freezable)
+- uid: System.Windows.Interop.D3DImage.GetCurrentValueAsFrozenCore(System.Windows.Freezable)
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: GetCurrentValueAsFrozenCore(Freezable)
+  nameWithType: D3DImage.GetCurrentValueAsFrozenCore(Freezable)
+  fullName: D3DImage.GetCurrentValueAsFrozenCore(Freezable)
+- uid: System.Windows.Interop.D3DImage.Height
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: Height
+  nameWithType: D3DImage.Height
+  fullName: D3DImage.Height
+- uid: System.Windows.Interop.D3DImage.IsFrontBufferAvailable
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: IsFrontBufferAvailable
+  nameWithType: D3DImage.IsFrontBufferAvailable
+  fullName: D3DImage.IsFrontBufferAvailable
+- uid: System.Windows.Interop.D3DImage.IsFrontBufferAvailableChanged
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: IsFrontBufferAvailableChanged
+  nameWithType: D3DImage.IsFrontBufferAvailableChanged
+  fullName: D3DImage.IsFrontBufferAvailableChanged
+- uid: System.Windows.DependencyPropertyChangedEventHandler
+  parent: System.Windows
+  isExternal: false
+  name: DependencyPropertyChangedEventHandler
+  nameWithType: DependencyPropertyChangedEventHandler
+  fullName: System.Windows.DependencyPropertyChangedEventHandler
+- uid: System.Windows.Interop.D3DImage.IsFrontBufferAvailableProperty
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: IsFrontBufferAvailableProperty
+  nameWithType: D3DImage.IsFrontBufferAvailableProperty
+  fullName: D3DImage.IsFrontBufferAvailableProperty
+- uid: System.Windows.DependencyProperty
+  parent: System.Windows
+  isExternal: false
+  name: DependencyProperty
+  nameWithType: DependencyProperty
+  fullName: System.Windows.DependencyProperty
+- uid: System.Windows.Interop.D3DImage.Lock
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: Lock()
+  nameWithType: D3DImage.Lock()
+  fullName: D3DImage.Lock()
+- uid: System.Windows.Interop.D3DImage.Metadata
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: Metadata
+  nameWithType: D3DImage.Metadata
+  fullName: D3DImage.Metadata
+- uid: System.Windows.Media.ImageMetadata
+  parent: System.Windows.Media
+  isExternal: false
+  name: ImageMetadata
+  nameWithType: ImageMetadata
+  fullName: System.Windows.Media.ImageMetadata
+- uid: System.Windows.Interop.D3DImage.PixelHeight
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: PixelHeight
+  nameWithType: D3DImage.PixelHeight
+  fullName: D3DImage.PixelHeight
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Windows.Interop.D3DImage.PixelWidth
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: PixelWidth
+  nameWithType: D3DImage.PixelWidth
+  fullName: D3DImage.PixelWidth
+- uid: System.Windows.Interop.D3DImage.SetBackBuffer(System.Windows.Interop.D3DResourceType,System.IntPtr)
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: SetBackBuffer(D3DResourceType, IntPtr)
+  nameWithType: D3DImage.SetBackBuffer(D3DResourceType, IntPtr)
+  fullName: D3DImage.SetBackBuffer(D3DResourceType, IntPtr)
+- uid: System.Windows.Interop.D3DResourceType
+  parent: System.Windows.Interop
+  isExternal: false
+  name: D3DResourceType
+  nameWithType: D3DResourceType
+  fullName: System.Windows.Interop.D3DResourceType
+- uid: System.IntPtr
+  parent: System
+  isExternal: false
+  name: IntPtr
+  nameWithType: IntPtr
+  fullName: System.IntPtr
+- uid: System.Windows.Interop.D3DImage.SetBackBuffer(System.Windows.Interop.D3DResourceType,System.IntPtr,System.Boolean)
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: SetBackBuffer(D3DResourceType, IntPtr, Boolean)
+  nameWithType: D3DImage.SetBackBuffer(D3DResourceType, IntPtr, Boolean)
+  fullName: D3DImage.SetBackBuffer(D3DResourceType, IntPtr, Boolean)
+- uid: System.Windows.Interop.D3DImage.TryLock(System.Windows.Duration)
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: TryLock(Duration)
+  nameWithType: D3DImage.TryLock(Duration)
+  fullName: D3DImage.TryLock(Duration)
+- uid: System.Windows.Duration
+  parent: System.Windows
+  isExternal: false
+  name: Duration
+  nameWithType: Duration
+  fullName: System.Windows.Duration
+- uid: System.Windows.Interop.D3DImage.Unlock
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: Unlock()
+  nameWithType: D3DImage.Unlock()
+  fullName: D3DImage.Unlock()
+- uid: System.Windows.Interop.D3DImage.Width
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: Width
+  nameWithType: D3DImage.Width
+  fullName: D3DImage.Width
+- uid: System.Windows.Interop.D3DImage.#ctor*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: D3DImage
+  nameWithType: D3DImage.D3DImage
+  fullName: D3DImage.D3DImage
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.AddDirtyRect*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: AddDirtyRect
+  nameWithType: D3DImage.AddDirtyRect
+  fullName: D3DImage.AddDirtyRect
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.Clone*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: Clone
+  nameWithType: D3DImage.Clone
+  fullName: D3DImage.Clone
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.CloneCore*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: CloneCore
+  nameWithType: D3DImage.CloneCore
+  fullName: D3DImage.CloneCore
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.CloneCurrentValue*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: CloneCurrentValue
+  nameWithType: D3DImage.CloneCurrentValue
+  fullName: D3DImage.CloneCurrentValue
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.CloneCurrentValueCore*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: CloneCurrentValueCore
+  nameWithType: D3DImage.CloneCurrentValueCore
+  fullName: D3DImage.CloneCurrentValueCore
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.CopyBackBuffer*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: CopyBackBuffer
+  nameWithType: D3DImage.CopyBackBuffer
+  fullName: D3DImage.CopyBackBuffer
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.CreateInstanceCore*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: CreateInstanceCore
+  nameWithType: D3DImage.CreateInstanceCore
+  fullName: D3DImage.CreateInstanceCore
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.Finalize*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: Finalize
+  nameWithType: D3DImage.Finalize
+  fullName: D3DImage.Finalize
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.FreezeCore*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: FreezeCore
+  nameWithType: D3DImage.FreezeCore
+  fullName: D3DImage.FreezeCore
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.GetAsFrozenCore*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: GetAsFrozenCore
+  nameWithType: D3DImage.GetAsFrozenCore
+  fullName: D3DImage.GetAsFrozenCore
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.GetCurrentValueAsFrozenCore*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: GetCurrentValueAsFrozenCore
+  nameWithType: D3DImage.GetCurrentValueAsFrozenCore
+  fullName: D3DImage.GetCurrentValueAsFrozenCore
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.Height*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: Height
+  nameWithType: D3DImage.Height
+  fullName: D3DImage.Height
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.IsFrontBufferAvailable*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: IsFrontBufferAvailable
+  nameWithType: D3DImage.IsFrontBufferAvailable
+  fullName: D3DImage.IsFrontBufferAvailable
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.Lock*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: Lock
+  nameWithType: D3DImage.Lock
+  fullName: D3DImage.Lock
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.Metadata*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: Metadata
+  nameWithType: D3DImage.Metadata
+  fullName: D3DImage.Metadata
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.PixelHeight*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: PixelHeight
+  nameWithType: D3DImage.PixelHeight
+  fullName: D3DImage.PixelHeight
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.PixelWidth*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: PixelWidth
+  nameWithType: D3DImage.PixelWidth
+  fullName: D3DImage.PixelWidth
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.SetBackBuffer*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: SetBackBuffer
+  nameWithType: D3DImage.SetBackBuffer
+  fullName: D3DImage.SetBackBuffer
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.TryLock*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: TryLock
+  nameWithType: D3DImage.TryLock
+  fullName: D3DImage.TryLock
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.Unlock*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: Unlock
+  nameWithType: D3DImage.Unlock
+  fullName: D3DImage.Unlock
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.Interop.D3DImage.Width*
+  parent: System.Windows.Interop.D3DImage
+  isExternal: false
+  name: Width
+  nameWithType: D3DImage.Width
+  fullName: D3DImage.Width
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Interop/D3DImage.xml
+- uid: System.Windows.DependencyObject.Equals(System.Object)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: DependencyObject.Equals(Object)
+  fullName: DependencyObject.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Windows.DependencyObject.GetHashCode
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: DependencyObject.GetHashCode()
+  fullName: DependencyObject.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Windows.Media.ImageSource.ToString
+  parent: System.Windows.Media.ImageSource
+  isExternal: false
+  name: ToString()
+  nameWithType: ImageSource.ToString()
+  fullName: ImageSource.ToString()
+- uid: System.Windows.Threading.DispatcherObject.CheckAccess
+  parent: System.Windows.Threading.DispatcherObject
+  isExternal: false
+  name: CheckAccess()
+  nameWithType: DispatcherObject.CheckAccess()
+  fullName: DispatcherObject.CheckAccess()
+- uid: System.Windows.Threading.DispatcherObject.Dispatcher
+  parent: System.Windows.Threading.DispatcherObject
+  isExternal: false
+  name: Dispatcher
+  nameWithType: DispatcherObject.Dispatcher
+  fullName: DispatcherObject.Dispatcher
+- uid: System.Windows.Threading.DispatcherObject.VerifyAccess
+  parent: System.Windows.Threading.DispatcherObject
+  isExternal: false
+  name: VerifyAccess()
+  nameWithType: DispatcherObject.VerifyAccess()
+  fullName: DispatcherObject.VerifyAccess()
+- uid: System.Windows.DependencyObject.ClearValue(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: ClearValue(DependencyProperty)
+  nameWithType: DependencyObject.ClearValue(DependencyProperty)
+  fullName: DependencyObject.ClearValue(DependencyProperty)
+- uid: System.Windows.DependencyObject.ClearValue(System.Windows.DependencyPropertyKey)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: ClearValue(DependencyPropertyKey)
+  nameWithType: DependencyObject.ClearValue(DependencyPropertyKey)
+  fullName: DependencyObject.ClearValue(DependencyPropertyKey)
+- uid: System.Windows.DependencyObject.CoerceValue(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: CoerceValue(DependencyProperty)
+  nameWithType: DependencyObject.CoerceValue(DependencyProperty)
+  fullName: DependencyObject.CoerceValue(DependencyProperty)
+- uid: System.Windows.DependencyObject.DependencyObjectType
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: DependencyObjectType
+  nameWithType: DependencyObject.DependencyObjectType
+  fullName: DependencyObject.DependencyObjectType
+- uid: System.Windows.DependencyObject.GetLocalValueEnumerator
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: GetLocalValueEnumerator()
+  nameWithType: DependencyObject.GetLocalValueEnumerator()
+  fullName: DependencyObject.GetLocalValueEnumerator()
+- uid: System.Windows.DependencyObject.GetValue(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: GetValue(DependencyProperty)
+  nameWithType: DependencyObject.GetValue(DependencyProperty)
+  fullName: DependencyObject.GetValue(DependencyProperty)
+- uid: System.Windows.DependencyObject.InvalidateProperty(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: InvalidateProperty(DependencyProperty)
+  nameWithType: DependencyObject.InvalidateProperty(DependencyProperty)
+  fullName: DependencyObject.InvalidateProperty(DependencyProperty)
+- uid: System.Windows.DependencyObject.IsSealed
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: IsSealed
+  nameWithType: DependencyObject.IsSealed
+  fullName: DependencyObject.IsSealed
+- uid: System.Windows.Freezable.OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs)
+  parent: System.Windows.Freezable
+  isExternal: false
+  name: OnPropertyChanged(DependencyPropertyChangedEventArgs)
+  nameWithType: Freezable.OnPropertyChanged(DependencyPropertyChangedEventArgs)
+  fullName: Freezable.OnPropertyChanged(DependencyPropertyChangedEventArgs)
+- uid: System.Windows.DependencyObject.ReadLocalValue(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: ReadLocalValue(DependencyProperty)
+  nameWithType: DependencyObject.ReadLocalValue(DependencyProperty)
+  fullName: DependencyObject.ReadLocalValue(DependencyProperty)
+- uid: System.Windows.DependencyObject.SetCurrentValue(System.Windows.DependencyProperty,System.Object)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: SetCurrentValue(DependencyProperty, Object)
+  nameWithType: DependencyObject.SetCurrentValue(DependencyProperty, Object)
+  fullName: DependencyObject.SetCurrentValue(DependencyProperty, Object)
+- uid: System.Windows.DependencyObject.SetValue(System.Windows.DependencyProperty,System.Object)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: SetValue(DependencyProperty, Object)
+  nameWithType: DependencyObject.SetValue(DependencyProperty, Object)
+  fullName: DependencyObject.SetValue(DependencyProperty, Object)
+- uid: System.Windows.DependencyObject.SetValue(System.Windows.DependencyPropertyKey,System.Object)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: SetValue(DependencyPropertyKey, Object)
+  nameWithType: DependencyObject.SetValue(DependencyPropertyKey, Object)
+  fullName: DependencyObject.SetValue(DependencyPropertyKey, Object)
+- uid: System.Windows.DependencyObject.ShouldSerializeProperty(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: ShouldSerializeProperty(DependencyProperty)
+  nameWithType: DependencyObject.ShouldSerializeProperty(DependencyProperty)
+  fullName: DependencyObject.ShouldSerializeProperty(DependencyProperty)
+- uid: System.Windows.Freezable.CanFreeze
+  parent: System.Windows.Freezable
+  isExternal: false
+  name: CanFreeze
+  nameWithType: Freezable.CanFreeze
+  fullName: Freezable.CanFreeze
+- uid: System.Windows.Freezable.Changed
+  parent: System.Windows.Freezable
+  isExternal: false
+  name: Changed
+  nameWithType: Freezable.Changed
+  fullName: Freezable.Changed
+- uid: System.Windows.Freezable.CreateInstance
+  parent: System.Windows.Freezable
+  isExternal: false
+  name: CreateInstance()
+  nameWithType: Freezable.CreateInstance()
+  fullName: Freezable.CreateInstance()
+- uid: System.Windows.Freezable.Freeze
+  parent: System.Windows.Freezable
+  isExternal: false
+  name: Freeze()
+  nameWithType: Freezable.Freeze()
+  fullName: Freezable.Freeze()
+- uid: System.Windows.Freezable.Freeze(System.Windows.Freezable,System.Boolean)
+  parent: System.Windows.Freezable
+  isExternal: false
+  name: Freeze(Freezable, Boolean)
+  nameWithType: Freezable.Freeze(Freezable, Boolean)
+  fullName: Freezable.Freeze(Freezable, Boolean)
+- uid: System.Windows.Freezable.GetAsFrozen
+  parent: System.Windows.Freezable
+  isExternal: false
+  name: GetAsFrozen()
+  nameWithType: Freezable.GetAsFrozen()
+  fullName: Freezable.GetAsFrozen()
+- uid: System.Windows.Freezable.GetCurrentValueAsFrozen
+  parent: System.Windows.Freezable
+  isExternal: false
+  name: GetCurrentValueAsFrozen()
+  nameWithType: Freezable.GetCurrentValueAsFrozen()
+  fullName: Freezable.GetCurrentValueAsFrozen()
+- uid: System.Windows.Freezable.IsFrozen
+  parent: System.Windows.Freezable
+  isExternal: false
+  name: IsFrozen
+  nameWithType: Freezable.IsFrozen
+  fullName: Freezable.IsFrozen
+- uid: System.Windows.Freezable.OnChanged
+  parent: System.Windows.Freezable
+  isExternal: false
+  name: OnChanged()
+  nameWithType: Freezable.OnChanged()
+  fullName: Freezable.OnChanged()
+- uid: System.Windows.Freezable.OnFreezablePropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyObject)
+  parent: System.Windows.Freezable
+  isExternal: false
+  name: OnFreezablePropertyChanged(DependencyObject, DependencyObject)
+  nameWithType: Freezable.OnFreezablePropertyChanged(DependencyObject, DependencyObject)
+  fullName: Freezable.OnFreezablePropertyChanged(DependencyObject, DependencyObject)
+- uid: System.Windows.Freezable.OnFreezablePropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyObject,System.Windows.DependencyProperty)
+  parent: System.Windows.Freezable
+  isExternal: false
+  name: OnFreezablePropertyChanged(DependencyObject, DependencyObject, DependencyProperty)
+  nameWithType: Freezable.OnFreezablePropertyChanged(DependencyObject, DependencyObject, DependencyProperty)
+  fullName: Freezable.OnFreezablePropertyChanged(DependencyObject, DependencyObject, DependencyProperty)
+- uid: System.Windows.Freezable.ReadPreamble
+  parent: System.Windows.Freezable
+  isExternal: false
+  name: ReadPreamble()
+  nameWithType: Freezable.ReadPreamble()
+  fullName: Freezable.ReadPreamble()
+- uid: System.Windows.Freezable.WritePostscript
+  parent: System.Windows.Freezable
+  isExternal: false
+  name: WritePostscript()
+  nameWithType: Freezable.WritePostscript()
+  fullName: Freezable.WritePostscript()
+- uid: System.Windows.Freezable.WritePreamble
+  parent: System.Windows.Freezable
+  isExternal: false
+  name: WritePreamble()
+  nameWithType: Freezable.WritePreamble()
+  fullName: Freezable.WritePreamble()
+- uid: System.Windows.Media.Animation.Animatable.ApplyAnimationClock(System.Windows.DependencyProperty,System.Windows.Media.Animation.AnimationClock)
+  parent: System.Windows.Media.Animation.Animatable
+  isExternal: false
+  name: ApplyAnimationClock(DependencyProperty, AnimationClock)
+  nameWithType: Animatable.ApplyAnimationClock(DependencyProperty, AnimationClock)
+  fullName: Animatable.ApplyAnimationClock(DependencyProperty, AnimationClock)
+- uid: System.Windows.Media.Animation.Animatable.ApplyAnimationClock(System.Windows.DependencyProperty,System.Windows.Media.Animation.AnimationClock,System.Windows.Media.Animation.HandoffBehavior)
+  parent: System.Windows.Media.Animation.Animatable
+  isExternal: false
+  name: ApplyAnimationClock(DependencyProperty, AnimationClock, HandoffBehavior)
+  nameWithType: Animatable.ApplyAnimationClock(DependencyProperty, AnimationClock, HandoffBehavior)
+  fullName: Animatable.ApplyAnimationClock(DependencyProperty, AnimationClock, HandoffBehavior)
+- uid: System.Windows.Media.Animation.Animatable.BeginAnimation(System.Windows.DependencyProperty,System.Windows.Media.Animation.AnimationTimeline)
+  parent: System.Windows.Media.Animation.Animatable
+  isExternal: false
+  name: BeginAnimation(DependencyProperty, AnimationTimeline)
+  nameWithType: Animatable.BeginAnimation(DependencyProperty, AnimationTimeline)
+  fullName: Animatable.BeginAnimation(DependencyProperty, AnimationTimeline)
+- uid: System.Windows.Media.Animation.Animatable.BeginAnimation(System.Windows.DependencyProperty,System.Windows.Media.Animation.AnimationTimeline,System.Windows.Media.Animation.HandoffBehavior)
+  parent: System.Windows.Media.Animation.Animatable
+  isExternal: false
+  name: BeginAnimation(DependencyProperty, AnimationTimeline, HandoffBehavior)
+  nameWithType: Animatable.BeginAnimation(DependencyProperty, AnimationTimeline, HandoffBehavior)
+  fullName: Animatable.BeginAnimation(DependencyProperty, AnimationTimeline, HandoffBehavior)
+- uid: System.Windows.Media.Animation.Animatable.GetAnimationBaseValue(System.Windows.DependencyProperty)
+  parent: System.Windows.Media.Animation.Animatable
+  isExternal: false
+  name: GetAnimationBaseValue(DependencyProperty)
+  nameWithType: Animatable.GetAnimationBaseValue(DependencyProperty)
+  fullName: Animatable.GetAnimationBaseValue(DependencyProperty)
+- uid: System.Windows.Media.Animation.Animatable.HasAnimatedProperties
+  parent: System.Windows.Media.Animation.Animatable
+  isExternal: false
+  name: HasAnimatedProperties
+  nameWithType: Animatable.HasAnimatedProperties
+  fullName: Animatable.HasAnimatedProperties
+- uid: System.Windows.Media.Animation.Animatable.ShouldSerializeStoredWeakReference(System.Windows.DependencyObject)
+  parent: System.Windows.Media.Animation.Animatable
+  isExternal: false
+  name: ShouldSerializeStoredWeakReference(DependencyObject)
+  nameWithType: Animatable.ShouldSerializeStoredWeakReference(DependencyObject)
+  fullName: Animatable.ShouldSerializeStoredWeakReference(DependencyObject)
+- uid: System.Windows.Media.ImageSource.PixelsToDIPs(System.Double,System.Int32)
+  parent: System.Windows.Media.ImageSource
+  isExternal: false
+  name: PixelsToDIPs(Double, Int32)
+  nameWithType: ImageSource.PixelsToDIPs(Double, Int32)
+  fullName: ImageSource.PixelsToDIPs(Double, Int32)
+- uid: System.Windows.Media.ImageSource.ToString(System.IFormatProvider)
+  parent: System.Windows.Media.ImageSource
+  isExternal: false
+  name: ToString(IFormatProvider)
+  nameWithType: ImageSource.ToString(IFormatProvider)
+  fullName: ImageSource.ToString(IFormatProvider)
+- uid: System.Windows.Media.ImageSource.System#IFormattable#ToString(System.String,System.IFormatProvider)
+  parent: System.Windows.Media.ImageSource
+  isExternal: false
+  name: IFormattable.ToString(String, IFormatProvider)
+  nameWithType: ImageSource.IFormattable.ToString(String, IFormatProvider)
+  fullName: ImageSource.IFormattable.ToString(String, IFormatProvider)

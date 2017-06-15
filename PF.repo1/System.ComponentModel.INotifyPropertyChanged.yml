@@ -1,0 +1,190 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.ComponentModel.INotifyPropertyChanged
+  commentId: T:System.ComponentModel.INotifyPropertyChanged
+  id: INotifyPropertyChanged
+  children:
+  - System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+  langs:
+  - csharp
+  name: INotifyPropertyChanged
+  nameWithType: INotifyPropertyChanged
+  fullName: System.ComponentModel.INotifyPropertyChanged
+  type: Interface
+  assemblies:
+  - System.ObjectModel
+  - System
+  - netstandard
+  namespace: System.ComponentModel
+  summary: Notifies clients that a property value has changed.
+  remarks: "The <xref:System.ComponentModel.INotifyPropertyChanged> interface is used to notify clients, typically binding clients, that a property value has changed.  \n  \n For example, consider a `Person` object with a property called `FirstName`. To provide generic property-change notification, the `Person` type implements the <xref:System.ComponentModel.INotifyPropertyChanged> interface and raises a <xref:System.ComponentModel.INotifyPropertyChanged.PropertyChanged> event when `FirstName` is changed.  \n  \n For change notification to occur in a binding between a bound client and a data source, your bound type should either:  \n  \n-   Implement the <xref:System.ComponentModel.INotifyPropertyChanged> interface (preferred).  \n  \n-   Provide a change event for each property of the bound type.  \n  \n Do not do both."
+  example:
+  - "The following code example demonstrates the how to implement the <xref:System.ComponentModel.INotifyPropertyChanged> interface. When you run this example, you will notice the bound <xref:System.Windows.Forms.DataGridView> control reflects the change in the data source without requiring the binding to be reset.  \n  \n If you use the `CallerMemberName` attribute, calls to the `NotifyPropertyChanged` method don't have to specify the property name as a string argument. For more information, see [Caller Information](http://msdn.microsoft.com/library/9cb2b8c0-c4f6-44b8-9c90-38948455b373).  \n  \n Replace the code in your Form1 with the following code and then change the namespace to the name of your project. As an alternative, you can name your project with the namespace name below when you create it.  \n  \n```csharp  \nusing System;  \nusing System.Collections.Generic;  \nusing System.ComponentModel;  \nusing System.Drawing;  \nusing System.Runtime.CompilerServices;  \nusing System.Windows.Forms;  \n  \n// Either change the following namespace to the name of your project,   \n// or name your project with the following name when you create it.  \nnamespace TestNotifyPropertyChangedCS  \n{  \n    // This form demonstrates using a BindingSource to bind  \n    // a list to a DataGridView control. The list does not  \n    // raise change notifications. However the DemoCustomer type   \n    // in the list does.  \n    public partial class Form1 : Form  \n    {  \n        // This button causes the value of a list element to be changed.  \n        private Button changeItemBtn = new Button();  \n  \n        // This DataGridView control displays the contents of the list.  \n        private DataGridView customersDataGridView = new DataGridView();  \n  \n        // This BindingSource binds the list to the DataGridView control.  \n        private BindingSource customersBindingSource = new BindingSource();  \n  \n        public Form1()  \n        {  \n            InitializeComponent();  \n  \n            // Set up the \"Change Item\" button.  \n            this.changeItemBtn.Text = \"Change Item\";  \n            this.changeItemBtn.Dock = DockStyle.Bottom;  \n            this.changeItemBtn.Click +=  \n                new EventHandler(changeItemBtn_Click);  \n            this.Controls.Add(this.changeItemBtn);  \n  \n            // Set up the DataGridView.  \n            customersDataGridView.Dock = DockStyle.Top;  \n            this.Controls.Add(customersDataGridView);  \n  \n            this.Size = new Size(400, 200);  \n        }  \n  \n        private void Form1_Load(object sender, EventArgs e)  \n        {  \n            // Create and populate the list of DemoCustomer objects  \n            // which will supply data to the DataGridView.  \n            BindingList<DemoCustomer> customerList = new BindingList<DemoCustomer>();  \n            customerList.Add(DemoCustomer.CreateNewCustomer());  \n            customerList.Add(DemoCustomer.CreateNewCustomer());  \n            customerList.Add(DemoCustomer.CreateNewCustomer());  \n  \n            // Bind the list to the BindingSource.  \n            this.customersBindingSource.DataSource = customerList;  \n  \n            // Attach the BindingSource to the DataGridView.  \n            this.customersDataGridView.DataSource =  \n                this.customersBindingSource;  \n  \n        }  \n  \n        // Change the value of the CompanyName property for the first   \n        // item in the list when the \"Change Item\" button is clicked.  \n        void changeItemBtn_Click(object sender, EventArgs e)  \n        {  \n            // Get a reference to the list from the BindingSource.  \n            BindingList<DemoCustomer> customerList =  \n                this.customersBindingSource.DataSource as BindingList<DemoCustomer>;  \n  \n            // Change the value of the CompanyName property for the   \n            // first item in the list.  \n            customerList[0].CustomerName = \"Tailspin Toys\";  \n            customerList[0].PhoneNumber = \"(708)555-0150\";  \n        }  \n  \n    }  \n  \n    // This is a simple customer class that   \n    // implements the IPropertyChange interface.  \n    public class DemoCustomer : INotifyPropertyChanged  \n    {  \n        // These fields hold the values for the public properties.  \n        private Guid idValue = Guid.NewGuid();  \n        private string customerNameValue = String.Empty;  \n        private string phoneNumberValue = String.Empty;  \n  \n        public event PropertyChangedEventHandler PropertyChanged;  \n  \n        // This method is called by the Set accessor of each property.  \n        // The CallerMemberName attribute that is applied to the optional propertyName  \n        // parameter causes the property name of the caller to be substituted as an argument.  \n        private void NotifyPropertyChanged([CallerMemberName] String propertyName = \"\")  \n        {  \n            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));\n        }  \n  \n        // The constructor is private to enforce the factory pattern.  \n        private DemoCustomer()  \n        {  \n            customerNameValue = \"Customer\";  \n            phoneNumberValue = \"(312)555-0100\";  \n        }  \n  \n        // This is the public factory method.  \n        public static DemoCustomer CreateNewCustomer()  \n        {  \n            return new DemoCustomer();  \n        }  \n  \n        // This property represents an ID, suitable  \n        // for use as a primary key in a database.  \n        public Guid ID  \n        {  \n            get  \n            {  \n                return this.idValue;  \n            }  \n        }  \n  \n        public string CustomerName  \n        {  \n            get  \n            {  \n                return this.customerNameValue;  \n            }  \n  \n            set  \n            {  \n                if (value != this.customerNameValue)  \n                {  \n                    this.customerNameValue = value;  \n                    NotifyPropertyChanged();  \n                }  \n            }  \n        }  \n  \n        public string PhoneNumber  \n        {  \n            get  \n            {  \n                return this.phoneNumberValue;  \n            }  \n  \n            set  \n            {  \n                if (value != this.phoneNumberValue)  \n                {  \n                    this.phoneNumberValue = value;  \n                    NotifyPropertyChanged();  \n                }  \n            }  \n        }  \n    }  \n}  \n```  \n  \n```vb  \nImports System  \nImports System.Collections.Generic  \nImports System.ComponentModel  \nImports System.Drawing  \nImports System.Runtime.CompilerServices  \nImports System.Windows.Forms  \n  \n' This form demonstrates using a BindingSource to bind  \n' a list to a DataGridView control. The list does not  \n' raise change notifications. However the DemoCustomer type   \n' in the list does.  \n  \nPublic Class Form1  \n    Inherits System.Windows.Forms.Form  \n    ' This button causes the value of a list element to be changed.  \n    Private changeItemBtn As New Button()  \n  \n    ' This DataGridView control displays the contents of the list.  \n    Private customersDataGridView As New DataGridView()  \n  \n    ' This BindingSource binds the list to the DataGridView control.  \n    Private customersBindingSource As New BindingSource()  \n  \n    Public Sub New()  \n        InitializeComponent()  \n  \n        ' Set up the \"Change Item\" button.  \n        Me.changeItemBtn.Text = \"Change Item\"  \n        Me.changeItemBtn.Dock = DockStyle.Bottom  \n        AddHandler Me.changeItemBtn.Click, AddressOf changeItemBtn_Click  \n        Me.Controls.Add(Me.changeItemBtn)  \n  \n        ' Set up the DataGridView.  \n        customersDataGridView.Dock = DockStyle.Top  \n        Me.Controls.Add(customersDataGridView)  \n  \n        Me.Size = New Size(400, 200)  \n    End Sub  \n  \n    Private Sub Form1_Load(ByVal sender As System.Object, _  \n        ByVal e As System.EventArgs) Handles Me.Load  \n  \n        ' Create and populate the list of DemoCustomer objects  \n        ' which will supply data to the DataGridView.  \n        Dim customerList As New BindingList(Of DemoCustomer)  \n  \n        customerList.Add(DemoCustomer.CreateNewCustomer())  \n        customerList.Add(DemoCustomer.CreateNewCustomer())  \n        customerList.Add(DemoCustomer.CreateNewCustomer())  \n  \n        ' Bind the list to the BindingSource.  \n        Me.customersBindingSource.DataSource = customerList  \n  \n        ' Attach the BindingSource to the DataGridView.  \n        Me.customersDataGridView.DataSource = Me.customersBindingSource  \n    End Sub  \n  \n    ' This event handler changes the value of the CompanyName  \n    ' property for the first item in the list.  \n    Private Sub changeItemBtn_Click(ByVal sender As Object, ByVal e As EventArgs)  \n        ' Get a reference to the list from the BindingSource.  \n        Dim customerList As BindingList(Of DemoCustomer) = _  \n            CType(customersBindingSource.DataSource, BindingList(Of DemoCustomer))  \n  \n        ' Change the value of the CompanyName property for the   \n        ' first item in the list.  \n        customerList(0).CustomerName = \"Tailspin Toys\"  \n        customerList(0).PhoneNumber = \"(708)555-0150\"  \n    End Sub  \nEnd Class  \n  \n' This class implements a simple customer type   \n' that implements the IPropertyChange interface.  \n  \nPublic Class DemoCustomer  \n    Implements INotifyPropertyChanged  \n  \n    ' These fields hold the values for the public properties.  \n    Private idValue As Guid = Guid.NewGuid()  \n    Private customerNameValue As String = String.Empty  \n    Private phoneNumberValue As String = String.Empty  \n  \n    Public Event PropertyChanged As PropertyChangedEventHandler _  \n        Implements INotifyPropertyChanged.PropertyChanged  \n  \n    ' This method is called by the Set accessor of each property.  \n    ' The CallerMemberName attribute that is applied to the optional propertyName  \n    ' parameter causes the property name of the caller to be substituted as an argument.  \n    Private Sub NotifyPropertyChanged(<CallerMemberName()> Optional ByVal propertyName As String = Nothing)  \n        RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))  \n    End Sub  \n  \n    ' The constructor is private to enforce the factory pattern.  \n    Private Sub New()  \n        customerNameValue = \"Customer\"  \n        phoneNumberValue = \"(312)555-0100\"  \n    End Sub  \n  \n    ' This is the public factory method.  \n    Public Shared Function CreateNewCustomer() As DemoCustomer  \n        Return New DemoCustomer()  \n    End Function  \n  \n    ' This property represents an ID, suitable  \n    ' for use as a primary key in a database.  \n    Public ReadOnly Property ID() As Guid  \n        Get  \n            Return Me.idValue  \n        End Get  \n    End Property  \n  \n    Public Property CustomerName() As String  \n        Get  \n            Return Me.customerNameValue  \n        End Get  \n  \n        Set(ByVal value As String)  \n            If Not (value = customerNameValue) Then  \n                Me.customerNameValue = value  \n                NotifyPropertyChanged()  \n            End If  \n        End Set  \n    End Property  \n  \n    Public Property PhoneNumber() As String  \n        Get  \n            Return Me.phoneNumberValue  \n        End Get  \n  \n        Set(ByVal value As String)  \n            If Not (value = phoneNumberValue) Then  \n                Me.phoneNumberValue = value  \n                NotifyPropertyChanged()  \n            End If  \n        End Set  \n    End Property  \nEnd Class  \n```"
+  syntax:
+    content: public interface INotifyPropertyChanged
+  derivedClasses:
+  - System.Activities.WorkflowDataContext
+  - System.Activities.Presentation.Model.ModelItem
+  - System.Activities.Presentation.PropertyEditing.CategoryEntry
+  - System.Activities.Presentation.PropertyEditing.PropertyEntry
+  - System.Activities.Presentation.PropertyEditing.PropertyValue
+  - System.Activities.Presentation.Toolbox.ToolboxCategory
+  - System.Activities.Presentation.Toolbox.ToolboxItemWrapper
+  - System.Activities.Presentation.View.TypePresenter
+  - System.Collections.ObjectModel.ObservableCollection`1
+  - System.Collections.ObjectModel.ReadOnlyObservableCollection`1
+  - System.ComponentModel.GroupDescription
+  - System.Configuration.ApplicationSettingsBase
+  - System.Data.DataRowView
+  - System.Data.Objects.DataClasses.StructuralObject
+  - System.Device.Location.GeoCoordinateWatcher
+  - System.Dynamic.ExpandoObject
+  - System.Printing.PrintTicket
+  - System.Windows.FreezableCollection`1
+  - System.Windows.Annotations.AnnotationResource
+  - System.Windows.Annotations.ContentLocatorBase
+  - System.Windows.Annotations.ContentLocatorPart
+  - System.Windows.Controls.CalendarDateRange
+  - System.Windows.Controls.GridViewColumn
+  - System.Windows.Controls.GroupStyle
+  - System.Windows.Data.CollectionView
+  - System.Windows.Data.CollectionViewGroup
+  - System.Windows.Data.DataSourceProvider
+  - System.Windows.Ink.DrawingAttributes
+  - System.Windows.Ink.Stroke
+  - System.Windows.Ink.StrokeCollection
+  implements: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel/INotifyPropertyChanged.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+  commentId: E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+  id: PropertyChanged
+  parent: System.ComponentModel.INotifyPropertyChanged
+  langs:
+  - csharp
+  name: PropertyChanged
+  nameWithType: INotifyPropertyChanged.PropertyChanged
+  fullName: INotifyPropertyChanged.PropertyChanged
+  type: Event
+  assemblies:
+  - System.ObjectModel
+  - System
+  - netstandard
+  namespace: System.ComponentModel
+  summary: Occurs when a property value changes.
+  remarks: The <xref:System.ComponentModel.INotifyPropertyChanged.PropertyChanged> event can indicate all properties on the object have changed by using either `null` or <xref:System.String.Empty?displayProperty=fullName> as the property name in the <xref:System.ComponentModel.PropertyChangedEventArgs>.
+  example:
+  - The following code example demonstrates how to implement the <xref:System.ComponentModel.INotifyPropertyChanged.PropertyChanged> event of the <xref:System.ComponentModel.INotifyPropertyChanged> interface.
+  syntax:
+    content: public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+    return:
+      type: System.ComponentModel.PropertyChangedEventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel/INotifyPropertyChanged.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+references:
+- uid: System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+  parent: System.ComponentModel.INotifyPropertyChanged
+  isExternal: false
+  name: PropertyChanged
+  nameWithType: INotifyPropertyChanged.PropertyChanged
+  fullName: INotifyPropertyChanged.PropertyChanged
+- uid: System.ComponentModel.PropertyChangedEventHandler
+  parent: System.ComponentModel
+  isExternal: false
+  name: PropertyChangedEventHandler
+  nameWithType: PropertyChangedEventHandler
+  fullName: System.ComponentModel.PropertyChangedEventHandler

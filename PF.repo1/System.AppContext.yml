@@ -1,0 +1,586 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.AppContext
+  commentId: T:System.AppContext
+  id: AppContext
+  children:
+  - System.AppContext.BaseDirectory
+  - System.AppContext.GetData(System.String)
+  - System.AppContext.SetSwitch(System.String,System.Boolean)
+  - System.AppContext.TargetFrameworkName
+  - System.AppContext.TryGetSwitch(System.String,System.Boolean@)
+  langs:
+  - csharp
+  name: AppContext
+  nameWithType: AppContext
+  fullName: System.AppContext
+  type: Class
+  assemblies:
+  - System.AppContext
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Provides members for setting and retrieving data about an application's context.
+  remarks: "The <xref:System.AppContext> class enables library writers to provide a uniform opt-out mechanism for new functionality for their users. It establishes a loosely-coupled contract between components in order to communicate an opt-out request. This capability is typically important when a change is made to existing functionality. Conversely, there is already an implicit opt-in for new functionality.  \n  \n## AppContext for library developers  \n Libraries use  the <xref:System.AppContext> class to define and expose compatibility switches, while library users can set those switches to affect the library behavior. By default, libraries provide the new functionality, and they only alter it (that is, they provide the previous functionality) if the switch is set.  This allows libraries to provide new behavior for an existing API while continuing to support callers who depend on the previous behavior.  \n  \n### Defining the switch name  \n The most common way to allow consumers of your library to opt out of a change of behavior is to define a named switch.  Its `value` element is a name/value pair that consists of the name of a switch and its <xref:System.Boolean> value.  By default, the switch is always implicitly `false`, which provides the new behavior (and makes the new behavior opt-in by default). Setting the switch to `true` enables it, which provides the legacy behavior. Explicitly setting the switch to `false` also provides the new behavior.  \n  \n It's beneficial to use a consistent format for switch names, since they are a formal contract exposed by a library. The following are two obvious formats.  \n  \n-   *Switch*.*namespace*.*switchname*  \n  \n-   *Switch*.*library*.*switchname*  \n  \n Once you define and document the switch, callers can use it by using the registry, by adding an  `AppContextSwitchOverrides` element to their application configuration file, or by calling the  <xref:System.AppContext.SetSwitch%28System.String%2CSystem.Boolean%29?displayProperty=fullName> method programmatically. See the [AppContext for library consumers](#ForConsumers) section for more information about how callers use and set the value of <xref:System.AppContext> configuration switches.  \n  \n When the common language runtime runs an application, it automatically reads the registry's compatibility settings and loads the application configuration file in order to populate the application's <xref:System.AppContext> instance. Because the <xref:System.AppContext> instance is populated either programmatically by the caller or by the runtime, you do not have to take any action, such as calling the <xref:System.AppContext.SetSwitch%2A> method,  to configure the <xref:System.AppContext> instance.  \n  \n### Checking the setting  \n You can then check if a consumer has declared the value of the switch and act appropriately by calling the <xref:System.AppContext.TryGetSwitch%2A?displayProperty=fullName> method. The method returns `true` if the `switchName` argument is found, and when the method returns, its `isEnabled` argument indicates the value of the switch.  Otherwise, the method returns `false`.  \n  \n### An example  \n The following example illustrates the use of the <xref:System.AppContext> class to allow the customer to choose the original behavior of a library method.   The following is version 1.0 of a library named `StringLibrary`. It defines a `SubstringStartsAt` method that performs an ordinal comparison to determine the starting index of a substring within a larger string.  \n  \n [!code-csharp[System.AppContext.Class#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.AppContext.Class/cs/Example4.cs#4)]\n [!code-vb[System.AppContext.Class#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.AppContext.Class/vb/Example4.vb#4)]  \n  \n The following example then uses the library to find the starting index of the substring \"archæ\" in \"The archaeologist\". Because the method performs an ordinal comparison, the substring cannot be found.  \n  \n [!code-csharp[System.AppContext.Class#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.AppContext.Class/cs/Example4.cs#5)]\n [!code-vb[System.AppContext.Class#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.AppContext.Class/vb/Example4.vb#5)]  \n  \n Version 2 of the library, however, changes the `SubstringStartsAt` method to use culture-sensitive comparison.  \n  \n [!code-csharp[System.AppContext.Class#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.AppContext.Class/cs/Example6.cs#6)]\n [!code-vb[System.AppContext.Class#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.AppContext.Class/vb/Example6.vb#6)]  \n  \n When the app is recompiled to run against the new version of the library, it now reports that the substring \"archæ\" is found at index 4 in \"The archaeologist\".  \n  \n [!code-csharp[System.AppContext.Class#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.AppContext.Class/cs/Example6.cs#7)]\n [!code-vb[System.AppContext.Class#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.AppContext.Class/vb/Example6.vb#7)]  \n  \n This change can be prevented from breaking the applications that depend on the original behavior by defining an `AppContextSwitchOverrides` switch. In this case, the switch is named `StringLibrary.DoNotUseCultureSensitiveComparison`. Its default value, `false`, indicates that the library should perform its version 2.0 culture-sensitive comparison. `true` indicates that the library should perform its version 1.0 ordinal comparison.  A slight modification of the previous code allows the library consumer to set the switch to determine the kind of comparison the method performs.  \n  \n [!code-csharp[System.AppContext.Class#8](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.AppContext.Class/cs/Example8.cs#8)]\n [!code-vb[System.AppContext.Class#8](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.AppContext.Class/vb/Example8.vb#8)]  \n  \n If application can then use the following configuration file to restore the version 1.0 behavior.  \n  \n```xml  \n  \n<configuration>  \n   <runtime>  \n      <AppContextSwitchOverrides value=\"StringLibrary.DoNotUseCultureSensitiveComparison=true\" />   \n   </runtime>  \n</configuration>  \n  \n```  \n  \n When the application is run with the configuration file present, it produces the following output:  \n  \n```  \n'archæ' not found in 'The archaeologist'  \n```  \n  \n<a name=\"ForConsumers\"></a>   \n## AppContext for library consumers  \n If you are the consumer of a library, the <xref:System.AppContext> class  allows you to take advantage of a library or library method's opt-out mechanism for new functionality.   Individual methods of the class library that you are calling define particular switches that enable or disable a new behavior. The value of the switch  is a Boolean. If it is `false`, which is typically the default value, the new behavior is enabled; if it is `true`, the new behavior is disabled, and the member behaves as it did previously.  \n  \n You can set the value of a switch in one of three ways:  \n  \n-   By calling the <xref:System.AppContext.SetSwitch%28System.String%2CSystem.Boolean%29?displayProperty=fullName> method in your code.  The `switchName` argument defines the switch name, and the `isEnabled` property defines the value of the switch. Because <xref:System.AppContext> is a static class, it is available on a per-application domain basis.  \n  \n     Calling the <xref:System.AppContext.SetSwitch%28System.String%2CSystem.Boolean%29?displayProperty=fullName> has application scope; that is, it affects only the application.  \n  \n-   By adding an `<AppContextSwitchOverrides>` element to the [\\<runtime>](~/docs/framework/configure-apps/file-schema/runtime/runtime-element.md) section of your app.config file. The switch has a single attribute, `value`, whose value is a string that represents a key/value pair containing both the switch name and its value.  \n  \n     To define multiple switches, separate each switch's key/value pair in the `<AppContextSwitchOverrides>` element's `value` attribute with a semicolon. In that case, the :`<AppContextSwitchOverrides>` element has the following format:  \n  \n    ```xml  \n    <AppContextSwitchOverrides value=\"switchName1=value1;switchName2=value2\" />  \n    ```  \n  \n     Using the `<AppContextSwitchOverrides>` element to define a configuration setting has application scope; that is, it affects only the application.  \n  \n-   By adding a string value whose name is the name of the switch to the `HKLM\\SOFTWARE\\Microsoft\\.NETFramework\\AppContext` key in the registry. Its value must be the string representation of a <xref:System.Boolean> that can be parsed by the <xref:System.Boolean.Parse%2A?displayProperty=fullName> method; that is, it must be \"True\", \"true\", \"False\", or \"false\". If the runtime encounters any other value, it ignores the switch.  \n  \n     Using the registry to define an <xref:System.AppContext> switch has machine scope; that is, it affects every application running on the machine.  \n  \n If you set the same switch in more than one way, the order of precedence for determining which setting overrides the others is:  \n  \n1.  The programmatic setting.  \n  \n2.  The setting in the app config file.  \n  \n3.  The registry setting.  \n  \n The following is a simple application that passes a file URI to the <xref:System.IO.Path.GetDirectoryName%2A?displayProperty=fullName> method.  When run under the .NET Framework 4.6, it throws an <xref:System.ArgumentException> because `file://` is no longer a valid part of a file path.  \n  \n [!code-csharp[System.AppContext.Class#10](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.AppContext.Class/cs/ForConsumers1.cs#10)]\n [!code-vb[System.AppContext.Class#10](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.AppContext.Class/vb/ForConsumers1.vb#10)]  \n  \n To restore the method's previous behavior and prevent the exception, you can add the `Switch.System.IO.UseLegacyPathHandling` switch to the application configuration file for the example:  \n  \n```xml  \n  \n<configuration>  \n    <runtime>  \n        <AppContextSwitchOverrides value=\"Switch.System.IO.UseLegacyPathHandling=true\" />    \n    </runtime>  \n</configuration>  \n  \n```"
+  syntax:
+    content: public static class AppContext
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/AppContext.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.AppContext.BaseDirectory
+  commentId: P:System.AppContext.BaseDirectory
+  id: BaseDirectory
+  parent: System.AppContext
+  langs:
+  - csharp
+  name: BaseDirectory
+  nameWithType: AppContext.BaseDirectory
+  fullName: AppContext.BaseDirectory
+  type: Property
+  assemblies:
+  - System.AppContext
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Gets the pathname of the base directory that the assembly resolver uses to probe for assemblies.
+  remarks: This is a per application domain property. Its value corresponds to the <xref:System.AppDomain.BaseDirectory%2A?displayProperty=fullName> property of the current application domain.
+  syntax:
+    content: public static string BaseDirectory { get; }
+    return:
+      type: System.String
+      description: the pathname of the base directory that the assembly resolver uses to probe for assemblies.
+  overload: System.AppContext.BaseDirectory*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/AppContext.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.AppContext.GetData(System.String)
+  commentId: M:System.AppContext.GetData(System.String)
+  id: GetData(System.String)
+  parent: System.AppContext
+  langs:
+  - csharp
+  name: GetData(String)
+  nameWithType: AppContext.GetData(String)
+  fullName: AppContext.GetData(String)
+  type: Method
+  assemblies:
+  - System.AppContext
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Returns the value of the named data element assigned to the current application domain.
+  syntax:
+    content: public static object GetData (string name);
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the data element.
+    return:
+      type: System.Object
+      description: The value of <code>name</code>, if <code>name</code> identifies a named value; otherwise, `null`.
+  overload: System.AppContext.GetData*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.7
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.7
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/AppContext.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.AppContext.SetSwitch(System.String,System.Boolean)
+  commentId: M:System.AppContext.SetSwitch(System.String,System.Boolean)
+  id: SetSwitch(System.String,System.Boolean)
+  parent: System.AppContext
+  langs:
+  - csharp
+  name: SetSwitch(String, Boolean)
+  nameWithType: AppContext.SetSwitch(String, Boolean)
+  fullName: AppContext.SetSwitch(String, Boolean)
+  type: Method
+  assemblies:
+  - System.AppContext
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Sets the value of a switch.
+  remarks: "The <xref:System.AppContext> class enables library writers to provide a uniform opt-out mechanism for new functionality for their users. It establishes a loosely-coupled contract between components in order to communicate an opt-out request. This capability is typically important when a change is made to existing functionality. Conversely, there is already an implicit opt-in for new functionality.  \n  \n The <xref:System.AppContext.SetSwitch%2A> method is called by an application (or a library) to declare the value of a switch (which is always a <xref:System.Boolean> value) that a dependent library defines. The switch is always implicitly `false`, which provides the new behavior. Setting the switch to `true` enables it, which provides the legacy behavior. Explicitly setting the switch to `false` also provides the new behavior. The dependent library can then check the value of the switch by calling the <xref:System.AppContext.TryGetSwitch%2A> method.  \n  \n> [!NOTE]\n>  It's beneficial to use a consistent format for switch names, since they are a formal contract exposed by a library. The following are two obvious formats.  \n>   \n>  -   *Switch*.*namespace*.*switchname*  \n> -   *Switch*.*library*.*switchname*  \n  \n In addition to setting the value of a switch programmatically, it can also be set:  \n  \n-   by adding the switch name and value to the `<AppContextSwitchOverrides>` element in the [\\<runtime>](~/docs/framework/configure-apps/file-schema/runtime/runtime-element.md) section of an application configuration file. For example, the following defines a switch named `Libraries.FPLibrary.UseExactFloatingPointComparison` whose value is `False`.  \n  \n    ```xml  \n  \n    <configuration>  \n       <runtime>  \n          <AppContextSwitchOverrides value=\"Libraries.FPLibrary.UseExactFloatingPointComparison=false\" />   \n       </runtime>  \n    </configuration>  \n  \n    ```  \n  \n-   by adding a string value whose name is the name of the switch to the `HKLM\\SOFTWARE\\Microsoft\\.NETFramework\\AppContext` key in the registry. Its value must be the string representation of a <xref:System.Boolean> that can be parsed by the <xref:System.Boolean.Parse%2A?displayProperty=fullName> method; that is, it must be \"True\", \"true\", \"False\", or \"false\".  \n  \n If `switchName` already exists, its value is overwritten by the `isEnabled` argument.  That is, the most recent call to the <xref:System.AppContext.SetSwitch%2A> method overrides the value defined in the registry, in an app configuration file, or by previous calls to the <xref:System.AppContext.SetSwitch%2A> method."
+  example:
+  - "The following line of code sets a switch named `Switch.AmazingLib.ThrowOnException` to `true`, which enables a legacy behavior. The library can then check whether a library consumer has set the value of the switch by calling the <xref:System.AppContext.TryGetSwitch%2A> method.  \n  \n [!code-csharp[System.AppContext.Class#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.AppContext.Class/cs/TestValue1.cs#1)]\n [!code-vb[System.AppContext.Class#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.AppContext.Class/vb/TestValue1.vb#1)]"
+  syntax:
+    content: public static void SetSwitch (string switchName, bool isEnabled);
+    parameters:
+    - id: switchName
+      type: System.String
+      description: The name of the switch.
+    - id: isEnabled
+      type: System.Boolean
+      description: The value of the switch.
+  overload: System.AppContext.SetSwitch*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>switchName</code> is `null`.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>switchName</code> is <xref href="System.String.Empty"></xref>.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/AppContext.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.AppContext.TargetFrameworkName
+  commentId: P:System.AppContext.TargetFrameworkName
+  id: TargetFrameworkName
+  parent: System.AppContext
+  langs:
+  - csharp
+  name: TargetFrameworkName
+  nameWithType: AppContext.TargetFrameworkName
+  fullName: AppContext.TargetFrameworkName
+  type: Property
+  assemblies:
+  - System.AppContext
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Gets the name of the framework version targeted by the current application.
+  remarks: The name of the target framework version corresponds to the value of the <xref:System.Runtime.Versioning.TargetFrameworkAttribute.FrameworkName%2A?displayProperty=fullName> property. For a list of target framework names for the .NET Framework, see the [\&lt;supportedRuntime\&gt; Element](~/docs/framework/configure-apps/file-schema/startup/supportedruntime-element.md) element.
+  syntax:
+    content: public static string TargetFrameworkName { get; }
+    return:
+      type: System.String
+      description: The name of the framework version targeted by the current application.
+  overload: System.AppContext.TargetFrameworkName*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.7
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.7
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/AppContext.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.AppContext.TryGetSwitch(System.String,System.Boolean@)
+  commentId: M:System.AppContext.TryGetSwitch(System.String,System.Boolean@)
+  id: TryGetSwitch(System.String,System.Boolean@)
+  parent: System.AppContext
+  langs:
+  - csharp
+  name: TryGetSwitch(String, Boolean)
+  nameWithType: AppContext.TryGetSwitch(String, Boolean)
+  fullName: AppContext.TryGetSwitch(String, Boolean)
+  type: Method
+  assemblies:
+  - System.AppContext
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Tries to get the value of a switch.
+  remarks: "The <xref:System.AppContext> class enables library writers to provide a uniform opt-out mechanism for new functionality for their users. It establishes a loosely-coupled contract between components in order to communicate an opt-out request. This capability is typically important when a change is made to existing functionality. Conversely, there is already an implicit opt-in for new functionality.  \n  \n The common language runtime automatically populates the switches assigned to an <xref:System.AppContext> instance by reading the registry and the application's configuration file. The value of these switches can then be overridden, and new switches added, by calling the <xref:System.AppContext.SetSwitch%2A> method.  \n  \n A library calls the <xref:System.AppContext.TryGetSwitch%2A> method to check whether its consumers have declared the value of the switch and then act appropriately on it.  By default, if the switch is not defined, the new functionality is enabled.. If the switch is defined and its value is `false`, the new functionality is also enabled. If its value is `true`, the legacy behavior is enabled."
+  example:
+  - "The following example determines whether a library consumer has set a switch named `Switch.AmazingLib.ThrowOnException`.  \n  \n [!code-csharp[System.AppContext.Class#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.AppContext.Class/cs/TestValue1.cs#2)]\n [!code-vb[System.AppContext.Class#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/System.AppContext.Class/vb/TestValue1.vb#2)]"
+  syntax:
+    content: public static bool TryGetSwitch (string switchName, out bool isEnabled);
+    parameters:
+    - id: switchName
+      type: System.String
+      description: The name of the switch.
+    - id: isEnabled
+      type: System.Boolean
+      description: When this method returns, contains the value of <code>switchName</code> if <code>switchName</code> was found, or `false` if <code>switchName</code> was not found. This parameter is passed uninitialized.
+    return:
+      type: System.Boolean
+      description: '`true` if <code>switchName</code> was set and the <code>isEnabled</code> argument contains the value of the switch; otherwise, `false`.'
+  overload: System.AppContext.TryGetSwitch*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>switchName</code> is `null`.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>switchName</code> is <xref href="System.String.Empty"></xref>.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/AppContext.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.AppContext.BaseDirectory
+  parent: System.AppContext
+  isExternal: false
+  name: BaseDirectory
+  nameWithType: AppContext.BaseDirectory
+  fullName: AppContext.BaseDirectory
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.AppContext.GetData(System.String)
+  parent: System.AppContext
+  isExternal: false
+  name: GetData(String)
+  nameWithType: AppContext.GetData(String)
+  fullName: AppContext.GetData(String)
+- uid: System.AppContext.SetSwitch(System.String,System.Boolean)
+  parent: System.AppContext
+  isExternal: false
+  name: SetSwitch(String, Boolean)
+  nameWithType: AppContext.SetSwitch(String, Boolean)
+  fullName: AppContext.SetSwitch(String, Boolean)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.AppContext.TargetFrameworkName
+  parent: System.AppContext
+  isExternal: false
+  name: TargetFrameworkName
+  nameWithType: AppContext.TargetFrameworkName
+  fullName: AppContext.TargetFrameworkName
+- uid: System.AppContext.TryGetSwitch(System.String,System.Boolean@)
+  parent: System.AppContext
+  isExternal: false
+  name: TryGetSwitch(String, Boolean)
+  nameWithType: AppContext.TryGetSwitch(String, Boolean)
+  fullName: AppContext.TryGetSwitch(String, Boolean)
+- uid: System.AppContext.BaseDirectory*
+  parent: System.AppContext
+  isExternal: false
+  name: BaseDirectory
+  nameWithType: AppContext.BaseDirectory
+  fullName: AppContext.BaseDirectory
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/AppContext.xml
+- uid: System.AppContext.GetData*
+  parent: System.AppContext
+  isExternal: false
+  name: GetData
+  nameWithType: AppContext.GetData
+  fullName: AppContext.GetData
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.7
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/AppContext.xml
+- uid: System.AppContext.SetSwitch*
+  parent: System.AppContext
+  isExternal: false
+  name: SetSwitch
+  nameWithType: AppContext.SetSwitch
+  fullName: AppContext.SetSwitch
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/AppContext.xml
+- uid: System.AppContext.TargetFrameworkName*
+  parent: System.AppContext
+  isExternal: false
+  name: TargetFrameworkName
+  nameWithType: AppContext.TargetFrameworkName
+  fullName: AppContext.TargetFrameworkName
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.7
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/AppContext.xml
+- uid: System.AppContext.TryGetSwitch*
+  parent: System.AppContext
+  isExternal: false
+  name: TryGetSwitch
+  nameWithType: AppContext.TryGetSwitch
+  fullName: AppContext.TryGetSwitch
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/AppContext.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

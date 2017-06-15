@@ -1,0 +1,636 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Text.DecoderFallback
+  commentId: T:System.Text.DecoderFallback
+  id: DecoderFallback
+  children:
+  - System.Text.DecoderFallback.#ctor
+  - System.Text.DecoderFallback.CreateFallbackBuffer
+  - System.Text.DecoderFallback.ExceptionFallback
+  - System.Text.DecoderFallback.MaxCharCount
+  - System.Text.DecoderFallback.ReplacementFallback
+  langs:
+  - csharp
+  name: DecoderFallback
+  nameWithType: DecoderFallback
+  fullName: System.Text.DecoderFallback
+  type: Class
+  assemblies:
+  - System.Text.Encoding
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Text
+  summary: Provides a failure-handling mechanism, called a fallback, for an encoded input byte sequence that cannot be converted to an output character.
+  remarks: "An encoding maps a Unicode character to an encoded sequence of bytes. A particular encoding is represented by a type that is derived from the <xref:System.Text.Encoding> class. Specifically, a character is encoded to a byte sequence by calling the encoding type's <xref:System.Text.Encoding.GetBytes%2A?displayProperty=fullName> method, and the byte sequence is decoded to a character array or a string by calling the <xref:System.Text.Encoding.GetChars%2A?displayProperty=fullName> or <xref:System.Text.Encoding.GetString%2A?displayProperty=fullName> method.  \n  \n A decoding operation can fail if the input byte sequence cannot be mapped by the encoding. For example, an <xref:System.Text.ASCIIEncoding> object cannot decode a byte sequence if that sequence represents a character that has a code point value that is outside the range U+0000 to U+007F.  \n  \n When a decoding conversion cannot be performed, the .NET Framework provides a failure-handling mechanism called a fallback. Your application can use predefined .NET Framework decoder fallbacks, or it can create a custom decoder fallback derived from the <xref:System.Text.DecoderFallback> and <xref:System.Text.DecoderFallbackBuffer> classes.  \n  \n <xref:System.Text.DecoderFallback> and <xref:System.Text.DecoderFallbackBuffer> are the base classes for all decoding fallback handlers in the .NET Framework. They support the following three kinds of fallback handling mechanisms:  \n  \n-   Best-fit fallback, which maps valid Unicode characters that cannot be decoded to an approximate equivalent. For example, a best-fit fallback handler for the <xref:System.Text.ASCIIEncoding> class might map Æ (U+00C6) to AE (U+0041 + U+0045). A best-fit fallback handler might also be implemented to transliterate one alphabet (such as Cyrillic) to another (such as Latin or Roman). The .NET Framework does not provide any public best-fit fallback implementations.  \n  \n-   Replacement fallback, which replaces each character that cannot be decoded with a predefined string. The .NET Framework provides a predefined replacement fallback handler. The <xref:System.Text.DecoderReplacementFallback> class replaces each byte sequence that cannot be decoded with a question mark character (\"?\", or U+003F) or a REPLACEMENT CHARACTER (U+FFFD). You can customize the replacement string by specifying a substitute in the call to the <xref:System.Text.DecoderReplacementFallback.%23ctor%28System.String%29?displayProperty=fullName> constructor. After the substitute string is emitted, the decoding operation continues converting the remainder of the input.  \n  \n-   Exception fallback, which throws an exception when a byte sequence cannot be decoded. The .NET Framework provides a predefined exception fallback handler. The <xref:System.Text.DecoderExceptionFallback> class throws a <xref:System.Text.DecoderFallbackException> when an invalid byte sequence is encountered, and the decoding operation terminates.  \n  \n If you choose to implement a custom solution, you must override the following abstract members of the <xref:System.Text.DecoderFallback> class:  \n  \n-   The <xref:System.Text.DecoderFallback.CreateFallbackBuffer%2A> method, which returns a class instance derived from <xref:System.Text.DecoderFallbackBuffer>. Depending on the type of fallback handler that you are developing, the <xref:System.Text.DecoderFallbackBuffer> implementation is responsible for performing the mapping or replacement, or for throwing the exception.  \n  \n-   The <xref:System.Text.DecoderFallback.MaxCharCount%2A> property, which returns the maximum number of characters that the fallback implementation can return. For an exception fallback handler, its value should be zero.  \n  \n For more information about encoding, decoding, and fallback strategies, see [Character Encoding in the .NET Framework](~/docs/standard/base-types/character-encoding.md)."
+  syntax:
+    content: public abstract class DecoderFallback
+  inheritance:
+  - System.Object
+  derivedClasses:
+  - System.Text.DecoderExceptionFallback
+  - System.Text.DecoderReplacementFallback
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Text/DecoderFallback.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Text.DecoderFallback.#ctor
+  commentId: M:System.Text.DecoderFallback.#ctor
+  id: '#ctor'
+  parent: System.Text.DecoderFallback
+  langs:
+  - csharp
+  name: DecoderFallback()
+  nameWithType: DecoderFallback.DecoderFallback()
+  fullName: DecoderFallback.DecoderFallback()
+  type: Constructor
+  assemblies:
+  - System.Text.Encoding
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Text
+  summary: Initializes a new instance of the <xref href="System.Text.DecoderFallback"></xref> class.
+  syntax:
+    content: protected DecoderFallback ();
+    parameters: []
+  overload: System.Text.DecoderFallback.#ctor*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Text/DecoderFallback.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Text.DecoderFallback.CreateFallbackBuffer
+  commentId: M:System.Text.DecoderFallback.CreateFallbackBuffer
+  id: CreateFallbackBuffer
+  parent: System.Text.DecoderFallback
+  langs:
+  - csharp
+  name: CreateFallbackBuffer()
+  nameWithType: DecoderFallback.CreateFallbackBuffer()
+  fullName: DecoderFallback.CreateFallbackBuffer()
+  type: Method
+  assemblies:
+  - System.Text.Encoding
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Text
+  summary: When overridden in a derived class, initializes a new instance of the <xref href="System.Text.DecoderFallbackBuffer"></xref> class.
+  remarks: "This method returns an object derived from <xref:System.Text.DecoderFallbackBuffer> that is responsible for performing the fallback operation. For example, of the predefined <xref:System.Text.DecoderFallback> implementations in the .NET Framework, the <xref:System.Text.DecoderReplacementFallback.CreateFallbackBuffer%2A?displayProperty=fullName> method returns a <xref:System.Text.DecoderReplacementFallbackBuffer> object, and the <xref:System.Text.DecoderExceptionFallback.CreateFallbackBuffer%2A?displayProperty=fullName> method returns a <xref:System.Text.DecoderExceptionFallbackBuffer> object.  \n  \n The<xref:System.Text.DecoderFallback.CreateFallbackBuffer%2A> method is called by a decoder when it encounters the first byte that it is unable to decode. The <xref:System.Text.DecoderFallbackBuffer> object returned by this method provides the fallback implementation and is responsible for returning the string that replaces the byte or bytes that could not be decoded."
+  syntax:
+    content: public abstract System.Text.DecoderFallbackBuffer CreateFallbackBuffer ();
+    parameters: []
+    return:
+      type: System.Text.DecoderFallbackBuffer
+      description: An object that provides a fallback buffer for a decoder.
+  overload: System.Text.DecoderFallback.CreateFallbackBuffer*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Text/DecoderFallback.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Text.DecoderFallback.ExceptionFallback
+  commentId: P:System.Text.DecoderFallback.ExceptionFallback
+  id: ExceptionFallback
+  parent: System.Text.DecoderFallback
+  langs:
+  - csharp
+  name: ExceptionFallback
+  nameWithType: DecoderFallback.ExceptionFallback
+  fullName: DecoderFallback.ExceptionFallback
+  type: Property
+  assemblies:
+  - System.Text.Encoding
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Text
+  summary: Gets an object that throws an exception when an input byte sequence cannot be decoded.
+  syntax:
+    content: public static System.Text.DecoderFallback ExceptionFallback { get; }
+    return:
+      type: System.Text.DecoderFallback
+      description: A type derived from the <xref href="System.Text.DecoderFallback"></xref> class. The default value is a <xref href="System.Text.DecoderExceptionFallback"></xref> object.
+  overload: System.Text.DecoderFallback.ExceptionFallback*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Text/DecoderFallback.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Text.DecoderFallback.MaxCharCount
+  commentId: P:System.Text.DecoderFallback.MaxCharCount
+  id: MaxCharCount
+  parent: System.Text.DecoderFallback
+  langs:
+  - csharp
+  name: MaxCharCount
+  nameWithType: DecoderFallback.MaxCharCount
+  fullName: DecoderFallback.MaxCharCount
+  type: Property
+  assemblies:
+  - System.Text.Encoding
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Text
+  summary: When overridden in a derived class, gets the maximum number of characters the current <xref href="System.Text.DecoderFallback"></xref> object can return.
+  remarks: For an exception fallback handler, this property should return zero.
+  syntax:
+    content: public abstract int MaxCharCount { get; }
+    return:
+      type: System.Int32
+      description: The maximum number of characters the current <xref href="System.Text.DecoderFallback"></xref> object can return.
+  overload: System.Text.DecoderFallback.MaxCharCount*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Text/DecoderFallback.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Text.DecoderFallback.ReplacementFallback
+  commentId: P:System.Text.DecoderFallback.ReplacementFallback
+  id: ReplacementFallback
+  parent: System.Text.DecoderFallback
+  langs:
+  - csharp
+  name: ReplacementFallback
+  nameWithType: DecoderFallback.ReplacementFallback
+  fullName: DecoderFallback.ReplacementFallback
+  type: Property
+  assemblies:
+  - System.Text.Encoding
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Text
+  summary: Gets an object that outputs a substitute string in place of an input byte sequence that cannot be decoded.
+  syntax:
+    content: public static System.Text.DecoderFallback ReplacementFallback { get; }
+    return:
+      type: System.Text.DecoderFallback
+      description: A type derived from the <xref href="System.Text.DecoderFallback"></xref> class. The default value is a <xref href="System.Text.DecoderReplacementFallback"></xref> object that emits the QUESTION MARK character ("?", U+003F) in place of unknown byte sequences.
+  overload: System.Text.DecoderFallback.ReplacementFallback*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Text/DecoderFallback.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Text.DecoderFallback.#ctor
+  parent: System.Text.DecoderFallback
+  isExternal: false
+  name: DecoderFallback()
+  nameWithType: DecoderFallback.DecoderFallback()
+  fullName: DecoderFallback.DecoderFallback()
+- uid: System.Text.DecoderFallback.CreateFallbackBuffer
+  parent: System.Text.DecoderFallback
+  isExternal: false
+  name: CreateFallbackBuffer()
+  nameWithType: DecoderFallback.CreateFallbackBuffer()
+  fullName: DecoderFallback.CreateFallbackBuffer()
+- uid: System.Text.DecoderFallbackBuffer
+  parent: System.Text
+  isExternal: false
+  name: DecoderFallbackBuffer
+  nameWithType: DecoderFallbackBuffer
+  fullName: System.Text.DecoderFallbackBuffer
+- uid: System.Text.DecoderFallback.ExceptionFallback
+  parent: System.Text.DecoderFallback
+  isExternal: false
+  name: ExceptionFallback
+  nameWithType: DecoderFallback.ExceptionFallback
+  fullName: DecoderFallback.ExceptionFallback
+- uid: System.Text.DecoderFallback
+  parent: System.Text
+  isExternal: false
+  name: DecoderFallback
+  nameWithType: DecoderFallback
+  fullName: System.Text.DecoderFallback
+- uid: System.Text.DecoderFallback.MaxCharCount
+  parent: System.Text.DecoderFallback
+  isExternal: false
+  name: MaxCharCount
+  nameWithType: DecoderFallback.MaxCharCount
+  fullName: DecoderFallback.MaxCharCount
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Text.DecoderFallback.ReplacementFallback
+  parent: System.Text.DecoderFallback
+  isExternal: false
+  name: ReplacementFallback
+  nameWithType: DecoderFallback.ReplacementFallback
+  fullName: DecoderFallback.ReplacementFallback
+- uid: System.Text.DecoderFallback.#ctor*
+  parent: System.Text.DecoderFallback
+  isExternal: false
+  name: DecoderFallback
+  nameWithType: DecoderFallback.DecoderFallback
+  fullName: DecoderFallback.DecoderFallback
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Text/DecoderFallback.xml
+- uid: System.Text.DecoderFallback.CreateFallbackBuffer*
+  parent: System.Text.DecoderFallback
+  isExternal: false
+  name: CreateFallbackBuffer
+  nameWithType: DecoderFallback.CreateFallbackBuffer
+  fullName: DecoderFallback.CreateFallbackBuffer
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Text/DecoderFallback.xml
+- uid: System.Text.DecoderFallback.ExceptionFallback*
+  parent: System.Text.DecoderFallback
+  isExternal: false
+  name: ExceptionFallback
+  nameWithType: DecoderFallback.ExceptionFallback
+  fullName: DecoderFallback.ExceptionFallback
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Text/DecoderFallback.xml
+- uid: System.Text.DecoderFallback.MaxCharCount*
+  parent: System.Text.DecoderFallback
+  isExternal: false
+  name: MaxCharCount
+  nameWithType: DecoderFallback.MaxCharCount
+  fullName: DecoderFallback.MaxCharCount
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Text/DecoderFallback.xml
+- uid: System.Text.DecoderFallback.ReplacementFallback*
+  parent: System.Text.DecoderFallback
+  isExternal: false
+  name: ReplacementFallback
+  nameWithType: DecoderFallback.ReplacementFallback
+  fullName: DecoderFallback.ReplacementFallback
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Text/DecoderFallback.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

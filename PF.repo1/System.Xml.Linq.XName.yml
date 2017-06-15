@@ -1,0 +1,1585 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Xml.Linq.XName
+  commentId: T:System.Xml.Linq.XName
+  id: XName
+  children:
+  - System.Xml.Linq.XName.Equals(System.Object)
+  - System.Xml.Linq.XName.Get(System.String)
+  - System.Xml.Linq.XName.Get(System.String,System.String)
+  - System.Xml.Linq.XName.GetHashCode
+  - System.Xml.Linq.XName.LocalName
+  - System.Xml.Linq.XName.Namespace
+  - System.Xml.Linq.XName.NamespaceName
+  - System.Xml.Linq.XName.op_Equality(System.Xml.Linq.XName,System.Xml.Linq.XName)
+  - System.Xml.Linq.XName.op_Implicit(System.String to System.Xml.Linq.XName)
+  - System.Xml.Linq.XName.op_Inequality(System.Xml.Linq.XName,System.Xml.Linq.XName)
+  - System.Xml.Linq.XName.ToString
+  - System.Xml.Linq.XName.System#IEquatable{System#Xml#Linq#XName}#Equals(System.Xml.Linq.XName)
+  - System.Xml.Linq.XName.System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  langs:
+  - csharp
+  name: XName
+  nameWithType: XName
+  fullName: System.Xml.Linq.XName
+  type: Class
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Represents a name of an XML element or attribute.
+  remarks: "XML names include a namespace and a local name. A *fully qualified name* is the combination of the namespace and local name.  \n  \n## Creating an XName Object  \n <xref:System.Xml.Linq.XName> does not contain any public constructors. Instead, this class provides an implicit conversion from <xref:System.String> that allows you to create an <xref:System.Xml.Linq.XName>. The most common place you use this conversion is when constructing an element or attribute: The first argument to the <xref:System.Xml.Linq.XElement> constructor is an <xref:System.Xml.Linq.XName>. By passing a string, you take advantage of the implicit conversion. The following code creates an element with a name that is in no namespace:  \n  \n```csharp  \n  \n                XElement root = new XElement(\"ElementName\", \"content\");  \nConsole.WriteLine(root);  \n```  \n  \n In Visual Basic, it is more appropriate to use XML literals:  \n  \n```vb  \n  \n                Dim root As XElement = <ElementName>content</ElementName>  \nConsole.WriteLine(root)  \n```  \n  \n This example produces the following output:  \n  \n```xml  \n  \n<ElementName>content</ElementName>  \n```  \n  \n Assigning a string to an <xref:System.Xml.Linq.XName> uses the implicit conversion from <xref:System.String>.  \n  \n The Visual Basic example creates the <xref:System.Xml.Linq.XElement> using XML literals. Even though XML literals are used, an <xref:System.Xml.Linq.XName> object is created for the <xref:System.Xml.Linq.XElement>.  \n  \n In addition, you can call the <xref:System.Xml.Linq.XName.Get%2A> method for an <xref:System.Xml.Linq.XName> object. However, the recommended way is to use the implicit conversion from string.  \n  \n## Creating an XName in a Namespace  \n As with XML, an <xref:System.Xml.Linq.XName> can be in a namespace, or it can be in no namespace.  \n  \n For C#, the recommended approach for creating an <xref:System.Xml.Linq.XName> in a namespace is to declare the <xref:System.Xml.Linq.XNamespace> object, then use the override of the addition operator.  \n  \n For Visual Basic, the recommended approach is to use XML literals and global namespace declarations to create XML that is in a namespace.  \n  \n```csharp  \n  \n                XNamespace aw = \"http://www.adventure-works.com\";  \nXElement root = new XElement(aw + \"ElementName\", \"content\");  \nConsole.WriteLine(root);  \n```  \n  \n```vb  \n  \n                Imports <xmlns=\"http://www.adventure-works.com\">  \n  \nModule Module1  \n    Sub Main()  \n        Dim root As XElement = <ElementName>content</ElementName>  \n        Console.WriteLine(root)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```xml  \n  \n<ElementName xmlns=\"http://www.adventure-works.com\">content</ElementName>  \n```  \n  \n## Creating an XName in no Namespace  \n The <xref:System.Xml.Linq.XName.Namespace%2A> property of an <xref:System.Xml.Linq.XName> object is guaranteed to not be null. If the <xref:System.Xml.Linq.XName> is in no namespace, then the <xref:System.Xml.Linq.XName.Namespace%2A> property will be set to <xref:System.Xml.Linq.XNamespace.None%2A>. The following code demonstrates this:  \n  \n```csharp  \n  \n                XElement root = new XElement(\"ElementName\", \"content\");  \nif (root.Name.Namespace == XNamespace.None)  \n    Console.WriteLine(\"The element is in no namespace.\");  \nelse  \n    Console.WriteLine(\"The element is in a namespace.\");  \n```  \n  \n```vb  \n  \n                Dim root As XElement = <ElementName>content</ElementName>  \nIf (root.Name.Namespace Is XNamespace.None) Then  \n    Console.WriteLine(\"The element is in no namespace.\")  \nElse  \n    Console.WriteLine(\"The element is in a namespace.\")  \nEnd If  \n```  \n  \n This example produces the following output:  \n  \n```  \nThe element is in no namespace.  \n```  \n  \n## Using Expanded Names  \n You can also create an <xref:System.Xml.Linq.XName> from a expanded XML name in the form `{namespace}localname`:  \n  \n```csharp  \n  \n                XElement root = new XElement(\"{http://www.adventure-works.com}ElementName\", \"content\");  \nConsole.WriteLine(root);  \n```  \n  \n```vb  \n  \n                Dim root As XElement = New XElement(\"{http://www.adventure-works.com}ElementName\", \"content\")  \nConsole.WriteLine(root)  \n```  \n  \n This example produces the following output:  \n  \n```xml  \n  \n<ElementName xmlns=\"http://www.adventure-works.com\">content</ElementName>  \n```  \n  \n Be aware that creating an <xref:System.Xml.Linq.XName> through an expanded name is less efficient than creating an <xref:System.Xml.Linq.XNamespace> object and using the override of the addition operator. It is also less efficient than importing a global namespace and using XML literals in Visual Basic.  \n  \n If you create an <xref:System.Xml.Linq.XName> using an expanded name, LINQ to XML must find the atomized instance of a namespace. This work must be repeated for every use of an expanded name. This additional time is likely to be negligible when writing LINQ queries; however, it might be significant when creating a large XML tree.  \n  \n## XName Objects are Atomized  \n <xref:System.Xml.Linq.XName> objects are guaranteed to be atomized; that is, if two <xref:System.Xml.Linq.XName> objects have exactly the same namespace and exactly the same local name, they will share the same instance. The equality and comparison operators are also provided explicitly for this purpose.  \n  \n Among other benefits, this feature allows for faster execution of queries. When filtering on the name of elements or attributes, the comparisons expressed in predicates use identity comparison, not value comparison. It is much faster to determine that two references actually refer to the same object than to compare two strings."
+  syntax:
+    content: >-
+      [System.Runtime.Serialization.KnownType(typeof(System.Xml.Linq.NameSerializer))]
+
+      public sealed class XName : IEquatable<System.Xml.Linq.XName>, System.Runtime.Serialization.ISerializable
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{System.Xml.Linq.XName}
+  - System.Runtime.Serialization.ISerializable
+  inheritedMembers:
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  attributes:
+  - type: System.Runtime.Serialization.KnownTypeAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XName.Equals(System.Object)
+  commentId: M:System.Xml.Linq.XName.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: System.Xml.Linq.XName
+  langs:
+  - csharp
+  name: Equals(Object)
+  nameWithType: XName.Equals(Object)
+  fullName: XName.Equals(Object)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Determines whether the specified <xref href="System.Xml.Linq.XName"></xref> is equal to this <xref href="System.Xml.Linq.XName"></xref>.
+  remarks: For two <xref:System.Xml.Linq.XName> objects to be equal, they must have the same expanded name.
+  syntax:
+    content: public override bool Equals (object obj);
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The <xref href="System.Xml.Linq.XName"></xref> to compare to the current <xref href="System.Xml.Linq.XName"></xref>.
+    return:
+      type: System.Boolean
+      description: '`true` if the specified <xref href="System.Xml.Linq.XName"></xref> is equal to the current <xref href="System.Xml.Linq.XName"></xref>; otherwise `false`.'
+  overload: System.Xml.Linq.XName.Equals*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XName.Get(System.String)
+  commentId: M:System.Xml.Linq.XName.Get(System.String)
+  id: Get(System.String)
+  parent: System.Xml.Linq.XName
+  langs:
+  - csharp
+  name: Get(String)
+  nameWithType: XName.Get(String)
+  fullName: XName.Get(String)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets an <xref href="System.Xml.Linq.XName"></xref> object from an expanded name.
+  remarks: "This method contains overloads that allow you to create an <xref:System.Xml.Linq.XName>. You can create it from a expanded XML name in the form `{namespace}localname`, or from a namespace and a local name, specified separately.  \n  \n A much more common and easier way to create an <xref:System.Xml.Linq.XName> is to use the implicit conversion from string.  \n  \n Because <xref:System.Xml.Linq.XName> are atomized, if there is an existing <xref:System.Xml.Linq.XName> with exactly the same name, the assigned variable will refer to the existing <xref:System.Xml.Linq.XName>. If there is no existing <xref:System.Xml.Linq.XName>, a new one will be created and initialized."
+  example:
+  - "The following example shows the use of this method.  \n  \n```csharp  \n  \n                XName name = XName.Get(\"{http://www.adventure-works.com}Root\");  \nXElement el = new XElement(name, \"content\");  \nConsole.WriteLine(el);  \n  \n// This is the preferred approach for specifying the XName in the  \n// constructor of XElement.  \nXNamespace aw = \"http://www.adventure-works.com\";  \nXElement el2 = new XElement(aw + \"Root\", \"content\");  \nConsole.WriteLine(el2);  \n```  \n  \n```vb  \n  \n                Imports <xmlns=\"http://www.adventure-works.com\">  \n  \nModule Module1  \n    Sub Main()  \n        Dim name As XName = XName.Get(\"{http://www.adventure-works.com}Root\")  \n        Dim el As XElement = New XElement(name, \"content\")  \n        Console.WriteLine(el)  \n  \n        ' The preferred approach for specifying an XName in a namespace  \n        ' for Visual Basic is to import a global namespace.  \n        Dim el2 As XElement = <Root>content</Root>  \n        Console.WriteLine(el2)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n<Root xmlns=\"http://www.adventure-works.com\">content</Root>  \n<Root xmlns=\"http://www.adventure-works.com\">content</Root>  \n```"
+  syntax:
+    content: public static System.Xml.Linq.XName Get (string expandedName);
+    parameters:
+    - id: expandedName
+      type: System.String
+      description: A <xref href="System.String"></xref> that contains an expanded XML name in the format <code>{namespace}localname</code>.
+    return:
+      type: System.Xml.Linq.XName
+      description: An <xref href="System.Xml.Linq.XName"></xref> object constructed from the expanded name.
+  overload: System.Xml.Linq.XName.Get*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XName.Get(System.String,System.String)
+  commentId: M:System.Xml.Linq.XName.Get(System.String,System.String)
+  id: Get(System.String,System.String)
+  parent: System.Xml.Linq.XName
+  langs:
+  - csharp
+  name: Get(String, String)
+  nameWithType: XName.Get(String, String)
+  fullName: XName.Get(String, String)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets an <xref href="System.Xml.Linq.XName"></xref> object from a local name and a namespace.
+  remarks: "This method contains overloads that allow you to create an <xref:System.Xml.Linq.XName>. You can create it from an expanded XML name in the form `{namespace}localname`, or from a namespace and a local name, specified separately.  \n  \n A much more common and easier way to create an <xref:System.Xml.Linq.XName> is to use the implicit conversion from string.  \n  \n Because <xref:System.Xml.Linq.XName> are atomized, if there is an existing <xref:System.Xml.Linq.XName> with exactly the same name, the assigned variable will refer to the existing <xref:System.Xml.Linq.XName>. If there is no existing <xref:System.Xml.Linq.XName>, a new one will be created and initialized."
+  example:
+  - "The following example shows the use of this method.  \n  \n```csharp  \n  \n                XName name = XName.Get(\"Root\", \"http://www.adventure-works.com\");  \nXElement el = new XElement(name, \"content\");  \nConsole.WriteLine(el);  \n  \n// This is the preferred form.  \nXNamespace aw = \"http://www.adventure-works.com\";  \nXElement el2 = new XElement(aw + \"Root\", \"content\");  \nConsole.WriteLine(el2);  \n```  \n  \n```vb  \n  \n                Imports <xmlns=\"http://www.adventure-works.com\">  \n  \nModule Module1  \n    Sub Main()  \n        Dim name As XName = XName.Get(\"{http://www.adventure-works.com}Root\")  \n        Dim el As XElement = New XElement(name, \"content\")  \n        Console.WriteLine(el)  \n  \n        ' The preferred approach for specifying an XName in a namespace  \n        ' for Visual Basic is to import a global namespace.  \n        Dim el2 As XElement = <Root>content</Root>  \n        Console.WriteLine(el2)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n<Root xmlns=\"http://www.adventure-works.com\">content</Root>  \n<Root xmlns=\"http://www.adventure-works.com\">content</Root>  \n```"
+  syntax:
+    content: public static System.Xml.Linq.XName Get (string localName, string namespaceName);
+    parameters:
+    - id: localName
+      type: System.String
+      description: A local (unqualified) name.
+    - id: namespaceName
+      type: System.String
+      description: An XML namespace.
+    return:
+      type: System.Xml.Linq.XName
+      description: An <xref href="System.Xml.Linq.XName"></xref> object created from the specified local name and namespace.
+  overload: System.Xml.Linq.XName.Get*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XName.GetHashCode
+  commentId: M:System.Xml.Linq.XName.GetHashCode
+  id: GetHashCode
+  parent: System.Xml.Linq.XName
+  langs:
+  - csharp
+  name: GetHashCode()
+  nameWithType: XName.GetHashCode()
+  fullName: XName.GetHashCode()
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets a hash code for this <xref href="System.Xml.Linq.XName"></xref>.
+  remarks: This method serves as a hash function for <xref:System.Xml.Linq.XName>. You can use <xref:System.Xml.Linq.XName.GetHashCode%2A> in hashing algorithms, or in data structures such as a hash table.
+  syntax:
+    content: public override int GetHashCode ();
+    parameters: []
+    return:
+      type: System.Int32
+      description: An <xref href="System.Int32"></xref> that contains the hash code for the <xref href="System.Xml.Linq.XName"></xref>.
+  overload: System.Xml.Linq.XName.GetHashCode*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XName.LocalName
+  commentId: P:System.Xml.Linq.XName.LocalName
+  id: LocalName
+  parent: System.Xml.Linq.XName
+  langs:
+  - csharp
+  name: LocalName
+  nameWithType: XName.LocalName
+  fullName: XName.LocalName
+  type: Property
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets the local (unqualified) part of the name.
+  remarks: This property is guaranteed to not be `null`.
+  example:
+  - "The following example shows the use of this property.  \n  \n```csharp  \n  \n                XNamespace ns = \"http://www.adventure-works.com\";  \nXElement root = new XElement(ns + \"Root\", \"content\");  \nConsole.WriteLine(root.Name);  \nConsole.WriteLine(root.Name.LocalName);  \nConsole.WriteLine(root.Name.Namespace);  \n```  \n  \n```vb  \n  \n                Imports <xmlns=\"http://www.adventure-works.com\">  \n  \nModule Module1  \n    Sub Main()  \n        Dim root As XElement = <Root/>  \n        Console.WriteLine(root.Name)  \n        Console.WriteLine(root.Name.LocalName)  \n        Console.WriteLine(root.Name.Namespace)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n{http://www.adventure-works.com}Root  \nRoot  \nhttp://www.adventure-works.com  \n```"
+  syntax:
+    content: public string LocalName { get; }
+    return:
+      type: System.String
+      description: A <xref href="System.String"></xref> that contains the local (unqualified) part of the name.
+  overload: System.Xml.Linq.XName.LocalName*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XName.Namespace
+  commentId: P:System.Xml.Linq.XName.Namespace
+  id: Namespace
+  parent: System.Xml.Linq.XName
+  langs:
+  - csharp
+  name: Namespace
+  nameWithType: XName.Namespace
+  fullName: XName.Namespace
+  type: Property
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets the namespace part of the fully qualified name.
+  remarks: The <xref:System.Xml.Linq.XName.Namespace%2A> property is guaranteed to not be `null`. If an <xref:System.Xml.Linq.XName> is in no namespace, this property returns <xref:System.Xml.Linq.XNamespace.None%2A>.
+  example:
+  - "The following example shows the use of this property.  \n  \n```csharp  \n  \n                XNamespace ns = \"http://www.adventure-works.com\";  \nXElement root = new XElement(ns + \"Root\", \"content\");  \nConsole.WriteLine(root.Name);  \nConsole.WriteLine(root.Name.LocalName);  \nConsole.WriteLine(root.Name.Namespace);  \n```  \n  \n```vb  \n  \n                Imports <xmlns=\"http://www.adventure-works.com\">  \n  \nModule Module1  \n    Sub Main()  \n        Dim root As XElement = <Root/>  \n        Console.WriteLine(root.Name)  \n        Console.WriteLine(root.Name.LocalName)  \n        Console.WriteLine(root.Name.Namespace)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n{http://www.adventure-works.com}Root  \nRoot  \nhttp://www.adventure-works.com  \n```"
+  syntax:
+    content: public System.Xml.Linq.XNamespace Namespace { get; }
+    return:
+      type: System.Xml.Linq.XNamespace
+      description: An <xref href="System.Xml.Linq.XNamespace"></xref> that contains the namespace part of the name.
+  overload: System.Xml.Linq.XName.Namespace*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XName.NamespaceName
+  commentId: P:System.Xml.Linq.XName.NamespaceName
+  id: NamespaceName
+  parent: System.Xml.Linq.XName
+  langs:
+  - csharp
+  name: NamespaceName
+  nameWithType: XName.NamespaceName
+  fullName: XName.NamespaceName
+  type: Property
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Returns the URI of the <xref href="System.Xml.Linq.XNamespace"></xref> for this <xref href="System.Xml.Linq.XName"></xref>.
+  remarks: This is a convenience property to get the namespace name from an <xref:System.Xml.Linq.XName>.
+  example:
+  - "This example creates an element in a namespace, and then prints the element's namespace.  \n  \n```csharp  \n  \n                XNamespace aw = \"http://www.adventure-works.com\";  \nXElement root = new XElement(aw + \"Root\");  \nConsole.WriteLine(root.Name.NamespaceName);  \n```  \n  \n```vb  \n  \n                Imports <xmlns=\"http://www.adventure-works.com\">  \n  \nModule Module1  \n    Sub Main()  \n        Dim root As XElement = <Root/>  \n        Console.WriteLine(root.Name.NamespaceName)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \nhttp://www.adventure-works.com  \n```"
+  syntax:
+    content: public string NamespaceName { get; }
+    return:
+      type: System.String
+      description: The URI of the <xref href="System.Xml.Linq.XNamespace"></xref> for this <xref href="System.Xml.Linq.XName"></xref>.
+  overload: System.Xml.Linq.XName.NamespaceName*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XName.op_Equality(System.Xml.Linq.XName,System.Xml.Linq.XName)
+  commentId: M:System.Xml.Linq.XName.op_Equality(System.Xml.Linq.XName,System.Xml.Linq.XName)
+  id: op_Equality(System.Xml.Linq.XName,System.Xml.Linq.XName)
+  parent: System.Xml.Linq.XName
+  langs:
+  - csharp
+  name: op_Equality(XName, XName)
+  nameWithType: XName.op_Equality(XName, XName)
+  fullName: XName.op_Equality(XName, XName)
+  type: Operator
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Returns a value indicating whether two instances of <xref href="System.Xml.Linq.XName"></xref> are equal.
+  remarks: "The operator overloads `==` and `!=` are included to enable comparisons between <xref:System.Xml.Linq.XName> and a `string`, such as`element.Name == \"SomeElementName\"`. The predefined reference equality operators in C# require one operand to be convertible to the type of the other through reference conversions only. These operators do not consider the implicit conversion from string to <xref:System.Xml.Linq.XName>.  \n  \n The equivalent method for this operator is ?qualifyHint=True&autoUpgrade=False"
+  example:
+  - "The following example shows some comparisons between <xref:System.Xml.Linq.XName> objects and strings.  \n  \n```csharp  \n  \n                XName xn;  \nxn = XName.Get(\"Root\");  \nConsole.WriteLine(xn == \"Root\");  \n  \nxn = XName.Get(\"Root\", \"http://www.adventure-works.com\");  \nConsole.WriteLine(xn == \"{http://www.adventure-works.com}Root\");  \n  \nXElement root = new XElement(\"Root\", \"content\");  \nConsole.WriteLine(root.Name == \"Root\");  \n```  \n  \n```vb  \n  \n                Dim xn As XName  \nxn = XName.Get(\"Root\")  \nConsole.WriteLine(xn = \"Root\")  \n  \nxn = XName.Get(\"Root\", \"http://www.adventure-works.com\")  \nConsole.WriteLine(xn = \"{http://www.adventure-works.com}Root\")  \n  \nDim root As XElement = New XElement(\"Root\", \"content\")  \nConsole.WriteLine(root.Name = \"Root\")  \n```  \n  \n This example produces the following output:  \n  \n```  \nTrue  \nTrue  \nTrue  \n```"
+  syntax:
+    content: public static bool op_Equality (System.Xml.Linq.XName left, System.Xml.Linq.XName right);
+    parameters:
+    - id: left
+      type: System.Xml.Linq.XName
+      description: The first <xref href="System.Xml.Linq.XName"></xref> to compare.
+    - id: right
+      type: System.Xml.Linq.XName
+      description: The second <xref href="System.Xml.Linq.XName"></xref> to compare.
+    return:
+      type: System.Boolean
+      description: '`true` if <code>left</code> and <code>right</code> are equal; otherwise `false`.'
+  overload: System.Xml.Linq.XName.op_Equality*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XName.op_Implicit(System.String to System.Xml.Linq.XName)
+  commentId: M:System.Xml.Linq.XName.op_Implicit(System.String)~System.Xml.Linq.XName
+  id: op_Implicit(System.String to System.Xml.Linq.XName)
+  parent: System.Xml.Linq.XName
+  langs:
+  - csharp
+  name: op_Implicit(String to XName)
+  nameWithType: XName.op_Implicit(String to XName)
+  fullName: XName.op_Implicit(String to XName)
+  type: Operator
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  syntax:
+    content: >-
+      [System.CLSCompliant(false)]
+
+      public static System.Xml.Linq.XName op_Implicit (string expandedName);
+    parameters:
+    - id: expandedName
+      type: System.String
+      description: ''
+    return:
+      type: System.Xml.Linq.XName
+      description: ''
+  overload: System.Xml.Linq.XName.op_Implicit*
+  exceptions: []
+  attributes:
+  - type: System.CLSCompliantAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+- uid: System.Xml.Linq.XName.op_Inequality(System.Xml.Linq.XName,System.Xml.Linq.XName)
+  commentId: M:System.Xml.Linq.XName.op_Inequality(System.Xml.Linq.XName,System.Xml.Linq.XName)
+  id: op_Inequality(System.Xml.Linq.XName,System.Xml.Linq.XName)
+  parent: System.Xml.Linq.XName
+  langs:
+  - csharp
+  name: op_Inequality(XName, XName)
+  nameWithType: XName.op_Inequality(XName, XName)
+  fullName: XName.op_Inequality(XName, XName)
+  type: Operator
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Returns a value indicating whether two instances of <xref href="System.Xml.Linq.XName"></xref> are not equal.
+  remarks: "The operator overloads `==` and `!=` are included to enable comparisons between <xref:System.Xml.Linq.XName> and a string, such as`element.Name == \"SomeElementName\"`. The predefined reference equality operators in C# require one operand to be convertible to the type of the other through reference conversions only. These operators do not consider the implicit conversion from string to <xref:System.Xml.Linq.XName>.  \n  \n The equivalent method for this operator is ?qualifyHint=True&autoUpgrade=False"
+  example:
+  - "The following C# example compares an <xref:System.Xml.Linq.XName> object to a string, which invokes this operator.  \n  \n```csharp  \n  \n                XNamespace aw = \"http://www.adventure-works.com\";  \nXElement root = new XElement(aw + \"Root\", \"content\");  \n  \nConsole.WriteLine(root.Name != \"{http://www.adventure-works.com}Root\");  \n  \n// the following is the preferred idiom  \nConsole.WriteLine(root.Name != aw + \"Root\");  \n```  \n  \n```vb  \n  \n                Imports <xmlns=\"http://www.adventure-works.com\">  \n  \nModule Module1  \n    Sub Main()  \n        Dim root As XElement = <Root>content</Root>  \n        Console.WriteLine(root.Name <> \"{http://www.adventure-works.com}Root\")  \n  \n        ' the following is the preferred idiom  \n        Console.WriteLine(root.Name <> GetXmlNamespace() + \"Root\")  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \nFalse  \nFalse  \n```"
+  syntax:
+    content: public static bool op_Inequality (System.Xml.Linq.XName left, System.Xml.Linq.XName right);
+    parameters:
+    - id: left
+      type: System.Xml.Linq.XName
+      description: The first <xref href="System.Xml.Linq.XName"></xref> to compare.
+    - id: right
+      type: System.Xml.Linq.XName
+      description: The second <xref href="System.Xml.Linq.XName"></xref> to compare.
+    return:
+      type: System.Boolean
+      description: '`true` if <code>left</code> and <code>right</code> are not equal; otherwise `false`.'
+  overload: System.Xml.Linq.XName.op_Inequality*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XName.ToString
+  commentId: M:System.Xml.Linq.XName.ToString
+  id: ToString
+  parent: System.Xml.Linq.XName
+  langs:
+  - csharp
+  name: ToString()
+  nameWithType: XName.ToString()
+  fullName: XName.ToString()
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Returns the expanded XML name in the format <code>{namespace}localname</code>.
+  remarks: ''
+  example:
+  - "The following example calls <xref:System.Console.WriteLine%2A>, passing an <xref:System.Xml.Linq.XName>. This causes the <xref:System.Xml.Linq.XName.ToString%2A> method to be called.  \n  \n```csharp  \n  \n                XNamespace ns = \"http://www.adventure-works.com\";  \nXElement root = new XElement(ns + \"Root\", \"content\");  \nConsole.WriteLine(root.Name);  \nConsole.WriteLine(root.Name.LocalName);  \nConsole.WriteLine(root.Name.Namespace);  \n```  \n  \n```vb  \nImports <xmlns=\"http://www.adventure-works.com\">  \n  \nModule Module1  \n    Sub Main()  \n        Dim root As XElement = <Root>content</Root>  \n        Console.WriteLine(root.Name)  \n        Console.WriteLine(root.Name.LocalName)  \n        Console.WriteLine(root.Name.Namespace)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n{http://www.adventure-works.com}Root  \nRoot  \nhttp://www.adventure-works.com  \n```"
+  syntax:
+    content: public override string ToString ();
+    parameters: []
+    return:
+      type: System.String
+      description: A <xref href="System.String"></xref> that contains the expanded XML name in the format <code>{namespace}localname</code>.
+  overload: System.Xml.Linq.XName.ToString*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XName.System#IEquatable{System#Xml#Linq#XName}#Equals(System.Xml.Linq.XName)
+  commentId: M:System.Xml.Linq.XName.System#IEquatable<System#Xml#Linq#XName>#Equals(System.Xml.Linq.XName)
+  id: System#IEquatable{System#Xml#Linq#XName}#Equals(System.Xml.Linq.XName)
+  isEii: true
+  parent: System.Xml.Linq.XName
+  langs:
+  - csharp
+  name: IEquatable<XName>.Equals(XName)
+  nameWithType: XName.IEquatable<XName>.Equals(XName)
+  fullName: XName.IEquatable<XName>.Equals(XName)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Indicates whether the current <xref href="System.Xml.Linq.XName"></xref> is equal to the specified <xref href="System.Xml.Linq.XName"></xref>.
+  syntax:
+    content: bool IEquatable<XName>.Equals (System.Xml.Linq.XName other);
+    parameters:
+    - id: other
+      type: System.Xml.Linq.XName
+      description: The <xref href="System.Xml.Linq.XName"></xref> to compare with this <xref href="System.Xml.Linq.XName"></xref>.
+    return:
+      type: System.Boolean
+      description: '`true` if this <xref href="System.Xml.Linq.XName"></xref> is equal to the specified <xref href="System.Xml.Linq.XName"></xref>, otherwise `false`.'
+  overload: System.Xml.Linq.XName.System#IEquatable{System#Xml#Linq#XName}#Equals*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XName.System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  commentId: M:System.Xml.Linq.XName.System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  id: System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  isEii: true
+  parent: System.Xml.Linq.XName
+  langs:
+  - csharp
+  name: ISerializable.GetObjectData(SerializationInfo, StreamingContext)
+  nameWithType: XName.ISerializable.GetObjectData(SerializationInfo, StreamingContext)
+  fullName: XName.ISerializable.GetObjectData(SerializationInfo, StreamingContext)
+  type: Method
+  assemblies:
+  - System.Xml.Linq
+  - netstandard
+  - System.Xml.XDocument
+  namespace: System.Xml.Linq
+  summary: Populates a <xref href="System.Runtime.Serialization.SerializationInfo"></xref> with the data required to serialize the target object.
+  remarks: This method is used internally to serialize object graphs that contain LINQ to XML objects.
+  syntax:
+    content: void ISerializable.GetObjectData (System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+    parameters:
+    - id: info
+      type: System.Runtime.Serialization.SerializationInfo
+      description: The <xref href="System.Runtime.Serialization.SerializationInfo"></xref> to populate with data.
+    - id: context
+      type: System.Runtime.Serialization.StreamingContext
+      description: The destination (see <xref href="System.Runtime.Serialization.StreamingContext"></xref>) for this serialization.
+  overload: System.Xml.Linq.XName.System#Runtime#Serialization#ISerializable#GetObjectData*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Xml.Linq.XName.Equals(System.Object)
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: XName.Equals(Object)
+  fullName: XName.Equals(Object)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Xml.Linq.XName.Get(System.String)
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: Get(String)
+  nameWithType: XName.Get(String)
+  fullName: XName.Get(String)
+- uid: System.Xml.Linq.XName
+  parent: System.Xml.Linq
+  isExternal: false
+  name: XName
+  nameWithType: XName
+  fullName: System.Xml.Linq.XName
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Xml.Linq.XName.Get(System.String,System.String)
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: Get(String, String)
+  nameWithType: XName.Get(String, String)
+  fullName: XName.Get(String, String)
+- uid: System.Xml.Linq.XName.GetHashCode
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: XName.GetHashCode()
+  fullName: XName.GetHashCode()
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Xml.Linq.XName.LocalName
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: LocalName
+  nameWithType: XName.LocalName
+  fullName: XName.LocalName
+- uid: System.Xml.Linq.XName.Namespace
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: Namespace
+  nameWithType: XName.Namespace
+  fullName: XName.Namespace
+- uid: System.Xml.Linq.XNamespace
+  parent: System.Xml.Linq
+  isExternal: false
+  name: XNamespace
+  nameWithType: XNamespace
+  fullName: System.Xml.Linq.XNamespace
+- uid: System.Xml.Linq.XName.NamespaceName
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: NamespaceName
+  nameWithType: XName.NamespaceName
+  fullName: XName.NamespaceName
+- uid: System.Xml.Linq.XName.op_Equality(System.Xml.Linq.XName,System.Xml.Linq.XName)
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: op_Equality(XName, XName)
+  nameWithType: XName.op_Equality(XName, XName)
+  fullName: XName.op_Equality(XName, XName)
+- uid: System.Xml.Linq.XName.op_Implicit(System.String to System.Xml.Linq.XName)
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: op_Implicit(String to XName)
+  nameWithType: XName.op_Implicit(String to XName)
+  fullName: XName.op_Implicit(String to XName)
+- uid: System.Xml.Linq.XName.op_Inequality(System.Xml.Linq.XName,System.Xml.Linq.XName)
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: op_Inequality(XName, XName)
+  nameWithType: XName.op_Inequality(XName, XName)
+  fullName: XName.op_Inequality(XName, XName)
+- uid: System.Xml.Linq.XName.ToString
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: ToString()
+  nameWithType: XName.ToString()
+  fullName: XName.ToString()
+- uid: System.Xml.Linq.XName.System#IEquatable{System#Xml#Linq#XName}#Equals(System.Xml.Linq.XName)
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: IEquatable<XName>.Equals(XName)
+  nameWithType: XName.IEquatable<XName>.Equals(XName)
+  fullName: XName.IEquatable<XName>.Equals(XName)
+- uid: System.Xml.Linq.XName.System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: ISerializable.GetObjectData(SerializationInfo, StreamingContext)
+  nameWithType: XName.ISerializable.GetObjectData(SerializationInfo, StreamingContext)
+  fullName: XName.ISerializable.GetObjectData(SerializationInfo, StreamingContext)
+- uid: System.Runtime.Serialization.SerializationInfo
+  parent: System.Runtime.Serialization
+  isExternal: false
+  name: SerializationInfo
+  nameWithType: SerializationInfo
+  fullName: System.Runtime.Serialization.SerializationInfo
+- uid: System.Runtime.Serialization.StreamingContext
+  parent: System.Runtime.Serialization
+  isExternal: false
+  name: StreamingContext
+  nameWithType: StreamingContext
+  fullName: System.Runtime.Serialization.StreamingContext
+- uid: System.Xml.Linq.XName.Get*
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: Get
+  nameWithType: XName.Get
+  fullName: XName.Get
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+- uid: System.Xml.Linq.XName.Equals*
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: Equals
+  nameWithType: XName.Equals
+  fullName: XName.Equals
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+- uid: System.Xml.Linq.XName.GetHashCode*
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: GetHashCode
+  nameWithType: XName.GetHashCode
+  fullName: XName.GetHashCode
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+- uid: System.Xml.Linq.XName.LocalName*
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: LocalName
+  nameWithType: XName.LocalName
+  fullName: XName.LocalName
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+- uid: System.Xml.Linq.XName.Namespace*
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: Namespace
+  nameWithType: XName.Namespace
+  fullName: XName.Namespace
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+- uid: System.Xml.Linq.XName.NamespaceName*
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: NamespaceName
+  nameWithType: XName.NamespaceName
+  fullName: XName.NamespaceName
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+- uid: System.Xml.Linq.XName.op_Equality*
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: op_Equality
+  nameWithType: XName.op_Equality
+  fullName: XName.op_Equality
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+- uid: System.Xml.Linq.XName.op_Implicit*
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: op_Implicit
+  nameWithType: XName.op_Implicit
+  fullName: XName.op_Implicit
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+- uid: System.Xml.Linq.XName.op_Inequality*
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: op_Inequality
+  nameWithType: XName.op_Inequality
+  fullName: XName.op_Inequality
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+- uid: System.Xml.Linq.XName.ToString*
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: ToString
+  nameWithType: XName.ToString
+  fullName: XName.ToString
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+- uid: System.Xml.Linq.XName.System#IEquatable{System#Xml#Linq#XName}#Equals*
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: System.IEquatable<System.Xml.Linq.XName>.Equals
+  nameWithType: XName.System.IEquatable<System.Xml.Linq.XName>.Equals
+  fullName: XName.System.IEquatable<System.Xml.Linq.XName>.Equals
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+- uid: System.Xml.Linq.XName.System#Runtime#Serialization#ISerializable#GetObjectData*
+  parent: System.Xml.Linq.XName
+  isExternal: false
+  name: System.Runtime.Serialization.ISerializable.GetObjectData
+  nameWithType: XName.System.Runtime.Serialization.ISerializable.GetObjectData
+  fullName: XName.System.Runtime.Serialization.ISerializable.GetObjectData
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XName.xml
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.IEquatable`1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+- uid: System.IEquatable{System.Xml.Linq.XName}
+  parent: System
+  isExternal: false
+  name: IEquatable<XName>
+  nameWithType: IEquatable<XName>
+  fullName: System.IEquatable<System.Xml.Linq.XName>
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    nameWithType: IEquatable
+    fullName: System.IEquatable
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Xml.Linq.XName
+    name: XName
+    nameWithType: XName
+    fullName: System.Xml.Linq.XName
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Runtime.Serialization.ISerializable
+  parent: System.Runtime.Serialization
+  isExternal: false
+  name: ISerializable
+  nameWithType: ISerializable
+  fullName: System.Runtime.Serialization.ISerializable

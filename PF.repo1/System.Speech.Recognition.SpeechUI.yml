@@ -1,0 +1,197 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Speech.Recognition.SpeechUI
+  commentId: T:System.Speech.Recognition.SpeechUI
+  id: SpeechUI
+  children:
+  - System.Speech.Recognition.SpeechUI.SendTextFeedback(System.Speech.Recognition.RecognitionResult,System.String,System.Boolean)
+  langs:
+  - csharp
+  name: SpeechUI
+  nameWithType: SpeechUI
+  fullName: System.Speech.Recognition.SpeechUI
+  type: Class
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Provides text and status information on recognition operations to be displayed in the Speech platform user interface.
+  remarks: The members of the <xref:System.Speech.Recognition.SpeechUI> class can be used to indicate exact feedback to the end user through the speech recognition user interface. An application can return arbitrary text and success/failure information using this class.
+  example:
+  - "The following example is a handler for the <xref:System.Speech.Recognition.Grammar.SpeechRecognized> event. This event is used by a <xref:System.Speech.Recognition.Grammar> that is designed to handle password input in the form \"My password is …\".  \n  \n If a password is not present, or not valid, <xref:System.Speech.Recognition.SpeechUI.SendTextFeedback%2A> sends error information to the Speech platform user interface.  \n  \n```  \n  \ngrammar.SpeechRecognized +=   \ndelegate(object sender, SpeechRecognizedEventArgs eventArgs)   \n{  \n  SemanticValue semantics = eventArgs.Result.Semantics;  \n  RecognitionResult result=eventArgs.Result;  \n  \n  if (!semantics.ContainsKey(\"Password\"))   \n  {  \n    SpeechUI.SendTextFeedback(eventArgs.Result, \"No Password Provided\", false);  \n  }  \n  else   \n  {  \n    RecognizedAudio pwdAudio = result.GetAudioForWordRange(  \n                  result.Words[3],  \n                  result.Words[result.Words.Count - 1]);  \n    MemoryStream pwdMemoryStream = new MemoryStream();  \n    pwdAudio.WriteToAudioStream(pwdMemoryStream);  \n    if (!IsValidPwd(pwdMemoryStream))   \n    {  \n      string badPwd = System.IO.Path.GetTempPath() +   \n              \"BadPwd\" + (new Random()).Next().ToString() + \".wav\";  \n      FileStream waveStream = new FileStream(badPwd, FileMode.Create);  \n      pwdAudio.WriteToWaveStream(waveStream);  \n      waveStream.Flush();  \n      waveStream.Close();  \n      SpeechUI.SendTextFeedback(eventArgs.Result, \"Invalid Password\", false);  \n    }  \n  }  \n};  \n```"
+  syntax:
+    content: public class SpeechUI
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/SpeechUI.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.SpeechUI.SendTextFeedback(System.Speech.Recognition.RecognitionResult,System.String,System.Boolean)
+  commentId: M:System.Speech.Recognition.SpeechUI.SendTextFeedback(System.Speech.Recognition.RecognitionResult,System.String,System.Boolean)
+  id: SendTextFeedback(System.Speech.Recognition.RecognitionResult,System.String,System.Boolean)
+  parent: System.Speech.Recognition.SpeechUI
+  langs:
+  - csharp
+  name: SendTextFeedback(RecognitionResult, String, Boolean)
+  nameWithType: SpeechUI.SendTextFeedback(RecognitionResult, String, Boolean)
+  fullName: SpeechUI.SendTextFeedback(RecognitionResult, String, Boolean)
+  type: Method
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition
+  summary: Sends status and descriptive text to the Speech platform user interface about the status of a recognition operation.
+  remarks: "<xref:System.Speech.Recognition.SpeechUI.SendTextFeedback%2A> can be used to indicate that a recognition operation failed to meet certain criteria, even if the input was recognized.  \n  \n An example is the verification of security code information, where the input was fully recognized, but the verification information was wrong."
+  example:
+  - "The following example is a handler for a <xref:System.Speech.Recognition.Grammar.SpeechRecognized> event. This event is used by a <xref:System.Speech.Recognition.Grammar> that is designed to handle password input of the form, \"My password is …\".  \n  \n If a password is not present, or not valid, **SendTextFeedback** is used to send error information to the Speech platform user interface.  \n  \n```  \n  \ngrammar.SpeechRecognized +=  \ndelegate(object sender, SpeechRecognizedEventArgs eventArgs)   \n{  \n  SemanticValue semantics = eventArgs.Result.Semantics;  \n  RecognitionResult result=eventArgs.Result;  \n  \n  if (!semantics.ContainsKey(\"Password\"))   \n  {  \n    SpeechUI.SendTextFeedback(eventArgs.Result, \"No Password Provided\", false);  \n  }  \n  else  \n  {  \n    RecognizedAudio pwdAudio = result.GetAudioForWordRange(  \n              result.Words[3],  \n              result.Words[result.Words.Count - 1]);  \n    MemoryStream pwdMemoryStream = new MemoryStream();  \n    pwdAudio.WriteToAudioStream(pwdMemoryStream);  \n    if (!IsValidPwd(pwdMemoryStream))   \n    {  \n      string badPwd = System.IO.Path.GetTempPath() + \"BadPwd\" +   \n               (new Random()).Next().ToString() + \".wav\";  \n      FileStream waveStream = new FileStream(badPwd, FileMode.Create);  \n      pwdAudio.WriteToWaveStream(waveStream);  \n      waveStream.Flush();  \n      waveStream.Close();  \n      SpeechUI.SendTextFeedback(eventArgs.Result, \"Invalid Password\", false);  \n    }  \n  }  \n};  \n```"
+  syntax:
+    content: public static bool SendTextFeedback (System.Speech.Recognition.RecognitionResult result, string feedback, bool isSuccessfulAction);
+    parameters:
+    - id: result
+      type: System.Speech.Recognition.RecognitionResult
+      description: A valid <xref href="System.Speech.Recognition.RecognitionResult"></xref> instance.
+    - id: feedback
+      type: System.String
+      description: A <xref href="System.String"></xref> containing a comment about the recognition operation that produced the <xref href="System.Speech.Recognition.RecognitionResult"></xref><code>result</code>.
+    - id: isSuccessfulAction
+      type: System.Boolean
+      description: A `bool` indicating whether the application deemed the recognition operation a success.
+    return:
+      type: System.Boolean
+      description: '`true` if the information provided to the method (<code>Feedback</code>, and <code>isSuccessfulAction</code>) was successfully made available to the Speech platform user interface, and `false` if the operation failed.'
+  overload: System.Speech.Recognition.SpeechUI.SendTextFeedback*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/SpeechUI.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Speech.Recognition.SpeechUI.SendTextFeedback(System.Speech.Recognition.RecognitionResult,System.String,System.Boolean)
+  parent: System.Speech.Recognition.SpeechUI
+  isExternal: false
+  name: SendTextFeedback(RecognitionResult, String, Boolean)
+  nameWithType: SpeechUI.SendTextFeedback(RecognitionResult, String, Boolean)
+  fullName: SpeechUI.SendTextFeedback(RecognitionResult, String, Boolean)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Speech.Recognition.RecognitionResult
+  parent: System.Speech.Recognition
+  isExternal: false
+  name: RecognitionResult
+  nameWithType: RecognitionResult
+  fullName: System.Speech.Recognition.RecognitionResult
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Speech.Recognition.SpeechUI.SendTextFeedback*
+  parent: System.Speech.Recognition.SpeechUI
+  isExternal: false
+  name: SendTextFeedback
+  nameWithType: SpeechUI.SendTextFeedback
+  fullName: SpeechUI.SendTextFeedback
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition/SpeechUI.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

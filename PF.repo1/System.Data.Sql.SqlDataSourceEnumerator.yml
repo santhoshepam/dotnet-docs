@@ -1,0 +1,275 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Data.Sql.SqlDataSourceEnumerator
+  commentId: T:System.Data.Sql.SqlDataSourceEnumerator
+  id: SqlDataSourceEnumerator
+  children:
+  - System.Data.Sql.SqlDataSourceEnumerator.GetDataSources
+  - System.Data.Sql.SqlDataSourceEnumerator.Instance
+  langs:
+  - csharp
+  name: SqlDataSourceEnumerator
+  nameWithType: SqlDataSourceEnumerator
+  fullName: System.Data.Sql.SqlDataSourceEnumerator
+  type: Class
+  assemblies:
+  - System.Data
+  namespace: System.Data.Sql
+  summary: Provides a mechanism for enumerating all available instances of SQL Server within the local network.
+  remarks: Both SQL Server 2000 and SQL Server 2005 make it possible for applications to determine the existence of SQL Server instances within the current network. The <xref:System.Data.Sql.SqlDataSourceEnumerator> class exposes this information to the application developer, providing a <xref:System.Data.DataTable> containing information about all the available servers. This returned table contains a list of server instances that matches the list provided when a user attempts to create a new connection, and on the `Connection Properties` dialog box, expands the drop-down list containing all the available servers.
+  syntax:
+    content: 'public sealed class SqlDataSourceEnumerator : System.Data.Common.DbDataSourceEnumerator'
+  inheritance:
+  - System.Object
+  - System.Data.Common.DbDataSourceEnumerator
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Sql/SqlDataSourceEnumerator.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.Sql.SqlDataSourceEnumerator.GetDataSources
+  commentId: M:System.Data.Sql.SqlDataSourceEnumerator.GetDataSources
+  id: GetDataSources
+  parent: System.Data.Sql.SqlDataSourceEnumerator
+  langs:
+  - csharp
+  name: GetDataSources()
+  nameWithType: SqlDataSourceEnumerator.GetDataSources()
+  fullName: SqlDataSourceEnumerator.GetDataSources()
+  type: Method
+  assemblies:
+  - System.Data
+  namespace: System.Data.Sql
+  summary: Retrieves a <xref href="System.Data.DataTable"></xref> containing information about all visible SQL Server 2000 or SQL Server 2005 instances.
+  remarks: "The table returned by this method contains the following columns, all of which contain strings:  \n  \n|Column|Description|  \n|------------|-----------------|  \n|**ServerName**|Name of the server.|  \n|**InstanceName**|Name of the server instance. Blank if the server is running as the default instance.|  \n|**IsClustered**|Indicates whether the server is part of a cluster.|  \n|**Version**|Version of the server (8.00.x for SQL Server 2000, and 9.00.x for SQL Server 2005).|  \n  \n> [!NOTE]\n>  Due to the nature of the mechanism used by <xref:System.Data.Sql.SqlDataSourceEnumerator> to locate data sources on a network, the method will not always return a complete list of the available servers, and the list might not be the same on every call. If you plan to use this function to let users select a server from a list, make sure that you always also supply an option to type in a name that is not in the list, in case the server enumeration does not return all the available servers. In addition, this method may take a significant amount of time to execute, so be careful about calling it when performance is critical."
+  example:
+  - "The following console application retrieves information about all the visible SQL Server instances and displays the information in the console window.  \n  \n```vb  \nImports System.Data.Sql  \n  \nModule Module1  \n  Sub Main()  \n    ' Retrieve the enumerator instance and then the data.  \n    Dim instance As SqlDataSourceEnumerator = _  \n     SqlDataSourceEnumerator.Instance  \n    Dim table As System.Data.DataTable = instance.GetDataSources()  \n  \n    ' Display the contents of the table.  \n    DisplayData(table)  \n  \n    Console.WriteLine(\"Press any key to continue.\")  \n    Console.ReadKey()  \n  End Sub  \n  \n  Private Sub DisplayData(ByVal table As DataTable)  \n    For Each row As DataRow In table.Rows  \n      For Each col As DataColumn In table.Columns  \n        Console.WriteLine(\"{0} = {1}\", col.ColumnName, row(col))  \n      Next  \n      Console.WriteLine(\"============================\")  \n    Next  \n  End Sub  \nEnd Module  \n```  \n  \n```csharp  \nusing System.Data.Sql;  \n  \nclass Program  \n{  \n  static void Main()  \n  {  \n    // Retrieve the enumerator instance and then the data.  \n    SqlDataSourceEnumerator instance =  \n      SqlDataSourceEnumerator.Instance;  \n    System.Data.DataTable table = instance.GetDataSources();  \n  \n    // Display the contents of the table.  \n    DisplayData(table);  \n  \n    Console.WriteLine(\"Press any key to continue.\");  \n    Console.ReadKey();  \n  }  \n  \n  private static void DisplayData(System.Data.DataTable table)  \n  {  \n    foreach (System.Data.DataRow row in table.Rows)  \n    {  \n      foreach (System.Data.DataColumn col in table.Columns)  \n      {  \n        Console.WriteLine(\"{0} = {1}\", col.ColumnName, row[col]);  \n      }  \n      Console.WriteLine(\"============================\");  \n    }  \n  }  \n}  \n```"
+  syntax:
+    content: public override System.Data.DataTable GetDataSources ();
+    parameters: []
+    return:
+      type: System.Data.DataTable
+      description: Returns a <xref href="System.Data.DataTable"></xref> containing information about the visible SQL Server instances.
+  overload: System.Data.Sql.SqlDataSourceEnumerator.GetDataSources*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Sql/SqlDataSourceEnumerator.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.Sql.SqlDataSourceEnumerator.Instance
+  commentId: P:System.Data.Sql.SqlDataSourceEnumerator.Instance
+  id: Instance
+  parent: System.Data.Sql.SqlDataSourceEnumerator
+  langs:
+  - csharp
+  name: Instance
+  nameWithType: SqlDataSourceEnumerator.Instance
+  fullName: SqlDataSourceEnumerator.Instance
+  type: Property
+  assemblies:
+  - System.Data
+  namespace: System.Data.Sql
+  summary: Gets an instance of the <xref href="System.Data.Sql.SqlDataSourceEnumerator"></xref>, which can be used to retrieve information about available SQL Server instances.
+  remarks: The <xref:System.Data.Sql.SqlDataSourceEnumerator> class does not provide a constructor. Use the <xref:System.Data.Sql.SqlDataSourceEnumerator.Instance%2A> property to retrieve an instance of the class instead.
+  example:
+  - "The following console application displays a list of all the available SQL Server 2005 instances within the local network. This code uses the <xref:System.Data.DataTable.Select%2A> method to filter the rows in the table returned by the <xref:System.Data.Sql.SqlDataSourceEnumerator.GetDataSources%2A> method.  \n  \n```vb  \nImports System.Data.Sql  \n  \nModule Module1  \n  Sub Main()  \n    ' Retrieve the enumerator instance, and  \n    ' then retrieve the data sources.  \n    Dim instance As SqlDataSourceEnumerator = _  \n     SqlDataSourceEnumerator.Instance  \n    Dim table As System.Data.DataTable = instance.GetDataSources()  \n  \n    ' Filter the sources to just show SQL Server 2005 instances.  \n    Dim rows() As DataRow = table.Select(\"Version LIKE '9%'\")  \n    For Each row As DataRow In rows  \n      Console.WriteLine(row(\"ServerName\"))  \n    Next  \n    Console.WriteLine(\"Press any key to continue.\")  \n    Console.ReadKey()  \n  End Sub  \nEnd Module  \n```  \n  \n```csharp  \nusing System.Data.Sql;  \n  \nclass Program  \n{  \n  static void Main()  \n  {  \n    // Retrieve the enumerator instance, and  \n    // then retrieve the data sources.  \n    SqlDataSourceEnumerator instance =  \n      SqlDataSourceEnumerator.Instance;  \n    System.Data.DataTable table = instance.GetDataSources();  \n  \n    // Filter the sources to just show SQL Server 2005 instances.  \n    System.Data.DataRow[] rows = table.Select(\"Version LIKE '9%'\");  \n    foreach (System.Data.DataRow row in rows)  \n    {  \n      Console.WriteLine(row[\"ServerName\"]);  \n    }  \n    Console.WriteLine(\"Press any key to continue.\");  \n    Console.ReadKey();  \n  }  \n}  \n```"
+  syntax:
+    content: public static System.Data.Sql.SqlDataSourceEnumerator Instance { get; }
+    return:
+      type: System.Data.Sql.SqlDataSourceEnumerator
+      description: An instance of the <xref href="System.Data.Sql.SqlDataSourceEnumerator"></xref> used to retrieve information about available SQL Server instances.
+  overload: System.Data.Sql.SqlDataSourceEnumerator.Instance*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Sql/SqlDataSourceEnumerator.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+references:
+- uid: System.Data.Common.DbDataSourceEnumerator
+  parent: System.Data.Common
+  isExternal: false
+  name: DbDataSourceEnumerator
+  nameWithType: DbDataSourceEnumerator
+  fullName: System.Data.Common.DbDataSourceEnumerator
+- uid: System.Data.Sql.SqlDataSourceEnumerator.GetDataSources
+  parent: System.Data.Sql.SqlDataSourceEnumerator
+  isExternal: false
+  name: GetDataSources()
+  nameWithType: SqlDataSourceEnumerator.GetDataSources()
+  fullName: SqlDataSourceEnumerator.GetDataSources()
+- uid: System.Data.DataTable
+  parent: System.Data
+  isExternal: false
+  name: DataTable
+  nameWithType: DataTable
+  fullName: System.Data.DataTable
+- uid: System.Data.Sql.SqlDataSourceEnumerator.Instance
+  parent: System.Data.Sql.SqlDataSourceEnumerator
+  isExternal: false
+  name: Instance
+  nameWithType: SqlDataSourceEnumerator.Instance
+  fullName: SqlDataSourceEnumerator.Instance
+- uid: System.Data.Sql.SqlDataSourceEnumerator
+  parent: System.Data.Sql
+  isExternal: false
+  name: SqlDataSourceEnumerator
+  nameWithType: SqlDataSourceEnumerator
+  fullName: System.Data.Sql.SqlDataSourceEnumerator
+- uid: System.Data.Sql.SqlDataSourceEnumerator.GetDataSources*
+  parent: System.Data.Sql.SqlDataSourceEnumerator
+  isExternal: false
+  name: GetDataSources
+  nameWithType: SqlDataSourceEnumerator.GetDataSources
+  fullName: SqlDataSourceEnumerator.GetDataSources
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Sql/SqlDataSourceEnumerator.xml
+- uid: System.Data.Sql.SqlDataSourceEnumerator.Instance*
+  parent: System.Data.Sql.SqlDataSourceEnumerator
+  isExternal: false
+  name: Instance
+  nameWithType: SqlDataSourceEnumerator.Instance
+  fullName: SqlDataSourceEnumerator.Instance
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Sql/SqlDataSourceEnumerator.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

@@ -1,0 +1,402 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.ServiceModel.Description.IEndpointBehavior
+  commentId: T:System.ServiceModel.Description.IEndpointBehavior
+  id: IEndpointBehavior
+  children:
+  - System.ServiceModel.Description.IEndpointBehavior.AddBindingParameters(System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Channels.BindingParameterCollection)
+  - System.ServiceModel.Description.IEndpointBehavior.ApplyClientBehavior(System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.ClientRuntime)
+  - System.ServiceModel.Description.IEndpointBehavior.ApplyDispatchBehavior(System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.EndpointDispatcher)
+  - System.ServiceModel.Description.IEndpointBehavior.Validate(System.ServiceModel.Description.ServiceEndpoint)
+  langs:
+  - csharp
+  name: IEndpointBehavior
+  nameWithType: IEndpointBehavior
+  fullName: System.ServiceModel.Description.IEndpointBehavior
+  type: Interface
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Implements methods that can be used to extend run-time behavior for an endpoint in either a service or client application.
+  remarks: "Implement the <xref:System.ServiceModel.Description.IEndpointBehavior> interface to modify, examine, or extend some aspect of endpoint-wide execution at the application level for either client or service applications.  \n  \n-   Use the <xref:System.ServiceModel.Description.IEndpointBehavior.AddBindingParameters%2A> method to pass custom data at runtime to enable bindings to support custom behavior.  \n  \n-   Use the <xref:System.ServiceModel.Description.IEndpointBehavior.ApplyClientBehavior%2A> method to modify, examine, or insert extensions to an endpoint in a client application.  \n  \n-   Use the <xref:System.ServiceModel.Description.IEndpointBehavior.ApplyDispatchBehavior%2A> method to modify, examine, or insert extensions to endpoint-wide execution in a service application.  \n  \n-   Use the <xref:System.ServiceModel.Description.IEndpointBehavior.Validate%2A> method to confirm that a <xref:System.ServiceModel.Description.ServiceEndpoint> meets specific requirements. This can be used to ensure that an endpoint has a certain configuration setting enabled, supports a particular feature and other requirements.  \n  \n <xref:System.ServiceModel.Description.IEndpointBehavior> objects can make use of any of these methods, but often only one is important; in such cases, the unused methods can return, performing no action.  \n  \n> [!NOTE]\n>  All of the <xref:System.ServiceModel.Description.IEndpointBehavior> methods pass a <xref:System.ServiceModel.Description.ServiceEndpoint> object as a parameter. This parameter is for examination only; if you modify the <xref:System.ServiceModel.Description.ServiceEndpoint> object the execution behavior is undefined.  \n  \n <xref:System.ServiceModel.Description.IEndpointBehavior> objects are typically used to access the various properties of the <xref:System.ServiceModel.Dispatcher.DispatchRuntime?displayProperty=fullName>, <xref:System.ServiceModel.Dispatcher.DispatchOperation?displayProperty=fullName>, <xref:System.ServiceModel.Dispatcher.EndpointDispatcher?displayProperty=fullName>, and <xref:System.ServiceModel.Dispatcher.ChannelDispatcher?displayProperty=fullName> objects in a service application and the <xref:System.ServiceModel.Dispatcher.ClientRuntime?displayProperty=fullName> and <xref:System.ServiceModel.Dispatcher.ClientOperation?displayProperty=fullName> in a client application. In addition, you can access the properties of duplex clients and services using the <xref:System.ServiceModel.Dispatcher.ClientRuntime.CallbackDispatchRuntime%2A?displayProperty=fullName> and <xref:System.ServiceModel.Dispatcher.DispatchRuntime.CallbackClientRuntime%2A?displayProperty=fullName> properties, respectively.  \n  \n For a description of the various properties and customizations available, see [Extending ServiceHost and the Service Model Layer](~/docs/framework/wcf/extending/extending-servicehost-and-the-service-model-layer.md).  \n  \n Once a customization has been decided upon (and the customization interface implemented if necessary) and the <xref:System.ServiceModel.Description.IEndpointBehavior> has been decided is the appropriate scope of customization, the customization must be inserted into the [!INCLUDE[indigo1](~/includes/indigo1-md.md)] runtime by implementing <xref:System.ServiceModel.Description.IEndpointBehavior> and adding the endpoint behavior to the runtime.  \n  \n There are two ways to add the behavior to the runtime:  \n  \n-   Programmatically add the custom endpoint behavior to the <xref:System.ServiceModel.Description.ServiceEndpoint.Behaviors%2A> property prior to the opening of the service host (in a service application) or the channel factory (in a client application).  \n  \n-   Configure the behavior using an application configuration file. For details, see [\\&lt;behaviorExtensions\\&gt;](~/docs/framework/configure-apps/file-schema/wcf/behaviorextensions.md).  \n  \n To perform the service customization task for which it is intended, the <xref:System.ServiceModel.Description.IEndpointBehavior> object must be added to the <xref:System.ServiceModel.Description.ServiceEndpoint.Behaviors%2A?displayProperty=fullName> property prior to the construction of the service runtime, which occurs when <xref:System.ServiceModel.ICommunicationObject.Open%2A?displayProperty=fullName> method is called on <xref:System.ServiceModel.ServiceHost?displayProperty=fullName>. To perform a client customization task, the <xref:System.ServiceModel.Description.IEndpointBehavior> object must be added to the <xref:System.ServiceModel.Description.ServiceEndpoint.Behaviors%2A?displayProperty=fullName> property before calling the <xref:System.ServiceModel.ChannelFactory%601.CreateChannel%2A?displayProperty=fullName> method or the <xref:System.ServiceModel.ICommunicationObject.Open%2A?displayProperty=fullName> method on <xref:System.ServiceModel.ChannelFactory%601>."
+  example:
+  - "The following code example shows the implementation of an endpoint behavior that adds an <xref:System.ServiceModel.Dispatcher.IDispatchMessageInspector?displayProperty=fullName> object in a service application. In this case, the `EndpointBehaviorMessageInspector` class implements <xref:System.ServiceModel.Dispatcher.IDispatchMessageInspector?displayProperty=fullName> to inspect the inbound and outbound message, the <xref:System.ServiceModel.Description.IEndpointBehavior> interface to insert the inspector class into the inspection system for all endpoints to which the behavior applies, and the <xref:System.ServiceModel.Configuration.BehaviorExtensionElement?displayProperty=fullName> to enable the message inspector behavior using an application configuration file.  \n  \n The first step is to implement the message inspector.  \n  \n [!code-csharp[IEndpointBehavior#2](~/samples/snippets/csharp/VS_Snippets_CFX/iendpointbehavior/cs/iendpointbehaviormessageinspector.cs#2)]  \n  \n The next code example shows the use of the <xref:System.ServiceModel.Description.IEndpointBehavior.ApplyDispatchBehavior%2A> method to add the message inspector to the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.MessageInspectors%2A?displayProperty=fullName> property.  \n  \n [!code-csharp[IEndpointBehavior#4](~/samples/snippets/csharp/VS_Snippets_CFX/iendpointbehavior/cs/iendpointbehaviormessageinspector.cs#4)]  \n  \n The following code example shows the implementation of <xref:System.ServiceModel.Configuration.BehaviorExtensionElement?displayProperty=fullName> in order to enable use of the message inspector behavior from a configuration file.  \n  \n [!code-csharp[IEndpointBehavior#3](~/samples/snippets/csharp/VS_Snippets_CFX/iendpointbehavior/cs/iendpointbehaviormessageinspector.cs#3)]  \n  \n Finally, the following configuration file shows how the preceding example can be used from configuration.  \n  \n [!code-xml[IEndpointBehavior#5](~/samples/snippets/csharp/VS_Snippets_CFX/iendpointbehavior/cs/hostapplication.exe.config#5)]"
+  syntax:
+    content: public interface IEndpointBehavior
+  derivedClasses:
+  - System.ServiceModel.CallbackBehaviorAttribute
+  - System.ServiceModel.Description.CallbackDebugBehavior
+  - System.ServiceModel.Description.ClientCredentials
+  - System.ServiceModel.Description.ClientViaBehavior
+  - System.ServiceModel.Description.DispatcherSynchronizationBehavior
+  - System.ServiceModel.Description.MustUnderstandBehavior
+  - System.ServiceModel.Description.SynchronousReceiveBehavior
+  - System.ServiceModel.Description.TransactedBatchingBehavior
+  - System.ServiceModel.Description.WebHttpBehavior
+  - System.ServiceModel.Discovery.EndpointDiscoveryBehavior
+  - System.ServiceModel.Routing.SoapProcessingBehavior
+  implements: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IEndpointBehavior.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Description.IEndpointBehavior.AddBindingParameters(System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Channels.BindingParameterCollection)
+  commentId: M:System.ServiceModel.Description.IEndpointBehavior.AddBindingParameters(System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Channels.BindingParameterCollection)
+  id: AddBindingParameters(System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Description.IEndpointBehavior
+  langs:
+  - csharp
+  name: AddBindingParameters(ServiceEndpoint, BindingParameterCollection)
+  nameWithType: IEndpointBehavior.AddBindingParameters(ServiceEndpoint, BindingParameterCollection)
+  fullName: IEndpointBehavior.AddBindingParameters(ServiceEndpoint, BindingParameterCollection)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Implement to pass data at runtime to bindings to support custom behavior.
+  remarks: Implement the <xref:System.ServiceModel.Description.IEndpointBehavior.AddBindingParameters%2A> method to provide binding elements with the extra objects they require to support the endpoint behavior. When binding parameters are added here the binding can locate these objects when the channel listener or channel factory is created. Typically, you implement the <xref:System.ServiceModel.Description.IEndpointBehavior.AddBindingParameters%2A> method to pass information about the endpoint to a custom binding element so that it can build a supporting channel correctly. Return no value if no modifications are required.
+  syntax:
+    content: public void AddBindingParameters (System.ServiceModel.Description.ServiceEndpoint endpoint, System.ServiceModel.Channels.BindingParameterCollection bindingParameters);
+    parameters:
+    - id: endpoint
+      type: System.ServiceModel.Description.ServiceEndpoint
+      description: The endpoint to modify.
+    - id: bindingParameters
+      type: System.ServiceModel.Channels.BindingParameterCollection
+      description: The objects that binding elements require to support the behavior.
+  overload: System.ServiceModel.Description.IEndpointBehavior.AddBindingParameters*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IEndpointBehavior.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Description.IEndpointBehavior.ApplyClientBehavior(System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.ClientRuntime)
+  commentId: M:System.ServiceModel.Description.IEndpointBehavior.ApplyClientBehavior(System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.ClientRuntime)
+  id: ApplyClientBehavior(System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.ClientRuntime)
+  parent: System.ServiceModel.Description.IEndpointBehavior
+  langs:
+  - csharp
+  name: ApplyClientBehavior(ServiceEndpoint, ClientRuntime)
+  nameWithType: IEndpointBehavior.ApplyClientBehavior(ServiceEndpoint, ClientRuntime)
+  fullName: IEndpointBehavior.ApplyClientBehavior(ServiceEndpoint, ClientRuntime)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Implements a modification or extension of the client across an endpoint.
+  remarks: "Implement the <xref:System.ServiceModel.Description.IEndpointBehavior.ApplyClientBehavior%2A> method to view, modify, or add custom extension to the client runtime across all messages used with an endpoint or for specific operations. For details about what customizations you can do with a client run-time object, see <xref:System.ServiceModel.Dispatcher.ClientRuntime> and <xref:System.ServiceModel.Dispatcher.ClientOperation>.  \n  \n It is recommended that the <xref:System.ServiceModel.Description.IEndpointBehavior.ApplyClientBehavior%2A> method throw a <xref:System.NotImplementedException> if the behavior is only intended for use in a service application.  \n  \n Because other behaviors may have already added or removed some operations from the runtime there is no guarantee that there are the same number of operations in the description as there are <xref:System.ServiceModel.Dispatcher.DispatchOperation> objects in the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.Operations%2A> property."
+  syntax:
+    content: public void ApplyClientBehavior (System.ServiceModel.Description.ServiceEndpoint endpoint, System.ServiceModel.Dispatcher.ClientRuntime clientRuntime);
+    parameters:
+    - id: endpoint
+      type: System.ServiceModel.Description.ServiceEndpoint
+      description: The endpoint that is to be customized.
+    - id: clientRuntime
+      type: System.ServiceModel.Dispatcher.ClientRuntime
+      description: The client runtime to be customized.
+  overload: System.ServiceModel.Description.IEndpointBehavior.ApplyClientBehavior*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IEndpointBehavior.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Description.IEndpointBehavior.ApplyDispatchBehavior(System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.EndpointDispatcher)
+  commentId: M:System.ServiceModel.Description.IEndpointBehavior.ApplyDispatchBehavior(System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.EndpointDispatcher)
+  id: ApplyDispatchBehavior(System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.EndpointDispatcher)
+  parent: System.ServiceModel.Description.IEndpointBehavior
+  langs:
+  - csharp
+  name: ApplyDispatchBehavior(ServiceEndpoint, EndpointDispatcher)
+  nameWithType: IEndpointBehavior.ApplyDispatchBehavior(ServiceEndpoint, EndpointDispatcher)
+  fullName: IEndpointBehavior.ApplyDispatchBehavior(ServiceEndpoint, EndpointDispatcher)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Implements a modification or extension of the service across an endpoint.
+  remarks: "Implement the <xref:System.ServiceModel.Description.IEndpointBehavior.ApplyDispatchBehavior%2A> method to view, modify, or extend the service runtime across all messages or for specific operations in an endpoint. For details about what customizations you can do in a service application, see <xref:System.ServiceModel.Dispatcher.DispatchRuntime?displayProperty=fullName> and <xref:System.ServiceModel.Dispatcher.DispatchOperation?displayProperty=fullName>.  \n  \n It is recommended that the <xref:System.ServiceModel.Description.IEndpointBehavior.ApplyDispatchBehavior%2A> method throw a <xref:System.NotImplementedException> exception if the behavior is only intended for use in a client application.  \n  \n Note that there can be two operations with the same name in the description when using a callback contract (one operation in each direction). If you are iterating through operations, you must correlate the message direction between the endpoint <xref:System.ServiceModel.Dispatcher.DispatchRuntime?displayProperty=fullName> and what is returned by the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.CallbackClientRuntime%2A?displayProperty=fullName> property.  \n  \n In addition, because other behaviors may have already added or removed some operations from the runtime, there is no guarantee that there are the same number of operations in description as there are <xref:System.ServiceModel.Dispatcher.DispatchOperation?displayProperty=fullName> objects in the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.Operations%2A?displayProperty=fullName> property."
+  example:
+  - "The following code example shows the implementation of an endpoint behavior that adds an <xref:System.ServiceModel.Dispatcher.IDispatchMessageInspector?displayProperty=fullName> object in a service application. In this case, the `EndpointBehaviorMessageInspector` class implements <xref:System.ServiceModel.Dispatcher.IDispatchMessageInspector?displayProperty=fullName> to inspect the inbound and outbound message, the <xref:System.ServiceModel.Description.IEndpointBehavior> interface to insert the inspector class into the inspection system for all endpoints to which the behavior applies, and the <xref:System.ServiceModel.Configuration.BehaviorExtensionElement?displayProperty=fullName> to enable the message inspector behavior using an application configuration file.  \n  \n The first step is to implement the message inspector.  \n  \n [!code-csharp[IEndpointBehavior#2](~/samples/snippets/csharp/VS_Snippets_CFX/iendpointbehavior/cs/iendpointbehaviormessageinspector.cs#2)]  \n  \n The next code example shows the use of the <xref:System.ServiceModel.Description.IEndpointBehavior.ApplyDispatchBehavior%2A> method to add the message inspector to the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.MessageInspectors%2A?displayProperty=fullName> property.  \n  \n [!code-csharp[IEndpointBehavior#4](~/samples/snippets/csharp/VS_Snippets_CFX/iendpointbehavior/cs/iendpointbehaviormessageinspector.cs#4)]  \n  \n The following code example shows the implementation of <xref:System.ServiceModel.Configuration.BehaviorExtensionElement?displayProperty=fullName> in order to enable use of the message inspector behavior from a configuration file.  \n  \n [!code-csharp[IEndpointBehavior#3](~/samples/snippets/csharp/VS_Snippets_CFX/iendpointbehavior/cs/iendpointbehaviormessageinspector.cs#3)]  \n  \n Finally, the following configuration file shows how the preceding example can be used from configuration.  \n  \n [!code-xml[IEndpointBehavior#5](~/samples/snippets/csharp/VS_Snippets_CFX/iendpointbehavior/cs/hostapplication.exe.config#5)]"
+  syntax:
+    content: public void ApplyDispatchBehavior (System.ServiceModel.Description.ServiceEndpoint endpoint, System.ServiceModel.Dispatcher.EndpointDispatcher endpointDispatcher);
+    parameters:
+    - id: endpoint
+      type: System.ServiceModel.Description.ServiceEndpoint
+      description: The endpoint that exposes the contract.
+    - id: endpointDispatcher
+      type: System.ServiceModel.Dispatcher.EndpointDispatcher
+      description: The endpoint dispatcher to be modified or extended.
+  overload: System.ServiceModel.Description.IEndpointBehavior.ApplyDispatchBehavior*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IEndpointBehavior.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Description.IEndpointBehavior.Validate(System.ServiceModel.Description.ServiceEndpoint)
+  commentId: M:System.ServiceModel.Description.IEndpointBehavior.Validate(System.ServiceModel.Description.ServiceEndpoint)
+  id: Validate(System.ServiceModel.Description.ServiceEndpoint)
+  parent: System.ServiceModel.Description.IEndpointBehavior
+  langs:
+  - csharp
+  name: Validate(ServiceEndpoint)
+  nameWithType: IEndpointBehavior.Validate(ServiceEndpoint)
+  fullName: IEndpointBehavior.Validate(ServiceEndpoint)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Implement to confirm that the endpoint meets some intended criteria.
+  remarks: "Implement the <xref:System.ServiceModel.Description.IEndpointBehavior.Validate%2A> method to examine the structure to confirm any set of criteria. It is not necessary to perform any customizations in <xref:System.ServiceModel.Description.IEndpointBehavior.ApplyClientBehavior%2A> or <xref:System.ServiceModel.Description.IEndpointBehavior.ApplyDispatchBehavior%2A> to make use of this method. If the endpoint passes validation, return; otherwise, throw an exception.  \n  \n For example, the <xref:System.ServiceModel.Description.IEndpointBehavior.Validate%2A> method can be use to ensure that all endpoints use an approved corporate binding."
+  syntax:
+    content: public void Validate (System.ServiceModel.Description.ServiceEndpoint endpoint);
+    parameters:
+    - id: endpoint
+      type: System.ServiceModel.Description.ServiceEndpoint
+      description: The endpoint to validate.
+  overload: System.ServiceModel.Description.IEndpointBehavior.Validate*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IEndpointBehavior.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+references:
+- uid: System.ServiceModel.Description.IEndpointBehavior.AddBindingParameters(System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Description.IEndpointBehavior
+  isExternal: false
+  name: AddBindingParameters(ServiceEndpoint, BindingParameterCollection)
+  nameWithType: IEndpointBehavior.AddBindingParameters(ServiceEndpoint, BindingParameterCollection)
+  fullName: IEndpointBehavior.AddBindingParameters(ServiceEndpoint, BindingParameterCollection)
+- uid: System.ServiceModel.Description.ServiceEndpoint
+  parent: System.ServiceModel.Description
+  isExternal: false
+  name: ServiceEndpoint
+  nameWithType: ServiceEndpoint
+  fullName: System.ServiceModel.Description.ServiceEndpoint
+- uid: System.ServiceModel.Channels.BindingParameterCollection
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: BindingParameterCollection
+  nameWithType: BindingParameterCollection
+  fullName: System.ServiceModel.Channels.BindingParameterCollection
+- uid: System.ServiceModel.Description.IEndpointBehavior.ApplyClientBehavior(System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.ClientRuntime)
+  parent: System.ServiceModel.Description.IEndpointBehavior
+  isExternal: false
+  name: ApplyClientBehavior(ServiceEndpoint, ClientRuntime)
+  nameWithType: IEndpointBehavior.ApplyClientBehavior(ServiceEndpoint, ClientRuntime)
+  fullName: IEndpointBehavior.ApplyClientBehavior(ServiceEndpoint, ClientRuntime)
+- uid: System.ServiceModel.Dispatcher.ClientRuntime
+  parent: System.ServiceModel.Dispatcher
+  isExternal: false
+  name: ClientRuntime
+  nameWithType: ClientRuntime
+  fullName: System.ServiceModel.Dispatcher.ClientRuntime
+- uid: System.ServiceModel.Description.IEndpointBehavior.ApplyDispatchBehavior(System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.EndpointDispatcher)
+  parent: System.ServiceModel.Description.IEndpointBehavior
+  isExternal: false
+  name: ApplyDispatchBehavior(ServiceEndpoint, EndpointDispatcher)
+  nameWithType: IEndpointBehavior.ApplyDispatchBehavior(ServiceEndpoint, EndpointDispatcher)
+  fullName: IEndpointBehavior.ApplyDispatchBehavior(ServiceEndpoint, EndpointDispatcher)
+- uid: System.ServiceModel.Dispatcher.EndpointDispatcher
+  parent: System.ServiceModel.Dispatcher
+  isExternal: false
+  name: EndpointDispatcher
+  nameWithType: EndpointDispatcher
+  fullName: System.ServiceModel.Dispatcher.EndpointDispatcher
+- uid: System.ServiceModel.Description.IEndpointBehavior.Validate(System.ServiceModel.Description.ServiceEndpoint)
+  parent: System.ServiceModel.Description.IEndpointBehavior
+  isExternal: false
+  name: Validate(ServiceEndpoint)
+  nameWithType: IEndpointBehavior.Validate(ServiceEndpoint)
+  fullName: IEndpointBehavior.Validate(ServiceEndpoint)
+- uid: System.ServiceModel.Description.IEndpointBehavior.AddBindingParameters*
+  parent: System.ServiceModel.Description.IEndpointBehavior
+  isExternal: false
+  name: AddBindingParameters
+  nameWithType: IEndpointBehavior.AddBindingParameters
+  fullName: IEndpointBehavior.AddBindingParameters
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IEndpointBehavior.xml
+- uid: System.ServiceModel.Description.IEndpointBehavior.ApplyClientBehavior*
+  parent: System.ServiceModel.Description.IEndpointBehavior
+  isExternal: false
+  name: ApplyClientBehavior
+  nameWithType: IEndpointBehavior.ApplyClientBehavior
+  fullName: IEndpointBehavior.ApplyClientBehavior
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IEndpointBehavior.xml
+- uid: System.ServiceModel.Description.IEndpointBehavior.ApplyDispatchBehavior*
+  parent: System.ServiceModel.Description.IEndpointBehavior
+  isExternal: false
+  name: ApplyDispatchBehavior
+  nameWithType: IEndpointBehavior.ApplyDispatchBehavior
+  fullName: IEndpointBehavior.ApplyDispatchBehavior
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IEndpointBehavior.xml
+- uid: System.ServiceModel.Description.IEndpointBehavior.Validate*
+  parent: System.ServiceModel.Description.IEndpointBehavior
+  isExternal: false
+  name: Validate
+  nameWithType: IEndpointBehavior.Validate
+  fullName: IEndpointBehavior.Validate
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IEndpointBehavior.xml

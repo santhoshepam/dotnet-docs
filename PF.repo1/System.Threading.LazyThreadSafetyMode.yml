@@ -1,0 +1,310 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Threading.LazyThreadSafetyMode
+  commentId: T:System.Threading.LazyThreadSafetyMode
+  id: LazyThreadSafetyMode
+  children:
+  - System.Threading.LazyThreadSafetyMode.ExecutionAndPublication
+  - System.Threading.LazyThreadSafetyMode.None
+  - System.Threading.LazyThreadSafetyMode.PublicationOnly
+  langs:
+  - csharp
+  name: LazyThreadSafetyMode
+  nameWithType: LazyThreadSafetyMode
+  fullName: System.Threading.LazyThreadSafetyMode
+  type: Enum
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Specifies how a <xref href="System.Lazy`1"></xref> instance synchronizes access among multiple threads.
+  remarks: "Use this enumeration to specify the `mode` parameter of <xref:System.Lazy%601> constructors. The effects of all constructors on thread synchronization can be described in terms of this enumeration, whether or not they have `mode` parameters.  \n  \n A <xref:System.Lazy%601> instance is initialized either by a user-specified initialization method or by the default constructor for `T`. The initialization method is specified by the `valueFactory` parameter of a <xref:System.Lazy%601> constructor. The method returns an instance of `T`, which is the type that is lazily instantiated by the instance of <xref:System.Lazy%601>. If a constructor does not have a `valueFactory` parameter, the default constructor for `T` is used to initialize the <xref:System.Lazy%601> instance. In either case, initialization occurs the first time you call the <xref:System.Lazy%601.Value%2A?displayProperty=fullName> property.  \n  \n In addition to specifying the thread safety of a <xref:System.Lazy%601> instance, this enumeration affects exception caching. When exceptions are cached for a <xref:System.Lazy%601> instance, you get only one chance to initialize the instance. If an exception is thrown the first time you call the <xref:System.Lazy%601.Value%2A?displayProperty=fullName> property, that exception is cached and rethrown on all subsequent calls to the <xref:System.Lazy%601.Value%2A?displayProperty=fullName> property. The advantage of caching exceptions is that any two threads always get the same result, even when errors occur.  \n  \n When you specify the PublicationOnly mode, exceptions are never cached. When you specify None or ExecutionAndPublication, caching depends on whether you specify an initialization method or allow the default constructor for `T` to be used. Specifying an initialization method enables exception caching for these two modes. The initialization method can be very simple. For example, it might call the default constructor for `T`: `new Lazy<Contents>(() => new Contents(), mode)` in C#, or `New Lazy(Of Contents)(Function() New Contents())` in Visual Basic. If you use a constructor that does not specify an initialization method, exceptions that are thrown by the default constructor for `T` are not cached. The following table summarizes exception caching behavior.  \n  \n|Mode|Using initialization method|Using default constructor for `T`|  \n|----------|---------------------------------|---------------------------------------|  \n|None|Cached|Not cached|  \n|PublicationOnly|Not cached|Not cached|  \n|ExecutionAndPublication|Cached|Not cached|"
+  syntax:
+    content: public enum LazyThreadSafetyMode
+  inheritance:
+  - System.Object
+  - System.ValueType
+  - System.Enum
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/LazyThreadSafetyMode.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.LazyThreadSafetyMode.ExecutionAndPublication
+  commentId: F:System.Threading.LazyThreadSafetyMode.ExecutionAndPublication
+  id: ExecutionAndPublication
+  parent: System.Threading.LazyThreadSafetyMode
+  langs:
+  - csharp
+  name: ExecutionAndPublication
+  nameWithType: LazyThreadSafetyMode.ExecutionAndPublication
+  fullName: LazyThreadSafetyMode.ExecutionAndPublication
+  type: Field
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Locks are used to ensure that only a single thread can initialize a <xref href="System.Lazy`1"></xref> instance in a thread-safe manner. If the initialization method (or the default constructor, if there is no initialization method) uses locks internally, deadlocks can occur. If you use a <xref href="System.Lazy`1"></xref> constructor that specifies an initialization method (<code>valueFactory</code> parameter), and if that initialization method throws an exception (or fails to handle an exception) the first time you call the <xref href="System.Lazy`1.Value"></xref> property, then the exception is cached and thrown again on subsequent calls to the <xref href="System.Lazy`1.Value"></xref> property. If you use a <xref href="System.Lazy`1"></xref> constructor that does not specify an initialization method, exceptions that are thrown by the default constructor for <code>T</code> are not cached. In that case, a subsequent call to the <xref href="System.Lazy`1.Value"></xref> property might successfully initialize the <xref href="System.Lazy`1"></xref> instance. If the initialization method recursively accesses the <xref href="System.Lazy`1.Value"></xref> property of the <xref href="System.Lazy`1"></xref> instance, an <xref href="System.InvalidOperationException"></xref> is thrown.
+  syntax:
+    content: ExecutionAndPublication
+    return:
+      type: System.Threading.LazyThreadSafetyMode
+      description: ''
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/LazyThreadSafetyMode.xml
+- uid: System.Threading.LazyThreadSafetyMode.None
+  commentId: F:System.Threading.LazyThreadSafetyMode.None
+  id: None
+  parent: System.Threading.LazyThreadSafetyMode
+  langs:
+  - csharp
+  name: None
+  nameWithType: LazyThreadSafetyMode.None
+  fullName: LazyThreadSafetyMode.None
+  type: Field
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: The <xref href="System.Lazy`1"></xref> instance is not thread safe; if the instance is accessed from multiple threads, its behavior is undefined. Use this mode only when high performance is crucial and the <xref href="System.Lazy`1"></xref> instance is guaranteed never to be initialized from more than one thread. If you use a <xref href="System.Lazy`1"></xref> constructor that specifies an initialization method (<code>valueFactory</code> parameter), and if that initialization method throws an exception (or fails to handle an exception) the first time you call the <xref href="System.Lazy`1.Value"></xref> property, then the exception is cached and thrown again on subsequent calls to the <xref href="System.Lazy`1.Value"></xref> property. If you use a <xref href="System.Lazy`1"></xref> constructor that does not specify an initialization method, exceptions that are thrown by the default constructor for <code>T</code> are not cached. In that case, a subsequent call to the <xref href="System.Lazy`1.Value"></xref> property might successfully initialize the <xref href="System.Lazy`1"></xref> instance. If the initialization method recursively accesses the <xref href="System.Lazy`1.Value"></xref> property of the <xref href="System.Lazy`1"></xref> instance, an <xref href="System.InvalidOperationException"></xref> is thrown.
+  syntax:
+    content: None
+    return:
+      type: System.Threading.LazyThreadSafetyMode
+      description: ''
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/LazyThreadSafetyMode.xml
+- uid: System.Threading.LazyThreadSafetyMode.PublicationOnly
+  commentId: F:System.Threading.LazyThreadSafetyMode.PublicationOnly
+  id: PublicationOnly
+  parent: System.Threading.LazyThreadSafetyMode
+  langs:
+  - csharp
+  name: PublicationOnly
+  nameWithType: LazyThreadSafetyMode.PublicationOnly
+  fullName: LazyThreadSafetyMode.PublicationOnly
+  type: Field
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: When multiple threads try to initialize a <xref href="System.Lazy`1"></xref> instance simultaneously, all threads are allowed to run the initialization method (or the default constructor, if there is no initialization method). The first thread to complete initialization sets the value of the <xref href="System.Lazy`1"></xref> instance. That value is returned to any other threads that were simultaneously running the initialization method, unless the initialization method throws exceptions on those threads. Any instances of <code>T</code> that were created by the competing threads are discarded. If the initialization method throws an exception on any thread, the exception is propagated out of the <xref href="System.Lazy`1.Value"></xref> property on that thread. The exception is not cached. The value of the <xref href="System.Lazy`1.IsValueCreated"></xref> property remains `false`, and subsequent calls to the <xref href="System.Lazy`1.Value"></xref> property, either by the thread where the exception was thrown or by other threads, cause the initialization method to run again. If the initialization method recursively accesses the <xref href="System.Lazy`1.Value"></xref> property of the <xref href="System.Lazy`1"></xref> instance, no exception is thrown.
+  syntax:
+    content: PublicationOnly
+    return:
+      type: System.Threading.LazyThreadSafetyMode
+      description: ''
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/LazyThreadSafetyMode.xml
+references:
+- uid: System.Enum
+  parent: System
+  isExternal: false
+  name: Enum
+  nameWithType: Enum
+  fullName: System.Enum
+- uid: System.Threading.LazyThreadSafetyMode.ExecutionAndPublication
+  parent: System.Threading.LazyThreadSafetyMode
+  isExternal: false
+  name: ExecutionAndPublication
+  nameWithType: LazyThreadSafetyMode.ExecutionAndPublication
+  fullName: LazyThreadSafetyMode.ExecutionAndPublication
+- uid: System.Threading.LazyThreadSafetyMode
+  parent: System.Threading
+  isExternal: false
+  name: LazyThreadSafetyMode
+  nameWithType: LazyThreadSafetyMode
+  fullName: System.Threading.LazyThreadSafetyMode
+- uid: System.Threading.LazyThreadSafetyMode.None
+  parent: System.Threading.LazyThreadSafetyMode
+  isExternal: false
+  name: None
+  nameWithType: LazyThreadSafetyMode.None
+  fullName: LazyThreadSafetyMode.None
+- uid: System.Threading.LazyThreadSafetyMode.PublicationOnly
+  parent: System.Threading.LazyThreadSafetyMode
+  isExternal: false
+  name: PublicationOnly
+  nameWithType: LazyThreadSafetyMode.PublicationOnly
+  fullName: LazyThreadSafetyMode.PublicationOnly

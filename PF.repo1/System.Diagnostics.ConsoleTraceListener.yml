@@ -1,0 +1,515 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Diagnostics.ConsoleTraceListener
+  commentId: T:System.Diagnostics.ConsoleTraceListener
+  id: ConsoleTraceListener
+  children:
+  - System.Diagnostics.ConsoleTraceListener.#ctor
+  - System.Diagnostics.ConsoleTraceListener.#ctor(System.Boolean)
+  - System.Diagnostics.ConsoleTraceListener.Close
+  langs:
+  - csharp
+  name: ConsoleTraceListener
+  nameWithType: ConsoleTraceListener
+  fullName: System.Diagnostics.ConsoleTraceListener
+  type: Class
+  assemblies:
+  - System
+  namespace: System.Diagnostics
+  summary: Directs tracing or debugging output to either the standard output or the standard error stream.
+  remarks: "Use the <xref:System.Diagnostics.ConsoleTraceListener> class to write trace and debugging messages to the console. You can initialize a <xref:System.Diagnostics.ConsoleTraceListener> object to write trace messages to the <xref:System.Console.Out%2A?displayProperty=fullName> stream or to the <xref:System.Console.Error%2A?displayProperty=fullName> stream.  \n  \n> [!IMPORTANT]\n>  <xref:System.IDisposable> interface. When you have finished using the type, you should dispose of it either directly or indirectly. To dispose of the type directly, call its <xref:System.IDisposable.Dispose%2A> method in a`try`/`catch` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the \"Using an Object that Implements IDisposable\" section in the <xref:System.IDisposable> interface topic.  \n  \n When trace and debugging output is enabled, the <xref:System.Diagnostics.ConsoleTraceListener> messages are written to the specified <xref:System.Console?displayProperty=fullName> stream, which is similar to the way messages are written with the <xref:System.Console.Write%2A?displayProperty=fullName> or <xref:System.Console.WriteLine%2A?displayProperty=fullName> methods. In a console application, the <xref:System.Console?displayProperty=fullName> output and error streams write messages to the existing console window, or you can redirect the streams to write to a <xref:System.IO.TextWriter?displayProperty=fullName> instance.  \n  \n> [!NOTE]\n>  If the console does not exist, as in a Windows-based application, messages written to the console are not displayed.  \n  \n Add a <xref:System.Diagnostics.ConsoleTraceListener> object to the appropriate <xref:System.Diagnostics.Trace.Listeners%2A> collection if you want messages written through <xref:System.Diagnostics.Trace>, <xref:System.Diagnostics.TraceSource>, or <xref:System.Diagnostics.Debug> to be written to the console. In addition, you can write messages directly to the console using the <xref:System.Diagnostics.Trace.Write%2A?displayProperty=fullName> or <xref:System.Diagnostics.Trace.WriteLine%2A?displayProperty=fullName> methods.  \n  \n> [!NOTE]\n>  The <xref:System.Diagnostics.Debug> and <xref:System.Diagnostics.Trace> classes share the same <xref:System.Diagnostics.TraceListenerCollection> collection, accessed through their respective `Listeners` properties. If you add a <xref:System.Diagnostics.ConsoleTraceListener> object to the collection using one of these classes, the other class automatically uses the same listener.  \n  \n Most compilers enable trace and debug output through conditional compilation flags. If you do not enable tracing or debugging, the messages written through the <xref:System.Diagnostics.Debug?displayProperty=fullName> and <xref:System.Diagnostics.Trace?displayProperty=fullName> classes are effectively ignored. The syntax to enable trace and debug output is compiler specific; if you use compilers other than C# or Visual Basic, refer to the documentation for your compiler.  \n  \n-   To enable debugging in C#, add the **/d:DEBUG**flag to the compiler command line when you compile your code, or you can add **#define DEBUG** to the top of your file. In Visual Basic, add the **/d:DEBUG=True** flag to the compiler command line.  \n  \n-   To enable tracing in C#, add the **/d:TRACE** flag to the compiler command line when you compile your code, or add **#define TRACE** to the top of your file. In Visual Basic, add the **/d:TRACE=True** flag to the compiler command line.  \n  \n You can add a <xref:System.Diagnostics.ConsoleTraceListener> object to the <xref:System.Diagnostics.Trace.Listeners%2A> collection in your code, or you can add a <xref:System.Diagnostics.ConsoleTraceListener> object to the <xref:System.Diagnostics.Trace.Listeners%2A> collection through the application configuration file. Add the <xref:System.Diagnostics.ConsoleTraceListener> object in your code to write messages for a specific code section or execution path. Add the <xref:System.Diagnostics.ConsoleTraceListener> object in your application configuration file to direct all trace and debug messages to the console while the application executes.  \n  \n To write trace and debug messages to the console for a specific section of code, initialize a <xref:System.Diagnostics.ConsoleTraceListener> object and add it to the <xref:System.Diagnostics.Trace.Listeners%2A> collection. Instrument the section of code that contains messages using the <xref:System.Diagnostics.Trace> or <xref:System.Diagnostics.Debug> classes. At the end of the code section, remove the <xref:System.Diagnostics.ConsoleTraceListener> object from the <xref:System.Diagnostics.Trace.Listeners%2A> collection, and call the <xref:System.Diagnostics.TextWriterTraceListener.Close%2A> method on the <xref:System.Diagnostics.ConsoleTraceListener>.  \n  \n To direct all trace and debug messages to the console while the application executes, add a <xref:System.Diagnostics.ConsoleTraceListener> object to the application configuration file. Edit the configuration file that corresponds to the name of your application, or the app.config file in a [!INCLUDE[vsprvslong](~/includes/vsprvslong-md.md)] project. In this file, insert an element for a <xref:System.Diagnostics.ConsoleTraceListener>.  \n  \n The following example adds a <xref:System.Diagnostics.ConsoleTraceListener> object named `configConsoleListener` to the <xref:System.Diagnostics.Trace.Listeners%2A> collection.  \n  \n```  \n<configuration>  \n  <system.diagnostics>  \n    <trace autoflush=\"false\" indentsize=\"4\">  \n      <listeners>  \n        <add name=\"configConsoleListener\"            type=\"System.Diagnostics.ConsoleTraceListener\" />  \n      </listeners>  \n    </trace>  \n  </system.diagnostics>  \n </configuration>  \n```  \n  \n For details about adding trace listeners in the application configuration file, see [\\&lt;listeners\\&gt;](~/docs/framework/configure-apps/file-schema/trace-debug/listeners-element-for-trace.md)."
+  example:
+  - "The following code example implements a console application consisting of a class with two public methods.  \n  \n The `Main` method examines the command-line arguments and determines if trace output should be directed to the standard error stream or the standard output stream. `Main` creates and initializes a <xref:System.Diagnostics.ConsoleTraceListener> object for the specified <xref:System.Console> output stream, and adds this object to the trace listener collection. It then calls the `WriteEnvironmentInfoToTrace` method, which writes details about the executing environment and the trace listener configuration to the trace output.  \n  \n When the example application runs, the environment and trace configuration details are written to the specified console output stream through the <xref:System.Diagnostics.ConsoleTraceListener> object.  \n  \n [!code-csharp[Diagnostics_ConsoleTraceListener#1](~/samples/snippets/csharp/VS_Snippets_CLR/Diagnostics_ConsoleTraceListener/CS/program.cs#1)]\n [!code-vb[Diagnostics_ConsoleTraceListener#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/Diagnostics_ConsoleTraceListener/VB/consoletrace.vb#1)]"
+  syntax:
+    content: 'public class ConsoleTraceListener : System.Diagnostics.TextWriterTraceListener'
+  inheritance:
+  - System.Object
+  - System.Diagnostics.TraceListener
+  - System.Diagnostics.TextWriterTraceListener
+  implements: []
+  inheritedMembers:
+  - System.Diagnostics.TextWriterTraceListener.Dispose(System.Boolean)
+  - System.Diagnostics.TextWriterTraceListener.Flush
+  - System.Diagnostics.TextWriterTraceListener.Write(System.String)
+  - System.Diagnostics.TextWriterTraceListener.WriteLine(System.String)
+  - System.Diagnostics.TextWriterTraceListener.Writer
+  - System.Diagnostics.TraceListener.Attributes
+  - System.Diagnostics.TraceListener.Dispose
+  - System.Diagnostics.TraceListener.Fail(System.String)
+  - System.Diagnostics.TraceListener.Fail(System.String,System.String)
+  - System.Diagnostics.TraceListener.Filter
+  - System.Diagnostics.TraceListener.GetSupportedAttributes
+  - System.Diagnostics.TraceListener.IndentLevel
+  - System.Diagnostics.TraceListener.IndentSize
+  - System.Diagnostics.TraceListener.IsThreadSafe
+  - System.Diagnostics.TraceListener.Name
+  - System.Diagnostics.TraceListener.NeedIndent
+  - System.Diagnostics.TraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)
+  - System.Diagnostics.TraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object[])
+  - System.Diagnostics.TraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32)
+  - System.Diagnostics.TraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String)
+  - System.Diagnostics.TraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])
+  - System.Diagnostics.TraceListener.TraceOutputOptions
+  - System.Diagnostics.TraceListener.TraceTransfer(System.Diagnostics.TraceEventCache,System.String,System.Int32,System.String,System.Guid)
+  - System.Diagnostics.TraceListener.Write(System.Object)
+  - System.Diagnostics.TraceListener.Write(System.Object,System.String)
+  - System.Diagnostics.TraceListener.Write(System.String,System.String)
+  - System.Diagnostics.TraceListener.WriteIndent
+  - System.Diagnostics.TraceListener.WriteLine(System.Object)
+  - System.Diagnostics.TraceListener.WriteLine(System.Object,System.String)
+  - System.Diagnostics.TraceListener.WriteLine(System.String,System.String)
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/ConsoleTraceListener.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.ConsoleTraceListener.#ctor
+  commentId: M:System.Diagnostics.ConsoleTraceListener.#ctor
+  id: '#ctor'
+  parent: System.Diagnostics.ConsoleTraceListener
+  langs:
+  - csharp
+  name: ConsoleTraceListener()
+  nameWithType: ConsoleTraceListener.ConsoleTraceListener()
+  fullName: ConsoleTraceListener.ConsoleTraceListener()
+  type: Constructor
+  assemblies:
+  - System
+  namespace: System.Diagnostics
+  summary: Initializes a new instance of the <xref href="System.Diagnostics.ConsoleTraceListener"></xref> class with trace output written to the standard output stream.
+  remarks: This constructor initializes a <xref:System.Diagnostics.ConsoleTraceListener> object to write messages to the <xref:System.Console.Out%2A?displayProperty=fullName> stream. Its <xref:System.Diagnostics.TraceListener.Name%2A> property is initialized to an empty string ("").
+  example:
+  - "The following code example initializes a <xref:System.Diagnostics.ConsoleTraceListener> object for the specified <xref:System.Console> output stream and adds it to the trace listener collection. This code example is part of a larger example provided for the <xref:System.Diagnostics.ConsoleTraceListener> class.  \n  \n [!code-csharp[Diagnostics_ConsoleTraceListener#2](~/samples/snippets/csharp/VS_Snippets_CLR/Diagnostics_ConsoleTraceListener/CS/program.cs#2)]\n [!code-vb[Diagnostics_ConsoleTraceListener#2](~/samples/snippets/visualbasic/VS_Snippets_CLR/Diagnostics_ConsoleTraceListener/VB/consoletrace.vb#2)]"
+  syntax:
+    content: public ConsoleTraceListener ();
+    parameters: []
+  overload: System.Diagnostics.ConsoleTraceListener.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/ConsoleTraceListener.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.ConsoleTraceListener.#ctor(System.Boolean)
+  commentId: M:System.Diagnostics.ConsoleTraceListener.#ctor(System.Boolean)
+  id: '#ctor(System.Boolean)'
+  parent: System.Diagnostics.ConsoleTraceListener
+  langs:
+  - csharp
+  name: ConsoleTraceListener(Boolean)
+  nameWithType: ConsoleTraceListener.ConsoleTraceListener(Boolean)
+  fullName: ConsoleTraceListener.ConsoleTraceListener(Boolean)
+  type: Constructor
+  assemblies:
+  - System
+  namespace: System.Diagnostics
+  summary: Initializes a new instance of the <xref href="System.Diagnostics.ConsoleTraceListener"></xref> class with an option to write trace output to the standard output stream or the standard error stream.
+  remarks: This constructor initializes a <xref:System.Diagnostics.ConsoleTraceListener> object to write messages to either the <xref:System.Console.Out%2A?displayProperty=fullName> or the <xref:System.Console.Error%2A?displayProperty=fullName> stream. Its <xref:System.Diagnostics.TraceListener.Name%2A> property is initialized to an empty string ("").
+  example:
+  - "The following code example initializes a <xref:System.Diagnostics.ConsoleTraceListener> object for the specified <xref:System.Console> output stream and adds it to the trace listener collection. This code example is part of a larger example provided for the <xref:System.Diagnostics.ConsoleTraceListener> class.  \n  \n [!code-csharp[Diagnostics_ConsoleTraceListener#2](~/samples/snippets/csharp/VS_Snippets_CLR/Diagnostics_ConsoleTraceListener/CS/program.cs#2)]\n [!code-vb[Diagnostics_ConsoleTraceListener#2](~/samples/snippets/visualbasic/VS_Snippets_CLR/Diagnostics_ConsoleTraceListener/VB/consoletrace.vb#2)]"
+  syntax:
+    content: public ConsoleTraceListener (bool useErrorStream);
+    parameters:
+    - id: useErrorStream
+      type: System.Boolean
+      description: '`true` to write tracing and debugging output to the standard error stream; `false` to write tracing and debugging output to the standard output stream.'
+  overload: System.Diagnostics.ConsoleTraceListener.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/ConsoleTraceListener.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.ConsoleTraceListener.Close
+  commentId: M:System.Diagnostics.ConsoleTraceListener.Close
+  id: Close
+  parent: System.Diagnostics.ConsoleTraceListener
+  langs:
+  - csharp
+  name: Close()
+  nameWithType: ConsoleTraceListener.Close()
+  fullName: ConsoleTraceListener.Close()
+  type: Method
+  assemblies:
+  - System
+  namespace: System.Diagnostics
+  summary: Closes the output to the stream specified for this trace listener.
+  remarks: The stream specified for this <xref:System.Diagnostics.ConsoleTraceListener> instance (either the <xref:System.Console.Out%2A?displayProperty=fullName> stream or the <xref:System.Console.Error%2A?displayProperty=fullName> stream) is closed.
+  syntax:
+    content: public override void Close ();
+    parameters: []
+  overload: System.Diagnostics.ConsoleTraceListener.Close*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/ConsoleTraceListener.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+references:
+- uid: System.Diagnostics.TextWriterTraceListener
+  parent: System.Diagnostics
+  isExternal: false
+  name: TextWriterTraceListener
+  nameWithType: TextWriterTraceListener
+  fullName: System.Diagnostics.TextWriterTraceListener
+- uid: System.Diagnostics.ConsoleTraceListener.#ctor
+  parent: System.Diagnostics.ConsoleTraceListener
+  isExternal: false
+  name: ConsoleTraceListener()
+  nameWithType: ConsoleTraceListener.ConsoleTraceListener()
+  fullName: ConsoleTraceListener.ConsoleTraceListener()
+- uid: System.Diagnostics.ConsoleTraceListener.#ctor(System.Boolean)
+  parent: System.Diagnostics.ConsoleTraceListener
+  isExternal: false
+  name: ConsoleTraceListener(Boolean)
+  nameWithType: ConsoleTraceListener.ConsoleTraceListener(Boolean)
+  fullName: ConsoleTraceListener.ConsoleTraceListener(Boolean)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Diagnostics.ConsoleTraceListener.Close
+  parent: System.Diagnostics.ConsoleTraceListener
+  isExternal: false
+  name: Close()
+  nameWithType: ConsoleTraceListener.Close()
+  fullName: ConsoleTraceListener.Close()
+- uid: System.Diagnostics.ConsoleTraceListener.#ctor*
+  parent: System.Diagnostics.ConsoleTraceListener
+  isExternal: false
+  name: ConsoleTraceListener
+  nameWithType: ConsoleTraceListener.ConsoleTraceListener
+  fullName: ConsoleTraceListener.ConsoleTraceListener
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/ConsoleTraceListener.xml
+- uid: System.Diagnostics.ConsoleTraceListener.Close*
+  parent: System.Diagnostics.ConsoleTraceListener
+  isExternal: false
+  name: Close
+  nameWithType: ConsoleTraceListener.Close
+  fullName: ConsoleTraceListener.Close
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/ConsoleTraceListener.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Diagnostics.TraceListener.Attributes
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: Attributes
+  nameWithType: TraceListener.Attributes
+  fullName: TraceListener.Attributes
+- uid: System.Diagnostics.TraceListener.Dispose
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: Dispose()
+  nameWithType: TraceListener.Dispose()
+  fullName: TraceListener.Dispose()
+- uid: System.Diagnostics.TextWriterTraceListener.Dispose(System.Boolean)
+  parent: System.Diagnostics.TextWriterTraceListener
+  isExternal: false
+  name: Dispose(Boolean)
+  nameWithType: TextWriterTraceListener.Dispose(Boolean)
+  fullName: TextWriterTraceListener.Dispose(Boolean)
+- uid: System.Diagnostics.TraceListener.Fail(System.String)
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: Fail(String)
+  nameWithType: TraceListener.Fail(String)
+  fullName: TraceListener.Fail(String)
+- uid: System.Diagnostics.TraceListener.Fail(System.String,System.String)
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: Fail(String, String)
+  nameWithType: TraceListener.Fail(String, String)
+  fullName: TraceListener.Fail(String, String)
+- uid: System.Diagnostics.TraceListener.Filter
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: Filter
+  nameWithType: TraceListener.Filter
+  fullName: TraceListener.Filter
+- uid: System.Diagnostics.TextWriterTraceListener.Flush
+  parent: System.Diagnostics.TextWriterTraceListener
+  isExternal: false
+  name: Flush()
+  nameWithType: TextWriterTraceListener.Flush()
+  fullName: TextWriterTraceListener.Flush()
+- uid: System.Diagnostics.TraceListener.GetSupportedAttributes
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: GetSupportedAttributes()
+  nameWithType: TraceListener.GetSupportedAttributes()
+  fullName: TraceListener.GetSupportedAttributes()
+- uid: System.Diagnostics.TraceListener.IndentLevel
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: IndentLevel
+  nameWithType: TraceListener.IndentLevel
+  fullName: TraceListener.IndentLevel
+- uid: System.Diagnostics.TraceListener.IndentSize
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: IndentSize
+  nameWithType: TraceListener.IndentSize
+  fullName: TraceListener.IndentSize
+- uid: System.Diagnostics.TraceListener.IsThreadSafe
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: IsThreadSafe
+  nameWithType: TraceListener.IsThreadSafe
+  fullName: TraceListener.IsThreadSafe
+- uid: System.Diagnostics.TraceListener.Name
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: Name
+  nameWithType: TraceListener.Name
+  fullName: TraceListener.Name
+- uid: System.Diagnostics.TraceListener.NeedIndent
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: NeedIndent
+  nameWithType: TraceListener.NeedIndent
+  fullName: TraceListener.NeedIndent
+- uid: System.Diagnostics.TraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: TraceData(TraceEventCache, String, TraceEventType, Int32, Object)
+  nameWithType: TraceListener.TraceData(TraceEventCache, String, TraceEventType, Int32, Object)
+  fullName: TraceListener.TraceData(TraceEventCache, String, TraceEventType, Int32, Object)
+- uid: System.Diagnostics.TraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object[])
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: TraceData(TraceEventCache, String, TraceEventType, Int32, Object[])
+  nameWithType: TraceListener.TraceData(TraceEventCache, String, TraceEventType, Int32, Object[])
+  fullName: TraceListener.TraceData(TraceEventCache, String, TraceEventType, Int32, Object[])
+- uid: System.Diagnostics.TraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32)
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: TraceEvent(TraceEventCache, String, TraceEventType, Int32)
+  nameWithType: TraceListener.TraceEvent(TraceEventCache, String, TraceEventType, Int32)
+  fullName: TraceListener.TraceEvent(TraceEventCache, String, TraceEventType, Int32)
+- uid: System.Diagnostics.TraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String)
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: TraceEvent(TraceEventCache, String, TraceEventType, Int32, String)
+  nameWithType: TraceListener.TraceEvent(TraceEventCache, String, TraceEventType, Int32, String)
+  fullName: TraceListener.TraceEvent(TraceEventCache, String, TraceEventType, Int32, String)
+- uid: System.Diagnostics.TraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: TraceEvent(TraceEventCache, String, TraceEventType, Int32, String, Object[])
+  nameWithType: TraceListener.TraceEvent(TraceEventCache, String, TraceEventType, Int32, String, Object[])
+  fullName: TraceListener.TraceEvent(TraceEventCache, String, TraceEventType, Int32, String, Object[])
+- uid: System.Diagnostics.TraceListener.TraceOutputOptions
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: TraceOutputOptions
+  nameWithType: TraceListener.TraceOutputOptions
+  fullName: TraceListener.TraceOutputOptions
+- uid: System.Diagnostics.TraceListener.TraceTransfer(System.Diagnostics.TraceEventCache,System.String,System.Int32,System.String,System.Guid)
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: TraceTransfer(TraceEventCache, String, Int32, String, Guid)
+  nameWithType: TraceListener.TraceTransfer(TraceEventCache, String, Int32, String, Guid)
+  fullName: TraceListener.TraceTransfer(TraceEventCache, String, Int32, String, Guid)
+- uid: System.Diagnostics.TraceListener.Write(System.Object)
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: Write(Object)
+  nameWithType: TraceListener.Write(Object)
+  fullName: TraceListener.Write(Object)
+- uid: System.Diagnostics.TextWriterTraceListener.Write(System.String)
+  parent: System.Diagnostics.TextWriterTraceListener
+  isExternal: false
+  name: Write(String)
+  nameWithType: TextWriterTraceListener.Write(String)
+  fullName: TextWriterTraceListener.Write(String)
+- uid: System.Diagnostics.TraceListener.Write(System.Object,System.String)
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: Write(Object, String)
+  nameWithType: TraceListener.Write(Object, String)
+  fullName: TraceListener.Write(Object, String)
+- uid: System.Diagnostics.TraceListener.Write(System.String,System.String)
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: Write(String, String)
+  nameWithType: TraceListener.Write(String, String)
+  fullName: TraceListener.Write(String, String)
+- uid: System.Diagnostics.TraceListener.WriteIndent
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: WriteIndent()
+  nameWithType: TraceListener.WriteIndent()
+  fullName: TraceListener.WriteIndent()
+- uid: System.Diagnostics.TraceListener.WriteLine(System.Object)
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: WriteLine(Object)
+  nameWithType: TraceListener.WriteLine(Object)
+  fullName: TraceListener.WriteLine(Object)
+- uid: System.Diagnostics.TextWriterTraceListener.WriteLine(System.String)
+  parent: System.Diagnostics.TextWriterTraceListener
+  isExternal: false
+  name: WriteLine(String)
+  nameWithType: TextWriterTraceListener.WriteLine(String)
+  fullName: TextWriterTraceListener.WriteLine(String)
+- uid: System.Diagnostics.TraceListener.WriteLine(System.Object,System.String)
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: WriteLine(Object, String)
+  nameWithType: TraceListener.WriteLine(Object, String)
+  fullName: TraceListener.WriteLine(Object, String)
+- uid: System.Diagnostics.TraceListener.WriteLine(System.String,System.String)
+  parent: System.Diagnostics.TraceListener
+  isExternal: false
+  name: WriteLine(String, String)
+  nameWithType: TraceListener.WriteLine(String, String)
+  fullName: TraceListener.WriteLine(String, String)
+- uid: System.Diagnostics.TextWriterTraceListener.Writer
+  parent: System.Diagnostics.TextWriterTraceListener
+  isExternal: false
+  name: Writer
+  nameWithType: TextWriterTraceListener.Writer
+  fullName: TextWriterTraceListener.Writer

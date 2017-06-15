@@ -1,0 +1,1670 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Windows.Navigation.NavigationService
+  commentId: T:System.Windows.Navigation.NavigationService
+  id: NavigationService
+  children:
+  - System.Windows.Navigation.NavigationService.AddBackEntry(System.Windows.Navigation.CustomContentState)
+  - System.Windows.Navigation.NavigationService.CanGoBack
+  - System.Windows.Navigation.NavigationService.CanGoForward
+  - System.Windows.Navigation.NavigationService.Content
+  - System.Windows.Navigation.NavigationService.CurrentSource
+  - System.Windows.Navigation.NavigationService.FragmentNavigation
+  - System.Windows.Navigation.NavigationService.GetNavigationService(System.Windows.DependencyObject)
+  - System.Windows.Navigation.NavigationService.GoBack
+  - System.Windows.Navigation.NavigationService.GoForward
+  - System.Windows.Navigation.NavigationService.LoadCompleted
+  - System.Windows.Navigation.NavigationService.Navigate(System.Uri,System.Object,System.Boolean)
+  - System.Windows.Navigation.NavigationService.Navigate(System.Uri,System.Object)
+  - System.Windows.Navigation.NavigationService.Navigate(System.Uri)
+  - System.Windows.Navigation.NavigationService.Navigate(System.Object)
+  - System.Windows.Navigation.NavigationService.Navigate(System.Object,System.Object)
+  - System.Windows.Navigation.NavigationService.Navigated
+  - System.Windows.Navigation.NavigationService.Navigating
+  - System.Windows.Navigation.NavigationService.NavigationFailed
+  - System.Windows.Navigation.NavigationService.NavigationProgress
+  - System.Windows.Navigation.NavigationService.NavigationStopped
+  - System.Windows.Navigation.NavigationService.Refresh
+  - System.Windows.Navigation.NavigationService.RemoveBackEntry
+  - System.Windows.Navigation.NavigationService.Source
+  - System.Windows.Navigation.NavigationService.StopLoading
+  langs:
+  - csharp
+  name: NavigationService
+  nameWithType: NavigationService
+  fullName: System.Windows.Navigation.NavigationService
+  type: Class
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Contains methods, properties, and events to support navigation.
+  remarks: "<xref:System.Windows.Navigation.NavigationService> encapsulates the ability to download content within the context of a browser-style navigation.  \n  \n Content can be any type of [!INCLUDE[TLA2#tla_winfx](~/includes/tla2sharptla-winfx-md.md)] object and [!INCLUDE[TLA#tla_html](~/includes/tlasharptla-html-md.md)] files. In general, however, pages are the preferred as the way to package content for navigation (see <xref:System.Windows.Controls.Page>).  \n  \n Content can be navigated to by providing an instance of an object and calling an overload of the <xref:System.Windows.Navigation.NavigationService.Navigate%2A> method that accepts an object:  \n  \n-   <xref:System.Windows.Navigation.NavigationService.Navigate%28System.Object%29?displayProperty=fullName>  \n  \n-   <xref:System.Windows.Navigation.NavigationService.Navigate%28System.Object%2CSystem.Object%29?displayProperty=fullName>  \n  \n Alternatively, content can be navigated to by passing a relative or absolute [!INCLUDE[TLA#tla_uri](~/includes/tlasharptla-uri-md.md)] to one of the <xref:System.Windows.Navigation.NavigationService.Navigate%2A> method overloads that accepts a [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)]:  \n  \n-   <xref:System.Windows.Navigation.NavigationService.Navigate%28System.Uri%29?displayProperty=fullName>  \n  \n-   <xref:System.Windows.Navigation.NavigationService.Navigate%28System.Uri%2CSystem.Object%29?displayProperty=fullName>  \n  \n-   <xref:System.Windows.Navigation.NavigationService.Navigate%28System.Uri%2CSystem.Object%2CSystem.Boolean%29?displayProperty=fullName>  \n  \n When content is navigated to by [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)], <xref:System.Windows.Navigation.NavigationService> will return an object that contains the content.  \n  \n The lifetime of a navigation can be tracked through the following events:  \n  \n-   <xref:System.Windows.Navigation.NavigationService.Navigating>  \n  \n-   <xref:System.Windows.Navigation.NavigationService.Navigated>  \n  \n-   <xref:System.Windows.Navigation.NavigationService.NavigationProgress>  \n  \n-   <xref:System.Windows.Navigation.NavigationService.NavigationFailed>  \n  \n-   <xref:System.Windows.Navigation.NavigationService.NavigationStopped>  \n  \n-   <xref:System.Windows.Navigation.NavigationService.LoadCompleted>  \n  \n-   <xref:System.Windows.Navigation.NavigationService.FragmentNavigation>.  \n  \n Not all events are raised each time that a navigation occurs; the set of events that are raised is determined by the type of navigation that occurs (content or content fragment) and how the navigation completes (canceled, stopped, or failed).  \n  \n The following figure illustrates the sequence in which these events are raised:  \n  \n ![Page navigation flow chart](~/add/media/navigationoverviewfigure11.png \"Page navigation flow chart\")  \n  \n During or after a navigation, <xref:System.Windows.Navigation.NavigationService> provides information about the content that is being navigated to, including the [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)] of the content being navigated to (<xref:System.Windows.Navigation.NavigationService.Source%2A>), the [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)] of the current content (<xref:System.Windows.Navigation.NavigationService.CurrentSource%2A>), and an object that contains the content that was navigated to (<xref:System.Windows.Navigation.NavigationService.Content%2A>).  \n  \n When content is navigated to, <xref:System.Windows.Navigation.NavigationService> records the navigation as an entry in navigation history. An entry is added to back navigation history when either a new navigation occurs, by calling the <xref:System.Windows.Navigation.NavigationService.Navigate%2A> method, or by navigating to an entry in forward navigation history, by calling <xref:System.Windows.Navigation.NavigationService.GoForward%2A>. An entry is added to forward navigation history by navigating to an entry in back navigation history, by calling <xref:System.Windows.Navigation.NavigationService.GoBack%2A>. <xref:System.Windows.Navigation.NavigationService.CanGoBack%2A> and <xref:System.Windows.Navigation.NavigationService.CanGoForward%2A> report whether there are entries in back and forward navigation history, respectively. Also, the most recent entry in back navigation history can be removed by calling <xref:System.Windows.Navigation.NavigationService.RemoveBackEntry%2A>.  \n  \n By default, <xref:System.Windows.Navigation.NavigationService> does not store an instance of a content object in navigation history. Instead, <xref:System.Windows.Navigation.NavigationService> creates a new instance of the content object each time it is navigated to by using navigation history. This behavior is designed to avoid excessive memory consumption when large numbers and large pieces of content are being navigated to. Consequently, the state of the content is not remembered from one navigation to the next. However, [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] provides several techniques by which you can store a piece of state for a piece of content in navigation history.  \n  \n Using <xref:System.Windows.Navigation.NavigationService.AddBackEntry%2A>, you can also remember multiple sets of state for a single page instance.  \n  \n <xref:System.Windows.Navigation.NavigationService> is `sealed` class and, therefore, cannot be instantiated; instead, <xref:System.Windows.Navigation.NavigationService> is used by navigators to enable navigation. In [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)], there are two navigators: <xref:System.Windows.Navigation.NavigationWindow>, <xref:System.Windows.Controls.Frame>.  \n  \n Visually, [!INCLUDE[TLA2#tla_xbap#plural](~/includes/tla2sharptla-xbapsharpplural-md.md)] use [!INCLUDE[TLA2#tla_ie7](~/includes/tla2sharptla-ie7-md.md)] as a navigator, to provide an integrated user experience. Physically, however, [!INCLUDE[TLA2#tla_xbap#plural](~/includes/tla2sharptla-xbapsharpplural-md.md)] actually use <xref:System.Windows.Navigation.NavigationWindow> as the navigator; the <xref:System.Windows.Application.MainWindow%2A> property of an [!INCLUDE[TLA2#tla_xbap](~/includes/tla2sharptla-xbap-md.md)] running in [!INCLUDE[TLA2#tla_ie7](~/includes/tla2sharptla-ie7-md.md)] will return a reference to the <xref:System.Windows.Navigation.NavigationWindow>, and the navigation history that is managed by the <xref:System.Windows.Navigation.NavigationWindow> is integrated with the navigation history that is managed by [!INCLUDE[TLA2#tla_ie7](~/includes/tla2sharptla-ie7-md.md)] in the following ways:  \n  \n-   When content is navigated to by calling <xref:System.Windows.Navigation.NavigationService.Navigate%2A>, <xref:System.Windows.Navigation.NavigationService.GoBack%2A>, and <xref:System.Windows.Navigation.NavigationService.GoForward%2A> from within an [!INCLUDE[TLA2#tla_xbap](~/includes/tla2sharptla-xbap-md.md)] the relevant navigation history entries are also added to [!INCLUDE[TLA2#tla_ie7](~/includes/tla2sharptla-ie7-md.md)] navigation history.  \n  \n-   When entries in the [!INCLUDE[TLA2#tla_ie7](~/includes/tla2sharptla-ie7-md.md)] navigation [!INCLUDE[TLA2#tla_ui](~/includes/tla2sharptla-ui-md.md)] are selected, [!INCLUDE[TLA2#tla_ie7](~/includes/tla2sharptla-ie7-md.md)] causes <xref:System.Windows.Navigation.NavigationService> to navigate back or forwards to the content that is associated with those entries.  \n  \n> [!NOTE]\n>  A <xref:System.Windows.Controls.Frame> can provide its own navigation history, or use the navigation history of the navigator that hosts it. If <xref:System.Windows.Controls.Frame> provides its own navigation history, it can display its own navigation [!INCLUDE[TLA2#tla_ui](~/includes/tla2sharptla-ui-md.md)] to navigate through the entries in navigation history; those entries are not added to the navigation history of the host navigator (<xref:System.Windows.Navigation.NavigationWindow>, <xref:System.Windows.Controls.Frame>, [!INCLUDE[TLA2#tla_iegeneric](~/includes/tla2sharptla-iegeneric-md.md)]) and, consequently, cannot be navigated to from the navigation [!INCLUDE[TLA2#tla_ui](~/includes/tla2sharptla-ui-md.md)] of each (see <xref:System.Windows.Controls.Frame.JournalOwnership%2A>)."
+  syntax:
+    content: public sealed class NavigationService
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.AddBackEntry(System.Windows.Navigation.CustomContentState)
+  commentId: M:System.Windows.Navigation.NavigationService.AddBackEntry(System.Windows.Navigation.CustomContentState)
+  id: AddBackEntry(System.Windows.Navigation.CustomContentState)
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: AddBackEntry(CustomContentState)
+  nameWithType: NavigationService.AddBackEntry(CustomContentState)
+  fullName: NavigationService.AddBackEntry(CustomContentState)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Adds an entry to back navigation history that contains a <xref href="System.Windows.Navigation.CustomContentState"></xref> object.
+  remarks: <xref:System.Windows.Navigation.NavigationService.AddBackEntry%2A>, <xref:System.Windows.Navigation.CustomContentState>, and <xref:System.Windows.Navigation.IProvideCustomContentState> are used to help remember multiple sets of state for the current content.
+  syntax:
+    content: public void AddBackEntry (System.Windows.Navigation.CustomContentState state);
+    parameters:
+    - id: state
+      type: System.Windows.Navigation.CustomContentState
+      description: A <xref href="System.Windows.Navigation.CustomContentState"></xref> object that represents application-defined state that is associated with a specific piece of content.
+  overload: System.Windows.Navigation.NavigationService.AddBackEntry*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: <code>state</code> is `null`, and a <xref href="System.Windows.Navigation.CustomContentState"></xref> object isn't returned from <xref href="System.Windows.Navigation.IProvideCustomContentState.GetContentState"></xref>.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.CanGoBack
+  commentId: P:System.Windows.Navigation.NavigationService.CanGoBack
+  id: CanGoBack
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: CanGoBack
+  nameWithType: NavigationService.CanGoBack
+  fullName: NavigationService.CanGoBack
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Gets a value that indicates whether there is at least one entry in back navigation history.
+  remarks: "<xref:System.Windows.Navigation.NavigationService.CanGoBack%2A> to determine whether there is at least one entry in back navigation history. This property should be inspected before calling <xref:System.Windows.Navigation.NavigationService.GoBack%2A>; if <xref:System.Windows.Navigation.NavigationService.GoBack%2A> is called and there are no entries in back navigation history, an <xref:System.InvalidOperationException> is thrown.  \n  \n> [!NOTE]\n>  that if navigation history is shared by multiple navigators (<xref:System.Windows.Navigation.NavigationWindow>, <xref:System.Windows.Controls.Frame>), the most recent entry in back navigation history may not have been added by the <xref:System.Windows.Navigation.NavigationService> for the current navigator."
+  syntax:
+    content: public bool CanGoBack { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if there is at least one entry in back navigation history; otherwise, `false`.'
+  overload: System.Windows.Navigation.NavigationService.CanGoBack*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Navigation.NavigationService.CanGoForward
+  commentId: P:System.Windows.Navigation.NavigationService.CanGoForward
+  id: CanGoForward
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: CanGoForward
+  nameWithType: NavigationService.CanGoForward
+  fullName: NavigationService.CanGoForward
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Gets a value that indicates whether there is at least one entry in forward navigation history.
+  remarks: <xref:System.Windows.Navigation.NavigationService.CanGoForward%2A> to determine whether there is at least one entry in forward navigation history. This property should be inspected before calling <xref:System.Windows.Navigation.NavigationService.GoForward%2A>; if <xref:System.Windows.Navigation.NavigationService.GoForward%2A> is called and there are no entries in forward navigation history, an <xref:System.InvalidOperationException> is thrown.
+  syntax:
+    content: public bool CanGoForward { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if there is at least one entry in forward navigation history; otherwise, `false`.'
+  overload: System.Windows.Navigation.NavigationService.CanGoForward*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.Content
+  commentId: P:System.Windows.Navigation.NavigationService.Content
+  id: Content
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: Content
+  nameWithType: NavigationService.Content
+  fullName: NavigationService.Content
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Gets or sets a reference to the object that contains the current content.
+  remarks: "Content can be set in one of two ways:  \n  \n-   Directly, by setting it to a reference to an object.  \n  \n-   Indirectly, by calling <xref:System.Windows.Navigation.NavigationService.Navigate%2A>, <xref:System.Windows.Navigation.NavigationService.GoBack%2A>, or <xref:System.Windows.Navigation.NavigationService.GoForward%2A>.  \n  \n Setting <xref:System.Windows.Navigation.NavigationService> initiates a new navigation; since navigation is asynchronous, <xref:System.Windows.Navigation.NavigationService.Content%2A> won't return a value if it is inspected immediately after being set."
+  syntax:
+    content: public object Content { get; set; }
+    return:
+      type: System.Object
+      description: An object that is a reference to the object that contains the current content.
+  overload: System.Windows.Navigation.NavigationService.Content*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.CurrentSource
+  commentId: P:System.Windows.Navigation.NavigationService.CurrentSource
+  id: CurrentSource
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: CurrentSource
+  nameWithType: NavigationService.CurrentSource
+  fullName: NavigationService.CurrentSource
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Gets the [!INCLUDE[TLA#tla_uri](~/includes/tlasharptla-uri-md.md)] of the content that was last navigated to.
+  remarks: "The value of the <xref:System.Windows.Navigation.NavigationService.CurrentSource%2A> property is not changed until navigation to a different [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)] has completed successfully.  \n  \n <xref:System.Windows.Navigation.NavigationService.CurrentSource%2A> can be set with a fragment-only [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)]."
+  syntax:
+    content: public Uri CurrentSource { get; }
+    return:
+      type: System.Uri
+      description: A <xref href="System.Uri"></xref> for the content that was last navigated to, if navigated to by using a [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)]; otherwise, `null`.
+  overload: System.Windows.Navigation.NavigationService.CurrentSource*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.FragmentNavigation
+  commentId: E:System.Windows.Navigation.NavigationService.FragmentNavigation
+  id: FragmentNavigation
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: FragmentNavigation
+  nameWithType: NavigationService.FragmentNavigation
+  fullName: NavigationService.FragmentNavigation
+  type: Event
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Occurs when navigation to a content fragment begins, which occurs immediately, if the desired fragment is in the current content, or after the source [!INCLUDE[TLA2#tla_titlexaml](~/includes/tla2sharptla-titlexaml-md.md)] content has been loaded, if the desired fragment is in different content.
+  remarks: "By default, a content fragment is content that is contained by a named <xref:System.Windows.UIElement>, which is a <xref:System.Windows.UIElement> whose <xref:System.Windows.FrameworkElement.Name%2A> attribute is set, eg:  \n  \n```  \n<TextBlock Name=\"FragmentName\">...</TextBlock>  \n```  \n  \n You navigate to a [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] fragment by providing a [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)] with a suffix in the following format:  \n  \n \\#*FragmentName*  \n  \n The following shows an example of a [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)] that refers to a content fragment:  \n  \n `http://www.microsoft.com/targetpage.xaml#FragmentName`  \n  \n After the source page loads (after <xref:System.Windows.Navigation.NavigationService.LoadCompleted> event is raised), fragment navigation begins and the <xref:System.Windows.Navigation.NavigationService> attempts to locate the [!INCLUDE[TLA2#tla_titlexaml](~/includes/tla2sharptla-titlexaml-md.md)] fragment. If the [!INCLUDE[TLA2#tla_titlexaml](~/includes/tla2sharptla-titlexaml-md.md)] fragment is found, <xref:System.Windows.Navigation.NavigationService> instructs the content navigator  (<xref:System.Windows.Navigation.NavigationWindow>, <xref:System.Windows.Controls.Frame>) to show the fragment. If you need to change this behavior, you can handle <xref:System.Windows.Navigation.NavigationService.FragmentNavigation> to provide your own fragment navigation behavior. <xref:System.Windows.Navigation.NavigationService.FragmentNavigation> is passed a <xref:System.Windows.Navigation.FragmentNavigationEventArgs> parameter which exposes properties that are useful for this purpose, including:  \n  \n-   The navigator that owns this navigation service (<xref:System.Windows.Navigation.NavigationWindow>, <xref:System.Windows.Controls.Frame>).  \n  \n-   The fragment name.  \n  \n You can handle <xref:System.Windows.Navigation.NavigationService.FragmentNavigation> to override the default [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] fragment implementation with your own custom implementation. If you do so, you need to set <xref:System.Windows.Navigation.FragmentNavigationEventArgs.Handled%2A> to `true`; otherwise, the default [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] fragment processing behavior is applied.  \n  \n You should avoid directly initiating navigation from within a <xref:System.Windows.Navigation.NavigationService.FragmentNavigation> event handler. Since <xref:System.Windows.Navigation.NavigationService.FragmentNavigation> is raised during an existing navigation, initiating a new navigation from a <xref:System.Windows.Navigation.NavigationService.FragmentNavigation> event handler creates a nested navigation that can cause the <xref:System.ExecutionEngineException> to be thrown. Instead, you can indirectly initiate navigation by creating an asynchronous work item using the <xref:System.Windows.Threading.Dispatcher>.  \n  \n> [!NOTE]\n>  When <xref:System.Windows.Navigation.NavigationService> raises <xref:System.Windows.Navigation.NavigationService.FragmentNavigation>, it also raises <xref:System.Windows.Application.FragmentNavigation?displayProperty=fullName> event on the <xref:System.Windows.Application> object.  \n  \n> [!IMPORTANT]\n>  Fragment navigation is not supported for loose [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] pages (markup-only [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] files with `Page` as the root element) in the following cases:  \n>   \n>  • When navigating to a fragment in a loose [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] page.  \n>   \n>  • When navigating from a loose [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] page to a fragment in another loose [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] page.  \n>   \n>  However, a loose [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] page can navigate to its own fragments."
+  example:
+  - "The following example shows how to handle <xref:System.Windows.Navigation.NavigationService.FragmentNavigation> to provide custom fragment navigation behavior. In this case, the example opens an error [!INCLUDE[TLA2#tla_titlexaml](~/includes/tla2sharptla-titlexaml-md.md)] page if the fragment in the source [!INCLUDE[TLA2#tla_titlexaml](~/includes/tla2sharptla-titlexaml-md.md)] page is not found.  \n  \n [!code-csharp[NavigationServiceSnippets#MainWindowFragmentNavigationCODE](~/samples/snippets/csharp/VS_Snippets_Wpf/NavigationServiceSnippets/CSharp/MainWindow.xaml.cs#mainwindowfragmentnavigationcode)]\n [!code-vb[NavigationServiceSnippets#MainWindowFragmentNavigationCODE](~/samples/snippets/visualbasic/VS_Snippets_Wpf/NavigationServiceSnippets/visualbasic/mainwindow.xaml.vb#mainwindowfragmentnavigationcode)]"
+  syntax:
+    content: public event System.Windows.Navigation.FragmentNavigationEventHandler FragmentNavigation;
+    return:
+      type: System.Windows.Navigation.FragmentNavigationEventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Navigation.NavigationService.GetNavigationService(System.Windows.DependencyObject)
+  commentId: M:System.Windows.Navigation.NavigationService.GetNavigationService(System.Windows.DependencyObject)
+  id: GetNavigationService(System.Windows.DependencyObject)
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: GetNavigationService(DependencyObject)
+  nameWithType: NavigationService.GetNavigationService(DependencyObject)
+  fullName: NavigationService.GetNavigationService(DependencyObject)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Gets a reference to the <xref href="System.Windows.Navigation.NavigationService"></xref> for the navigator whose content contains the specified <xref href="System.Windows.DependencyObject"></xref>.
+  remarks: "A navigator has a <xref:System.Windows.Navigation.NavigationService> that handles content navigation. [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] has two navigators: <xref:System.Windows.Navigation.NavigationWindow> and <xref:System.Windows.Controls.Frame>. To process navigation requests and manage navigation lifetime, a navigator uses the [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] navigation service, which is implemented as the <xref:System.Windows.Navigation.NavigationService> class. Content that is hosted by a navigator can get a reference to the navigator's <xref:System.Windows.Navigation.NavigationService> by calling the <xref:System.Windows.Navigation.NavigationService.GetNavigationService%2A> method.  \n  \n <xref:System.Windows.Navigation.NavigationService.GetNavigationService%2A> returns `null` when the `dependencyObject`:  \n  \n-   Is a <xref:System.Windows.Navigation.NavigationWindow>.  \n  \n-   Is a <xref:System.Windows.Controls.Frame> that:  \n  \n    1.  Is hosted by another navigator.  \n  \n    2.  Has its <xref:System.Windows.Controls.Frame.JournalOwnership%2A> property set to <xref:System.Windows.Navigation.JournalOwnership.UsesParentJournal>.  \n  \n-   Is not part of content that is hosted by a navigator.  \n  \n [!INCLUDE[TLA2#tla_wpf](~/includes/tla2sharptla-wpf-md.md)] offers two shortcuts for acquiring a reference to the <xref:System.Windows.Navigation.NavigationService>:  \n  \n-   The <xref:System.Windows.Navigation.NavigationService> that processed the navigation to a <xref:System.Windows.Controls.Page> can be accessed from the <xref:System.Windows.Controls.Page> itself by getting the value of its <xref:System.Windows.Controls.Page.NavigationService%2A?displayProperty=fullName> property.  \n  \n-   The <xref:System.Windows.Navigation.NavigationService> that is used by a <xref:System.Windows.Controls.Frame> to process navigation can be accessed by getting the value of the <xref:System.Windows.Controls.Frame.NavigationService%2A> property."
+  example:
+  - "The following example shows how a <xref:System.Windows.Controls.UserControl> can retrieve a navigation service by calling <xref:System.Windows.Navigation.NavigationService.GetNavigationService%2A>.  \n  \n [!code-csharp[NSGetNavigationServiceSnippets#GetNavigationServiceCODE1](~/samples/snippets/csharp/VS_Snippets_Wpf/NSGetNavigationServiceSnippets/CSharp/ContentUserControl.xaml.cs#getnavigationservicecode1)]\n [!code-vb[NSGetNavigationServiceSnippets#GetNavigationServiceCODE1](~/samples/snippets/visualbasic/VS_Snippets_Wpf/NSGetNavigationServiceSnippets/visualbasic/contentusercontrol.xaml.vb#getnavigationservicecode1)]  \n[!code-csharp[NSGetNavigationServiceSnippets#GetNavigationServiceCODE2](~/samples/snippets/csharp/VS_Snippets_Wpf/NSGetNavigationServiceSnippets/CSharp/ContentUserControl.xaml.cs#getnavigationservicecode2)]\n[!code-vb[NSGetNavigationServiceSnippets#GetNavigationServiceCODE2](~/samples/snippets/visualbasic/VS_Snippets_Wpf/NSGetNavigationServiceSnippets/visualbasic/contentusercontrol.xaml.vb#getnavigationservicecode2)]"
+  syntax:
+    content: public static System.Windows.Navigation.NavigationService GetNavigationService (System.Windows.DependencyObject dependencyObject);
+    parameters:
+    - id: dependencyObject
+      type: System.Windows.DependencyObject
+      description: The <xref href="System.Windows.DependencyObject"></xref> in content that is hosted by a navigator.
+    return:
+      type: System.Windows.Navigation.NavigationService
+      description: A reference to the <xref href="System.Windows.Navigation.NavigationService"></xref> for the navigator whose content contains the specified <xref href="System.Windows.DependencyObject"></xref>; can be `null` in some cases.
+  overload: System.Windows.Navigation.NavigationService.GetNavigationService*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code>dependencyObject</code> parameter is `null`.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.GoBack
+  commentId: M:System.Windows.Navigation.NavigationService.GoBack
+  id: GoBack
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: GoBack()
+  nameWithType: NavigationService.GoBack()
+  fullName: NavigationService.GoBack()
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Navigates to the most recent entry in back navigation history, if there is one.
+  remarks: Before calling <xref:System.Windows.Navigation.NavigationService.GoBack%2A>, the <xref:System.Windows.Navigation.NavigationService.CanGoBack%2A> property can be inspected to determine whether there are entries in back navigation history.
+  example:
+  - "The following example navigates to the most recent entry in back navigation history, if one exists.  \n  \n [!code-csharp[NavigationServiceSnippets#MainWindowBackCODE](~/samples/snippets/csharp/VS_Snippets_Wpf/NavigationServiceSnippets/CSharp/MainWindow.xaml.cs#mainwindowbackcode)]\n [!code-vb[NavigationServiceSnippets#MainWindowBackCODE](~/samples/snippets/visualbasic/VS_Snippets_Wpf/NavigationServiceSnippets/visualbasic/mainwindow.xaml.vb#mainwindowbackcode)]"
+  syntax:
+    content: public void GoBack ();
+    parameters: []
+  overload: System.Windows.Navigation.NavigationService.GoBack*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: <xref href="System.Windows.Navigation.NavigationService.GoBack"></xref> is called when there are no entries in back navigation history.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.GoForward
+  commentId: M:System.Windows.Navigation.NavigationService.GoForward
+  id: GoForward
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: GoForward()
+  nameWithType: NavigationService.GoForward()
+  fullName: NavigationService.GoForward()
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Navigate to the most recent entry in forward navigation history, if there is one.
+  remarks: Before calling <xref:System.Windows.Navigation.NavigationService.GoForward%2A>, the <xref:System.Windows.Navigation.NavigationService.CanGoForward%2A> property can be inspected to determine whether there are entries in forward navigation history.
+  example:
+  - "The following example navigates to the most recent entry in forward navigation history, if one exists.  \n  \n [!code-csharp[NavigationServiceSnippets#MainWindowForwardCODE](~/samples/snippets/csharp/VS_Snippets_Wpf/NavigationServiceSnippets/CSharp/MainWindow.xaml.cs#mainwindowforwardcode)]\n [!code-vb[NavigationServiceSnippets#MainWindowForwardCODE](~/samples/snippets/visualbasic/VS_Snippets_Wpf/NavigationServiceSnippets/visualbasic/mainwindow.xaml.vb#mainwindowforwardcode)]"
+  syntax:
+    content: public void GoForward ();
+    parameters: []
+  overload: System.Windows.Navigation.NavigationService.GoForward*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: <xref href="System.Windows.Navigation.NavigationService.GoForward"></xref> is called when there are no entries in forward navigation history.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Navigation.NavigationService.LoadCompleted
+  commentId: E:System.Windows.Navigation.NavigationService.LoadCompleted
+  id: LoadCompleted
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: LoadCompleted
+  nameWithType: NavigationService.LoadCompleted
+  fullName: NavigationService.LoadCompleted
+  type: Event
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Occurs when content that was navigated to has been loaded, parsed, and has begun rendering.
+  remarks: "You handle <xref:System.Windows.Navigation.NavigationService.LoadCompleted> if you need to discover pertinent information regarding the navigation request upon load completion. This information is available from the <xref:System.Windows.Navigation.NavigationEventArgs> object that is passed to the <xref:System.Windows.Navigation.NavigationService.LoadCompleted> event handler, and includes:  \n  \n-   The content and its [!INCLUDE[TLA#tla_uri](~/includes/tlasharptla-uri-md.md)].  \n  \n-   The navigator (<xref:System.Windows.Navigation.NavigationWindow>, <xref:System.Windows.Controls.Frame>).  \n  \n-   Additional data, if the navigation was initiated by calling either <xref:System.Windows.Navigation.NavigationService.Navigate%2A> or <xref:System.Windows.Navigation.NavigationService.Navigate%2A>.  \n  \n-   Response details (using a <xref:System.Net.WebResponse> object).  \n  \n <xref:System.Windows.Navigation.NavigationService.LoadCompleted> is not raised when the source page could not be found or loaded, in which case <xref:System.Windows.Navigation.NavigationService.NavigationFailed> is raised.  \n  \n> [!NOTE]\n>  When <xref:System.Windows.Navigation.NavigationService> raises <xref:System.Windows.Navigation.NavigationService.LoadCompleted>, it also raises <xref:System.Windows.Application.LoadCompleted?displayProperty=fullName> event on the <xref:System.Windows.Application> object."
+  example:
+  - "The following example shows how to handle <xref:System.Windows.Navigation.NavigationService.LoadCompleted>.  \n  \n [!code-csharp[NavigationServiceSnippets#MainWindowLoadCompletedCODE](~/samples/snippets/csharp/VS_Snippets_Wpf/NavigationServiceSnippets/CSharp/MainWindow.xaml.cs#mainwindowloadcompletedcode)]\n [!code-vb[NavigationServiceSnippets#MainWindowLoadCompletedCODE](~/samples/snippets/visualbasic/VS_Snippets_Wpf/NavigationServiceSnippets/visualbasic/mainwindow.xaml.vb#mainwindowloadcompletedcode)]"
+  syntax:
+    content: public event System.Windows.Navigation.LoadCompletedEventHandler LoadCompleted;
+    return:
+      type: System.Windows.Navigation.LoadCompletedEventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.Navigate(System.Uri,System.Object,System.Boolean)
+  commentId: M:System.Windows.Navigation.NavigationService.Navigate(System.Uri,System.Object,System.Boolean)
+  id: Navigate(System.Uri,System.Object,System.Boolean)
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: Navigate(Uri, Object, Boolean)
+  nameWithType: NavigationService.Navigate(Uri, Object, Boolean)
+  fullName: NavigationService.Navigate(Uri, Object, Boolean)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Navigate asynchronously to source content located at a [!INCLUDE[TLA#tla_uri](~/includes/tlasharptla-uri-md.md)], pass an object containing navigation state for processing during navigation, and sandbox the content.
+  remarks: "This method is only for standalone applications and [!INCLUDE[TLA#tla_xaml](~/includes/tlasharptla-xaml-md.md)] content.  \n  \n This method exhibits the same behavior as <xref:System.Windows.Navigation.NavigationService.Navigate%2A?displayProperty=fullName>, and extends it by ensuring that the content that is being downloaded is placed into a partial trust security sandbox (with the default Internet zone set of permissions - see [WPF Partial Trust Security](~/docs/framework/wpf/wpf-partial-trust-security.md))."
+  syntax:
+    content: public bool Navigate (Uri source, object navigationState, bool sandboxExternalContent);
+    parameters:
+    - id: source
+      type: System.Uri
+      description: A <xref href="System.Uri"></xref> object initialized with the [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)] for the desired content.
+    - id: navigationState
+      type: System.Object
+      description: An object that contains data to be used for processing during navigation.
+    - id: sandboxExternalContent
+      type: System.Boolean
+      description: Download content into a partial trust security sandbox (with the default Internet zone set of permissions, if `true`. The default is `false`.
+    return:
+      type: System.Boolean
+      description: '`true` if a navigation is not canceled; otherwise, `false`.'
+  overload: System.Windows.Navigation.NavigationService.Navigate*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.Navigate(System.Uri,System.Object)
+  commentId: M:System.Windows.Navigation.NavigationService.Navigate(System.Uri,System.Object)
+  id: Navigate(System.Uri,System.Object)
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: Navigate(Uri, Object)
+  nameWithType: NavigationService.Navigate(Uri, Object)
+  fullName: NavigationService.Navigate(Uri, Object)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Navigate asynchronously to source content located at a [!INCLUDE[TLA#tla_uri](~/includes/tlasharptla-uri-md.md)], and pass an object that contains data to be used for processing during navigation.
+  remarks: "Since navigations are asynchronous, it is possible for multiple navigations to be in progress at the same time. For example, if there are two child frames on a single page, both frames could be navigating. In this case, the various navigation events that are raised by <xref:System.Windows.Navigation.NavigationService> may be raised multiple times, one for each piece of content that is being navigated to, and not necessarily in order that the navigations were requested. Consequently, if a particular navigation request needs to process data that is specific to the individual request, it cannot use data that is available to all navigation requests. Instead, you can use `navigationState` to pass data for navigation processing that is specific to one navigation request.  \n  \n The following event arguments provide access to navigation state:  \n  \n-   <xref:System.Windows.Navigation.NavigatingCancelEventArgs.ExtraData%2A> (passed to the <xref:System.Windows.Navigation.NavigationService.Navigating> event).  \n  \n-   <xref:System.Windows.Navigation.NavigationEventArgs.ExtraData%2A> (passed to the <xref:System.Windows.Navigation.NavigationService.Navigated>, <xref:System.Windows.Navigation.NavigationService.NavigationStopped>, <xref:System.Windows.Navigation.NavigationService.LoadCompleted> event handlers)."
+  example:
+  - "The following example demonstrates navigating to a [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)] and passing navigation state.  \n  \n [!code-csharp[NavigationServiceNavigateUriStateSnippets#MainWindowCODE](~/samples/snippets/csharp/VS_Snippets_Wpf/NavigationServiceNavigateUriStateSnippets/CSharp/MainWindow.xaml.cs#mainwindowcode)]\n [!code-vb[NavigationServiceNavigateUriStateSnippets#MainWindowCODE](~/samples/snippets/visualbasic/VS_Snippets_Wpf/NavigationServiceNavigateUriStateSnippets/visualbasic/mainwindow.xaml.vb#mainwindowcode)]"
+  syntax:
+    content: public bool Navigate (Uri source, object navigationState);
+    parameters:
+    - id: source
+      type: System.Uri
+      description: A <xref href="System.Uri"></xref> object initialized with the [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)] for the desired content.
+    - id: navigationState
+      type: System.Object
+      description: An object that contains data to be used for processing during navigation.
+    return:
+      type: System.Boolean
+      description: '`true` if a navigation is not canceled; otherwise, `false`.'
+  overload: System.Windows.Navigation.NavigationService.Navigate*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Navigation.NavigationService.Navigate(System.Uri)
+  commentId: M:System.Windows.Navigation.NavigationService.Navigate(System.Uri)
+  id: Navigate(System.Uri)
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: Navigate(Uri)
+  nameWithType: NavigationService.Navigate(Uri)
+  fullName: NavigationService.Navigate(Uri)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Navigate asynchronously to content that is specified by a [!INCLUDE[TLA#tla_uri](~/includes/tlasharptla-uri-md.md)].
+  remarks: "The value of `source` can be a Web [!INCLUDE[TLA#tla_url](~/includes/tlasharptla-url-md.md)] or a valid pack [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)] (see [Pack URIs in WPF](~/docs/framework/wpf/app-development/pack-uris-in-wpf.md)).  \n  \n <xref:System.Windows.Navigation.NavigationService.Navigate%2A> will navigate to the [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)] specified by `source` if the following conditions are true:  \n  \n-   The <xref:System.Windows.Navigation.NavigationService.Navigating> event is not cancelled.  \n  \n-   A web request (see <xref:System.Windows.Navigation.NavigationService.Navigating>) can be created.  \n  \n If `source` is `null`, the existing content (<xref:System.Windows.Navigation.NavigationService.Content%2A>) is cleared.  \n  \n> [!NOTE]\n>  When downloading Web content, you may receive a Web exception (for example, 404: File Not Found). You can handle such exceptions from <xref:System.Windows.Navigation.NavigationService.NavigationFailed>.  \n  \n You can use <xref:System.Windows.Navigation.NavigationService.Navigate%2A> to navigate to a content fragment. If the content identified by the [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)] is the current content, it is not downloaded again."
+  example:
+  - "The following example shows how to navigate to a [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)].  \n  \n [!code-csharp[NavigationServiceSnippets#MainWindowNavigateCODE](~/samples/snippets/csharp/VS_Snippets_Wpf/NavigationServiceSnippets/CSharp/MainWindow.xaml.cs#mainwindownavigatecode)]\n [!code-vb[NavigationServiceSnippets#MainWindowNavigateCODE](~/samples/snippets/visualbasic/VS_Snippets_Wpf/NavigationServiceSnippets/visualbasic/mainwindow.xaml.vb#mainwindownavigatecode)]"
+  syntax:
+    content: public bool Navigate (Uri source);
+    parameters:
+    - id: source
+      type: System.Uri
+      description: A <xref href="System.Uri"></xref> object initialized with the [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)] for the desired content.
+    return:
+      type: System.Boolean
+      description: '`true` if a navigation is not canceled; otherwise, `false`.'
+  overload: System.Windows.Navigation.NavigationService.Navigate*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.Navigate(System.Object)
+  commentId: M:System.Windows.Navigation.NavigationService.Navigate(System.Object)
+  id: Navigate(System.Object)
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: Navigate(Object)
+  nameWithType: NavigationService.Navigate(Object)
+  fullName: NavigationService.Navigate(Object)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Navigate asynchronously to content that is contained by an object.
+  remarks: "<xref:System.Windows.Navigation.NavigationService.Navigate%2A> will navigate to the <xref:System.Object> specified by `root` if the following conditions are true:  \n  \n-   The <xref:System.Windows.Navigation.NavigationService.Navigating> event is not cancelled.  \n  \n-   A web request (see <xref:System.Windows.Navigation.NavigationService.Navigating>) can be created.  \n  \n If `root` is `null`, the existing content (<xref:System.Windows.Navigation.NavigationService.Content%2A>) is cleared.  \n  \n> [!NOTE]\n>  When downloading Web content, you may receive a Web exception (for example, 404: File Not Found). You can handle such exceptions from <xref:System.Windows.Navigation.NavigationService.NavigationFailed>."
+  example:
+  - "The following example shows how to navigate to a <xref:System.Windows.Controls.Page> object containing the source content tree.  \n  \n [!code-csharp[NavigationServiceSnippets#MainWindowNavigateObjectCODE](~/samples/snippets/csharp/VS_Snippets_Wpf/NavigationServiceSnippets/CSharp/MainWindow.xaml.cs#mainwindownavigateobjectcode)]\n [!code-vb[NavigationServiceSnippets#MainWindowNavigateObjectCODE](~/samples/snippets/visualbasic/VS_Snippets_Wpf/NavigationServiceSnippets/visualbasic/mainwindow.xaml.vb#mainwindownavigateobjectcode)]"
+  syntax:
+    content: public bool Navigate (object root);
+    parameters:
+    - id: root
+      type: System.Object
+      description: An object that contains the content to navigate to.
+    return:
+      type: System.Boolean
+      description: '`true` if a navigation is not canceled; otherwise, `false`.'
+  overload: System.Windows.Navigation.NavigationService.Navigate*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Navigation.NavigationService.Navigate(System.Object,System.Object)
+  commentId: M:System.Windows.Navigation.NavigationService.Navigate(System.Object,System.Object)
+  id: Navigate(System.Object,System.Object)
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: Navigate(Object, Object)
+  nameWithType: NavigationService.Navigate(Object, Object)
+  fullName: NavigationService.Navigate(Object, Object)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Navigate asynchronously to content that is contained by an object, and pass an object that contains data to be used for processing during navigation.
+  remarks: This method has the same behavior as <xref:System.Windows.Navigation.NavigationService.Navigate%2A?displayProperty=fullName>, although an object is passed instead of a [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)].
+  example:
+  - "The following example shows how to navigate to a <xref:System.Windows.Controls.Page> object containing the source content, and passing navigation state.  \n  \n [!code-csharp[NavigationServiceNavigateObjectStateSnippets#MainWindowCODE](~/samples/snippets/csharp/VS_Snippets_Wpf/NavigationServiceNavigateObjectStateSnippets/CSharp/MainWindow.xaml.cs#mainwindowcode)]\n [!code-vb[NavigationServiceNavigateObjectStateSnippets#MainWindowCODE](~/samples/snippets/visualbasic/VS_Snippets_Wpf/NavigationServiceNavigateObjectStateSnippets/visualbasic/mainwindow.xaml.vb#mainwindowcode)]"
+  syntax:
+    content: public bool Navigate (object root, object navigationState);
+    parameters:
+    - id: root
+      type: System.Object
+      description: An object that contains the content to navigate to.
+    - id: navigationState
+      type: System.Object
+      description: An object that contains data to be used for processing during navigation.
+    return:
+      type: System.Boolean
+      description: '`true` if a navigation is not canceled; otherwise, `false`.'
+  overload: System.Windows.Navigation.NavigationService.Navigate*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.Navigated
+  commentId: E:System.Windows.Navigation.NavigationService.Navigated
+  id: Navigated
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: Navigated
+  nameWithType: NavigationService.Navigated
+  fullName: NavigationService.Navigated
+  type: Event
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Occurs when the content that is being navigated to has been found, and is available from the <xref href="System.Windows.Navigation.NavigationService.Content"></xref> property, although it may not have completed loading.
+  remarks: "You handle <xref:System.Windows.Navigation.NavigationService.Navigated> if you need to discover pertinent information regarding the navigation request when downloading commences. This information is available from the <xref:System.Windows.Navigation.NavigationEventArgs> object that is passed to the <xref:System.Windows.Navigation.NavigationService.Navigated> event handler, and includes:  \n  \n-   The source page. When <xref:System.Windows.Navigation.NavigationService.Navigated> is raised, at least part of the source page's [!INCLUDE[TLA#tla_ui](~/includes/tlasharptla-ui-md.md)] tree has been parsed, and attached to target content control.  \n  \n-   The requested [!INCLUDE[TLA#tla_uri](~/includes/tlasharptla-uri-md.md)].  \n  \n-   The navigator (<xref:System.Windows.Navigation.NavigationWindow>, <xref:System.Windows.Controls.Frame>).  \n  \n-   Additional data, if the navigation was initiated by calling either <xref:System.Windows.Navigation.NavigationService.Navigate%2A> or <xref:System.Windows.Navigation.NavigationService.Navigate%2A>.  \n  \n-   Response details (using a <xref:System.Net.WebResponse> object).  \n  \n <xref:System.Windows.Navigation.NavigationService.Navigated> is not raised when the source page could not be found or loaded, in which case <xref:System.Windows.Navigation.NavigationService.NavigationFailed> is raised.  \n  \n> [!NOTE]\n>  When <xref:System.Windows.Navigation.NavigationService> raises <xref:System.Windows.Navigation.NavigationService.NavigationFailed>, it also raises <xref:System.Windows.Application.NavigationFailed?displayProperty=fullName> event on the <xref:System.Windows.Application> object."
+  example:
+  - "The following example shows how to handle <xref:System.Windows.Navigation.NavigationService.Navigated>.  \n  \n [!code-csharp[NavigationServiceSnippets#MainWindowNavigatedCODE](~/samples/snippets/csharp/VS_Snippets_Wpf/NavigationServiceSnippets/CSharp/MainWindow.xaml.cs#mainwindownavigatedcode)]\n [!code-vb[NavigationServiceSnippets#MainWindowNavigatedCODE](~/samples/snippets/visualbasic/VS_Snippets_Wpf/NavigationServiceSnippets/visualbasic/mainwindow.xaml.vb#mainwindownavigatedcode)]"
+  syntax:
+    content: public event System.Windows.Navigation.NavigatedEventHandler Navigated;
+    return:
+      type: System.Windows.Navigation.NavigatedEventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.Navigating
+  commentId: E:System.Windows.Navigation.NavigationService.Navigating
+  id: Navigating
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: Navigating
+  nameWithType: NavigationService.Navigating
+  fullName: NavigationService.Navigating
+  type: Event
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Occurs when a new navigation is requested.
+  remarks: "<xref:System.Windows.Navigation.NavigationService.Navigating> is raised when a new navigation is requested, but before the source content is requested, including when:  \n  \n-   <xref:System.Windows.Navigation.NavigationService.Navigate%2A> is called.  \n  \n-   <xref:System.Windows.Navigation.NavigationService.GoBack%2A> or <xref:System.Windows.Navigation.NavigationService.GoForward%2A> is called (or an entry is selected from a navigation [!INCLUDE[TLA2#tla_ui](~/includes/tla2sharptla-ui-md.md)]).  \n  \n-   A content fragment is navigated to.  \n  \n You handle <xref:System.Windows.Navigation.NavigationService.Navigating> if you need to discover pertinent information regarding the navigation request before navigation starts. This information is available from the <xref:System.Windows.Navigation.NavigatingCancelEventArgs> object that is passed to the <xref:System.Windows.Navigation.NavigationService.Navigating> event handler.  \n  \n A <xref:System.Net.WebRequest> object for the navigation is created and available from the <xref:System.Windows.Navigation.NavigatingCancelEventArgs> parameter; because the actual request hasn't been made at this point, you can reconfigure the <xref:System.Net.WebRequest> object, if necessary.  \n  \n You also handle <xref:System.Windows.Navigation.NavigatingCancelEventArgs> to cancel navigation, if required, by setting <xref:System.ComponentModel.CancelEventArgs.Cancel%2A> to true. If you cancel navigation, no other navigation events are raised.  \n  \n> [!NOTE]\n>  If your application is hosted in the browser, you cannot prevent the user from navigating away from your application by canceling the <xref:System.Windows.Navigation.NavigationService.Navigating> event.  \n  \n After the first piece of content is navigated to by a navigator (<xref:System.Windows.Navigation.NavigationWindow>, <xref:System.Windows.Controls.Frame>), each piece of content that is navigated away from is added to navigation history. If you need to save state information about the content you are navigating away from, you can add the state to the journal entry for that content by setting <xref:System.Windows.Navigation.NavigatingCancelEventArgs.ContentStateToSave%2A> with a <xref:System.Windows.Navigation.CustomContentState> object.  \n  \n> [!NOTE]\n>  When <xref:System.Windows.Navigation.NavigationService> raises <xref:System.Windows.Navigation.NavigationService.Navigating>, it also raises <xref:System.Windows.Application.Navigating?displayProperty=fullName> event on the <xref:System.Windows.Application> object."
+  example:
+  - "The following example shows how to handle <xref:System.Windows.Navigation.NavigationService.Navigating> to detect whether a request to refresh static content has been made and, if so, to cancel the request.  \n  \n <xref:System.Windows.Navigation.NavigationService.Navigating>.  \n  \n [!code-csharp[NavigationServiceSnippets#MainWindowNavigatingCODE](~/samples/snippets/csharp/VS_Snippets_Wpf/NavigationServiceSnippets/CSharp/MainWindow.xaml.cs#mainwindownavigatingcode)]\n [!code-vb[NavigationServiceSnippets#MainWindowNavigatingCODE](~/samples/snippets/visualbasic/VS_Snippets_Wpf/NavigationServiceSnippets/visualbasic/mainwindow.xaml.vb#mainwindownavigatingcode)]"
+  syntax:
+    content: public event System.Windows.Navigation.NavigatingCancelEventHandler Navigating;
+    return:
+      type: System.Windows.Navigation.NavigatingCancelEventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.NavigationFailed
+  commentId: E:System.Windows.Navigation.NavigationService.NavigationFailed
+  id: NavigationFailed
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: NavigationFailed
+  nameWithType: NavigationService.NavigationFailed
+  fullName: NavigationService.NavigationFailed
+  type: Event
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Occurs when an error occurs while navigating to the requested content.
+  remarks: "When either a <xref:System.Net.WebException> or an <xref:System.IO.IOException> is thrown during a navigation, the <xref:System.Windows.Navigation.NavigationService.NavigationFailed> event is raised. <xref:System.Windows.Navigation.NavigationService.NavigationFailed> is passed a <xref:System.Windows.Navigation.NavigationFailedEventArgs> that encapsulates information about both the exception and the details of the navigation that caused the exception.  \n  \n When an exception results from a failed navigation, and is unhandled, the following events are raised in the order listed:  \n  \n-   <xref:System.Windows.Navigation.NavigationService.NavigationFailed?displayProperty=fullName>.  \n  \n-   <xref:System.Windows.Controls.Frame.NavigationFailed?displayProperty=fullName> or <xref:System.Windows.Navigation.NavigationWindow.NavigationFailed?displayProperty=fullName>.  \n  \n-   <xref:System.Windows.Application.NavigationFailed?displayProperty=fullName>.  \n  \n-   <xref:System.Windows.Application.DispatcherUnhandledException>.  \n  \n If a navigator (<xref:System.Windows.Navigation.NavigationWindow>, <xref:System.Windows.Controls.Frame>) is hosted by one or more navigators, `NavigationFailed` is not raised on any of them."
+  example:
+  - "The following example shows how to handle <xref:System.Windows.Navigation.NavigationService.NavigationFailed>.  \n  \n [!code-csharp[NavigationServiceSnippets#MainWindowNavigationFailedCODE](~/samples/snippets/csharp/VS_Snippets_Wpf/NavigationServiceSnippets/CSharp/MainWindow.xaml.cs#mainwindownavigationfailedcode)]\n [!code-vb[NavigationServiceSnippets#MainWindowNavigationFailedCODE](~/samples/snippets/visualbasic/VS_Snippets_Wpf/NavigationServiceSnippets/visualbasic/mainwindow.xaml.vb#mainwindownavigationfailedcode)]"
+  syntax:
+    content: public event System.Windows.Navigation.NavigationFailedEventHandler NavigationFailed;
+    return:
+      type: System.Windows.Navigation.NavigationFailedEventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.NavigationProgress
+  commentId: E:System.Windows.Navigation.NavigationService.NavigationProgress
+  id: NavigationProgress
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: NavigationProgress
+  nameWithType: NavigationService.NavigationProgress
+  fullName: NavigationService.NavigationProgress
+  type: Event
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Occurs periodically during a download to provide navigation progress information.
+  remarks: "<xref:System.Windows.Navigation.NavigationService.NavigationProgress> is passed a <xref:System.Windows.Navigation.NavigationProgressEventArgs> which exposes the following progress information:  \n  \n-   Number of bytes downloaded so far (<xref:System.Windows.Navigation.NavigationProgressEventArgs.BytesRead%2A>).  \n  \n-   Number of total bytes to download (<xref:System.Windows.Navigation.NavigationProgressEventArgs.MaxBytes%2A>).  \n  \n <xref:System.Windows.Navigation.NavigationService.NavigationProgress> is raised once for every 1024 bytes of content downloaded, and once more if the number of remaining bytes is ever less than 1024 bytes. For this reason, handling <xref:System.Windows.Navigation.NavigationService.NavigationProgress> provides a useful way to track and display the progress of a current download.  \n  \n <xref:System.Windows.Navigation.NavigationService.NavigationProgress> won't be raised in some cases, such as when the same piece of content is navigated to, or when a content fragment is navigated to on content that is currently loaded (that is, the value of the <xref:System.Windows.Navigation.NavigationService.Content%2A> property).  \n  \n When navigating to a compiled XAML resource, the final <xref:System.Windows.Navigation.NavigationService.NavigationProgress> event may not be raised. This means that at the end of the download, the last reported <xref:System.Windows.Navigation.NavigationProgressEventArgs.BytesRead%2A> value may not equal the <xref:System.Windows.Navigation.NavigationProgressEventArgs.MaxBytes%2A> value. Handle the <xref:System.Windows.Navigation.NavigationService.LoadCompleted> event to be notified when the navigation has finished.  \n  \n> [!NOTE]\n>  When <xref:System.Windows.Navigation.NavigationService> raises <xref:System.Windows.Navigation.NavigationService.NavigationProgress>, it also raises <xref:System.Windows.Application.NavigationProgress?displayProperty=fullName> event on the <xref:System.Windows.Application> object."
+  example:
+  - "The following example shows how to handle <xref:System.Windows.Navigation.NavigationService.NavigationProgress>.  \n  \n [!code-csharp[NavigationServiceSnippets#MainWindowNavigationProgressCODE](~/samples/snippets/csharp/VS_Snippets_Wpf/NavigationServiceSnippets/CSharp/MainWindow.xaml.cs#mainwindownavigationprogresscode)]\n [!code-vb[NavigationServiceSnippets#MainWindowNavigationProgressCODE](~/samples/snippets/visualbasic/VS_Snippets_Wpf/NavigationServiceSnippets/visualbasic/mainwindow.xaml.vb#mainwindownavigationprogresscode)]"
+  syntax:
+    content: public event System.Windows.Navigation.NavigationProgressEventHandler NavigationProgress;
+    return:
+      type: System.Windows.Navigation.NavigationProgressEventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.NavigationStopped
+  commentId: E:System.Windows.Navigation.NavigationService.NavigationStopped
+  id: NavigationStopped
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: NavigationStopped
+  nameWithType: NavigationService.NavigationStopped
+  fullName: NavigationService.NavigationStopped
+  type: Event
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Occurs when the <xref href="System.Windows.Navigation.NavigationService.StopLoading"></xref> method is called, or when a new navigation is requested while a current navigation is in progress.
+  remarks: "You handle <xref:System.Windows.Navigation.NavigationService.NavigationStopped> if you need to discover pertinent information regarding the navigation request when downloading is stopped. This information is available from the <xref:System.Windows.Navigation.NavigationEventArgs> object that is passed to the <xref:System.Windows.Navigation.NavigationService.NavigationStopped> event handler, and includes:  \n  \n-   The requested [!INCLUDE[TLA#tla_uri](~/includes/tlasharptla-uri-md.md)].  \n  \n-   The navigator (<xref:System.Windows.Navigation.NavigationWindow>, <xref:System.Windows.Controls.Frame>).  \n  \n-   Additional data, if the navigation was initiated by calling either <xref:System.Windows.Navigation.NavigationService.Navigate%2A?displayProperty=fullName> or <xref:System.Windows.Navigation.NavigationService.Navigate%2A?displayProperty=fullName>.  \n  \n> [!NOTE]\n>  When <xref:System.Windows.Navigation.NavigationService> raises <xref:System.Windows.Navigation.NavigationService.NavigationStopped>, it also raises <xref:System.Windows.Application.NavigationStopped?displayProperty=fullName> event on the <xref:System.Windows.Application> object."
+  example:
+  - "The following example shows how to handle <xref:System.Windows.Navigation.NavigationService.NavigationStopped>.  \n  \n [!code-csharp[NavigationServiceSnippets#MainWindowNavigationStoppedCODE](~/samples/snippets/csharp/VS_Snippets_Wpf/NavigationServiceSnippets/CSharp/MainWindow.xaml.cs#mainwindownavigationstoppedcode)]\n [!code-vb[NavigationServiceSnippets#MainWindowNavigationStoppedCODE](~/samples/snippets/visualbasic/VS_Snippets_Wpf/NavigationServiceSnippets/visualbasic/mainwindow.xaml.vb#mainwindownavigationstoppedcode)]"
+  syntax:
+    content: public event System.Windows.Navigation.NavigationStoppedEventHandler NavigationStopped;
+    return:
+      type: System.Windows.Navigation.NavigationStoppedEventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.Refresh
+  commentId: M:System.Windows.Navigation.NavigationService.Refresh
+  id: Refresh
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: Refresh()
+  nameWithType: NavigationService.Refresh()
+  fullName: NavigationService.Refresh()
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Reloads the current content.
+  remarks: "If the current content (specified by the value of the <xref:System.Windows.Navigation.NavigationService.Source%2A> property) is navigated to again, <xref:System.Windows.Navigation.NavigationService> does not download the content again. To force <xref:System.Windows.Navigation.NavigationService> to re-navigate to the content, call <xref:System.Windows.Navigation.NavigationService.Refresh%2A>.  \n  \n Note that if the current content is navigated to again, whether by calling <xref:System.Windows.Navigation.NavigationService.Navigate%2A> or <xref:System.Windows.Navigation.NavigationService.Refresh%2A>, a new entry is not added to navigation history."
+  syntax:
+    content: public void Refresh ();
+    parameters: []
+  overload: System.Windows.Navigation.NavigationService.Refresh*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.RemoveBackEntry
+  commentId: M:System.Windows.Navigation.NavigationService.RemoveBackEntry
+  id: RemoveBackEntry
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: RemoveBackEntry()
+  nameWithType: NavigationService.RemoveBackEntry()
+  fullName: NavigationService.RemoveBackEntry()
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Removes the most recent journal entry from back history.
+  remarks: If two or more navigators (<xref:System.Windows.Navigation.NavigationWindow>, <xref:System.Windows.Controls.Frame>) share the same navigation history, one navigator can use <xref:System.Windows.Navigation.NavigationService.RemoveBackEntry%2A> to retrieve the back navigation history entry for a navigation that took place in another navigator.
+  syntax:
+    content: public System.Windows.Navigation.JournalEntry RemoveBackEntry ();
+    parameters: []
+    return:
+      type: System.Windows.Navigation.JournalEntry
+      description: The most recent <xref href="System.Windows.Navigation.JournalEntry"></xref> in back navigation history, if there is one.
+  overload: System.Windows.Navigation.NavigationService.RemoveBackEntry*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.Source
+  commentId: P:System.Windows.Navigation.NavigationService.Source
+  id: Source
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: Source
+  nameWithType: NavigationService.Source
+  fullName: NavigationService.Source
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Gets or sets the [!INCLUDE[TLA#tla_uri](~/includes/tlasharptla-uri-md.md)] of the current content, or the [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)] of new content that is currently being navigated to.
+  remarks: "If you set this property to a different [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)] than the one currently being displayed, the navigator (<xref:System.Windows.Navigation.NavigationWindow>, <xref:System.Windows.Controls.Frame>) navigates to the specified [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)].  \n  \n <xref:System.Windows.Navigation.NavigationService.Source%2A> is set to the content that is loaded from the [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)] that is navigated to, unless the navigation is canceled.  \n  \n <xref:System.Windows.Navigation.NavigationService.Source%2A> can be set with a fragment-only [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)], and can be set to `null`."
+  syntax:
+    content: public Uri Source { get; set; }
+    return:
+      type: System.Uri
+      description: A <xref href="System.Uri"></xref> that contains the [!INCLUDE[TLA2#tla_uri](~/includes/tla2sharptla-uri-md.md)] for the current content, or the content that is currently being navigated to.
+  overload: System.Windows.Navigation.NavigationService.Source*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Navigation.NavigationService.StopLoading
+  commentId: M:System.Windows.Navigation.NavigationService.StopLoading
+  id: StopLoading
+  parent: System.Windows.Navigation.NavigationService
+  langs:
+  - csharp
+  name: StopLoading()
+  nameWithType: NavigationService.StopLoading()
+  fullName: NavigationService.StopLoading()
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Navigation
+  summary: Stops further downloading of content for the current navigation request.
+  remarks: "<xref:System.Windows.Navigation.NavigationService.StopLoading%2A> can be called as soon as <xref:System.Windows.Navigation.NavigationService.Navigate%2A> returns, and stops navigation that is in progress in child frames.  \n  \n (<xref:System.Windows.Controls.Frame>).  \n  \n Calling the <xref:System.Windows.Navigation.NavigationService.StopLoading%2A> method raises the <xref:System.Windows.Navigation.NavigationService.NavigationStopped> event.  \n  \n> [!NOTE]\n>  <xref:System.Windows.Navigation.NavigationService.StopLoading%2A> must be called on the same thread that initiated the navigation."
+  example:
+  - "The following example demonstrates how to stop loading.  \n  \n [!code-csharp[NavigationServiceSnippets#MainWindowStopLoadingCODE](~/samples/snippets/csharp/VS_Snippets_Wpf/NavigationServiceSnippets/CSharp/MainWindow.xaml.cs#mainwindowstoploadingcode)]\n [!code-vb[NavigationServiceSnippets#MainWindowStopLoadingCODE](~/samples/snippets/visualbasic/VS_Snippets_Wpf/NavigationServiceSnippets/visualbasic/mainwindow.xaml.vb#mainwindowstoploadingcode)]"
+  syntax:
+    content: public void StopLoading ();
+    parameters: []
+  overload: System.Windows.Navigation.NavigationService.StopLoading*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.InvalidOperationException
+  parent: System
+  isExternal: false
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.Windows.Navigation.NavigationService.AddBackEntry(System.Windows.Navigation.CustomContentState)
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: AddBackEntry(CustomContentState)
+  nameWithType: NavigationService.AddBackEntry(CustomContentState)
+  fullName: NavigationService.AddBackEntry(CustomContentState)
+- uid: System.Windows.Navigation.CustomContentState
+  parent: System.Windows.Navigation
+  isExternal: false
+  name: CustomContentState
+  nameWithType: CustomContentState
+  fullName: System.Windows.Navigation.CustomContentState
+- uid: System.Windows.Navigation.NavigationService.CanGoBack
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: CanGoBack
+  nameWithType: NavigationService.CanGoBack
+  fullName: NavigationService.CanGoBack
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Windows.Navigation.NavigationService.CanGoForward
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: CanGoForward
+  nameWithType: NavigationService.CanGoForward
+  fullName: NavigationService.CanGoForward
+- uid: System.Windows.Navigation.NavigationService.Content
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: Content
+  nameWithType: NavigationService.Content
+  fullName: NavigationService.Content
+- uid: System.Windows.Navigation.NavigationService.CurrentSource
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: CurrentSource
+  nameWithType: NavigationService.CurrentSource
+  fullName: NavigationService.CurrentSource
+- uid: System.Uri
+  parent: System
+  isExternal: false
+  name: Uri
+  nameWithType: Uri
+  fullName: System.Uri
+- uid: System.Windows.Navigation.NavigationService.FragmentNavigation
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: FragmentNavigation
+  nameWithType: NavigationService.FragmentNavigation
+  fullName: NavigationService.FragmentNavigation
+- uid: System.Windows.Navigation.FragmentNavigationEventHandler
+  parent: System.Windows.Navigation
+  isExternal: false
+  name: FragmentNavigationEventHandler
+  nameWithType: FragmentNavigationEventHandler
+  fullName: System.Windows.Navigation.FragmentNavigationEventHandler
+- uid: System.Windows.Navigation.NavigationService.GetNavigationService(System.Windows.DependencyObject)
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: GetNavigationService(DependencyObject)
+  nameWithType: NavigationService.GetNavigationService(DependencyObject)
+  fullName: NavigationService.GetNavigationService(DependencyObject)
+- uid: System.Windows.Navigation.NavigationService
+  parent: System.Windows.Navigation
+  isExternal: false
+  name: NavigationService
+  nameWithType: NavigationService
+  fullName: System.Windows.Navigation.NavigationService
+- uid: System.Windows.DependencyObject
+  parent: System.Windows
+  isExternal: false
+  name: DependencyObject
+  nameWithType: DependencyObject
+  fullName: System.Windows.DependencyObject
+- uid: System.Windows.Navigation.NavigationService.GoBack
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: GoBack()
+  nameWithType: NavigationService.GoBack()
+  fullName: NavigationService.GoBack()
+- uid: System.Windows.Navigation.NavigationService.GoForward
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: GoForward()
+  nameWithType: NavigationService.GoForward()
+  fullName: NavigationService.GoForward()
+- uid: System.Windows.Navigation.NavigationService.LoadCompleted
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: LoadCompleted
+  nameWithType: NavigationService.LoadCompleted
+  fullName: NavigationService.LoadCompleted
+- uid: System.Windows.Navigation.LoadCompletedEventHandler
+  parent: System.Windows.Navigation
+  isExternal: false
+  name: LoadCompletedEventHandler
+  nameWithType: LoadCompletedEventHandler
+  fullName: System.Windows.Navigation.LoadCompletedEventHandler
+- uid: System.Windows.Navigation.NavigationService.Navigate(System.Uri,System.Object,System.Boolean)
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: Navigate(Uri, Object, Boolean)
+  nameWithType: NavigationService.Navigate(Uri, Object, Boolean)
+  fullName: NavigationService.Navigate(Uri, Object, Boolean)
+- uid: System.Windows.Navigation.NavigationService.Navigate(System.Uri,System.Object)
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: Navigate(Uri, Object)
+  nameWithType: NavigationService.Navigate(Uri, Object)
+  fullName: NavigationService.Navigate(Uri, Object)
+- uid: System.Windows.Navigation.NavigationService.Navigate(System.Uri)
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: Navigate(Uri)
+  nameWithType: NavigationService.Navigate(Uri)
+  fullName: NavigationService.Navigate(Uri)
+- uid: System.Windows.Navigation.NavigationService.Navigate(System.Object)
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: Navigate(Object)
+  nameWithType: NavigationService.Navigate(Object)
+  fullName: NavigationService.Navigate(Object)
+- uid: System.Windows.Navigation.NavigationService.Navigate(System.Object,System.Object)
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: Navigate(Object, Object)
+  nameWithType: NavigationService.Navigate(Object, Object)
+  fullName: NavigationService.Navigate(Object, Object)
+- uid: System.Windows.Navigation.NavigationService.Navigated
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: Navigated
+  nameWithType: NavigationService.Navigated
+  fullName: NavigationService.Navigated
+- uid: System.Windows.Navigation.NavigatedEventHandler
+  parent: System.Windows.Navigation
+  isExternal: false
+  name: NavigatedEventHandler
+  nameWithType: NavigatedEventHandler
+  fullName: System.Windows.Navigation.NavigatedEventHandler
+- uid: System.Windows.Navigation.NavigationService.Navigating
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: Navigating
+  nameWithType: NavigationService.Navigating
+  fullName: NavigationService.Navigating
+- uid: System.Windows.Navigation.NavigatingCancelEventHandler
+  parent: System.Windows.Navigation
+  isExternal: false
+  name: NavigatingCancelEventHandler
+  nameWithType: NavigatingCancelEventHandler
+  fullName: System.Windows.Navigation.NavigatingCancelEventHandler
+- uid: System.Windows.Navigation.NavigationService.NavigationFailed
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: NavigationFailed
+  nameWithType: NavigationService.NavigationFailed
+  fullName: NavigationService.NavigationFailed
+- uid: System.Windows.Navigation.NavigationFailedEventHandler
+  parent: System.Windows.Navigation
+  isExternal: false
+  name: NavigationFailedEventHandler
+  nameWithType: NavigationFailedEventHandler
+  fullName: System.Windows.Navigation.NavigationFailedEventHandler
+- uid: System.Windows.Navigation.NavigationService.NavigationProgress
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: NavigationProgress
+  nameWithType: NavigationService.NavigationProgress
+  fullName: NavigationService.NavigationProgress
+- uid: System.Windows.Navigation.NavigationProgressEventHandler
+  parent: System.Windows.Navigation
+  isExternal: false
+  name: NavigationProgressEventHandler
+  nameWithType: NavigationProgressEventHandler
+  fullName: System.Windows.Navigation.NavigationProgressEventHandler
+- uid: System.Windows.Navigation.NavigationService.NavigationStopped
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: NavigationStopped
+  nameWithType: NavigationService.NavigationStopped
+  fullName: NavigationService.NavigationStopped
+- uid: System.Windows.Navigation.NavigationStoppedEventHandler
+  parent: System.Windows.Navigation
+  isExternal: false
+  name: NavigationStoppedEventHandler
+  nameWithType: NavigationStoppedEventHandler
+  fullName: System.Windows.Navigation.NavigationStoppedEventHandler
+- uid: System.Windows.Navigation.NavigationService.Refresh
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: Refresh()
+  nameWithType: NavigationService.Refresh()
+  fullName: NavigationService.Refresh()
+- uid: System.Windows.Navigation.NavigationService.RemoveBackEntry
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: RemoveBackEntry()
+  nameWithType: NavigationService.RemoveBackEntry()
+  fullName: NavigationService.RemoveBackEntry()
+- uid: System.Windows.Navigation.JournalEntry
+  parent: System.Windows.Navigation
+  isExternal: false
+  name: JournalEntry
+  nameWithType: JournalEntry
+  fullName: System.Windows.Navigation.JournalEntry
+- uid: System.Windows.Navigation.NavigationService.Source
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: Source
+  nameWithType: NavigationService.Source
+  fullName: NavigationService.Source
+- uid: System.Windows.Navigation.NavigationService.StopLoading
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: StopLoading()
+  nameWithType: NavigationService.StopLoading()
+  fullName: NavigationService.StopLoading()
+- uid: System.Windows.Navigation.NavigationService.AddBackEntry*
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: AddBackEntry
+  nameWithType: NavigationService.AddBackEntry
+  fullName: NavigationService.AddBackEntry
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+- uid: System.Windows.Navigation.NavigationService.CanGoBack*
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: CanGoBack
+  nameWithType: NavigationService.CanGoBack
+  fullName: NavigationService.CanGoBack
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+- uid: System.Windows.Navigation.NavigationService.CanGoForward*
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: CanGoForward
+  nameWithType: NavigationService.CanGoForward
+  fullName: NavigationService.CanGoForward
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+- uid: System.Windows.Navigation.NavigationService.Content*
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: Content
+  nameWithType: NavigationService.Content
+  fullName: NavigationService.Content
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+- uid: System.Windows.Navigation.NavigationService.CurrentSource*
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: CurrentSource
+  nameWithType: NavigationService.CurrentSource
+  fullName: NavigationService.CurrentSource
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+- uid: System.Windows.Navigation.NavigationService.GetNavigationService*
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: GetNavigationService
+  nameWithType: NavigationService.GetNavigationService
+  fullName: NavigationService.GetNavigationService
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+- uid: System.Windows.Navigation.NavigationService.GoBack*
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: GoBack
+  nameWithType: NavigationService.GoBack
+  fullName: NavigationService.GoBack
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+- uid: System.Windows.Navigation.NavigationService.GoForward*
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: GoForward
+  nameWithType: NavigationService.GoForward
+  fullName: NavigationService.GoForward
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+- uid: System.Windows.Navigation.NavigationService.Navigate*
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: Navigate
+  nameWithType: NavigationService.Navigate
+  fullName: NavigationService.Navigate
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+- uid: System.Windows.Navigation.NavigationService.Refresh*
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: Refresh
+  nameWithType: NavigationService.Refresh
+  fullName: NavigationService.Refresh
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+- uid: System.Windows.Navigation.NavigationService.RemoveBackEntry*
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: RemoveBackEntry
+  nameWithType: NavigationService.RemoveBackEntry
+  fullName: NavigationService.RemoveBackEntry
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+- uid: System.Windows.Navigation.NavigationService.Source*
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: Source
+  nameWithType: NavigationService.Source
+  fullName: NavigationService.Source
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+- uid: System.Windows.Navigation.NavigationService.StopLoading*
+  parent: System.Windows.Navigation.NavigationService
+  isExternal: false
+  name: StopLoading
+  nameWithType: NavigationService.StopLoading
+  fullName: NavigationService.StopLoading
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Navigation/NavigationService.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

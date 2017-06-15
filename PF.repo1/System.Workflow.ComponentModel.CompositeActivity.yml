@@ -1,0 +1,1916 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Workflow.ComponentModel.CompositeActivity
+  commentId: T:System.Workflow.ComponentModel.CompositeActivity
+  id: CompositeActivity
+  children:
+  - System.Workflow.ComponentModel.CompositeActivity.#ctor
+  - System.Workflow.ComponentModel.CompositeActivity.#ctor(System.Collections.Generic.IEnumerable{System.Workflow.ComponentModel.Activity})
+  - System.Workflow.ComponentModel.CompositeActivity.#ctor(System.String)
+  - System.Workflow.ComponentModel.CompositeActivity.Activities
+  - System.Workflow.ComponentModel.CompositeActivity.ApplyWorkflowChanges(System.Workflow.ComponentModel.WorkflowChanges)
+  - System.Workflow.ComponentModel.CompositeActivity.CanModifyActivities
+  - System.Workflow.ComponentModel.CompositeActivity.Dispose(System.Boolean)
+  - System.Workflow.ComponentModel.CompositeActivity.EnabledActivities
+  - System.Workflow.ComponentModel.CompositeActivity.GetDynamicActivities(System.Workflow.ComponentModel.Activity)
+  - System.Workflow.ComponentModel.CompositeActivity.HandleFault(System.Workflow.ComponentModel.ActivityExecutionContext,System.Exception)
+  - System.Workflow.ComponentModel.CompositeActivity.Initialize(System.IServiceProvider)
+  - System.Workflow.ComponentModel.CompositeActivity.OnActivityChangeAdd(System.Workflow.ComponentModel.ActivityExecutionContext,System.Workflow.ComponentModel.Activity)
+  - System.Workflow.ComponentModel.CompositeActivity.OnActivityChangeRemove(System.Workflow.ComponentModel.ActivityExecutionContext,System.Workflow.ComponentModel.Activity)
+  - System.Workflow.ComponentModel.CompositeActivity.OnActivityExecutionContextLoad(System.IServiceProvider)
+  - System.Workflow.ComponentModel.CompositeActivity.OnActivityExecutionContextUnload(System.IServiceProvider)
+  - System.Workflow.ComponentModel.CompositeActivity.OnListChanged(System.Workflow.ComponentModel.ActivityCollectionChangeEventArgs)
+  - System.Workflow.ComponentModel.CompositeActivity.OnListChanging(System.Workflow.ComponentModel.ActivityCollectionChangeEventArgs)
+  - System.Workflow.ComponentModel.CompositeActivity.OnWorkflowChangesCompleted(System.Workflow.ComponentModel.ActivityExecutionContext)
+  - System.Workflow.ComponentModel.CompositeActivity.Uninitialize(System.IServiceProvider)
+  langs:
+  - csharp
+  name: CompositeActivity
+  nameWithType: CompositeActivity
+  fullName: System.Workflow.ComponentModel.CompositeActivity
+  type: Class
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Derivative of <xref href="System.Workflow.ComponentModel.Activity"></xref> that is the base class for all activities that contain other activities. A <xref href="System.Workflow.ComponentModel.CompositeActivity"></xref> is responsible for managing the execution of its child activities.
+  remarks: "> [!NOTE]\n>  [!INCLUDE[DeprecatedContent](~/includes/deprecatedcontent-md.md)]  \n  \n A <xref:System.Workflow.ComponentModel.CompositeActivity> manages the execution of its child activities using <xref:System.Workflow.ComponentModel.ActivityExecutionContext> class methods and events defined on the <xref:System.Workflow.ComponentModel.Activity> class.  For example, a child activity is scheduled for execution using the <xref:System.Workflow.ComponentModel.ActivityExecutionContext.ExecuteActivity%2A> of <xref:System.Workflow.ComponentModel.ActivityExecutionContext>. A <xref:System.Workflow.ComponentModel.CompositeActivity> activity can be notified when a child activity completes its execution by subscribing to the <xref:System.Workflow.ComponentModel.Activity.Closed> event defined on <xref:System.Workflow.ComponentModel.Activity>.  \n  \n The workflow runtime enforces certain constraints on <xref:System.Workflow.ComponentModel.CompositeActivity> execution, the most fundamental of which is that a <xref:System.Workflow.ComponentModel.CompositeActivity> activity cannot move to the <xref:System.Workflow.ComponentModel.Activity.Closed> state if any child activities are still in a <xref:System.Workflow.ComponentModel.Activity.Executing>, <xref:System.Workflow.ComponentModel.Activity.Canceling>, <xref:System.Workflow.ComponentModel.Activity.Compensating>, or <xref:System.Workflow.ComponentModel.Activity.Faulting>, state."
+  example:
+  - "This example shows a basic `CompositeActivity` that executes its first child activity for execution. When the child activity moves to the Closed state, the composite activity is notified and then completes its execution.  \n  \n```csharp  \npublic class HasOneChildActivity : CompositeActivity  \n{  \n    protected override ActivityExecutionStatus Execute(ActivityExecutionContext executionContext)  \n    {  \n        Activity child = this.EnabledActivities[0];  \n        child.Closed += this.ChildClosed;  \n        executionContext.ExecuteActivity(child);  \n  \n        return ActivityExecutionStatus.Executing;  \n    }  \n  \n    void ChildClosed(object sender, ActivityExecutionStatusChangedEventArgs e)  \n    {  \n        e.Activity.Closed -= this.ChildClosed;  \n        ActivityExecutionContext executionContext = sender as ActivityExecutionContext;  \n  \n        executionContext.CloseActivity();  \n    }  \n}  \n```"
+  syntax:
+    content: >-
+      [System.Obsolete("The System.Workflow.* types are deprecated.  Instead, please use the new types from System.Activities.*")]
+
+      [System.Workflow.ComponentModel.Compiler.ActivityCodeGenerator(typeof(System.Workflow.ComponentModel.Compiler.CompositeActivityCodeGenerator))]
+
+      [System.Workflow.ComponentModel.Compiler.ActivityValidator(typeof(System.Workflow.ComponentModel.Compiler.CompositeActivityValidator))]
+
+      [System.Workflow.ComponentModel.Serialization.ContentProperty("Activities")]
+
+      public class CompositeActivity : System.Workflow.ComponentModel.Activity
+  inheritance:
+  - System.Object
+  - System.Workflow.ComponentModel.DependencyObject
+  - System.Workflow.ComponentModel.Activity
+  derivedClasses:
+  - System.Workflow.Activities.ConditionedActivityGroup
+  - System.Workflow.Activities.EventHandlersActivity
+  - System.Workflow.Activities.EventHandlingScopeActivity
+  - System.Workflow.Activities.IfElseActivity
+  - System.Workflow.Activities.ListenActivity
+  - System.Workflow.Activities.ParallelActivity
+  - System.Workflow.Activities.ReplicatorActivity
+  - System.Workflow.Activities.SequenceActivity
+  - System.Workflow.Activities.StateActivity
+  - System.Workflow.Activities.WhileActivity
+  - System.Workflow.ComponentModel.CancellationHandlerActivity
+  - System.Workflow.ComponentModel.CompensatableTransactionScopeActivity
+  - System.Workflow.ComponentModel.CompensationHandlerActivity
+  - System.Workflow.ComponentModel.FaultHandlerActivity
+  - System.Workflow.ComponentModel.FaultHandlersActivity
+  - System.Workflow.ComponentModel.SynchronizationScopeActivity
+  - System.Workflow.ComponentModel.TransactionScopeActivity
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Workflow.ComponentModel.Activity.ActivityContextGuidProperty
+  - System.Workflow.ComponentModel.Activity.Cancel(System.Workflow.ComponentModel.ActivityExecutionContext)
+  - System.Workflow.ComponentModel.Activity.Canceling
+  - System.Workflow.ComponentModel.Activity.CancelingEvent
+  - System.Workflow.ComponentModel.Activity.Clone
+  - System.Workflow.ComponentModel.Activity.Closed
+  - System.Workflow.ComponentModel.Activity.ClosedEvent
+  - System.Workflow.ComponentModel.Activity.Compensating
+  - System.Workflow.ComponentModel.Activity.CompensatingEvent
+  - System.Workflow.ComponentModel.Activity.Description
+  - System.Workflow.ComponentModel.Activity.Enabled
+  - System.Workflow.ComponentModel.Activity.Execute(System.Workflow.ComponentModel.ActivityExecutionContext)
+  - System.Workflow.ComponentModel.Activity.Executing
+  - System.Workflow.ComponentModel.Activity.ExecutingEvent
+  - System.Workflow.ComponentModel.Activity.ExecutionResult
+  - System.Workflow.ComponentModel.Activity.ExecutionStatus
+  - System.Workflow.ComponentModel.Activity.Faulting
+  - System.Workflow.ComponentModel.Activity.FaultingEvent
+  - System.Workflow.ComponentModel.Activity.GetActivityByName(System.String)
+  - System.Workflow.ComponentModel.Activity.GetActivityByName(System.String,System.Boolean)
+  - System.Workflow.ComponentModel.Activity.Invoke``1(System.EventHandler{``0},``0)
+  - System.Workflow.ComponentModel.Activity.Invoke``1(System.Workflow.ComponentModel.IActivityEventListener{``0},``0)
+  - System.Workflow.ComponentModel.Activity.IsDynamicActivity
+  - System.Workflow.ComponentModel.Activity.Load(System.IO.Stream,System.Workflow.ComponentModel.Activity)
+  - System.Workflow.ComponentModel.Activity.Load(System.IO.Stream,System.Workflow.ComponentModel.Activity,System.Runtime.Serialization.IFormatter)
+  - System.Workflow.ComponentModel.Activity.Name
+  - System.Workflow.ComponentModel.Activity.OnClosed(System.IServiceProvider)
+  - System.Workflow.ComponentModel.Activity.Parent
+  - System.Workflow.ComponentModel.Activity.QualifiedName
+  - System.Workflow.ComponentModel.Activity.RaiseEvent(System.Workflow.ComponentModel.DependencyProperty,System.Object,System.EventArgs)
+  - System.Workflow.ComponentModel.Activity.RaiseGenericEvent``1(System.Workflow.ComponentModel.DependencyProperty,System.Object,``0)
+  - System.Workflow.ComponentModel.Activity.RegisterForStatusChange(System.Workflow.ComponentModel.DependencyProperty,System.Workflow.ComponentModel.IActivityEventListener{System.Workflow.ComponentModel.ActivityExecutionStatusChangedEventArgs})
+  - System.Workflow.ComponentModel.Activity.Save(System.IO.Stream)
+  - System.Workflow.ComponentModel.Activity.Save(System.IO.Stream,System.Runtime.Serialization.IFormatter)
+  - System.Workflow.ComponentModel.Activity.StatusChanged
+  - System.Workflow.ComponentModel.Activity.StatusChangedEvent
+  - System.Workflow.ComponentModel.Activity.ToString
+  - System.Workflow.ComponentModel.Activity.TrackData(System.Object)
+  - System.Workflow.ComponentModel.Activity.TrackData(System.String,System.Object)
+  - System.Workflow.ComponentModel.Activity.UnregisterForStatusChange(System.Workflow.ComponentModel.DependencyProperty,System.Workflow.ComponentModel.IActivityEventListener{System.Workflow.ComponentModel.ActivityExecutionStatusChangedEventArgs})
+  - System.Workflow.ComponentModel.Activity.WorkflowInstanceId
+  - System.Workflow.ComponentModel.DependencyObject.AddHandler(System.Workflow.ComponentModel.DependencyProperty,System.Object)
+  - System.Workflow.ComponentModel.DependencyObject.DesignMode
+  - System.Workflow.ComponentModel.DependencyObject.Dispose
+  - System.Workflow.ComponentModel.DependencyObject.GetBinding(System.Workflow.ComponentModel.DependencyProperty)
+  - System.Workflow.ComponentModel.DependencyObject.GetBoundValue(System.Workflow.ComponentModel.ActivityBind,System.Type)
+  - System.Workflow.ComponentModel.DependencyObject.GetInvocationList``1(System.Workflow.ComponentModel.DependencyProperty)
+  - System.Workflow.ComponentModel.DependencyObject.GetValue(System.Workflow.ComponentModel.DependencyProperty)
+  - System.Workflow.ComponentModel.DependencyObject.GetValueBase(System.Workflow.ComponentModel.DependencyProperty)
+  - System.Workflow.ComponentModel.DependencyObject.InitializeProperties
+  - System.Workflow.ComponentModel.DependencyObject.IsBindingSet(System.Workflow.ComponentModel.DependencyProperty)
+  - System.Workflow.ComponentModel.DependencyObject.MetaEquals(System.Workflow.ComponentModel.DependencyObject)
+  - System.Workflow.ComponentModel.DependencyObject.ParentDependencyObject
+  - System.Workflow.ComponentModel.DependencyObject.RemoveHandler(System.Workflow.ComponentModel.DependencyProperty,System.Object)
+  - System.Workflow.ComponentModel.DependencyObject.RemoveProperty(System.Workflow.ComponentModel.DependencyProperty)
+  - System.Workflow.ComponentModel.DependencyObject.SetBinding(System.Workflow.ComponentModel.DependencyProperty,System.Workflow.ComponentModel.ActivityBind)
+  - System.Workflow.ComponentModel.DependencyObject.SetBoundValue(System.Workflow.ComponentModel.ActivityBind,System.Object)
+  - System.Workflow.ComponentModel.DependencyObject.SetReadOnlyPropertyValue(System.Workflow.ComponentModel.DependencyProperty,System.Object)
+  - System.Workflow.ComponentModel.DependencyObject.SetValue(System.Workflow.ComponentModel.DependencyProperty,System.Object)
+  - System.Workflow.ComponentModel.DependencyObject.SetValueBase(System.Workflow.ComponentModel.DependencyProperty,System.Object)
+  - System.Workflow.ComponentModel.DependencyObject.Site
+  - System.Workflow.ComponentModel.DependencyObject.UserData
+  attributes:
+  - type: System.ObsoleteAttribute
+  - type: System.Workflow.ComponentModel.Compiler.ActivityCodeGeneratorAttribute
+  - type: System.Workflow.ComponentModel.Compiler.ActivityValidatorAttribute
+  - type: System.Workflow.ComponentModel.Serialization.ContentPropertyAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.#ctor
+  commentId: M:System.Workflow.ComponentModel.CompositeActivity.#ctor
+  id: '#ctor'
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: CompositeActivity()
+  nameWithType: CompositeActivity.CompositeActivity()
+  fullName: CompositeActivity.CompositeActivity()
+  type: Constructor
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Initializes a new instance of the <xref href="System.Workflow.ComponentModel.CompositeActivity"></xref> class.
+  syntax:
+    content: public CompositeActivity ();
+    parameters: []
+  overload: System.Workflow.ComponentModel.CompositeActivity.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.#ctor(System.Collections.Generic.IEnumerable{System.Workflow.ComponentModel.Activity})
+  commentId: M:System.Workflow.ComponentModel.CompositeActivity.#ctor(System.Collections.Generic.IEnumerable{System.Workflow.ComponentModel.Activity})
+  id: '#ctor(System.Collections.Generic.IEnumerable{System.Workflow.ComponentModel.Activity})'
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: CompositeActivity(IEnumerable<Activity>)
+  nameWithType: CompositeActivity.CompositeActivity(IEnumerable<Activity>)
+  fullName: CompositeActivity.CompositeActivity(IEnumerable<Activity>)
+  type: Constructor
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Initializes a new instance of the <xref href="System.Workflow.ComponentModel.CompositeActivity"></xref> class from an <xref href="System.Object"></xref> which implements the <xref href="System.Collections.IEnumerable"></xref> interface with type <xref href="System.Workflow.ComponentModel.Activity"></xref>.
+  syntax:
+    content: public CompositeActivity (System.Collections.Generic.IEnumerable<System.Workflow.ComponentModel.Activity> children);
+    parameters:
+    - id: children
+      type: System.Collections.Generic.IEnumerable{System.Workflow.ComponentModel.Activity}
+      description: The <xref href="System.Object"></xref> implementing the <xref href="System.Collections.IEnumerable"></xref> interface with type <xref href="System.Workflow.ComponentModel.Activity"></xref>.
+  overload: System.Workflow.ComponentModel.CompositeActivity.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.#ctor(System.String)
+  commentId: M:System.Workflow.ComponentModel.CompositeActivity.#ctor(System.String)
+  id: '#ctor(System.String)'
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: CompositeActivity(String)
+  nameWithType: CompositeActivity.CompositeActivity(String)
+  fullName: CompositeActivity.CompositeActivity(String)
+  type: Constructor
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Initializes a new instance of the <xref href="System.Workflow.ComponentModel.CompositeActivity"></xref> class, along with the name for that activity.
+  syntax:
+    content: public CompositeActivity (string name);
+    parameters:
+    - id: name
+      type: System.String
+      description: The name for the instance.
+  overload: System.Workflow.ComponentModel.CompositeActivity.#ctor*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>name</code> is a null reference (`Nothing` in Visual Basic).
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.Activities
+  commentId: P:System.Workflow.ComponentModel.CompositeActivity.Activities
+  id: Activities
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: Activities
+  nameWithType: CompositeActivity.Activities
+  fullName: CompositeActivity.Activities
+  type: Property
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Gets the object representing the collection, <xref href="System.Workflow.ComponentModel.ActivityCollection"></xref>, of all child activities.
+  remarks: Represents the collection of child activities managed by the composite activity. This collection can be updated.
+  example:
+  - "The following code shows how to create activities and add them as children to a composite activity and includes setting the <xref:System.Workflow.ComponentModel.CompositeActivity.CanModifyActivities%2A> permissive for this type.  \n  \n This code example is part of the Throw SDK sample and is from the ThrowWorkFlow.cs file. For more information, see [Throw Sample](http://msdn.microsoft.com/en-us/aa5b9546-ec95-4e43-8337-20e26f8d71cc).  \n  \n [!code-csharp[WF_Samples#179](~/samples/snippets/csharp/VS_Snippets_CFX/wf_samples/cs/snippets11.cs#179)]\n [!code-vb[WF_Samples#179](~/samples/snippets/visualbasic/VS_Snippets_CFX/wf_samples/vb/snippets11.vb#179)]"
+  syntax:
+    content: >-
+      [System.ComponentModel.Browsable(false)]
+
+      public System.Workflow.ComponentModel.ActivityCollection Activities { get; }
+    return:
+      type: System.Workflow.ComponentModel.ActivityCollection
+      description: <xref href="System.Workflow.ComponentModel.ActivityCollection"></xref> of all child activities.
+  overload: System.Workflow.ComponentModel.CompositeActivity.Activities*
+  exceptions: []
+  attributes:
+  - type: System.ComponentModel.BrowsableAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.ApplyWorkflowChanges(System.Workflow.ComponentModel.WorkflowChanges)
+  commentId: M:System.Workflow.ComponentModel.CompositeActivity.ApplyWorkflowChanges(System.Workflow.ComponentModel.WorkflowChanges)
+  id: ApplyWorkflowChanges(System.Workflow.ComponentModel.WorkflowChanges)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: ApplyWorkflowChanges(WorkflowChanges)
+  nameWithType: CompositeActivity.ApplyWorkflowChanges(WorkflowChanges)
+  fullName: CompositeActivity.ApplyWorkflowChanges(WorkflowChanges)
+  type: Method
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Applies the <xref href="System.Workflow.ComponentModel.WorkflowChanges"></xref> manifest in the parameter to this instance.
+  syntax:
+    content: protected void ApplyWorkflowChanges (System.Workflow.ComponentModel.WorkflowChanges workflowChanges);
+    parameters:
+    - id: workflowChanges
+      type: System.Workflow.ComponentModel.WorkflowChanges
+      description: The <xref href="System.Workflow.ComponentModel.WorkflowChanges"></xref> to apply.
+  overload: System.Workflow.ComponentModel.CompositeActivity.ApplyWorkflowChanges*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>workflowChanges</code> is a null reference (`Nothing` in Visual Basic).
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.CanModifyActivities
+  commentId: P:System.Workflow.ComponentModel.CompositeActivity.CanModifyActivities
+  id: CanModifyActivities
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: CanModifyActivities
+  nameWithType: CompositeActivity.CanModifyActivities
+  fullName: CompositeActivity.CanModifyActivities
+  type: Property
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Gets or sets a value which controls whether the individual activities within <xref href="System.Workflow.ComponentModel.CompositeActivity.Activities"></xref> can be modified.
+  remarks: ''
+  example:
+  - "The following code shows how to create activities and add them as children to a composite activity and includes setting the <xref:System.Workflow.ComponentModel.CompositeActivity.CanModifyActivities%2A> permissive for this type.  \n  \n This code example is part of the Throw SDK sample and is from the ThrowWorkFlow.cs file. For more information, see [Throw Sample](http://msdn.microsoft.com/en-us/aa5b9546-ec95-4e43-8337-20e26f8d71cc).  \n  \n [!code-csharp[WF_Samples#179](~/samples/snippets/csharp/VS_Snippets_CFX/wf_samples/cs/snippets11.cs#179)]\n [!code-vb[WF_Samples#179](~/samples/snippets/visualbasic/VS_Snippets_CFX/wf_samples/vb/snippets11.vb#179)]"
+  syntax:
+    content: protected bool CanModifyActivities { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if the individual activities within <xref href="System.Workflow.ComponentModel.CompositeActivity.Activities"></xref> can be modified; otherwise `false`.'
+  overload: System.Workflow.ComponentModel.CompositeActivity.CanModifyActivities*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.Dispose(System.Boolean)
+  commentId: M:System.Workflow.ComponentModel.CompositeActivity.Dispose(System.Boolean)
+  id: Dispose(System.Boolean)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: Dispose(Boolean)
+  nameWithType: CompositeActivity.Dispose(Boolean)
+  fullName: CompositeActivity.Dispose(Boolean)
+  type: Method
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Calls <xref href="System.Workflow.ComponentModel.DependencyObject.Dispose(System.Boolean)"></xref> on this instance, and optionally calls <xref href="System.Workflow.ComponentModel.DependencyObject.Dispose"></xref> on all child activities of this instance.
+  remarks: Throughout an activity's lifetime, several .NET objects may be created or disposed. Every time a workflow instance is unloaded from memory, the .NET objects corresponding to the activities in the workflow tree are disposed (the <xref:System.Workflow.ComponentModel.DependencyObject.Dispose%2A> method is called on each activity). When the workflow instance is loaded back into memory, a new .NET object is created for each activity with the state from the corresponding unload.
+  syntax:
+    content: protected override void Dispose (bool disposing);
+    parameters:
+    - id: disposing
+      type: System.Boolean
+      description: '`true` to release both managed and unmanaged resources used by this instance and all child activities of this instance; `false` to release only the unmanaged resources of this instance.'
+  overload: System.Workflow.ComponentModel.CompositeActivity.Dispose*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.EnabledActivities
+  commentId: P:System.Workflow.ComponentModel.CompositeActivity.EnabledActivities
+  id: EnabledActivities
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: EnabledActivities
+  nameWithType: CompositeActivity.EnabledActivities
+  fullName: CompositeActivity.EnabledActivities
+  type: Property
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Gets the read-only collection that represents the subset of <xref href="System.Workflow.ComponentModel.CompositeActivity.Activities"></xref> that are enabled.
+  syntax:
+    content: >-
+      [System.ComponentModel.Browsable(false)]
+
+      public System.Collections.ObjectModel.ReadOnlyCollection<System.Workflow.ComponentModel.Activity> EnabledActivities { get; }
+    return:
+      type: System.Collections.ObjectModel.ReadOnlyCollection{System.Workflow.ComponentModel.Activity}
+      description: The read-only collection that represents the subset of <xref href="System.Workflow.ComponentModel.CompositeActivity.Activities"></xref> that are enabled.
+  overload: System.Workflow.ComponentModel.CompositeActivity.EnabledActivities*
+  exceptions: []
+  attributes:
+  - type: System.ComponentModel.BrowsableAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.GetDynamicActivities(System.Workflow.ComponentModel.Activity)
+  commentId: M:System.Workflow.ComponentModel.CompositeActivity.GetDynamicActivities(System.Workflow.ComponentModel.Activity)
+  id: GetDynamicActivities(System.Workflow.ComponentModel.Activity)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: GetDynamicActivities(Activity)
+  nameWithType: CompositeActivity.GetDynamicActivities(Activity)
+  fullName: CompositeActivity.GetDynamicActivities(Activity)
+  type: Method
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Returns an array that contains all of the currently executing instances of the specified activity.
+  syntax:
+    content: protected System.Workflow.ComponentModel.Activity[] GetDynamicActivities (System.Workflow.ComponentModel.Activity activity);
+    parameters:
+    - id: activity
+      type: System.Workflow.ComponentModel.Activity
+      description: The specified <xref href="System.Workflow.ComponentModel.Activity"></xref>.
+    return:
+      type: System.Workflow.ComponentModel.Activity[]
+      description: An array of activity instances that are currently executing.
+  overload: System.Workflow.ComponentModel.CompositeActivity.GetDynamicActivities*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.HandleFault(System.Workflow.ComponentModel.ActivityExecutionContext,System.Exception)
+  commentId: M:System.Workflow.ComponentModel.CompositeActivity.HandleFault(System.Workflow.ComponentModel.ActivityExecutionContext,System.Exception)
+  id: HandleFault(System.Workflow.ComponentModel.ActivityExecutionContext,System.Exception)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: HandleFault(ActivityExecutionContext, Exception)
+  nameWithType: CompositeActivity.HandleFault(ActivityExecutionContext, Exception)
+  fullName: CompositeActivity.HandleFault(ActivityExecutionContext, Exception)
+  type: Method
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Called when an exception is raised within the context of the execution of this instance.
+  syntax:
+    content: protected override System.Workflow.ComponentModel.ActivityExecutionStatus HandleFault (System.Workflow.ComponentModel.ActivityExecutionContext executionContext, Exception exception);
+    parameters:
+    - id: executionContext
+      type: System.Workflow.ComponentModel.ActivityExecutionContext
+      description: The <xref href="System.Workflow.ComponentModel.ActivityExecutionContext"></xref> for this instance.
+    - id: exception
+      type: System.Exception
+      description: The <xref href="System.Exception"></xref> that caused this fault.
+    return:
+      type: System.Workflow.ComponentModel.ActivityExecutionStatus
+      description: The <xref href="System.Workflow.ComponentModel.ActivityExecutionStatus"></xref> that results from an attempt to cancel this instance.
+  overload: System.Workflow.ComponentModel.CompositeActivity.HandleFault*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>exception</code> is a null reference (`Nothing` in Visual Basic).
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.Initialize(System.IServiceProvider)
+  commentId: M:System.Workflow.ComponentModel.CompositeActivity.Initialize(System.IServiceProvider)
+  id: Initialize(System.IServiceProvider)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: Initialize(IServiceProvider)
+  nameWithType: CompositeActivity.Initialize(IServiceProvider)
+  fullName: CompositeActivity.Initialize(IServiceProvider)
+  type: Method
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Initializes all appropriate child activities of this instance and the specified <xref href="System.IServiceProvider"></xref>.
+  syntax:
+    content: protected override void Initialize (IServiceProvider provider);
+    parameters:
+    - id: provider
+      type: System.IServiceProvider
+      description: The specified <xref href="System.IServiceProvider"></xref>.
+  overload: System.Workflow.ComponentModel.CompositeActivity.Initialize*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>provider</code> is a null reference (`Nothing` in Visual Basic).
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnActivityChangeAdd(System.Workflow.ComponentModel.ActivityExecutionContext,System.Workflow.ComponentModel.Activity)
+  commentId: M:System.Workflow.ComponentModel.CompositeActivity.OnActivityChangeAdd(System.Workflow.ComponentModel.ActivityExecutionContext,System.Workflow.ComponentModel.Activity)
+  id: OnActivityChangeAdd(System.Workflow.ComponentModel.ActivityExecutionContext,System.Workflow.ComponentModel.Activity)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: OnActivityChangeAdd(ActivityExecutionContext, Activity)
+  nameWithType: CompositeActivity.OnActivityChangeAdd(ActivityExecutionContext, Activity)
+  fullName: CompositeActivity.OnActivityChangeAdd(ActivityExecutionContext, Activity)
+  type: Method
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Calls when an activity is added.
+  syntax:
+    content: protected virtual void OnActivityChangeAdd (System.Workflow.ComponentModel.ActivityExecutionContext executionContext, System.Workflow.ComponentModel.Activity addedActivity);
+    parameters:
+    - id: executionContext
+      type: System.Workflow.ComponentModel.ActivityExecutionContext
+      description: The specified <xref href="System.Workflow.ComponentModel.ActivityExecutionContext"></xref>.
+    - id: addedActivity
+      type: System.Workflow.ComponentModel.Activity
+      description: The specified <xref href="System.Workflow.ComponentModel.Activity"></xref>.
+  overload: System.Workflow.ComponentModel.CompositeActivity.OnActivityChangeAdd*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>addedActivity</code> is a null reference (`Nothing`).
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnActivityChangeRemove(System.Workflow.ComponentModel.ActivityExecutionContext,System.Workflow.ComponentModel.Activity)
+  commentId: M:System.Workflow.ComponentModel.CompositeActivity.OnActivityChangeRemove(System.Workflow.ComponentModel.ActivityExecutionContext,System.Workflow.ComponentModel.Activity)
+  id: OnActivityChangeRemove(System.Workflow.ComponentModel.ActivityExecutionContext,System.Workflow.ComponentModel.Activity)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: OnActivityChangeRemove(ActivityExecutionContext, Activity)
+  nameWithType: CompositeActivity.OnActivityChangeRemove(ActivityExecutionContext, Activity)
+  fullName: CompositeActivity.OnActivityChangeRemove(ActivityExecutionContext, Activity)
+  type: Method
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Called when an activity is removed.
+  remarks: Current implementation provides no functionality.
+  syntax:
+    content: protected virtual void OnActivityChangeRemove (System.Workflow.ComponentModel.ActivityExecutionContext executionContext, System.Workflow.ComponentModel.Activity removedActivity);
+    parameters:
+    - id: executionContext
+      type: System.Workflow.ComponentModel.ActivityExecutionContext
+      description: The specified <xref href="System.Workflow.ComponentModel.ActivityExecutionContext"></xref>.
+    - id: removedActivity
+      type: System.Workflow.ComponentModel.Activity
+      description: The specified <xref href="System.Workflow.ComponentModel.Activity"></xref>.
+  overload: System.Workflow.ComponentModel.CompositeActivity.OnActivityChangeRemove*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnActivityExecutionContextLoad(System.IServiceProvider)
+  commentId: M:System.Workflow.ComponentModel.CompositeActivity.OnActivityExecutionContextLoad(System.IServiceProvider)
+  id: OnActivityExecutionContextLoad(System.IServiceProvider)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: OnActivityExecutionContextLoad(IServiceProvider)
+  nameWithType: CompositeActivity.OnActivityExecutionContextLoad(IServiceProvider)
+  fullName: CompositeActivity.OnActivityExecutionContextLoad(IServiceProvider)
+  type: Method
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Called by the workflow runtime engine every time the <xref href="System.Workflow.ComponentModel.ActivityExecutionContext"></xref> for this activity is loaded.
+  syntax:
+    content: protected override void OnActivityExecutionContextLoad (IServiceProvider provider);
+    parameters:
+    - id: provider
+      type: System.IServiceProvider
+      description: An <xref href="System.Object"></xref> that implements <xref href="System.IServiceProvider"></xref> and provides services to this instance.
+  overload: System.Workflow.ComponentModel.CompositeActivity.OnActivityExecutionContextLoad*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnActivityExecutionContextUnload(System.IServiceProvider)
+  commentId: M:System.Workflow.ComponentModel.CompositeActivity.OnActivityExecutionContextUnload(System.IServiceProvider)
+  id: OnActivityExecutionContextUnload(System.IServiceProvider)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: OnActivityExecutionContextUnload(IServiceProvider)
+  nameWithType: CompositeActivity.OnActivityExecutionContextUnload(IServiceProvider)
+  fullName: CompositeActivity.OnActivityExecutionContextUnload(IServiceProvider)
+  type: Method
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Called by the workflow runtime engine every time the <xref href="System.Workflow.ComponentModel.ActivityExecutionContext"></xref> for this activity is unloaded.
+  syntax:
+    content: protected override void OnActivityExecutionContextUnload (IServiceProvider provider);
+    parameters:
+    - id: provider
+      type: System.IServiceProvider
+      description: An <xref href="System.Object"></xref> that implements <xref href="System.IServiceProvider"></xref> and provides services to this instance.
+  overload: System.Workflow.ComponentModel.CompositeActivity.OnActivityExecutionContextUnload*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnListChanged(System.Workflow.ComponentModel.ActivityCollectionChangeEventArgs)
+  commentId: M:System.Workflow.ComponentModel.CompositeActivity.OnListChanged(System.Workflow.ComponentModel.ActivityCollectionChangeEventArgs)
+  id: OnListChanged(System.Workflow.ComponentModel.ActivityCollectionChangeEventArgs)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: OnListChanged(ActivityCollectionChangeEventArgs)
+  nameWithType: CompositeActivity.OnListChanged(ActivityCollectionChangeEventArgs)
+  fullName: CompositeActivity.OnListChanged(ActivityCollectionChangeEventArgs)
+  type: Method
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Performs additional processing when the <xref href="System.Workflow.ComponentModel.CompositeActivity.Activities"></xref> property changes.
+  syntax:
+    content: protected virtual void OnListChanged (System.Workflow.ComponentModel.ActivityCollectionChangeEventArgs e);
+    parameters:
+    - id: e
+      type: System.Workflow.ComponentModel.ActivityCollectionChangeEventArgs
+      description: The <xref href="System.Workflow.ComponentModel.ActivityCollectionChangeEventArgs"></xref> broadcast by the event.
+  overload: System.Workflow.ComponentModel.CompositeActivity.OnListChanged*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnListChanging(System.Workflow.ComponentModel.ActivityCollectionChangeEventArgs)
+  commentId: M:System.Workflow.ComponentModel.CompositeActivity.OnListChanging(System.Workflow.ComponentModel.ActivityCollectionChangeEventArgs)
+  id: OnListChanging(System.Workflow.ComponentModel.ActivityCollectionChangeEventArgs)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: OnListChanging(ActivityCollectionChangeEventArgs)
+  nameWithType: CompositeActivity.OnListChanging(ActivityCollectionChangeEventArgs)
+  fullName: CompositeActivity.OnListChanging(ActivityCollectionChangeEventArgs)
+  type: Method
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Event that occurs before a change being made to the underlying <xref href="System.Workflow.ComponentModel.CompositeActivity.Activities"></xref>.
+  syntax:
+    content: protected virtual void OnListChanging (System.Workflow.ComponentModel.ActivityCollectionChangeEventArgs e);
+    parameters:
+    - id: e
+      type: System.Workflow.ComponentModel.ActivityCollectionChangeEventArgs
+      description: <xref href="System.EventArgs"></xref> relating to the event.
+  overload: System.Workflow.ComponentModel.CompositeActivity.OnListChanging*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnWorkflowChangesCompleted(System.Workflow.ComponentModel.ActivityExecutionContext)
+  commentId: M:System.Workflow.ComponentModel.CompositeActivity.OnWorkflowChangesCompleted(System.Workflow.ComponentModel.ActivityExecutionContext)
+  id: OnWorkflowChangesCompleted(System.Workflow.ComponentModel.ActivityExecutionContext)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: OnWorkflowChangesCompleted(ActivityExecutionContext)
+  nameWithType: CompositeActivity.OnWorkflowChangesCompleted(ActivityExecutionContext)
+  fullName: CompositeActivity.OnWorkflowChangesCompleted(ActivityExecutionContext)
+  type: Method
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Called after changes have been made to the collection <xref href="System.Workflow.ComponentModel.CompositeActivity.Activities"></xref> of this instance.
+  remarks: When overridden in a derived class, provides processing for this event.
+  syntax:
+    content: protected virtual void OnWorkflowChangesCompleted (System.Workflow.ComponentModel.ActivityExecutionContext rootContext);
+    parameters:
+    - id: rootContext
+      type: System.Workflow.ComponentModel.ActivityExecutionContext
+      description: The <xref href="System.Workflow.ComponentModel.ActivityExecutionContext"></xref> associated with this instance.
+  overload: System.Workflow.ComponentModel.CompositeActivity.OnWorkflowChangesCompleted*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Workflow.ComponentModel.CompositeActivity.Uninitialize(System.IServiceProvider)
+  commentId: M:System.Workflow.ComponentModel.CompositeActivity.Uninitialize(System.IServiceProvider)
+  id: Uninitialize(System.IServiceProvider)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  langs:
+  - csharp
+  name: Uninitialize(IServiceProvider)
+  nameWithType: CompositeActivity.Uninitialize(IServiceProvider)
+  fullName: CompositeActivity.Uninitialize(IServiceProvider)
+  type: Method
+  assemblies:
+  - System.Workflow.ComponentModel
+  namespace: System.Workflow.ComponentModel
+  summary: Called by the workflow runtime engine when an activity transitions into the <xref href="System.Workflow.ComponentModel.ActivityExecutionStatus.Closed"></xref> state from the <xref href="System.Workflow.ComponentModel.ActivityExecutionStatus.Initialized"></xref> state.
+  remarks: This method is used for activity cleanup, such as clearing dependency properties and deleting queues.
+  syntax:
+    content: protected override void Uninitialize (IServiceProvider provider);
+    parameters:
+    - id: provider
+      type: System.IServiceProvider
+      description: An <xref href="System.Object"></xref> that implements <xref href="System.IServiceProvider"></xref> and provides services to this instance.
+  overload: System.Workflow.ComponentModel.CompositeActivity.Uninitialize*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+references:
+- uid: System.Workflow.ComponentModel.Activity
+  parent: System.Workflow.ComponentModel
+  isExternal: false
+  name: Activity
+  nameWithType: Activity
+  fullName: System.Workflow.ComponentModel.Activity
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.Workflow.ComponentModel.CompositeActivity.#ctor
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: CompositeActivity()
+  nameWithType: CompositeActivity.CompositeActivity()
+  fullName: CompositeActivity.CompositeActivity()
+- uid: System.Workflow.ComponentModel.CompositeActivity.#ctor(System.Collections.Generic.IEnumerable{System.Workflow.ComponentModel.Activity})
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: CompositeActivity(IEnumerable<Activity>)
+  nameWithType: CompositeActivity.CompositeActivity(IEnumerable<Activity>)
+  fullName: CompositeActivity.CompositeActivity(IEnumerable<Activity>)
+- uid: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+- uid: System.Collections.Generic.IEnumerable{System.Workflow.ComponentModel.Activity}
+  parent: System.Collections.Generic
+  isExternal: false
+  name: IEnumerable<Activity>
+  nameWithType: IEnumerable<Activity>
+  fullName: System.Collections.Generic.IEnumerable<System.Workflow.ComponentModel.Activity>
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Workflow.ComponentModel.Activity
+    name: Activity
+    nameWithType: Activity
+    fullName: System.Workflow.ComponentModel.Activity
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Workflow.ComponentModel.CompositeActivity.#ctor(System.String)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: CompositeActivity(String)
+  nameWithType: CompositeActivity.CompositeActivity(String)
+  fullName: CompositeActivity.CompositeActivity(String)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Workflow.ComponentModel.CompositeActivity.Activities
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: Activities
+  nameWithType: CompositeActivity.Activities
+  fullName: CompositeActivity.Activities
+- uid: System.Workflow.ComponentModel.ActivityCollection
+  parent: System.Workflow.ComponentModel
+  isExternal: false
+  name: ActivityCollection
+  nameWithType: ActivityCollection
+  fullName: System.Workflow.ComponentModel.ActivityCollection
+- uid: System.Workflow.ComponentModel.CompositeActivity.ApplyWorkflowChanges(System.Workflow.ComponentModel.WorkflowChanges)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: ApplyWorkflowChanges(WorkflowChanges)
+  nameWithType: CompositeActivity.ApplyWorkflowChanges(WorkflowChanges)
+  fullName: CompositeActivity.ApplyWorkflowChanges(WorkflowChanges)
+- uid: System.Workflow.ComponentModel.WorkflowChanges
+  parent: System.Workflow.ComponentModel
+  isExternal: false
+  name: WorkflowChanges
+  nameWithType: WorkflowChanges
+  fullName: System.Workflow.ComponentModel.WorkflowChanges
+- uid: System.Workflow.ComponentModel.CompositeActivity.CanModifyActivities
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: CanModifyActivities
+  nameWithType: CompositeActivity.CanModifyActivities
+  fullName: CompositeActivity.CanModifyActivities
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Workflow.ComponentModel.CompositeActivity.Dispose(System.Boolean)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: Dispose(Boolean)
+  nameWithType: CompositeActivity.Dispose(Boolean)
+  fullName: CompositeActivity.Dispose(Boolean)
+- uid: System.Workflow.ComponentModel.CompositeActivity.EnabledActivities
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: EnabledActivities
+  nameWithType: CompositeActivity.EnabledActivities
+  fullName: CompositeActivity.EnabledActivities
+- uid: System.Collections.ObjectModel.ReadOnlyCollection`1
+  name: ReadOnlyCollection<T>
+  nameWithType: ReadOnlyCollection<T>
+  fullName: System.Collections.ObjectModel.ReadOnlyCollection<T>
+- uid: System.Collections.ObjectModel.ReadOnlyCollection{System.Workflow.ComponentModel.Activity}
+  parent: System.Collections.ObjectModel
+  isExternal: false
+  name: ReadOnlyCollection<Activity>
+  nameWithType: ReadOnlyCollection<Activity>
+  fullName: System.Collections.ObjectModel.ReadOnlyCollection<System.Workflow.ComponentModel.Activity>
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.ReadOnlyCollection`1
+    name: ReadOnlyCollection
+    nameWithType: ReadOnlyCollection
+    fullName: System.Collections.ObjectModel.ReadOnlyCollection
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Workflow.ComponentModel.Activity
+    name: Activity
+    nameWithType: Activity
+    fullName: System.Workflow.ComponentModel.Activity
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Workflow.ComponentModel.CompositeActivity.GetDynamicActivities(System.Workflow.ComponentModel.Activity)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: GetDynamicActivities(Activity)
+  nameWithType: CompositeActivity.GetDynamicActivities(Activity)
+  fullName: CompositeActivity.GetDynamicActivities(Activity)
+- uid: System.Workflow.ComponentModel.Activity[]
+  parent: System.Workflow.ComponentModel
+  isExternal: false
+  name: Activity[]
+  nameWithType: Activity[]
+  fullName: System.Workflow.ComponentModel.Activity[]
+  spec.csharp:
+  - uid: System.Workflow.ComponentModel.Activity
+    name: Activity
+    nameWithType: Activity
+    fullName: System.Workflow.ComponentModel.Activity
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+- uid: System.Workflow.ComponentModel.CompositeActivity.HandleFault(System.Workflow.ComponentModel.ActivityExecutionContext,System.Exception)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: HandleFault(ActivityExecutionContext, Exception)
+  nameWithType: CompositeActivity.HandleFault(ActivityExecutionContext, Exception)
+  fullName: CompositeActivity.HandleFault(ActivityExecutionContext, Exception)
+- uid: System.Workflow.ComponentModel.ActivityExecutionStatus
+  parent: System.Workflow.ComponentModel
+  isExternal: false
+  name: ActivityExecutionStatus
+  nameWithType: ActivityExecutionStatus
+  fullName: System.Workflow.ComponentModel.ActivityExecutionStatus
+- uid: System.Workflow.ComponentModel.ActivityExecutionContext
+  parent: System.Workflow.ComponentModel
+  isExternal: false
+  name: ActivityExecutionContext
+  nameWithType: ActivityExecutionContext
+  fullName: System.Workflow.ComponentModel.ActivityExecutionContext
+- uid: System.Exception
+  parent: System
+  isExternal: false
+  name: Exception
+  nameWithType: Exception
+  fullName: System.Exception
+- uid: System.Workflow.ComponentModel.CompositeActivity.Initialize(System.IServiceProvider)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: Initialize(IServiceProvider)
+  nameWithType: CompositeActivity.Initialize(IServiceProvider)
+  fullName: CompositeActivity.Initialize(IServiceProvider)
+- uid: System.IServiceProvider
+  parent: System
+  isExternal: false
+  name: IServiceProvider
+  nameWithType: IServiceProvider
+  fullName: System.IServiceProvider
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnActivityChangeAdd(System.Workflow.ComponentModel.ActivityExecutionContext,System.Workflow.ComponentModel.Activity)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: OnActivityChangeAdd(ActivityExecutionContext, Activity)
+  nameWithType: CompositeActivity.OnActivityChangeAdd(ActivityExecutionContext, Activity)
+  fullName: CompositeActivity.OnActivityChangeAdd(ActivityExecutionContext, Activity)
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnActivityChangeRemove(System.Workflow.ComponentModel.ActivityExecutionContext,System.Workflow.ComponentModel.Activity)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: OnActivityChangeRemove(ActivityExecutionContext, Activity)
+  nameWithType: CompositeActivity.OnActivityChangeRemove(ActivityExecutionContext, Activity)
+  fullName: CompositeActivity.OnActivityChangeRemove(ActivityExecutionContext, Activity)
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnActivityExecutionContextLoad(System.IServiceProvider)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: OnActivityExecutionContextLoad(IServiceProvider)
+  nameWithType: CompositeActivity.OnActivityExecutionContextLoad(IServiceProvider)
+  fullName: CompositeActivity.OnActivityExecutionContextLoad(IServiceProvider)
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnActivityExecutionContextUnload(System.IServiceProvider)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: OnActivityExecutionContextUnload(IServiceProvider)
+  nameWithType: CompositeActivity.OnActivityExecutionContextUnload(IServiceProvider)
+  fullName: CompositeActivity.OnActivityExecutionContextUnload(IServiceProvider)
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnListChanged(System.Workflow.ComponentModel.ActivityCollectionChangeEventArgs)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: OnListChanged(ActivityCollectionChangeEventArgs)
+  nameWithType: CompositeActivity.OnListChanged(ActivityCollectionChangeEventArgs)
+  fullName: CompositeActivity.OnListChanged(ActivityCollectionChangeEventArgs)
+- uid: System.Workflow.ComponentModel.ActivityCollectionChangeEventArgs
+  parent: System.Workflow.ComponentModel
+  isExternal: false
+  name: ActivityCollectionChangeEventArgs
+  nameWithType: ActivityCollectionChangeEventArgs
+  fullName: System.Workflow.ComponentModel.ActivityCollectionChangeEventArgs
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnListChanging(System.Workflow.ComponentModel.ActivityCollectionChangeEventArgs)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: OnListChanging(ActivityCollectionChangeEventArgs)
+  nameWithType: CompositeActivity.OnListChanging(ActivityCollectionChangeEventArgs)
+  fullName: CompositeActivity.OnListChanging(ActivityCollectionChangeEventArgs)
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnWorkflowChangesCompleted(System.Workflow.ComponentModel.ActivityExecutionContext)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: OnWorkflowChangesCompleted(ActivityExecutionContext)
+  nameWithType: CompositeActivity.OnWorkflowChangesCompleted(ActivityExecutionContext)
+  fullName: CompositeActivity.OnWorkflowChangesCompleted(ActivityExecutionContext)
+- uid: System.Workflow.ComponentModel.CompositeActivity.Uninitialize(System.IServiceProvider)
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: Uninitialize(IServiceProvider)
+  nameWithType: CompositeActivity.Uninitialize(IServiceProvider)
+  fullName: CompositeActivity.Uninitialize(IServiceProvider)
+- uid: System.Workflow.ComponentModel.CompositeActivity.#ctor*
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: CompositeActivity
+  nameWithType: CompositeActivity.CompositeActivity
+  fullName: CompositeActivity.CompositeActivity
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+- uid: System.Workflow.ComponentModel.CompositeActivity.Activities*
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: Activities
+  nameWithType: CompositeActivity.Activities
+  fullName: CompositeActivity.Activities
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+- uid: System.Workflow.ComponentModel.CompositeActivity.ApplyWorkflowChanges*
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: ApplyWorkflowChanges
+  nameWithType: CompositeActivity.ApplyWorkflowChanges
+  fullName: CompositeActivity.ApplyWorkflowChanges
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+- uid: System.Workflow.ComponentModel.CompositeActivity.CanModifyActivities*
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: CanModifyActivities
+  nameWithType: CompositeActivity.CanModifyActivities
+  fullName: CompositeActivity.CanModifyActivities
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+- uid: System.Workflow.ComponentModel.CompositeActivity.Dispose*
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: Dispose
+  nameWithType: CompositeActivity.Dispose
+  fullName: CompositeActivity.Dispose
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+- uid: System.Workflow.ComponentModel.CompositeActivity.EnabledActivities*
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: EnabledActivities
+  nameWithType: CompositeActivity.EnabledActivities
+  fullName: CompositeActivity.EnabledActivities
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+- uid: System.Workflow.ComponentModel.CompositeActivity.GetDynamicActivities*
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: GetDynamicActivities
+  nameWithType: CompositeActivity.GetDynamicActivities
+  fullName: CompositeActivity.GetDynamicActivities
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+- uid: System.Workflow.ComponentModel.CompositeActivity.HandleFault*
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: HandleFault
+  nameWithType: CompositeActivity.HandleFault
+  fullName: CompositeActivity.HandleFault
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+- uid: System.Workflow.ComponentModel.CompositeActivity.Initialize*
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: Initialize
+  nameWithType: CompositeActivity.Initialize
+  fullName: CompositeActivity.Initialize
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnActivityChangeAdd*
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: OnActivityChangeAdd
+  nameWithType: CompositeActivity.OnActivityChangeAdd
+  fullName: CompositeActivity.OnActivityChangeAdd
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnActivityChangeRemove*
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: OnActivityChangeRemove
+  nameWithType: CompositeActivity.OnActivityChangeRemove
+  fullName: CompositeActivity.OnActivityChangeRemove
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnActivityExecutionContextLoad*
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: OnActivityExecutionContextLoad
+  nameWithType: CompositeActivity.OnActivityExecutionContextLoad
+  fullName: CompositeActivity.OnActivityExecutionContextLoad
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnActivityExecutionContextUnload*
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: OnActivityExecutionContextUnload
+  nameWithType: CompositeActivity.OnActivityExecutionContextUnload
+  fullName: CompositeActivity.OnActivityExecutionContextUnload
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnListChanged*
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: OnListChanged
+  nameWithType: CompositeActivity.OnListChanged
+  fullName: CompositeActivity.OnListChanged
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnListChanging*
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: OnListChanging
+  nameWithType: CompositeActivity.OnListChanging
+  fullName: CompositeActivity.OnListChanging
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+- uid: System.Workflow.ComponentModel.CompositeActivity.OnWorkflowChangesCompleted*
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: OnWorkflowChangesCompleted
+  nameWithType: CompositeActivity.OnWorkflowChangesCompleted
+  fullName: CompositeActivity.OnWorkflowChangesCompleted
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+- uid: System.Workflow.ComponentModel.CompositeActivity.Uninitialize*
+  parent: System.Workflow.ComponentModel.CompositeActivity
+  isExternal: false
+  name: Uninitialize
+  nameWithType: CompositeActivity.Uninitialize
+  fullName: CompositeActivity.Uninitialize
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Workflow.ComponentModel/CompositeActivity.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Workflow.ComponentModel.Activity.ToString
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: ToString()
+  nameWithType: Activity.ToString()
+  fullName: Activity.ToString()
+- uid: System.Workflow.ComponentModel.DependencyObject.AddHandler(System.Workflow.ComponentModel.DependencyProperty,System.Object)
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: AddHandler(DependencyProperty, Object)
+  nameWithType: DependencyObject.AddHandler(DependencyProperty, Object)
+  fullName: DependencyObject.AddHandler(DependencyProperty, Object)
+- uid: System.Workflow.ComponentModel.DependencyObject.DesignMode
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: DesignMode
+  nameWithType: DependencyObject.DesignMode
+  fullName: DependencyObject.DesignMode
+- uid: System.Workflow.ComponentModel.DependencyObject.Dispose
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: Dispose()
+  nameWithType: DependencyObject.Dispose()
+  fullName: DependencyObject.Dispose()
+- uid: System.Workflow.ComponentModel.DependencyObject.GetBinding(System.Workflow.ComponentModel.DependencyProperty)
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: GetBinding(DependencyProperty)
+  nameWithType: DependencyObject.GetBinding(DependencyProperty)
+  fullName: DependencyObject.GetBinding(DependencyProperty)
+- uid: System.Workflow.ComponentModel.DependencyObject.GetBoundValue(System.Workflow.ComponentModel.ActivityBind,System.Type)
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: GetBoundValue(ActivityBind, Type)
+  nameWithType: DependencyObject.GetBoundValue(ActivityBind, Type)
+  fullName: DependencyObject.GetBoundValue(ActivityBind, Type)
+- uid: System.Workflow.ComponentModel.DependencyObject.GetInvocationList``1(System.Workflow.ComponentModel.DependencyProperty)
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: GetInvocationList<T>(DependencyProperty)
+  nameWithType: DependencyObject.GetInvocationList<T>(DependencyProperty)
+  fullName: DependencyObject.GetInvocationList<T>(DependencyProperty)
+- uid: System.Workflow.ComponentModel.DependencyObject.GetValue(System.Workflow.ComponentModel.DependencyProperty)
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: GetValue(DependencyProperty)
+  nameWithType: DependencyObject.GetValue(DependencyProperty)
+  fullName: DependencyObject.GetValue(DependencyProperty)
+- uid: System.Workflow.ComponentModel.DependencyObject.GetValueBase(System.Workflow.ComponentModel.DependencyProperty)
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: GetValueBase(DependencyProperty)
+  nameWithType: DependencyObject.GetValueBase(DependencyProperty)
+  fullName: DependencyObject.GetValueBase(DependencyProperty)
+- uid: System.Workflow.ComponentModel.DependencyObject.InitializeProperties
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: InitializeProperties()
+  nameWithType: DependencyObject.InitializeProperties()
+  fullName: DependencyObject.InitializeProperties()
+- uid: System.Workflow.ComponentModel.DependencyObject.IsBindingSet(System.Workflow.ComponentModel.DependencyProperty)
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: IsBindingSet(DependencyProperty)
+  nameWithType: DependencyObject.IsBindingSet(DependencyProperty)
+  fullName: DependencyObject.IsBindingSet(DependencyProperty)
+- uid: System.Workflow.ComponentModel.DependencyObject.MetaEquals(System.Workflow.ComponentModel.DependencyObject)
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: MetaEquals(DependencyObject)
+  nameWithType: DependencyObject.MetaEquals(DependencyObject)
+  fullName: DependencyObject.MetaEquals(DependencyObject)
+- uid: System.Workflow.ComponentModel.DependencyObject.ParentDependencyObject
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: ParentDependencyObject
+  nameWithType: DependencyObject.ParentDependencyObject
+  fullName: DependencyObject.ParentDependencyObject
+- uid: System.Workflow.ComponentModel.DependencyObject.RemoveHandler(System.Workflow.ComponentModel.DependencyProperty,System.Object)
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: RemoveHandler(DependencyProperty, Object)
+  nameWithType: DependencyObject.RemoveHandler(DependencyProperty, Object)
+  fullName: DependencyObject.RemoveHandler(DependencyProperty, Object)
+- uid: System.Workflow.ComponentModel.DependencyObject.RemoveProperty(System.Workflow.ComponentModel.DependencyProperty)
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: RemoveProperty(DependencyProperty)
+  nameWithType: DependencyObject.RemoveProperty(DependencyProperty)
+  fullName: DependencyObject.RemoveProperty(DependencyProperty)
+- uid: System.Workflow.ComponentModel.DependencyObject.SetBinding(System.Workflow.ComponentModel.DependencyProperty,System.Workflow.ComponentModel.ActivityBind)
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: SetBinding(DependencyProperty, ActivityBind)
+  nameWithType: DependencyObject.SetBinding(DependencyProperty, ActivityBind)
+  fullName: DependencyObject.SetBinding(DependencyProperty, ActivityBind)
+- uid: System.Workflow.ComponentModel.DependencyObject.SetBoundValue(System.Workflow.ComponentModel.ActivityBind,System.Object)
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: SetBoundValue(ActivityBind, Object)
+  nameWithType: DependencyObject.SetBoundValue(ActivityBind, Object)
+  fullName: DependencyObject.SetBoundValue(ActivityBind, Object)
+- uid: System.Workflow.ComponentModel.DependencyObject.SetReadOnlyPropertyValue(System.Workflow.ComponentModel.DependencyProperty,System.Object)
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: SetReadOnlyPropertyValue(DependencyProperty, Object)
+  nameWithType: DependencyObject.SetReadOnlyPropertyValue(DependencyProperty, Object)
+  fullName: DependencyObject.SetReadOnlyPropertyValue(DependencyProperty, Object)
+- uid: System.Workflow.ComponentModel.DependencyObject.SetValue(System.Workflow.ComponentModel.DependencyProperty,System.Object)
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: SetValue(DependencyProperty, Object)
+  nameWithType: DependencyObject.SetValue(DependencyProperty, Object)
+  fullName: DependencyObject.SetValue(DependencyProperty, Object)
+- uid: System.Workflow.ComponentModel.DependencyObject.SetValueBase(System.Workflow.ComponentModel.DependencyProperty,System.Object)
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: SetValueBase(DependencyProperty, Object)
+  nameWithType: DependencyObject.SetValueBase(DependencyProperty, Object)
+  fullName: DependencyObject.SetValueBase(DependencyProperty, Object)
+- uid: System.Workflow.ComponentModel.DependencyObject.Site
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: Site
+  nameWithType: DependencyObject.Site
+  fullName: DependencyObject.Site
+- uid: System.Workflow.ComponentModel.DependencyObject.UserData
+  parent: System.Workflow.ComponentModel.DependencyObject
+  isExternal: false
+  name: UserData
+  nameWithType: DependencyObject.UserData
+  fullName: DependencyObject.UserData
+- uid: System.Workflow.ComponentModel.Activity.ActivityContextGuidProperty
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: ActivityContextGuidProperty
+  nameWithType: Activity.ActivityContextGuidProperty
+  fullName: Activity.ActivityContextGuidProperty
+- uid: System.Workflow.ComponentModel.Activity.Cancel(System.Workflow.ComponentModel.ActivityExecutionContext)
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Cancel(ActivityExecutionContext)
+  nameWithType: Activity.Cancel(ActivityExecutionContext)
+  fullName: Activity.Cancel(ActivityExecutionContext)
+- uid: System.Workflow.ComponentModel.Activity.Canceling
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Canceling
+  nameWithType: Activity.Canceling
+  fullName: Activity.Canceling
+- uid: System.Workflow.ComponentModel.Activity.CancelingEvent
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: CancelingEvent
+  nameWithType: Activity.CancelingEvent
+  fullName: Activity.CancelingEvent
+- uid: System.Workflow.ComponentModel.Activity.Clone
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Clone()
+  nameWithType: Activity.Clone()
+  fullName: Activity.Clone()
+- uid: System.Workflow.ComponentModel.Activity.Closed
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Closed
+  nameWithType: Activity.Closed
+  fullName: Activity.Closed
+- uid: System.Workflow.ComponentModel.Activity.ClosedEvent
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: ClosedEvent
+  nameWithType: Activity.ClosedEvent
+  fullName: Activity.ClosedEvent
+- uid: System.Workflow.ComponentModel.Activity.Compensating
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Compensating
+  nameWithType: Activity.Compensating
+  fullName: Activity.Compensating
+- uid: System.Workflow.ComponentModel.Activity.CompensatingEvent
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: CompensatingEvent
+  nameWithType: Activity.CompensatingEvent
+  fullName: Activity.CompensatingEvent
+- uid: System.Workflow.ComponentModel.Activity.Description
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Description
+  nameWithType: Activity.Description
+  fullName: Activity.Description
+- uid: System.Workflow.ComponentModel.Activity.Enabled
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Enabled
+  nameWithType: Activity.Enabled
+  fullName: Activity.Enabled
+- uid: System.Workflow.ComponentModel.Activity.Execute(System.Workflow.ComponentModel.ActivityExecutionContext)
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Execute(ActivityExecutionContext)
+  nameWithType: Activity.Execute(ActivityExecutionContext)
+  fullName: Activity.Execute(ActivityExecutionContext)
+- uid: System.Workflow.ComponentModel.Activity.Executing
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Executing
+  nameWithType: Activity.Executing
+  fullName: Activity.Executing
+- uid: System.Workflow.ComponentModel.Activity.ExecutingEvent
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: ExecutingEvent
+  nameWithType: Activity.ExecutingEvent
+  fullName: Activity.ExecutingEvent
+- uid: System.Workflow.ComponentModel.Activity.ExecutionResult
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: ExecutionResult
+  nameWithType: Activity.ExecutionResult
+  fullName: Activity.ExecutionResult
+- uid: System.Workflow.ComponentModel.Activity.ExecutionStatus
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: ExecutionStatus
+  nameWithType: Activity.ExecutionStatus
+  fullName: Activity.ExecutionStatus
+- uid: System.Workflow.ComponentModel.Activity.Faulting
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Faulting
+  nameWithType: Activity.Faulting
+  fullName: Activity.Faulting
+- uid: System.Workflow.ComponentModel.Activity.FaultingEvent
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: FaultingEvent
+  nameWithType: Activity.FaultingEvent
+  fullName: Activity.FaultingEvent
+- uid: System.Workflow.ComponentModel.Activity.GetActivityByName(System.String)
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: GetActivityByName(String)
+  nameWithType: Activity.GetActivityByName(String)
+  fullName: Activity.GetActivityByName(String)
+- uid: System.Workflow.ComponentModel.Activity.GetActivityByName(System.String,System.Boolean)
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: GetActivityByName(String, Boolean)
+  nameWithType: Activity.GetActivityByName(String, Boolean)
+  fullName: Activity.GetActivityByName(String, Boolean)
+- uid: System.Workflow.ComponentModel.Activity.Invoke``1(System.EventHandler{``0},``0)
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Invoke<T>(EventHandler<T>, T)
+  nameWithType: Activity.Invoke<T>(EventHandler<T>, T)
+  fullName: Activity.Invoke<T>(EventHandler<T>, T)
+- uid: System.Workflow.ComponentModel.Activity.Invoke``1(System.Workflow.ComponentModel.IActivityEventListener{``0},``0)
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Invoke<T>(IActivityEventListener<T>, T)
+  nameWithType: Activity.Invoke<T>(IActivityEventListener<T>, T)
+  fullName: Activity.Invoke<T>(IActivityEventListener<T>, T)
+- uid: System.Workflow.ComponentModel.Activity.IsDynamicActivity
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: IsDynamicActivity
+  nameWithType: Activity.IsDynamicActivity
+  fullName: Activity.IsDynamicActivity
+- uid: System.Workflow.ComponentModel.Activity.Load(System.IO.Stream,System.Workflow.ComponentModel.Activity)
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Load(Stream, Activity)
+  nameWithType: Activity.Load(Stream, Activity)
+  fullName: Activity.Load(Stream, Activity)
+- uid: System.Workflow.ComponentModel.Activity.Load(System.IO.Stream,System.Workflow.ComponentModel.Activity,System.Runtime.Serialization.IFormatter)
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Load(Stream, Activity, IFormatter)
+  nameWithType: Activity.Load(Stream, Activity, IFormatter)
+  fullName: Activity.Load(Stream, Activity, IFormatter)
+- uid: System.Workflow.ComponentModel.Activity.Name
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Name
+  nameWithType: Activity.Name
+  fullName: Activity.Name
+- uid: System.Workflow.ComponentModel.Activity.OnClosed(System.IServiceProvider)
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: OnClosed(IServiceProvider)
+  nameWithType: Activity.OnClosed(IServiceProvider)
+  fullName: Activity.OnClosed(IServiceProvider)
+- uid: System.Workflow.ComponentModel.Activity.Parent
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Parent
+  nameWithType: Activity.Parent
+  fullName: Activity.Parent
+- uid: System.Workflow.ComponentModel.Activity.QualifiedName
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: QualifiedName
+  nameWithType: Activity.QualifiedName
+  fullName: Activity.QualifiedName
+- uid: System.Workflow.ComponentModel.Activity.RaiseEvent(System.Workflow.ComponentModel.DependencyProperty,System.Object,System.EventArgs)
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: RaiseEvent(DependencyProperty, Object, EventArgs)
+  nameWithType: Activity.RaiseEvent(DependencyProperty, Object, EventArgs)
+  fullName: Activity.RaiseEvent(DependencyProperty, Object, EventArgs)
+- uid: System.Workflow.ComponentModel.Activity.RaiseGenericEvent``1(System.Workflow.ComponentModel.DependencyProperty,System.Object,``0)
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: RaiseGenericEvent<T>(DependencyProperty, Object, T)
+  nameWithType: Activity.RaiseGenericEvent<T>(DependencyProperty, Object, T)
+  fullName: Activity.RaiseGenericEvent<T>(DependencyProperty, Object, T)
+- uid: System.Workflow.ComponentModel.Activity.RegisterForStatusChange(System.Workflow.ComponentModel.DependencyProperty,System.Workflow.ComponentModel.IActivityEventListener{System.Workflow.ComponentModel.ActivityExecutionStatusChangedEventArgs})
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: RegisterForStatusChange(DependencyProperty, IActivityEventListener<ActivityExecutionStatusChangedEventArgs>)
+  nameWithType: Activity.RegisterForStatusChange(DependencyProperty, IActivityEventListener<ActivityExecutionStatusChangedEventArgs>)
+  fullName: Activity.RegisterForStatusChange(DependencyProperty, IActivityEventListener<ActivityExecutionStatusChangedEventArgs>)
+- uid: System.Workflow.ComponentModel.Activity.Save(System.IO.Stream)
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Save(Stream)
+  nameWithType: Activity.Save(Stream)
+  fullName: Activity.Save(Stream)
+- uid: System.Workflow.ComponentModel.Activity.Save(System.IO.Stream,System.Runtime.Serialization.IFormatter)
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: Save(Stream, IFormatter)
+  nameWithType: Activity.Save(Stream, IFormatter)
+  fullName: Activity.Save(Stream, IFormatter)
+- uid: System.Workflow.ComponentModel.Activity.StatusChanged
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: StatusChanged
+  nameWithType: Activity.StatusChanged
+  fullName: Activity.StatusChanged
+- uid: System.Workflow.ComponentModel.Activity.StatusChangedEvent
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: StatusChangedEvent
+  nameWithType: Activity.StatusChangedEvent
+  fullName: Activity.StatusChangedEvent
+- uid: System.Workflow.ComponentModel.Activity.TrackData(System.Object)
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: TrackData(Object)
+  nameWithType: Activity.TrackData(Object)
+  fullName: Activity.TrackData(Object)
+- uid: System.Workflow.ComponentModel.Activity.TrackData(System.String,System.Object)
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: TrackData(String, Object)
+  nameWithType: Activity.TrackData(String, Object)
+  fullName: Activity.TrackData(String, Object)
+- uid: System.Workflow.ComponentModel.Activity.UnregisterForStatusChange(System.Workflow.ComponentModel.DependencyProperty,System.Workflow.ComponentModel.IActivityEventListener{System.Workflow.ComponentModel.ActivityExecutionStatusChangedEventArgs})
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: UnregisterForStatusChange(DependencyProperty, IActivityEventListener<ActivityExecutionStatusChangedEventArgs>)
+  nameWithType: Activity.UnregisterForStatusChange(DependencyProperty, IActivityEventListener<ActivityExecutionStatusChangedEventArgs>)
+  fullName: Activity.UnregisterForStatusChange(DependencyProperty, IActivityEventListener<ActivityExecutionStatusChangedEventArgs>)
+- uid: System.Workflow.ComponentModel.Activity.WorkflowInstanceId
+  parent: System.Workflow.ComponentModel.Activity
+  isExternal: false
+  name: WorkflowInstanceId
+  nameWithType: Activity.WorkflowInstanceId
+  fullName: Activity.WorkflowInstanceId

@@ -1,0 +1,934 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.ServiceProcess.ServiceProcessInstaller
+  commentId: T:System.ServiceProcess.ServiceProcessInstaller
+  id: ServiceProcessInstaller
+  children:
+  - System.ServiceProcess.ServiceProcessInstaller.#ctor
+  - System.ServiceProcess.ServiceProcessInstaller.Account
+  - System.ServiceProcess.ServiceProcessInstaller.CopyFromComponent(System.ComponentModel.IComponent)
+  - System.ServiceProcess.ServiceProcessInstaller.HelpText
+  - System.ServiceProcess.ServiceProcessInstaller.Install(System.Collections.IDictionary)
+  - System.ServiceProcess.ServiceProcessInstaller.Password
+  - System.ServiceProcess.ServiceProcessInstaller.Rollback(System.Collections.IDictionary)
+  - System.ServiceProcess.ServiceProcessInstaller.Username
+  langs:
+  - csharp
+  name: ServiceProcessInstaller
+  nameWithType: ServiceProcessInstaller
+  fullName: System.ServiceProcess.ServiceProcessInstaller
+  type: Class
+  assemblies:
+  - System.ServiceProcess
+  namespace: System.ServiceProcess
+  summary: Installs an executable containing classes that extend <xref href="System.ServiceProcess.ServiceBase"></xref>. This class is called by installation utilities, such as InstallUtil.exe, when installing a service application.
+  remarks: "The <xref:System.ServiceProcess.ServiceProcessInstaller> does work common to all services in an executable. It is used by the installation utility to write registry values associated with services you want to install.  \n  \n To install a service, create a project installer class that inherits from <xref:System.Configuration.Install.Installer>, and set the <xref:System.ComponentModel.RunInstallerAttribute> on the class to `true`. Within your project, instantiate one <xref:System.ServiceProcess.ServiceProcessInstaller> instance per service application, and one <xref:System.ServiceProcess.ServiceInstaller> instance for each service in the application. Finally, add the <xref:System.ServiceProcess.ServiceProcessInstaller> instance and the <xref:System.ServiceProcess.ServiceInstaller> instances to your project installer class.  \n  \n When InstallUtil.exe runs, the utility looks for classes in the service assembly with the <xref:System.ComponentModel.RunInstallerAttribute> set to `true`. Add classes to the service assembly by adding them to the <xref:System.Configuration.Install.Installer.Installers%2A> collection associated with your project installer. If <xref:System.ComponentModel.RunInstallerAttribute> is `false`, the install utility ignores the project installer.  \n  \n For an instance of <xref:System.ServiceProcess.ServiceProcessInstaller>, properties you can modify include specifying that a service application run under an account other than the logged-on user. You can specify a particular <xref:System.ServiceProcess.ServiceProcessInstaller.Username%2A> and <xref:System.ServiceProcess.ServiceProcessInstaller.Password%2A> pair under which the service should run, or you can use <xref:System.ServiceProcess.ServiceProcessInstaller.Account%2A> to specify that the service run under the computer's System account, a local or network service account, or a user account.  \n  \n> [!NOTE]\n>  The computer's System account is not the same as the Administrator account.  \n  \n Normally, you do not call the methods on <xref:System.ServiceProcess.ServiceInstaller> within your code; they are generally called only by the install utility. The install utility automatically calls the <xref:System.ServiceProcess.ServiceProcessInstaller.Install%2A?displayProperty=fullName> and <xref:System.ServiceProcess.ServiceInstaller.Install%2A?displayProperty=fullName> methods during the installation process. It backs out failures, if necessary, by calling <xref:System.ServiceProcess.ServiceProcessInstaller.Rollback%2A> (or <xref:System.ServiceProcess.ServiceInstaller.Rollback%2A?displayProperty=fullName>) on all previously installed components.  \n  \n An application's install routine maintains information automatically about the components already installed, using the project installer's <xref:System.Configuration.Install.Installer.Context%2A?displayProperty=fullName>. This state information is continuously updated as the <xref:System.ServiceProcess.ServiceProcessInstaller> instance and each <xref:System.ServiceProcess.ServiceInstaller> instance is installed by the utility. It is usually unnecessary for your code to modify this state information explicitly.  \n  \n Instantiating a <xref:System.ServiceProcess.ServiceProcessInstaller> causes the base class constructor, <xref:System.Configuration.Install.ComponentInstaller.%23ctor%2A>, to be called."
+  example:
+  - "The following example creates a project installer called MyProjectInstaller, which inherits from <xref:System.Configuration.Install.Installer>. It is assumed there is a service executable that contains two services, \"Hello-World Service 1\" and \"Hello-World Service 2\". Within the constructor for MyProjectInstaller (which would be called by the install utility), <xref:System.ServiceProcess.ServiceInstaller> objects are created for each service, and a <xref:System.ServiceProcess.ServiceProcessInstaller> is created for the executable. For the install utility to recognize MyProjectInstaller as a valid installer, the <xref:System.ComponentModel.RunInstallerAttribute> attribute is set to `true`.  \n  \n Optional properties are set on the process installer and the service installers before the installers are added to the <xref:System.Configuration.Install.Installer.Installers%2A> collection. When the install utility accesses MyProjectInstaller, the objects added to the <xref:System.Configuration.Install.Installer.Installers%2A> collection through a call to <xref:System.Configuration.Install.InstallerCollection.Add%2A?displayProperty=fullName> will be installed in turn. During the process, the installer maintains state information indicating which objects have been installed, so each object can be backed out in turn in case of an installation failure.  \n  \n Normally, you would not instantiate your project installer class explicitly. You would create it and add the <xref:System.ComponentModel.RunInstallerAttribute>, but the install utility actually calls, and therefore instantiates, the class.  \n  \n [!code-cpp[Classic ServiceInstaller Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_Classic/classic ServiceInstaller Example/CPP/source.cpp#1)]\n [!code-csharp[Classic ServiceInstaller Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_Classic/classic ServiceInstaller Example/CS/source.cs#1)]\n [!code-vb[Classic ServiceInstaller Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_Classic/classic ServiceInstaller Example/VB/source.vb#1)]"
+  syntax:
+    content: 'public class ServiceProcessInstaller : System.Configuration.Install.ComponentInstaller'
+  inheritance:
+  - System.Object
+  - System.MarshalByRefObject
+  - System.ComponentModel.Component
+  - System.Configuration.Install.Installer
+  - System.Configuration.Install.ComponentInstaller
+  implements: []
+  inheritedMembers:
+  - System.ComponentModel.Component.CanRaiseEvents
+  - System.ComponentModel.Component.Container
+  - System.ComponentModel.Component.DesignMode
+  - System.ComponentModel.Component.Dispose
+  - System.ComponentModel.Component.Dispose(System.Boolean)
+  - System.ComponentModel.Component.Disposed
+  - System.ComponentModel.Component.Events
+  - System.ComponentModel.Component.GetService(System.Type)
+  - System.ComponentModel.Component.Site
+  - System.ComponentModel.Component.ToString
+  - System.Configuration.Install.ComponentInstaller.IsEquivalentInstaller(System.Configuration.Install.ComponentInstaller)
+  - System.Configuration.Install.Installer.AfterInstall
+  - System.Configuration.Install.Installer.AfterRollback
+  - System.Configuration.Install.Installer.AfterUninstall
+  - System.Configuration.Install.Installer.BeforeInstall
+  - System.Configuration.Install.Installer.BeforeRollback
+  - System.Configuration.Install.Installer.BeforeUninstall
+  - System.Configuration.Install.Installer.Commit(System.Collections.IDictionary)
+  - System.Configuration.Install.Installer.Committed
+  - System.Configuration.Install.Installer.Committing
+  - System.Configuration.Install.Installer.Context
+  - System.Configuration.Install.Installer.Installers
+  - System.Configuration.Install.Installer.OnAfterInstall(System.Collections.IDictionary)
+  - System.Configuration.Install.Installer.OnAfterRollback(System.Collections.IDictionary)
+  - System.Configuration.Install.Installer.OnAfterUninstall(System.Collections.IDictionary)
+  - System.Configuration.Install.Installer.OnBeforeInstall(System.Collections.IDictionary)
+  - System.Configuration.Install.Installer.OnBeforeRollback(System.Collections.IDictionary)
+  - System.Configuration.Install.Installer.OnBeforeUninstall(System.Collections.IDictionary)
+  - System.Configuration.Install.Installer.OnCommitted(System.Collections.IDictionary)
+  - System.Configuration.Install.Installer.OnCommitting(System.Collections.IDictionary)
+  - System.Configuration.Install.Installer.Parent
+  - System.Configuration.Install.Installer.Uninstall(System.Collections.IDictionary)
+  - System.MarshalByRefObject.CreateObjRef(System.Type)
+  - System.MarshalByRefObject.GetLifetimeService
+  - System.MarshalByRefObject.InitializeLifetimeService
+  - System.MarshalByRefObject.MemberwiseClone(System.Boolean)
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceProcess/ServiceProcessInstaller.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.ServiceProcess.ServiceProcessInstaller.#ctor
+  commentId: M:System.ServiceProcess.ServiceProcessInstaller.#ctor
+  id: '#ctor'
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  langs:
+  - csharp
+  name: ServiceProcessInstaller()
+  nameWithType: ServiceProcessInstaller.ServiceProcessInstaller()
+  fullName: ServiceProcessInstaller.ServiceProcessInstaller()
+  type: Constructor
+  assemblies:
+  - System.ServiceProcess
+  namespace: System.ServiceProcess
+  summary: Creates a new instance of the <xref href="System.ServiceProcess.ServiceProcessInstaller"></xref> class.
+  syntax:
+    content: public ServiceProcessInstaller ();
+    parameters: []
+  overload: System.ServiceProcess.ServiceProcessInstaller.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceProcess/ServiceProcessInstaller.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.ServiceProcess.ServiceProcessInstaller.Account
+  commentId: P:System.ServiceProcess.ServiceProcessInstaller.Account
+  id: Account
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  langs:
+  - csharp
+  name: Account
+  nameWithType: ServiceProcessInstaller.Account
+  fullName: ServiceProcessInstaller.Account
+  type: Property
+  assemblies:
+  - System.ServiceProcess
+  namespace: System.ServiceProcess
+  summary: Gets or sets the type of account under which to run this service application.
+  remarks: "When the <xref:System.ServiceProcess.ServiceProcessInstaller.Account%2A> property is `User`, the <xref:System.ServiceProcess.ServiceProcessInstaller.Username%2A> and <xref:System.ServiceProcess.ServiceProcessInstaller.Password%2A> properties are used to define an account under which the service application runs.  \n  \n The <xref:System.ServiceProcess.ServiceProcessInstaller.Username%2A> and <xref:System.ServiceProcess.ServiceProcessInstaller.Password%2A> pair allows the service to run under an account other than the system account. This can, for example, allow the service to start automatically at reboot, when no user is logged on. If you leave either the <xref:System.ServiceProcess.ServiceProcessInstaller.Username%2A> or <xref:System.ServiceProcess.ServiceProcessInstaller.Password%2A> empty and set <xref:System.ServiceProcess.ServiceProcessInstaller.Account%2A> to `User`, you will be prompted for a valid user name and password at installation.  \n  \n You can also specify that the service run under the local system account, or as a local or network service. See the <xref:System.ServiceProcess.ServiceAccount> enumeration for details on types of accounts."
+  syntax:
+    content: >-
+      [System.ServiceProcess.ServiceProcessDescription("ServiceProcessInstallerAccount")]
+
+      public System.ServiceProcess.ServiceAccount Account { get; set; }
+    return:
+      type: System.ServiceProcess.ServiceAccount
+      description: A <xref href="System.ServiceProcess.ServiceAccount"></xref> that defines the type of account under which the system runs this service. The default is `User`.
+  overload: System.ServiceProcess.ServiceProcessInstaller.Account*
+  exceptions: []
+  attributes:
+  - type: System.ServiceProcess.ServiceProcessDescriptionAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceProcess/ServiceProcessInstaller.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.ServiceProcess.ServiceProcessInstaller.CopyFromComponent(System.ComponentModel.IComponent)
+  commentId: M:System.ServiceProcess.ServiceProcessInstaller.CopyFromComponent(System.ComponentModel.IComponent)
+  id: CopyFromComponent(System.ComponentModel.IComponent)
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  langs:
+  - csharp
+  name: CopyFromComponent(IComponent)
+  nameWithType: ServiceProcessInstaller.CopyFromComponent(IComponent)
+  fullName: ServiceProcessInstaller.CopyFromComponent(IComponent)
+  type: Method
+  assemblies:
+  - System.ServiceProcess
+  namespace: System.ServiceProcess
+  summary: Implements the base class <xref href="System.Configuration.Install.ComponentInstaller.CopyFromComponent(System.ComponentModel.IComponent)"></xref> method with no <xref href="System.ServiceProcess.ServiceProcessInstaller"></xref> class-specific behavior.
+  remarks: This method should not be called within your code. The base class method on <xref:System.Configuration.Install.ComponentInstaller> is `abstract`, so it is implemented here on the derived class. However, there is no <xref:System.ServiceProcess.ServiceProcessInstaller> class-specific processing in the method's implementation.
+  syntax:
+    content: public override void CopyFromComponent (System.ComponentModel.IComponent comp);
+    parameters:
+    - id: comp
+      type: System.ComponentModel.IComponent
+      description: The <xref href="System.ComponentModel.IComponent"></xref> that represents the service process.
+  overload: System.ServiceProcess.ServiceProcessInstaller.CopyFromComponent*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceProcess/ServiceProcessInstaller.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.ServiceProcess.ServiceProcessInstaller.HelpText
+  commentId: P:System.ServiceProcess.ServiceProcessInstaller.HelpText
+  id: HelpText
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  langs:
+  - csharp
+  name: HelpText
+  nameWithType: ServiceProcessInstaller.HelpText
+  fullName: ServiceProcessInstaller.HelpText
+  type: Property
+  assemblies:
+  - System.ServiceProcess
+  namespace: System.ServiceProcess
+  summary: Gets help text displayed for service installation options.
+  remarks: This help text can be used when a service starts manually. It indicates to the user how to enter user name and password information.
+  syntax:
+    content: public override string HelpText { get; }
+    return:
+      type: System.String
+      description: Help text that provides a description of the steps for setting the user name and password in order to run the service under a particular account.
+  overload: System.ServiceProcess.ServiceProcessInstaller.HelpText*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceProcess/ServiceProcessInstaller.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.ServiceProcess.ServiceProcessInstaller.Install(System.Collections.IDictionary)
+  commentId: M:System.ServiceProcess.ServiceProcessInstaller.Install(System.Collections.IDictionary)
+  id: Install(System.Collections.IDictionary)
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  langs:
+  - csharp
+  name: Install(IDictionary)
+  nameWithType: ServiceProcessInstaller.Install(IDictionary)
+  fullName: ServiceProcessInstaller.Install(IDictionary)
+  type: Method
+  assemblies:
+  - System.ServiceProcess
+  namespace: System.ServiceProcess
+  summary: Writes service application information to the registry. This method is meant to be used by installation tools, which call the appropriate methods automatically.
+  remarks: "Normally, you do not call the methods on <xref:System.ServiceProcess.ServiceProcessInstaller> within your code; they are generally called only by the install utility. The install utility automatically calls the <xref:System.ServiceProcess.ServiceProcessInstaller.Install%2A?displayProperty=fullName> method during the installation process. It backs out failures, if necessary, by calling <xref:System.ServiceProcess.ServiceProcessInstaller.Rollback%2A> on all previously installed components. This method passes the installation to the base class <xref:System.Configuration.Install.Installer.Install%2A?displayProperty=fullName> method.  \n  \n Normally, you will not call the methods on <xref:System.ServiceProcess.ServiceInstaller> within your code; they are generally called only by the install utility. The install utility automatically calls the <xref:System.ServiceProcess.ServiceProcessInstaller.Install%2A?displayProperty=fullName> and <xref:System.ServiceProcess.ServiceInstaller.Install%2A?displayProperty=fullName> methods during the installation process. It backs out failures, if necessary, by calling <xref:System.ServiceProcess.ServiceProcessInstaller.Rollback%2A> (or <xref:System.ServiceProcess.ServiceInstaller.Rollback%2A?displayProperty=fullName>) on all previously installed components  \n  \n An application's install routine maintains information automatically about the components already installed, using the project installer's <xref:System.Configuration.Install.Installer.Context%2A?displayProperty=fullName>. This state information, passed into <xref:System.ServiceProcess.ServiceProcessInstaller.Install%2A> as the `stateSaver` parameter, is continuously updated as the <xref:System.ServiceProcess.ServiceProcessInstaller> instance and each <xref:System.ServiceProcess.ServiceInstaller> instance is installed by the utility. It is usually unnecessary for your code to modify this state information explicitly.  \n  \n <xref:System.ServiceProcess.ServiceProcessInstaller.Install%2A> passes to the calling method any exceptions thrown by base class methods or <xref:System.Configuration.Install.Installer.BeforeInstall> / <xref:System.Configuration.Install.Installer.AfterInstall> event handlers."
+  syntax:
+    content: public override void Install (System.Collections.IDictionary stateSaver);
+    parameters:
+    - id: stateSaver
+      type: System.Collections.IDictionary
+      description: An <xref href="System.Collections.IDictionary"></xref> that contains the context information associated with the installation.
+  overload: System.ServiceProcess.ServiceProcessInstaller.Install*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The <code>stateSaver</code> is `null`.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceProcess/ServiceProcessInstaller.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.ServiceProcess.ServiceProcessInstaller.Password
+  commentId: P:System.ServiceProcess.ServiceProcessInstaller.Password
+  id: Password
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  langs:
+  - csharp
+  name: Password
+  nameWithType: ServiceProcessInstaller.Password
+  fullName: ServiceProcessInstaller.Password
+  type: Property
+  assemblies:
+  - System.ServiceProcess
+  namespace: System.ServiceProcess
+  summary: Gets or sets the password associated with the user account under which the service application runs.
+  remarks: "The <xref:System.ServiceProcess.ServiceProcessInstaller.Password%2A> and <xref:System.ServiceProcess.ServiceProcessInstaller.Username%2A> pair allows the service to run under an account other than the system account. This can, for example, allow the service to start automatically at reboot, when no user is logged on.  \n  \n <xref:System.ServiceProcess.ServiceProcessInstaller.Password%2A> and <xref:System.ServiceProcess.ServiceProcessInstaller.Username%2A> are handled in a secure manner in that they are never serialized or saved to the install state (the project installer's <xref:System.Configuration.Install.Installer.Context%2A?displayProperty=fullName>) or other location with public access.  \n  \n Setting the <xref:System.ServiceProcess.ServiceProcessInstaller.Username%2A> and <xref:System.ServiceProcess.ServiceProcessInstaller.Password%2A> allows an account to be associated automatically with the service at install time. If you leave either the <xref:System.ServiceProcess.ServiceProcessInstaller.Username%2A> or <xref:System.ServiceProcess.ServiceProcessInstaller.Password%2A> empty and set <xref:System.ServiceProcess.ServiceProcessInstaller.Account%2A> to `User`, you will be prompted for a valid user name and password at installation.  \n  \n Another option for running a service under a separate account is to use the computer's System account. That account, which is distinct from the Administrator account, requires no password. The System account's privileges may exceed those of the user currently logged in. Running under the System account rather than a user account avoids problems resulting from the user lacking a permission the service requires  \n  \n If <xref:System.ServiceProcess.ServiceProcessInstaller.Account%2A> is any value other than `User`, the specifed account (local or network service, or local system) is used, even if the <xref:System.ServiceProcess.ServiceProcessInstaller.Username%2A> and <xref:System.ServiceProcess.ServiceProcessInstaller.Password%2A> properties are populated."
+  syntax:
+    content: >-
+      [System.ComponentModel.Browsable(false)]
+
+      public string Password { get; set; }
+    return:
+      type: System.String
+      description: The password associated with the account under which the service should run. The default is an empty string (""). The property is not public, and is never serialized.
+  overload: System.ServiceProcess.ServiceProcessInstaller.Password*
+  exceptions: []
+  attributes:
+  - type: System.ComponentModel.BrowsableAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceProcess/ServiceProcessInstaller.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.ServiceProcess.ServiceProcessInstaller.Rollback(System.Collections.IDictionary)
+  commentId: M:System.ServiceProcess.ServiceProcessInstaller.Rollback(System.Collections.IDictionary)
+  id: Rollback(System.Collections.IDictionary)
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  langs:
+  - csharp
+  name: Rollback(IDictionary)
+  nameWithType: ServiceProcessInstaller.Rollback(IDictionary)
+  fullName: ServiceProcessInstaller.Rollback(IDictionary)
+  type: Method
+  assemblies:
+  - System.ServiceProcess
+  namespace: System.ServiceProcess
+  summary: Rolls back service application information written to the registry by the installation procedure. This method is meant to be used by installation tools, which process the appropriate methods automatically.
+  remarks: "Normally, you do not call the methods on <xref:System.ServiceProcess.ServiceProcessInstaller> within your code; they are generally called only by the install utility. The install utility automatically calls the <xref:System.ServiceProcess.ServiceProcessInstaller.Install%2A?displayProperty=fullName> method during the installation process. It backs out failures, if necessary, by calling <xref:System.ServiceProcess.ServiceProcessInstaller.Rollback%2A> on the object that generated the exception.  \n  \n An application's install routine maintains information automatically about the components already installed, using the project installer's <xref:System.Configuration.Install.Installer.Context%2A?displayProperty=fullName>. This state information, passed into <xref:System.ServiceProcess.ServiceProcessInstaller.Rollback%2A> as the `savedState` parameter, is continuously updated as the <xref:System.ServiceProcess.ServiceProcessInstaller> instance and each <xref:System.ServiceProcess.ServiceInstaller> instance is installed by the utility. It is usually unnecessary for your code to modify this state information explicitly.  \n  \n <xref:System.ServiceProcess.ServiceProcessInstaller.Rollback%2A> passes to the calling method any exceptions thrown by base class methods or <xref:System.Configuration.Install.Installer.BeforeInstall> / <xref:System.Configuration.Install.Installer.AfterInstall> event handlers."
+  syntax:
+    content: public override void Rollback (System.Collections.IDictionary savedState);
+    parameters:
+    - id: savedState
+      type: System.Collections.IDictionary
+      description: An <xref href="System.Collections.IDictionary"></xref> that contains the context information associated with the installation.
+  overload: System.ServiceProcess.ServiceProcessInstaller.Rollback*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: "The <code>savedState</code> is `null`.  \n  \n -or-  \n  \n The <code>savedState</code> is corrupted or non-existent."
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceProcess/ServiceProcessInstaller.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.ServiceProcess.ServiceProcessInstaller.Username
+  commentId: P:System.ServiceProcess.ServiceProcessInstaller.Username
+  id: Username
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  langs:
+  - csharp
+  name: Username
+  nameWithType: ServiceProcessInstaller.Username
+  fullName: ServiceProcessInstaller.Username
+  type: Property
+  assemblies:
+  - System.ServiceProcess
+  namespace: System.ServiceProcess
+  summary: Gets or sets the user account under which the service application will run.
+  remarks: "The <xref:System.ServiceProcess.ServiceProcessInstaller.Username%2A> and <xref:System.ServiceProcess.ServiceProcessInstaller.Password%2A> pair allows the service to run under an account other than the system account. This can, for example, allow the service to start automatically at reboot, when no user is logged on.  \n  \n <xref:System.ServiceProcess.ServiceProcessInstaller.Password%2A> and <xref:System.ServiceProcess.ServiceProcessInstaller.Username%2A> are handled in a secure manner in that they are never serialized or saved to the install state (the project installer's <xref:System.Configuration.Install.Installer.Context%2A?displayProperty=fullName>) or other location with public access.  \n  \n Setting the <xref:System.ServiceProcess.ServiceProcessInstaller.Username%2A> and <xref:System.ServiceProcess.ServiceProcessInstaller.Password%2A> allows an account to be associated automatically with the service at install time. If you leave either the <xref:System.ServiceProcess.ServiceProcessInstaller.Username%2A> or <xref:System.ServiceProcess.ServiceProcessInstaller.Password%2A> empty and set <xref:System.ServiceProcess.ServiceProcessInstaller.Account%2A> to `User`, you will be prompted for a valid user name and password at installation.  \n  \n Another option for running a service under a separate account is to use the computer's System account. That account, which is distinct from the Administrator account, requires no password. The System account's privileges may exceed those of the user currently logged in. Running under the System account rather than a user account avoids problems resulting from the user lacking a permission the service requires  \n  \n If <xref:System.ServiceProcess.ServiceProcessInstaller.Account%2A> is any value other than `User`, the specified account (local or network service, or local system) is used, even if the <xref:System.ServiceProcess.ServiceProcessInstaller.Username%2A> and <xref:System.ServiceProcess.ServiceProcessInstaller.Password%2A> properties are populated."
+  syntax:
+    content: >-
+      [System.ComponentModel.Browsable(false)]
+
+      [System.ComponentModel.TypeConverter("System.Diagnostics.Design.StringValueConverter, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+
+      public string Username { get; set; }
+    return:
+      type: System.String
+      description: The account under which the service should run. The default is an empty string ("").
+  overload: System.ServiceProcess.ServiceProcessInstaller.Username*
+  exceptions: []
+  attributes:
+  - type: System.ComponentModel.BrowsableAttribute
+  - type: System.ComponentModel.TypeConverterAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceProcess/ServiceProcessInstaller.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+references:
+- uid: System.Configuration.Install.ComponentInstaller
+  parent: System.Configuration.Install
+  isExternal: false
+  name: ComponentInstaller
+  nameWithType: ComponentInstaller
+  fullName: System.Configuration.Install.ComponentInstaller
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.ServiceProcess.ServiceProcessInstaller.#ctor
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  isExternal: false
+  name: ServiceProcessInstaller()
+  nameWithType: ServiceProcessInstaller.ServiceProcessInstaller()
+  fullName: ServiceProcessInstaller.ServiceProcessInstaller()
+- uid: System.ServiceProcess.ServiceProcessInstaller.Account
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  isExternal: false
+  name: Account
+  nameWithType: ServiceProcessInstaller.Account
+  fullName: ServiceProcessInstaller.Account
+- uid: System.ServiceProcess.ServiceAccount
+  parent: System.ServiceProcess
+  isExternal: false
+  name: ServiceAccount
+  nameWithType: ServiceAccount
+  fullName: System.ServiceProcess.ServiceAccount
+- uid: System.ServiceProcess.ServiceProcessInstaller.CopyFromComponent(System.ComponentModel.IComponent)
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  isExternal: false
+  name: CopyFromComponent(IComponent)
+  nameWithType: ServiceProcessInstaller.CopyFromComponent(IComponent)
+  fullName: ServiceProcessInstaller.CopyFromComponent(IComponent)
+- uid: System.ComponentModel.IComponent
+  parent: System.ComponentModel
+  isExternal: false
+  name: IComponent
+  nameWithType: IComponent
+  fullName: System.ComponentModel.IComponent
+- uid: System.ServiceProcess.ServiceProcessInstaller.HelpText
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  isExternal: false
+  name: HelpText
+  nameWithType: ServiceProcessInstaller.HelpText
+  fullName: ServiceProcessInstaller.HelpText
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.ServiceProcess.ServiceProcessInstaller.Install(System.Collections.IDictionary)
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  isExternal: false
+  name: Install(IDictionary)
+  nameWithType: ServiceProcessInstaller.Install(IDictionary)
+  fullName: ServiceProcessInstaller.Install(IDictionary)
+- uid: System.Collections.IDictionary
+  parent: System.Collections
+  isExternal: false
+  name: IDictionary
+  nameWithType: IDictionary
+  fullName: System.Collections.IDictionary
+- uid: System.ServiceProcess.ServiceProcessInstaller.Password
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  isExternal: false
+  name: Password
+  nameWithType: ServiceProcessInstaller.Password
+  fullName: ServiceProcessInstaller.Password
+- uid: System.ServiceProcess.ServiceProcessInstaller.Rollback(System.Collections.IDictionary)
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  isExternal: false
+  name: Rollback(IDictionary)
+  nameWithType: ServiceProcessInstaller.Rollback(IDictionary)
+  fullName: ServiceProcessInstaller.Rollback(IDictionary)
+- uid: System.ServiceProcess.ServiceProcessInstaller.Username
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  isExternal: false
+  name: Username
+  nameWithType: ServiceProcessInstaller.Username
+  fullName: ServiceProcessInstaller.Username
+- uid: System.ServiceProcess.ServiceProcessInstaller.#ctor*
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  isExternal: false
+  name: ServiceProcessInstaller
+  nameWithType: ServiceProcessInstaller.ServiceProcessInstaller
+  fullName: ServiceProcessInstaller.ServiceProcessInstaller
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceProcess/ServiceProcessInstaller.xml
+- uid: System.ServiceProcess.ServiceProcessInstaller.Account*
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  isExternal: false
+  name: Account
+  nameWithType: ServiceProcessInstaller.Account
+  fullName: ServiceProcessInstaller.Account
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceProcess/ServiceProcessInstaller.xml
+- uid: System.ServiceProcess.ServiceProcessInstaller.CopyFromComponent*
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  isExternal: false
+  name: CopyFromComponent
+  nameWithType: ServiceProcessInstaller.CopyFromComponent
+  fullName: ServiceProcessInstaller.CopyFromComponent
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceProcess/ServiceProcessInstaller.xml
+- uid: System.ServiceProcess.ServiceProcessInstaller.HelpText*
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  isExternal: false
+  name: HelpText
+  nameWithType: ServiceProcessInstaller.HelpText
+  fullName: ServiceProcessInstaller.HelpText
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceProcess/ServiceProcessInstaller.xml
+- uid: System.ServiceProcess.ServiceProcessInstaller.Install*
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  isExternal: false
+  name: Install
+  nameWithType: ServiceProcessInstaller.Install
+  fullName: ServiceProcessInstaller.Install
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceProcess/ServiceProcessInstaller.xml
+- uid: System.ServiceProcess.ServiceProcessInstaller.Password*
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  isExternal: false
+  name: Password
+  nameWithType: ServiceProcessInstaller.Password
+  fullName: ServiceProcessInstaller.Password
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceProcess/ServiceProcessInstaller.xml
+- uid: System.ServiceProcess.ServiceProcessInstaller.Rollback*
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  isExternal: false
+  name: Rollback
+  nameWithType: ServiceProcessInstaller.Rollback
+  fullName: ServiceProcessInstaller.Rollback
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceProcess/ServiceProcessInstaller.xml
+- uid: System.ServiceProcess.ServiceProcessInstaller.Username*
+  parent: System.ServiceProcess.ServiceProcessInstaller
+  isExternal: false
+  name: Username
+  nameWithType: ServiceProcessInstaller.Username
+  fullName: ServiceProcessInstaller.Username
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceProcess/ServiceProcessInstaller.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.ComponentModel.Component.ToString
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: ToString()
+  nameWithType: Component.ToString()
+  fullName: Component.ToString()
+- uid: System.MarshalByRefObject.CreateObjRef(System.Type)
+  parent: System.MarshalByRefObject
+  isExternal: false
+  name: CreateObjRef(Type)
+  nameWithType: MarshalByRefObject.CreateObjRef(Type)
+  fullName: MarshalByRefObject.CreateObjRef(Type)
+- uid: System.MarshalByRefObject.GetLifetimeService
+  parent: System.MarshalByRefObject
+  isExternal: false
+  name: GetLifetimeService()
+  nameWithType: MarshalByRefObject.GetLifetimeService()
+  fullName: MarshalByRefObject.GetLifetimeService()
+- uid: System.MarshalByRefObject.InitializeLifetimeService
+  parent: System.MarshalByRefObject
+  isExternal: false
+  name: InitializeLifetimeService()
+  nameWithType: MarshalByRefObject.InitializeLifetimeService()
+  fullName: MarshalByRefObject.InitializeLifetimeService()
+- uid: System.MarshalByRefObject.MemberwiseClone(System.Boolean)
+  parent: System.MarshalByRefObject
+  isExternal: false
+  name: MemberwiseClone(Boolean)
+  nameWithType: MarshalByRefObject.MemberwiseClone(Boolean)
+  fullName: MarshalByRefObject.MemberwiseClone(Boolean)
+- uid: System.ComponentModel.Component.CanRaiseEvents
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: CanRaiseEvents
+  nameWithType: Component.CanRaiseEvents
+  fullName: Component.CanRaiseEvents
+- uid: System.ComponentModel.Component.Container
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: Container
+  nameWithType: Component.Container
+  fullName: Component.Container
+- uid: System.ComponentModel.Component.DesignMode
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: DesignMode
+  nameWithType: Component.DesignMode
+  fullName: Component.DesignMode
+- uid: System.ComponentModel.Component.Dispose
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: Dispose()
+  nameWithType: Component.Dispose()
+  fullName: Component.Dispose()
+- uid: System.ComponentModel.Component.Dispose(System.Boolean)
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: Dispose(Boolean)
+  nameWithType: Component.Dispose(Boolean)
+  fullName: Component.Dispose(Boolean)
+- uid: System.ComponentModel.Component.Disposed
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: Disposed
+  nameWithType: Component.Disposed
+  fullName: Component.Disposed
+- uid: System.ComponentModel.Component.Events
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: Events
+  nameWithType: Component.Events
+  fullName: Component.Events
+- uid: System.ComponentModel.Component.GetService(System.Type)
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: GetService(Type)
+  nameWithType: Component.GetService(Type)
+  fullName: Component.GetService(Type)
+- uid: System.ComponentModel.Component.Site
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: Site
+  nameWithType: Component.Site
+  fullName: Component.Site
+- uid: System.Configuration.Install.Installer.AfterInstall
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: AfterInstall
+  nameWithType: Installer.AfterInstall
+  fullName: Installer.AfterInstall
+- uid: System.Configuration.Install.Installer.AfterRollback
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: AfterRollback
+  nameWithType: Installer.AfterRollback
+  fullName: Installer.AfterRollback
+- uid: System.Configuration.Install.Installer.AfterUninstall
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: AfterUninstall
+  nameWithType: Installer.AfterUninstall
+  fullName: Installer.AfterUninstall
+- uid: System.Configuration.Install.Installer.BeforeInstall
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: BeforeInstall
+  nameWithType: Installer.BeforeInstall
+  fullName: Installer.BeforeInstall
+- uid: System.Configuration.Install.Installer.BeforeRollback
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: BeforeRollback
+  nameWithType: Installer.BeforeRollback
+  fullName: Installer.BeforeRollback
+- uid: System.Configuration.Install.Installer.BeforeUninstall
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: BeforeUninstall
+  nameWithType: Installer.BeforeUninstall
+  fullName: Installer.BeforeUninstall
+- uid: System.Configuration.Install.Installer.Commit(System.Collections.IDictionary)
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: Commit(IDictionary)
+  nameWithType: Installer.Commit(IDictionary)
+  fullName: Installer.Commit(IDictionary)
+- uid: System.Configuration.Install.Installer.Committed
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: Committed
+  nameWithType: Installer.Committed
+  fullName: Installer.Committed
+- uid: System.Configuration.Install.Installer.Committing
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: Committing
+  nameWithType: Installer.Committing
+  fullName: Installer.Committing
+- uid: System.Configuration.Install.Installer.Context
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: Context
+  nameWithType: Installer.Context
+  fullName: Installer.Context
+- uid: System.Configuration.Install.Installer.Installers
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: Installers
+  nameWithType: Installer.Installers
+  fullName: Installer.Installers
+- uid: System.Configuration.Install.Installer.OnAfterInstall(System.Collections.IDictionary)
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: OnAfterInstall(IDictionary)
+  nameWithType: Installer.OnAfterInstall(IDictionary)
+  fullName: Installer.OnAfterInstall(IDictionary)
+- uid: System.Configuration.Install.Installer.OnAfterRollback(System.Collections.IDictionary)
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: OnAfterRollback(IDictionary)
+  nameWithType: Installer.OnAfterRollback(IDictionary)
+  fullName: Installer.OnAfterRollback(IDictionary)
+- uid: System.Configuration.Install.Installer.OnAfterUninstall(System.Collections.IDictionary)
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: OnAfterUninstall(IDictionary)
+  nameWithType: Installer.OnAfterUninstall(IDictionary)
+  fullName: Installer.OnAfterUninstall(IDictionary)
+- uid: System.Configuration.Install.Installer.OnBeforeInstall(System.Collections.IDictionary)
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: OnBeforeInstall(IDictionary)
+  nameWithType: Installer.OnBeforeInstall(IDictionary)
+  fullName: Installer.OnBeforeInstall(IDictionary)
+- uid: System.Configuration.Install.Installer.OnBeforeRollback(System.Collections.IDictionary)
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: OnBeforeRollback(IDictionary)
+  nameWithType: Installer.OnBeforeRollback(IDictionary)
+  fullName: Installer.OnBeforeRollback(IDictionary)
+- uid: System.Configuration.Install.Installer.OnBeforeUninstall(System.Collections.IDictionary)
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: OnBeforeUninstall(IDictionary)
+  nameWithType: Installer.OnBeforeUninstall(IDictionary)
+  fullName: Installer.OnBeforeUninstall(IDictionary)
+- uid: System.Configuration.Install.Installer.OnCommitted(System.Collections.IDictionary)
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: OnCommitted(IDictionary)
+  nameWithType: Installer.OnCommitted(IDictionary)
+  fullName: Installer.OnCommitted(IDictionary)
+- uid: System.Configuration.Install.Installer.OnCommitting(System.Collections.IDictionary)
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: OnCommitting(IDictionary)
+  nameWithType: Installer.OnCommitting(IDictionary)
+  fullName: Installer.OnCommitting(IDictionary)
+- uid: System.Configuration.Install.Installer.Parent
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: Parent
+  nameWithType: Installer.Parent
+  fullName: Installer.Parent
+- uid: System.Configuration.Install.Installer.Uninstall(System.Collections.IDictionary)
+  parent: System.Configuration.Install.Installer
+  isExternal: false
+  name: Uninstall(IDictionary)
+  nameWithType: Installer.Uninstall(IDictionary)
+  fullName: Installer.Uninstall(IDictionary)
+- uid: System.Configuration.Install.ComponentInstaller.IsEquivalentInstaller(System.Configuration.Install.ComponentInstaller)
+  parent: System.Configuration.Install.ComponentInstaller
+  isExternal: false
+  name: IsEquivalentInstaller(ComponentInstaller)
+  nameWithType: ComponentInstaller.IsEquivalentInstaller(ComponentInstaller)
+  fullName: ComponentInstaller.IsEquivalentInstaller(ComponentInstaller)

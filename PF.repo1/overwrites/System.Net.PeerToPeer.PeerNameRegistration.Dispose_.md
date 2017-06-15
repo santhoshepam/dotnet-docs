@@ -1,0 +1,5 @@
+---
+summary: Releases the resources used by the <xref href="System.Net.PeerToPeer.PeerNameRegistration"></xref> object.
+remarks: "When a peer leaves a <xref:System.Net.PeerToPeer.Cloud>, the cloud no longer requires the <xref:System.Net.PeerToPeer.PeerNameRegistration> object associated with the peer.  Whether the registration object is stopped or disposed is dependent upon whether the cloud will reuse the object to register this peer or another peer. If there are any other endpoint(s) within the registration object with which the peer host expected to communicate, registering those endpoints within the cloud must occur before stopping or disposing of this object.  \n  \n If the cloud expects to register more peers, the <xref:System.Net.PeerToPeer.PeerNameRegistration.Stop%2A> method is recommended; when the cloud no longer needs the memory, it should be returned to the operating system via the <xref:System.Net.PeerToPeer.PeerNameRegistration.Dispose%2A> method."
+uid: System.Net.PeerToPeer.PeerNameRegistration.Dispose*
+---

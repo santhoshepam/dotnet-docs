@@ -1,0 +1,2129 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Exception
+  commentId: T:System.Exception
+  id: Exception
+  children:
+  - System.Exception.#ctor
+  - System.Exception.#ctor(System.String)
+  - System.Exception.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  - System.Exception.#ctor(System.String,System.Exception)
+  - System.Exception.Data
+  - System.Exception.GetBaseException
+  - System.Exception.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  - System.Exception.GetType
+  - System.Exception.HelpLink
+  - System.Exception.HResult
+  - System.Exception.InnerException
+  - System.Exception.Message
+  - System.Exception.SerializeObjectState
+  - System.Exception.Source
+  - System.Exception.StackTrace
+  - System.Exception.TargetSite
+  - System.Exception.ToString
+  langs:
+  - csharp
+  name: Exception
+  nameWithType: Exception
+  fullName: System.Exception
+  type: Class
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Represents errors that occur during application execution.
+  remarks: "> [!NOTE]\n>  To view the .NET Framework source code for this type, see the [Reference Source](http://referencesource.microsoft.com/#mscorlib/system/exception.cs#f092fb2b893a0162). You can browse through the source code online, download the reference for offline viewing, and step through the sources (including patches and updates) during debugging; see [instructions](http://referencesource.microsoft.com/).  \n  \n This class is the base class for all exceptions. When an error occurs, either the system or the currently executing application reports it by throwing an exception that contains information about the error. After an exception is thrown, it is handled by the application or by the default exception handler.  \n  \n In this section:  \n  \n [Errors and exceptions](#Errors)   \n [Try/catch blocks](#TryCatch)   \n [Exception type features](#Features)   \n [Exception class properties](#Properties)   \n [Performance considerations](#Performance)   \n [Re-throwing an exception](#Rethrow)   \n [Choosing standard exceptions](#Standard)   \n [Implementing custom exceptions](#Custom)  \n  \n<a name=\"Errors\"></a>   \n## Errors and exceptions  \n Run-time errors can occur for a variety of reasons. However, not all errors should be handled as exceptions in your code. Here are some categories of errors that can occur at run time and the appropriate ways to respond to them.  \n  \n-   **Usage errors.** A usage error represents an error in program logic that can result in an exception. However, the error should be addressed not through exception handling but by modifying the faulty code. For example, the override of the <xref:System.Object.Equals%28System.Object%29?displayProperty=fullName> method in the following example assumes that the `obj` argument must always be non-null.  \n  \n     [!code-csharp[System.Exception.Class#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.exception.class/cs/usageerrors1.cs#4)]\n     [!code-vb[System.Exception.Class#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.exception.class/vb/usageerrors1.vb#4)]  \n  \n     The <xref:System.NullReferenceException> exception that results when `obj` is `null` can be eliminated by modifying the source code to explicitly test for null before calling the <xref:System.Object.Equals%2A?displayProperty=fullName> override and then re-compiling. The following example contains the corrected source code that handles a `null` argument.  \n  \n     [!code-csharp[System.Exception.Class#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.exception.class/cs/usageerrors2.cs#5)]\n     [!code-vb[System.Exception.Class#5](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.exception.class/vb/usageerrors2.vb#5)]  \n  \n     Instead of using exception handling for usage errors, you can use the <xref:System.Diagnostics.Debug.Assert%2A?displayProperty=fullName> method to identify usage errors in debug builds, and the <xref:System.Diagnostics.Trace.Assert%2A?displayProperty=fullName> method to identify usage errors in both debug and release builds. For more information, see [Assertions in Managed Code](http://msdn.microsoft.com/library/70ab2522-6486-4076-a1a9-e0f11cd0f3a1).  \n  \n-   **Program errors.** A program error is a run-time error that cannot necessarily be avoided by writing bug-free code.  \n  \n     In some cases, a program error may reflect an expected or routine error condition. In this case, you may want to avoid using exception handling to deal with the program error and instead retry the operation. For example, if the user is expected to input a date in a particular format, you can parse the date string by calling the <xref:System.DateTime.TryParseExact%2A?displayProperty=fullName> method, which returns a <xref:System.Boolean> value that indicates whether the parse operation succeeded, instead of using the <xref:System.DateTime.ParseExact%2A?displayProperty=fullName> method, which throws a <xref:System.FormatException> exception if the date string cannot be converted to a <xref:System.DateTime> value. Similarly, if a user tries to open a file that does not exist, you can first call the <xref:System.IO.File.Exists%2A?displayProperty=fullName> method to check whether the file exists and, if it does not, prompt the user whether he or she wants to create it.  \n  \n     In other cases, a program error reflects an unexpected error condition that can be handled in your code. For example, even if you've checked to ensure that a file exists, it may be deleted before you can open it, or it may be corrupted. In that case, trying to open the file by instantiating a <xref:System.IO.StreamReader> object or calling the <xref:System.IO.File.Open%2A> method may throw a <xref:System.IO.FileNotFoundException> exception. In these cases, you should use exception handling to recover from the error.  \n  \n-   **System failures.** A system failure is a run-time error that cannot be handled programmatically in a meaningful way. For example, any method can throw an <xref:System.OutOfMemoryException> exception if the common language runtime is unable to allocate additional memory. Ordinarily, system failures are not handled by using exception handling. Instead, you may be able to use an event such as <xref:System.AppDomain.UnhandledException?displayProperty=fullName> and call the <xref:System.Environment.FailFast%2A?displayProperty=fullName> method to log exception information and notify the user of the failure before the application terminates.  \n  \n<a name=\"TryCatch\"></a>   \n## Try/catch blocks  \n The common language runtime provides an exception handling model that is based on the representation of exceptions as objects, and the separation of program code and exception handling code into `try` blocks and `catch` blocks. There can be one or more `catch` blocks, each designed to handle a particular type of exception, or one block designed to catch a more specific exception than another block.  \n  \n If an application handles exceptions that occur during the execution of a block of application code, the code must be placed within a `try` statement and is called a `try` block. Application code that handles exceptions thrown by a `try` block is placed within a `catch` statement and is called a `catch` block. Zero or more `catch` blocks are associated with a `try` block, and each `catch` block includes a type filter that determines the types of exceptions it handles.  \n  \n When an exception occurs in a `try` block, the system searches the associated `catch` blocks in the order they appear in application code, until it locates a `catch` block that handles the exception. A `catch` block handles an exception of type `T` if the type filter of the catch block specifies `T` or any type that `T` derives from. The system stops searching after it finds the first `catch` block that handles the exception. For this reason, in application code, a `catch` block that handles a type must be specified before a `catch` block that handles its base types, as demonstrated in the example that follows this section. A catch block that handles `System.Exception` is specified last.  \n  \n If none of the `catch` blocks associated with the current `try` block handle the exception, and the current `try` block is nested within other `try` blocks in the current call, the `catch` blocks associated with the next enclosing `try` block are searched. If no `catch` block for the exception is found, the system searches previous nesting levels in the current call. If no `catch` block for the exception is found in the current call, the exception is passed up the call stack, and the previous stack frame is searched for a `catch` block that handles the exception. The search of the call stack continues until the exception is handled or until no more frames exist on the call stack. If the top of the call stack is reached without finding a `catch` block that handles the exception, the default exception handler handles it and the application terminates.  \n  \n<a name=\"Features\"></a>   \n## Exception type features  \n Exception types support the following features:  \n  \n-   Human-readable text that describes the error. When an exception occurs, the runtime makes a text message available to inform the user of the nature of the error and to suggest action to resolve the problem. This text message is held in the <xref:System.Exception.Message%2A> property of the exception object. During the creation of the exception object, you can pass a text string to the constructor to describe the details of that particular exception. If no error message argument is supplied to the constructor, the default error message is used. For more information, see the <xref:System.Exception.Message%2A> property.  \n  \n-   The state of the call stack when the exception was thrown. The <xref:System.Exception.StackTrace%2A> property carries a stack trace that can be used to determine where the error occurs in the code. The stack trace lists all the called methods and the line numbers in the source file where the calls are made.  \n  \n<a name=\"Properties\"></a>   \n## Exception class properties  \n The <xref:System.Exception> class includes a number of properties that help identify the code location, the type, the help file, and the reason for the exception: <xref:System.Exception.StackTrace%2A>, <xref:System.Exception.InnerException%2A>, <xref:System.Exception.Message%2A>, <xref:System.Exception.HelpLink%2A>, <xref:System.Exception.HResult%2A>, <xref:System.Exception.Source%2A>, <xref:System.Exception.TargetSite%2A>, and <xref:System.Exception.Data%2A>.  \n  \n When a causal relationship exists between two or more exceptions, the <xref:System.Exception.InnerException%2A> property maintains this information. The outer exception is thrown in response to this inner exception. The code that handles the outer exception can use the information from the earlier inner exception to handle the error more appropriately. Supplementary information about the exception can be stored as a collection of key/value pairs in the <xref:System.Exception.Data%2A> property.  \n  \n The error message string that is passed to the constructor during the creation of the exception object should be localized and can be supplied from a resource file by using the <xref:System.Resources.ResourceManager> class. For more information about localized resources, see the [Creating Satellite Assemblies](~/docs/framework/resources/creating-satellite-assemblies-for-desktop-apps.md) and [Packaging and Deploying Resources](~/docs/framework/resources/packaging-and-deploying-resources-in-desktop-apps.md) topics.  \n  \n To provide the user with extensive information about why the exception occurred, the <xref:System.Exception.HelpLink%2A> property can hold a URL (or URN) to a help file.  \n  \n The <xref:System.Exception> class uses the HRESULT COR_E_EXCEPTION, which has the value 0x80131500.  \n  \n For a list of initial property values for an instance of the <xref:System.Exception> class, see the <xref:System.Exception.%23ctor%2A> constructors.  \n  \n<a name=\"Performance\"></a>   \n## Performance considerations  \n Throwing or handling an exception consumes a significant amount of system resources and execution time. Throw exceptions only to handle truly extraordinary conditions, not to handle predictable events or flow control. For example, in some cases, such as when you're developing a class library, it's reasonable to throw an exception if a method argument is invalid, because you expect your method to be called with valid parameters. An invalid method argument, if it is not the result of a usage error, means that something extraordinary has occurred. Conversely, do not throw an exception if user input is invalid, because you can expect users to occasionally enter invalid data. Instead, provide a retry mechanism so users can enter valid input. Nor should you use exceptions to handle usage errors. Instead, use [assertions](http://msdn.microsoft.com/library/70ab2522-6486-4076-a1a9-e0f11cd0f3a1) to identify and correct usage errors.  \n  \n In addition, do not throw an exception when a return code is sufficient; do not convert a return code to an exception; and do not routinely catch an exception, ignore it, and then continue processing.  \n  \n<a name=\"Rethrow\"></a>   \n## Re-throwing an exception  \n In many cases, an exception handler simply wants to pass the exception on to the caller. This most often occurs in:  \n  \n-   A class library that in turn wraps calls to methods in the .NET Framework class library or other class libraries.  \n  \n-   An application or library that encounters a fatal exception. The exception handler can log the exception and then re-throw the exception.  \n  \n The recommended way to re-throw an exception is to simply use the [throw](~/docs/csharp/language-reference/keywords/throw.md) statement in C# and the [Throw](~/docs/visual-basic/language-reference/statements/throw-statement.md) statement in Visual Basic without including an expression. This ensures that all call stack information is preserved when the exception is propagated to the caller. The following example illustrates this. A string extension method, `FindOccurrences`, wraps one or more calls to <xref:System.String.IndexOf%28System.String%2CSystem.Int32%29?displayProperty=fullName> without validating its arguments beforehand.  \n  \n [!code-csharp[System.Exception.Class#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.exception.class/cs/rethrow1.cs#6)]\n [!code-vb[System.Exception.Class#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.exception.class/vb/rethrow1.vb#6)]  \n  \n A caller then calls `FindOccurrences` twice. In the second call to `FindOccurrences`, the caller passes a `null` as the search string, which cases the <xref:System.String.IndexOf%28System.String%2CSystem.Int32%29?displayProperty=fullName> method to throw an <xref:System.ArgumentNullException> exception. This exception is handled by the `FindOccurrences` method and passed back to the caller. Because the throw statement is used with no expression, the output from the example shows that the call stack is preserved.  \n  \n [!code-csharp[System.Exception.Class#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.exception.class/cs/rethrow1.cs#7)]\n [!code-vb[System.Exception.Class#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.exception.class/vb/rethrow1.vb#7)]  \n  \n In contrast, if the exception is re-thrown by using the  \n  \n```csharp  \nthrow e  \n```  \n  \n```vb  \nThrow e  \n```  \n  \n statement, the full call stack is not preserved, and the example would generate the following output:  \n  \n```Output  \n  \n'a' occurs at the following character positions: 4, 7, 15  \n  \nAn exception (ArgumentNullException) occurred.  \nMessage:  \n   Value cannot be null.  \nParameter name: value  \n  \nStack Trace:  \n      at Library.FindOccurrences(String s, String f)  \n   at Example.Main()  \n  \n```  \n  \n A slightly more cumbersome alternative is to throw a new exception, and to preserve the original exception's call stack information in an inner exception. The caller can then use the new exception's <xref:System.Exception.InnerException%2A> property to retrieve stack frame and other information about the original exception. In this case, the throw statement is:  \n  \n [!code-csharp[System.Exception.Class#8](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.exception.class/cs/rethrow3.cs#8)]\n [!code-vb[System.Exception.Class#8](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.exception.class/vb/rethrow3.vb#8)]  \n  \n The user code that handles the exception has to know that the <xref:System.Exception.InnerException%2A> property contains information about the original exception, as the following exception handler illustrates.  \n  \n [!code-csharp[System.Exception.Class#9](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.exception.class/cs/rethrow3.cs#9)]\n [!code-vb[System.Exception.Class#9](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.exception.class/vb/rethrow3.vb#9)]  \n  \n<a name=\"Standard\"></a>   \n## Choosing standard exceptions  \n When you have to throw an exception, you can often use an existing exception type in the .NET Framework instead of implementing a custom exception. You should use a standard exception type under these two conditions:  \n  \n-   You are throwing an exception that is caused by a usage error (that is, by an error in program logic made by the developer who is calling your method). Typically, you would throw an exception such as <xref:System.ArgumentException>, <xref:System.ArgumentNullException>, <xref:System.InvalidOperationException>, or <xref:System.NotSupportedException>. The string you supply to the exception object's constructor when instantiating the exception object should describe the error so that the developer can fix it. For more information, see the <xref:System.Exception.Message%2A> property.  \n  \n-   You are handling an error that can be communicated to the caller with an existing .NET Framework exception. You should throw the most derived exception possible. For example, if a method requires an argument to be a valid member of an enumeration type, you should throw an <xref:System.ComponentModel.InvalidEnumArgumentException> (the most derived class) rather than an <xref:System.ArgumentException>.  \n  \n The following table lists common exception types and the conditions under which you would throw them.  \n  \n|Exception|Condition|  \n|---------------|---------------|  \n|<xref:System.ArgumentException>|A non-null argument that is passed to a method is invalid.|  \n|<xref:System.ArgumentNullException>|An argument that is passed to a method is `null`.|  \n|<xref:System.ArgumentOutOfRangeException>|An argument is outside the range of valid values.|  \n|<xref:System.IO.DirectoryNotFoundException>|Part of a directory path is not valid.|  \n|<xref:System.DivideByZeroException>|The denominator in an integer or <xref:System.Decimal> division operation is zero.|  \n|<xref:System.IO.DriveNotFoundException>|A drive is unavailable or does not exist.|  \n|<xref:System.IO.FileNotFoundException>|A file does not exist.|  \n|<xref:System.FormatException>|A value is not in an appropriate format to be converted from a string by a conversion method such as `Parse`.|  \n|<xref:System.IndexOutOfRangeException>|An index is outside the bounds of an array or collection.|  \n|<xref:System.InvalidOperationException>|A method call is invalid in an object's current state.|  \n|<xref:System.Collections.Generic.KeyNotFoundException>|The specified key for accessing a member in a collection cannot be found.|  \n|<xref:System.NotImplementedException>|A method or operation is not implemented.|  \n|<xref:System.NotSupportedException>|A method or operation is not supported.|  \n|<xref:System.ObjectDisposedException>|An operation is performed on an object that has been disposed.|  \n|<xref:System.OverflowException>|An arithmetic, casting, or conversion operation results in an overflow.|  \n|<xref:System.IO.PathTooLongException>|A path or file name exceeds the maximum system-defined length.|  \n|<xref:System.PlatformNotSupportedException>|The operation is not supported on the current platform.|  \n|<xref:System.RankException>|An array with the wrong number of dimensions is passed to a method.|  \n|<xref:System.TimeoutException>|The time interval allotted to an operation has expired.|  \n|<xref:System.UriFormatException>|An invalid Uniform Resource Identifier (URI) is used.|  \n  \n<a name=\"Custom\"></a>   \n## Implementing custom exceptions  \n In the following cases, using an existing .NET Framework exception to handle an error condition is not adequate:  \n  \n-   When the exception reflects a unique program error that cannot be mapped to an existing .NET Framework exception.  \n  \n-   When the exception requires handling that is different from the handling that is appropriate for an existing .NET Framework exception, or the exception must be disambiguated from a similar exception. For example, if you throw an <xref:System.ArgumentOutOfRangeException> exception when parsing the numeric representation of a string that is out of range of the target integral type, you would not want to use the same exception for an error that results from the caller not supplying the appropriate constrained values when calling the method.  \n  \n The <xref:System.Exception> class is the base class of all exceptions in the .NET Framework. Many derived classes rely on the inherited behavior of the members of the <xref:System.Exception> class; they do not override the members of <xref:System.Exception>, nor do they define any unique members.  \n  \n To define your own exception class:  \n  \n1.  Define a class that inherits from <xref:System.Exception>. If necessary, define any unique members needed by your class to provide additional information about the exception. For example, the <xref:System.ArgumentException> class includes a <xref:System.ArgumentException.ParamName%2A> property that specifies the name of the parameter whose argument caused the exception, and the <xref:System.Text.RegularExpressions.RegexMatchTimeoutException> property includes a <xref:System.Text.RegularExpressions.RegexMatchTimeoutException.MatchTimeout%2A> property that indicates the time-out interval.  \n  \n2.  If necessary, override any inherited members whose functionality you want to change or modify. Note that most existing derived classes of <xref:System.Exception> do not override the behavior of inherited members.  \n  \n3.  Determine whether your custom exception object is serializable. Serialization enables you to save information about the exception and permits exception information to be shared by a server and a client proxy in a remoting context. To make the exception object serializable, mark it with the <xref:System.SerializableAttribute> attribute.  \n  \n4.  Define the constructors of your exception class. Typically, exception classes have one or more of the following constructors:  \n  \n    -   <xref:System.Exception.%23ctor>, which uses default values to initialize the properties of a new exception object.  \n  \n    -   <xref:System.Exception.%23ctor%28System.String%29>, which initializes a new exception object with a specified error message.  \n  \n    -   <xref:System.Exception.%23ctor%28System.String%2CSystem.Exception%29>, which initializes a new exception object with a specified error message and inner exception.  \n  \n    -   <xref:System.Exception.%23ctor%28System.Runtime.Serialization.SerializationInfo%2CSystem.Runtime.Serialization.StreamingContext%29>, which is a `protected` constructor that initializes a new exception object from serialized data. You should implement this constructor if you've chosen to make your exception object serializable.  \n  \n The following example illustrates the use of a custom exception class. It defines a `NotPrimeException` exception that is thrown when a client tries to retrieve a sequence of prime numbers by specifying a starting number that is not prime. The exception defines a new property, `NonPrime`, that returns the non-prime number that caused the exception. Besides implementing a protected parameterless constructor and a constructor with <xref:System.Runtime.Serialization.SerializationInfo> and <xref:System.Runtime.Serialization.StreamingContext> parameters for serialization, the `NotPrimeException` class defines three additional constructors to support the `NonPrime` property.  Each constructor calls a base class constructor in addition to preserving the value of the non-prime number. The `NotPrimeException` class is also marked with the <xref:System.SerializableAttribute> attribute.  \n  \n [!code-csharp[System.Exception.Class#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.exception.class/cs/notprimeexception.cs#1)]\n [!code-vb[System.Exception.Class#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.exception.class/vb/notprimeexception.vb#1)]  \n  \n The `PrimeNumberGenerator` class shown in the following example uses the Sieve of Eratosthenes to calculate the sequence of prime numbers from 2 to a limit specified by the client in the call to its class constructor. The `GetPrimesFrom` method returns all prime numbers that are greater than or equal to a specified lower limit, but throws a `NotPrimeException` if that lower limit is not a prime number.  \n  \n [!code-csharp[System.Exception.Class#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.exception.class/cs/primenumbergenerator.cs#2)]\n [!code-vb[System.Exception.Class#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.exception.class/vb/primenumbergenerator.vb#2)]  \n  \n The following example makes two calls to the `GetPrimesFrom` method with non-prime numbers, one of which crosses application domain boundaries. In both cases, the exception is thrown and successfully handled in client code.  \n  \n [!code-csharp[System.Exception.Class#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.exception.class/cs/example.cs#3)]\n [!code-vb[System.Exception.Class#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.exception.class/vb/example.vb#3)]  \n  \n## Windows Runtime and [!INCLUDE[net_v451](~/includes/net-v451-md.md)]  \n In [!INCLUDE[net_win8_profile](~/includes/net-win8-profile-md.md)] for [!INCLUDE[win8](~/includes/win8-md.md)], some exception information is typically lost when an exception is propagated through non-.NET Framework stack frames. Starting with the [!INCLUDE[net_v451](~/includes/net-v451-md.md)] and [!INCLUDE[win81](~/includes/win81-md.md)], the common language runtime continues to use the original <xref:System.Exception> object that was thrown unless that exception was modified in a non-.NET Framework stack frame."
+  example:
+  - "The following example demonstrates a `catch` block that is defined to handle <xref:System.ArithmeticException> errors. This `catch` block also catches <xref:System.DivideByZeroException> errors, because <xref:System.DivideByZeroException> derives from <xref:System.ArithmeticException> and there is no `catch` block explicitly defined for <xref:System.DivideByZeroException> errors.  \n  \n [!code-cpp[CatchException#1](~/samples/snippets/cpp/VS_Snippets_CLR/CatchException/CPP/catchexception.cpp#1)]\n [!code-csharp[CatchException#1](~/samples/snippets/csharp/VS_Snippets_CLR/CatchException/CS/catchexception.cs#1)]\n [!code-vb[CatchException#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/CatchException/VB/catchexception.vb#1)]"
+  syntax:
+    content: >-
+      [System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
+
+      [System.Runtime.InteropServices.ComVisible(true)]
+
+      public class Exception : System.Runtime.InteropServices._Exception, System.Runtime.Serialization.ISerializable
+  inheritance:
+  - System.Object
+  derivedClasses:
+  - Microsoft.Build.BuildEngine.InternalLoggerException
+  - Microsoft.Build.BuildEngine.InvalidProjectFileException
+  - Microsoft.Build.BuildEngine.InvalidToolsetDefinitionException
+  - Microsoft.Build.BuildEngine.RemoteErrorException
+  - Microsoft.Build.Exceptions.BuildAbortedException
+  - Microsoft.Build.Exceptions.InternalLoggerException
+  - Microsoft.Build.Exceptions.InvalidProjectFileException
+  - Microsoft.Build.Exceptions.InvalidToolsetDefinitionException
+  - Microsoft.Build.Framework.LoggerException
+  - Microsoft.CSharp.RuntimeBinder.RuntimeBinderException
+  - Microsoft.CSharp.RuntimeBinder.RuntimeBinderInternalCompilerException
+  - Microsoft.FSharp.Core.MatchFailureException
+  - Microsoft.JScript.CmdLineException
+  - Microsoft.JScript.ParserException
+  - Microsoft.VisualBasic.ApplicationServices.CantStartSingleInstanceException
+  - Microsoft.VisualBasic.ApplicationServices.NoStartupFormException
+  - Microsoft.VisualBasic.Compatibility.VB6.WebClassContainingClassNotOptional
+  - Microsoft.VisualBasic.Compatibility.VB6.WebClassCouldNotFindEvent
+  - Microsoft.VisualBasic.Compatibility.VB6.WebClassNextItemCannotBeCurrentWebItem
+  - Microsoft.VisualBasic.Compatibility.VB6.WebClassNextItemRespondNotFound
+  - Microsoft.VisualBasic.Compatibility.VB6.WebClassUserWebClassNameNotOptional
+  - Microsoft.VisualBasic.Compatibility.VB6.WebClassWebClassFileNameNotOptional
+  - Microsoft.VisualBasic.Compatibility.VB6.WebClassWebItemNotValid
+  - Microsoft.VisualBasic.Compatibility.VB6.WebItemAssociatedWebClassNotOptional
+  - Microsoft.VisualBasic.Compatibility.VB6.WebItemClosingTagNotFound
+  - Microsoft.VisualBasic.Compatibility.VB6.WebItemCouldNotLoadEmbeddedResource
+  - Microsoft.VisualBasic.Compatibility.VB6.WebItemCouldNotLoadTemplateFile
+  - Microsoft.VisualBasic.Compatibility.VB6.WebItemNameNotOptional
+  - Microsoft.VisualBasic.Compatibility.VB6.WebItemNoTemplateSpecified
+  - Microsoft.VisualBasic.Compatibility.VB6.WebItemTooManyNestedTags
+  - Microsoft.VisualBasic.Compatibility.VB6.WebItemUnexpectedErrorReadingTemplateFile
+  - Microsoft.VisualBasic.CompilerServices.IncompleteInitialization
+  - Microsoft.VisualBasic.CompilerServices.InternalErrorException
+  - Microsoft.VisualBasic.FileIO.MalformedLineException
+  - Mono.Security.Interface.TlsException
+  - System.AggregateException
+  - System.ApplicationException
+  - System.ArgumentException
+  - System.ArithmeticException
+  - System.ArrayTypeMismatchException
+  - System.BadImageFormatException
+  - System.DataMisalignedException
+  - System.FormatException
+  - System.IndexOutOfRangeException
+  - System.InsufficientExecutionStackException
+  - System.InvalidCastException
+  - System.InvalidOperationException
+  - System.InvalidProgramException
+  - System.InvalidTimeZoneException
+  - System.MemberAccessException
+  - System.NotImplementedException
+  - System.NotSupportedException
+  - System.NullReferenceException
+  - System.OperationCanceledException
+  - System.OutOfMemoryException
+  - System.RankException
+  - System.SystemException
+  - System.TimeoutException
+  - System.TimeZoneNotFoundException
+  - System.TypeInitializationException
+  - System.TypeLoadException
+  - System.UnauthorizedAccessException
+  - System.Activities.InvalidWorkflowException
+  - System.Activities.VersionMismatchException
+  - System.Activities.WorkflowApplicationException
+  - System.Activities.DynamicUpdate.InstanceUpdateException
+  - System.Activities.ExpressionParser.SourceExpressionException
+  - System.Activities.Expressions.LambdaSerializationException
+  - System.Activities.Presentation.Metadata.AttributeTableValidationException
+  - System.Activities.Statements.WorkflowTerminatedException
+  - System.AddIn.Hosting.AddInSegmentDirectoryNotFoundException
+  - System.AddIn.Hosting.InvalidPipelineStoreException
+  - System.Collections.Generic.KeyNotFoundException
+  - System.ComponentModel.Win32Exception
+  - System.ComponentModel.Composition.CompositionContractMismatchException
+  - System.ComponentModel.Composition.CompositionException
+  - System.ComponentModel.Composition.ImportCardinalityMismatchException
+  - System.ComponentModel.Composition.Primitives.ComposablePartException
+  - System.ComponentModel.DataAnnotations.ValidationException
+  - System.ComponentModel.Design.ExceptionCollection
+  - System.Composition.Hosting.CompositionFailedException
+  - System.Configuration.SettingsPropertyIsReadOnlyException
+  - System.Configuration.SettingsPropertyNotFoundException
+  - System.Configuration.SettingsPropertyWrongTypeException
+  - System.Configuration.Provider.ProviderException
+  - System.Data.Common.DbException
+  - System.Data.Linq.ChangeConflictException
+  - System.Data.SqlTypes.SqlTypeException
+  - System.Diagnostics.Eventing.Reader.EventLogException
+  - System.Diagnostics.Tracing.EventSourceException
+  - System.DirectoryServices.ActiveDirectory.ActiveDirectoryObjectExistsException
+  - System.DirectoryServices.ActiveDirectory.ActiveDirectoryObjectNotFoundException
+  - System.DirectoryServices.ActiveDirectory.ActiveDirectoryOperationException
+  - System.DirectoryServices.ActiveDirectory.ActiveDirectoryServerDownException
+  - System.DirectoryServices.Protocols.DirectoryException
+  - System.IdentityModel.AsynchronousOperationException
+  - System.IdentityModel.RequestException
+  - System.IdentityModel.Metadata.MetadataSerializationException
+  - System.IdentityModel.Protocols.WSTrust.WSTrustSerializationException
+  - System.IdentityModel.Selectors.CardSpaceException
+  - System.IdentityModel.Selectors.IdentityValidationException
+  - System.IdentityModel.Selectors.PolicyValidationException
+  - System.IdentityModel.Selectors.ServiceBusyException
+  - System.IdentityModel.Selectors.ServiceNotStartedException
+  - System.IdentityModel.Selectors.StsCommunicationException
+  - System.IdentityModel.Selectors.UnsupportedPolicyOptionsException
+  - System.IdentityModel.Selectors.UntrustedRecipientException
+  - System.IdentityModel.Selectors.UserCancellationException
+  - System.IdentityModel.Services.AsynchronousOperationException
+  - System.IdentityModel.Services.FederatedAuthenticationSessionEndingException
+  - System.IdentityModel.Services.FederationException
+  - System.IdentityModel.Services.WSFederationMessageException
+  - System.IO.InvalidDataException
+  - System.IO.IOException
+  - System.IO.IsolatedStorage.IsolatedStorageException
+  - System.IO.Log.SequenceFullException
+  - System.Management.Instrumentation.InstrumentationBaseException
+  - System.Management.Instrumentation.WmiProviderInstallationException
+  - System.Net.Http.HttpRequestException
+  - System.Net.Mail.SmtpException
+  - System.Net.NetworkInformation.NetworkInformationException
+  - System.Net.PeerToPeer.PeerToPeerException
+  - System.Net.Sockets.SocketException
+  - System.Net.WebSockets.WebSocketException
+  - System.Reflection.AmbiguousMatchException
+  - System.Reflection.InvalidFilterCriteriaException
+  - System.Reflection.ReflectionTypeLoadException
+  - System.Reflection.TargetException
+  - System.Reflection.TargetInvocationException
+  - System.Reflection.TargetParameterCountException
+  - System.Reflection.Metadata.ImageFormatLimitationException
+  - System.Resources.MissingManifestResourceException
+  - System.Runtime.CompilerServices.RuntimeWrappedException
+  - System.Runtime.DurableInstancing.InstancePersistenceException
+  - System.Runtime.InteropServices.COMException
+  - System.Runtime.InteropServices.InvalidComObjectException
+  - System.Runtime.InteropServices.InvalidOleVariantTypeException
+  - System.Runtime.InteropServices.MarshalDirectiveException
+  - System.Runtime.InteropServices.SafeArrayRankMismatchException
+  - System.Runtime.InteropServices.SafeArrayTypeMismatchException
+  - System.Runtime.InteropServices.SEHException
+  - System.Runtime.Remoting.MetadataServices.SUDSGeneratorException
+  - System.Runtime.Remoting.MetadataServices.SUDSParserException
+  - System.Runtime.Serialization.InvalidDataContractException
+  - System.Runtime.Serialization.SerializationException
+  - System.Security.SecurityException
+  - System.Security.VerificationException
+  - System.Security.Authentication.AuthenticationException
+  - System.Security.Cryptography.CryptographicException
+  - System.Security.Principal.IdentityNotMappedException
+  - System.Security.RightsManagement.RightsManagementException
+  - System.ServiceModel.Channels.InvalidChannelBindingException
+  - System.ServiceProcess.TimeoutException
+  - System.Threading.AbandonedMutexException
+  - System.Threading.BarrierPostPhaseException
+  - System.Threading.LockRecursionException
+  - System.Threading.SemaphoreFullException
+  - System.Threading.SynchronizationLockException
+  - System.Threading.ThreadStartException
+  - System.Threading.ThreadStateException
+  - System.Threading.WaitHandleCannotBeOpenedException
+  - System.Threading.Tasks.TaskSchedulerException
+  - System.Web.Query.Dynamic.ParseException
+  - System.Web.Security.MembershipCreateUserException
+  - System.Web.Security.MembershipPasswordException
+  - System.Web.UI.ViewStateException
+  - System.Web.UI.WebControls.EntityDataSourceValidationException
+  - System.Web.UI.WebControls.LinqDataSourceValidationException
+  - System.Windows.Automation.NoClickablePointException
+  - System.Windows.Automation.ProxyAssemblyNotLoadedException
+  - System.Windows.Controls.PrintDialogException
+  - System.Windows.Forms.AxHost.InvalidActiveXStateException
+  - System.Windows.Xps.XpsException
+  - System.Windows.Xps.XpsWriterException
+  - System.Workflow.Activities.Rules.RuleException
+  - System.Workflow.ComponentModel.WorkflowTerminatedException
+  - System.Workflow.ComponentModel.Compiler.WorkflowValidationFailedException
+  - System.Workflow.ComponentModel.Serialization.WorkflowMarkupSerializationException
+  - System.Workflow.Runtime.WorkflowOwnershipException
+  - System.Xaml.XamlException
+  - System.Xml.XmlException
+  - System.Xml.XPath.XPathException
+  implements:
+  - System.Runtime.InteropServices._Exception
+  - System.Runtime.Serialization.ISerializable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  attributes:
+  - type: System.Runtime.InteropServices.ClassInterfaceAttribute
+  - type: System.Runtime.InteropServices.ComVisibleAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Exception.#ctor
+  commentId: M:System.Exception.#ctor
+  id: '#ctor'
+  parent: System.Exception
+  langs:
+  - csharp
+  name: Exception()
+  nameWithType: Exception.Exception()
+  fullName: Exception.Exception()
+  type: Constructor
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Initializes a new instance of the <xref href="System.Exception"></xref> class.
+  remarks: "This constructor initializes the <xref:System.Exception.Message%2A> property of the new instance to a system-supplied message that describes the error and takes into account the current system culture.  \n  \n All the derived classes should provide this default constructor. The following table shows the initial property values for an instance of <xref:System.Exception>.  \n  \n|Property|Value|  \n|--------------|-----------|  \n|<xref:System.Exception.InnerException%2A>|A null reference (`Nothing` in Visual Basic).|  \n|<xref:System.Exception.Message%2A>|A system-supplied localized description.|"
+  example:
+  - "The following code example derives an `Exception` that uses a predefined message. The code demonstrates the use of the parameterless constructor for the derived class and the base `Exception` class.  \n  \n [!code-cpp[System.Exception.Ctor#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Exception.Ctor/CPP/new.cpp#1)]\n [!code-csharp[System.Exception.Ctor#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Exception.Ctor/CS/new.cs#1)]\n [!code-vb[System.Exception.Ctor#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Exception.Ctor/VB/new.vb#1)]"
+  syntax:
+    content: public Exception ();
+    parameters: []
+  overload: System.Exception.#ctor*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Exception.#ctor(System.String)
+  commentId: M:System.Exception.#ctor(System.String)
+  id: '#ctor(System.String)'
+  parent: System.Exception
+  langs:
+  - csharp
+  name: Exception(String)
+  nameWithType: Exception.Exception(String)
+  fullName: Exception.Exception(String)
+  type: Constructor
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Initializes a new instance of the <xref href="System.Exception"></xref> class with a specified error message.
+  remarks: "This constructor initializes the <xref:System.Exception.Message%2A> property of the new instance by using the `message` parameter. If the `message` parameter is `null`, this is the same as calling the <xref:System.Exception.%23ctor%2A> constructor.  \n  \n The following table shows the initial property values for an instance of <xref:System.Exception>.  \n  \n|Property|Value|  \n|--------------|-----------|  \n|<xref:System.Exception.InnerException%2A>|A null reference (`Nothing` in Visual Basic).|  \n|<xref:System.Exception.Message%2A>|The error message string.|"
+  example:
+  - "The following code example derives an `Exception` for a specific condition. The code demonstrates the use of the constructor that takes a caller-specified message as a parameter, for both the derived class and the base `Exception` class.  \n  \n [!code-cpp[System.Exception.Ctor#2](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Exception.Ctor/CPP/news.cpp#2)]\n [!code-csharp[System.Exception.Ctor#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Exception.Ctor/CS/news.cs#2)]\n [!code-vb[System.Exception.Ctor#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Exception.Ctor/VB/news.vb#2)]"
+  syntax:
+    content: public Exception (string message);
+    parameters:
+    - id: message
+      type: System.String
+      description: The message that describes the error.
+  overload: System.Exception.#ctor*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Exception.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  commentId: M:System.Exception.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  id: '#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)'
+  parent: System.Exception
+  langs:
+  - csharp
+  name: Exception(SerializationInfo, StreamingContext)
+  nameWithType: Exception.Exception(SerializationInfo, StreamingContext)
+  fullName: Exception.Exception(SerializationInfo, StreamingContext)
+  type: Constructor
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Initializes a new instance of the <xref href="System.Exception"></xref> class with serialized data.
+  remarks: This constructor is called during deserialization to reconstitute the exception object transmitted over a stream. For more information, see [XML and SOAP Serialization](~/docs/framework/serialization/xml-and-soap-serialization.md).
+  example:
+  - "The following code example defines a derived serializable `Exception` class. The code forces a divide-by-0 error and then creates an instance of the derived exception using the (<xref:System.Runtime.Serialization.SerializationInfo>, <xref:System.Runtime.Serialization.StreamingContext>) constructor. The code serializes the instance to a file, deserializes the file into a new exception, which it throws, and then catches and displays the exception's data.  \n  \n [!code-cpp[System.Exception.GetObjectData#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Exception.GetObjectData/CPP/getobjdata.cpp#1)]\n [!code-csharp[System.Exception.GetObjectData#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Exception.GetObjectData/CS/getobjdata.cs#1)]\n [!code-vb[System.Exception.GetObjectData#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Exception.GetObjectData/VB/getobjdata.vb#1)]"
+  syntax:
+    content: protected Exception (System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+    parameters:
+    - id: info
+      type: System.Runtime.Serialization.SerializationInfo
+      description: The <xref href="System.Runtime.Serialization.SerializationInfo"></xref> that holds the serialized object data about the exception being thrown.
+    - id: context
+      type: System.Runtime.Serialization.StreamingContext
+      description: The <xref href="System.Runtime.Serialization.StreamingContext"></xref> that contains contextual information about the source or destination.
+  overload: System.Exception.#ctor*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code>info</code> parameter is `null`.
+  - type: System.Runtime.Serialization.SerializationException
+    commentId: T:System.Runtime.Serialization.SerializationException
+    description: The class name is `null` or <xref href="System.Exception.HResult"></xref> is zero (0).
+  attributes: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Exception.#ctor(System.String,System.Exception)
+  commentId: M:System.Exception.#ctor(System.String,System.Exception)
+  id: '#ctor(System.String,System.Exception)'
+  parent: System.Exception
+  langs:
+  - csharp
+  name: Exception(String, Exception)
+  nameWithType: Exception.Exception(String, Exception)
+  fullName: Exception.Exception(String, Exception)
+  type: Constructor
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Initializes a new instance of the <xref href="System.Exception"></xref> class with a specified error message and a reference to the inner exception that is the cause of this exception.
+  remarks: "An exception that is thrown as a direct result of a previous exception should include a reference to the previous exception in the <xref:System.Exception.InnerException%2A> property. The <xref:System.Exception.InnerException%2A> property returns the same value that is passed into the constructor, or a null reference (`Nothing` in Visual Basic) if the <xref:System.Exception.InnerException%2A> property does not supply the inner exception value to the constructor.  \n  \n The following table shows the initial property values for an instance of <xref:System.Exception>.  \n  \n|Property|Value|  \n|--------------|-----------|  \n|<xref:System.Exception.InnerException%2A>|The inner exception reference.|  \n|<xref:System.Exception.Message%2A>|The error message string.|"
+  example:
+  - "The following code example derives an `Exception` for a specific condition. The code demonstrates the use of the constructor that takes a message and an inner exception as parameters, for both the derived class and the base `Exception` class.  \n  \n [!code-cpp[System.Exception.Ctor#3](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Exception.Ctor/CPP/newsi.cpp#3)]\n [!code-csharp[System.Exception.Ctor#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Exception.Ctor/CS/newsi.cs#3)]\n [!code-vb[System.Exception.Ctor#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Exception.Ctor/VB/newsi.vb#3)]"
+  syntax:
+    content: public Exception (string message, Exception innerException);
+    parameters:
+    - id: message
+      type: System.String
+      description: The error message that explains the reason for the exception.
+    - id: innerException
+      type: System.Exception
+      description: The exception that is the cause of the current exception, or a null reference (`Nothing` in Visual Basic) if no inner exception is specified.
+  overload: System.Exception.#ctor*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Exception.Data
+  commentId: P:System.Exception.Data
+  id: Data
+  parent: System.Exception
+  langs:
+  - csharp
+  name: Data
+  nameWithType: Exception.Data
+  fullName: Exception.Data
+  type: Property
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Gets a collection of key/value pairs that provide additional user-defined information about the exception.
+  remarks: "Use the <xref:System.Collections.IDictionary?displayProperty=fullName> object returned by the <xref:System.Exception.Data%2A> property to store and retrieve supplementary information relevant to the exception. The information is in the form of an arbitrary number of user-defined key/value pairs. The key component of each key/value pair is typically an identifying string, whereas the value component of the pair can be any type of object.  \n  \n## Key/Value Pair Security  \n The key/value pairs stored in the collection returned by the <xref:System.Exception.Data%2A> property are not secure. If your application calls a nested series of routines, and each routine contains exception handlers, the resulting call stack contains a hierarchy of those exception handlers. If a lower-level routine throws an exception, any upper-level exception handler in the call stack hierarchy can read and/or modify the key/value pairs stored in the collection by any other exception handler. This means you must guarantee that the information in the key/value pairs is not confidential and that your application will operate correctly if the information in the key/value pairs is corrupted.  \n  \n## Key Conflicts  \n A key conflict occurs when different exception handlers specify the same key to access a key/value pair. Use caution when developing your application because the consequence of a key conflict is that lower-level exception handlers can inadvertently communicate with higher-level exception handlers, and this communication might cause subtle program errors. However, if you are cautious you can use key conflicts to enhance your application.  \n  \n## Avoiding Key Conflicts  \n Avoid key conflicts by adopting a naming convention to generate unique keys for key/value pairs. For example, a naming convention might yield a key that consists of the period-delimited name of your application, the method that provides supplementary information for the pair, and a unique identifier.  \n  \n Suppose two applications, named Products and Suppliers, each has a method named Sales. The Sales method in the Products application provides the identification number (the stock keeping unit or SKU) of a product. The Sales method in the Suppliers application provides the identification number, or SID, of a supplier. Consequently, the naming convention for this example yields the keys, \"Products.Sales.SKU\" and \"Suppliers.Sales.SID\".  \n  \n## Exploiting Key Conflicts  \n Exploit key conflicts by using the presence of one or more special, prearranged keys to control processing. Suppose, in one scenario, the highest level exception handler in the call stack hierarchy catches all exceptions thrown by lower-level exception handlers. If a key/value pair with a special key exists, the high-level exception handler formats the remaining key/value pairs in the <xref:System.Collections.IDictionary> object in some nonstandard way; otherwise, the remaining key/value pairs are formatted in some normal manner.  \n  \n Now suppose, in another scenario, the exception handler at each level of the call stack hierarchy catches the exception thrown by the next lower-level exception handler. In addition, each exception handler knows the collection returned by the <xref:System.Exception.Data%2A> property contains a set of key/value pairs that can be accessed with a prearranged set of keys.  \n  \n Each exception handler uses the prearranged set of keys to update the value component of the corresponding key/value pair with information unique to that exception handler. After the update process is complete, the exception handler throws the exception to the next higher-level exception handler. Finally, the highest level exception handler accesses the key/value pairs and displays the consolidated update information from all the lower-level exception handlers."
+  example:
+  - "The following example demonstrates how to add and retrieve information using the <xref:System.Exception.Data%2A> property.  \n  \n [!code-cpp[exception.data#1](~/samples/snippets/cpp/VS_Snippets_CLR/exception.data/CPP/data.cpp#1)]\n [!code-csharp[exception.data#1](~/samples/snippets/csharp/VS_Snippets_CLR/exception.data/CS/data.cs#1)]\n [!code-vb[exception.data#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/exception.data/VB/data.vb#1)]"
+  syntax:
+    content: >-
+      [get: System.Security.SecuritySafeCritical]
+
+      public virtual System.Collections.IDictionary Data { get; }
+    return:
+      type: System.Collections.IDictionary
+      description: An object that implements the <xref href="System.Collections.IDictionary"></xref> interface and contains a collection of user-defined key/value pairs. The default is an empty collection.
+  overload: System.Exception.Data*
+  exceptions: []
+  attributes:
+  - type: 'get: System.Security.SecuritySafeCritical'
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Exception.GetBaseException
+  commentId: M:System.Exception.GetBaseException
+  id: GetBaseException
+  parent: System.Exception
+  langs:
+  - csharp
+  name: GetBaseException()
+  nameWithType: Exception.GetBaseException()
+  fullName: Exception.GetBaseException()
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: When overridden in a derived class, returns the <xref href="System.Exception"></xref> that is the root cause of one or more subsequent exceptions.
+  remarks: "A chain of exceptions consists of a set of exceptions such that each exception in the chain was thrown as a direct result of the exception referenced in its `InnerException` property. For a given chain, there can be exactly one exception that is the root cause of all other exceptions in the chain. This exception is called the base exception and its `InnerException` property always contains a null reference.  \n  \n For all exceptions in a chain of exceptions, the `GetBaseException` method must return the same object (the base exception).  \n  \n Use the `GetBaseException` method when you want to find the root cause of an exception but do not need information about exceptions that may have occurred between the current exception and the first exception."
+  example:
+  - "The following code example defines two derived `Exception` classes. It forces an exception and then throws it again with each of the derived classes. The code shows the use of the `GetBaseException` method to retrieve the original exception.  \n  \n [!code-cpp[System.Exception.GetBaseException#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Exception.GetBaseException/CPP/getbaseexc.cpp#1)]\n [!code-csharp[System.Exception.GetBaseException#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Exception.GetBaseException/CS/getbaseexc.cs#1)]\n [!code-vb[System.Exception.GetBaseException#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Exception.GetBaseException/VB/getbaseexc.vb#1)]"
+  syntax:
+    content: public virtual Exception GetBaseException ();
+    parameters: []
+    return:
+      type: System.Exception
+      description: The first exception thrown in a chain of exceptions. If the <xref href="System.Exception.InnerException"></xref> property of the current exception is a null reference (`Nothing` in Visual Basic), this property returns the current exception.
+  overload: System.Exception.GetBaseException*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Exception.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  commentId: M:System.Exception.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  id: GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  parent: System.Exception
+  langs:
+  - csharp
+  name: GetObjectData(SerializationInfo, StreamingContext)
+  nameWithType: Exception.GetObjectData(SerializationInfo, StreamingContext)
+  fullName: Exception.GetObjectData(SerializationInfo, StreamingContext)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: When overridden in a derived class, sets the <xref href="System.Runtime.Serialization.SerializationInfo"></xref> with information about the exception.
+  remarks: '`GetObjectData` sets a <xref:System.Runtime.Serialization.SerializationInfo> with all the exception object data targeted for serialization. During deserialization, the exception is reconstituted from the `SerializationInfo` transmitted over the stream.'
+  example:
+  - "The following code example defines a derived serializable `Exception` class that implements `GetObjectData`, which makes minor changes to two properties and then calls the base class to perform the serialization. The example forces a divide-by-0 error and then creates an instance of the derived exception. The code serializes the instance to a file, deserializes the file into a new exception, which it throws, and then catches and displays the exception's data.  \n  \n [!code-cpp[System.Exception.GetObjectData#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Exception.GetObjectData/CPP/getobjdata.cpp#1)]\n [!code-csharp[System.Exception.GetObjectData#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Exception.GetObjectData/CS/getobjdata.cs#1)]\n [!code-vb[System.Exception.GetObjectData#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Exception.GetObjectData/VB/getobjdata.vb#1)]"
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public virtual void GetObjectData (System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+    parameters:
+    - id: info
+      type: System.Runtime.Serialization.SerializationInfo
+      description: The <xref href="System.Runtime.Serialization.SerializationInfo"></xref> that holds the serialized object data about the exception being thrown.
+    - id: context
+      type: System.Runtime.Serialization.StreamingContext
+      description: The <xref href="System.Runtime.Serialization.StreamingContext"></xref> that contains contextual information about the source or destination.
+  overload: System.Exception.GetObjectData*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code>info</code> parameter is a null reference (`Nothing` in Visual Basic).
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Exception.GetType
+  commentId: M:System.Exception.GetType
+  id: GetType
+  parent: System.Exception
+  langs:
+  - csharp
+  name: GetType()
+  nameWithType: Exception.GetType()
+  fullName: Exception.GetType()
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Gets the runtime type of the current instance.
+  remarks: The <xref:System.Exception.GetType%2A> method exists to support the .NET Framework infrastructure, and internally invokes the fundamental method, <xref:System.Object.GetType%2A?displayProperty=fullName>.
+  syntax:
+    content: public Type GetType ();
+    parameters: []
+    return:
+      type: System.Type
+      description: A <xref href="System.Type"></xref> object that represents the exact runtime type of the current instance.
+  overload: System.Exception.GetType*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Exception.HelpLink
+  commentId: P:System.Exception.HelpLink
+  id: HelpLink
+  parent: System.Exception
+  langs:
+  - csharp
+  name: HelpLink
+  nameWithType: Exception.HelpLink
+  fullName: Exception.HelpLink
+  type: Property
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Gets or sets a link to the help file associated with this exception.
+  remarks: "The return value, which represents a help file, is a URN or URL. For example, the `HelpLink` value could be:  \n  \n \"file:///C:/Applications/Bazzal/help.html#ErrorNum42\""
+  example:
+  - "The following code example throws an `Exception` that sets the `HelpLink` property in its constructor and then catches the exception and displays `HelpLink`.  \n  \n [!code-cpp[System.Exception.Properties#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Exception.Properties/CPP/properties.cpp#1)]\n [!code-csharp[System.Exception.Properties#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Exception.Properties/CS/properties.cs#1)]\n [!code-vb[System.Exception.Properties#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Exception.Properties/VB/properties.vb#1)]"
+  syntax:
+    content: public virtual string HelpLink { get; set; }
+    return:
+      type: System.String
+      description: The Uniform Resource Name (URN) or Uniform Resource Locator (URL).
+  overload: System.Exception.HelpLink*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Exception.HResult
+  commentId: P:System.Exception.HResult
+  id: HResult
+  parent: System.Exception
+  langs:
+  - csharp
+  name: HResult
+  nameWithType: Exception.HResult
+  fullName: Exception.HResult
+  type: Property
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Gets or sets HRESULT, a coded numerical value that is assigned to a specific exception.
+  remarks: "HRESULT is a 32-bit value, divided into three different fields: a severity code, a facility code, and an error code. The severity code indicates whether the return value represents information, warning, or error. The facility code identifies the area of the system responsible for the error. The error code is a unique number that is assigned to represent the exception. Each exception is mapped to a distinct HRESULT. When managed code throws an exception, the runtime passes the HRESULT to the COM client. When unmanaged code returns an error, the HRESULT is converted to an exception, which is then thrown by the runtime. For information about HRESULT values and their corresponding .NET Framework exceptions, see [How to: Map HRESULTs and Exceptions](~/docs/framework/interop/how-to-map-hresults-and-exceptions.md). See [Common HRESULT Values](http://msdn.microsoft.com/library/windows/desktop/aa378137.aspx) in the Windows documentation for a list of the values you are most likely to encounter.  \n  \n Starting with the [!INCLUDE[net_v45](~/includes/net-v45-md.md)], the <xref:System.Exception.HResult%2A> property's setter is protected, whereas its getter is public.  In previous versions of the .NET Framework, both getter and setter are protected."
+  example:
+  - "The following code example defines a derived `Exception` class that sets the `HResult` property to a custom value in its constructor.  \n  \n [!code-cpp[System.Exception.HResult#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Exception.HResult/CPP/hresult.cpp#1)]\n [!code-csharp[System.Exception.HResult#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Exception.HResult/CS/hresult.cs#1)]\n [!code-vb[System.Exception.HResult#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Exception.HResult/VB/hresult.vb#1)]"
+  syntax:
+    content: public int HResult { get; protected set; }
+    return:
+      type: System.Int32
+      description: The HRESULT value.
+  overload: System.Exception.HResult*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Exception.InnerException
+  commentId: P:System.Exception.InnerException
+  id: InnerException
+  parent: System.Exception
+  langs:
+  - csharp
+  name: InnerException
+  nameWithType: Exception.InnerException
+  fullName: Exception.InnerException
+  type: Property
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Gets the <xref href="System.Exception"></xref> instance that caused the current exception.
+  remarks: "When an exception `X` is thrown as a direct result of a previous exception `Y`, the <xref:System.Exception.InnerException%2A> property of `X` should contain a reference to `Y`.  \n  \n Use the <xref:System.Exception.InnerException%2A> property to obtain the set of exceptions that led to the current exception.  \n  \n You can create a new exception that catches an earlier exception. The code that handles the second exception can make use of the additional information from the earlier exception to handle the error more appropriately.  \n  \n Suppose that there is a function that reads a file and formats the data from that file. In this example, as the code tries to read the file, an <xref:System.IO.IOException> is thrown. The function catches the <xref:System.IO.IOException> and throws a <xref:System.IO.FileNotFoundException>. The <xref:System.IO.IOException> could be saved in the <xref:System.Exception.InnerException%2A> property of the <xref:System.IO.FileNotFoundException>, enabling the code that catches the <xref:System.IO.FileNotFoundException> to examine the cause of the initial error.  \n  \n The <xref:System.Exception.InnerException%2A> property, which holds a reference to the inner exception, is set upon initialization of the exception object."
+  example:
+  - "The following example demonstrates throwing and catching an exception that references an inner exception.  \n  \n [!code-cpp[InnerEx#1](~/samples/snippets/cpp/VS_Snippets_CLR/InnerEx/CPP/innerex.cpp#1)]\n [!code-csharp[InnerEx#1](~/samples/snippets/csharp/VS_Snippets_CLR/InnerEx/CS/innerex.cs#1)]\n [!code-vb[InnerEx#1](~/samples/snippets/visualbasic/VS_Snippets_CLR/InnerEx/VB/innerex.vb#1)]"
+  syntax:
+    content: public Exception InnerException { get; }
+    return:
+      type: System.Exception
+      description: An object that describes the error that caused the current exception. The <xref href="System.Exception.InnerException"></xref> property returns the same value as was passed into the <xref href="System.Exception.#ctor(System.String,System.Exception)"></xref> constructor, or `null` if the inner exception value was not supplied to the constructor. This property is read-only.
+  overload: System.Exception.InnerException*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Exception.Message
+  commentId: P:System.Exception.Message
+  id: Message
+  parent: System.Exception
+  langs:
+  - csharp
+  name: Message
+  nameWithType: Exception.Message
+  fullName: Exception.Message
+  type: Property
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Gets a message that describes the current exception.
+  remarks: "Error messages target the developer who is handling the exception. The text of the <xref:System.Exception.Message%2A> property should completely describe the error and, when possible, should also explain how to correct the error. Top-level exception handlers may display the message to end-users, so you should ensure that it is grammatically correct and that each sentence of the message ends with a period. Do not use question marks or exclamation points. If your application uses localized exception messages, you should ensure that they are accurately translated.  \n  \n> [!IMPORTANT]\n>  Do not disclose sensitive information in exception messages without checking for the appropriate permissions.  \n  \n The value of the <xref:System.Exception.Message%2A> property is included in the information returned by <xref:System.Exception.ToString%2A>.The <xref:System.Exception.Message%2A> property is set only when creating an <xref:System.Exception>. If no message was supplied to the constructor for the current instance, the system supplies a default message that is formatted using the current system culture.  \n  \n## Windows Runtime and [!INCLUDE[net_v451](~/includes/net-v451-md.md)]  \n Starting with the [!INCLUDE[net_v451](~/includes/net-v451-md.md)] and [!INCLUDE[win81](~/includes/win81-md.md)], the fidelity of error messages from exceptions that are propagated from Windows Runtime types and members that are not part of the .NET Framework is improved. In particular, exception messages from Visual C++ component extensions (C++/CX) are now propagated back into .NET Framework <xref:System.Exception> objects."
+  example:
+  - "The following code example throws and then catches an <xref:System.Exception>Exception and displays the exception's text message using the <xref:System.Exception.Message%2A> property.  \n  \n [!code-cpp[System.Exception.Properties#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Exception.Properties/CPP/properties.cpp#1)]\n [!code-csharp[System.Exception.Properties#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Exception.Properties/CS/properties.cs#1)]\n [!code-vb[System.Exception.Properties#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Exception.Properties/VB/properties.vb#1)]"
+  syntax:
+    content: public virtual string Message { get; }
+    return:
+      type: System.String
+      description: The error message that explains the reason for the exception, or an empty string ("").
+  overload: System.Exception.Message*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Exception.SerializeObjectState
+  commentId: E:System.Exception.SerializeObjectState
+  id: SerializeObjectState
+  parent: System.Exception
+  langs:
+  - csharp
+  name: SerializeObjectState
+  nameWithType: Exception.SerializeObjectState
+  fullName: Exception.SerializeObjectState
+  type: Event
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Occurs when an exception is serialized to create an exception state object that contains serialized data about the exception.
+  remarks: "The exception state object implements the <xref:System.Runtime.Serialization.ISafeSerializationData> interface.  \n  \n When the <xref:System.Exception.SerializeObjectState> event is subscribed to, the exception is deserialized and created as an empty exception. The exception's constructor is not run, and the exception state is also deserialized. The <xref:System.Runtime.Serialization.ISafeSerializationData.CompleteDeserialization%2A> callback method of the exception state object is then notified so that it can push deserialized data into the empty exception.  \n  \n The <xref:System.Exception.SerializeObjectState> event enables transparent exception types to serialize and deserialize exception data. Transparent code can execute commands within the bounds of the permission set it is operating within, but cannot execute, call, derive from, or contain critical code.  \n  \n If the <xref:System.Exception.SerializeObjectState> event is not subscribed to, deserialization occurs as usual using the <xref:System.Exception.%23ctor%2A> constructor.  \n  \n Typically, a handler for the <xref:System.Exception.SerializeObjectState> event is added in the exception's constructor to provide for its serialization. But because the constructor is not executed when the <xref:System.Exception.SerializeObjectState> event handler executes, serializing a deserialized exception can throw a <xref:System.Runtime.Serialization.SerializationException> exception when you try to deserialize the exception. To avoid this, you should also add the handler for the <xref:System.Exception.SerializeObjectState> event in the <xref:System.Runtime.Serialization.ISafeSerializationData.CompleteDeserialization%2A?displayProperty=fullName> method. See the Examples section for an illustration."
+  example:
+  - "The following example defines a `BadDivisionException` that handles the <xref:System.Exception.SerializeObjectState> event. It also contains a state object, which is a nested structure named `BadDivisionExceptionState` that implements the <xref:System.Runtime.Serialization.ISafeSerializationData> interface.  \n  \n [!code-csharp[System.Exception.SerializeObjectState#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.exception.serializeobjectstate/cs/example2.cs#1)]\n [!code-vb[System.Exception.SerializeObjectState#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.exception.serializeobjectstate/vb/example2.vb#1)]  \n  \n The `BadDivisionException` exception is thrown when a floating-point division by zero occurs. During the first division by zero, the example instantiates a `BadDivisionException` object, serializes it, and throws the exception. When subsequent divisions by zero occur, the example deserializes the  previously serialized object, reserializes it, and throws the exception. To provide for object serialization, deserialization, reserialization, and deserialization, the example adds the <xref:System.Exception.SerializeObjectState> event handler both in the `BadDivisionException` class constructor and in the <xref:System.Runtime.Serialization.ISafeSerializationData.CompleteDeserialization%2A?displayProperty=fullName> implementation."
+  syntax:
+    content: protected event EventHandler<System.Runtime.Serialization.SafeSerializationEventArgs> SerializeObjectState;
+    return:
+      type: System.EventHandler{System.Runtime.Serialization.SafeSerializationEventArgs}
+      description: ''
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Exception.Source
+  commentId: P:System.Exception.Source
+  id: Source
+  parent: System.Exception
+  langs:
+  - csharp
+  name: Source
+  nameWithType: Exception.Source
+  fullName: Exception.Source
+  type: Property
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Gets or sets the name of the application or the object that causes the error.
+  remarks: If the <xref:System.Exception.Source%2A> property is not set explicitly, the runtime automatically sets it to the name of the assembly in which the exception originated.
+  example:
+  - "The following example throws an `Exception` that sets the `Source` property in its constructor and then catches the exception and displays `Source`.  \n  \n [!code-cpp[System.Exception.Properties#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Exception.Properties/CPP/properties.cpp#1)]\n [!code-csharp[System.Exception.Properties#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Exception.Properties/CS/properties.cs#1)]\n [!code-vb[System.Exception.Properties#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Exception.Properties/VB/properties.vb#1)]"
+  syntax:
+    content: public virtual string Source { get; set; }
+    return:
+      type: System.String
+      description: The name of the application or the object that causes the error.
+  overload: System.Exception.Source*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The object must be a runtime <xref href="System.Reflection"></xref> object
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Exception.StackTrace
+  commentId: P:System.Exception.StackTrace
+  id: StackTrace
+  parent: System.Exception
+  langs:
+  - csharp
+  name: StackTrace
+  nameWithType: Exception.StackTrace
+  fullName: Exception.StackTrace
+  type: Property
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Gets a string representation of the immediate frames on the call stack.
+  remarks: "The execution stack keeps track of all the methods that are in execution at a given instant. A trace of the method calls is called a stack trace. The stack trace listing provides a way to follow the call stack to the line number in the method where the exception occurs.  \n  \n The <xref:System.Exception.StackTrace%2A> property returns the frames of the call stack that originate at the location where the exception was thrown. You can obtain information about additional frames in the call stack by creating a new instance of the <xref:System.Diagnostics.StackTrace?displayProperty=fullName> class and using its <xref:System.Diagnostics.StackTrace.ToString%2A?displayProperty=fullName> method.  \n  \n The common language runtime (CLR) updates the stack trace whenever an exception is thrown in application code (by using the `throw` keyword). If the exception was rethrown in a method that is different than the method where it was originally thrown, the stack trace contains both the location in the method where the exception was originally thrown, and the location in the method where the exception was rethrown. If the exception is thrown, and later rethrown, in the same method, the stack trace only contains the location where the exception was rethrown and does not include the location where the exception was originally thrown.  \n  \n The <xref:System.Exception.StackTrace%2A> property may not report as many method calls as expected because of code transformations, such as inlining, that occur during optimization."
+  example:
+  - "The following code example throws an `Exception` and then catches it and displays a stack trace using the `StackTrace` property.  \n  \n [!code-cpp[System.Exception.Properties#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Exception.Properties/CPP/properties.cpp#1)]\n [!code-csharp[System.Exception.Properties#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Exception.Properties/CS/properties.cs#1)]\n [!code-vb[System.Exception.Properties#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Exception.Properties/VB/properties.vb#1)]"
+  syntax:
+    content: public virtual string StackTrace { get; }
+    return:
+      type: System.String
+      description: A string that describes the immediate frames of the call stack.
+  overload: System.Exception.StackTrace*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Exception.TargetSite
+  commentId: P:System.Exception.TargetSite
+  id: TargetSite
+  parent: System.Exception
+  langs:
+  - csharp
+  name: TargetSite
+  nameWithType: Exception.TargetSite
+  fullName: Exception.TargetSite
+  type: Property
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Gets the method that throws the current exception.
+  remarks: "If the method that throws this exception is not available and the stack trace is not a null reference (`Nothing` in Visual Basic), <xref:System.Exception.TargetSite%2A> obtains the method from the stack trace. If the stack trace is a null reference, <xref:System.Exception.TargetSite%2A> also returns a null reference.  \n  \n> [!NOTE]\n>  The <xref:System.Exception.TargetSite%2A> property may not accurately report the name of the method in which an exception was thrown if the exception handler handles an exception across application domain boundaries."
+  example:
+  - "The following code example throws an `Exception` and then catches it and displays the originating method using the `TargetSite` property.  \n  \n [!code-cpp[System.Exception.Properties#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Exception.Properties/CPP/properties.cpp#1)]\n [!code-csharp[System.Exception.Properties#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Exception.Properties/CS/properties.cs#1)]\n [!code-vb[System.Exception.Properties#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Exception.Properties/VB/properties.vb#1)]"
+  syntax:
+    content: >-
+      [get: System.Security.SecuritySafeCritical]
+
+      public System.Reflection.MethodBase TargetSite { get; }
+    return:
+      type: System.Reflection.MethodBase
+      description: The <xref href="System.Reflection.MethodBase"></xref> that threw the current exception.
+  overload: System.Exception.TargetSite*
+  exceptions: []
+  attributes:
+  - type: 'get: System.Security.SecuritySafeCritical'
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Exception.ToString
+  commentId: M:System.Exception.ToString
+  id: ToString
+  parent: System.Exception
+  langs:
+  - csharp
+  name: ToString()
+  nameWithType: Exception.ToString()
+  fullName: Exception.ToString()
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Creates and returns a string representation of the current exception.
+  remarks: "<xref:System.Exception.ToString%2A> returns a representation of the current exception that is intended to be understood by humans. Where the exception contains culture-sensitive data, the string representation returned by `ToString` is required to take into account the current system culture. Although there are no exact requirements for the format of the returned string, it should attempt to reflect the value of the object as perceived by the user.  \n  \n The default implementation of <xref:System.Exception.ToString%2A> obtains the name of the class that threw the current exception, the message, the result of calling <xref:System.Exception.ToString%2A> on the inner exception, and the result of calling <xref:System.Environment.StackTrace%2A?displayProperty=fullName>. If any of these members is `null`, its value is not included in the returned string.  \n  \n If there is no error message or if it is an empty string (\"\"), then no error message is returned. The name of the inner exception and the stack trace are returned only if they are not `null`.  \n  \n This method overrides <xref:System.Object.ToString%2A?displayProperty=fullName>."
+  example:
+  - "The following example causes an exception and displays the result of calling <xref:System.Exception.ToString%2A> on that exception. Note that the <xref:System.Exception.ToString%2A?displayProperty=fullName> method is called implicitly when the Exception class instance appears in the argument list of the <xref:System.Console.WriteLine%2A?displayProperty=fullName> method.  \n  \n [!code-cpp[System.Exception.ToString#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.exception.tostring/cpp/ToStringEx1.cpp#1)]\n [!code-csharp[System.Exception.ToString#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.exception.tostring/cs/ToStringEx1.cs#1)]\n [!code-vb[System.Exception.ToString#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.exception.tostring/vb/ToStringEx1.vb#1)]"
+  syntax:
+    content: public override string ToString ();
+    parameters: []
+    return:
+      type: System.String
+      description: A string representation of the current exception.
+  overload: System.Exception.ToString*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.Runtime.Serialization.SerializationException
+  parent: System.Runtime.Serialization
+  isExternal: false
+  name: SerializationException
+  nameWithType: SerializationException
+  fullName: System.Runtime.Serialization.SerializationException
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.Exception.#ctor
+  parent: System.Exception
+  isExternal: false
+  name: Exception()
+  nameWithType: Exception.Exception()
+  fullName: Exception.Exception()
+- uid: System.Exception.#ctor(System.String)
+  parent: System.Exception
+  isExternal: false
+  name: Exception(String)
+  nameWithType: Exception.Exception(String)
+  fullName: Exception.Exception(String)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Exception.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  parent: System.Exception
+  isExternal: false
+  name: Exception(SerializationInfo, StreamingContext)
+  nameWithType: Exception.Exception(SerializationInfo, StreamingContext)
+  fullName: Exception.Exception(SerializationInfo, StreamingContext)
+- uid: System.Runtime.Serialization.SerializationInfo
+  parent: System.Runtime.Serialization
+  isExternal: false
+  name: SerializationInfo
+  nameWithType: SerializationInfo
+  fullName: System.Runtime.Serialization.SerializationInfo
+- uid: System.Runtime.Serialization.StreamingContext
+  parent: System.Runtime.Serialization
+  isExternal: false
+  name: StreamingContext
+  nameWithType: StreamingContext
+  fullName: System.Runtime.Serialization.StreamingContext
+- uid: System.Exception.#ctor(System.String,System.Exception)
+  parent: System.Exception
+  isExternal: false
+  name: Exception(String, Exception)
+  nameWithType: Exception.Exception(String, Exception)
+  fullName: Exception.Exception(String, Exception)
+- uid: System.Exception
+  parent: System
+  isExternal: false
+  name: Exception
+  nameWithType: Exception
+  fullName: System.Exception
+- uid: System.Exception.Data
+  parent: System.Exception
+  isExternal: false
+  name: Data
+  nameWithType: Exception.Data
+  fullName: Exception.Data
+- uid: System.Collections.IDictionary
+  parent: System.Collections
+  isExternal: false
+  name: IDictionary
+  nameWithType: IDictionary
+  fullName: System.Collections.IDictionary
+- uid: System.Exception.GetBaseException
+  parent: System.Exception
+  isExternal: false
+  name: GetBaseException()
+  nameWithType: Exception.GetBaseException()
+  fullName: Exception.GetBaseException()
+- uid: System.Exception.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  parent: System.Exception
+  isExternal: false
+  name: GetObjectData(SerializationInfo, StreamingContext)
+  nameWithType: Exception.GetObjectData(SerializationInfo, StreamingContext)
+  fullName: Exception.GetObjectData(SerializationInfo, StreamingContext)
+- uid: System.Exception.GetType
+  parent: System.Exception
+  isExternal: false
+  name: GetType()
+  nameWithType: Exception.GetType()
+  fullName: Exception.GetType()
+- uid: System.Type
+  parent: System
+  isExternal: false
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: System.Exception.HelpLink
+  parent: System.Exception
+  isExternal: false
+  name: HelpLink
+  nameWithType: Exception.HelpLink
+  fullName: Exception.HelpLink
+- uid: System.Exception.HResult
+  parent: System.Exception
+  isExternal: false
+  name: HResult
+  nameWithType: Exception.HResult
+  fullName: Exception.HResult
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Exception.InnerException
+  parent: System.Exception
+  isExternal: false
+  name: InnerException
+  nameWithType: Exception.InnerException
+  fullName: Exception.InnerException
+- uid: System.Exception.Message
+  parent: System.Exception
+  isExternal: false
+  name: Message
+  nameWithType: Exception.Message
+  fullName: Exception.Message
+- uid: System.Exception.SerializeObjectState
+  parent: System.Exception
+  isExternal: false
+  name: SerializeObjectState
+  nameWithType: Exception.SerializeObjectState
+  fullName: Exception.SerializeObjectState
+- uid: System.EventHandler`1
+  name: EventHandler<TEventArgs>
+  nameWithType: EventHandler<TEventArgs>
+  fullName: System.EventHandler<TEventArgs>
+- uid: System.Runtime.Serialization.SafeSerializationEventArgs
+  name: SafeSerializationEventArgs
+  nameWithType: SafeSerializationEventArgs
+  fullName: System.Runtime.Serialization.SafeSerializationEventArgs
+- uid: System.EventHandler{System.Runtime.Serialization.SafeSerializationEventArgs}
+  parent: System
+  isExternal: false
+  name: EventHandler<SafeSerializationEventArgs>
+  nameWithType: EventHandler<SafeSerializationEventArgs>
+  fullName: System.EventHandler<System.Runtime.Serialization.SafeSerializationEventArgs>
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Runtime.Serialization.SafeSerializationEventArgs
+    name: SafeSerializationEventArgs
+    nameWithType: SafeSerializationEventArgs
+    fullName: System.Runtime.Serialization.SafeSerializationEventArgs
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Exception.Source
+  parent: System.Exception
+  isExternal: false
+  name: Source
+  nameWithType: Exception.Source
+  fullName: Exception.Source
+- uid: System.Exception.StackTrace
+  parent: System.Exception
+  isExternal: false
+  name: StackTrace
+  nameWithType: Exception.StackTrace
+  fullName: Exception.StackTrace
+- uid: System.Exception.TargetSite
+  parent: System.Exception
+  isExternal: false
+  name: TargetSite
+  nameWithType: Exception.TargetSite
+  fullName: Exception.TargetSite
+- uid: System.Reflection.MethodBase
+  parent: System.Reflection
+  isExternal: false
+  name: MethodBase
+  nameWithType: MethodBase
+  fullName: System.Reflection.MethodBase
+- uid: System.Exception.ToString
+  parent: System.Exception
+  isExternal: false
+  name: ToString()
+  nameWithType: Exception.ToString()
+  fullName: Exception.ToString()
+- uid: System.Exception.#ctor*
+  parent: System.Exception
+  isExternal: false
+  name: Exception
+  nameWithType: Exception.Exception
+  fullName: Exception.Exception
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+- uid: System.Exception.Data*
+  parent: System.Exception
+  isExternal: false
+  name: Data
+  nameWithType: Exception.Data
+  fullName: Exception.Data
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+- uid: System.Exception.GetBaseException*
+  parent: System.Exception
+  isExternal: false
+  name: GetBaseException
+  nameWithType: Exception.GetBaseException
+  fullName: Exception.GetBaseException
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+- uid: System.Exception.GetObjectData*
+  parent: System.Exception
+  isExternal: false
+  name: GetObjectData
+  nameWithType: Exception.GetObjectData
+  fullName: Exception.GetObjectData
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+- uid: System.Exception.GetType*
+  parent: System.Exception
+  isExternal: false
+  name: GetType
+  nameWithType: Exception.GetType
+  fullName: Exception.GetType
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+- uid: System.Exception.HelpLink*
+  parent: System.Exception
+  isExternal: false
+  name: HelpLink
+  nameWithType: Exception.HelpLink
+  fullName: Exception.HelpLink
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+- uid: System.Exception.HResult*
+  parent: System.Exception
+  isExternal: false
+  name: HResult
+  nameWithType: Exception.HResult
+  fullName: Exception.HResult
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+- uid: System.Exception.InnerException*
+  parent: System.Exception
+  isExternal: false
+  name: InnerException
+  nameWithType: Exception.InnerException
+  fullName: Exception.InnerException
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+- uid: System.Exception.Message*
+  parent: System.Exception
+  isExternal: false
+  name: Message
+  nameWithType: Exception.Message
+  fullName: Exception.Message
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+- uid: System.Exception.Source*
+  parent: System.Exception
+  isExternal: false
+  name: Source
+  nameWithType: Exception.Source
+  fullName: Exception.Source
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+- uid: System.Exception.StackTrace*
+  parent: System.Exception
+  isExternal: false
+  name: StackTrace
+  nameWithType: Exception.StackTrace
+  fullName: Exception.StackTrace
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+- uid: System.Exception.TargetSite*
+  parent: System.Exception
+  isExternal: false
+  name: TargetSite
+  nameWithType: Exception.TargetSite
+  fullName: Exception.TargetSite
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+- uid: System.Exception.ToString*
+  parent: System.Exception
+  isExternal: false
+  name: ToString
+  nameWithType: Exception.ToString
+  fullName: Exception.ToString
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/Exception.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Runtime.InteropServices._Exception
+  parent: System.Runtime.InteropServices
+  isExternal: false
+  name: _Exception
+  nameWithType: _Exception
+  fullName: System.Runtime.InteropServices._Exception
+- uid: System.Runtime.Serialization.ISerializable
+  parent: System.Runtime.Serialization
+  isExternal: false
+  name: ISerializable
+  nameWithType: ISerializable
+  fullName: System.Runtime.Serialization.ISerializable

@@ -1,0 +1,2309 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Data.OracleClient.OracleDataAdapter
+  commentId: T:System.Data.OracleClient.OracleDataAdapter
+  id: OracleDataAdapter
+  children:
+  - System.Data.OracleClient.OracleDataAdapter.#ctor
+  - System.Data.OracleClient.OracleDataAdapter.#ctor(System.Data.OracleClient.OracleCommand)
+  - System.Data.OracleClient.OracleDataAdapter.#ctor(System.String,System.Data.OracleClient.OracleConnection)
+  - System.Data.OracleClient.OracleDataAdapter.#ctor(System.String,System.String)
+  - System.Data.OracleClient.OracleDataAdapter.AddToBatch(System.Data.IDbCommand)
+  - System.Data.OracleClient.OracleDataAdapter.ClearBatch
+  - System.Data.OracleClient.OracleDataAdapter.CreateRowUpdatedEvent(System.Data.DataRow,System.Data.IDbCommand,System.Data.StatementType,System.Data.Common.DataTableMapping)
+  - System.Data.OracleClient.OracleDataAdapter.CreateRowUpdatingEvent(System.Data.DataRow,System.Data.IDbCommand,System.Data.StatementType,System.Data.Common.DataTableMapping)
+  - System.Data.OracleClient.OracleDataAdapter.DeleteCommand
+  - System.Data.OracleClient.OracleDataAdapter.ExecuteBatch
+  - System.Data.OracleClient.OracleDataAdapter.GetBatchedParameter(System.Int32,System.Int32)
+  - System.Data.OracleClient.OracleDataAdapter.GetBatchedRecordsAffected(System.Int32,System.Int32@,System.Exception@)
+  - System.Data.OracleClient.OracleDataAdapter.InitializeBatching
+  - System.Data.OracleClient.OracleDataAdapter.InsertCommand
+  - System.Data.OracleClient.OracleDataAdapter.OnRowUpdated(System.Data.Common.RowUpdatedEventArgs)
+  - System.Data.OracleClient.OracleDataAdapter.OnRowUpdating(System.Data.Common.RowUpdatingEventArgs)
+  - System.Data.OracleClient.OracleDataAdapter.RowUpdated
+  - System.Data.OracleClient.OracleDataAdapter.RowUpdating
+  - System.Data.OracleClient.OracleDataAdapter.SelectCommand
+  - System.Data.OracleClient.OracleDataAdapter.TerminateBatching
+  - System.Data.OracleClient.OracleDataAdapter.UpdateBatchSize
+  - System.Data.OracleClient.OracleDataAdapter.UpdateCommand
+  - System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#DeleteCommand
+  - System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#InsertCommand
+  - System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#SelectCommand
+  - System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#UpdateCommand
+  - System.Data.OracleClient.OracleDataAdapter.System#ICloneable#Clone
+  langs:
+  - csharp
+  name: OracleDataAdapter
+  nameWithType: OracleDataAdapter
+  fullName: System.Data.OracleClient.OracleDataAdapter
+  type: Class
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Represents a set of data commands and a connection to a database that are used to fill the <xref href="System.Data.DataSet"></xref> and update the database. This class cannot be inherited.
+  remarks: "This type is deprecated and will be removed in a future version of the .NET Framework. For more information, see [Oracle and ADO.NET](~/docs/framework/data/adonet/oracle-and-adonet.md).  \n  \n The <xref:System.Data.OracleClient.OracleDataAdapter> serves as a bridge between a **DataSet** and database for retrieving and saving data. The <xref:System.Data.OracleClient.OracleDataAdapter> provides this bridge by using <xref:System.Data.Common.DbDataAdapter.Fill%2A> to load data from the database into the <xref:System.Data.DataSet>, and using <xref:System.Data.Common.DbDataAdapter.Update%2A> to send changes made in the <xref:System.Data.DataSet> back to the data source.  \n  \n When the <xref:System.Data.OracleClient.OracleDataAdapter> fills a <xref:System.Data.DataSet>, it creates the necessary tables and columns for the returned data if they do not already exist. However, primary key information is not included in the implicitly created schema unless the <xref:System.Data.Common.DataAdapter.MissingSchemaAction%2A> property is set to <xref:System.Data.MissingSchemaAction.AddWithKey>. You may also have the <xref:System.Data.OracleClient.OracleDataAdapter> create the schema of the <xref:System.Data.DataSet>, including primary key information, before filling it with data using <xref:System.Data.Common.DbDataAdapter.FillSchema%2A>. For more information, see [Adding Existing Constraints to a DataSet](~/docs/framework/data/adonet/adding-existing-constraints-to-a-dataset.md).  \n  \n> [!NOTE]\n>  By default, numeric fields imported to a <xref:System.Data.DataTable> with <xref:System.Data.Common.DbDataAdapter.Fill%2A> are mapped to <xref:System.Data.OracleClient.OracleNumber> objects. It is possible to overflow the <xref:System.Data.OracleClient.OracleNumber>, and throw an Oracle exception, by importing a non-integral numeric value that is either too large or too high precision for the <xref:System.Data.OracleClient.OracleNumber>'s precision limitations. Refer to the description of <xref:System.Data.OracleClient.OracleNumber> for more information.  \n  \n The <xref:System.Data.OracleClient.OracleDataAdapter> also includes the <xref:System.Data.OracleClient.OracleDataAdapter.SelectCommand%2A>, <xref:System.Data.OracleClient.OracleDataAdapter.InsertCommand%2A>, <xref:System.Data.OracleClient.OracleDataAdapter.DeleteCommand%2A>, <xref:System.Data.OracleClient.OracleDataAdapter.UpdateCommand%2A>, and `TableMappings` properties to facilitate loading and updating of data.  \n  \n The .NET Framework Data Provider for Oracle does not support batched SQL statements. However, it does allow you to use multiple `REF CURSOR` output parameters to fill a **DataSet**, each in its own <xref:System.Data.DataTable>. You must define the parameters, mark them as output parameters, and indicate that they are `REF CURSOR` data types. Note that you cannot use the <xref:System.Data.Common.DbDataAdapter.Update%2A> method when the <xref:System.Data.OracleClient.OracleDataAdapter> is filled using `REF CURSOR` parameters returned by a stored procedure, because Oracle does not provide the information necessary to determine what the table name and column names are when the SQL statement is executed. The following C# example assumes that you have created this stored procedure.  \n  \n Create the following Oracle package on the Oracle server.  \n  \n```  \nCREATE OR REPLACE PACKAGE CURSPKG AS   \n   TYPE T_CURSOR IS REF CURSOR;   \n   PROCEDURE OPEN_ONE_CURSOR (N_EMPNO IN NUMBER,   \n      IO_CURSOR OUT T_CURSOR);   \n   PROCEDURE OPEN_TWO_CURSORS (EMPCURSOR OUT T_CURSOR,   \n      DEPTCURSOR OUT T_CURSOR);  \nEND CURSPKG;  \n/  \n```  \n  \n Create the following Oracle package body on the Oracle server.  \n  \n```  \nCREATE OR REPLACE PACKAGE BODY CURSPKG AS   \n    PROCEDURE OPEN_ONE_CURSOR (N_EMPNO IN NUMBER,   \n                               IO_CURSOR OUT T_CURSOR)   \n    IS   \n        V_CURSOR T_CURSOR;   \n    BEGIN   \n        IF N_EMPNO <> 0 THEN   \n             OPEN V_CURSOR FOR   \n             SELECT EMP.EMPNO, EMP.ENAME, DEPT.DEPTNO, DEPT.DNAME   \n                  FROM EMP, DEPT   \n                  WHERE EMP.DEPTNO = DEPT.DEPTNO   \n                        AND EMP.EMPNO = N_EMPNO;   \n        ELSE   \n             OPEN V_CURSOR FOR   \n             SELECT EMP.EMPNO, EMP.ENAME, DEPT.DEPTNO, DEPT.DNAME   \n                  FROM EMP, DEPT   \n                  WHERE EMP.DEPTNO = DEPT.DEPTNO;   \n        END IF;   \n        IO_CURSOR := V_CURSOR;   \n    END OPEN_ONE_CURSOR;   \n    PROCEDURE OPEN_TWO_CURSORS (EMPCURSOR OUT T_CURSOR,   \n                                DEPTCURSOR OUT T_CURSOR)   \n    IS   \n        V_CURSOR1 T_CURSOR;   \n        V_CURSOR2 T_CURSOR;   \n    BEGIN   \n        OPEN V_CURSOR1 FOR SELECT * FROM EMP;   \n        OPEN V_CURSOR2 FOR SELECT * FROM DEPT;   \n        EMPCURSOR  := V_CURSOR1;   \n        DEPTCURSOR := V_CURSOR2;   \n    END OPEN_TWO_CURSORS;   \nEND CURSPKG;  \n /  \n```  \n  \n The following C# example demonstrates how you might obtain table and column information using the stored procedure.  \n  \n```csharp  \n// GetConnectionString() returns a connection string for  \n// the data source.  \n  \nstring connString = GetConnectionString();  \nDataSet ds = new DataSet();  \nOracleConnection conn = new OracleConnection(connString);  \nOracleCommand cmd = conn.CreateCommand();  \n  \ncmd.CommandText = \"CURSPKG.OPEN_TWO_CURSORS\";  \ncmd.CommandType = CommandType.StoredProcedure;  \ncmd.Parameters.Add(\"EMPCURSOR\", OracleType.Cursor).Direction =   \n       ParameterDirection.Output;  \ncmd.Parameters.Add(\"DEPTCURSOR\", OracleType.Cursor).Direction =   \n       ParameterDirection.Output;  \n  \nOracleDataAdapter da = new OracleDataAdapter(cmd);  \nda.TableMappings.Add(\"Table\", \"Emp\");  \nda.TableMappings.Add(\"Table1\", \"Dept\");  \nda.Fill(ds);  \n  \nds.Relations.Add(\"EmpDept\", ds.Tables[\"Dept\"].Columns[\"Deptno\"],   \n      ds.Tables[\"Emp\"].Columns[\"Deptno\"], false);  \n```  \n  \n The following Visual Basic example demonstrates how to use an <xref:System.Data.OracleClient.OracleDataAdapter> to fill a <xref:System.Data.DataSet> using an Oracle `REF CURSOR`. These examples use tables that are defined in the Oracle Scott/Tiger schema, and require the following PL/SQL package and package body. You must create these on your server to use the examples.  \n  \n Create the following Oracle package on the Oracle server.  \n  \n```  \nCREATE OR REPLACE PACKAGE CURSPKG AS   \n   TYPE T_CURSOR IS REF CURSOR;   \n   PROCEDURE OPEN_ONE_CURSOR (N_EMPNO IN NUMBER,   \n      IO_CURSOR OUT T_CURSOR);   \n   PROCEDURE OPEN_TWO_CURSORS (EMPCURSOR OUT T_CURSOR,   \n      DEPTCURSOR OUT T_CURSOR);  \nEND CURSPKG;  \n/  \n```  \n  \n Create the following Oracle package body on the Oracle server.  \n  \n``` \nCREATE OR REPLACE PACKAGE BODY CURSPKG AS   \n    PROCEDURE OPEN_ONE_CURSOR (N_EMPNO IN NUMBER,   \n                               IO_CURSOR OUT T_CURSOR)   \n    IS   \n        V_CURSOR T_CURSOR;   \n    BEGIN   \n        IF N_EMPNO <> 0 THEN   \n             OPEN V_CURSOR FOR   \n             SELECT EMP.EMPNO, EMP.ENAME, DEPT.DEPTNO, DEPT.DNAME   \n                  FROM EMP, DEPT   \n                  WHERE EMP.DEPTNO = DEPT.DEPTNO   \n                        AND EMP.EMPNO = N_EMPNO;   \n        ELSE   \n             OPEN V_CURSOR FOR   \n             SELECT EMP.EMPNO, EMP.ENAME, DEPT.DEPTNO, DEPT.DNAME   \n                  FROM EMP, DEPT   \n                  WHERE EMP.DEPTNO = DEPT.DEPTNO;   \n        END IF;   \n        IO_CURSOR := V_CURSOR;   \n    END OPEN_ONE_CURSOR;   \n    PROCEDURE OPEN_TWO_CURSORS (EMPCURSOR OUT T_CURSOR,   \n                                DEPTCURSOR OUT T_CURSOR)   \n    IS   \n        V_CURSOR1 T_CURSOR;   \n        V_CURSOR2 T_CURSOR;   \n    BEGIN   \n        OPEN V_CURSOR1 FOR SELECT * FROM EMP;   \n        OPEN V_CURSOR2 FOR SELECT * FROM DEPT;   \n        EMPCURSOR  := V_CURSOR1;   \n        DEPTCURSOR := V_CURSOR2;   \n    END OPEN_TWO_CURSORS;   \nEND CURSPKG;  \n /  \n```  \n  \n This Visual Basic example executes a PL/SQL stored procedure that returns two `REF CURSOR` parameters, and fills a <xref:System.Data.DataSet> with the rows that are returned.  \n  \n```vb  \n  \n' GetConnectionString() returns a connection string for  \n' the data source.  \n  \n    Dim connString As New String(GetConnectionString())  \n    Dim ds As New DataSet()  \n    Dim conn As New OracleConnection(connString)  \n    Dim cmd As OracleCommand = conn.CreateCommand()  \n  \n    cmd.CommandText = \"CURSPKG.OPEN_TWO_CURSORS\"  \n    cmd.CommandType = CommandType.StoredProcedure  \n    cmd.Parameters.Add(\"EMPCURSOR\", OracleType.Cursor).Direction = _  \n       ParameterDirection.Output  \n    cmd.Parameters.Add(\"DEPTCURSOR\", OracleType.Cursor).Direction = _  \n       ParameterDirection.Output  \n  \n    Dim da As New OracleDataAdapter(cmd)  \n    da.TableMappings.Add(\"Table\", \"Emp\")  \n    da.TableMappings.Add(\"Table1\", \"Dept\")  \n    da.Fill(ds)  \n  \n    ds.Relations.Add(\"EmpDept\", ds.Tables(\"Dept\").Columns(\"Deptno\"), _  \n      ds.Tables(\"Emp\").Columns(\"Deptno\"), False)  \n```  \n  \n After using the <xref:System.Data.OracleClient.OracleDataAdapter> to perform a `Fill` or `FillSchema` operation, the `DataColumn.ReadOnly` property always returns false, regardless of whether a column can be updated or not, because the Oracle server does not return this information."
+  syntax:
+    content: >-
+      [System.Obsolete("OracleDataAdapter has been deprecated. http://go.microsoft.com/fwlink/?LinkID=144260", false)]
+
+      public sealed class OracleDataAdapter : System.Data.Common.DbDataAdapter, ICloneable
+  inheritance:
+  - System.Object
+  - System.MarshalByRefObject
+  - System.ComponentModel.Component
+  - System.Data.Common.DataAdapter
+  - System.Data.Common.DbDataAdapter
+  implements:
+  - System.ICloneable
+  inheritedMembers:
+  - System.ComponentModel.Component.CanRaiseEvents
+  - System.ComponentModel.Component.Container
+  - System.ComponentModel.Component.DesignMode
+  - System.ComponentModel.Component.Dispose
+  - System.ComponentModel.Component.Disposed
+  - System.ComponentModel.Component.Events
+  - System.ComponentModel.Component.GetService(System.Type)
+  - System.ComponentModel.Component.Site
+  - System.ComponentModel.Component.ToString
+  - System.Data.Common.DataAdapter.AcceptChangesDuringFill
+  - System.Data.Common.DataAdapter.AcceptChangesDuringUpdate
+  - System.Data.Common.DataAdapter.CloneInternals
+  - System.Data.Common.DataAdapter.ContinueUpdateOnError
+  - System.Data.Common.DataAdapter.CreateTableMappings
+  - System.Data.Common.DataAdapter.Fill(System.Data.DataSet,System.String,System.Data.IDataReader,System.Int32,System.Int32)
+  - System.Data.Common.DataAdapter.Fill(System.Data.DataTable,System.Data.IDataReader)
+  - System.Data.Common.DataAdapter.Fill(System.Data.DataTable[],System.Data.IDataReader,System.Int32,System.Int32)
+  - System.Data.Common.DataAdapter.FillError
+  - System.Data.Common.DataAdapter.FillLoadOption
+  - System.Data.Common.DataAdapter.FillSchema(System.Data.DataSet,System.Data.SchemaType,System.String,System.Data.IDataReader)
+  - System.Data.Common.DataAdapter.FillSchema(System.Data.DataTable,System.Data.SchemaType,System.Data.IDataReader)
+  - System.Data.Common.DataAdapter.HasTableMappings
+  - System.Data.Common.DataAdapter.MissingMappingAction
+  - System.Data.Common.DataAdapter.MissingSchemaAction
+  - System.Data.Common.DataAdapter.OnFillError(System.Data.FillErrorEventArgs)
+  - System.Data.Common.DataAdapter.ResetFillLoadOption
+  - System.Data.Common.DataAdapter.ReturnProviderSpecificTypes
+  - System.Data.Common.DataAdapter.ShouldSerializeAcceptChangesDuringFill
+  - System.Data.Common.DataAdapter.ShouldSerializeFillLoadOption
+  - System.Data.Common.DataAdapter.ShouldSerializeTableMappings
+  - System.Data.Common.DataAdapter.System#Data#IDataAdapter#TableMappings
+  - System.Data.Common.DataAdapter.TableMappings
+  - System.Data.Common.DbDataAdapter.DefaultSourceTableName
+  - System.Data.Common.DbDataAdapter.Dispose(System.Boolean)
+  - System.Data.Common.DbDataAdapter.Fill(System.Data.DataSet)
+  - System.Data.Common.DbDataAdapter.Fill(System.Data.DataSet,System.Int32,System.Int32,System.String)
+  - System.Data.Common.DbDataAdapter.Fill(System.Data.DataSet,System.Int32,System.Int32,System.String,System.Data.IDbCommand,System.Data.CommandBehavior)
+  - System.Data.Common.DbDataAdapter.Fill(System.Data.DataSet,System.String)
+  - System.Data.Common.DbDataAdapter.Fill(System.Data.DataTable)
+  - System.Data.Common.DbDataAdapter.Fill(System.Data.DataTable,System.Data.IDbCommand,System.Data.CommandBehavior)
+  - System.Data.Common.DbDataAdapter.Fill(System.Data.DataTable[],System.Int32,System.Int32,System.Data.IDbCommand,System.Data.CommandBehavior)
+  - System.Data.Common.DbDataAdapter.Fill(System.Int32,System.Int32,System.Data.DataTable[])
+  - System.Data.Common.DbDataAdapter.FillCommandBehavior
+  - System.Data.Common.DbDataAdapter.FillSchema(System.Data.DataSet,System.Data.SchemaType)
+  - System.Data.Common.DbDataAdapter.FillSchema(System.Data.DataSet,System.Data.SchemaType,System.Data.IDbCommand,System.String,System.Data.CommandBehavior)
+  - System.Data.Common.DbDataAdapter.FillSchema(System.Data.DataSet,System.Data.SchemaType,System.String)
+  - System.Data.Common.DbDataAdapter.FillSchema(System.Data.DataTable,System.Data.SchemaType)
+  - System.Data.Common.DbDataAdapter.FillSchema(System.Data.DataTable,System.Data.SchemaType,System.Data.IDbCommand,System.Data.CommandBehavior)
+  - System.Data.Common.DbDataAdapter.GetFillParameters
+  - System.Data.Common.DbDataAdapter.Update(System.Data.DataRow[])
+  - System.Data.Common.DbDataAdapter.Update(System.Data.DataRow[],System.Data.Common.DataTableMapping)
+  - System.Data.Common.DbDataAdapter.Update(System.Data.DataSet)
+  - System.Data.Common.DbDataAdapter.Update(System.Data.DataSet,System.String)
+  - System.Data.Common.DbDataAdapter.Update(System.Data.DataTable)
+  - System.MarshalByRefObject.CreateObjRef(System.Type)
+  - System.MarshalByRefObject.GetLifetimeService
+  - System.MarshalByRefObject.InitializeLifetimeService
+  - System.MarshalByRefObject.MemberwiseClone(System.Boolean)
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  attributes:
+  - type: System.ObsoleteAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleDataAdapter.#ctor
+  commentId: M:System.Data.OracleClient.OracleDataAdapter.#ctor
+  id: '#ctor'
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: OracleDataAdapter()
+  nameWithType: OracleDataAdapter.OracleDataAdapter()
+  fullName: OracleDataAdapter.OracleDataAdapter()
+  type: Constructor
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Initializes a new instance of the <xref href="System.Data.OracleClient.OracleDataAdapter"></xref> class.
+  remarks: "When you create an instance of <xref:System.Data.OracleClient.OracleDataAdapter>, the following read/write properties are set to their default values, as shown in the table.  \n  \n|Properties|Default value|  \n|----------------|-------------------|  \n|<xref:System.Data.Common.DataAdapter.MissingMappingAction%2A>|`MissingMappingAction.Passthrough`|  \n|<xref:System.Data.Common.DataAdapter.MissingSchemaAction%2A>|`MissingSchemaAction.Add`|  \n  \n You can change the value of any of these properties through a separate call to the property."
+  example:
+  - "The following example creates an <xref:System.Data.OracleClient.OracleDataAdapter> and sets some of its properties.  \n  \n```vb  \nPublic Sub CreateOracleDataAdapter()  \n    Dim myOracleConnection As OracleConnection = New OracleConnection(\"Data Source=Oracle8i;Integrated Security=yes\")  \n    Dim custDA As OracleDataAdapter = New OracleDataAdapter  \n    custDA.MissingSchemaAction = MissingSchemaAction.AddWithKey  \n  \n    custDA.SelectCommand = New OracleCommand(\"SELECT DeptNo, DName FROM Dept\", myOracleConnection)  \n    custDA.InsertCommand = New OracleCommand(\"INSERT INTO Dept (DeptNo, DName) \" & _  \n                                            \"VALUES (:pDeptNo, :pDName)\", myOracleConnection)  \n    custDA.UpdateCommand = New OracleCommand(\"UPDATE Dept SET DeptNo = :pDeptNo, DName = :pDName \" & _  \n                                            \"WHERE DeptNo = :pDeptNo\", myOracleConnection)  \n    custDA.DeleteCommand = New OracleCommand(\"DELETE FROM Dept WHERE DeptNo = :pDeptNo\", myOracleConnection)  \n  \n    custDA.InsertCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\")  \n    custDA.InsertCommand.Parameters.Add(\"pDName\", OracleType.VarChar, 14, \"DName\")  \n  \n    custDA.UpdateCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\")  \n    custDA.UpdateCommand.Parameters.Add(\"pDName\", OracleType.VarChar, 14, \"DName\")  \n    custDA.UpdateCommand.Parameters.Add(\"poldDeptNo\", OracleType.Number, 2, \"DeptNo\").SourceVersion = DataRowVersion.Original  \n  \n    custDA.DeleteCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\").SourceVersion = DataRowVersion.Original  \nEnd Sub  \n```  \n  \n```csharp  \npublic static void CreateOracleDataAdapter()   \n{  \n    OracleConnection myOracleConnection = new OracleConnection(\"Data Source=Oracle8i;Integrated Security=yes\");  \n    OracleDataAdapter custDA = new OracleDataAdapter();  \n    custDA.MissingSchemaAction = MissingSchemaAction.AddWithKey;  \n  \n    custDA.SelectCommand = new OracleCommand(\"SELECT DeptNo, CompanyName FROM Dept\", myOracleConnection);  \n    custDA.InsertCommand = new OracleCommand(\"INSERT INTO Dept (DeptNo, CompanyName) \" +  \n                                            \"VALUES (:pDeptNo, :pCompanyName)\", myOracleConnection);  \n    custDA.UpdateCommand = new OracleCommand(\"UPDATE Dept SET DeptNo = :pDeptNo, CompanyName = :pCompanyName \" +  \n                                            \"WHERE DeptNo = :pDeptNo\", myOracleConnection);  \n    custDA.DeleteCommand = new OracleCommand(\"DELETE FROM Dept WHERE DeptNo = :pDeptNo\", myOracleConnection);  \n  \n    custDA.InsertCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\");  \n    custDA.InsertCommand.Parameters.Add(\"pCompanyName\", OracleType.VarChar, 14, \"CompanyName\");  \n  \n    custDA.UpdateCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\");  \n    custDA.UpdateCommand.Parameters.Add(\"pCompanyName\", OracleType.VarChar, 14, \"CompanyName\");  \n    custDA.UpdateCommand.Parameters.Add(\"poldDeptNo\", OracleType.Number, 2, \"DeptNo\").SourceVersion = DataRowVersion.Original;  \n  \n    custDA.DeleteCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\").SourceVersion = DataRowVersion.Original;  \n}  \n```"
+  syntax:
+    content: public OracleDataAdapter ();
+    parameters: []
+  overload: System.Data.OracleClient.OracleDataAdapter.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleDataAdapter.#ctor(System.Data.OracleClient.OracleCommand)
+  commentId: M:System.Data.OracleClient.OracleDataAdapter.#ctor(System.Data.OracleClient.OracleCommand)
+  id: '#ctor(System.Data.OracleClient.OracleCommand)'
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: OracleDataAdapter(OracleCommand)
+  nameWithType: OracleDataAdapter.OracleDataAdapter(OracleCommand)
+  fullName: OracleDataAdapter.OracleDataAdapter(OracleCommand)
+  type: Constructor
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Initializes a new instance of the <xref href="System.Data.OracleClient.OracleDataAdapter"></xref> class with the specified SQL SELECT statement.
+  remarks: "This implementation of the <xref:System.Data.OracleClient.OracleDataAdapter> constructor sets the <xref:System.Data.OracleClient.OracleDataAdapter.SelectCommand%2A> property to the value specified in the `selectCommand` parameter.  \n  \n When you create an instance of <xref:System.Data.OracleClient.OracleDataAdapter>, the following read/write properties are set to their default values, as shown in the table.  \n  \n|Properties|Initial value|  \n|----------------|-------------------|  \n|<xref:System.Data.Common.DataAdapter.MissingMappingAction%2A>|`MissingMappingAction.Passthrough`|  \n|<xref:System.Data.Common.DataAdapter.MissingSchemaAction%2A>|`MissingSchemaAction.Add`|  \n  \n You can change the value of any of these properties through a separate call to the property."
+  example:
+  - "The following example creates an <xref:System.Data.OracleClient.OracleDataAdapter> and sets some of its properties.  \n  \n```vb  \nPublic Sub CreateOracleDataAdapter()  \n    Dim myOracleConnection As OracleConnection = New OracleConnection(\"Data Source=Oracle8i;Integrated Security=yes\")  \n    Dim myOracleCommand As OracleCommand = New OracleCommand(\"SELECT DeptNo, DName FROM Dept\", myOracleConnection)  \n    Dim custDA As OracleDataAdapter = New OracleDataAdapter(myOracleCommand)  \n    custDA.MissingSchemaAction = MissingSchemaAction.AddWithKey  \n  \n    custDA.InsertCommand = New OracleCommand(\"INSERT INTO Dept (DeptNo, DName) \" & _  \n                                            \"VALUES (:pDeptNo, :pDName)\", myOracleConnection)  \n    custDA.UpdateCommand = New OracleCommand(\"UPDATE Dept SET DeptNo = :pDeptNo, DName = :pDName \" & _  \n                                            \"WHERE DeptNo = :pDeptNo\", myOracleConnection)  \n    custDA.DeleteCommand = New OracleCommand(\"DELETE FROM Dept WHERE DeptNo = :pDeptNo\", myOracleConnection)  \n  \n    custDA.InsertCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\")  \n    custDA.InsertCommand.Parameters.Add(\"pDName\", OracleType.VarChar, 14, \"DName\")  \n  \n    custDA.UpdateCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\")  \n    custDA.UpdateCommand.Parameters.Add(\"pDName\", OracleType.VarChar, 14, \"DName\")  \n    custDA.UpdateCommand.Parameters.Add(\"poldDeptNo\", OracleType.Number, 2, \"DeptNo\").SourceVersion = DataRowVersion.Original  \n  \n    custDA.DeleteCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\").SourceVersion = DataRowVersion.Original  \nEnd Sub  \n```  \n  \n```csharp  \npublic static void CreateOracleDataAdapter()   \n{  \n    OracleConnection myOracleConnection = new OracleConnection(\"Data Source=Oracle8i;Integrated Security=yes\");  \n    OracleCommand myOracleCommand = new OracleCommand(\"SELECT DeptNo, DName FROM Dept\", myOracleConnection);  \n    OracleDataAdapter custDA = new OracleDataAdapter(myOracleCommand);  \n    custDA.MissingSchemaAction = MissingSchemaAction.AddWithKey;  \n  \n    custDA.InsertCommand = new OracleCommand(\"INSERT INTO Dept (DeptNo, DName) \" +  \n                                            \"VALUES (:pDeptNo, :pDName)\", myOracleConnection);  \n    custDA.UpdateCommand = new OracleCommand(\"UPDATE Dept SET DeptNo = :pDeptNo, DName = :pDName \" +  \n                                            \"WHERE DeptNo = :pDeptNo\", myOracleConnection);  \n    custDA.DeleteCommand = new OracleCommand(\"DELETE FROM Dept WHERE DeptNo = :pDeptNo\", myOracleConnection);  \n  \n    custDA.InsertCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\");  \n    custDA.InsertCommand.Parameters.Add(\"pDName\", OracleType.VarChar, 14, \"DName\");  \n  \n    custDA.UpdateCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\");  \n    custDA.UpdateCommand.Parameters.Add(\"pDName\", OracleType.VarChar, 14, \"DName\");  \n    custDA.UpdateCommand.Parameters.Add(\"poldDeptNo\", OracleType.Number, 2, \"DeptNo\").SourceVersion = DataRowVersion.Original;  \n  \n    custDA.DeleteCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\").SourceVersion = DataRowVersion.Original;  \n}  \n```"
+  syntax:
+    content: public OracleDataAdapter (System.Data.OracleClient.OracleCommand selectCommand);
+    parameters:
+    - id: selectCommand
+      type: System.Data.OracleClient.OracleCommand
+      description: An <xref href="System.Data.OracleClient.OracleCommand"></xref> that is an SQL SELECT statement or stored procedure, and is set as the <xref href="System.Data.OracleClient.OracleDataAdapter.SelectCommand"></xref> property of the <xref href="System.Data.OracleClient.OracleDataAdapter"></xref>.
+  overload: System.Data.OracleClient.OracleDataAdapter.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleDataAdapter.#ctor(System.String,System.Data.OracleClient.OracleConnection)
+  commentId: M:System.Data.OracleClient.OracleDataAdapter.#ctor(System.String,System.Data.OracleClient.OracleConnection)
+  id: '#ctor(System.String,System.Data.OracleClient.OracleConnection)'
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: OracleDataAdapter(String, OracleConnection)
+  nameWithType: OracleDataAdapter.OracleDataAdapter(String, OracleConnection)
+  fullName: OracleDataAdapter.OracleDataAdapter(String, OracleConnection)
+  type: Constructor
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Initializes a new instance of the <xref href="System.Data.OracleClient.OracleDataAdapter"></xref> class with an SQL SELECT statement and an <xref href="System.Data.OracleClient.OracleConnection"></xref>.
+  remarks: This implementation of the <xref:System.Data.OracleClient.OracleDataAdapter> can be useful in an application that must call the `Fill` method for two or more <xref:System.Data.OracleClient.OracleDataAdapter> objects.
+  example:
+  - "The following example creates an <xref:System.Data.OracleClient.OracleDataAdapter> and sets some of its properties.  \n  \n```vb  \nPublic Sub CreateOracleDataAdapter()  \n    Dim myOracleConnection As OracleConnection = New OracleConnection(\"Data Source=Oracle8i;Integrated Security=yes\")  \n    Dim mySelectText As String = \"SELECT DeptNo, DName FROM Dept\"  \n    Dim custDA As OracleDataAdapter = New OracleDataAdapter(mySelectText, myOracleConnection)   \n    custDA.MissingSchemaAction = MissingSchemaAction.AddWithKey  \n  \n    custDA.InsertCommand = New OracleCommand(\"INSERT INTO Dept (DeptNo, DName) \" & _  \n                                            \"VALUES (:pDeptNo, :pDName)\", myOracleConnection)  \n    custDA.UpdateCommand = New OracleCommand(\"UPDATE Dept SET DeptNo = :pDeptNo, DName = :pDName \" & _  \n                                            \"WHERE DeptNo = :pDeptNo\", myOracleConnection)  \n    custDA.DeleteCommand = New OracleCommand(\"DELETE FROM Dept WHERE DeptNo = :pDeptNo\", myOracleConnection)  \n  \n    custDA.InsertCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\")  \n    custDA.InsertCommand.Parameters.Add(\"pDName\", OracleType.VarChar, 14, \"DName\")  \n  \n    custDA.UpdateCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\")  \n    custDA.UpdateCommand.Parameters.Add(\"pDName\", OracleType.VarChar, 14, \"DName\")  \n    custDA.UpdateCommand.Parameters.Add(\"poldDeptNo\", OracleType.Number, 2, \"DeptNo\").SourceVersion = DataRowVersion.Original  \n  \n    custDA.DeleteCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\").SourceVersion = DataRowVersion.Original  \nEnd Sub  \n```  \n  \n```csharp  \npublic static void CreateOracleDataAdapter()   \n{  \n    OracleConnection myOracleConnection = new OracleConnection(\"Data Source=Oracle8i;Integrated Security=yes\");  \n  \n    string mySelectText = \"SELECT DeptNo, DName FROM Dept\";  \n  \n    OracleDataAdapter custDA = new OracleDataAdapter(mySelectText, myOracleConnection );  \n    custDA.MissingSchemaAction = MissingSchemaAction.AddWithKey;  \n  \n    custDA.InsertCommand = new OracleCommand(\"INSERT INTO Dept (DeptNo, DName) \" +  \n                                            \"VALUES (:pDeptNo, :pDName)\", myOracleConnection);  \n    custDA.UpdateCommand = new OracleCommand(\"UPDATE Dept SET DeptNo = :pDeptNo, DName = :pDName \" +  \n                                            \"WHERE DeptNo = :pDeptNo\", myOracleConnection);  \n    custDA.DeleteCommand = new OracleCommand(\"DELETE FROM Dept WHERE DeptNo = :pDeptNo\", myOracleConnection);  \n  \n    custDA.InsertCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\");  \n    custDA.InsertCommand.Parameters.Add(\"pDName\", OracleType.VarChar, 14, \"DName\");  \n  \n    custDA.UpdateCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\");  \n    custDA.UpdateCommand.Parameters.Add(\"pDName\", OracleType.VarChar, 14, \"DName\");  \n    custDA.UpdateCommand.Parameters.Add(\"poldDeptNo\", OracleType.Number, 2, \"DeptNo\").SourceVersion = DataRowVersion.Original;  \n  \n    custDA.DeleteCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\").SourceVersion = DataRowVersion.Original;  \n}  \n```"
+  syntax:
+    content: public OracleDataAdapter (string selectCommandText, System.Data.OracleClient.OracleConnection selectConnection);
+    parameters:
+    - id: selectCommandText
+      type: System.String
+      description: A string that is an SQL SELECT statement or stored procedure to be used by the <xref href="System.Data.OracleClient.OracleDataAdapter.SelectCommand"></xref> property of the <xref href="System.Data.OracleClient.OracleDataAdapter"></xref>.
+    - id: selectConnection
+      type: System.Data.OracleClient.OracleConnection
+      description: An <xref href="System.Data.OracleClient.OracleConnection"></xref> that represents the connection.
+  overload: System.Data.OracleClient.OracleDataAdapter.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleDataAdapter.#ctor(System.String,System.String)
+  commentId: M:System.Data.OracleClient.OracleDataAdapter.#ctor(System.String,System.String)
+  id: '#ctor(System.String,System.String)'
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: OracleDataAdapter(String, String)
+  nameWithType: OracleDataAdapter.OracleDataAdapter(String, String)
+  fullName: OracleDataAdapter.OracleDataAdapter(String, String)
+  type: Constructor
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Initializes a new instance of the <xref href="System.Data.OracleClient.OracleDataAdapter"></xref> class with an SQL SELECT statement and a connection string.
+  remarks: ''
+  example:
+  - "The following example creates an <xref:System.Data.OracleClient.OracleDataAdapter> and sets some of its properties.  \n  \n```vb  \nPublic Sub CreateOracleDataAdapter()  \n    Dim myConnectionText As String = \"Data Source=Oracle8i;Integrated Security=yes\"  \n    Dim mySelectText As String = \"SELECT DeptNo, DName FROM Dept\"  \n    Dim custDA As OracleDataAdapter = New OracleDataAdapter(mySelectText, myConnectionText )   \n    Dim myOracleConnection As OracleConnection = custDA.SelectCommand.Connection  \n  \n    custDA.MissingSchemaAction = MissingSchemaAction.AddWithKey     \n  \n    custDA.InsertCommand = New OracleCommand(\"INSERT INTO Dept (DeptNo, DName) \" & _  \n                                            \"VALUES (:pDeptNo, :pDName)\", myOracleConnection)  \n    custDA.UpdateCommand = New OracleCommand(\"UPDATE Dept SET DeptNo = :pDeptNo, DName = :pDName \" & _  \n                                            \"WHERE DeptNo = :pDeptNo\", myOracleConnection)  \n    custDA.DeleteCommand = New OracleCommand(\"DELETE FROM Dept WHERE DeptNo = :pDeptNo\", myOracleConnection)  \n  \n    custDA.InsertCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\")  \n    custDA.InsertCommand.Parameters.Add(\"pDName\", OracleType.VarChar, 14, \"DName\")  \n  \n    custDA.UpdateCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\")  \n    custDA.UpdateCommand.Parameters.Add(\"pDName\", OracleType.VarChar, 14, \"DName\")  \n    custDA.UpdateCommand.Parameters.Add(\"poldDeptNo\", OracleType.Number, 2, \"DeptNo\").SourceVersion = DataRowVersion.Original  \n  \n    custDA.DeleteCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\").SourceVersion = DataRowVersion.Original  \nEnd Sub  \n```  \n  \n```csharp  \npublic static void CreateOracleDataAdapter()   \n{  \n    string myConnectionText = \"Data Source=Oracle8i;Integrated Security=yes\";  \n  \n    string mySelectText = \"SELECT DeptNo, DName FROM Dept\";  \n  \n    OracleDataAdapter custDA = new OracleDataAdapter(mySelectText, myConnectionText );  \n   OracleConnection myOracleConnection = custDA.SelectCommand.Connection;  \n  \n    custDA.MissingSchemaAction = MissingSchemaAction.AddWithKey;  \n  \n    custDA.InsertCommand = new OracleCommand(\"INSERT INTO Dept (DeptNo, DName) \" +  \n                                            \"VALUES (:pDeptNo, :pDName)\", myOracleConnection);  \n    custDA.UpdateCommand = new OracleCommand(\"UPDATE Dept SET DeptNo = :pDeptNo, DName = :pDName \" +  \n                                            \"WHERE DeptNo = :pDeptNo\", myOracleConnection);  \n    custDA.DeleteCommand = new OracleCommand(\"DELETE FROM Dept WHERE DeptNo = :pDeptNo\", myOracleConnection);  \n  \n    custDA.InsertCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\");  \n    custDA.InsertCommand.Parameters.Add(\"pDName\", OracleType.VarChar, 14, \"DName\");  \n  \n    custDA.UpdateCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\");  \n    custDA.UpdateCommand.Parameters.Add(\"pDName\", OracleType.VarChar, 14, \"DName\");  \n    custDA.UpdateCommand.Parameters.Add(\"poldDeptNo\", OracleType.Number, 2, \"DeptNo\").SourceVersion = DataRowVersion.Original;  \n  \n    custDA.DeleteCommand.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\").SourceVersion = DataRowVersion.Original;  \n}  \n```"
+  syntax:
+    content: public OracleDataAdapter (string selectCommandText, string selectConnectionString);
+    parameters:
+    - id: selectCommandText
+      type: System.String
+      description: A string that is an SQL SELECT statement or stored procedure to be used by the <xref href="System.Data.OracleClient.OracleDataAdapter.SelectCommand"></xref> property of the <xref href="System.Data.OracleClient.OracleDataAdapter"></xref>.
+    - id: selectConnectionString
+      type: System.String
+      description: The connection string.
+  overload: System.Data.OracleClient.OracleDataAdapter.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleDataAdapter.AddToBatch(System.Data.IDbCommand)
+  commentId: M:System.Data.OracleClient.OracleDataAdapter.AddToBatch(System.Data.IDbCommand)
+  id: AddToBatch(System.Data.IDbCommand)
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: AddToBatch(IDbCommand)
+  nameWithType: OracleDataAdapter.AddToBatch(IDbCommand)
+  fullName: OracleDataAdapter.AddToBatch(IDbCommand)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  syntax:
+    content: protected override int AddToBatch (System.Data.IDbCommand command);
+    parameters:
+    - id: command
+      type: System.Data.IDbCommand
+      description: ''
+    return:
+      type: System.Int32
+      description: ''
+  overload: System.Data.OracleClient.OracleDataAdapter.AddToBatch*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.ClearBatch
+  commentId: M:System.Data.OracleClient.OracleDataAdapter.ClearBatch
+  id: ClearBatch
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: ClearBatch()
+  nameWithType: OracleDataAdapter.ClearBatch()
+  fullName: OracleDataAdapter.ClearBatch()
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  syntax:
+    content: protected override void ClearBatch ();
+    parameters: []
+  overload: System.Data.OracleClient.OracleDataAdapter.ClearBatch*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.CreateRowUpdatedEvent(System.Data.DataRow,System.Data.IDbCommand,System.Data.StatementType,System.Data.Common.DataTableMapping)
+  commentId: M:System.Data.OracleClient.OracleDataAdapter.CreateRowUpdatedEvent(System.Data.DataRow,System.Data.IDbCommand,System.Data.StatementType,System.Data.Common.DataTableMapping)
+  id: CreateRowUpdatedEvent(System.Data.DataRow,System.Data.IDbCommand,System.Data.StatementType,System.Data.Common.DataTableMapping)
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: CreateRowUpdatedEvent(DataRow, IDbCommand, StatementType, DataTableMapping)
+  nameWithType: OracleDataAdapter.CreateRowUpdatedEvent(DataRow, IDbCommand, StatementType, DataTableMapping)
+  fullName: OracleDataAdapter.CreateRowUpdatedEvent(DataRow, IDbCommand, StatementType, DataTableMapping)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  syntax:
+    content: protected override System.Data.Common.RowUpdatedEventArgs CreateRowUpdatedEvent (System.Data.DataRow dataRow, System.Data.IDbCommand command, System.Data.StatementType statementType, System.Data.Common.DataTableMapping tableMapping);
+    parameters:
+    - id: dataRow
+      type: System.Data.DataRow
+      description: ''
+    - id: command
+      type: System.Data.IDbCommand
+      description: ''
+    - id: statementType
+      type: System.Data.StatementType
+      description: ''
+    - id: tableMapping
+      type: System.Data.Common.DataTableMapping
+      description: ''
+    return:
+      type: System.Data.Common.RowUpdatedEventArgs
+      description: ''
+  overload: System.Data.OracleClient.OracleDataAdapter.CreateRowUpdatedEvent*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.CreateRowUpdatingEvent(System.Data.DataRow,System.Data.IDbCommand,System.Data.StatementType,System.Data.Common.DataTableMapping)
+  commentId: M:System.Data.OracleClient.OracleDataAdapter.CreateRowUpdatingEvent(System.Data.DataRow,System.Data.IDbCommand,System.Data.StatementType,System.Data.Common.DataTableMapping)
+  id: CreateRowUpdatingEvent(System.Data.DataRow,System.Data.IDbCommand,System.Data.StatementType,System.Data.Common.DataTableMapping)
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: CreateRowUpdatingEvent(DataRow, IDbCommand, StatementType, DataTableMapping)
+  nameWithType: OracleDataAdapter.CreateRowUpdatingEvent(DataRow, IDbCommand, StatementType, DataTableMapping)
+  fullName: OracleDataAdapter.CreateRowUpdatingEvent(DataRow, IDbCommand, StatementType, DataTableMapping)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  syntax:
+    content: protected override System.Data.Common.RowUpdatingEventArgs CreateRowUpdatingEvent (System.Data.DataRow dataRow, System.Data.IDbCommand command, System.Data.StatementType statementType, System.Data.Common.DataTableMapping tableMapping);
+    parameters:
+    - id: dataRow
+      type: System.Data.DataRow
+      description: ''
+    - id: command
+      type: System.Data.IDbCommand
+      description: ''
+    - id: statementType
+      type: System.Data.StatementType
+      description: ''
+    - id: tableMapping
+      type: System.Data.Common.DataTableMapping
+      description: ''
+    return:
+      type: System.Data.Common.RowUpdatingEventArgs
+      description: ''
+  overload: System.Data.OracleClient.OracleDataAdapter.CreateRowUpdatingEvent*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.DeleteCommand
+  commentId: P:System.Data.OracleClient.OracleDataAdapter.DeleteCommand
+  id: DeleteCommand
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: DeleteCommand
+  nameWithType: OracleDataAdapter.DeleteCommand
+  fullName: OracleDataAdapter.DeleteCommand
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets an SQL statement or stored procedure used to delete records in the database.
+  remarks: "When the <xref:System.Data.OracleClient.OracleDataAdapter.DeleteCommand%2A> property is assigned to a previously created <xref:System.Data.OracleClient.OracleCommand>, the <xref:System.Data.OracleClient.OracleCommand> is not cloned. Instead, the <xref:System.Data.OracleClient.OracleDataAdapter.DeleteCommand%2A> maintains a reference to the previously created <xref:System.Data.OracleClient.OracleCommand>.  \n  \n During an update operation, if <xref:System.Data.OracleClient.OracleDataAdapter.DeleteCommand%2A> is not set and primary key information is present in the <xref:System.Data.DataSet>, you can use the <xref:System.Data.OracleClient.OracleCommandBuilder> class to automatically generate the <xref:System.Data.OracleClient.OracleDataAdapter.DeleteCommand%2A>, and additional commands needed to reconcile the <xref:System.Data.DataSet> to the database. To do this, set the <xref:System.Data.OracleClient.OracleDataAdapter.SelectCommand%2A> property of the <xref:System.Data.OracleClient.OracleDataAdapter>. The generation logic also requires key column information to be present in the <xref:System.Data.DataSet>. For more information see [Generating Commands with CommandBuilders](~/docs/framework/data/adonet/generating-commands-with-commandbuilders.md)."
+  example:
+  - "The following example creates an <xref:System.Data.OracleClient.OracleDataAdapter> and sets the <xref:System.Data.OracleClient.OracleDataAdapter.SelectCommand%2A> and <xref:System.Data.OracleClient.OracleDataAdapter.DeleteCommand%2A> properties. It assumes you have already created an <xref:System.Data.OracleClient.OracleConnection> object.  \n  \n```vb  \nPublic Shared Function CreateCustomerAdapter(conn As OracleConnection) As OracleDataAdapter   \n  \n  Dim da As OracleDataAdapter = New OracleDataAdapter()  \n  Dim cmd As OracleCommand  \n  Dim parm As OracleParameter  \n  \n  ' Create the SelectCommand.  \n  \n  cmd = New OracleCommand(\"SELECT * FROM Dept \" & _  \n                       \"WHERE DName = :pDName AND Loc = :pLoc\", conn)  \n  \n  cmd.Parameters.Add(\"pDName\", OracleType.NVarChar, 14)  \n  cmd.Parameters.Add(\"pLoc\", OracleType.NVarChar, 13)  \n  \n  da.SelectCommand = cmd  \n  \n  ' Create the DeleteCommand.  \n  \n  cmd = New OracleCommand(\"DELETE FROM Dept WHERE DeptNo = :pDeptNo\", conn)  \n  \n  parm = cmd.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\")  \n  parm.SourceVersion = DataRowVersion.Original  \n  \n  da.DeleteCommand = cmd  \n  \n  Return da  \nEnd Function  \n```  \n  \n```csharp  \npublic static OracleDataAdapter CreateCustomerAdapter(OracleConnection conn)  \n{  \n  OracleDataAdapter da = new OracleDataAdapter();  \n  OracleCommand cmd;  \n  OracleParameter parm;  \n  \n  // Create the SelectCommand.  \n  \n  cmd = new OracleCommand(\"SELECT * FROM Dept \" +  \n                       \"WHERE DName = :pDName AND Loc = :pLoc\", conn);  \n  \n  cmd.Parameters.Add(\"pDName\", OracleType.NVarChar, 14);  \n  cmd.Parameters.Add(\"pLoc\", OracleType.NVarChar, 13);  \n  \n  da.SelectCommand = cmd;  \n  \n  // Create the DeleteCommand.  \n  \n  cmd = new OracleCommand(\"DELETE FROM Dept WHERE DeptNo = :pDeptNo\", conn);  \n  \n  parm = cmd.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\");  \n  parm.SourceVersion = DataRowVersion.Original;  \n  \n  da.DeleteCommand = cmd;  \n  \n  return da;  \n}  \n```"
+  syntax:
+    content: public System.Data.OracleClient.OracleCommand DeleteCommand { get; set; }
+    return:
+      type: System.Data.OracleClient.OracleCommand
+      description: An <xref href="System.Data.OracleClient.OracleCommand"></xref> used during an update operation to delete records in the database that correspond to deleted rows in the `DataSet`.
+  overload: System.Data.OracleClient.OracleDataAdapter.DeleteCommand*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleDataAdapter.ExecuteBatch
+  commentId: M:System.Data.OracleClient.OracleDataAdapter.ExecuteBatch
+  id: ExecuteBatch
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: ExecuteBatch()
+  nameWithType: OracleDataAdapter.ExecuteBatch()
+  fullName: OracleDataAdapter.ExecuteBatch()
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  syntax:
+    content: protected override int ExecuteBatch ();
+    parameters: []
+    return:
+      type: System.Int32
+      description: ''
+  overload: System.Data.OracleClient.OracleDataAdapter.ExecuteBatch*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.GetBatchedParameter(System.Int32,System.Int32)
+  commentId: M:System.Data.OracleClient.OracleDataAdapter.GetBatchedParameter(System.Int32,System.Int32)
+  id: GetBatchedParameter(System.Int32,System.Int32)
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: GetBatchedParameter(Int32, Int32)
+  nameWithType: OracleDataAdapter.GetBatchedParameter(Int32, Int32)
+  fullName: OracleDataAdapter.GetBatchedParameter(Int32, Int32)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  syntax:
+    content: protected override System.Data.IDataParameter GetBatchedParameter (int commandIdentifier, int parameterIndex);
+    parameters:
+    - id: commandIdentifier
+      type: System.Int32
+      description: ''
+    - id: parameterIndex
+      type: System.Int32
+      description: ''
+    return:
+      type: System.Data.IDataParameter
+      description: ''
+  overload: System.Data.OracleClient.OracleDataAdapter.GetBatchedParameter*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.GetBatchedRecordsAffected(System.Int32,System.Int32@,System.Exception@)
+  commentId: M:System.Data.OracleClient.OracleDataAdapter.GetBatchedRecordsAffected(System.Int32,System.Int32@,System.Exception@)
+  id: GetBatchedRecordsAffected(System.Int32,System.Int32@,System.Exception@)
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: GetBatchedRecordsAffected(Int32, Int32, Exception)
+  nameWithType: OracleDataAdapter.GetBatchedRecordsAffected(Int32, Int32, Exception)
+  fullName: OracleDataAdapter.GetBatchedRecordsAffected(Int32, Int32, Exception)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  syntax:
+    content: protected override bool GetBatchedRecordsAffected (int commandIdentifier, out int recordsAffected, out Exception error);
+    parameters:
+    - id: commandIdentifier
+      type: System.Int32
+      description: ''
+    - id: recordsAffected
+      type: System.Int32
+      description: ''
+    - id: error
+      type: System.Exception
+      description: ''
+    return:
+      type: System.Boolean
+      description: ''
+  overload: System.Data.OracleClient.OracleDataAdapter.GetBatchedRecordsAffected*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.InitializeBatching
+  commentId: M:System.Data.OracleClient.OracleDataAdapter.InitializeBatching
+  id: InitializeBatching
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: InitializeBatching()
+  nameWithType: OracleDataAdapter.InitializeBatching()
+  fullName: OracleDataAdapter.InitializeBatching()
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  syntax:
+    content: protected override void InitializeBatching ();
+    parameters: []
+  overload: System.Data.OracleClient.OracleDataAdapter.InitializeBatching*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.InsertCommand
+  commentId: P:System.Data.OracleClient.OracleDataAdapter.InsertCommand
+  id: InsertCommand
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: InsertCommand
+  nameWithType: OracleDataAdapter.InsertCommand
+  fullName: OracleDataAdapter.InsertCommand
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets an SQL statement or stored procedure used to insert new records into the database.
+  remarks: "When the <xref:System.Data.OracleClient.OracleDataAdapter.InsertCommand%2A> property is assigned to a previously created <xref:System.Data.OracleClient.OracleCommand> object, the <xref:System.Data.OracleClient.OracleCommand> is not cloned. Instead, <xref:System.Data.OracleClient.OracleDataAdapter.InsertCommand%2A> maintains a reference to the previously created <xref:System.Data.OracleClient.OracleCommand>.  \n  \n During an update operation, if <xref:System.Data.OracleClient.OracleDataAdapter.InsertCommand%2A> is not set and primary key information is present in the <xref:System.Data.DataSet>, you can use the <xref:System.Data.OracleClient.OracleCommandBuilder> class to automatically generate <xref:System.Data.OracleClient.OracleDataAdapter.InsertCommand%2A>, and additional commands needed to reconcile the <xref:System.Data.DataSet> to the database. To do this, set the <xref:System.Data.OracleClient.OracleDataAdapter.SelectCommand%2A> property of the <xref:System.Data.OracleClient.OracleDataAdapter>. The generation logic also requires key column information to be present in the <xref:System.Data.DataSet>. For more information see [Generating Commands with CommandBuilders](~/docs/framework/data/adonet/generating-commands-with-commandbuilders.md).  \n  \n> [!NOTE]\n>  If execution of this command returns rows, these rows may be added to the <xref:System.Data.DataSet> depending upon how you set the <xref:System.Data.OracleClient.OracleCommand.UpdatedRowSource%2A> property of the <xref:System.Data.OracleClient.OracleCommand> object.  \n  \n When you update a column with the `LONG RAW` data type, an exception is thrown when you enter a value of `NULL` in the column. The Oracle `LONG RAW` data type is a deprecated type in Oracle version 8.0. To avoid this error, use the `BLOB` data type instead of `LONG RAW`."
+  example:
+  - "The following example creates an <xref:System.Data.OracleClient.OracleDataAdapter> and sets the <xref:System.Data.OracleClient.OracleDataAdapter.SelectCommand%2A> and <xref:System.Data.OracleClient.OracleDataAdapter.InsertCommand%2A> properties. It assumes you have already created an <xref:System.Data.OracleClient.OracleConnection> object.  \n  \n```vb  \nPublic Shared Function CreateCustomerAdapter(conn As OracleConnection) As OracleDataAdapter   \n  \n  Dim da As OracleDataAdapter = New OracleDataAdapter()  \n  Dim cmd As OracleCommand  \n  \n  ' Create the SelectCommand.  \n  \n  cmd = New OracleCommand(\"SELECT * FROM Dept \" & _  \n                       \"WHERE DName = :pDName AND Loc = :pLoc\", conn)  \n  \n  cmd.Parameters.Add(\"pDName\", OracleType.NVarChar, 14)  \n  cmd.Parameters.Add(\"pLoc\", OracleType.NVarChar, 13)  \n  \n  da.SelectCommand = cmd  \n  \n  ' Create the InsertCommand.  \n  \n  cmd = New OracleCommand(\"INSERT INTO Dept (DeptNo, DName) \" & _  \n                       \"VALUES (:pDeptNo, :pDName)\", conn)  \n  \n  cmd.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\")  \n  cmd.Parameters.Add(\"pDName\", OracleType.NVarChar, 14, \"DName\")  \n  \n  da.InsertCommand = cmd  \n  \n  Return da  \nEnd Function  \n```  \n  \n```csharp  \npublic static OracleDataAdapter CreateCustomerAdapter(OracleConnection conn)  \n{  \n  OracleDataAdapter da = new OracleDataAdapter();  \n  OracleCommand cmd;  \n  \n  // Create the SelectCommand.  \n  \n  cmd = new OracleCommand(\"SELECT * FROM Dept \" +  \n                       \"WHERE DName = :pDName AND Loc = :pLoc\", conn);  \n  \n  cmd.Parameters.Add(\"pDName\", OracleType.NVarChar, 14);  \n  cmd.Parameters.Add(\"pLoc\", OracleType.NVarChar, 13);  \n  \n  da.SelectCommand = cmd;  \n  \n  // Create the InsertCommand.  \n  \n  cmd = new OracleCommand(\"INSERT INTO Dept (DeptNo, DName) \" +  \n                       \"VALUES (:pDeptNo, :pDName)\", conn);  \n  \n  cmd.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\");  \n  cmd.Parameters.Add(\"pDName\", OracleType.NVarChar, 14, \"DName\");  \n  \n  da.InsertCommand = cmd;  \n  \n  return da;  \n}  \n```"
+  syntax:
+    content: public System.Data.OracleClient.OracleCommand InsertCommand { get; set; }
+    return:
+      type: System.Data.OracleClient.OracleCommand
+      description: An <xref href="System.Data.OracleClient.OracleCommand"></xref> used during an update operation to insert records in the database that correspond to new rows in the <xref href="System.Data.DataSet"></xref>.
+  overload: System.Data.OracleClient.OracleDataAdapter.InsertCommand*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleDataAdapter.OnRowUpdated(System.Data.Common.RowUpdatedEventArgs)
+  commentId: M:System.Data.OracleClient.OracleDataAdapter.OnRowUpdated(System.Data.Common.RowUpdatedEventArgs)
+  id: OnRowUpdated(System.Data.Common.RowUpdatedEventArgs)
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: OnRowUpdated(RowUpdatedEventArgs)
+  nameWithType: OracleDataAdapter.OnRowUpdated(RowUpdatedEventArgs)
+  fullName: OracleDataAdapter.OnRowUpdated(RowUpdatedEventArgs)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  syntax:
+    content: protected override void OnRowUpdated (System.Data.Common.RowUpdatedEventArgs value);
+    parameters:
+    - id: value
+      type: System.Data.Common.RowUpdatedEventArgs
+      description: ''
+  overload: System.Data.OracleClient.OracleDataAdapter.OnRowUpdated*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.OnRowUpdating(System.Data.Common.RowUpdatingEventArgs)
+  commentId: M:System.Data.OracleClient.OracleDataAdapter.OnRowUpdating(System.Data.Common.RowUpdatingEventArgs)
+  id: OnRowUpdating(System.Data.Common.RowUpdatingEventArgs)
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: OnRowUpdating(RowUpdatingEventArgs)
+  nameWithType: OracleDataAdapter.OnRowUpdating(RowUpdatingEventArgs)
+  fullName: OracleDataAdapter.OnRowUpdating(RowUpdatingEventArgs)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  syntax:
+    content: protected override void OnRowUpdating (System.Data.Common.RowUpdatingEventArgs value);
+    parameters:
+    - id: value
+      type: System.Data.Common.RowUpdatingEventArgs
+      description: ''
+  overload: System.Data.OracleClient.OracleDataAdapter.OnRowUpdating*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.RowUpdated
+  commentId: E:System.Data.OracleClient.OracleDataAdapter.RowUpdated
+  id: RowUpdated
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: RowUpdated
+  nameWithType: OracleDataAdapter.RowUpdated
+  fullName: OracleDataAdapter.RowUpdated
+  type: Event
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Occurs during an update operation after a command is executed against the database.
+  remarks: "When using the `Update` method, there are two events that occur per data row updated. The order of execution is as follows:  \n  \n1.  The values in the <xref:System.Data.DataRow> are moved to the parameter values.  \n  \n2.  The `OnRowUpdating` event is raised.  \n  \n3.  The command executes.  \n  \n4.  If the `UpdateRowSource` enumeration is set to `FirstReturnedRecord`, the first returned result is placed in the **DataRow**.  \n  \n5.  If there are output parameters, they are placed in the **DataRow**.  \n  \n6.  The `OnRowUpdated` event is raised.  \n  \n7.  `AcceptChanges` is called."
+  syntax:
+    content: public event System.Data.OracleClient.OracleRowUpdatedEventHandler RowUpdated;
+    return:
+      type: System.Data.OracleClient.OracleRowUpdatedEventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleDataAdapter.RowUpdating
+  commentId: E:System.Data.OracleClient.OracleDataAdapter.RowUpdating
+  id: RowUpdating
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: RowUpdating
+  nameWithType: OracleDataAdapter.RowUpdating
+  fullName: OracleDataAdapter.RowUpdating
+  type: Event
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Occurs during <xref href="System.Data.Common.DbDataAdapter.Update(System.Data.DataSet)"></xref> before a command is executed against the data source.
+  remarks: "When using the `Update` method, there are two events that occur per data row updated. The order of execution is as follows:  \n  \n1.  The values in the <xref:System.Data.DataRow> are moved to the parameter values.  \n  \n2.  The `OnRowUpdating` event is raised.  \n  \n3.  The command executes.  \n  \n4.  If the `UpdateRowSource` enumeration is set to `FirstReturnedRecord`, the first returned result is placed in the **DataRow**.  \n  \n5.  If there are output parameters, they are placed in the **DataRow**.  \n  \n6.  The `OnRowUpdated` event is raised.  \n  \n7.  `AcceptChanges` is called."
+  syntax:
+    content: public event System.Data.OracleClient.OracleRowUpdatingEventHandler RowUpdating;
+    return:
+      type: System.Data.OracleClient.OracleRowUpdatingEventHandler
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleDataAdapter.SelectCommand
+  commentId: P:System.Data.OracleClient.OracleDataAdapter.SelectCommand
+  id: SelectCommand
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: SelectCommand
+  nameWithType: OracleDataAdapter.SelectCommand
+  fullName: OracleDataAdapter.SelectCommand
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets an SQL statement or stored procedure used to select records in the database.
+  remarks: "When <xref:System.Data.OracleClient.OracleDataAdapter.SelectCommand%2A> is assigned to a previously created <xref:System.Data.OracleClient.OracleCommand>, the <xref:System.Data.OracleClient.OracleCommand> is not cloned. Instead, the <xref:System.Data.OracleClient.OracleDataAdapter.SelectCommand%2A> maintains a reference to the previously created <xref:System.Data.OracleClient.OracleCommand> object.  \n  \n If <xref:System.Data.OracleClient.OracleDataAdapter.SelectCommand%2A> does not return any rows, no tables are added to the **DataSet**, and no exception is raised."
+  example:
+  - "The following example creates an <xref:System.Data.OracleClient.OracleDataAdapter> and sets the <xref:System.Data.OracleClient.OracleDataAdapter.SelectCommand%2A> and <xref:System.Data.OracleClient.OracleDataAdapter.InsertCommand%2A> properties. It assumes you have already created an <xref:System.Data.OracleClient.OracleConnection> object.  \n  \n```vb  \nPublic Shared Function CreateCustomerAdapter(conn As OracleConnection) As OracleDataAdapter   \n  \n  Dim da As OracleDataAdapter = New OracleDataAdapter()  \n  Dim cmd As OracleCommand  \n  \n  ' Create the SelectCommand.  \n  \n  cmd = New OracleCommand(\"SELECT * FROM Dept \" & _  \n                       \"WHERE DName = :pDName AND Loc = :pLoc\", conn)  \n  \n  cmd.Parameters.Add(\"pDName\", OracleType.NVarChar, 14)  \n  cmd.Parameters.Add(\"pLoc\", OracleType.NVarChar, 13)  \n  \n  da.SelectCommand = cmd  \n  \n  ' Create the InsertCommand.  \n  \n  cmd = New OracleCommand(\"INSERT INTO Dept (DeptNo, DName) \" & _  \n                       \"VALUES (pDeptNo, pDName)\", conn)  \n  \n  cmd.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\")  \n  cmd.Parameters.Add(\"pDName\", OracleType.NVarChar, 14, \"DName\")  \n  \n  da.InsertCommand = cmd  \n  \n  Return da  \nEnd Function  \n```  \n  \n```csharp  \npublic static OracleDataAdapter CreateCustomerAdapter(OracleConnection conn)  \n{  \n  OracleDataAdapter da = new OracleDataAdapter();  \n  OracleCommand cmd;  \n  \n  // Create the SelectCommand.  \n  \n  cmd = new OracleCommand(\"SELECT * FROM Dept \" +  \n                       \"WHERE DName = :pDName AND Loc = :pLoc\", conn);  \n  \n  cmd.Parameters.Add(\"pDName\", OracleType.NVarChar, 14);  \n  cmd.Parameters.Add(\"pLoc\", OracleType.NVarChar, 13);  \n  \n  da.SelectCommand = cmd;  \n  \n  // Create the InsertCommand.  \n  \n  cmd = new OracleCommand(\"INSERT INTO Dept (DeptNo, DName) \" +  \n                       \"VALUES (:pDeptNo, :pDName)\", conn);  \n  \n  cmd.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\");  \n  cmd.Parameters.Add(\"pDName\", OracleType.NVarChar, 14, \"DName\");  \n  \n  da.InsertCommand = cmd;  \n  \n  return da;  \n}  \n```"
+  syntax:
+    content: public System.Data.OracleClient.OracleCommand SelectCommand { get; set; }
+    return:
+      type: System.Data.OracleClient.OracleCommand
+      description: An <xref href="System.Data.OracleClient.OracleCommand"></xref> that is used during a fill operation to select records from database for placement in the <xref href="System.Data.DataSet"></xref>.
+  overload: System.Data.OracleClient.OracleDataAdapter.SelectCommand*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleDataAdapter.TerminateBatching
+  commentId: M:System.Data.OracleClient.OracleDataAdapter.TerminateBatching
+  id: TerminateBatching
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: TerminateBatching()
+  nameWithType: OracleDataAdapter.TerminateBatching()
+  fullName: OracleDataAdapter.TerminateBatching()
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  syntax:
+    content: protected override void TerminateBatching ();
+    parameters: []
+  overload: System.Data.OracleClient.OracleDataAdapter.TerminateBatching*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.UpdateBatchSize
+  commentId: P:System.Data.OracleClient.OracleDataAdapter.UpdateBatchSize
+  id: UpdateBatchSize
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: UpdateBatchSize
+  nameWithType: OracleDataAdapter.UpdateBatchSize
+  fullName: OracleDataAdapter.UpdateBatchSize
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets a value that enables or disables batch processing support, and specifies the number of commands that can be executed in a batch.
+  remarks: "Use the <xref:System.Data.OracleClient.OracleDataAdapter.UpdateBatchSize%2A> property to update a data source with changes from a <xref:System.Data.DataSet>. This can increase application performance by reducing the number of round-trips to the server.  \n  \n Executing an extremely large batch could decrease performance. Therefore, you should test for the optimum batch size setting before you implement your application.  \n  \n An <xref:System.ArgumentOutOfRangeException> is thrown if the value is set to a number less than zero."
+  syntax:
+    content: public override int UpdateBatchSize { get; set; }
+    return:
+      type: System.Int32
+      description: "The number of rows to process per batch.  \n  \n <table><thead><tr><th> Value:  \n  \n </th><th> Effect:  \n  \n </th></tr></thead><tbody><tr><td> 0  \n  \n </td><td> There is no limit on the batch size.  \n  \n </td></tr><tr><td> 1  \n  \n </td><td> Disables batch updating.  \n  \n </td></tr><tr><td> > 1  \n  \n </td><td> Changes are sent using batches of <xref href=\"System.Data.OracleClient.OracleDataAdapter.UpdateBatchSize\"></xref> operations at a time.  \n  \n </td></tr></tbody></table>  \n  \n When setting this to a value other than 1 all the commands associated with the <xref href=\"System.Data.OracleClient.OracleDataAdapter\"></xref> have to have their <xref href=\"System.Data.IDbCommand.UpdatedRowSource\"></xref> property set to `None` or `OutputParameters`. An exception is thrown otherwise."
+  overload: System.Data.OracleClient.OracleDataAdapter.UpdateBatchSize*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleDataAdapter.UpdateCommand
+  commentId: P:System.Data.OracleClient.OracleDataAdapter.UpdateCommand
+  id: UpdateCommand
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: UpdateCommand
+  nameWithType: OracleDataAdapter.UpdateCommand
+  fullName: OracleDataAdapter.UpdateCommand
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets an SQL statement or stored procedure used to update records in the database.
+  remarks: "When <xref:System.Data.OracleClient.OracleDataAdapter.UpdateCommand%2A> is assigned to a previously created <xref:System.Data.OracleClient.OracleCommand>, the <xref:System.Data.OracleClient.OracleCommand> is not cloned. Instead, the <xref:System.Data.OracleClient.OracleDataAdapter.UpdateCommand%2A> maintains a reference to the previously created <xref:System.Data.OracleClient.OracleCommand> object.  \n  \n During an update operation, if <xref:System.Data.OracleClient.OracleDataAdapter.InsertCommand%2A> is not set and primary key information is present in the **DataSet**, you can use the <xref:System.Data.OracleClient.OracleCommandBuilder> class to automatically generate <xref:System.Data.OracleClient.OracleDataAdapter.InsertCommand%2A>, and additional commands needed to reconcile the <xref:System.Data.DataSet> to the database. To do this, set the <xref:System.Data.OracleClient.OracleDataAdapter.SelectCommand%2A> property of the <xref:System.Data.OracleClient.OracleDataAdapter>. The generation logic also requires key column information to be present in the <xref:System.Data.DataSet>. For more information see [Generating Commands with CommandBuilders](~/docs/framework/data/adonet/generating-commands-with-commandbuilders.md).  \n  \n> [!NOTE]\n>  If execution of this command returns rows, these rows may be merged with the <xref:System.Data.DataSet> depending upon how you set the <xref:System.Data.OracleClient.OracleCommand.UpdatedRowSource%2A> property of the <xref:System.Data.OracleClient.OracleCommand> object.  \n  \n When you update a column with the `LONG RAW` data type, an exception is thrown when you enter a value of `NULL` in the column. The Oracle `LONG RAW` data type is a deprecated type in Oracle version 8.0. To avoid this error, use the `BLOB` data type instead of `LONG RAW`."
+  example:
+  - "The following example creates an <xref:System.Data.OracleClient.OracleDataAdapter> and sets the <xref:System.Data.OracleClient.OracleDataAdapter.SelectCommand%2A> and <xref:System.Data.OracleClient.OracleDataAdapter.UpdateCommand%2A> properties. It assumes you have already created an <xref:System.Data.OracleClient.OracleConnection> object.  \n  \n```vb  \nPublic Shared Function CreateCustomerAdapter(conn As OracleConnection) As OracleDataAdapter   \n  \n  Dim da As OracleDataAdapter = New OracleDataAdapter()  \n  Dim cmd As OracleCommand  \n  Dim parm As OracleParameter  \n  \n  ' Create the SelectCommand.  \n  \n  cmd = New OracleCommand(\"SELECT * FROM Dept \" & _  \n                       \"WHERE DName = pDName AND Loc = pLoc\", conn)  \n  \n  cmd.Parameters.Add(\"pDName\", OracleType.NVarChar, 14)  \n  cmd.Parameters.Add(\"pLoc\", OracleType.NVarChar, 13)  \n  \n  da.SelectCommand = cmd  \n  \n  ' Create the UpdateCommand.  \n  \n  cmd = New OracleCommand(\"UPDATE Dept SET DeptNo = pDeptNo, DName = pDName \" & _  \n                       \"WHERE DeptNo = poldDeptNo\", conn)  \n  \n  cmd.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\")  \n  cmd.Parameters.Add(\"pDName\", OracleType.NVarChar, 14, \"DName\")  \n  \n  parm = cmd.Parameters.Add(\"poldDeptNo\", OracleType.Number, 2, \"DeptNo\")  \n  parm.SourceVersion = DataRowVersion.Original  \n  \n  da.UpdateCommand = cmd  \n  \n  Return da  \nEnd Function  \n```  \n  \n```csharp  \npublic static OracleDataAdapter CreateCustomerAdapter(OracleConnection conn)  \n{  \n  OracleDataAdapter da = new OracleDataAdapter();  \n  OracleCommand cmd;  \n  OracleParameter parm;  \n  \n  // Create the SelectCommand.  \n  \n  cmd = new OracleCommand(\"SELECT * FROM Dept \" +  \n                       \"WHERE DName = pDName AND Loc = pLoc\", conn);  \n  \n  cmd.Parameters.Add(\"pDName\", OracleType.NVarChar, 14);  \n  cmd.Parameters.Add(\"pLoc\", OracleType.NVarChar, 13);  \n  \n  da.SelectCommand = cmd;  \n  \n  // Create the UpdateCommand.  \n  \n  cmd = new OracleCommand(\"UPDATE Dept SET DeptNo = pDeptNo, DName = pDName \" +  \n                       \"WHERE DeptNo = poldDeptNo\", conn);  \n  \n  cmd.Parameters.Add(\"pDeptNo\", OracleType.Number, 2, \"DeptNo\");  \n  cmd.Parameters.Add(\"pDName\", OracleType.NVarChar, 14, \"DName\");  \n  \n  parm = cmd.Parameters.Add(\"poldDeptNo\", OracleType.Number, 2, \"DeptNo\");  \n  parm.SourceVersion = DataRowVersion.Original;  \n  \n  da.UpdateCommand = cmd;  \n  \n  return da;  \n}  \n```"
+  syntax:
+    content: public System.Data.OracleClient.OracleCommand UpdateCommand { get; set; }
+    return:
+      type: System.Data.OracleClient.OracleCommand
+      description: An <xref href="System.Data.OracleClient.OracleCommand"></xref> used during an update operation to update records in the database that correspond to modified rows in the <xref href="System.Data.DataSet"></xref>.
+  overload: System.Data.OracleClient.OracleDataAdapter.UpdateCommand*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#DeleteCommand
+  commentId: P:System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#DeleteCommand
+  id: System#Data#IDbDataAdapter#DeleteCommand
+  isEii: true
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: IDbDataAdapter.DeleteCommand
+  nameWithType: OracleDataAdapter.IDbDataAdapter.DeleteCommand
+  fullName: OracleDataAdapter.IDbDataAdapter.DeleteCommand
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: For a description of this member, see <xref href="System.Data.IDbDataAdapter.DeleteCommand"></xref>.
+  remarks: This member is an explicit interface member implementation. It can be used only when the <xref:System.Data.OracleClient.OracleDataAdapter> instance is cast to an <xref:System.Data.IDbDataAdapter> interface.
+  syntax:
+    content: System.Data.IDbCommand System.Data.IDbDataAdapter.DeleteCommand { get; set; }
+    return:
+      type: System.Data.IDbCommand
+      description: A string representing the command.
+  overload: System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#DeleteCommand*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#InsertCommand
+  commentId: P:System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#InsertCommand
+  id: System#Data#IDbDataAdapter#InsertCommand
+  isEii: true
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: IDbDataAdapter.InsertCommand
+  nameWithType: OracleDataAdapter.IDbDataAdapter.InsertCommand
+  fullName: OracleDataAdapter.IDbDataAdapter.InsertCommand
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: For a description of this member, see <xref href="System.Data.IDbDataAdapter.InsertCommand"></xref>.
+  remarks: This member is an explicit interface member implementation. It can be used only when the <xref:System.Data.OracleClient.OracleDataAdapter> instance is cast to an <xref:System.Data.IDbDataAdapter> interface.
+  syntax:
+    content: System.Data.IDbCommand System.Data.IDbDataAdapter.InsertCommand { get; set; }
+    return:
+      type: System.Data.IDbCommand
+      description: A string representing the command.
+  overload: System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#InsertCommand*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#SelectCommand
+  commentId: P:System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#SelectCommand
+  id: System#Data#IDbDataAdapter#SelectCommand
+  isEii: true
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: IDbDataAdapter.SelectCommand
+  nameWithType: OracleDataAdapter.IDbDataAdapter.SelectCommand
+  fullName: OracleDataAdapter.IDbDataAdapter.SelectCommand
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: For a description of this member, see <xref href="System.Data.IDbDataAdapter.SelectCommand"></xref>.
+  remarks: This member is an explicit interface member implementation. It can be used only when the <xref:System.Data.OracleClient.OracleDataAdapter> instance is cast to an <xref:System.Data.IDbDataAdapter> interface.
+  syntax:
+    content: System.Data.IDbCommand System.Data.IDbDataAdapter.SelectCommand { get; set; }
+    return:
+      type: System.Data.IDbCommand
+      description: A string representing the command.
+  overload: System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#SelectCommand*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#UpdateCommand
+  commentId: P:System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#UpdateCommand
+  id: System#Data#IDbDataAdapter#UpdateCommand
+  isEii: true
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: IDbDataAdapter.UpdateCommand
+  nameWithType: OracleDataAdapter.IDbDataAdapter.UpdateCommand
+  fullName: OracleDataAdapter.IDbDataAdapter.UpdateCommand
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: For a description of this member, see <xref href="System.Data.IDbDataAdapter.UpdateCommand"></xref>.
+  remarks: This member is an explicit interface member implementation. It can be used only when the <xref:System.Data.OracleClient.OracleDataAdapter> instance is cast to an <xref:System.Data.IDbDataAdapter> interface.
+  syntax:
+    content: System.Data.IDbCommand System.Data.IDbDataAdapter.UpdateCommand { get; set; }
+    return:
+      type: System.Data.IDbCommand
+      description: A string representing the command.
+  overload: System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#UpdateCommand*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleDataAdapter.System#ICloneable#Clone
+  commentId: M:System.Data.OracleClient.OracleDataAdapter.System#ICloneable#Clone
+  id: System#ICloneable#Clone
+  isEii: true
+  parent: System.Data.OracleClient.OracleDataAdapter
+  langs:
+  - csharp
+  name: ICloneable.Clone()
+  nameWithType: OracleDataAdapter.ICloneable.Clone()
+  fullName: OracleDataAdapter.ICloneable.Clone()
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: For a description of this member, see <xref href="System.ICloneable.Clone"></xref>.
+  remarks: This member is an explicit interface member implementation. It can be used only when the <xref:System.Data.OracleClient.OracleDataAdapter> instance is cast to an <xref:System.ICloneable> interface.
+  syntax:
+    content: object ICloneable.Clone ();
+    parameters: []
+    return:
+      type: System.Object
+      description: A new object that is a copy of this instance.
+  overload: System.Data.OracleClient.OracleDataAdapter.System#ICloneable#Clone*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+references:
+- uid: System.Data.Common.DbDataAdapter
+  parent: System.Data.Common
+  isExternal: false
+  name: DbDataAdapter
+  nameWithType: DbDataAdapter
+  fullName: System.Data.Common.DbDataAdapter
+- uid: System.Data.OracleClient.OracleDataAdapter.#ctor
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: OracleDataAdapter()
+  nameWithType: OracleDataAdapter.OracleDataAdapter()
+  fullName: OracleDataAdapter.OracleDataAdapter()
+- uid: System.Data.OracleClient.OracleDataAdapter.#ctor(System.Data.OracleClient.OracleCommand)
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: OracleDataAdapter(OracleCommand)
+  nameWithType: OracleDataAdapter.OracleDataAdapter(OracleCommand)
+  fullName: OracleDataAdapter.OracleDataAdapter(OracleCommand)
+- uid: System.Data.OracleClient.OracleCommand
+  parent: System.Data.OracleClient
+  isExternal: false
+  name: OracleCommand
+  nameWithType: OracleCommand
+  fullName: System.Data.OracleClient.OracleCommand
+- uid: System.Data.OracleClient.OracleDataAdapter.#ctor(System.String,System.Data.OracleClient.OracleConnection)
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: OracleDataAdapter(String, OracleConnection)
+  nameWithType: OracleDataAdapter.OracleDataAdapter(String, OracleConnection)
+  fullName: OracleDataAdapter.OracleDataAdapter(String, OracleConnection)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Data.OracleClient.OracleConnection
+  parent: System.Data.OracleClient
+  isExternal: false
+  name: OracleConnection
+  nameWithType: OracleConnection
+  fullName: System.Data.OracleClient.OracleConnection
+- uid: System.Data.OracleClient.OracleDataAdapter.#ctor(System.String,System.String)
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: OracleDataAdapter(String, String)
+  nameWithType: OracleDataAdapter.OracleDataAdapter(String, String)
+  fullName: OracleDataAdapter.OracleDataAdapter(String, String)
+- uid: System.Data.OracleClient.OracleDataAdapter.AddToBatch(System.Data.IDbCommand)
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: AddToBatch(IDbCommand)
+  nameWithType: OracleDataAdapter.AddToBatch(IDbCommand)
+  fullName: OracleDataAdapter.AddToBatch(IDbCommand)
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Data.IDbCommand
+  parent: System.Data
+  isExternal: false
+  name: IDbCommand
+  nameWithType: IDbCommand
+  fullName: System.Data.IDbCommand
+- uid: System.Data.OracleClient.OracleDataAdapter.ClearBatch
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: ClearBatch()
+  nameWithType: OracleDataAdapter.ClearBatch()
+  fullName: OracleDataAdapter.ClearBatch()
+- uid: System.Data.OracleClient.OracleDataAdapter.CreateRowUpdatedEvent(System.Data.DataRow,System.Data.IDbCommand,System.Data.StatementType,System.Data.Common.DataTableMapping)
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: CreateRowUpdatedEvent(DataRow, IDbCommand, StatementType, DataTableMapping)
+  nameWithType: OracleDataAdapter.CreateRowUpdatedEvent(DataRow, IDbCommand, StatementType, DataTableMapping)
+  fullName: OracleDataAdapter.CreateRowUpdatedEvent(DataRow, IDbCommand, StatementType, DataTableMapping)
+- uid: System.Data.Common.RowUpdatedEventArgs
+  parent: System.Data.Common
+  isExternal: false
+  name: RowUpdatedEventArgs
+  nameWithType: RowUpdatedEventArgs
+  fullName: System.Data.Common.RowUpdatedEventArgs
+- uid: System.Data.DataRow
+  parent: System.Data
+  isExternal: false
+  name: DataRow
+  nameWithType: DataRow
+  fullName: System.Data.DataRow
+- uid: System.Data.StatementType
+  parent: System.Data
+  isExternal: false
+  name: StatementType
+  nameWithType: StatementType
+  fullName: System.Data.StatementType
+- uid: System.Data.Common.DataTableMapping
+  parent: System.Data.Common
+  isExternal: false
+  name: DataTableMapping
+  nameWithType: DataTableMapping
+  fullName: System.Data.Common.DataTableMapping
+- uid: System.Data.OracleClient.OracleDataAdapter.CreateRowUpdatingEvent(System.Data.DataRow,System.Data.IDbCommand,System.Data.StatementType,System.Data.Common.DataTableMapping)
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: CreateRowUpdatingEvent(DataRow, IDbCommand, StatementType, DataTableMapping)
+  nameWithType: OracleDataAdapter.CreateRowUpdatingEvent(DataRow, IDbCommand, StatementType, DataTableMapping)
+  fullName: OracleDataAdapter.CreateRowUpdatingEvent(DataRow, IDbCommand, StatementType, DataTableMapping)
+- uid: System.Data.Common.RowUpdatingEventArgs
+  parent: System.Data.Common
+  isExternal: false
+  name: RowUpdatingEventArgs
+  nameWithType: RowUpdatingEventArgs
+  fullName: System.Data.Common.RowUpdatingEventArgs
+- uid: System.Data.OracleClient.OracleDataAdapter.DeleteCommand
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: DeleteCommand
+  nameWithType: OracleDataAdapter.DeleteCommand
+  fullName: OracleDataAdapter.DeleteCommand
+- uid: System.Data.OracleClient.OracleDataAdapter.ExecuteBatch
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: ExecuteBatch()
+  nameWithType: OracleDataAdapter.ExecuteBatch()
+  fullName: OracleDataAdapter.ExecuteBatch()
+- uid: System.Data.OracleClient.OracleDataAdapter.GetBatchedParameter(System.Int32,System.Int32)
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: GetBatchedParameter(Int32, Int32)
+  nameWithType: OracleDataAdapter.GetBatchedParameter(Int32, Int32)
+  fullName: OracleDataAdapter.GetBatchedParameter(Int32, Int32)
+- uid: System.Data.IDataParameter
+  parent: System.Data
+  isExternal: false
+  name: IDataParameter
+  nameWithType: IDataParameter
+  fullName: System.Data.IDataParameter
+- uid: System.Data.OracleClient.OracleDataAdapter.GetBatchedRecordsAffected(System.Int32,System.Int32@,System.Exception@)
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: GetBatchedRecordsAffected(Int32, Int32, Exception)
+  nameWithType: OracleDataAdapter.GetBatchedRecordsAffected(Int32, Int32, Exception)
+  fullName: OracleDataAdapter.GetBatchedRecordsAffected(Int32, Int32, Exception)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Exception
+  parent: System
+  isExternal: false
+  name: Exception
+  nameWithType: Exception
+  fullName: System.Exception
+- uid: System.Data.OracleClient.OracleDataAdapter.InitializeBatching
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: InitializeBatching()
+  nameWithType: OracleDataAdapter.InitializeBatching()
+  fullName: OracleDataAdapter.InitializeBatching()
+- uid: System.Data.OracleClient.OracleDataAdapter.InsertCommand
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: InsertCommand
+  nameWithType: OracleDataAdapter.InsertCommand
+  fullName: OracleDataAdapter.InsertCommand
+- uid: System.Data.OracleClient.OracleDataAdapter.OnRowUpdated(System.Data.Common.RowUpdatedEventArgs)
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: OnRowUpdated(RowUpdatedEventArgs)
+  nameWithType: OracleDataAdapter.OnRowUpdated(RowUpdatedEventArgs)
+  fullName: OracleDataAdapter.OnRowUpdated(RowUpdatedEventArgs)
+- uid: System.Data.OracleClient.OracleDataAdapter.OnRowUpdating(System.Data.Common.RowUpdatingEventArgs)
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: OnRowUpdating(RowUpdatingEventArgs)
+  nameWithType: OracleDataAdapter.OnRowUpdating(RowUpdatingEventArgs)
+  fullName: OracleDataAdapter.OnRowUpdating(RowUpdatingEventArgs)
+- uid: System.Data.OracleClient.OracleDataAdapter.RowUpdated
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: RowUpdated
+  nameWithType: OracleDataAdapter.RowUpdated
+  fullName: OracleDataAdapter.RowUpdated
+- uid: System.Data.OracleClient.OracleRowUpdatedEventHandler
+  parent: System.Data.OracleClient
+  isExternal: false
+  name: OracleRowUpdatedEventHandler
+  nameWithType: OracleRowUpdatedEventHandler
+  fullName: System.Data.OracleClient.OracleRowUpdatedEventHandler
+- uid: System.Data.OracleClient.OracleDataAdapter.RowUpdating
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: RowUpdating
+  nameWithType: OracleDataAdapter.RowUpdating
+  fullName: OracleDataAdapter.RowUpdating
+- uid: System.Data.OracleClient.OracleRowUpdatingEventHandler
+  parent: System.Data.OracleClient
+  isExternal: false
+  name: OracleRowUpdatingEventHandler
+  nameWithType: OracleRowUpdatingEventHandler
+  fullName: System.Data.OracleClient.OracleRowUpdatingEventHandler
+- uid: System.Data.OracleClient.OracleDataAdapter.SelectCommand
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: SelectCommand
+  nameWithType: OracleDataAdapter.SelectCommand
+  fullName: OracleDataAdapter.SelectCommand
+- uid: System.Data.OracleClient.OracleDataAdapter.TerminateBatching
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: TerminateBatching()
+  nameWithType: OracleDataAdapter.TerminateBatching()
+  fullName: OracleDataAdapter.TerminateBatching()
+- uid: System.Data.OracleClient.OracleDataAdapter.UpdateBatchSize
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: UpdateBatchSize
+  nameWithType: OracleDataAdapter.UpdateBatchSize
+  fullName: OracleDataAdapter.UpdateBatchSize
+- uid: System.Data.OracleClient.OracleDataAdapter.UpdateCommand
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: UpdateCommand
+  nameWithType: OracleDataAdapter.UpdateCommand
+  fullName: OracleDataAdapter.UpdateCommand
+- uid: System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#DeleteCommand
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: IDbDataAdapter.DeleteCommand
+  nameWithType: OracleDataAdapter.IDbDataAdapter.DeleteCommand
+  fullName: OracleDataAdapter.IDbDataAdapter.DeleteCommand
+- uid: System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#InsertCommand
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: IDbDataAdapter.InsertCommand
+  nameWithType: OracleDataAdapter.IDbDataAdapter.InsertCommand
+  fullName: OracleDataAdapter.IDbDataAdapter.InsertCommand
+- uid: System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#SelectCommand
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: IDbDataAdapter.SelectCommand
+  nameWithType: OracleDataAdapter.IDbDataAdapter.SelectCommand
+  fullName: OracleDataAdapter.IDbDataAdapter.SelectCommand
+- uid: System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#UpdateCommand
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: IDbDataAdapter.UpdateCommand
+  nameWithType: OracleDataAdapter.IDbDataAdapter.UpdateCommand
+  fullName: OracleDataAdapter.IDbDataAdapter.UpdateCommand
+- uid: System.Data.OracleClient.OracleDataAdapter.System#ICloneable#Clone
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: ICloneable.Clone()
+  nameWithType: OracleDataAdapter.ICloneable.Clone()
+  fullName: OracleDataAdapter.ICloneable.Clone()
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Data.OracleClient.OracleDataAdapter.#ctor*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: OracleDataAdapter
+  nameWithType: OracleDataAdapter.OracleDataAdapter
+  fullName: OracleDataAdapter.OracleDataAdapter
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.AddToBatch*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: AddToBatch
+  nameWithType: OracleDataAdapter.AddToBatch
+  fullName: OracleDataAdapter.AddToBatch
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.ClearBatch*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: ClearBatch
+  nameWithType: OracleDataAdapter.ClearBatch
+  fullName: OracleDataAdapter.ClearBatch
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.CreateRowUpdatedEvent*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: CreateRowUpdatedEvent
+  nameWithType: OracleDataAdapter.CreateRowUpdatedEvent
+  fullName: OracleDataAdapter.CreateRowUpdatedEvent
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.CreateRowUpdatingEvent*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: CreateRowUpdatingEvent
+  nameWithType: OracleDataAdapter.CreateRowUpdatingEvent
+  fullName: OracleDataAdapter.CreateRowUpdatingEvent
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.DeleteCommand*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: DeleteCommand
+  nameWithType: OracleDataAdapter.DeleteCommand
+  fullName: OracleDataAdapter.DeleteCommand
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.ExecuteBatch*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: ExecuteBatch
+  nameWithType: OracleDataAdapter.ExecuteBatch
+  fullName: OracleDataAdapter.ExecuteBatch
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.GetBatchedParameter*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: GetBatchedParameter
+  nameWithType: OracleDataAdapter.GetBatchedParameter
+  fullName: OracleDataAdapter.GetBatchedParameter
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.GetBatchedRecordsAffected*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: GetBatchedRecordsAffected
+  nameWithType: OracleDataAdapter.GetBatchedRecordsAffected
+  fullName: OracleDataAdapter.GetBatchedRecordsAffected
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.InitializeBatching*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: InitializeBatching
+  nameWithType: OracleDataAdapter.InitializeBatching
+  fullName: OracleDataAdapter.InitializeBatching
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.InsertCommand*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: InsertCommand
+  nameWithType: OracleDataAdapter.InsertCommand
+  fullName: OracleDataAdapter.InsertCommand
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.OnRowUpdated*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: OnRowUpdated
+  nameWithType: OracleDataAdapter.OnRowUpdated
+  fullName: OracleDataAdapter.OnRowUpdated
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.OnRowUpdating*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: OnRowUpdating
+  nameWithType: OracleDataAdapter.OnRowUpdating
+  fullName: OracleDataAdapter.OnRowUpdating
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.SelectCommand*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: SelectCommand
+  nameWithType: OracleDataAdapter.SelectCommand
+  fullName: OracleDataAdapter.SelectCommand
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.TerminateBatching*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: TerminateBatching
+  nameWithType: OracleDataAdapter.TerminateBatching
+  fullName: OracleDataAdapter.TerminateBatching
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.UpdateBatchSize*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: UpdateBatchSize
+  nameWithType: OracleDataAdapter.UpdateBatchSize
+  fullName: OracleDataAdapter.UpdateBatchSize
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.UpdateCommand*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: UpdateCommand
+  nameWithType: OracleDataAdapter.UpdateCommand
+  fullName: OracleDataAdapter.UpdateCommand
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#DeleteCommand*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: System.Data.IDbDataAdapter.DeleteCommand
+  nameWithType: OracleDataAdapter.System.Data.IDbDataAdapter.DeleteCommand
+  fullName: OracleDataAdapter.System.Data.IDbDataAdapter.DeleteCommand
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#InsertCommand*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: System.Data.IDbDataAdapter.InsertCommand
+  nameWithType: OracleDataAdapter.System.Data.IDbDataAdapter.InsertCommand
+  fullName: OracleDataAdapter.System.Data.IDbDataAdapter.InsertCommand
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#SelectCommand*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: System.Data.IDbDataAdapter.SelectCommand
+  nameWithType: OracleDataAdapter.System.Data.IDbDataAdapter.SelectCommand
+  fullName: OracleDataAdapter.System.Data.IDbDataAdapter.SelectCommand
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.System#Data#IDbDataAdapter#UpdateCommand*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: System.Data.IDbDataAdapter.UpdateCommand
+  nameWithType: OracleDataAdapter.System.Data.IDbDataAdapter.UpdateCommand
+  fullName: OracleDataAdapter.System.Data.IDbDataAdapter.UpdateCommand
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Data.OracleClient.OracleDataAdapter.System#ICloneable#Clone*
+  parent: System.Data.OracleClient.OracleDataAdapter
+  isExternal: false
+  name: System.ICloneable.Clone
+  nameWithType: OracleDataAdapter.System.ICloneable.Clone
+  fullName: OracleDataAdapter.System.ICloneable.Clone
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleDataAdapter.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.ComponentModel.Component.ToString
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: ToString()
+  nameWithType: Component.ToString()
+  fullName: Component.ToString()
+- uid: System.MarshalByRefObject.CreateObjRef(System.Type)
+  parent: System.MarshalByRefObject
+  isExternal: false
+  name: CreateObjRef(Type)
+  nameWithType: MarshalByRefObject.CreateObjRef(Type)
+  fullName: MarshalByRefObject.CreateObjRef(Type)
+- uid: System.MarshalByRefObject.GetLifetimeService
+  parent: System.MarshalByRefObject
+  isExternal: false
+  name: GetLifetimeService()
+  nameWithType: MarshalByRefObject.GetLifetimeService()
+  fullName: MarshalByRefObject.GetLifetimeService()
+- uid: System.MarshalByRefObject.InitializeLifetimeService
+  parent: System.MarshalByRefObject
+  isExternal: false
+  name: InitializeLifetimeService()
+  nameWithType: MarshalByRefObject.InitializeLifetimeService()
+  fullName: MarshalByRefObject.InitializeLifetimeService()
+- uid: System.MarshalByRefObject.MemberwiseClone(System.Boolean)
+  parent: System.MarshalByRefObject
+  isExternal: false
+  name: MemberwiseClone(Boolean)
+  nameWithType: MarshalByRefObject.MemberwiseClone(Boolean)
+  fullName: MarshalByRefObject.MemberwiseClone(Boolean)
+- uid: System.ComponentModel.Component.CanRaiseEvents
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: CanRaiseEvents
+  nameWithType: Component.CanRaiseEvents
+  fullName: Component.CanRaiseEvents
+- uid: System.ComponentModel.Component.Container
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: Container
+  nameWithType: Component.Container
+  fullName: Component.Container
+- uid: System.ComponentModel.Component.DesignMode
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: DesignMode
+  nameWithType: Component.DesignMode
+  fullName: Component.DesignMode
+- uid: System.ComponentModel.Component.Dispose
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: Dispose()
+  nameWithType: Component.Dispose()
+  fullName: Component.Dispose()
+- uid: System.Data.Common.DbDataAdapter.Dispose(System.Boolean)
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: Dispose(Boolean)
+  nameWithType: DbDataAdapter.Dispose(Boolean)
+  fullName: DbDataAdapter.Dispose(Boolean)
+- uid: System.ComponentModel.Component.Disposed
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: Disposed
+  nameWithType: Component.Disposed
+  fullName: Component.Disposed
+- uid: System.ComponentModel.Component.Events
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: Events
+  nameWithType: Component.Events
+  fullName: Component.Events
+- uid: System.ComponentModel.Component.GetService(System.Type)
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: GetService(Type)
+  nameWithType: Component.GetService(Type)
+  fullName: Component.GetService(Type)
+- uid: System.ComponentModel.Component.Site
+  parent: System.ComponentModel.Component
+  isExternal: false
+  name: Site
+  nameWithType: Component.Site
+  fullName: Component.Site
+- uid: System.Data.Common.DataAdapter.AcceptChangesDuringFill
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: AcceptChangesDuringFill
+  nameWithType: DataAdapter.AcceptChangesDuringFill
+  fullName: DataAdapter.AcceptChangesDuringFill
+- uid: System.Data.Common.DataAdapter.AcceptChangesDuringUpdate
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: AcceptChangesDuringUpdate
+  nameWithType: DataAdapter.AcceptChangesDuringUpdate
+  fullName: DataAdapter.AcceptChangesDuringUpdate
+- uid: System.Data.Common.DataAdapter.CloneInternals
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: CloneInternals()
+  nameWithType: DataAdapter.CloneInternals()
+  fullName: DataAdapter.CloneInternals()
+- uid: System.Data.Common.DataAdapter.ContinueUpdateOnError
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: ContinueUpdateOnError
+  nameWithType: DataAdapter.ContinueUpdateOnError
+  fullName: DataAdapter.ContinueUpdateOnError
+- uid: System.Data.Common.DataAdapter.CreateTableMappings
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: CreateTableMappings()
+  nameWithType: DataAdapter.CreateTableMappings()
+  fullName: DataAdapter.CreateTableMappings()
+- uid: System.Data.Common.DbDataAdapter.Fill(System.Data.DataSet)
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: Fill(DataSet)
+  nameWithType: DbDataAdapter.Fill(DataSet)
+  fullName: DbDataAdapter.Fill(DataSet)
+- uid: System.Data.Common.DataAdapter.Fill(System.Data.DataTable,System.Data.IDataReader)
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: Fill(DataTable, IDataReader)
+  nameWithType: DataAdapter.Fill(DataTable, IDataReader)
+  fullName: DataAdapter.Fill(DataTable, IDataReader)
+- uid: System.Data.Common.DataAdapter.Fill(System.Data.DataTable[],System.Data.IDataReader,System.Int32,System.Int32)
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: Fill(DataTable[], IDataReader, Int32, Int32)
+  nameWithType: DataAdapter.Fill(DataTable[], IDataReader, Int32, Int32)
+  fullName: DataAdapter.Fill(DataTable[], IDataReader, Int32, Int32)
+- uid: System.Data.Common.DataAdapter.Fill(System.Data.DataSet,System.String,System.Data.IDataReader,System.Int32,System.Int32)
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: Fill(DataSet, String, IDataReader, Int32, Int32)
+  nameWithType: DataAdapter.Fill(DataSet, String, IDataReader, Int32, Int32)
+  fullName: DataAdapter.Fill(DataSet, String, IDataReader, Int32, Int32)
+- uid: System.Data.Common.DataAdapter.FillError
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: FillError
+  nameWithType: DataAdapter.FillError
+  fullName: DataAdapter.FillError
+- uid: System.Data.Common.DataAdapter.FillLoadOption
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: FillLoadOption
+  nameWithType: DataAdapter.FillLoadOption
+  fullName: DataAdapter.FillLoadOption
+- uid: System.Data.Common.DataAdapter.FillSchema(System.Data.DataSet,System.Data.SchemaType,System.String,System.Data.IDataReader)
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: FillSchema(DataSet, SchemaType, String, IDataReader)
+  nameWithType: DataAdapter.FillSchema(DataSet, SchemaType, String, IDataReader)
+  fullName: DataAdapter.FillSchema(DataSet, SchemaType, String, IDataReader)
+- uid: System.Data.Common.DbDataAdapter.FillSchema(System.Data.DataSet,System.Data.SchemaType)
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: FillSchema(DataSet, SchemaType)
+  nameWithType: DbDataAdapter.FillSchema(DataSet, SchemaType)
+  fullName: DbDataAdapter.FillSchema(DataSet, SchemaType)
+- uid: System.Data.Common.DataAdapter.FillSchema(System.Data.DataTable,System.Data.SchemaType,System.Data.IDataReader)
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: FillSchema(DataTable, SchemaType, IDataReader)
+  nameWithType: DataAdapter.FillSchema(DataTable, SchemaType, IDataReader)
+  fullName: DataAdapter.FillSchema(DataTable, SchemaType, IDataReader)
+- uid: System.Data.Common.DbDataAdapter.GetFillParameters
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: GetFillParameters()
+  nameWithType: DbDataAdapter.GetFillParameters()
+  fullName: DbDataAdapter.GetFillParameters()
+- uid: System.Data.Common.DataAdapter.HasTableMappings
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: HasTableMappings()
+  nameWithType: DataAdapter.HasTableMappings()
+  fullName: DataAdapter.HasTableMappings()
+- uid: System.Data.Common.DataAdapter.MissingMappingAction
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: MissingMappingAction
+  nameWithType: DataAdapter.MissingMappingAction
+  fullName: DataAdapter.MissingMappingAction
+- uid: System.Data.Common.DataAdapter.MissingSchemaAction
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: MissingSchemaAction
+  nameWithType: DataAdapter.MissingSchemaAction
+  fullName: DataAdapter.MissingSchemaAction
+- uid: System.Data.Common.DataAdapter.OnFillError(System.Data.FillErrorEventArgs)
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: OnFillError(FillErrorEventArgs)
+  nameWithType: DataAdapter.OnFillError(FillErrorEventArgs)
+  fullName: DataAdapter.OnFillError(FillErrorEventArgs)
+- uid: System.Data.Common.DataAdapter.ResetFillLoadOption
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: ResetFillLoadOption()
+  nameWithType: DataAdapter.ResetFillLoadOption()
+  fullName: DataAdapter.ResetFillLoadOption()
+- uid: System.Data.Common.DataAdapter.ReturnProviderSpecificTypes
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: ReturnProviderSpecificTypes
+  nameWithType: DataAdapter.ReturnProviderSpecificTypes
+  fullName: DataAdapter.ReturnProviderSpecificTypes
+- uid: System.Data.Common.DataAdapter.ShouldSerializeAcceptChangesDuringFill
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: ShouldSerializeAcceptChangesDuringFill()
+  nameWithType: DataAdapter.ShouldSerializeAcceptChangesDuringFill()
+  fullName: DataAdapter.ShouldSerializeAcceptChangesDuringFill()
+- uid: System.Data.Common.DataAdapter.ShouldSerializeFillLoadOption
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: ShouldSerializeFillLoadOption()
+  nameWithType: DataAdapter.ShouldSerializeFillLoadOption()
+  fullName: DataAdapter.ShouldSerializeFillLoadOption()
+- uid: System.Data.Common.DataAdapter.ShouldSerializeTableMappings
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: ShouldSerializeTableMappings()
+  nameWithType: DataAdapter.ShouldSerializeTableMappings()
+  fullName: DataAdapter.ShouldSerializeTableMappings()
+- uid: System.Data.Common.DataAdapter.TableMappings
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: TableMappings
+  nameWithType: DataAdapter.TableMappings
+  fullName: DataAdapter.TableMappings
+- uid: System.Data.Common.DbDataAdapter.Update(System.Data.DataSet)
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: Update(DataSet)
+  nameWithType: DbDataAdapter.Update(DataSet)
+  fullName: DbDataAdapter.Update(DataSet)
+- uid: System.Data.Common.DataAdapter.System#Data#IDataAdapter#TableMappings
+  parent: System.Data.Common.DataAdapter
+  isExternal: false
+  name: IDataAdapter.TableMappings
+  nameWithType: DataAdapter.IDataAdapter.TableMappings
+  fullName: DataAdapter.IDataAdapter.TableMappings
+- uid: System.Data.Common.DbDataAdapter.DefaultSourceTableName
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: DefaultSourceTableName
+  nameWithType: DbDataAdapter.DefaultSourceTableName
+  fullName: DbDataAdapter.DefaultSourceTableName
+- uid: System.Data.Common.DbDataAdapter.Fill(System.Data.DataSet,System.Int32,System.Int32,System.String,System.Data.IDbCommand,System.Data.CommandBehavior)
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: Fill(DataSet, Int32, Int32, String, IDbCommand, CommandBehavior)
+  nameWithType: DbDataAdapter.Fill(DataSet, Int32, Int32, String, IDbCommand, CommandBehavior)
+  fullName: DbDataAdapter.Fill(DataSet, Int32, Int32, String, IDbCommand, CommandBehavior)
+- uid: System.Data.Common.DbDataAdapter.Fill(System.Data.DataTable[],System.Int32,System.Int32,System.Data.IDbCommand,System.Data.CommandBehavior)
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: Fill(DataTable[], Int32, Int32, IDbCommand, CommandBehavior)
+  nameWithType: DbDataAdapter.Fill(DataTable[], Int32, Int32, IDbCommand, CommandBehavior)
+  fullName: DbDataAdapter.Fill(DataTable[], Int32, Int32, IDbCommand, CommandBehavior)
+- uid: System.Data.Common.DbDataAdapter.Fill(System.Data.DataSet,System.Int32,System.Int32,System.String)
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: Fill(DataSet, Int32, Int32, String)
+  nameWithType: DbDataAdapter.Fill(DataSet, Int32, Int32, String)
+  fullName: DbDataAdapter.Fill(DataSet, Int32, Int32, String)
+- uid: System.Data.Common.DbDataAdapter.Fill(System.Int32,System.Int32,System.Data.DataTable[])
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: Fill(Int32, Int32, DataTable[])
+  nameWithType: DbDataAdapter.Fill(Int32, Int32, DataTable[])
+  fullName: DbDataAdapter.Fill(Int32, Int32, DataTable[])
+- uid: System.Data.Common.DbDataAdapter.Fill(System.Data.DataSet,System.String)
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: Fill(DataSet, String)
+  nameWithType: DbDataAdapter.Fill(DataSet, String)
+  fullName: DbDataAdapter.Fill(DataSet, String)
+- uid: System.Data.Common.DbDataAdapter.Fill(System.Data.DataTable)
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: Fill(DataTable)
+  nameWithType: DbDataAdapter.Fill(DataTable)
+  fullName: DbDataAdapter.Fill(DataTable)
+- uid: System.Data.Common.DbDataAdapter.Fill(System.Data.DataTable,System.Data.IDbCommand,System.Data.CommandBehavior)
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: Fill(DataTable, IDbCommand, CommandBehavior)
+  nameWithType: DbDataAdapter.Fill(DataTable, IDbCommand, CommandBehavior)
+  fullName: DbDataAdapter.Fill(DataTable, IDbCommand, CommandBehavior)
+- uid: System.Data.Common.DbDataAdapter.FillCommandBehavior
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: FillCommandBehavior
+  nameWithType: DbDataAdapter.FillCommandBehavior
+  fullName: DbDataAdapter.FillCommandBehavior
+- uid: System.Data.Common.DbDataAdapter.FillSchema(System.Data.DataSet,System.Data.SchemaType,System.Data.IDbCommand,System.String,System.Data.CommandBehavior)
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: FillSchema(DataSet, SchemaType, IDbCommand, String, CommandBehavior)
+  nameWithType: DbDataAdapter.FillSchema(DataSet, SchemaType, IDbCommand, String, CommandBehavior)
+  fullName: DbDataAdapter.FillSchema(DataSet, SchemaType, IDbCommand, String, CommandBehavior)
+- uid: System.Data.Common.DbDataAdapter.FillSchema(System.Data.DataSet,System.Data.SchemaType,System.String)
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: FillSchema(DataSet, SchemaType, String)
+  nameWithType: DbDataAdapter.FillSchema(DataSet, SchemaType, String)
+  fullName: DbDataAdapter.FillSchema(DataSet, SchemaType, String)
+- uid: System.Data.Common.DbDataAdapter.FillSchema(System.Data.DataTable,System.Data.SchemaType,System.Data.IDbCommand,System.Data.CommandBehavior)
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: FillSchema(DataTable, SchemaType, IDbCommand, CommandBehavior)
+  nameWithType: DbDataAdapter.FillSchema(DataTable, SchemaType, IDbCommand, CommandBehavior)
+  fullName: DbDataAdapter.FillSchema(DataTable, SchemaType, IDbCommand, CommandBehavior)
+- uid: System.Data.Common.DbDataAdapter.FillSchema(System.Data.DataTable,System.Data.SchemaType)
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: FillSchema(DataTable, SchemaType)
+  nameWithType: DbDataAdapter.FillSchema(DataTable, SchemaType)
+  fullName: DbDataAdapter.FillSchema(DataTable, SchemaType)
+- uid: System.Data.Common.DbDataAdapter.Update(System.Data.DataTable)
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: Update(DataTable)
+  nameWithType: DbDataAdapter.Update(DataTable)
+  fullName: DbDataAdapter.Update(DataTable)
+- uid: System.Data.Common.DbDataAdapter.Update(System.Data.DataRow[])
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: Update(DataRow[])
+  nameWithType: DbDataAdapter.Update(DataRow[])
+  fullName: DbDataAdapter.Update(DataRow[])
+- uid: System.Data.Common.DbDataAdapter.Update(System.Data.DataSet,System.String)
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: Update(DataSet, String)
+  nameWithType: DbDataAdapter.Update(DataSet, String)
+  fullName: DbDataAdapter.Update(DataSet, String)
+- uid: System.Data.Common.DbDataAdapter.Update(System.Data.DataRow[],System.Data.Common.DataTableMapping)
+  parent: System.Data.Common.DbDataAdapter
+  isExternal: false
+  name: Update(DataRow[], DataTableMapping)
+  nameWithType: DbDataAdapter.Update(DataRow[], DataTableMapping)
+  fullName: DbDataAdapter.Update(DataRow[], DataTableMapping)
+- uid: System.ICloneable
+  parent: System
+  isExternal: false
+  name: ICloneable
+  nameWithType: ICloneable
+  fullName: System.ICloneable

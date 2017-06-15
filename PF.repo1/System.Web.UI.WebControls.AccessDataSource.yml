@@ -1,0 +1,1811 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Web.UI.WebControls.AccessDataSource
+  commentId: T:System.Web.UI.WebControls.AccessDataSource
+  id: AccessDataSource
+  children:
+  - System.Web.UI.WebControls.AccessDataSource.#ctor
+  - System.Web.UI.WebControls.AccessDataSource.#ctor(System.String,System.String)
+  - System.Web.UI.WebControls.AccessDataSource.ConnectionString
+  - System.Web.UI.WebControls.AccessDataSource.CreateDataSourceView(System.String)
+  - System.Web.UI.WebControls.AccessDataSource.DataFile
+  - System.Web.UI.WebControls.AccessDataSource.GetDbProviderFactory
+  - System.Web.UI.WebControls.AccessDataSource.ProviderName
+  - System.Web.UI.WebControls.AccessDataSource.SqlCacheDependency
+  langs:
+  - csharp
+  name: AccessDataSource
+  nameWithType: AccessDataSource
+  fullName: System.Web.UI.WebControls.AccessDataSource
+  type: Class
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Represents a Microsoft Access database for use with data-bound controls.
+  remarks: "The <xref:System.Web.UI.WebControls.AccessDataSource> class is a data source control that works with Microsoft Access databases. Like its base class, <xref:System.Web.UI.WebControls.SqlDataSource>, the <xref:System.Web.UI.WebControls.AccessDataSource> control uses SQL queries to perform data retrieval.  \n  \n One of the unique characteristics of the <xref:System.Web.UI.WebControls.AccessDataSource> control is that you do not set the <xref:System.Web.UI.WebControls.AccessDataSource.ConnectionString%2A> property. All you need to do is set the location of the Access (.mdb) file in the <xref:System.Web.UI.WebControls.AccessDataSource.DataFile%2A> property and the <xref:System.Web.UI.WebControls.AccessDataSource> takes care of the underlying connection to the database. You should place Access databases in the App_Data directory of the Web site and reference them by a relative path (for example, `~/App_Data/Northwind.mdb`). This location offers additional security for data files, because they are not served if they are requested directly by the client Web browser.  \n  \n The <xref:System.Web.UI.WebControls.AccessDataSource> class does not support connecting to Access databases that are protected by a user name or password, because you cannot set the <xref:System.Web.UI.WebControls.AccessDataSource.ConnectionString%2A> property. If your Access database is protected by a user name or password, use the <xref:System.Web.UI.WebControls.SqlDataSource> control to connect to it so that you can specify a complete connection string.  \n  \n You bind data-bound controls to an <xref:System.Web.UI.WebControls.AccessDataSource> using the `DataSourceID` property of the data-bound control. For more information about binding a data-bound control to data source controls, see [Binding to Data Using a Data Source Control](http://msdn.microsoft.com/en-us/e41adfff-8fb8-449e-9cd1-9bd49788c5f7).  \n  \n Because the <xref:System.Web.UI.WebControls.AccessDataSource> control is specific to only one database product, it always uses the same provider—the <xref:System.Data.OleDb?displayProperty=fullName> .NET data provider. For this reason, the <xref:System.Web.UI.WebControls.AccessDataSource.ProviderName%2A> property is read-only. When using the <xref:System.Data.OleDb?displayProperty=fullName> provider, the order of the parameters in a parameterized SQL statement is significant; any parameterized SQL queries that you specify in the <xref:System.Web.UI.WebControls.SqlDataSource.SelectCommand%2A>, <xref:System.Web.UI.WebControls.SqlDataSourceView.UpdateCommand%2A>, <xref:System.Web.UI.WebControls.SqlDataSourceView.InsertCommand%2A>, and <xref:System.Web.UI.WebControls.SqlDataSourceView.DeleteCommand%2A> properties must match the order of any <xref:System.Web.UI.WebControls.Parameter> objects that are in the corresponding parameter collection. If no parameter collection is specified on the <xref:System.Web.UI.WebControls.AccessDataSource>, the order of parameters that are supplied to these operations must match the order in which they appear in the underlying SQL statement. For more information, see [Using Parameters with the SqlDataSource Control](http://msdn.microsoft.com/library/403ff44a-dd0b-484d-968e-dcd1dcd4c295).  \n  \n The <xref:System.Web.UI.WebControls.AccessDataSource> control supports the same caching behavior that its base class supports. Use caching to increase the performance of pages that use the <xref:System.Web.UI.WebControls.AccessDataSource> control. For more information about data source caching, see [Caching Data Using Data Source Controls](http://msdn.microsoft.com/en-us/8f534a06-3136-4048-bb2e-6563a8238d15).  \n  \n The following table describes the features of the <xref:System.Web.UI.WebControls.AccessDataSource> control.  \n  \n|Capability|Requirements|  \n|----------------|------------------|  \n|Sorting|Set the <xref:System.Web.UI.WebControls.SqlDataSource.DataSourceMode%2A> property to the <xref:System.Web.UI.WebControls.SqlDataSourceMode.DataSet> value.|  \n|Filtering|Set the <xref:System.Web.UI.WebControls.SqlDataSource.FilterExpression%2A> property to a filtering expression used to filter the data when the <xref:System.Web.UI.WebControls.SqlDataSource.Select%2A> method is called.|  \n|Paging|The <xref:System.Web.UI.WebControls.AccessDataSource> does not support direct paging operations on an Access database. A data-bound control, such as the <xref:System.Web.UI.WebControls.GridView>, can page over the items returned by the <xref:System.Web.UI.WebControls.AccessDataSource>, if the <xref:System.Web.UI.WebControls.SqlDataSource.DataSourceMode%2A> property is set to the <xref:System.Web.UI.WebControls.SqlDataSourceMode.DataSet> value.|  \n|Updating|Set the <xref:System.Web.UI.WebControls.SqlDataSource.UpdateCommand%2A> property to a SQL statement used to update data. This statement is typically parameterized.|  \n|Deleting|Set the <xref:System.Web.UI.WebControls.SqlDataSource.DeleteCommand%2A> property to a SQL statement used to delete data. This statement is typically parameterized.|  \n|Inserting|Set the <xref:System.Web.UI.WebControls.SqlDataSource.InsertCommand%2A> property to a SQL statement used to insert data. This statement is typically parameterized.|  \n|Caching|Set the <xref:System.Web.UI.WebControls.SqlDataSource.DataSourceMode%2A> property to the <xref:System.Web.UI.WebControls.SqlDataSourceMode.DataSet> value, the <xref:System.Web.UI.WebControls.SqlDataSource.EnableCaching%2A> property to `true`, and the <xref:System.Web.UI.WebControls.SqlDataSource.CacheDuration%2A> and <xref:System.Web.UI.WebControls.SqlDataSource.CacheExpirationPolicy%2A> properties according to the caching behavior you want for your cached data.|  \n  \n As with all data source controls, the <xref:System.Web.UI.WebControls.AccessDataSource> control is associated with a strongly typed data source view class. Just as the <xref:System.Web.UI.WebControls.AccessDataSource> control extends the <xref:System.Web.UI.WebControls.SqlDataSource> control, the <xref:System.Web.UI.WebControls.AccessDataSourceView> class extends the <xref:System.Web.UI.WebControls.SqlDataSourceView> class. The <xref:System.Web.UI.WebControls.AccessDataSourceView> class overrides a few of the <xref:System.Web.UI.WebControls.SqlDataSourceView> methods to use the <xref:System.Data.OleDb?displayProperty=fullName> .NET data provider.  \n  \n There is no visual rendering of the <xref:System.Web.UI.WebControls.AccessDataSource> control; it is implemented as a control to enable declarative persistence and to permit, optionally, participation in state management. As a result, you cannot set properties that support visual features, such as the <xref:System.Web.UI.DataSourceControl.EnableTheming%2A> and <xref:System.Web.UI.DataSourceControl.SkinID%2A> properties.  \n  \n<a name=\"DeclarativeSyntax\"></a>   \n## Declarative Syntax  \n  \n```  \n<asp:AccessDataSource  \n    CacheDuration=\"string|Infinite\"  \n    CacheExpirationPolicy=\"Absolute|Sliding\"  \n    CacheKeyDependency=\"string\"  \n    CancelSelectOnNullParameter=\"True|False\"  \n    ConflictDetection=\"OverwriteChanges|CompareAllValues\"  \n    DataFile=\"uri\"  \n    DataSourceMode=\"DataReader|DataSet\"  \n    DeleteCommand=\"string\"  \n    DeleteCommandType=\"Text|StoredProcedure\"  \n    EnableCaching=\"True|False\"  \n    EnableTheming=\"True|False\"  \n    EnableViewState=\"True|False\"  \n    FilterExpression=\"string\"  \n    ID=\"string\"  \n    InsertCommand=\"string\"  \n    InsertCommandType=\"Text|StoredProcedure\"  \n    OldValuesParameterFormatString=\"string\"  \n    OnDataBinding=\"DataBinding event handler\"  \n    OnDeleted=\"Deleted event handler\"  \n    OnDeleting=\"Deleting event handler\"  \n    OnDisposed=\"Disposed event handler\"  \n    OnFiltering=\"Filtering event handler\"  \n    OnInit=\"Init event handler\"  \n    OnInserted=\"Inserted event handler\"  \n    OnInserting=\"Inserting event handler\"  \n    OnLoad=\"Load event handler\"  \n    OnPreRender=\"PreRender event handler\"  \n    OnSelected=\"Selected event handler\"  \n    OnSelecting=\"Selecting event handler\"  \n    OnUnload=\"Unload event handler\"  \n    OnUpdated=\"Updated event handler\"  \n    OnUpdating=\"Updating event handler\"  \n    runat=\"server\"  \n    SelectCommand=\"string\"  \n    SelectCommandType=\"Text|StoredProcedure\"  \n    SkinID=\"string\"  \n    SortParameterName=\"string\"  \n    UpdateCommand=\"string\"  \n    UpdateCommandType=\"Text|StoredProcedure\"  \n    Visible=\"True|False\"  \n>  \n        <DeleteParameters>  \n                <asp:ControlParameter  \n                    ControlID=\"string\"  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|  \n                        ReturnValue\"  \n                    Name=\"string\"  \n                    PropertyName=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:CookieParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    CookieName=\"string\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|  \n                        ReturnValue\"  \n                    Name=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:FormParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    FormField=\"string\"  \n                    Name=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:Parameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64  \n                        |Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:ProfileParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    PropertyName=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:QueryStringParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    QueryStringField=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:SessionParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    SessionField=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n        </DeleteParameters>  \n        <FilterParameters>  \n                <asp:ControlParameter  \n                    ControlID=\"string\"  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    PropertyName=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:CookieParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    CookieName=\"string\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:FormParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    FormField=\"string\"  \n                    Name=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:Parameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:ProfileParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    PropertyName=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:QueryStringParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    QueryStringField=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:SessionParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    SessionField=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n        </FilterParameters>  \n        <InsertParameters>  \n                <asp:ControlParameter  \n                    ControlID=\"string\"  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    PropertyName=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:CookieParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    CookieName=\"string\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:FormParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    FormField=\"string\"  \n                    Name=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:Parameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:ProfileParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    PropertyName=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:QueryStringParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    QueryStringField=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:SessionParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    SessionField=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n        </InsertParameters>  \n        <SelectParameters>  \n                <asp:ControlParameter  \n                    ControlID=\"string\"  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    PropertyName=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:CookieParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    CookieName=\"string\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:FormParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    FormField=\"string\"  \n                    Name=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:Parameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:ProfileParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    PropertyName=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:QueryStringParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    QueryStringField=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:SessionParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    SessionField=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n        </SelectParameters>  \n        <UpdateParameters>  \n                <asp:ControlParameter  \n                    ControlID=\"string\"  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    PropertyName=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:CookieParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    CookieName=\"string\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:FormParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    FormField=\"string\"  \n                    Name=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:Parameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:ProfileParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    PropertyName=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                       Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:QueryStringParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    QueryStringField=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n                <asp:SessionParameter  \n                    ConvertEmptyStringToNull=\"True|False\"  \n                    DefaultValue=\"string\"  \n                    Direction=\"Input|Output|InputOutput|ReturnValue\"  \n                    Name=\"string\"  \n                    SessionField=\"string\"  \n                    Size=\"integer\"  \n                    Type=\"Empty|Object|DBNull|Boolean|Char|SByte|  \n                        Byte|Int16|UInt16|Int32|UInt32|Int64|UInt64|  \n                        Single|Double|Decimal|DateTime|String\"  \n                />  \n        </UpdateParameters>  \n</asp:AccessDataSource>  \n```"
+  example:
+  - "The following code example demonstrates a common display and update scenario with the <xref:System.Web.UI.WebControls.GridView> control. The <xref:System.Web.UI.WebControls.SqlDataSource.SelectCommand%2A> property is set to an appropriate SQL query, and data from the Northwind database is displayed in the <xref:System.Web.UI.WebControls.GridView> control. Because a <xref:System.Web.UI.WebControls.SqlDataSource.UpdateCommand%2A> property is also specified and the <xref:System.Web.UI.WebControls.GridView.AutoGenerateEditButton%2A> property is set to `true`, you can edit and update the records with no additional code. The <xref:System.Web.UI.WebControls.GridView> control handles adding parameters to the <xref:System.Web.UI.WebControls.SqlDataSource.UpdateParameters%2A> collection; the <xref:System.Web.UI.WebControls.GridView> control passes the parameter values for the <xref:System.Web.UI.WebControls.BoundField> objects first, followed by the values of fields that are specified by the <xref:System.Web.UI.WebControls.GridView.DataKeyNames%2A> property. The <xref:System.Web.UI.WebControls.GridView> calls the <xref:System.Web.UI.WebControls.SqlDataSource.Update%2A> method automatically. If you want to order the parameters, explicitly, specify an <xref:System.Web.UI.WebControls.SqlDataSource.UpdateParameters%2A> collection on the <xref:System.Web.UI.WebControls.AccessDataSource>.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.WebControls.AccessDataSource_5access#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.UI.WebControls.AccessDataSource_5access/CS/access5cs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.WebControls.AccessDataSource_5access#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.UI.WebControls.AccessDataSource_5access/VB/access5vb.aspx#1)]  -->"
+  syntax:
+    content: >-
+      [System.Drawing.ToolboxBitmap(typeof(System.Web.UI.WebControls.AccessDataSource))]
+
+      public class AccessDataSource : System.Web.UI.WebControls.SqlDataSource
+  inheritance:
+  - System.Object
+  - System.Web.UI.Control
+  - System.Web.UI.DataSourceControl
+  - System.Web.UI.WebControls.SqlDataSource
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  - System.Web.UI.Control.Adapter
+  - System.Web.UI.Control.AddedControl(System.Web.UI.Control,System.Int32)
+  - System.Web.UI.Control.AddParsedSubObject(System.Object)
+  - System.Web.UI.Control.AppRelativeTemplateSourceDirectory
+  - System.Web.UI.Control.BeginRenderTracing(System.IO.TextWriter,System.Object)
+  - System.Web.UI.Control.BindingContainer
+  - System.Web.UI.Control.BuildProfileTree(System.String,System.Boolean)
+  - System.Web.UI.Control.ChildControlsCreated
+  - System.Web.UI.Control.ClearCachedClientID
+  - System.Web.UI.Control.ClearChildControlState
+  - System.Web.UI.Control.ClearChildState
+  - System.Web.UI.Control.ClearChildViewState
+  - System.Web.UI.Control.ClearEffectiveClientIDMode
+  - System.Web.UI.Control.ClientIDSeparator
+  - System.Web.UI.Control.Context
+  - System.Web.UI.Control.CreateChildControls
+  - System.Web.UI.Control.DataBind
+  - System.Web.UI.Control.DataBind(System.Boolean)
+  - System.Web.UI.Control.DataBindChildren
+  - System.Web.UI.Control.DataBinding
+  - System.Web.UI.Control.DataItemContainer
+  - System.Web.UI.Control.DataKeysContainer
+  - System.Web.UI.Control.DesignMode
+  - System.Web.UI.Control.Dispose
+  - System.Web.UI.Control.Disposed
+  - System.Web.UI.Control.EnableViewState
+  - System.Web.UI.Control.EndRenderTracing(System.IO.TextWriter,System.Object)
+  - System.Web.UI.Control.EnsureChildControls
+  - System.Web.UI.Control.EnsureID
+  - System.Web.UI.Control.Events
+  - System.Web.UI.Control.FindControl(System.String,System.Int32)
+  - System.Web.UI.Control.GetDesignModeState
+  - System.Web.UI.Control.GetRouteUrl(System.Object)
+  - System.Web.UI.Control.GetRouteUrl(System.String,System.Object)
+  - System.Web.UI.Control.GetRouteUrl(System.String,System.Web.Routing.RouteValueDictionary)
+  - System.Web.UI.Control.GetRouteUrl(System.Web.Routing.RouteValueDictionary)
+  - System.Web.UI.Control.GetUniqueIDRelativeTo(System.Web.UI.Control)
+  - System.Web.UI.Control.HasChildViewState
+  - System.Web.UI.Control.HasEvents
+  - System.Web.UI.Control.ID
+  - System.Web.UI.Control.IdSeparator
+  - System.Web.UI.Control.Init
+  - System.Web.UI.Control.IsChildControlStateCleared
+  - System.Web.UI.Control.IsLiteralContent
+  - System.Web.UI.Control.IsTrackingViewState
+  - System.Web.UI.Control.IsViewStateEnabled
+  - System.Web.UI.Control.Load
+  - System.Web.UI.Control.LoadControlState(System.Object)
+  - System.Web.UI.Control.LoadViewStateByID
+  - System.Web.UI.Control.MapPathSecure(System.String)
+  - System.Web.UI.Control.NamingContainer
+  - System.Web.UI.Control.OnBubbleEvent(System.Object,System.EventArgs)
+  - System.Web.UI.Control.OnDataBinding(System.EventArgs)
+  - System.Web.UI.Control.OnLoad(System.EventArgs)
+  - System.Web.UI.Control.OnPreRender(System.EventArgs)
+  - System.Web.UI.Control.OnUnload(System.EventArgs)
+  - System.Web.UI.Control.OpenFile(System.String)
+  - System.Web.UI.Control.Page
+  - System.Web.UI.Control.Parent
+  - System.Web.UI.Control.PreRender
+  - System.Web.UI.Control.RaiseBubbleEvent(System.Object,System.EventArgs)
+  - System.Web.UI.Control.RemovedControl(System.Web.UI.Control)
+  - System.Web.UI.Control.Render(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.Control.RenderChildren(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter,System.Web.UI.Adapters.ControlAdapter)
+  - System.Web.UI.Control.RenderingCompatibility
+  - System.Web.UI.Control.ResolveAdapter
+  - System.Web.UI.Control.ResolveClientUrl(System.String)
+  - System.Web.UI.Control.ResolveUrl(System.String)
+  - System.Web.UI.Control.SaveControlState
+  - System.Web.UI.Control.SetDesignModeState(System.Collections.IDictionary)
+  - System.Web.UI.Control.SetRenderMethodDelegate(System.Web.UI.RenderMethod)
+  - System.Web.UI.Control.SetTraceData(System.Object,System.Object)
+  - System.Web.UI.Control.SetTraceData(System.Object,System.Object,System.Object)
+  - System.Web.UI.Control.Site
+  - System.Web.UI.Control.System#Web#UI#IControlBuilderAccessor#ControlBuilder
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#GetDesignModeState
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetDesignModeState(System.Collections.IDictionary)
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetOwnerControl(System.Web.UI.Control)
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#UserData
+  - System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#DataBindings
+  - System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#HasDataBindings
+  - System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#Expressions
+  - System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#HasExpressions
+  - System.Web.UI.Control.System#Web#UI#IParserAccessor#AddParsedSubObject(System.Object)
+  - System.Web.UI.Control.TemplateControl
+  - System.Web.UI.Control.TemplateSourceDirectory
+  - System.Web.UI.Control.UniqueID
+  - System.Web.UI.Control.Unload
+  - System.Web.UI.Control.ValidateRequestMode
+  - System.Web.UI.Control.ViewState
+  - System.Web.UI.Control.ViewStateIgnoresCase
+  - System.Web.UI.Control.ViewStateMode
+  - System.Web.UI.DataSourceControl.ApplyStyleSheetSkin(System.Web.UI.Page)
+  - System.Web.UI.DataSourceControl.ClientID
+  - System.Web.UI.DataSourceControl.ClientIDMode
+  - System.Web.UI.DataSourceControl.Controls
+  - System.Web.UI.DataSourceControl.CreateControlCollection
+  - System.Web.UI.DataSourceControl.EnableTheming
+  - System.Web.UI.DataSourceControl.FindControl(System.String)
+  - System.Web.UI.DataSourceControl.Focus
+  - System.Web.UI.DataSourceControl.HasControls
+  - System.Web.UI.DataSourceControl.RaiseDataSourceChangedEvent(System.EventArgs)
+  - System.Web.UI.DataSourceControl.RenderControl(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.DataSourceControl.SkinID
+  - System.Web.UI.DataSourceControl.System#ComponentModel#IListSource#ContainsListCollection
+  - System.Web.UI.DataSourceControl.System#ComponentModel#IListSource#GetList
+  - System.Web.UI.DataSourceControl.System#Web#UI#IDataSource#GetView(System.String)
+  - System.Web.UI.DataSourceControl.System#Web#UI#IDataSource#GetViewNames
+  - System.Web.UI.DataSourceControl.Visible
+  - System.Web.UI.WebControls.SqlDataSource.CacheDuration
+  - System.Web.UI.WebControls.SqlDataSource.CacheExpirationPolicy
+  - System.Web.UI.WebControls.SqlDataSource.CacheKeyDependency
+  - System.Web.UI.WebControls.SqlDataSource.CancelSelectOnNullParameter
+  - System.Web.UI.WebControls.SqlDataSource.ConflictDetection
+  - System.Web.UI.WebControls.SqlDataSource.DataSourceMode
+  - System.Web.UI.WebControls.SqlDataSource.Delete
+  - System.Web.UI.WebControls.SqlDataSource.DeleteCommand
+  - System.Web.UI.WebControls.SqlDataSource.DeleteCommandType
+  - System.Web.UI.WebControls.SqlDataSource.Deleted
+  - System.Web.UI.WebControls.SqlDataSource.DeleteParameters
+  - System.Web.UI.WebControls.SqlDataSource.Deleting
+  - System.Web.UI.WebControls.SqlDataSource.EnableCaching
+  - System.Web.UI.WebControls.SqlDataSource.FilterExpression
+  - System.Web.UI.WebControls.SqlDataSource.Filtering
+  - System.Web.UI.WebControls.SqlDataSource.FilterParameters
+  - System.Web.UI.WebControls.SqlDataSource.GetView(System.String)
+  - System.Web.UI.WebControls.SqlDataSource.GetViewNames
+  - System.Web.UI.WebControls.SqlDataSource.Insert
+  - System.Web.UI.WebControls.SqlDataSource.InsertCommand
+  - System.Web.UI.WebControls.SqlDataSource.InsertCommandType
+  - System.Web.UI.WebControls.SqlDataSource.Inserted
+  - System.Web.UI.WebControls.SqlDataSource.Inserting
+  - System.Web.UI.WebControls.SqlDataSource.InsertParameters
+  - System.Web.UI.WebControls.SqlDataSource.LoadViewState(System.Object)
+  - System.Web.UI.WebControls.SqlDataSource.OldValuesParameterFormatString
+  - System.Web.UI.WebControls.SqlDataSource.OnInit(System.EventArgs)
+  - System.Web.UI.WebControls.SqlDataSource.SaveViewState
+  - System.Web.UI.WebControls.SqlDataSource.Select(System.Web.UI.DataSourceSelectArguments)
+  - System.Web.UI.WebControls.SqlDataSource.SelectCommand
+  - System.Web.UI.WebControls.SqlDataSource.SelectCommandType
+  - System.Web.UI.WebControls.SqlDataSource.Selected
+  - System.Web.UI.WebControls.SqlDataSource.Selecting
+  - System.Web.UI.WebControls.SqlDataSource.SelectParameters
+  - System.Web.UI.WebControls.SqlDataSource.SortParameterName
+  - System.Web.UI.WebControls.SqlDataSource.TrackViewState
+  - System.Web.UI.WebControls.SqlDataSource.Update
+  - System.Web.UI.WebControls.SqlDataSource.UpdateCommand
+  - System.Web.UI.WebControls.SqlDataSource.UpdateCommandType
+  - System.Web.UI.WebControls.SqlDataSource.Updated
+  - System.Web.UI.WebControls.SqlDataSource.UpdateParameters
+  - System.Web.UI.WebControls.SqlDataSource.Updating
+  extensionMethods:
+  - System.Web.DynamicData.DynamicDataExtensions.FindDataSourceControl(System.Web.UI.Control)
+  - System.Web.DynamicData.DynamicDataExtensions.FindFieldTemplate(System.Web.UI.Control,System.String)
+  - System.Web.DynamicData.DynamicDataExtensions.FindMetaTable(System.Web.UI.Control)
+  - System.Web.DynamicData.DynamicDataExtensions.GetDefaultValues(System.Web.UI.IDataSource)
+  - System.Web.DynamicData.DynamicDataExtensions.GetMetaTable(System.Web.UI.IDataSource)
+  - System.Web.DynamicData.DynamicDataExtensions.TryGetMetaTable(System.Web.UI.IDataSource,System.Web.DynamicData.MetaTable@)
+  attributes:
+  - type: System.Drawing.ToolboxBitmapAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AccessDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AccessDataSource.#ctor
+  commentId: M:System.Web.UI.WebControls.AccessDataSource.#ctor
+  id: '#ctor'
+  parent: System.Web.UI.WebControls.AccessDataSource
+  langs:
+  - csharp
+  name: AccessDataSource()
+  nameWithType: AccessDataSource.AccessDataSource()
+  fullName: AccessDataSource.AccessDataSource()
+  type: Constructor
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Initializes a new instance of the <xref href="System.Web.UI.WebControls.AccessDataSource"></xref> class.
+  remarks: ''
+  example:
+  - "The following code example demonstrates how to use the <xref:System.Web.UI.WebControls.AccessDataSource.%23ctor%2A> constructor to create a new <xref:System.Web.UI.WebControls.AccessDataSource> data source control and bind a <xref:System.Web.UI.WebControls.CheckBoxList> control to data in a Microsoft Access database.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.WebControls.AccessDataSource_6access#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.UI.WebControls.AccessDataSource_6access/CS/access6cs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.WebControls.AccessDataSource_6access#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.UI.WebControls.AccessDataSource_6access/VB/access6vb.aspx#1)]  -->"
+  syntax:
+    content: public AccessDataSource ();
+    parameters: []
+  overload: System.Web.UI.WebControls.AccessDataSource.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AccessDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AccessDataSource.#ctor(System.String,System.String)
+  commentId: M:System.Web.UI.WebControls.AccessDataSource.#ctor(System.String,System.String)
+  id: '#ctor(System.String,System.String)'
+  parent: System.Web.UI.WebControls.AccessDataSource
+  langs:
+  - csharp
+  name: AccessDataSource(String, String)
+  nameWithType: AccessDataSource.AccessDataSource(String, String)
+  fullName: AccessDataSource.AccessDataSource(String, String)
+  type: Constructor
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Initializes a new instance of the <xref href="System.Web.UI.WebControls.AccessDataSource"></xref> class with the specified data file path and **Select** command.
+  remarks: ''
+  example:
+  - "The following code example demonstrates how to use the <xref:System.Web.UI.WebControls.AccessDataSource.%23ctor%2A> constructor to create a new <xref:System.Web.UI.WebControls.AccessDataSource> data source control and bind a <xref:System.Web.UI.WebControls.CheckBoxList> control to data in a Microsoft Access database.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.WebControls.AccessDataSource_7access#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.UI.WebControls.AccessDataSource_7access/CS/access7cs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.WebControls.AccessDataSource_7access#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.UI.WebControls.AccessDataSource_7access/VB/access7vb.aspx#1)]  -->"
+  syntax:
+    content: public AccessDataSource (string dataFile, string selectCommand);
+    parameters:
+    - id: dataFile
+      type: System.String
+      description: The location of the Access .mdb file. The location can be relative to the current Web form's folder, an absolute physical path, or a virtual path.
+    - id: selectCommand
+      type: System.String
+      description: The SQL query used to retrieve data from the Access database. If the SQL query is a parameterized SQL string, add <xref href="System.Web.UI.WebControls.Parameter"></xref> objects to the <xref href="System.Web.UI.WebControls.SqlDataSource.SelectParameters"></xref> collection.
+  overload: System.Web.UI.WebControls.AccessDataSource.#ctor*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>dataFile</code> is `null` or an empty string.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AccessDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AccessDataSource.ConnectionString
+  commentId: P:System.Web.UI.WebControls.AccessDataSource.ConnectionString
+  id: ConnectionString
+  parent: System.Web.UI.WebControls.AccessDataSource
+  langs:
+  - csharp
+  name: ConnectionString
+  nameWithType: AccessDataSource.ConnectionString
+  fullName: AccessDataSource.ConnectionString
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets the connection string that is used to connect to the Microsoft Access database.
+  remarks: The <xref:System.Web.UI.WebControls.AccessDataSource> control can be used only with the <xref:System.Data.OleDb?displayProperty=fullName> .NET data provider, and the connection string that <xref:System.Web.UI.WebControls.AccessDataSource> uses is specific to this provider. Therefore, the <xref:System.Web.UI.WebControls.AccessDataSource> control exposes connection string settings, such as the <xref:System.Web.UI.WebControls.AccessDataSource.DataFile%2A> property, as a property and constructs a connection string at run time using the values of the <xref:System.Web.UI.WebControls.AccessDataSource.ConnectionString%2A> property, if set.
+  example:
+  - "The following code example demonstrates how to display the <xref:System.Web.UI.WebControls.AccessDataSource.ConnectionString%2A> property of the <xref:System.Web.UI.WebControls.AccessDataSource> control in an ASP.NET Web page.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.WebControls.AccessDataSource_24access#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.UI.WebControls.AccessDataSource_24access/CS/access24cs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.WebControls.AccessDataSource_24access#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.UI.WebControls.AccessDataSource_24access/VB/access24vb.aspx#1)]  -->"
+  syntax:
+    content: >-
+      [System.ComponentModel.Browsable(false)]
+
+      public override string ConnectionString { get; set; }
+    return:
+      type: System.String
+      description: The OLE DB connection string that the <xref href="System.Web.UI.WebControls.AccessDataSource"></xref> control uses to connect to an Access database, through the <xref href="System.Data.OleDb"></xref> .NET data provider.
+  overload: System.Web.UI.WebControls.AccessDataSource.ConnectionString*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: An attempt was made to set the <xref href="System.Web.UI.WebControls.AccessDataSource.ConnectionString"></xref> property.
+  attributes:
+  - type: System.ComponentModel.BrowsableAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AccessDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AccessDataSource.CreateDataSourceView(System.String)
+  commentId: M:System.Web.UI.WebControls.AccessDataSource.CreateDataSourceView(System.String)
+  id: CreateDataSourceView(System.String)
+  parent: System.Web.UI.WebControls.AccessDataSource
+  langs:
+  - csharp
+  name: CreateDataSourceView(String)
+  nameWithType: AccessDataSource.CreateDataSourceView(String)
+  fullName: AccessDataSource.CreateDataSourceView(String)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Creates a data source view object that is associated with the data source control.
+  remarks: Classes that derive from the <xref:System.Web.UI.WebControls.AccessDataSource> class can override the <xref:System.Web.UI.WebControls.AccessDataSource.CreateDataSourceView%2A> method to return strongly typed data source view objects.
+  syntax:
+    content: protected override System.Web.UI.WebControls.SqlDataSourceView CreateDataSourceView (string viewName);
+    parameters:
+    - id: viewName
+      type: System.String
+      description: The name of the data source view.
+    return:
+      type: System.Web.UI.WebControls.SqlDataSourceView
+      description: An <xref href="System.Web.UI.WebControls.AccessDataSourceView"></xref> object that is associated with the <xref href="System.Web.UI.WebControls.AccessDataSource"></xref> instance.
+  overload: System.Web.UI.WebControls.AccessDataSource.CreateDataSourceView*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AccessDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AccessDataSource.DataFile
+  commentId: P:System.Web.UI.WebControls.AccessDataSource.DataFile
+  id: DataFile
+  parent: System.Web.UI.WebControls.AccessDataSource
+  langs:
+  - csharp
+  name: DataFile
+  nameWithType: AccessDataSource.DataFile
+  fullName: AccessDataSource.DataFile
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets or sets the location of the Microsoft Access .mdb file.
+  remarks: "The <xref:System.Web.UI.WebControls.AccessDataSource.DataFile%2A> property is a virtual, absolute, or UNC directory path to the Access .mdb file that the <xref:System.Web.UI.WebControls.AccessDataSource> control represents. If only the name of the file is entered, this indicates that the .mdb file is found in the same directory as the currently executing Web Forms page or code. Relative paths with both forward and backward slashes are supported. For example, `\"./test/test/Northwind.mdb\"` maps to the same path as `\".\\test\\test\\Northwind.mdb\"` and `\"test/test/Northwind.mdb\"`. UNC paths, such as `\"\\\\mymachine\\somedatadirectory\\Northwind.mdb\"`, are also supported. Although absolute physical paths are supported, you should avoid using them because they can complicate deployment.  \n  \n## Configuring Permissions for an Access Database  \n An important aspect of working with an Access .mdb file is to configure permissions properly. When a Web application uses an Access database, the application must have Read permission to the .mdb file so that it can access the data. In addition, the application must have Write permission to the folder containing the .mdb file. Write permission is required because Access creates an additional file with the extension .ldb in which it maintains information about database locks for concurrent users. The .ldb file is created at run time.  \n  \n By default, ASP.NET Web applications run in the context of a local machine account called ASPNET (for Microsoft Windows 2000 and Microsoft Windows XP), or in the context of the NETWORK SERVICE account (for Microsoft Windows Server 2003). For example, for Windows 2000 or Windows XP, if the Web server is named MyServer, ASP.NET applications on the MyServer computer run in the context of the local account MyServer\\ASPNET.  \n  \n Therefore, to use an Access database in an ASP.NET Web application, you must configure the folder containing the Access database to have both Read and Write permissions.  \n  \n When you create a Web site in the Microsoft Visual Web Developer Web development tool, Visual Web Developer creates a folder named App_Data below the current root folder. The folder is designed to be a store for application data, including Access databases. The App_Data folder is also used by ASP.NET to store databases that the system maintains, such as the database for membership and roles. When Visual Web Developer creates the App_Data folder, it grants Read and Write permissions for the folder to the ASPNET or NETWORK SERVICE user account.  \n  \n> [!NOTE]\n>  As a security measure, Visual Web Developer also configures the App_Data folder so that files in the folder are not served by the Web server. Do not store any Web pages in the App_Data folder, because users will see an error if they request a page from that folder."
+  example:
+  - "This section contains three code examples. The first code example demonstrates how to set the <xref:System.Web.UI.WebControls.AccessDataSource.DataFile%2A> property to a Northwind.mdb file that resides in the same directory as the Web Forms page. The second code example demonstrates how to set the <xref:System.Web.UI.WebControls.AccessDataSource.DataFile%2A> property to the virtual path of a Northwind.mdb file that resides in a directory named Database, which is beneath the directory that the Web Forms page is in. The third code example demonstrates how to set the <xref:System.Web.UI.WebControls.AccessDataSource.DataFile%2A> property to a UNC path of a Northwind.mdb file that is available on a UNC share.  \n  \n The following code example demonstrates how to set the <xref:System.Web.UI.WebControls.AccessDataSource.DataFile%2A> property to a Northwind.mdb file that resides in the same directory as the Web Forms page.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.WebControls.AccessDataSource_4access#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.UI.WebControls.AccessDataSource_4access/CS/access4cs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.WebControls.AccessDataSource_4access#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.UI.WebControls.AccessDataSource_4access/VB/access4vb.aspx#1)]  -->  \n  \n The following code example demonstrates how to set the <xref:System.Web.UI.WebControls.AccessDataSource.DataFile%2A> property to the virtual path of a Northwind.mdb file that resides in a directory named Database, which is beneath the directory that the Web Forms page is in.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.WebControls.AccessDataSource_23access#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.UI.WebControls.AccessDataSource_23access/CS/access23cs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.WebControls.AccessDataSource_23access#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.UI.WebControls.AccessDataSource_23access/VB/access23vb.aspx#1)]  -->  \n  \n The following code example demonstrates how to set the <xref:System.Web.UI.WebControls.AccessDataSource.DataFile%2A> property to a UNC path of a Northwind.mdb file that is available on a UNC share.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.WebControls.AccessDataSource_22access#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.UI.WebControls.AccessDataSource_22access/CS/access22cs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.WebControls.AccessDataSource_22access#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.UI.WebControls.AccessDataSource_22access/VB/access22vb.aspx#1)]  -->"
+  syntax:
+    content: public string DataFile { get; set; }
+    return:
+      type: System.String
+      description: The location of the Access .mdb file. Absolute, relative, and virtual paths are supported.
+  overload: System.Web.UI.WebControls.AccessDataSource.DataFile*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: An invalid path was given.
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AccessDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AccessDataSource.GetDbProviderFactory
+  commentId: M:System.Web.UI.WebControls.AccessDataSource.GetDbProviderFactory
+  id: GetDbProviderFactory
+  parent: System.Web.UI.WebControls.AccessDataSource
+  langs:
+  - csharp
+  name: GetDbProviderFactory()
+  nameWithType: AccessDataSource.GetDbProviderFactory()
+  fullName: AccessDataSource.GetDbProviderFactory()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Retrieves a <xref href="System.Data.Common.DbProviderFactory"></xref> object that is associated with the .NET data provider that is identified by the <xref href="System.Web.UI.WebControls.SqlDataSource.ProviderName"></xref> property.
+  syntax:
+    content: protected override System.Data.Common.DbProviderFactory GetDbProviderFactory ();
+    parameters: []
+    return:
+      type: System.Data.Common.DbProviderFactory
+      description: An <xref href="System.Data.OleDb.OleDbFactory"></xref> object.
+  overload: System.Web.UI.WebControls.AccessDataSource.GetDbProviderFactory*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AccessDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AccessDataSource.ProviderName
+  commentId: P:System.Web.UI.WebControls.AccessDataSource.ProviderName
+  id: ProviderName
+  parent: System.Web.UI.WebControls.AccessDataSource
+  langs:
+  - csharp
+  name: ProviderName
+  nameWithType: AccessDataSource.ProviderName
+  fullName: AccessDataSource.ProviderName
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets the name of the .NET data provider that the <xref href="System.Web.UI.WebControls.AccessDataSource"></xref> control uses to connect to a Microsoft Access database.
+  remarks: While the <xref:System.Web.UI.WebControls.AccessDataSource> control exposes the <xref:System.Web.UI.WebControls.SqlDataSource.ProviderName%2A> property because it is inherited from its base class, attempting to set the <xref:System.Web.UI.WebControls.AccessDataSource.ProviderName%2A> property results in a <xref:System.NotSupportedException> exception.
+  example:
+  - "The following code example demonstrates how to display the <xref:System.Web.UI.WebControls.AccessDataSource.ProviderName%2A> property of the <xref:System.Web.UI.WebControls.AccessDataSource> control in a Web Forms page.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.WebControls.AccessDataSource_25access#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.UI.WebControls.AccessDataSource_25access/CS/access25cs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.WebControls.AccessDataSource_25access#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.UI.WebControls.AccessDataSource_25access/VB/access25vb.aspx#1)]  -->"
+  syntax:
+    content: >-
+      [System.ComponentModel.Browsable(false)]
+
+      public override string ProviderName { get; set; }
+    return:
+      type: System.String
+      description: The string "System.Data.OleDb".
+  overload: System.Web.UI.WebControls.AccessDataSource.ProviderName*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: An attempt was made to set the <xref href="System.Web.UI.WebControls.AccessDataSource.ProviderName"></xref> property.
+  attributes:
+  - type: System.ComponentModel.BrowsableAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AccessDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.WebControls.AccessDataSource.SqlCacheDependency
+  commentId: P:System.Web.UI.WebControls.AccessDataSource.SqlCacheDependency
+  id: SqlCacheDependency
+  parent: System.Web.UI.WebControls.AccessDataSource
+  langs:
+  - csharp
+  name: SqlCacheDependency
+  nameWithType: AccessDataSource.SqlCacheDependency
+  fullName: AccessDataSource.SqlCacheDependency
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: The <xref href="System.Web.UI.WebControls.AccessDataSource.SqlCacheDependency"></xref> property overrides the <xref href="System.Web.UI.WebControls.SqlDataSource.SqlCacheDependency"></xref> property.
+  remarks: In the base class, <xref:System.Web.UI.WebControls.SqlDataSource>, the <xref:System.Web.UI.WebControls.AccessDataSource.SqlCacheDependency%2A> property gets or sets a semicolon-delimited string that indicates which databases and tables to use for the Microsoft SQL Server cache dependency. Cache dependency is not supported by Microsoft Access, and any access to the <xref:System.Web.UI.WebControls.AccessDataSource.SqlCacheDependency%2A> property results in a <xref:System.NotSupportedException> exception.
+  syntax:
+    content: >-
+      [System.ComponentModel.Browsable(false)]
+
+      public override string SqlCacheDependency { get; set; }
+    return:
+      type: System.String
+      description: Throws a <xref href="System.NotSupportedException"></xref>, in all cases.
+  overload: System.Web.UI.WebControls.AccessDataSource.SqlCacheDependency*
+  exceptions:
+  - type: System.NotSupportedException
+    commentId: T:System.NotSupportedException
+    description: An attempt was made to get or set the <xref href="System.Web.UI.WebControls.AccessDataSource.SqlCacheDependency"></xref> property.
+  attributes:
+  - type: System.ComponentModel.BrowsableAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AccessDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+references:
+- uid: System.Web.UI.WebControls.SqlDataSource
+  parent: System.Web.UI.WebControls
+  isExternal: false
+  name: SqlDataSource
+  nameWithType: SqlDataSource
+  fullName: System.Web.UI.WebControls.SqlDataSource
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.InvalidOperationException
+  parent: System
+  isExternal: false
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.NotSupportedException
+  parent: System
+  isExternal: false
+  name: NotSupportedException
+  nameWithType: NotSupportedException
+  fullName: System.NotSupportedException
+- uid: System.Web.UI.WebControls.AccessDataSource.#ctor
+  parent: System.Web.UI.WebControls.AccessDataSource
+  isExternal: false
+  name: AccessDataSource()
+  nameWithType: AccessDataSource.AccessDataSource()
+  fullName: AccessDataSource.AccessDataSource()
+- uid: System.Web.UI.WebControls.AccessDataSource.#ctor(System.String,System.String)
+  parent: System.Web.UI.WebControls.AccessDataSource
+  isExternal: false
+  name: AccessDataSource(String, String)
+  nameWithType: AccessDataSource.AccessDataSource(String, String)
+  fullName: AccessDataSource.AccessDataSource(String, String)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Web.UI.WebControls.AccessDataSource.ConnectionString
+  parent: System.Web.UI.WebControls.AccessDataSource
+  isExternal: false
+  name: ConnectionString
+  nameWithType: AccessDataSource.ConnectionString
+  fullName: AccessDataSource.ConnectionString
+- uid: System.Web.UI.WebControls.AccessDataSource.CreateDataSourceView(System.String)
+  parent: System.Web.UI.WebControls.AccessDataSource
+  isExternal: false
+  name: CreateDataSourceView(String)
+  nameWithType: AccessDataSource.CreateDataSourceView(String)
+  fullName: AccessDataSource.CreateDataSourceView(String)
+- uid: System.Web.UI.WebControls.SqlDataSourceView
+  parent: System.Web.UI.WebControls
+  isExternal: false
+  name: SqlDataSourceView
+  nameWithType: SqlDataSourceView
+  fullName: System.Web.UI.WebControls.SqlDataSourceView
+- uid: System.Web.UI.WebControls.AccessDataSource.DataFile
+  parent: System.Web.UI.WebControls.AccessDataSource
+  isExternal: false
+  name: DataFile
+  nameWithType: AccessDataSource.DataFile
+  fullName: AccessDataSource.DataFile
+- uid: System.Web.UI.WebControls.AccessDataSource.GetDbProviderFactory
+  parent: System.Web.UI.WebControls.AccessDataSource
+  isExternal: false
+  name: GetDbProviderFactory()
+  nameWithType: AccessDataSource.GetDbProviderFactory()
+  fullName: AccessDataSource.GetDbProviderFactory()
+- uid: System.Data.Common.DbProviderFactory
+  parent: System.Data.Common
+  isExternal: false
+  name: DbProviderFactory
+  nameWithType: DbProviderFactory
+  fullName: System.Data.Common.DbProviderFactory
+- uid: System.Web.UI.WebControls.AccessDataSource.ProviderName
+  parent: System.Web.UI.WebControls.AccessDataSource
+  isExternal: false
+  name: ProviderName
+  nameWithType: AccessDataSource.ProviderName
+  fullName: AccessDataSource.ProviderName
+- uid: System.Web.UI.WebControls.AccessDataSource.SqlCacheDependency
+  parent: System.Web.UI.WebControls.AccessDataSource
+  isExternal: false
+  name: SqlCacheDependency
+  nameWithType: AccessDataSource.SqlCacheDependency
+  fullName: AccessDataSource.SqlCacheDependency
+- uid: System.Web.UI.WebControls.AccessDataSource.#ctor*
+  parent: System.Web.UI.WebControls.AccessDataSource
+  isExternal: false
+  name: AccessDataSource
+  nameWithType: AccessDataSource.AccessDataSource
+  fullName: AccessDataSource.AccessDataSource
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AccessDataSource.xml
+- uid: System.Web.UI.WebControls.AccessDataSource.ConnectionString*
+  parent: System.Web.UI.WebControls.AccessDataSource
+  isExternal: false
+  name: ConnectionString
+  nameWithType: AccessDataSource.ConnectionString
+  fullName: AccessDataSource.ConnectionString
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AccessDataSource.xml
+- uid: System.Web.UI.WebControls.AccessDataSource.CreateDataSourceView*
+  parent: System.Web.UI.WebControls.AccessDataSource
+  isExternal: false
+  name: CreateDataSourceView
+  nameWithType: AccessDataSource.CreateDataSourceView
+  fullName: AccessDataSource.CreateDataSourceView
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AccessDataSource.xml
+- uid: System.Web.UI.WebControls.AccessDataSource.DataFile*
+  parent: System.Web.UI.WebControls.AccessDataSource
+  isExternal: false
+  name: DataFile
+  nameWithType: AccessDataSource.DataFile
+  fullName: AccessDataSource.DataFile
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AccessDataSource.xml
+- uid: System.Web.UI.WebControls.AccessDataSource.GetDbProviderFactory*
+  parent: System.Web.UI.WebControls.AccessDataSource
+  isExternal: false
+  name: GetDbProviderFactory
+  nameWithType: AccessDataSource.GetDbProviderFactory
+  fullName: AccessDataSource.GetDbProviderFactory
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AccessDataSource.xml
+- uid: System.Web.UI.WebControls.AccessDataSource.ProviderName*
+  parent: System.Web.UI.WebControls.AccessDataSource
+  isExternal: false
+  name: ProviderName
+  nameWithType: AccessDataSource.ProviderName
+  fullName: AccessDataSource.ProviderName
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AccessDataSource.xml
+- uid: System.Web.UI.WebControls.AccessDataSource.SqlCacheDependency*
+  parent: System.Web.UI.WebControls.AccessDataSource
+  isExternal: false
+  name: SqlCacheDependency
+  nameWithType: AccessDataSource.SqlCacheDependency
+  fullName: AccessDataSource.SqlCacheDependency
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/AccessDataSource.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Web.UI.Control.Adapter
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Adapter
+  nameWithType: Control.Adapter
+  fullName: Control.Adapter
+- uid: System.Web.UI.Control.AddedControl(System.Web.UI.Control,System.Int32)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AddedControl(Control, Int32)
+  nameWithType: Control.AddedControl(Control, Int32)
+  fullName: Control.AddedControl(Control, Int32)
+- uid: System.Web.UI.Control.AddParsedSubObject(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AddParsedSubObject(Object)
+  nameWithType: Control.AddParsedSubObject(Object)
+  fullName: Control.AddParsedSubObject(Object)
+- uid: System.Web.UI.DataSourceControl.ApplyStyleSheetSkin(System.Web.UI.Page)
+  parent: System.Web.UI.DataSourceControl
+  isExternal: false
+  name: ApplyStyleSheetSkin(Page)
+  nameWithType: DataSourceControl.ApplyStyleSheetSkin(Page)
+  fullName: DataSourceControl.ApplyStyleSheetSkin(Page)
+- uid: System.Web.UI.Control.AppRelativeTemplateSourceDirectory
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AppRelativeTemplateSourceDirectory
+  nameWithType: Control.AppRelativeTemplateSourceDirectory
+  fullName: Control.AppRelativeTemplateSourceDirectory
+- uid: System.Web.UI.Control.BeginRenderTracing(System.IO.TextWriter,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BeginRenderTracing(TextWriter, Object)
+  nameWithType: Control.BeginRenderTracing(TextWriter, Object)
+  fullName: Control.BeginRenderTracing(TextWriter, Object)
+- uid: System.Web.UI.Control.BindingContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BindingContainer
+  nameWithType: Control.BindingContainer
+  fullName: Control.BindingContainer
+- uid: System.Web.UI.Control.BuildProfileTree(System.String,System.Boolean)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BuildProfileTree(String, Boolean)
+  nameWithType: Control.BuildProfileTree(String, Boolean)
+  fullName: Control.BuildProfileTree(String, Boolean)
+- uid: System.Web.UI.Control.ChildControlsCreated
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ChildControlsCreated
+  nameWithType: Control.ChildControlsCreated
+  fullName: Control.ChildControlsCreated
+- uid: System.Web.UI.Control.ClearCachedClientID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearCachedClientID()
+  nameWithType: Control.ClearCachedClientID()
+  fullName: Control.ClearCachedClientID()
+- uid: System.Web.UI.Control.ClearChildControlState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildControlState()
+  nameWithType: Control.ClearChildControlState()
+  fullName: Control.ClearChildControlState()
+- uid: System.Web.UI.Control.ClearChildState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildState()
+  nameWithType: Control.ClearChildState()
+  fullName: Control.ClearChildState()
+- uid: System.Web.UI.Control.ClearChildViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildViewState()
+  nameWithType: Control.ClearChildViewState()
+  fullName: Control.ClearChildViewState()
+- uid: System.Web.UI.Control.ClearEffectiveClientIDMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearEffectiveClientIDMode()
+  nameWithType: Control.ClearEffectiveClientIDMode()
+  fullName: Control.ClearEffectiveClientIDMode()
+- uid: System.Web.UI.DataSourceControl.ClientID
+  parent: System.Web.UI.DataSourceControl
+  isExternal: false
+  name: ClientID
+  nameWithType: DataSourceControl.ClientID
+  fullName: DataSourceControl.ClientID
+- uid: System.Web.UI.DataSourceControl.ClientIDMode
+  parent: System.Web.UI.DataSourceControl
+  isExternal: false
+  name: ClientIDMode
+  nameWithType: DataSourceControl.ClientIDMode
+  fullName: DataSourceControl.ClientIDMode
+- uid: System.Web.UI.Control.ClientIDSeparator
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClientIDSeparator
+  nameWithType: Control.ClientIDSeparator
+  fullName: Control.ClientIDSeparator
+- uid: System.Web.UI.Control.Context
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Context
+  nameWithType: Control.Context
+  fullName: Control.Context
+- uid: System.Web.UI.DataSourceControl.Controls
+  parent: System.Web.UI.DataSourceControl
+  isExternal: false
+  name: Controls
+  nameWithType: DataSourceControl.Controls
+  fullName: DataSourceControl.Controls
+- uid: System.Web.UI.Control.CreateChildControls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: CreateChildControls()
+  nameWithType: Control.CreateChildControls()
+  fullName: Control.CreateChildControls()
+- uid: System.Web.UI.DataSourceControl.CreateControlCollection
+  parent: System.Web.UI.DataSourceControl
+  isExternal: false
+  name: CreateControlCollection()
+  nameWithType: DataSourceControl.CreateControlCollection()
+  fullName: DataSourceControl.CreateControlCollection()
+- uid: System.Web.UI.Control.DataBind
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBind()
+  nameWithType: Control.DataBind()
+  fullName: Control.DataBind()
+- uid: System.Web.UI.Control.DataBind(System.Boolean)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBind(Boolean)
+  nameWithType: Control.DataBind(Boolean)
+  fullName: Control.DataBind(Boolean)
+- uid: System.Web.UI.Control.DataBindChildren
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBindChildren()
+  nameWithType: Control.DataBindChildren()
+  fullName: Control.DataBindChildren()
+- uid: System.Web.UI.Control.DataBinding
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBinding
+  nameWithType: Control.DataBinding
+  fullName: Control.DataBinding
+- uid: System.Web.UI.Control.DataItemContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataItemContainer
+  nameWithType: Control.DataItemContainer
+  fullName: Control.DataItemContainer
+- uid: System.Web.UI.Control.DataKeysContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataKeysContainer
+  nameWithType: Control.DataKeysContainer
+  fullName: Control.DataKeysContainer
+- uid: System.Web.UI.Control.DesignMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DesignMode
+  nameWithType: Control.DesignMode
+  fullName: Control.DesignMode
+- uid: System.Web.UI.Control.Dispose
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Dispose()
+  nameWithType: Control.Dispose()
+  fullName: Control.Dispose()
+- uid: System.Web.UI.Control.Disposed
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Disposed
+  nameWithType: Control.Disposed
+  fullName: Control.Disposed
+- uid: System.Web.UI.DataSourceControl.EnableTheming
+  parent: System.Web.UI.DataSourceControl
+  isExternal: false
+  name: EnableTheming
+  nameWithType: DataSourceControl.EnableTheming
+  fullName: DataSourceControl.EnableTheming
+- uid: System.Web.UI.Control.EnableViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnableViewState
+  nameWithType: Control.EnableViewState
+  fullName: Control.EnableViewState
+- uid: System.Web.UI.Control.EndRenderTracing(System.IO.TextWriter,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EndRenderTracing(TextWriter, Object)
+  nameWithType: Control.EndRenderTracing(TextWriter, Object)
+  fullName: Control.EndRenderTracing(TextWriter, Object)
+- uid: System.Web.UI.Control.EnsureChildControls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnsureChildControls()
+  nameWithType: Control.EnsureChildControls()
+  fullName: Control.EnsureChildControls()
+- uid: System.Web.UI.Control.EnsureID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnsureID()
+  nameWithType: Control.EnsureID()
+  fullName: Control.EnsureID()
+- uid: System.Web.UI.Control.Events
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Events
+  nameWithType: Control.Events
+  fullName: Control.Events
+- uid: System.Web.UI.DataSourceControl.FindControl(System.String)
+  parent: System.Web.UI.DataSourceControl
+  isExternal: false
+  name: FindControl(String)
+  nameWithType: DataSourceControl.FindControl(String)
+  fullName: DataSourceControl.FindControl(String)
+- uid: System.Web.UI.Control.FindControl(System.String,System.Int32)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: FindControl(String, Int32)
+  nameWithType: Control.FindControl(String, Int32)
+  fullName: Control.FindControl(String, Int32)
+- uid: System.Web.UI.DataSourceControl.Focus
+  parent: System.Web.UI.DataSourceControl
+  isExternal: false
+  name: Focus()
+  nameWithType: DataSourceControl.Focus()
+  fullName: DataSourceControl.Focus()
+- uid: System.Web.UI.Control.GetDesignModeState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetDesignModeState()
+  nameWithType: Control.GetDesignModeState()
+  fullName: Control.GetDesignModeState()
+- uid: System.Web.UI.Control.GetRouteUrl(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(Object)
+  nameWithType: Control.GetRouteUrl(Object)
+  fullName: Control.GetRouteUrl(Object)
+- uid: System.Web.UI.Control.GetRouteUrl(System.Web.Routing.RouteValueDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(RouteValueDictionary)
+  nameWithType: Control.GetRouteUrl(RouteValueDictionary)
+  fullName: Control.GetRouteUrl(RouteValueDictionary)
+- uid: System.Web.UI.Control.GetRouteUrl(System.String,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(String, Object)
+  nameWithType: Control.GetRouteUrl(String, Object)
+  fullName: Control.GetRouteUrl(String, Object)
+- uid: System.Web.UI.Control.GetRouteUrl(System.String,System.Web.Routing.RouteValueDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(String, RouteValueDictionary)
+  nameWithType: Control.GetRouteUrl(String, RouteValueDictionary)
+  fullName: Control.GetRouteUrl(String, RouteValueDictionary)
+- uid: System.Web.UI.Control.GetUniqueIDRelativeTo(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetUniqueIDRelativeTo(Control)
+  nameWithType: Control.GetUniqueIDRelativeTo(Control)
+  fullName: Control.GetUniqueIDRelativeTo(Control)
+- uid: System.Web.UI.Control.HasChildViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: HasChildViewState
+  nameWithType: Control.HasChildViewState
+  fullName: Control.HasChildViewState
+- uid: System.Web.UI.DataSourceControl.HasControls
+  parent: System.Web.UI.DataSourceControl
+  isExternal: false
+  name: HasControls()
+  nameWithType: DataSourceControl.HasControls()
+  fullName: DataSourceControl.HasControls()
+- uid: System.Web.UI.Control.HasEvents
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: HasEvents()
+  nameWithType: Control.HasEvents()
+  fullName: Control.HasEvents()
+- uid: System.Web.UI.Control.ID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ID
+  nameWithType: Control.ID
+  fullName: Control.ID
+- uid: System.Web.UI.Control.IdSeparator
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IdSeparator
+  nameWithType: Control.IdSeparator
+  fullName: Control.IdSeparator
+- uid: System.Web.UI.Control.Init
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Init
+  nameWithType: Control.Init
+  fullName: Control.Init
+- uid: System.Web.UI.Control.IsChildControlStateCleared
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsChildControlStateCleared
+  nameWithType: Control.IsChildControlStateCleared
+  fullName: Control.IsChildControlStateCleared
+- uid: System.Web.UI.Control.IsLiteralContent
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsLiteralContent()
+  nameWithType: Control.IsLiteralContent()
+  fullName: Control.IsLiteralContent()
+- uid: System.Web.UI.Control.IsTrackingViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsTrackingViewState
+  nameWithType: Control.IsTrackingViewState
+  fullName: Control.IsTrackingViewState
+- uid: System.Web.UI.Control.IsViewStateEnabled
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsViewStateEnabled
+  nameWithType: Control.IsViewStateEnabled
+  fullName: Control.IsViewStateEnabled
+- uid: System.Web.UI.Control.Load
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Load
+  nameWithType: Control.Load
+  fullName: Control.Load
+- uid: System.Web.UI.Control.LoadControlState(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: LoadControlState(Object)
+  nameWithType: Control.LoadControlState(Object)
+  fullName: Control.LoadControlState(Object)
+- uid: System.Web.UI.WebControls.SqlDataSource.LoadViewState(System.Object)
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: LoadViewState(Object)
+  nameWithType: SqlDataSource.LoadViewState(Object)
+  fullName: SqlDataSource.LoadViewState(Object)
+- uid: System.Web.UI.Control.LoadViewStateByID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: LoadViewStateByID
+  nameWithType: Control.LoadViewStateByID
+  fullName: Control.LoadViewStateByID
+- uid: System.Web.UI.Control.MapPathSecure(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: MapPathSecure(String)
+  nameWithType: Control.MapPathSecure(String)
+  fullName: Control.MapPathSecure(String)
+- uid: System.Web.UI.Control.NamingContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: NamingContainer
+  nameWithType: Control.NamingContainer
+  fullName: Control.NamingContainer
+- uid: System.Web.UI.Control.OnBubbleEvent(System.Object,System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnBubbleEvent(Object, EventArgs)
+  nameWithType: Control.OnBubbleEvent(Object, EventArgs)
+  fullName: Control.OnBubbleEvent(Object, EventArgs)
+- uid: System.Web.UI.Control.OnDataBinding(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnDataBinding(EventArgs)
+  nameWithType: Control.OnDataBinding(EventArgs)
+  fullName: Control.OnDataBinding(EventArgs)
+- uid: System.Web.UI.WebControls.SqlDataSource.OnInit(System.EventArgs)
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: OnInit(EventArgs)
+  nameWithType: SqlDataSource.OnInit(EventArgs)
+  fullName: SqlDataSource.OnInit(EventArgs)
+- uid: System.Web.UI.Control.OnLoad(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnLoad(EventArgs)
+  nameWithType: Control.OnLoad(EventArgs)
+  fullName: Control.OnLoad(EventArgs)
+- uid: System.Web.UI.Control.OnPreRender(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnPreRender(EventArgs)
+  nameWithType: Control.OnPreRender(EventArgs)
+  fullName: Control.OnPreRender(EventArgs)
+- uid: System.Web.UI.Control.OnUnload(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnUnload(EventArgs)
+  nameWithType: Control.OnUnload(EventArgs)
+  fullName: Control.OnUnload(EventArgs)
+- uid: System.Web.UI.Control.OpenFile(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OpenFile(String)
+  nameWithType: Control.OpenFile(String)
+  fullName: Control.OpenFile(String)
+- uid: System.Web.UI.Control.Page
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Page
+  nameWithType: Control.Page
+  fullName: Control.Page
+- uid: System.Web.UI.Control.Parent
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Parent
+  nameWithType: Control.Parent
+  fullName: Control.Parent
+- uid: System.Web.UI.Control.PreRender
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: PreRender
+  nameWithType: Control.PreRender
+  fullName: Control.PreRender
+- uid: System.Web.UI.Control.RaiseBubbleEvent(System.Object,System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RaiseBubbleEvent(Object, EventArgs)
+  nameWithType: Control.RaiseBubbleEvent(Object, EventArgs)
+  fullName: Control.RaiseBubbleEvent(Object, EventArgs)
+- uid: System.Web.UI.Control.RemovedControl(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RemovedControl(Control)
+  nameWithType: Control.RemovedControl(Control)
+  fullName: Control.RemovedControl(Control)
+- uid: System.Web.UI.Control.Render(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Render(HtmlTextWriter)
+  nameWithType: Control.Render(HtmlTextWriter)
+  fullName: Control.Render(HtmlTextWriter)
+- uid: System.Web.UI.Control.RenderChildren(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderChildren(HtmlTextWriter)
+  nameWithType: Control.RenderChildren(HtmlTextWriter)
+  fullName: Control.RenderChildren(HtmlTextWriter)
+- uid: System.Web.UI.DataSourceControl.RenderControl(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.DataSourceControl
+  isExternal: false
+  name: RenderControl(HtmlTextWriter)
+  nameWithType: DataSourceControl.RenderControl(HtmlTextWriter)
+  fullName: DataSourceControl.RenderControl(HtmlTextWriter)
+- uid: System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter,System.Web.UI.Adapters.ControlAdapter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderControl(HtmlTextWriter, ControlAdapter)
+  nameWithType: Control.RenderControl(HtmlTextWriter, ControlAdapter)
+  fullName: Control.RenderControl(HtmlTextWriter, ControlAdapter)
+- uid: System.Web.UI.Control.RenderingCompatibility
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderingCompatibility
+  nameWithType: Control.RenderingCompatibility
+  fullName: Control.RenderingCompatibility
+- uid: System.Web.UI.Control.ResolveAdapter
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveAdapter()
+  nameWithType: Control.ResolveAdapter()
+  fullName: Control.ResolveAdapter()
+- uid: System.Web.UI.Control.ResolveClientUrl(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveClientUrl(String)
+  nameWithType: Control.ResolveClientUrl(String)
+  fullName: Control.ResolveClientUrl(String)
+- uid: System.Web.UI.Control.ResolveUrl(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveUrl(String)
+  nameWithType: Control.ResolveUrl(String)
+  fullName: Control.ResolveUrl(String)
+- uid: System.Web.UI.Control.SaveControlState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SaveControlState()
+  nameWithType: Control.SaveControlState()
+  fullName: Control.SaveControlState()
+- uid: System.Web.UI.WebControls.SqlDataSource.SaveViewState
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: SaveViewState()
+  nameWithType: SqlDataSource.SaveViewState()
+  fullName: SqlDataSource.SaveViewState()
+- uid: System.Web.UI.Control.SetDesignModeState(System.Collections.IDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetDesignModeState(IDictionary)
+  nameWithType: Control.SetDesignModeState(IDictionary)
+  fullName: Control.SetDesignModeState(IDictionary)
+- uid: System.Web.UI.Control.SetRenderMethodDelegate(System.Web.UI.RenderMethod)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetRenderMethodDelegate(RenderMethod)
+  nameWithType: Control.SetRenderMethodDelegate(RenderMethod)
+  fullName: Control.SetRenderMethodDelegate(RenderMethod)
+- uid: System.Web.UI.Control.SetTraceData(System.Object,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetTraceData(Object, Object)
+  nameWithType: Control.SetTraceData(Object, Object)
+  fullName: Control.SetTraceData(Object, Object)
+- uid: System.Web.UI.Control.SetTraceData(System.Object,System.Object,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetTraceData(Object, Object, Object)
+  nameWithType: Control.SetTraceData(Object, Object, Object)
+  fullName: Control.SetTraceData(Object, Object, Object)
+- uid: System.Web.UI.Control.Site
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Site
+  nameWithType: Control.Site
+  fullName: Control.Site
+- uid: System.Web.UI.DataSourceControl.SkinID
+  parent: System.Web.UI.DataSourceControl
+  isExternal: false
+  name: SkinID
+  nameWithType: DataSourceControl.SkinID
+  fullName: DataSourceControl.SkinID
+- uid: System.Web.UI.Control.TemplateControl
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: TemplateControl
+  nameWithType: Control.TemplateControl
+  fullName: Control.TemplateControl
+- uid: System.Web.UI.Control.TemplateSourceDirectory
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: TemplateSourceDirectory
+  nameWithType: Control.TemplateSourceDirectory
+  fullName: Control.TemplateSourceDirectory
+- uid: System.Web.UI.WebControls.SqlDataSource.TrackViewState
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: TrackViewState()
+  nameWithType: SqlDataSource.TrackViewState()
+  fullName: SqlDataSource.TrackViewState()
+- uid: System.Web.UI.Control.UniqueID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: UniqueID
+  nameWithType: Control.UniqueID
+  fullName: Control.UniqueID
+- uid: System.Web.UI.Control.Unload
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Unload
+  nameWithType: Control.Unload
+  fullName: Control.Unload
+- uid: System.Web.UI.Control.ValidateRequestMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ValidateRequestMode
+  nameWithType: Control.ValidateRequestMode
+  fullName: Control.ValidateRequestMode
+- uid: System.Web.UI.Control.ViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewState
+  nameWithType: Control.ViewState
+  fullName: Control.ViewState
+- uid: System.Web.UI.Control.ViewStateIgnoresCase
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewStateIgnoresCase
+  nameWithType: Control.ViewStateIgnoresCase
+  fullName: Control.ViewStateIgnoresCase
+- uid: System.Web.UI.Control.ViewStateMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewStateMode
+  nameWithType: Control.ViewStateMode
+  fullName: Control.ViewStateMode
+- uid: System.Web.UI.DataSourceControl.Visible
+  parent: System.Web.UI.DataSourceControl
+  isExternal: false
+  name: Visible
+  nameWithType: DataSourceControl.Visible
+  fullName: DataSourceControl.Visible
+- uid: System.Web.UI.Control.System#Web#UI#IControlBuilderAccessor#ControlBuilder
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlBuilderAccessor.ControlBuilder
+  nameWithType: Control.IControlBuilderAccessor.ControlBuilder
+  fullName: Control.IControlBuilderAccessor.ControlBuilder
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#GetDesignModeState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.GetDesignModeState()
+  nameWithType: Control.IControlDesignerAccessor.GetDesignModeState()
+  fullName: Control.IControlDesignerAccessor.GetDesignModeState()
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetDesignModeState(System.Collections.IDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.SetDesignModeState(IDictionary)
+  nameWithType: Control.IControlDesignerAccessor.SetDesignModeState(IDictionary)
+  fullName: Control.IControlDesignerAccessor.SetDesignModeState(IDictionary)
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetOwnerControl(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.SetOwnerControl(Control)
+  nameWithType: Control.IControlDesignerAccessor.SetOwnerControl(Control)
+  fullName: Control.IControlDesignerAccessor.SetOwnerControl(Control)
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#UserData
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.UserData
+  nameWithType: Control.IControlDesignerAccessor.UserData
+  fullName: Control.IControlDesignerAccessor.UserData
+- uid: System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#DataBindings
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IDataBindingsAccessor.DataBindings
+  nameWithType: Control.IDataBindingsAccessor.DataBindings
+  fullName: Control.IDataBindingsAccessor.DataBindings
+- uid: System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#HasDataBindings
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IDataBindingsAccessor.HasDataBindings
+  nameWithType: Control.IDataBindingsAccessor.HasDataBindings
+  fullName: Control.IDataBindingsAccessor.HasDataBindings
+- uid: System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#Expressions
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IExpressionsAccessor.Expressions
+  nameWithType: Control.IExpressionsAccessor.Expressions
+  fullName: Control.IExpressionsAccessor.Expressions
+- uid: System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#HasExpressions
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IExpressionsAccessor.HasExpressions
+  nameWithType: Control.IExpressionsAccessor.HasExpressions
+  fullName: Control.IExpressionsAccessor.HasExpressions
+- uid: System.Web.UI.Control.System#Web#UI#IParserAccessor#AddParsedSubObject(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IParserAccessor.AddParsedSubObject(Object)
+  nameWithType: Control.IParserAccessor.AddParsedSubObject(Object)
+  fullName: Control.IParserAccessor.AddParsedSubObject(Object)
+- uid: System.Web.UI.WebControls.SqlDataSource.GetView(System.String)
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: GetView(String)
+  nameWithType: SqlDataSource.GetView(String)
+  fullName: SqlDataSource.GetView(String)
+- uid: System.Web.UI.WebControls.SqlDataSource.GetViewNames
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: GetViewNames()
+  nameWithType: SqlDataSource.GetViewNames()
+  fullName: SqlDataSource.GetViewNames()
+- uid: System.Web.UI.DataSourceControl.RaiseDataSourceChangedEvent(System.EventArgs)
+  parent: System.Web.UI.DataSourceControl
+  isExternal: false
+  name: RaiseDataSourceChangedEvent(EventArgs)
+  nameWithType: DataSourceControl.RaiseDataSourceChangedEvent(EventArgs)
+  fullName: DataSourceControl.RaiseDataSourceChangedEvent(EventArgs)
+- uid: System.Web.UI.DataSourceControl.System#ComponentModel#IListSource#ContainsListCollection
+  parent: System.Web.UI.DataSourceControl
+  isExternal: false
+  name: IListSource.ContainsListCollection
+  nameWithType: DataSourceControl.IListSource.ContainsListCollection
+  fullName: DataSourceControl.IListSource.ContainsListCollection
+- uid: System.Web.UI.DataSourceControl.System#ComponentModel#IListSource#GetList
+  parent: System.Web.UI.DataSourceControl
+  isExternal: false
+  name: IListSource.GetList()
+  nameWithType: DataSourceControl.IListSource.GetList()
+  fullName: DataSourceControl.IListSource.GetList()
+- uid: System.Web.UI.DataSourceControl.System#Web#UI#IDataSource#GetView(System.String)
+  parent: System.Web.UI.DataSourceControl
+  isExternal: false
+  name: IDataSource.GetView(String)
+  nameWithType: DataSourceControl.IDataSource.GetView(String)
+  fullName: DataSourceControl.IDataSource.GetView(String)
+- uid: System.Web.UI.DataSourceControl.System#Web#UI#IDataSource#GetViewNames
+  parent: System.Web.UI.DataSourceControl
+  isExternal: false
+  name: IDataSource.GetViewNames()
+  nameWithType: DataSourceControl.IDataSource.GetViewNames()
+  fullName: DataSourceControl.IDataSource.GetViewNames()
+- uid: System.Web.UI.WebControls.SqlDataSource.CacheDuration
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: CacheDuration
+  nameWithType: SqlDataSource.CacheDuration
+  fullName: SqlDataSource.CacheDuration
+- uid: System.Web.UI.WebControls.SqlDataSource.CacheExpirationPolicy
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: CacheExpirationPolicy
+  nameWithType: SqlDataSource.CacheExpirationPolicy
+  fullName: SqlDataSource.CacheExpirationPolicy
+- uid: System.Web.UI.WebControls.SqlDataSource.CacheKeyDependency
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: CacheKeyDependency
+  nameWithType: SqlDataSource.CacheKeyDependency
+  fullName: SqlDataSource.CacheKeyDependency
+- uid: System.Web.UI.WebControls.SqlDataSource.CancelSelectOnNullParameter
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: CancelSelectOnNullParameter
+  nameWithType: SqlDataSource.CancelSelectOnNullParameter
+  fullName: SqlDataSource.CancelSelectOnNullParameter
+- uid: System.Web.UI.WebControls.SqlDataSource.ConflictDetection
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: ConflictDetection
+  nameWithType: SqlDataSource.ConflictDetection
+  fullName: SqlDataSource.ConflictDetection
+- uid: System.Web.UI.WebControls.SqlDataSource.DataSourceMode
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: DataSourceMode
+  nameWithType: SqlDataSource.DataSourceMode
+  fullName: SqlDataSource.DataSourceMode
+- uid: System.Web.UI.WebControls.SqlDataSource.Delete
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: Delete()
+  nameWithType: SqlDataSource.Delete()
+  fullName: SqlDataSource.Delete()
+- uid: System.Web.UI.WebControls.SqlDataSource.DeleteCommand
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: DeleteCommand
+  nameWithType: SqlDataSource.DeleteCommand
+  fullName: SqlDataSource.DeleteCommand
+- uid: System.Web.UI.WebControls.SqlDataSource.DeleteCommandType
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: DeleteCommandType
+  nameWithType: SqlDataSource.DeleteCommandType
+  fullName: SqlDataSource.DeleteCommandType
+- uid: System.Web.UI.WebControls.SqlDataSource.Deleted
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: Deleted
+  nameWithType: SqlDataSource.Deleted
+  fullName: SqlDataSource.Deleted
+- uid: System.Web.UI.WebControls.SqlDataSource.DeleteParameters
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: DeleteParameters
+  nameWithType: SqlDataSource.DeleteParameters
+  fullName: SqlDataSource.DeleteParameters
+- uid: System.Web.UI.WebControls.SqlDataSource.Deleting
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: Deleting
+  nameWithType: SqlDataSource.Deleting
+  fullName: SqlDataSource.Deleting
+- uid: System.Web.UI.WebControls.SqlDataSource.EnableCaching
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: EnableCaching
+  nameWithType: SqlDataSource.EnableCaching
+  fullName: SqlDataSource.EnableCaching
+- uid: System.Web.UI.WebControls.SqlDataSource.FilterExpression
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: FilterExpression
+  nameWithType: SqlDataSource.FilterExpression
+  fullName: SqlDataSource.FilterExpression
+- uid: System.Web.UI.WebControls.SqlDataSource.Filtering
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: Filtering
+  nameWithType: SqlDataSource.Filtering
+  fullName: SqlDataSource.Filtering
+- uid: System.Web.UI.WebControls.SqlDataSource.FilterParameters
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: FilterParameters
+  nameWithType: SqlDataSource.FilterParameters
+  fullName: SqlDataSource.FilterParameters
+- uid: System.Web.UI.WebControls.SqlDataSource.Insert
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: Insert()
+  nameWithType: SqlDataSource.Insert()
+  fullName: SqlDataSource.Insert()
+- uid: System.Web.UI.WebControls.SqlDataSource.InsertCommand
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: InsertCommand
+  nameWithType: SqlDataSource.InsertCommand
+  fullName: SqlDataSource.InsertCommand
+- uid: System.Web.UI.WebControls.SqlDataSource.InsertCommandType
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: InsertCommandType
+  nameWithType: SqlDataSource.InsertCommandType
+  fullName: SqlDataSource.InsertCommandType
+- uid: System.Web.UI.WebControls.SqlDataSource.Inserted
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: Inserted
+  nameWithType: SqlDataSource.Inserted
+  fullName: SqlDataSource.Inserted
+- uid: System.Web.UI.WebControls.SqlDataSource.Inserting
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: Inserting
+  nameWithType: SqlDataSource.Inserting
+  fullName: SqlDataSource.Inserting
+- uid: System.Web.UI.WebControls.SqlDataSource.InsertParameters
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: InsertParameters
+  nameWithType: SqlDataSource.InsertParameters
+  fullName: SqlDataSource.InsertParameters
+- uid: System.Web.UI.WebControls.SqlDataSource.OldValuesParameterFormatString
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: OldValuesParameterFormatString
+  nameWithType: SqlDataSource.OldValuesParameterFormatString
+  fullName: SqlDataSource.OldValuesParameterFormatString
+- uid: System.Web.UI.WebControls.SqlDataSource.Select(System.Web.UI.DataSourceSelectArguments)
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: Select(DataSourceSelectArguments)
+  nameWithType: SqlDataSource.Select(DataSourceSelectArguments)
+  fullName: SqlDataSource.Select(DataSourceSelectArguments)
+- uid: System.Web.UI.WebControls.SqlDataSource.SelectCommand
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: SelectCommand
+  nameWithType: SqlDataSource.SelectCommand
+  fullName: SqlDataSource.SelectCommand
+- uid: System.Web.UI.WebControls.SqlDataSource.SelectCommandType
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: SelectCommandType
+  nameWithType: SqlDataSource.SelectCommandType
+  fullName: SqlDataSource.SelectCommandType
+- uid: System.Web.UI.WebControls.SqlDataSource.Selected
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: Selected
+  nameWithType: SqlDataSource.Selected
+  fullName: SqlDataSource.Selected
+- uid: System.Web.UI.WebControls.SqlDataSource.Selecting
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: Selecting
+  nameWithType: SqlDataSource.Selecting
+  fullName: SqlDataSource.Selecting
+- uid: System.Web.UI.WebControls.SqlDataSource.SelectParameters
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: SelectParameters
+  nameWithType: SqlDataSource.SelectParameters
+  fullName: SqlDataSource.SelectParameters
+- uid: System.Web.UI.WebControls.SqlDataSource.SortParameterName
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: SortParameterName
+  nameWithType: SqlDataSource.SortParameterName
+  fullName: SqlDataSource.SortParameterName
+- uid: System.Web.UI.WebControls.SqlDataSource.Update
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: Update()
+  nameWithType: SqlDataSource.Update()
+  fullName: SqlDataSource.Update()
+- uid: System.Web.UI.WebControls.SqlDataSource.UpdateCommand
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: UpdateCommand
+  nameWithType: SqlDataSource.UpdateCommand
+  fullName: SqlDataSource.UpdateCommand
+- uid: System.Web.UI.WebControls.SqlDataSource.UpdateCommandType
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: UpdateCommandType
+  nameWithType: SqlDataSource.UpdateCommandType
+  fullName: SqlDataSource.UpdateCommandType
+- uid: System.Web.UI.WebControls.SqlDataSource.Updated
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: Updated
+  nameWithType: SqlDataSource.Updated
+  fullName: SqlDataSource.Updated
+- uid: System.Web.UI.WebControls.SqlDataSource.UpdateParameters
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: UpdateParameters
+  nameWithType: SqlDataSource.UpdateParameters
+  fullName: SqlDataSource.UpdateParameters
+- uid: System.Web.UI.WebControls.SqlDataSource.Updating
+  parent: System.Web.UI.WebControls.SqlDataSource
+  isExternal: false
+  name: Updating
+  nameWithType: SqlDataSource.Updating
+  fullName: SqlDataSource.Updating
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindDataSourceControl(System.Web.UI.Control)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindDataSourceControl(Control)
+  nameWithType: DynamicDataExtensions.FindDataSourceControl(Control)
+  fullName: DynamicDataExtensions.FindDataSourceControl(Control)
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindFieldTemplate(System.Web.UI.Control,System.String)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindFieldTemplate(Control, String)
+  nameWithType: DynamicDataExtensions.FindFieldTemplate(Control, String)
+  fullName: DynamicDataExtensions.FindFieldTemplate(Control, String)
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindMetaTable(System.Web.UI.Control)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindMetaTable(Control)
+  nameWithType: DynamicDataExtensions.FindMetaTable(Control)
+  fullName: DynamicDataExtensions.FindMetaTable(Control)
+- uid: System.Web.DynamicData.DynamicDataExtensions.GetDefaultValues(System.Web.UI.IDataSource)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: GetDefaultValues(IDataSource)
+  nameWithType: DynamicDataExtensions.GetDefaultValues(IDataSource)
+  fullName: DynamicDataExtensions.GetDefaultValues(IDataSource)
+- uid: System.Web.DynamicData.DynamicDataExtensions.GetMetaTable(System.Web.UI.IDataSource)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: GetMetaTable(IDataSource)
+  nameWithType: DynamicDataExtensions.GetMetaTable(IDataSource)
+  fullName: DynamicDataExtensions.GetMetaTable(IDataSource)
+- uid: System.Web.DynamicData.DynamicDataExtensions.TryGetMetaTable(System.Web.UI.IDataSource,System.Web.DynamicData.MetaTable@)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: TryGetMetaTable(IDataSource, MetaTable)
+  nameWithType: DynamicDataExtensions.TryGetMetaTable(IDataSource, MetaTable)
+  fullName: DynamicDataExtensions.TryGetMetaTable(IDataSource, MetaTable)

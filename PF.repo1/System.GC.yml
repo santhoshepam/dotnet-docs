@@ -1,0 +1,2829 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.GC
+  commentId: T:System.GC
+  id: GC
+  children:
+  - System.GC.AddMemoryPressure(System.Int64)
+  - System.GC.CancelFullGCNotification
+  - System.GC.Collect
+  - System.GC.Collect(System.Int32)
+  - System.GC.Collect(System.Int32,System.GCCollectionMode)
+  - System.GC.Collect(System.Int32,System.GCCollectionMode,System.Boolean)
+  - System.GC.Collect(System.Int32,System.GCCollectionMode,System.Boolean,System.Boolean)
+  - System.GC.CollectionCount(System.Int32)
+  - System.GC.EndNoGCRegion
+  - System.GC.GetAllocatedBytesForCurrentThread
+  - System.GC.GetGeneration(System.Object)
+  - System.GC.GetGeneration(System.WeakReference)
+  - System.GC.GetTotalMemory(System.Boolean)
+  - System.GC.KeepAlive(System.Object)
+  - System.GC.MaxGeneration
+  - System.GC.RegisterForFullGCNotification(System.Int32,System.Int32)
+  - System.GC.RemoveMemoryPressure(System.Int64)
+  - System.GC.ReRegisterForFinalize(System.Object)
+  - System.GC.SuppressFinalize(System.Object)
+  - System.GC.TryStartNoGCRegion(System.Int64)
+  - System.GC.TryStartNoGCRegion(System.Int64,System.Boolean)
+  - System.GC.TryStartNoGCRegion(System.Int64,System.Int64)
+  - System.GC.TryStartNoGCRegion(System.Int64,System.Int64,System.Boolean)
+  - System.GC.WaitForFullGCApproach
+  - System.GC.WaitForFullGCApproach(System.Int32)
+  - System.GC.WaitForFullGCComplete
+  - System.GC.WaitForFullGCComplete(System.Int32)
+  - System.GC.WaitForPendingFinalizers
+  langs:
+  - csharp
+  name: GC
+  nameWithType: GC
+  fullName: System.GC
+  type: Class
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Controls the system garbage collector, a service that automatically reclaims unused memory.
+  remarks: "The garbage collector is a common language runtime component that controls the allocation and release of managed memory. The methods in this class influence when garbage collection is performed on an object and when resources allocated by an object are released. Properties in this class provide information about the total amount of memory available in the system and the age category, or generation, of memory allocated to an object.  \n  \n The garbage collector tracks and reclaims objects allocated in managed memory. Periodically, the garbage collector performs garbage collection to reclaim memory allocated to objects for which there are no valid references. Garbage collection happens automatically when a request for memory cannot be satisfied using available free memory. Alternatively, an application can force garbage collection using the <xref:System.GC.Collect%2A> method.  \n  \n Garbage collection consists of the following steps:  \n  \n1.  The garbage collector searches for managed objects that are referenced in managed code.  \n  \n2.  The garbage collector tries to finalize objects that are not referenced.  \n  \n3.  The garbage collector frees objects that are not referenced and reclaims their memory.  \n  \n This topic includes the following sections:  \n  \n [The garbage collector and unmanaged resources](#unmanaged)   \n [Object aging and generations](#generations)   \n [Disallowing garbage collection](#NoGCRegion)  \n  \n<a name=\"unmanaged\"></a>   \n## The garbage collector and unmanaged resources  \n During a collection, the garbage collector will not free an object if it finds one or more references to the object in managed code. However, the garbage collector does not recognize references to an object from unmanaged code, and might free objects that are being used exclusively in unmanaged code unless explicitly prevented from doing so. The <xref:System.GC.KeepAlive%2A> method provides a mechanism that prevents the garbage collector from collecting objects that are still in use in unmanaged code.  \n  \n Aside from managed memory allocations, implementations of the garbage collector do not maintain information about resources held by an object, such as file handles or database connections. When a type uses unmanaged resources that must be released before instances of the type are reclaimed, the type can implement a finalizer.  \n  \n In most cases, finalizers are implemented by overriding the <xref:System.Object.Finalize%2A?displayProperty=fullName> method; however, types written in C# or C++ implement destructors, which compilers turn into an override of <xref:System.Object.Finalize%2A?displayProperty=fullName>. In most cases, if an object has a finalizer, the garbage collector calls it prior to freeing the object. However, the garbage collector is not required to call finalizers in all situations; for example, the <xref:System.GC.SuppressFinalize%2A> method explicitly prevents an object's finalizer from being called. Also, the garbage collector is not required to use a specific thread to finalize objects, or guarantee the order in which finalizers are called for objects that reference each other but are otherwise available for garbage collection.  \n  \n In scenarios where resources must be released at a specific time, classes can implement the <xref:System.IDisposable> interface, which contains the <xref:System.IDisposable.Dispose%2A?displayProperty=fullName> method that performs resource management and cleanup tasks. Classes that implement <xref:System.IDisposable.Dispose%2A> must specify, as part of their class contract, if and when class consumers call the method to clean up the object. The garbage collector does not, by default, call the <xref:System.IDisposable.Dispose%2A> method; however, implementations of the <xref:System.IDisposable.Dispose%2A> method can call methods in the <xref:System.GC> class to customize the finalization behavior of the garbage collector.  \n  \n For more information on object finalization and the dispose pattern, see [Cleaning Up Unmanaged Resources](~/docs/standard/garbage-collection/unmanaged.md).  \n  \n<a name=\"generations\"></a>   \n## Object aging and generations  \n The garbage collector in the common language runtime supports object aging using generations. A generation is a unit of measure of the relative age of objects in memory. The generation number, or age, of an object indicates the generation to which an object belongs. Objects created more recently are part of newer generations, and have lower generation numbers than objects created earlier in the application life cycle. Objects in the most recent generation are in generation 0. This implementation of the garbage collector supports three generations of objects, generations 0, 1, and 2. You can retrieve the value of the <xref:System.GC.MaxGeneration%2A> property to determine the maximum generation number supported by the system.  \n  \n Object aging allows applications to target garbage collection at a specific set of generations rather than requiring the garbage collector to evaluate all generations. Overloads of the <xref:System.GC.Collect%2A> method that include a `generation` parameter allow you to specify the oldest generation to be garbage collected.  \n  \n<a name=\"NoGCRegion\"></a>   \n## Disallowing garbage collection  \n Starting with the [!INCLUDE[net_v46](~/includes/net-v46-md.md)], the garbage collector supports a no GC region latency mode that can be used during the execution of critical paths in which garbage collection can adversely affect an app's performance. The no GC region latency mode requires that you specify an amount of memory that can be allocated without interference from the garbage collector. If the runtime can allocate that memory, the runtime will not perform a garbage collection while code in the critical path is executing.  \n  \n You define the beginning of the critical path of the no GC region by calling one of the overloads of the <xref:System.GC.TryStartNoGCRegion%2A>. You specify the end of its critical path by calling the <xref:System.GC.EndNoGCRegion%2A> method.  \n  \n You cannot nest calls to the <xref:System.GC.TryStartNoGCRegion%2A> method, and you should only call the <xref:System.GC.EndNoGCRegion%2A> method if the runtime is currently in no GC region latency mode. In other words, you should not call <xref:System.GC.TryStartNoGCRegion%2A> multiple times (after the first method call, subsequent calls will not succeed), and you should not expect calls to <xref:System.GC.EndNoGCRegion%2A> to succeed just because the first call to <xref:System.GC.TryStartNoGCRegion%2A> succeeded."
+  example:
+  - "The following example uses several GC methods to get generation and memory information about a block of unused objects and print it to the console. The unused objects are then collected, and the resulting memory totals are displayed.  \n  \n [!code-cpp[System.GC.Collect Int Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.gc.collect int example/CPP/class1.cpp#1)]\n [!code-csharp[System.GC.Collect Int Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.gc.collect int example/CS/class1.cs#1)]\n [!code-vb[System.GC.Collect Int Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.gc.collect int example/VB/class1.vb#1)]"
+  syntax:
+    content: public static class GC
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.AddMemoryPressure(System.Int64)
+  commentId: M:System.GC.AddMemoryPressure(System.Int64)
+  id: AddMemoryPressure(System.Int64)
+  parent: System.GC
+  langs:
+  - csharp
+  name: AddMemoryPressure(Int64)
+  nameWithType: GC.AddMemoryPressure(Int64)
+  fullName: GC.AddMemoryPressure(Int64)
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Informs the runtime of a large allocation of unmanaged memory that should be taken into account when scheduling garbage collection.
+  remarks: "In determining when to schedule garbage collection, the runtime takes into account how much managed memory is allocated. If a small managed object allocates a large amount of unmanaged memory, the runtime takes into account only the managed memory, and thus underestimates the urgency of scheduling garbage collection. The <xref:System.GC.AddMemoryPressure%2A> method informs the runtime of this additional pressure on system memory.  \n  \n In the simplest usage pattern, a managed object allocates unmanaged memory in the constructor and releases it in the `Dispose` or `Finalize` method. Call the <xref:System.GC.AddMemoryPressure%2A> method after allocating the unmanaged memory, and call the <xref:System.GC.RemoveMemoryPressure%2A> method after releasing it.  \n  \n In more complicated scenarios, where the unmanaged memory allocation changes substantially during the lifetime of the managed object, you can call the <xref:System.GC.AddMemoryPressure%2A> and <xref:System.GC.RemoveMemoryPressure%2A> methods to communicate these incremental changes to the runtime.  \n  \n> [!CAUTION]\n>  You must ensure that you remove exactly the amount of pressure you add. Failing to do so can adversely affect the performance of the system in applications that run for long periods of time."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public static void AddMemoryPressure (long bytesAllocated);
+    parameters:
+    - id: bytesAllocated
+      type: System.Int64
+      description: The incremental amount of unmanaged memory that has been allocated.
+  overload: System.GC.AddMemoryPressure*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: "<code>bytesAllocated</code> is less than or equal to 0.  \n  \n -or-  \n  \n On a 32-bit computer, <code>bytesAllocated</code> is larger than <xref href=\"System.Int32.MaxValue\"></xref>."
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.CancelFullGCNotification
+  commentId: M:System.GC.CancelFullGCNotification
+  id: CancelFullGCNotification
+  parent: System.GC
+  langs:
+  - csharp
+  name: CancelFullGCNotification()
+  nameWithType: GC.CancelFullGCNotification()
+  fullName: GC.CancelFullGCNotification()
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Cancels the registration of a garbage collection notification.
+  remarks: This method cancels a garbage collection notification that was registered by using the <xref:System.GC.RegisterForFullGCNotification%2A> method. You do not have to call this method before adjusting threshold parameter values in subsequent calls to the <xref:System.GC.RegisterForFullGCNotification%2A> method.
+  example:
+  - "The following example cancels a garbage collection registration. This example is part of a larger example provided for the [Garbage Collection Notifications](~/docs/standard/garbage-collection/notifications.md) topic.  \n  \n [!code-cpp[GCNotification#7](~/samples/snippets/cpp/VS_Snippets_CLR/GCNotification/cpp/program.cpp#7)]\n [!code-csharp[GCNotification#7](~/samples/snippets/csharp/VS_Snippets_CLR/GCNotification/cs/Program.cs#7)]\n [!code-vb[GCNotification#7](~/samples/snippets/visualbasic/VS_Snippets_CLR/GCNotification/vb/program.vb#7)]"
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public static void CancelFullGCNotification ();
+    parameters: []
+  overload: System.GC.CancelFullGCNotification*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: This member is not available when concurrent garbage collection is enabled. See the [<gcConcurrent>](~/docs/framework/configure-apps/file-schema/runtime/gcconcurrent-element.md) runtime setting for information about how to disable concurrent garbage collection.
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.Collect
+  commentId: M:System.GC.Collect
+  id: Collect
+  parent: System.GC
+  langs:
+  - csharp
+  name: Collect()
+  nameWithType: GC.Collect()
+  fullName: GC.Collect()
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Forces an immediate garbage collection of all generations.
+  remarks: "Use this method to try to reclaim all memory that is inaccessible. It performs a blocking garbage collection of all generations.  \n  \n All objects, regardless of how long they have been in memory, are considered for collection; however, objects that are referenced in managed code are not collected. Use this method to force the system to try to reclaim the maximum amount of available memory.  \n  \n Starting with the [!INCLUDE[net_v451](~/includes/net-v451-md.md)], you can compact the large object heap (LOH) by setting the <xref:System.Runtime.GCSettings.LargeObjectHeapCompactionMode%2A?displayProperty=fullName> property to <xref:System.Runtime.GCLargeObjectHeapCompactionMode?displayProperty=fullName> before calling the <xref:System.GC.Collect%2A> method, as the following example illustrates.  \n  \n [!code-csharp[System.Runtime.GCSettings#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.runtime.gcsettings/cs/lohcompactionmode1.cs#1)]\n [!code-vb[System.Runtime.GCSettings#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.runtime.gcsettings/vb/lohcompactionmode1.vb#1)]"
+  example:
+  - "The following example demonstrates how to use the <xref:System.GC.Collect%2A> method to perform a collection on all generations of memory. The code generates a number of unused objects, and then calls the <xref:System.GC.Collect%2A> method to clean them from memory.  \n  \n [!code-cpp[System.GC.Collect Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.GC.Collect Example/CPP/class1.cpp#1)]\n [!code-csharp[System.GC.Collect Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.GC.Collect Example/CS/class1.cs#1)]\n [!code-vb[System.GC.Collect Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.GC.Collect Example/VB/class1.vb#1)]"
+  syntax:
+    content: public static void Collect ();
+    parameters: []
+  overload: System.GC.Collect*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.Collect(System.Int32)
+  commentId: M:System.GC.Collect(System.Int32)
+  id: Collect(System.Int32)
+  parent: System.GC
+  langs:
+  - csharp
+  name: Collect(Int32)
+  nameWithType: GC.Collect(Int32)
+  fullName: GC.Collect(Int32)
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Forces an immediate garbage collection from generation 0 through a specified generation.
+  remarks: "Use this method to try to reclaim memory that is inaccessible. However, using this method does not guarantee that all inaccessible memory in the specified generation is reclaimed.  \n  \n If object aging is implemented, the garbage collector does not collect objects with a generation number that is higher than the specified generation. If object aging is not implemented, the garbage collector considers all objects during the garbage collection.  \n  \n Use the <xref:System.GC.MaxGeneration%2A> property to determine the maximum valid value of the `generation` parameter.  \n  \n To have the garbage collector consider all objects regardless of their generation, use the version of this method that takes no parameters. To have the garbage collector reclaim objects based on a <xref:System.GCCollectionMode> setting, use the <xref:System.GC.Collect%28System.Int32%2CSystem.GCCollectionMode%29?displayProperty=fullName> method overload."
+  example:
+  - "The following example demonstrates how to use the <xref:System.GC.Collect%2A> method to perform a collection on individual layers of memory. The code generates a number of unused objects, and then calls the <xref:System.GC.Collect%2A> method to clean them from memory.  \n  \n [!code-cpp[System.GC.Collect Int Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.gc.collect int example/CPP/class1.cpp#1)]\n [!code-csharp[System.GC.Collect Int Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.gc.collect int example/CS/class1.cs#1)]\n [!code-vb[System.GC.Collect Int Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.gc.collect int example/VB/class1.vb#1)]"
+  syntax:
+    content: public static void Collect (int generation);
+    parameters:
+    - id: generation
+      type: System.Int32
+      description: The number of the oldest generation to be garbage collected.
+  overload: System.GC.Collect*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>generation</code> is not valid.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.Collect(System.Int32,System.GCCollectionMode)
+  commentId: M:System.GC.Collect(System.Int32,System.GCCollectionMode)
+  id: Collect(System.Int32,System.GCCollectionMode)
+  parent: System.GC
+  langs:
+  - csharp
+  name: Collect(Int32, GCCollectionMode)
+  nameWithType: GC.Collect(Int32, GCCollectionMode)
+  fullName: GC.Collect(Int32, GCCollectionMode)
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Forces a garbage collection from generation 0 through a specified generation, at a time specified by a <xref href="System.GCCollectionMode"></xref> value.
+  remarks: "Use the `mode` parameter to specify whether garbage collection should occur immediately or only if the time is optimal to reclaim objects. Using this method does not guarantee that all inaccessible memory in the specified generation is reclaimed.  \n  \n To adjust the intrusiveness of garbage collection during critical periods in your application, set the <xref:System.Runtime.GCSettings.LatencyMode%2A> property.  \n  \n The garbage collector does not collect objects with a generation number higher than specified by the `generation` parameter. Use the <xref:System.GC.MaxGeneration%2A> property to determine the maximum valid value of `generation`.  \n  \n To have the garbage collector consider all objects regardless of their generation, use the version of this method that takes no parameters.  \n  \n To have the garbage collector reclaim objects up to a specified generation of objects, use the <xref:System.GC.Collect%28System.Int32%29?displayProperty=fullName> method overload. When you specify the maximum generation, all objects are collected."
+  example:
+  - "The following example forces a garbage collection for generation 2 objects with the <xref:System.GCCollectionMode.Optimized> setting.  \n  \n [!code-csharp[System.GC.GCCollectionMode#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.GC.GCCollectionMode/cs/Program.cs#1)]\n [!code-vb[System.GC.GCCollectionMode#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.GC.GCCollectionMode/vb/program.vb#1)]"
+  syntax:
+    content: public static void Collect (int generation, GCCollectionMode mode);
+    parameters:
+    - id: generation
+      type: System.Int32
+      description: The number of the oldest generation to be garbage collected.
+    - id: mode
+      type: System.GCCollectionMode
+      description: An enumeration value that specifies whether the garbage collection is forced (<xref href="System.GCCollectionMode.Default"></xref> or <xref href="System.GCCollectionMode.Forced"></xref>) or optimized (<xref href="System.GCCollectionMode.Optimized"></xref>).
+  overload: System.GC.Collect*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: "<code>generation</code> is not valid.  \n  \n -or-  \n  \n <code>mode</code> is not one of the <xref href=\"System.GCCollectionMode\"></xref> values."
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.Collect(System.Int32,System.GCCollectionMode,System.Boolean)
+  commentId: M:System.GC.Collect(System.Int32,System.GCCollectionMode,System.Boolean)
+  id: Collect(System.Int32,System.GCCollectionMode,System.Boolean)
+  parent: System.GC
+  langs:
+  - csharp
+  name: Collect(Int32, GCCollectionMode, Boolean)
+  nameWithType: GC.Collect(Int32, GCCollectionMode, Boolean)
+  fullName: GC.Collect(Int32, GCCollectionMode, Boolean)
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Forces a garbage collection from generation 0 through a specified generation, at a time specified by a <xref href="System.GCCollectionMode"></xref> value, with a value specifying whether the collection should be blocking.
+  remarks: "The following table summarizes the interaction of the `mode` and `blocking` parameters:  \n  \n|`mode`|`blocking` is `true`|`blocking` is `false`|  \n|-|-|-|  \n|<xref:System.GCCollectionMode.Forced> or <xref:System.GCCollectionMode.Default>|A blocking collection is performed as soon as possible. If a background collection is in progress and `generation` is 0 or 1, the <xref:System.GC.Collect%28System.Int32%2CSystem.GCCollectionMode%2CSystem.Boolean%29> method immediately triggers a blocking collection and returns when the collection is finished. If a background collection is in progress and `generation` is 2, the method waits until the background collection is finished, triggers a blocking generation 2 collection, and then returns.|A collection is performed as soon as possible. The <xref:System.GC.Collect%28System.Int32%2CSystem.GCCollectionMode%2CSystem.Boolean%29> method requests a background collection, but this is not guaranteed; depending on the circumstances, a blocking collection may still be performed. If a background collection is already in progress, the method returns immediately.|  \n|<xref:System.GCCollectionMode.Optimized>|A blocking collection may be performed, depending on the state of the garbage collector and the `generation` parameter. The garbage collector tries to provide optimal performance.|A collection may be performed, depending on the state of the garbage collector. The <xref:System.GC.Collect%28System.Int32%2CSystem.GCCollectionMode%2CSystem.Boolean%29> method requests a background collection, but this is not guaranteed; depending on the circumstances, a blocking collection may still be performed. The garbage collector tries to provide optimal performance. If a background collection is already in progress, the method returns immediately.|  \n  \n If a call to the <xref:System.GC.Collect%28System.Int32%2CSystem.GCCollectionMode%2CSystem.Boolean%29> method performs a full blocking garbage collection, you can also compact the large object heap by setting the <xref:System.Runtime.GCSettings.LargeObjectHeapCompactionMode%2A?displayProperty=fullName> property to <xref:System.Runtime.GCLargeObjectHeapCompactionMode?displayProperty=fullName> before calling the <xref:System.GC.Collect%2A> method."
+  syntax:
+    content: public static void Collect (int generation, GCCollectionMode mode, bool blocking);
+    parameters:
+    - id: generation
+      type: System.Int32
+      description: The number of the oldest generation to be garbage collected.
+    - id: mode
+      type: System.GCCollectionMode
+      description: An enumeration value that specifies whether the garbage collection is forced (<xref href="System.GCCollectionMode.Default"></xref> or <xref href="System.GCCollectionMode.Forced"></xref>) or optimized (<xref href="System.GCCollectionMode.Optimized"></xref>).
+    - id: blocking
+      type: System.Boolean
+      description: '`true` to perform a blocking garbage collection; `false` to perform a background garbage collection where possible.'
+  overload: System.GC.Collect*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: "<code>generation</code> is not valid.  \n  \n -or-  \n  \n <code>mode</code> is not one of the <xref href=\"System.GCCollectionMode\"></xref> values."
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.Collect(System.Int32,System.GCCollectionMode,System.Boolean,System.Boolean)
+  commentId: M:System.GC.Collect(System.Int32,System.GCCollectionMode,System.Boolean,System.Boolean)
+  id: Collect(System.Int32,System.GCCollectionMode,System.Boolean,System.Boolean)
+  parent: System.GC
+  langs:
+  - csharp
+  name: Collect(Int32, GCCollectionMode, Boolean, Boolean)
+  nameWithType: GC.Collect(Int32, GCCollectionMode, Boolean, Boolean)
+  fullName: GC.Collect(Int32, GCCollectionMode, Boolean, Boolean)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Forces a garbage collection from generation 0 through a specified generation, at a time specified by a <xref href="System.GCCollectionMode"></xref> value, with values that specify whether the collection should be blocking and compacting.
+  remarks: "If `blocking` is `false`, the GC decides whether to perform a background or a blocking garbage collection. If `compacting` is `true`, it performs a blocking garbage collection.  \n  \n If `compacting` is `true`, the runtime compacts the small object heap (SOH). The large object heap (LOH) is not compacted unless the <xref:System.Runtime.GCSettings.LargeObjectHeapCompactionMode%2A?displayProperty=fullName> property is set to <xref:System.Runtime.GCLargeObjectHeapCompactionMode?displayProperty=fullName>. Note that this includes all blocking garbage collections, not just full blocking garbage collections.  \n  \n You can call the <xref:System.GC.Collect%28System.Int32%2CSystem.GCCollectionMode%2CSystem.Boolean%2CSystem.Boolean%29> method to reduce the managed heap to the smallest size possible, as the following code fragment illustrates.  \n  \n [!code-csharp[System.GC.Collect#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.gc.collect/cs/collect4.cs#1)]\n [!code-vb[System.GC.Collect#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.gc.collect/vb/collect4.vb#1)]  \n  \n Specifying `true` for the `compacting` argument guarantees a compacting, full blocking garbage collection. Setting the <xref:System.Runtime.GCSettings.LargeObjectHeapCompactionMode%2A?displayProperty=fullName> property to <xref:System.Runtime.GCLargeObjectHeapCompactionMode?displayProperty=fullName> ensures that both the LOH and SOH are compacted."
+  syntax:
+    content: public static void Collect (int generation, GCCollectionMode mode, bool blocking, bool compacting);
+    parameters:
+    - id: generation
+      type: System.Int32
+      description: The number of the oldest generation to be garbage collected.
+    - id: mode
+      type: System.GCCollectionMode
+      description: An enumeration value that specifies whether the garbage collection is forced (<xref href="System.GCCollectionMode.Default"></xref> or <xref href="System.GCCollectionMode.Forced"></xref>) or optimized (<xref href="System.GCCollectionMode.Optimized"></xref>).
+    - id: blocking
+      type: System.Boolean
+      description: '`true` to perform a blocking garbage collection; `false` to perform a background garbage collection where possible.'
+    - id: compacting
+      type: System.Boolean
+      description: '`true` to compact the small object heap; `false` to sweep only.'
+  overload: System.GC.Collect*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.CollectionCount(System.Int32)
+  commentId: M:System.GC.CollectionCount(System.Int32)
+  id: CollectionCount(System.Int32)
+  parent: System.GC
+  langs:
+  - csharp
+  name: CollectionCount(Int32)
+  nameWithType: GC.CollectionCount(Int32)
+  fullName: GC.CollectionCount(Int32)
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Returns the number of times garbage collection has occurred for the specified generation of objects.
+  remarks: If you implement your own resource management, you might need to force garbage collection periodically by calling the <xref:System.GC.Collect%2A> method. Because this is an expensive operation, you can improve performance by skipping the call when a garbage collection has occurred recently. Save the value returned by <xref:System.GC.CollectionCount%2A> immediately after calling <xref:System.GC.Collect%2A>. The next time you need to call <xref:System.GC.Collect%2A>, compare the current value returned by <xref:System.GC.CollectionCount%2A> to the saved value. If the two values are equal, no collection has occurred in the interim and it is reasonable to call <xref:System.GC.Collect%2A> again.
+  syntax:
+    content: public static int CollectionCount (int generation);
+    parameters:
+    - id: generation
+      type: System.Int32
+      description: The generation of objects for which the garbage collection count is to be determined.
+    return:
+      type: System.Int32
+      description: The number of times garbage collection has occurred for the specified generation since the process was started.
+  overload: System.GC.CollectionCount*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>generation</code> is less than 0.
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.EndNoGCRegion
+  commentId: M:System.GC.EndNoGCRegion
+  id: EndNoGCRegion
+  parent: System.GC
+  langs:
+  - csharp
+  name: EndNoGCRegion()
+  nameWithType: GC.EndNoGCRegion()
+  fullName: GC.EndNoGCRegion()
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Ends the no GC region latency mode.
+  remarks: "The <xref:System.GC.EndNoGCRegion%2A> method throws an <xref:System.InvalidOperationException> if the garbage collector is not in no GC region latency mode. This occurs under any of the following conditions:  \n  \n-   The <xref:System.GC.TryStartNoGCRegion%2A> method was not called previously.  \n  \n-   The call to the <xref:System.GC.TryStartNoGCRegion%2A> method returned `false`.  \n  \n-   The call to the <xref:System.GC.TryStartNoGCRegion%2A> method threw an exception.  \n  \n You can prevent an exception for any of these reasons by using code such as the following:  \n  \n [!code-csharp[System.GC.EndNoGCRegion#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.gc.endnogcregion/cs/endnogcregion1.cs#1)]\n [!code-vb[System.GC.EndNoGCRegion#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.gc.endnogcregion/vb/endnogcregion1.vb#1)]"
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public static void EndNoGCRegion ();
+    parameters: []
+  overload: System.GC.EndNoGCRegion*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: "The garbage collector is not in no GC region latency mode.  \n  \n -or-  \n  \n The no GC region latency mode was ended previously because a garbage collection was induced.  \n  \n -or-  \n  \n A memory allocation exceeded the amount specified in the call to the <xref href=\"System.GC.TryStartNoGCRegion(System.Int64)\"></xref> method."
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.GetAllocatedBytesForCurrentThread
+  commentId: M:System.GC.GetAllocatedBytesForCurrentThread
+  id: GetAllocatedBytesForCurrentThread
+  parent: System.GC
+  langs:
+  - csharp
+  name: GetAllocatedBytesForCurrentThread()
+  nameWithType: GC.GetAllocatedBytesForCurrentThread()
+  fullName: GC.GetAllocatedBytesForCurrentThread()
+  type: Method
+  assemblies:
+  - System.Runtime
+  namespace: System
+  syntax:
+    content: public static long GetAllocatedBytesForCurrentThread ();
+    parameters: []
+    return:
+      type: System.Int64
+      description: ''
+  overload: System.GC.GetAllocatedBytesForCurrentThread*
+  exceptions: []
+  version:
+  - netcore-2.0
+  monikers:
+  - netcore-2.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.GetGeneration(System.Object)
+  commentId: M:System.GC.GetGeneration(System.Object)
+  id: GetGeneration(System.Object)
+  parent: System.GC
+  langs:
+  - csharp
+  name: GetGeneration(Object)
+  nameWithType: GC.GetGeneration(Object)
+  fullName: GC.GetGeneration(Object)
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Returns the current generation number of the specified object.
+  remarks: Use this method to determine the age of an object, and then use that information with the <xref:System.GC.Collect%2A> method to force the garbage collector to collect objects in the same generation. For example, use this method when you have a set of objects that are created as a group and that become inaccessible at the same time.
+  example:
+  - "The following example demonstrates how to use the <xref:System.GC.GetGeneration%2A> method to determine the age of an object. The example then performs garbage collections to clean up memory and compare the pre and post collection memory totals in the console.  \n  \n [!code-cpp[System.GC.Collect Int Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.gc.collect int example/CPP/class1.cpp#1)]\n [!code-csharp[System.GC.Collect Int Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.gc.collect int example/CS/class1.cs#1)]\n [!code-vb[System.GC.Collect Int Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.gc.collect int example/VB/class1.vb#1)]"
+  syntax:
+    content: public static int GetGeneration (object obj);
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object that generation information is retrieved for.
+    return:
+      type: System.Int32
+      description: The current generation number of <code>obj</code>.
+  overload: System.GC.GetGeneration*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.GetGeneration(System.WeakReference)
+  commentId: M:System.GC.GetGeneration(System.WeakReference)
+  id: GetGeneration(System.WeakReference)
+  parent: System.GC
+  langs:
+  - csharp
+  name: GetGeneration(WeakReference)
+  nameWithType: GC.GetGeneration(WeakReference)
+  fullName: GC.GetGeneration(WeakReference)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Returns the current generation number of the target of a specified weak reference.
+  remarks: ''
+  example:
+  - "The following example demonstrates the use of the <xref:System.GC.GetGeneration%2A> method to determine the age of a weak reference object.  \n  \n [!code-cpp[System.GC.GetGenerationWeak Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.GC.GetGenerationWeak Example/CPP/systemgcgetgenerationweak.cpp#1)]\n [!code-csharp[System.GC.GetGenerationWeak Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.GC.GetGenerationWeak Example/CS/systemgcgetgenerationweak.cs#1)]\n [!code-vb[System.GC.GetGenerationWeak Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.GC.GetGenerationWeak Example/VB/systemgcgetgenerationweak.vb#1)]"
+  syntax:
+    content: public static int GetGeneration (WeakReference wo);
+    parameters:
+    - id: wo
+      type: System.WeakReference
+      description: A <xref href="System.WeakReference"></xref> that refers to the target object whose generation number is to be determined.
+    return:
+      type: System.Int32
+      description: The current generation number of the target of <code>wo</code>.
+  overload: System.GC.GetGeneration*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: Garbage collection has already been performed on <code>wo</code>.
+  attributes: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.GetTotalMemory(System.Boolean)
+  commentId: M:System.GC.GetTotalMemory(System.Boolean)
+  id: GetTotalMemory(System.Boolean)
+  parent: System.GC
+  langs:
+  - csharp
+  name: GetTotalMemory(Boolean)
+  nameWithType: GC.GetTotalMemory(Boolean)
+  fullName: GC.GetTotalMemory(Boolean)
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Retrieves the number of bytes currently thought to be allocated. A parameter indicates whether this method can wait a short interval before returning, to allow the system to collect garbage and finalize objects.
+  remarks: If the `forceFullCollection` parameter is `true`, this method waits a short interval before returning while the system collects garbage and finalizes objects. The duration of the interval is an internally specified limit determined by the number of garbage collection cycles completed and the change in the amount of memory recovered between cycles. The garbage collector does not guarantee that all inaccessible memory is collected.
+  example:
+  - "The following example demonstrates how to use the <xref:System.GC.GetTotalMemory%2A> method to get and display the number of bytes currently allocated in managed memory.  \n  \n [!code-cpp[System.GC.Collect Int Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.gc.collect int example/CPP/class1.cpp#1)]\n [!code-csharp[System.GC.Collect Int Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.gc.collect int example/CS/class1.cs#1)]\n [!code-vb[System.GC.Collect Int Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.gc.collect int example/VB/class1.vb#1)]"
+  syntax:
+    content: public static long GetTotalMemory (bool forceFullCollection);
+    parameters:
+    - id: forceFullCollection
+      type: System.Boolean
+      description: '`true` to indicate that this method can wait for garbage collection to occur before returning; otherwise, `false`.'
+    return:
+      type: System.Int64
+      description: A number that is the best available approximation of the number of bytes currently allocated in managed memory.
+  overload: System.GC.GetTotalMemory*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.KeepAlive(System.Object)
+  commentId: M:System.GC.KeepAlive(System.Object)
+  id: KeepAlive(System.Object)
+  parent: System.GC
+  langs:
+  - csharp
+  name: KeepAlive(Object)
+  nameWithType: GC.KeepAlive(Object)
+  fullName: GC.KeepAlive(Object)
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: References the specified object, which makes it ineligible for garbage collection from the start of the current routine to the point where this method is called.
+  remarks: "The purpose of the <xref:System.GC.KeepAlive%2A> method is to ensure the existence of a reference to an object that is at risk of being prematurely reclaimed by the garbage collector. A common scenario where this might happen is when there are no references to the object in managed code or data, but the object is still in use in unmanaged code such as Win32 APIs, unmanaged DLLs, or methods using COM.  \n  \n This method references the `obj` parameter, making that object ineligible for garbage collection from the start of the routine to the point, in execution order, where this method is called. Code this method at the end, not the beginning, of the range of instructions where `obj` must be available.  \n  \n The <xref:System.GC.KeepAlive%2A> method performs no operation and produces no side effects other than extending the lifetime of the object passed in as a parameter."
+  example:
+  - "The following code example creates an object at the beginning of its `Main` method and does not refer to the object again until the end, when the <xref:System.GC.KeepAlive%2A> method is called. The object persists for the 30-second duration of the `Main` method, despite calls to the <xref:System.GC.Collect%2A> and <xref:System.GC.WaitForPendingFinalizers%2A> methods.  \n  \n [!code-cpp[System.GC.KeepAlive Example2#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.GC.KeepAlive Example2/CPP/gckeepalive.cpp#1)]\n [!code-csharp[System.GC.KeepAlive Example2#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.GC.KeepAlive Example2/CS/gckeepalive.cs#1)]\n [!code-vb[System.GC.KeepAlive Example2#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.GC.KeepAlive Example2/VB/gckeepalive.vb#1)]"
+  syntax:
+    content: public static void KeepAlive (object obj);
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object to reference.
+  overload: System.GC.KeepAlive*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.MaxGeneration
+  commentId: P:System.GC.MaxGeneration
+  id: MaxGeneration
+  parent: System.GC
+  langs:
+  - csharp
+  name: MaxGeneration
+  nameWithType: GC.MaxGeneration
+  fullName: GC.MaxGeneration
+  type: Property
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Gets the maximum number of generations that the system currently supports.
+  remarks: "The generation number, or age, of an object is an implementation-defined relative measure of an object's lifespan. The most recently created objects are in generation 0 and the oldest objects are in a generation less than or equal to the generation returned by the <xref:System.GC.MaxGeneration%2A> property.  \n  \n The garbage collector assumes that newer memory is more likely to be eligible for garbage collection than older memory. Therefore, the garbage collector improves its performance by adjusting generation numbers each time it reclaims memory, and the <xref:System.GC.MaxGeneration%2A> property value can grow over time.  \n  \n If object aging is implemented, the <xref:System.GC.MaxGeneration%2A> property returns the maximum generation number used by the system; otherwise, this property returns zero."
+  example:
+  - "The following example demonstrates how to use the MaxGeneration property to display the largest generation number currently in use.  \n  \n [!code-cpp[System.GC.Collect Int Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.gc.collect int example/CPP/class1.cpp#1)]\n [!code-csharp[System.GC.Collect Int Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.gc.collect int example/CS/class1.cs#1)]\n [!code-vb[System.GC.Collect Int Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.gc.collect int example/VB/class1.vb#1)]"
+  syntax:
+    content: >-
+      [get: System.Security.SecuritySafeCritical]
+
+      public static int MaxGeneration { get; }
+    return:
+      type: System.Int32
+      description: A value that ranges from zero to the maximum number of supported generations.
+  overload: System.GC.MaxGeneration*
+  exceptions: []
+  attributes:
+  - type: 'get: System.Security.SecuritySafeCritical'
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.RegisterForFullGCNotification(System.Int32,System.Int32)
+  commentId: M:System.GC.RegisterForFullGCNotification(System.Int32,System.Int32)
+  id: RegisterForFullGCNotification(System.Int32,System.Int32)
+  parent: System.GC
+  langs:
+  - csharp
+  name: RegisterForFullGCNotification(Int32, Int32)
+  nameWithType: GC.RegisterForFullGCNotification(Int32, Int32)
+  fullName: GC.RegisterForFullGCNotification(Int32, Int32)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Specifies that a garbage collection notification should be raised when conditions favor full garbage collection and when the collection has been completed.
+  remarks: "For each generation, the garbage collector sets a threshold for allocations into that generation. When the size of allocations exceeds this threshold, a garbage collection is triggered on that generation. For example, if generation 2’s threshold is 20MB (which means that 20MB survives generation 1 collections and is promoted into generation 2), and more than 20MB has survived generation 1 and is prompted into generation 2, the next garbage collection will be attempted as a generation 2 collection. Similarly, if the large object heap's (LOH's) threshold is 20MB and your app has allocated more than 20MB of large objects, the next garbage collection will also be attempted as a generation 2 collection (since the LOH is only collected in gen2 garbage collections).  \n  \n The `maxGenerationThreshold` and `largeObjectHeapThreshold` thresholds control how much in advance you are notified before a full garbage collection occurs. The greater the threshold, the more allocations that can occur between notification and the next full garbage collection.  \n  \n If you have situations in which a full garbage collection by the common language runtime would adversely affect your application's performance, you can ask to be notified when the runtime is about to do a full garbage collection and circumvent that collection by inducing a collection yourself (using the <xref:System.GC.Collect%2A> method) when conditions are still favorable. In addition to changing the garbage collection schedule yourself, full GC notification is useful in following the scenarios:  \n  \n-   You monitor for the approach of a full garbage collection and, when you are notified that one is approaching, you reduce live data size (for example, by releasing some cache entries). As a result, when the garbage collection occurs, it is able to reclaim more memory.  \n  \n-   You monitor for the completion of a full garbage collection so that you can collect some statistics.  For example, you might want to measure the size of the heap at GC completion so that you know the size of live data. (After a full GC, the heap is at its smallest size.)  \n  \n For more information about what represents a full garbage collection, see [Garbage Collection Notifications](~/docs/standard/garbage-collection/notifications.md).  \n  \n When you register for a garbage collection notification, you can be notified when a full garbage collection is approaching and when it is completed. This pattern resembles how the operating system monitors for low memory notifications.  \n  \n Use the following guidelines for specifying the `maxGenerationThreshold` and `largeObjectHeapThreshold` parameters:  \n  \n-   The larger the threshold value, the more allocations will occur between the notification and the full garbage collection.  \n  \n     A larger threshold value provides more opportunities for the runtime to check for an approaching collection. This increases the likelihood that you will be notified. However, you should not set the threshold too high because that results in a more allocations before the runtime induces the next collection.  \n  \n     When you induce a collection yourself upon notification using a high threshold value, fewer objects are reclaimed than would be reclaimed by the runtime's next collection.  \n  \n-   The smaller the threshold value, the fewer the allocations between notification and the full garbage collection."
+  example:
+  - "The following example shows how to register a garbage collection notification and start a thread to monitor the status of the garbage collection notification. This code example is part of a larger example provided for [Garbage Collection Notifications](~/docs/standard/garbage-collection/notifications.md) topic.  \n  \n [!code-cpp[GCNotification#2](~/samples/snippets/cpp/VS_Snippets_CLR/GCNotification/cpp/program.cpp#2)]\n [!code-csharp[GCNotification#2](~/samples/snippets/csharp/VS_Snippets_CLR/GCNotification/cs/Program.cs#2)]\n [!code-vb[GCNotification#2](~/samples/snippets/visualbasic/VS_Snippets_CLR/GCNotification/vb/program.vb#2)]"
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public static void RegisterForFullGCNotification (int maxGenerationThreshold, int largeObjectHeapThreshold);
+    parameters:
+    - id: maxGenerationThreshold
+      type: System.Int32
+      description: A number between 1 and 99 that specifies when the notification should be raised based on the objects allocated in generation 2.
+    - id: largeObjectHeapThreshold
+      type: System.Int32
+      description: A number between 1 and 99 that specifies when the notification should be raised based on objects allocated in the large object heap.
+  overload: System.GC.RegisterForFullGCNotification*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>maxGenerationThreshold</code> or <code>largeObjectHeapThreshold</code> is not between 1 and 99.
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.RemoveMemoryPressure(System.Int64)
+  commentId: M:System.GC.RemoveMemoryPressure(System.Int64)
+  id: RemoveMemoryPressure(System.Int64)
+  parent: System.GC
+  langs:
+  - csharp
+  name: RemoveMemoryPressure(Int64)
+  nameWithType: GC.RemoveMemoryPressure(Int64)
+  fullName: GC.RemoveMemoryPressure(Int64)
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Informs the runtime that unmanaged memory has been released and no longer needs to be taken into account when scheduling garbage collection.
+  remarks: "In determining when to schedule garbage collection, the runtime takes into account how much managed memory is allocated. If a small managed object allocates a large amount of unmanaged memory, the runtime takes into account only the managed memory, and thus underestimates the urgency of scheduling garbage collection. The <xref:System.GC.AddMemoryPressure%2A> method informs the runtime of this additional pressure on system memory, and the <xref:System.GC.RemoveMemoryPressure%2A> method informs the runtime that the additional pressure has been released.  \n  \n In the simplest usage pattern, a managed object allocates unmanaged memory in the constructor and releases it in the `Dispose` or `Finalize` method. Call the <xref:System.GC.AddMemoryPressure%2A> method after allocating the unmanaged memory, and call the <xref:System.GC.RemoveMemoryPressure%2A> method after releasing it.  \n  \n In more complicated scenarios, where the unmanaged memory allocation changes substantially during the lifetime of the managed object, you can call the <xref:System.GC.AddMemoryPressure%2A> and <xref:System.GC.RemoveMemoryPressure%2A> methods to communicate these incremental changes to the runtime.  \n  \n> [!CAUTION]\n>  You must ensure that you remove exactly the amount of pressure you add. Failing to do so can adversely affect the performance of the system in applications that run for long periods of time."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public static void RemoveMemoryPressure (long bytesAllocated);
+    parameters:
+    - id: bytesAllocated
+      type: System.Int64
+      description: The amount of unmanaged memory that has been released.
+  overload: System.GC.RemoveMemoryPressure*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: "<code>bytesAllocated</code> is less than or equal to 0.  \n  \n -or-  \n  \n On a 32-bit computer, <code>bytesAllocated</code> is larger than <xref href=\"System.Int32.MaxValue\"></xref>."
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.ReRegisterForFinalize(System.Object)
+  commentId: M:System.GC.ReRegisterForFinalize(System.Object)
+  id: ReRegisterForFinalize(System.Object)
+  parent: System.GC
+  langs:
+  - csharp
+  name: ReRegisterForFinalize(Object)
+  nameWithType: GC.ReRegisterForFinalize(Object)
+  fullName: GC.ReRegisterForFinalize(Object)
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Requests that the system call the finalizer for the specified object for which <xref href="System.GC.SuppressFinalize(System.Object)"></xref> has previously been called.
+  remarks: "The <xref:System.GC.ReRegisterForFinalize%2A> method adds the `obj` parameter to the list of objects that request finalization before the garbage collector frees the object. The `obj` parameter must be the caller of this method.  \n  \n Calling the <xref:System.GC.ReRegisterForFinalize%2A> method does not guarantee that the garbage collector will call an object's finalizer.  \n  \n By default, all objects that implement finalizers are added to the list of objects that require finalization; however, an object might have already been finalized or might have disabled finalization by calling the <xref:System.GC.SuppressFinalize%2A> method.  \n  \n A finalizer can use this method to resurrect itself or an object that it references."
+  example:
+  - "The following example demonstrates how to use the ReRegisterForFinalize method to finalize an object a second time after garbage collection.  \n  \n [!code-cpp[System.GC.ReregisterForFinalize Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.GC.ReRegisterForFinalize Example/CPP/class1.cpp#1)]\n [!code-csharp[System.GC.ReregisterForFinalize Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.GC.ReRegisterForFinalize Example/CS/class1.cs#1)]\n [!code-vb[System.GC.ReregisterForFinalize Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.GC.ReRegisterForFinalize Example/VB/class1.vb#1)]"
+  syntax:
+    content: public static void ReRegisterForFinalize (object obj);
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object that a finalizer must be called for.
+  overload: System.GC.ReRegisterForFinalize*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>obj</code> is `null`.
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.SuppressFinalize(System.Object)
+  commentId: M:System.GC.SuppressFinalize(System.Object)
+  id: SuppressFinalize(System.Object)
+  parent: System.GC
+  langs:
+  - csharp
+  name: SuppressFinalize(Object)
+  nameWithType: GC.SuppressFinalize(Object)
+  fullName: GC.SuppressFinalize(Object)
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Requests that the common language runtime not call the finalizer for the specified object.
+  remarks: "This method sets a bit in the object header of `obj`, which the runtime checks when calling finalizers. A finalizer, which is represented by the <xref:System.Object.Finalize%2A?displayProperty=fullName> method, is used to release unmanaged resources before an object is garbage-collected. If `obj` does not have a finalizer, the call to the <xref:System.GC.SuppressFinalize%2A> method has no effect.  \n  \n Objects that implement the <xref:System.IDisposable> interface can call this method from the object's <xref:System.IDisposable.Dispose%2A?displayProperty=fullName> implementation to prevent the garbage collector from calling <xref:System.Object.Finalize%2A?displayProperty=fullName> on an object that does not require it. Typically, this is done to prevent the finalizer from releasing unmanaged resources that have already been freed by the <xref:System.IDisposable.Dispose%2A?displayProperty=fullName> implementation."
+  example:
+  - "The following example demonstrates how to use the <xref:System.GC.SuppressFinalize%2A> method in a resource class to prevent a redundant garbage collection from being called. The example uses the [dispose pattern](~/docs/standard/design-guidelines/dispose-pattern.md) to free both managed resources (that is, objects that implement <xref:System.IDisposable>) and unmanaged resources.  \n  \n [!code-csharp[System.GC.SuppressFinalize#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.gc.suppressfinalize/cs/suppressfinalize1.cs#1)]\n [!code-vb[System.GC.SuppressFinalize#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.gc.suppressfinalize/vb/suppressfinalize1.vb#1)]"
+  syntax:
+    content: public static void SuppressFinalize (object obj);
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object whose finalizer must not be executed.
+  overload: System.GC.SuppressFinalize*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>obj</code> is `null`.
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.TryStartNoGCRegion(System.Int64)
+  commentId: M:System.GC.TryStartNoGCRegion(System.Int64)
+  id: TryStartNoGCRegion(System.Int64)
+  parent: System.GC
+  langs:
+  - csharp
+  name: TryStartNoGCRegion(Int64)
+  nameWithType: GC.TryStartNoGCRegion(Int64)
+  fullName: GC.TryStartNoGCRegion(Int64)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Attempts to disallow garbage collection during the execution of a critical path if a specified amount of memory is available.
+  remarks: "The <xref:System.GC.TryStartNoGCRegion%28System.Int64%29> method attempts to place the garbage collector in no GC region latency mode, which disallows garbage collection while an app executes a critical region of code.  If the runtime is unable to initially allocate the requested amount of memory, the garbage collector performs a full blocking garbage collection in an attempt to free additional memory. The garbage collector enters no GC region latency mode if it is able to allocate the required amount of memory, which in this case is actually 2 * `totalSize` bytes (it attempts to allocate `totalSize` bytes for the small object heap and `totalSize` bytes for the large object heap).  \n  \n `totalSize` must be large enough to handle all memory allocations that occur in the critical path. This includes allocations by the app, as well as allocations that the runtime makes on the app's behalf.  \n  \n> [!IMPORTANT]\n>  You cannot nest calls to the <xref:System.GC.TryStartNoGCRegion%2A> method, and you should only call the <xref:System.GC.EndNoGCRegion%2A> method if the runtime is currently in no GC region latency mode. In other words, you should not call <xref:System.GC.TryStartNoGCRegion%2A> multiple times (after the first method call, subsequent calls will not succeed), and you should not expect calls to <xref:System.GC.EndNoGCRegion%2A> to succeed just because the first call to <xref:System.GC.TryStartNoGCRegion%2A> succeeded.  \n  \n You exit the no GC region latency mode by calling the <xref:System.GC.EndNoGCRegion%2A> method."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public static bool TryStartNoGCRegion (long totalSize);
+    parameters:
+    - id: totalSize
+      type: System.Int64
+      description: The amount of memory in bytes to allocate without triggering a garbage collection. It must be less than or equal to the size of an ephemeral segment. For information on the size of an ephemeral segement, see the "Ephemeral generations and segments" section in the [Fundamentals of Garbage Collection](~/docs/standard/garbage-collection/fundamentals.md) article.
+    return:
+      type: System.Boolean
+      description: '`true` if the runtime was able to commit the required amount of memory and the garbage collector is able to enter no GC region latency mode; otherwise, `false`.'
+  overload: System.GC.TryStartNoGCRegion*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>totalSize</code> exceeds the ephemeral segment size.
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The process is already in no GC region latency mode.
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.TryStartNoGCRegion(System.Int64,System.Boolean)
+  commentId: M:System.GC.TryStartNoGCRegion(System.Int64,System.Boolean)
+  id: TryStartNoGCRegion(System.Int64,System.Boolean)
+  parent: System.GC
+  langs:
+  - csharp
+  name: TryStartNoGCRegion(Int64, Boolean)
+  nameWithType: GC.TryStartNoGCRegion(Int64, Boolean)
+  fullName: GC.TryStartNoGCRegion(Int64, Boolean)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Attempts to disallow garbage collection during the execution of a critical path if a specified amount of memory is available, and controls whether the garbage collector does a full blocking garbage collection if not enough memory is initially available.
+  remarks: "The <xref:System.GC.TryStartNoGCRegion%28System.Int64%2CSystem.Boolean%29> method attempts to place the garbage collector in no GC region latency mode, which disallows garbage collection while an app executes a critical region of code.  If the runtime is unable to initially allocate the requested amount of memory and the `disallowFullBlockingGC` argument is `false`, the garbage collector performs a full blocking garbage collection in an attempt to free additional memory; otherwise, the allocation fails, and the method returns `false`. The garbage collector enters no GC region latency mode if it is able to allocate the required amount of memory, which in this case is actually 2 * `totalSize` (it attempts to allocate `totalSize` for the small object heap and `totalSize` for the large object heap).  \n  \n `totalSize` must be large enough to handle all memory allocations that occur in the critical path. This includes allocations by the app, as well as allocations that the runtime makes on the app's behalf.  \n  \n Setting `disallowFullBlockingGC` to `true` to prevent a full blocking garbage collection if not enough memory is initially available is most useful in load balancing scenarios: one system can call this method and report itself as ready to accept requests if it returns `true`, and have the load balancer redirect requests to other systems if it returns `false`. It can then do a full blocking garbage collection when it's not handling requests by calling the <xref:System.GC.Collect%28System.Int32%2CSystem.GCCollectionMode%2CSystem.Boolean%2CSystem.Boolean%29> method.  \n  \n> [!IMPORTANT]\n>  You cannot nest calls to the <xref:System.GC.TryStartNoGCRegion%2A> method, and you should only call the <xref:System.GC.EndNoGCRegion%2A> method if the runtime is currently in no GC region latency mode. In other words, you should not call <xref:System.GC.TryStartNoGCRegion%2A> multiple times (after the first method call, subsequent calls will not succeed), and you should not expect calls to <xref:System.GC.EndNoGCRegion%2A> to succeed just because the first call to <xref:System.GC.TryStartNoGCRegion%2A> succeeded.  \n  \n You exit the no GC region latency mode by calling the <xref:System.GC.EndNoGCRegion%2A> method."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public static bool TryStartNoGCRegion (long totalSize, bool disallowFullBlockingGC);
+    parameters:
+    - id: totalSize
+      type: System.Int64
+      description: The amount of memory in bytes to allocate without triggering a garbage collection. It must be less than or equal to the size of an ephemeral segment. For information on the size of an ephemeral segement, see the "Ephemeral generations and segments" section in the [Fundamentals of Garbage Collection](~/docs/standard/garbage-collection/fundamentals.md) article.
+    - id: disallowFullBlockingGC
+      type: System.Boolean
+      description: '`true` to omit a full blocking garbage collection if the garbage collector is initially unable to allocate <code>totalSize</code> bytes; otherwise, `false`.'
+    return:
+      type: System.Boolean
+      description: '`true` if the runtime was able to commit the required amount of memory and the garbage collector is able to enter no GC region latency mode; otherwise, `false`.'
+  overload: System.GC.TryStartNoGCRegion*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>totalSize</code> exceeds the ephemeral segment size.
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The process is already in no GC region latency mode.
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.TryStartNoGCRegion(System.Int64,System.Int64)
+  commentId: M:System.GC.TryStartNoGCRegion(System.Int64,System.Int64)
+  id: TryStartNoGCRegion(System.Int64,System.Int64)
+  parent: System.GC
+  langs:
+  - csharp
+  name: TryStartNoGCRegion(Int64, Int64)
+  nameWithType: GC.TryStartNoGCRegion(Int64, Int64)
+  fullName: GC.TryStartNoGCRegion(Int64, Int64)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Attempts to disallow garbage collection during the execution of a critical path if a specified amount of memory is available for the large object heap and the small object heap.
+  remarks: "The <xref:System.GC.TryStartNoGCRegion%28System.Int64%2CSystem.Int64%29> method attempts to place the garbage collector in no GC region latency mode, which disallows garbage collection while an app executes a critical region of code.  If the runtime is unable to initially allocate the requested amount of memory, the garbage collector performs a full blocking garbage collection in an attempt to free additional memory. The garbage collector enters no GC region latency mode if it is able to allocate `lohSize` for the LOH and `totalSize` – `lohSize` for the small object heap (SOH).  \n  \n `lohSize` must be large enough to handle all memory allocations that occur in the critical path for the LOH, and `totalSize` – `lohSize` must be large enough to handle all memory allocations that occur in the critical path for the SOH. This includes allocations by the app, as well as allocations that the runtime makes on the app's behalf.  \n  \n> [!IMPORTANT]\n>  You cannot nest calls to the <xref:System.GC.TryStartNoGCRegion%2A> method, and you should only call the <xref:System.GC.EndNoGCRegion%2A> method if the runtime is currently in no GC region latency mode. In other words, you should not call <xref:System.GC.TryStartNoGCRegion%2A> multiple times (after the first method call, subsequent calls will not succeed), and you should not expect calls to <xref:System.GC.EndNoGCRegion%2A> to succeed just because the first call to <xref:System.GC.TryStartNoGCRegion%2A> succeeded.  \n  \n You exit the no GC region latency mode by calling the <xref:System.GC.EndNoGCRegion%2A> method."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public static bool TryStartNoGCRegion (long totalSize, long lohSize);
+    parameters:
+    - id: totalSize
+      type: System.Int64
+      description: The amount of memory in bytes to allocate without triggering a garbage collection. <code>totalSize</code> –<code>lohSize</code> must be less than or equal to the size of an ephemeral segment. For information on the size of an ephemeral segement, see the "Ephemeral generations and segments" section in the [Fundamentals of Garbage Collection](~/docs/standard/garbage-collection/fundamentals.md) article.
+    - id: lohSize
+      type: System.Int64
+      description: The number of bytes in <code>totalSize</code> to use for large object heap (LOH) allocations.
+    return:
+      type: System.Boolean
+      description: '`true` if the runtime was able to commit the required amount of memory and the garbage collector is able to enter no GC region latency mode; otherwise, `false`.'
+  overload: System.GC.TryStartNoGCRegion*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>totalSize</code> – <code>lohSize</code> exceeds the ephemeral segment size.
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The process is already in no GC region latency mode.
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.TryStartNoGCRegion(System.Int64,System.Int64,System.Boolean)
+  commentId: M:System.GC.TryStartNoGCRegion(System.Int64,System.Int64,System.Boolean)
+  id: TryStartNoGCRegion(System.Int64,System.Int64,System.Boolean)
+  parent: System.GC
+  langs:
+  - csharp
+  name: TryStartNoGCRegion(Int64, Int64, Boolean)
+  nameWithType: GC.TryStartNoGCRegion(Int64, Int64, Boolean)
+  fullName: GC.TryStartNoGCRegion(Int64, Int64, Boolean)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Attempts to disallow garbage collection during the execution of a critical path if a specified amount of memory is available for the large object heap and the small object heap, and controls whether the garbage collector does a full blocking garbage collection if not enough memory is initially available.
+  remarks: "The <xref:System.GC.TryStartNoGCRegion%28System.Int64%2CSystem.Int64%2CSystem.Boolean%29> method attempts to place the garbage collector in no GC region latency mode, which disallows garbage collection while an app executes a critical region of code.  If the runtime is unable to initially allocate the requested amount of memory and the `disallowFullBlockingGC` argument is `false`, the garbage collector performs a full blocking garbage collection in an attempt to free additional memory; otherwise, the allocation fails, and the method returns `false`. The garbage collector enters no GC region latency mode if it is able to allocate `lohSize` for the LOH and `totalSize` – `lohSize` for the small object heap (SOH).  \n  \n `lohSize` must be large enough to handle all memory allocations that occur in the critical path for the LOH, and `totalSize` – `lohSize` must be large enough to handle all memory allocations that occur in the critical path for the SOH. This includes allocations by the app, as well as allocations that the runtime makes on the app's behalf.  \n  \n Setting `disallowFullBlockingGC` to `true` to prevent a full blocking garbage collection if not enough memory is initially available is most useful in load balancing scenarios: one system can call this method and report itself as ready to accept requests if it returns `true`, and have the load balancer redirect requests to other systems if it returns `false`. It can then do a full blocking garbage collection when it's not handling requests by calling the <xref:System.GC.Collect%28System.Int32%2CSystem.GCCollectionMode%2CSystem.Boolean%2CSystem.Boolean%29> method.  \n  \n> [!IMPORTANT]\n>  You cannot nest calls to the <xref:System.GC.TryStartNoGCRegion%2A> method, and you should only call the <xref:System.GC.EndNoGCRegion%2A> method if the runtime is currently in no GC region latency mode. In other words, you should not call <xref:System.GC.TryStartNoGCRegion%2A> multiple times (after the first method call, subsequent calls will not succeed), and you should not expect calls to <xref:System.GC.EndNoGCRegion%2A> to succeed just because the first call to <xref:System.GC.TryStartNoGCRegion%2A> succeeded.  \n  \n You exit the no GC region latency mode by calling the <xref:System.GC.EndNoGCRegion%2A> method."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public static bool TryStartNoGCRegion (long totalSize, long lohSize, bool disallowFullBlockingGC);
+    parameters:
+    - id: totalSize
+      type: System.Int64
+      description: The amount of memory in bytes to allocate without triggering a garbage collection. <code>totalSize</code> –<code>lohSize</code> must be less than or equal to the size of an ephemeral segment. For information on the size of an ephemeral segement, see the "Ephemeral generations and segments" section in the [Fundamentals of Garbage Collection](~/docs/standard/garbage-collection/fundamentals.md) article.
+    - id: lohSize
+      type: System.Int64
+      description: The number of bytes in <code>totalSize</code> to use for large object heap (LOH) allocations.
+    - id: disallowFullBlockingGC
+      type: System.Boolean
+      description: '`true` to omit a full blocking garbage collection if the garbage collector is initially unable to allocate the specified memory on the small object heap (SOH) and LOH; otherwise, `false`.'
+    return:
+      type: System.Boolean
+      description: '`true` if the runtime was able to commit the required amount of memory and the garbage collector is able to enter no GC region latency mode; otherwise, `false`.'
+  overload: System.GC.TryStartNoGCRegion*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>totalSize</code> – <code>lohSize</code> exceeds the ephemeral segment size.
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The process is already in no GC region latency mode.
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.WaitForFullGCApproach
+  commentId: M:System.GC.WaitForFullGCApproach
+  id: WaitForFullGCApproach
+  parent: System.GC
+  langs:
+  - csharp
+  name: WaitForFullGCApproach()
+  nameWithType: GC.WaitForFullGCApproach()
+  fullName: GC.WaitForFullGCApproach()
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Returns the status of a registered notification for determining whether a full, blocking garbage collection by the common language runtime is imminent.
+  remarks: "Use the <xref:System.GCNotificationStatus> enumeration returned by this method to determine the status of the current garbage collection notification that was registered by using the <xref:System.GC.RegisterForFullGCNotification%2A> method. You can also use the <xref:System.GC.WaitForFullGCComplete%2A> method to determine whether the full garbage collection has completed.  \n  \n When the enumeration returns <xref:System.GCNotificationStatus.Succeeded>, you can do tasks such as preventing additional objects from being allocated and inducing a collection yourself with the <xref:System.GC.Collect%2A> method. Note that the notification does not guarantee that a full garbage collection will occur, only that conditions have reached the threshold that are favorable for a full garbage collection to occur.  \n  \n This method waits indefinitely for a garbage collection notification to be obtained. If you want to specify a time-out period for the method to return if the notification cannot be obtained, use the <xref:System.GC.WaitForFullGCApproach%28System.Int32%29?displayProperty=fullName> method overload. If you call this method without specifying a time-out, you can call the <xref:System.GC.CancelFullGCNotification%2A> method if you are waiting longer than preferred.  \n  \n You should follow this method with a call to the <xref:System.GC.WaitForFullGCComplete%2A> method to make sure that you have had a full garbage collection. Calling this method alone causes indeterminate results."
+  example:
+  - "The following example shows how to use this method to determine whether a full, blocking garbage collection is approaching. Whenever the status of the notification is <xref:System.GCNotificationStatus.Succeeded>, the user method `OnFullGCApproachNotify` is called to perform actions in response to the approaching collection. This code example is part of a larger example provided for [Garbage Collection Notifications](~/docs/standard/garbage-collection/notifications.md) topic.  \n  \n [!code-cpp[GCNotification#3](~/samples/snippets/cpp/VS_Snippets_CLR/GCNotification/cpp/program.cpp#3)]\n [!code-csharp[GCNotification#3](~/samples/snippets/csharp/VS_Snippets_CLR/GCNotification/cs/Program.cs#3)]\n [!code-vb[GCNotification#3](~/samples/snippets/visualbasic/VS_Snippets_CLR/GCNotification/vb/program.vb#3)]"
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public static GCNotificationStatus WaitForFullGCApproach ();
+    parameters: []
+    return:
+      type: System.GCNotificationStatus
+      description: The status of the registered garbage collection notification.
+  overload: System.GC.WaitForFullGCApproach*
+  exceptions: []
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.WaitForFullGCApproach(System.Int32)
+  commentId: M:System.GC.WaitForFullGCApproach(System.Int32)
+  id: WaitForFullGCApproach(System.Int32)
+  parent: System.GC
+  langs:
+  - csharp
+  name: WaitForFullGCApproach(Int32)
+  nameWithType: GC.WaitForFullGCApproach(Int32)
+  fullName: GC.WaitForFullGCApproach(Int32)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Returns, in a specified time-out period, the status of a registered notification for determining whether a full, blocking garbage collection by the common language runtime is imminent.
+  remarks: "Use the <xref:System.GCNotificationStatus> enumeration returned by this method to determine the status of the current garbage collection notification that was registered by using the <xref:System.GC.RegisterForFullGCNotification%2A> method. You can also use the <xref:System.GC.WaitForFullGCComplete%2A> method to determine whether the full garbage collection has completed.  \n  \n Note that this method returns immediately whenever a garbage collection notification status is obtained, regardless of the value specified by `millisecondsTimeout`. If a garbage collection notification status is not obtained before `millisecondsTimeout` times out, this method returns <xref:System.GCNotificationStatus.NotApplicable>.  \n  \n When the enumeration returns <xref:System.GCNotificationStatus.Succeeded>, you can do tasks such as preventing additional objects from being allocated and inducing a collection yourself with the <xref:System.GC.Collect%2A> method. Note that the notification does not guarantee that a full garbage collection will occur, only that conditions have reached the threshold that are favorable for a full garbage collection to occur.  \n  \n You can call the <xref:System.GC.CancelFullGCNotification%2A> method when you cannot wait for the time-out period to elapse.  \n  \n You should follow this method with a call to the <xref:System.GC.WaitForFullGCComplete%2A> method to make sure that you have had a full garbage collection. Calling this method alone causes indeterminate results."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public static GCNotificationStatus WaitForFullGCApproach (int millisecondsTimeout);
+    parameters:
+    - id: millisecondsTimeout
+      type: System.Int32
+      description: The length of time to wait before a notification status can be obtained. Specify -1 to wait indefinitely.
+    return:
+      type: System.GCNotificationStatus
+      description: The status of the registered garbage collection notification.
+  overload: System.GC.WaitForFullGCApproach*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>millisecondsTimeout</code> must be either non-negative or less than or equal to <xref href="System.Int32.MaxValue"></xref> or -1.
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.WaitForFullGCComplete
+  commentId: M:System.GC.WaitForFullGCComplete
+  id: WaitForFullGCComplete
+  parent: System.GC
+  langs:
+  - csharp
+  name: WaitForFullGCComplete()
+  nameWithType: GC.WaitForFullGCComplete()
+  fullName: GC.WaitForFullGCComplete()
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Returns the status of a registered notification for determining whether a full, blocking garbage collection by the common language runtime has completed.
+  remarks: "Use the <xref:System.GCNotificationStatus> enumeration returned by this method to determine the status of the current garbage collection notification that was registered by using the <xref:System.GC.RegisterForFullGCNotification%2A> method. You can also use the <xref:System.GC.WaitForFullGCApproach%2A> method to determine whether a full garbage collection is imminent.  \n  \n When the enumeration returns <xref:System.GCNotificationStatus.Succeeded>, you can do tasks such as resuming work and obtaining a collection count with the <xref:System.GC.CollectionCount%2A> property.  \n  \n This method waits indefinitely for a garbage collection notification to be obtained. If you want to specify a time-out period for the method to return if the notification cannot be obtained, use the <xref:System.GC.WaitForFullGCApproach%28System.Int32%29?displayProperty=fullName> method overload. If you call this method without specifying a time-out, you can call the <xref:System.GC.CancelFullGCNotification%2A> method if you are waiting longer than preferred.  \n  \n This method call should be preceded with a call to the <xref:System.GC.WaitForFullGCApproach%2A> method to make sure that you have had a full garbage collection. Calling this method alone can produce indeterminate results."
+  example:
+  - "The following example shows how to use this method to determine whether a full garbage collection has completed. Whenever the status of the notification is <xref:System.GCNotificationStatus.Succeeded>, the user method `OnFullGCCompletedNotify` is called to perform actions in response to the completed collection. This code example is part of a larger example provided for [Garbage Collection Notifications](~/docs/standard/garbage-collection/notifications.md) topic.  \n  \n [!code-cpp[GCNotification#4](~/samples/snippets/cpp/VS_Snippets_CLR/GCNotification/cpp/program.cpp#4)]\n [!code-csharp[GCNotification#4](~/samples/snippets/csharp/VS_Snippets_CLR/GCNotification/cs/Program.cs#4)]\n [!code-vb[GCNotification#4](~/samples/snippets/visualbasic/VS_Snippets_CLR/GCNotification/vb/program.vb#4)]"
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public static GCNotificationStatus WaitForFullGCComplete ();
+    parameters: []
+    return:
+      type: System.GCNotificationStatus
+      description: The status of the registered garbage collection notification.
+  overload: System.GC.WaitForFullGCComplete*
+  exceptions: []
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.WaitForFullGCComplete(System.Int32)
+  commentId: M:System.GC.WaitForFullGCComplete(System.Int32)
+  id: WaitForFullGCComplete(System.Int32)
+  parent: System.GC
+  langs:
+  - csharp
+  name: WaitForFullGCComplete(Int32)
+  nameWithType: GC.WaitForFullGCComplete(Int32)
+  fullName: GC.WaitForFullGCComplete(Int32)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Returns, in a specified time-out period, the status of a registered notification for determining whether a full, blocking garbage collection by common language the runtime has completed.
+  remarks: "Use the <xref:System.GCNotificationStatus> enumeration returned by this method to determine the status of the current garbage collection notification that was registered by using the <xref:System.GC.RegisterForFullGCNotification%2A> method. You can also use the <xref:System.GC.WaitForFullGCApproach%2A> method to determine whether a full garbage collection is imminent.  \n  \n Note that this method returns immediately whenever a garbage collection notification status is obtained, regardless of the value specified by `millisecondsTimeout`. If a garbage collection notification status is not obtained before `millisecondsTimeout` times out, this method returns <xref:System.GCNotificationStatus.NotApplicable>.  \n  \n When the enumeration returns <xref:System.GCNotificationStatus.Succeeded>, you can do tasks such as resuming work and obtaining a collection count with the <xref:System.GC.CollectionCount%2A> property.  \n  \n You can call the <xref:System.GC.CancelFullGCNotification%2A> method when you cannot wait for the time-out period to elapse.  \n  \n This method call should be preceded with a call to the <xref:System.GC.WaitForFullGCApproach%2A> method to make sure that you have had a full garbage collection. Calling this method alone can produce indeterminate results."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public static GCNotificationStatus WaitForFullGCComplete (int millisecondsTimeout);
+    parameters:
+    - id: millisecondsTimeout
+      type: System.Int32
+      description: The length of time to wait before a notification status can be obtained. Specify -1 to wait indefinitely.
+    return:
+      type: System.GCNotificationStatus
+      description: The status of the registered garbage collection notification.
+  overload: System.GC.WaitForFullGCComplete*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: <code>millisecondsTimeout</code> must be either non-negative or less than or equal to <xref href="System.Int32.MaxValue"></xref> or -1.
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.GC.WaitForPendingFinalizers
+  commentId: M:System.GC.WaitForPendingFinalizers
+  id: WaitForPendingFinalizers
+  parent: System.GC
+  langs:
+  - csharp
+  name: WaitForPendingFinalizers()
+  nameWithType: GC.WaitForPendingFinalizers()
+  fullName: GC.WaitForPendingFinalizers()
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Suspends the current thread until the thread that is processing the queue of finalizers has emptied that queue.
+  remarks: "When the garbage collector finds objects that can be reclaimed, it checks each object to determine the object's finalization requirements. If an object implements a finalizer and has not disabled finalization by calling <xref:System.GC.SuppressFinalize%2A>, the object is placed in a list of objects that are marked as ready for finalization. The garbage collector calls the <xref:System.Object.Finalize%2A> methods for the objects in this list and removes the entries from the list. This method blocks until all finalizers have run to completion.  \n  \n The thread on which finalizers are run is unspecified, so there is no guarantee that this method will terminate. However, this thread can be interrupted by another thread while the <xref:System.GC.WaitForPendingFinalizers%2A> method is in progress. For example, you can start another thread that waits for a period of time and then interrupts this thread if this thread is still suspended."
+  example:
+  - "The following example demonstrates how to use the <xref:System.GC.WaitForPendingFinalizers%2A> method to suspend the current thread until finalization of all the collected objects is complete.  \n  \n [!code-cpp[System.GC.WaitForPendingFinalizers Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.GC.WaitForPendingFinalizers Example/CPP/class1.cpp#1)]\n [!code-csharp[System.GC.WaitForPendingFinalizers Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.GC.WaitForPendingFinalizers Example/CS/class1.cs#1)]\n [!code-vb[System.GC.WaitForPendingFinalizers Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.GC.WaitForPendingFinalizers Example/VB/class1.vb#1)]"
+  syntax:
+    content: public static void WaitForPendingFinalizers ();
+    parameters: []
+  overload: System.GC.WaitForPendingFinalizers*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ArgumentOutOfRangeException
+  parent: System
+  isExternal: false
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: System.InvalidOperationException
+  parent: System
+  isExternal: false
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.GC.AddMemoryPressure(System.Int64)
+  parent: System.GC
+  isExternal: false
+  name: AddMemoryPressure(Int64)
+  nameWithType: GC.AddMemoryPressure(Int64)
+  fullName: GC.AddMemoryPressure(Int64)
+- uid: System.Int64
+  parent: System
+  isExternal: false
+  name: Int64
+  nameWithType: Int64
+  fullName: System.Int64
+- uid: System.GC.CancelFullGCNotification
+  parent: System.GC
+  isExternal: false
+  name: CancelFullGCNotification()
+  nameWithType: GC.CancelFullGCNotification()
+  fullName: GC.CancelFullGCNotification()
+- uid: System.GC.Collect
+  parent: System.GC
+  isExternal: false
+  name: Collect()
+  nameWithType: GC.Collect()
+  fullName: GC.Collect()
+- uid: System.GC.Collect(System.Int32)
+  parent: System.GC
+  isExternal: false
+  name: Collect(Int32)
+  nameWithType: GC.Collect(Int32)
+  fullName: GC.Collect(Int32)
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.GC.Collect(System.Int32,System.GCCollectionMode)
+  parent: System.GC
+  isExternal: false
+  name: Collect(Int32, GCCollectionMode)
+  nameWithType: GC.Collect(Int32, GCCollectionMode)
+  fullName: GC.Collect(Int32, GCCollectionMode)
+- uid: System.GCCollectionMode
+  parent: System
+  isExternal: false
+  name: GCCollectionMode
+  nameWithType: GCCollectionMode
+  fullName: System.GCCollectionMode
+- uid: System.GC.Collect(System.Int32,System.GCCollectionMode,System.Boolean)
+  parent: System.GC
+  isExternal: false
+  name: Collect(Int32, GCCollectionMode, Boolean)
+  nameWithType: GC.Collect(Int32, GCCollectionMode, Boolean)
+  fullName: GC.Collect(Int32, GCCollectionMode, Boolean)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.GC.Collect(System.Int32,System.GCCollectionMode,System.Boolean,System.Boolean)
+  parent: System.GC
+  isExternal: false
+  name: Collect(Int32, GCCollectionMode, Boolean, Boolean)
+  nameWithType: GC.Collect(Int32, GCCollectionMode, Boolean, Boolean)
+  fullName: GC.Collect(Int32, GCCollectionMode, Boolean, Boolean)
+- uid: System.GC.CollectionCount(System.Int32)
+  parent: System.GC
+  isExternal: false
+  name: CollectionCount(Int32)
+  nameWithType: GC.CollectionCount(Int32)
+  fullName: GC.CollectionCount(Int32)
+- uid: System.GC.EndNoGCRegion
+  parent: System.GC
+  isExternal: false
+  name: EndNoGCRegion()
+  nameWithType: GC.EndNoGCRegion()
+  fullName: GC.EndNoGCRegion()
+- uid: System.GC.GetAllocatedBytesForCurrentThread
+  parent: System.GC
+  isExternal: false
+  name: GetAllocatedBytesForCurrentThread()
+  nameWithType: GC.GetAllocatedBytesForCurrentThread()
+  fullName: GC.GetAllocatedBytesForCurrentThread()
+- uid: System.GC.GetGeneration(System.Object)
+  parent: System.GC
+  isExternal: false
+  name: GetGeneration(Object)
+  nameWithType: GC.GetGeneration(Object)
+  fullName: GC.GetGeneration(Object)
+- uid: System.GC.GetGeneration(System.WeakReference)
+  parent: System.GC
+  isExternal: false
+  name: GetGeneration(WeakReference)
+  nameWithType: GC.GetGeneration(WeakReference)
+  fullName: GC.GetGeneration(WeakReference)
+- uid: System.WeakReference
+  parent: System
+  isExternal: false
+  name: WeakReference
+  nameWithType: WeakReference
+  fullName: System.WeakReference
+- uid: System.GC.GetTotalMemory(System.Boolean)
+  parent: System.GC
+  isExternal: false
+  name: GetTotalMemory(Boolean)
+  nameWithType: GC.GetTotalMemory(Boolean)
+  fullName: GC.GetTotalMemory(Boolean)
+- uid: System.GC.KeepAlive(System.Object)
+  parent: System.GC
+  isExternal: false
+  name: KeepAlive(Object)
+  nameWithType: GC.KeepAlive(Object)
+  fullName: GC.KeepAlive(Object)
+- uid: System.GC.MaxGeneration
+  parent: System.GC
+  isExternal: false
+  name: MaxGeneration
+  nameWithType: GC.MaxGeneration
+  fullName: GC.MaxGeneration
+- uid: System.GC.RegisterForFullGCNotification(System.Int32,System.Int32)
+  parent: System.GC
+  isExternal: false
+  name: RegisterForFullGCNotification(Int32, Int32)
+  nameWithType: GC.RegisterForFullGCNotification(Int32, Int32)
+  fullName: GC.RegisterForFullGCNotification(Int32, Int32)
+- uid: System.GC.RemoveMemoryPressure(System.Int64)
+  parent: System.GC
+  isExternal: false
+  name: RemoveMemoryPressure(Int64)
+  nameWithType: GC.RemoveMemoryPressure(Int64)
+  fullName: GC.RemoveMemoryPressure(Int64)
+- uid: System.GC.ReRegisterForFinalize(System.Object)
+  parent: System.GC
+  isExternal: false
+  name: ReRegisterForFinalize(Object)
+  nameWithType: GC.ReRegisterForFinalize(Object)
+  fullName: GC.ReRegisterForFinalize(Object)
+- uid: System.GC.SuppressFinalize(System.Object)
+  parent: System.GC
+  isExternal: false
+  name: SuppressFinalize(Object)
+  nameWithType: GC.SuppressFinalize(Object)
+  fullName: GC.SuppressFinalize(Object)
+- uid: System.GC.TryStartNoGCRegion(System.Int64)
+  parent: System.GC
+  isExternal: false
+  name: TryStartNoGCRegion(Int64)
+  nameWithType: GC.TryStartNoGCRegion(Int64)
+  fullName: GC.TryStartNoGCRegion(Int64)
+- uid: System.GC.TryStartNoGCRegion(System.Int64,System.Boolean)
+  parent: System.GC
+  isExternal: false
+  name: TryStartNoGCRegion(Int64, Boolean)
+  nameWithType: GC.TryStartNoGCRegion(Int64, Boolean)
+  fullName: GC.TryStartNoGCRegion(Int64, Boolean)
+- uid: System.GC.TryStartNoGCRegion(System.Int64,System.Int64)
+  parent: System.GC
+  isExternal: false
+  name: TryStartNoGCRegion(Int64, Int64)
+  nameWithType: GC.TryStartNoGCRegion(Int64, Int64)
+  fullName: GC.TryStartNoGCRegion(Int64, Int64)
+- uid: System.GC.TryStartNoGCRegion(System.Int64,System.Int64,System.Boolean)
+  parent: System.GC
+  isExternal: false
+  name: TryStartNoGCRegion(Int64, Int64, Boolean)
+  nameWithType: GC.TryStartNoGCRegion(Int64, Int64, Boolean)
+  fullName: GC.TryStartNoGCRegion(Int64, Int64, Boolean)
+- uid: System.GC.WaitForFullGCApproach
+  parent: System.GC
+  isExternal: false
+  name: WaitForFullGCApproach()
+  nameWithType: GC.WaitForFullGCApproach()
+  fullName: GC.WaitForFullGCApproach()
+- uid: System.GCNotificationStatus
+  parent: System
+  isExternal: false
+  name: GCNotificationStatus
+  nameWithType: GCNotificationStatus
+  fullName: System.GCNotificationStatus
+- uid: System.GC.WaitForFullGCApproach(System.Int32)
+  parent: System.GC
+  isExternal: false
+  name: WaitForFullGCApproach(Int32)
+  nameWithType: GC.WaitForFullGCApproach(Int32)
+  fullName: GC.WaitForFullGCApproach(Int32)
+- uid: System.GC.WaitForFullGCComplete
+  parent: System.GC
+  isExternal: false
+  name: WaitForFullGCComplete()
+  nameWithType: GC.WaitForFullGCComplete()
+  fullName: GC.WaitForFullGCComplete()
+- uid: System.GC.WaitForFullGCComplete(System.Int32)
+  parent: System.GC
+  isExternal: false
+  name: WaitForFullGCComplete(Int32)
+  nameWithType: GC.WaitForFullGCComplete(Int32)
+  fullName: GC.WaitForFullGCComplete(Int32)
+- uid: System.GC.WaitForPendingFinalizers
+  parent: System.GC
+  isExternal: false
+  name: WaitForPendingFinalizers()
+  nameWithType: GC.WaitForPendingFinalizers()
+  fullName: GC.WaitForPendingFinalizers()
+- uid: System.GC.TryStartNoGCRegion*
+  parent: System.GC
+  isExternal: false
+  name: TryStartNoGCRegion
+  nameWithType: GC.TryStartNoGCRegion
+  fullName: GC.TryStartNoGCRegion
+  monikers:
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.AddMemoryPressure*
+  parent: System.GC
+  isExternal: false
+  name: AddMemoryPressure
+  nameWithType: GC.AddMemoryPressure
+  fullName: GC.AddMemoryPressure
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.CancelFullGCNotification*
+  parent: System.GC
+  isExternal: false
+  name: CancelFullGCNotification
+  nameWithType: GC.CancelFullGCNotification
+  fullName: GC.CancelFullGCNotification
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.Collect*
+  parent: System.GC
+  isExternal: false
+  name: Collect
+  nameWithType: GC.Collect
+  fullName: GC.Collect
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.CollectionCount*
+  parent: System.GC
+  isExternal: false
+  name: CollectionCount
+  nameWithType: GC.CollectionCount
+  fullName: GC.CollectionCount
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.EndNoGCRegion*
+  parent: System.GC
+  isExternal: false
+  name: EndNoGCRegion
+  nameWithType: GC.EndNoGCRegion
+  fullName: GC.EndNoGCRegion
+  monikers:
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.GetAllocatedBytesForCurrentThread*
+  parent: System.GC
+  isExternal: false
+  name: GetAllocatedBytesForCurrentThread
+  nameWithType: GC.GetAllocatedBytesForCurrentThread
+  fullName: GC.GetAllocatedBytesForCurrentThread
+  monikers:
+  - netcore-2.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.GetGeneration*
+  parent: System.GC
+  isExternal: false
+  name: GetGeneration
+  nameWithType: GC.GetGeneration
+  fullName: GC.GetGeneration
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.GetTotalMemory*
+  parent: System.GC
+  isExternal: false
+  name: GetTotalMemory
+  nameWithType: GC.GetTotalMemory
+  fullName: GC.GetTotalMemory
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.KeepAlive*
+  parent: System.GC
+  isExternal: false
+  name: KeepAlive
+  nameWithType: GC.KeepAlive
+  fullName: GC.KeepAlive
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.MaxGeneration*
+  parent: System.GC
+  isExternal: false
+  name: MaxGeneration
+  nameWithType: GC.MaxGeneration
+  fullName: GC.MaxGeneration
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.RegisterForFullGCNotification*
+  parent: System.GC
+  isExternal: false
+  name: RegisterForFullGCNotification
+  nameWithType: GC.RegisterForFullGCNotification
+  fullName: GC.RegisterForFullGCNotification
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.RemoveMemoryPressure*
+  parent: System.GC
+  isExternal: false
+  name: RemoveMemoryPressure
+  nameWithType: GC.RemoveMemoryPressure
+  fullName: GC.RemoveMemoryPressure
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.ReRegisterForFinalize*
+  parent: System.GC
+  isExternal: false
+  name: ReRegisterForFinalize
+  nameWithType: GC.ReRegisterForFinalize
+  fullName: GC.ReRegisterForFinalize
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.SuppressFinalize*
+  parent: System.GC
+  isExternal: false
+  name: SuppressFinalize
+  nameWithType: GC.SuppressFinalize
+  fullName: GC.SuppressFinalize
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.WaitForFullGCApproach*
+  parent: System.GC
+  isExternal: false
+  name: WaitForFullGCApproach
+  nameWithType: GC.WaitForFullGCApproach
+  fullName: GC.WaitForFullGCApproach
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.WaitForFullGCComplete*
+  parent: System.GC
+  isExternal: false
+  name: WaitForFullGCComplete
+  nameWithType: GC.WaitForFullGCComplete
+  fullName: GC.WaitForFullGCComplete
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.GC.WaitForPendingFinalizers*
+  parent: System.GC
+  isExternal: false
+  name: WaitForPendingFinalizers
+  nameWithType: GC.WaitForPendingFinalizers
+  fullName: GC.WaitForPendingFinalizers
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/GC.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

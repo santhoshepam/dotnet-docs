@@ -1,0 +1,5 @@
+---
+summary: Sets the <xref href="System.Web.UI.WebControls.WebParts.WebPart.IsShared"></xref> property of a <xref href="System.Web.UI.WebControls.WebParts.WebPart"></xref> control or the <xref href="System.Web.UI.WebControls.WebParts.WebPartConnection.IsShared"></xref> property of a <xref href="System.Web.UI.WebControls.WebParts.WebPartConnection"></xref> object.
+remarks: "The <xref:System.Web.UI.WebControls.WebParts.WebPartManagerInternals.SetIsShared%2A> method calls a method in a base class to set a property that indicates whether a particular instance of a control is shared. In the Web Parts control set, a shared control means a control that is visible to all users of a page. This is in contrast to a per-user control, which is visible only to the specific user who added the control to the page.  \n  \n> [!NOTE]\n>  For more on personalization and shared versus per-user controls, see [Web Parts Personalization Overview](http://msdn.microsoft.com/library/7dc34f74-52aa-4082-b98d-2bcf9e07e320)."
+uid: System.Web.UI.WebControls.WebParts.WebPartManagerInternals.SetIsShared*
+---

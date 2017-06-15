@@ -1,0 +1,1097 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.ComponentModel.Design.DesignerTransaction
+  commentId: T:System.ComponentModel.Design.DesignerTransaction
+  id: DesignerTransaction
+  children:
+  - System.ComponentModel.Design.DesignerTransaction.#ctor
+  - System.ComponentModel.Design.DesignerTransaction.#ctor(System.String)
+  - System.ComponentModel.Design.DesignerTransaction.Cancel
+  - System.ComponentModel.Design.DesignerTransaction.Canceled
+  - System.ComponentModel.Design.DesignerTransaction.Commit
+  - System.ComponentModel.Design.DesignerTransaction.Committed
+  - System.ComponentModel.Design.DesignerTransaction.Description
+  - System.ComponentModel.Design.DesignerTransaction.Dispose(System.Boolean)
+  - System.ComponentModel.Design.DesignerTransaction.Finalize
+  - System.ComponentModel.Design.DesignerTransaction.OnCancel
+  - System.ComponentModel.Design.DesignerTransaction.OnCommit
+  - System.ComponentModel.Design.DesignerTransaction.System#IDisposable#Dispose
+  langs:
+  - csharp
+  name: DesignerTransaction
+  nameWithType: DesignerTransaction
+  fullName: System.ComponentModel.Design.DesignerTransaction
+  type: Class
+  assemblies:
+  - System
+  - netstandard
+  - System.ComponentModel.TypeConverter
+  namespace: System.ComponentModel.Design
+  summary: Provides a way to group a series of design-time actions to improve performance and enable most types of changes to be undone.
+  remarks: "Transactions can track actions that can be undone later. Changes made during a transaction can be reversed by canceling a transaction, which automatically attempts to reverse each change by setting each changed property to its pre-change value. Transactions can also improve performance during a series of operations by deferring updates to the display until the completion of the transaction.  \n  \n When a transaction is in progress, some components defer their processing until the transaction has completed by listening to the <xref:System.ComponentModel.Design.IDesignerHost.TransactionOpening> and <xref:System.ComponentModel.Design.IDesignerHost.TransactionClosed> events. The Properties window, for example, does not update its display after a transaction has opened until the transaction has closed.  \n  \n To use transactions for reversible or multiple operations, have your designer create a <xref:System.ComponentModel.Design.DesignerTransaction> for each operation or series of operations which should be reversible. Be careful not to perform actions outside the transactions that might prevent a sequence of undo events from completing successfully.  \n  \n You can obtain a new <xref:System.ComponentModel.Design.DesignerTransaction> by calling the <xref:System.ComponentModel.Design.IDesignerHost.CreateTransaction%2A> method of an <xref:System.ComponentModel.Design.IDesignerHost>. Be sure to obtain each <xref:System.ComponentModel.Design.DesignerTransaction> from the active <xref:System.ComponentModel.Design.IDesignerHost> in order to correctly integrate with the designer transaction processing mechanism, rather than creating a new <xref:System.ComponentModel.Design.DesignerTransaction> directly.  \n  \n To perform an action within a transaction, you must first create a transaction. Then you must call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanging%2A> method before each change or set of changes occurs, and the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanged%2A> method after each change or set of changes occur. Finally, complete and close the transaction by calling the <xref:System.ComponentModel.Design.DesignerTransaction.Commit%2A> method.  \n  \n> [!NOTE]\n>  When making changes to property values, use the <xref:System.ComponentModel.PropertyDescriptor.SetValue%2A> method of a <xref:System.ComponentModel.PropertyDescriptor>, which calls the component change methods of the <xref:System.ComponentModel.Design.IComponentChangeService> and creates a <xref:System.ComponentModel.Design.DesignerTransaction> representing the change automatically.  \n  \n To perform a transaction, complete the following steps:  \n  \n1.  Call <xref:System.ComponentModel.Design.IDesignerHost.CreateTransaction%2A> to obtain a <xref:System.ComponentModel.Design.DesignerTransaction> that can be used to control the transaction.  \n  \n2.  Within a `try` block, for each action that you want to track with a <xref:System.ComponentModel.Design.DesignerTransaction>, call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanging%2A> method, make the change or changes, then call the <xref:System.ComponentModel.Design.IComponentChangeService.OnComponentChanged%2A> method to signal that the change or changes have been made.  \n  \n3.  To complete the transaction, call <xref:System.ComponentModel.Design.DesignerTransaction.Commit%2A> from within a `finally` block.  \n  \n In C#, you can use the `using` statement rather than a `try/finally` block, such as in the following example.  \n  \n```  \nusing (host.CreateTransaction() {  \n// Insert your code here.  \n}  \n```  \n  \n To cancel and attempt to roll back a transaction before it has been committed, call the <xref:System.ComponentModel.Design.DesignerTransaction.Cancel%2A> method. When the <xref:System.ComponentModel.Design.DesignerTransaction.Cancel%2A> method is invoked, the actions tracked by the <xref:System.ComponentModel.Design.DesignerTransaction> are reversed to attempt to roll back the changes. To undo actions that occurred as part of earlier transactions, you must use the undo command provided by the development environment."
+  example:
+  - "The following code example program demonstrates how to create a <xref:System.ComponentModel.Design.DesignerTransaction> from a designer. To run this sample, compile the source code into a class library. You must add a reference to the System.Design assembly. In a new project, add a reference to the compiled DLL and add the component in the library to the **Toolbox**.  \n  \n There is extensive support for this feature in Visual Studio.  \n  \n Also see [Walkthrough: Automatically Populating the Toolbox with Custom Components](http://msdn.microsoft.com/library/fw694kde\\(v=vs.110\\).aspx).  \n  \n The designer can optionally display notifications about designer transaction events. If you add an instance of the `DTComponent` to a form while in design mode, a message box appears asking whether you would like to receive designer transaction event notifications. You may toggle these notifications using the shortcut menu that appears when you right-click an instance of the `DTComponent`. Transactions are created when you change values using the Properties window. You can also have the designer perform a transaction by clicking **Perform Example Transaction** on the shortcut menu for the component.  \n  \n [!code-cpp[DesignerTransaction Sample#1](~/samples/snippets/cpp/VS_Snippets_Winforms/DesignerTransaction Sample/CPP/source.cpp#1)]\n [!code-csharp[DesignerTransaction Sample#1](~/samples/snippets/csharp/VS_Snippets_Winforms/DesignerTransaction Sample/CS/source.cs#1)]\n [!code-vb[DesignerTransaction Sample#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/DesignerTransaction Sample/VB/source.vb#1)]"
+  syntax:
+    content: 'public abstract class DesignerTransaction : IDisposable'
+  inheritance:
+  - System.Object
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.DesignerTransaction.#ctor
+  commentId: M:System.ComponentModel.Design.DesignerTransaction.#ctor
+  id: '#ctor'
+  parent: System.ComponentModel.Design.DesignerTransaction
+  langs:
+  - csharp
+  name: DesignerTransaction()
+  nameWithType: DesignerTransaction.DesignerTransaction()
+  fullName: DesignerTransaction.DesignerTransaction()
+  type: Constructor
+  assemblies:
+  - System
+  - netstandard
+  - System.ComponentModel.TypeConverter
+  namespace: System.ComponentModel.Design
+  summary: Initializes a new instance of the <xref href="System.ComponentModel.Design.DesignerTransaction"></xref> class with no description.
+  syntax:
+    content: protected DesignerTransaction ();
+    parameters: []
+  overload: System.ComponentModel.Design.DesignerTransaction.#ctor*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.DesignerTransaction.#ctor(System.String)
+  commentId: M:System.ComponentModel.Design.DesignerTransaction.#ctor(System.String)
+  id: '#ctor(System.String)'
+  parent: System.ComponentModel.Design.DesignerTransaction
+  langs:
+  - csharp
+  name: DesignerTransaction(String)
+  nameWithType: DesignerTransaction.DesignerTransaction(String)
+  fullName: DesignerTransaction.DesignerTransaction(String)
+  type: Constructor
+  assemblies:
+  - System
+  - netstandard
+  - System.ComponentModel.TypeConverter
+  namespace: System.ComponentModel.Design
+  summary: Initializes a new instance of the <xref href="System.ComponentModel.Design.DesignerTransaction"></xref> class using the specified transaction description.
+  remarks: This constructor initializes the transaction with the specified description.
+  syntax:
+    content: protected DesignerTransaction (string description);
+    parameters:
+    - id: description
+      type: System.String
+      description: A description for this transaction.
+  overload: System.ComponentModel.Design.DesignerTransaction.#ctor*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.DesignerTransaction.Cancel
+  commentId: M:System.ComponentModel.Design.DesignerTransaction.Cancel
+  id: Cancel
+  parent: System.ComponentModel.Design.DesignerTransaction
+  langs:
+  - csharp
+  name: Cancel()
+  nameWithType: DesignerTransaction.Cancel()
+  fullName: DesignerTransaction.Cancel()
+  type: Method
+  assemblies:
+  - System
+  - netstandard
+  - System.ComponentModel.TypeConverter
+  namespace: System.ComponentModel.Design
+  summary: Cancels the transaction and attempts to roll back the changes made by the events of the transaction.
+  syntax:
+    content: public void Cancel ();
+    parameters: []
+  overload: System.ComponentModel.Design.DesignerTransaction.Cancel*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.DesignerTransaction.Canceled
+  commentId: P:System.ComponentModel.Design.DesignerTransaction.Canceled
+  id: Canceled
+  parent: System.ComponentModel.Design.DesignerTransaction
+  langs:
+  - csharp
+  name: Canceled
+  nameWithType: DesignerTransaction.Canceled
+  fullName: DesignerTransaction.Canceled
+  type: Property
+  assemblies:
+  - System
+  - netstandard
+  - System.ComponentModel.TypeConverter
+  namespace: System.ComponentModel.Design
+  summary: Gets a value indicating whether the transaction was canceled.
+  remarks: When a designer transaction is canceled, the transaction processing mechanism attempts to roll back the changes that have been made so far in the transaction. Whether this succeeds is dependent upon such factors as the type of each operation, whether other operations interfered with any of the involved code's state, and whether a sequence of expected operations failed to complete.
+  syntax:
+    content: public bool Canceled { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the transaction was canceled; otherwise, `false`.'
+  overload: System.ComponentModel.Design.DesignerTransaction.Canceled*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.DesignerTransaction.Commit
+  commentId: M:System.ComponentModel.Design.DesignerTransaction.Commit
+  id: Commit
+  parent: System.ComponentModel.Design.DesignerTransaction
+  langs:
+  - csharp
+  name: Commit()
+  nameWithType: DesignerTransaction.Commit()
+  fullName: DesignerTransaction.Commit()
+  type: Method
+  assemblies:
+  - System
+  - netstandard
+  - System.ComponentModel.TypeConverter
+  namespace: System.ComponentModel.Design
+  summary: Commits this transaction.
+  remarks: "When a designer transaction is committed, the transaction is considered complete and does not track further changes.  \n  \n Once a transaction has been committed, further calls to this method do nothing. Always call this method after creating a transaction to ensure that the transaction closes properly."
+  syntax:
+    content: public void Commit ();
+    parameters: []
+  overload: System.ComponentModel.Design.DesignerTransaction.Commit*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.DesignerTransaction.Committed
+  commentId: P:System.ComponentModel.Design.DesignerTransaction.Committed
+  id: Committed
+  parent: System.ComponentModel.Design.DesignerTransaction
+  langs:
+  - csharp
+  name: Committed
+  nameWithType: DesignerTransaction.Committed
+  fullName: DesignerTransaction.Committed
+  type: Property
+  assemblies:
+  - System
+  - netstandard
+  - System.ComponentModel.TypeConverter
+  namespace: System.ComponentModel.Design
+  summary: Gets a value indicating whether the transaction was committed.
+  remarks: When a designer transaction is committed, the transaction is considered complete and does not track further changes.
+  syntax:
+    content: public bool Committed { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the transaction was committed; otherwise, `false`.'
+  overload: System.ComponentModel.Design.DesignerTransaction.Committed*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.DesignerTransaction.Description
+  commentId: P:System.ComponentModel.Design.DesignerTransaction.Description
+  id: Description
+  parent: System.ComponentModel.Design.DesignerTransaction
+  langs:
+  - csharp
+  name: Description
+  nameWithType: DesignerTransaction.Description
+  fullName: DesignerTransaction.Description
+  type: Property
+  assemblies:
+  - System
+  - netstandard
+  - System.ComponentModel.TypeConverter
+  namespace: System.ComponentModel.Design
+  summary: Gets a description for the transaction.
+  remarks: A transaction can have a description that is useful in identifying the nature of the operation or operations.
+  syntax:
+    content: public string Description { get; }
+    return:
+      type: System.String
+      description: A description for the transaction.
+  overload: System.ComponentModel.Design.DesignerTransaction.Description*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.DesignerTransaction.Dispose(System.Boolean)
+  commentId: M:System.ComponentModel.Design.DesignerTransaction.Dispose(System.Boolean)
+  id: Dispose(System.Boolean)
+  parent: System.ComponentModel.Design.DesignerTransaction
+  langs:
+  - csharp
+  name: Dispose(Boolean)
+  nameWithType: DesignerTransaction.Dispose(Boolean)
+  fullName: DesignerTransaction.Dispose(Boolean)
+  type: Method
+  assemblies:
+  - System
+  - netstandard
+  - System.ComponentModel.TypeConverter
+  namespace: System.ComponentModel.Design
+  summary: Releases the unmanaged resources used by the <xref href="System.ComponentModel.Design.DesignerTransaction"></xref> and optionally releases the managed resources.
+  remarks: "This method is called by the public `Dispose()` method and the <xref:System.Object.Finalize%2A> method. `Dispose()` invokes the protected `Dispose(Boolean)` method with the `disposing` parameter set to `true`. <xref:System.Object.Finalize%2A> invokes `Dispose` with `disposing` set to `false`.  \n  \n When the `disposing` parameter is `true`, this method releases all resources held by any managed objects that this <xref:System.ComponentModel.Design.DesignerTransaction> references. This method invokes the `Dispose()` method of each referenced object."
+  syntax:
+    content: protected virtual void Dispose (bool disposing);
+    parameters:
+    - id: disposing
+      type: System.Boolean
+      description: '`true` to release both managed and unmanaged resources; `false` to release only unmanaged resources.'
+  overload: System.ComponentModel.Design.DesignerTransaction.Dispose*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.DesignerTransaction.Finalize
+  commentId: M:System.ComponentModel.Design.DesignerTransaction.Finalize
+  id: Finalize
+  parent: System.ComponentModel.Design.DesignerTransaction
+  langs:
+  - csharp
+  name: Finalize()
+  nameWithType: DesignerTransaction.Finalize()
+  fullName: DesignerTransaction.Finalize()
+  type: Method
+  assemblies:
+  - System
+  - netstandard
+  - System.ComponentModel.TypeConverter
+  namespace: System.ComponentModel.Design
+  summary: Releases the resources associated with this object. This override commits this transaction if it was not already committed.
+  remarks: "This method overrides <xref:System.Object.Finalize%2A?displayProperty=fullName> and cleans up resources by calling `Dispose(false)`. Override `Dispose(Boolean)` to customize the cleanup.  \n  \n Application code should not call this method; an object's `Finalize` method is automatically invoked during garbage collection, unless finalization by the garbage collector has been disabled by a call to the <xref:System.GC.SuppressFinalize%2A?displayProperty=fullName> method.  \n  \n For more information, see [Finalize Methods and Destructors](http://msdn.microsoft.com/en-us/fd376774-1643-499b-869e-9546a3aeea70), [Cleaning Up Unmanaged Resources](~/docs/standard/garbage-collection/unmanaged.md), and [Overriding the Finalize Method](http://msdn.microsoft.com/en-us/8026cb68-fe93-43fc-96c1-c09ad7d64cd3)."
+  syntax:
+    content: ~DesignerTransaction ();
+    parameters: []
+  overload: System.ComponentModel.Design.DesignerTransaction.Finalize*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.DesignerTransaction.OnCancel
+  commentId: M:System.ComponentModel.Design.DesignerTransaction.OnCancel
+  id: OnCancel
+  parent: System.ComponentModel.Design.DesignerTransaction
+  langs:
+  - csharp
+  name: OnCancel()
+  nameWithType: DesignerTransaction.OnCancel()
+  fullName: DesignerTransaction.OnCancel()
+  type: Method
+  assemblies:
+  - System
+  - netstandard
+  - System.ComponentModel.TypeConverter
+  namespace: System.ComponentModel.Design
+  summary: Raises the `Cancel` event.
+  remarks: When a designer transaction is canceled, the transaction processing mechanism attempts to roll back the changes that have been made so far in the transaction. Whether this succeeds is dependent upon such factors as the type of each operation, whether other operations interfered with any of the involved code's state, and whether a sequence of expected operations failed to complete.
+  syntax:
+    content: protected abstract void OnCancel ();
+    parameters: []
+  overload: System.ComponentModel.Design.DesignerTransaction.OnCancel*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.DesignerTransaction.OnCommit
+  commentId: M:System.ComponentModel.Design.DesignerTransaction.OnCommit
+  id: OnCommit
+  parent: System.ComponentModel.Design.DesignerTransaction
+  langs:
+  - csharp
+  name: OnCommit()
+  nameWithType: DesignerTransaction.OnCommit()
+  fullName: DesignerTransaction.OnCommit()
+  type: Method
+  assemblies:
+  - System
+  - netstandard
+  - System.ComponentModel.TypeConverter
+  namespace: System.ComponentModel.Design
+  summary: Performs the actual work of committing a transaction.
+  remarks: When a designer transaction is committed, the transaction is considered complete and does not track further changes.
+  syntax:
+    content: protected abstract void OnCommit ();
+    parameters: []
+  overload: System.ComponentModel.Design.DesignerTransaction.OnCommit*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.ComponentModel.Design.DesignerTransaction.System#IDisposable#Dispose
+  commentId: M:System.ComponentModel.Design.DesignerTransaction.System#IDisposable#Dispose
+  id: System#IDisposable#Dispose
+  isEii: true
+  parent: System.ComponentModel.Design.DesignerTransaction
+  langs:
+  - csharp
+  name: IDisposable.Dispose()
+  nameWithType: DesignerTransaction.IDisposable.Dispose()
+  fullName: DesignerTransaction.IDisposable.Dispose()
+  type: Method
+  assemblies:
+  - System
+  - netstandard
+  - System.ComponentModel.TypeConverter
+  namespace: System.ComponentModel.Design
+  summary: Releases all resources used by the <xref href="System.ComponentModel.Design.DesignerTransaction"></xref>.
+  remarks: When a transaction is disposed, it is committed.
+  syntax:
+    content: void IDisposable.Dispose ();
+    parameters: []
+  overload: System.ComponentModel.Design.DesignerTransaction.System#IDisposable#Dispose*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+  ms.technology:
+  - dotnet-standard
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ComponentModel.Design.DesignerTransaction.#ctor
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: DesignerTransaction()
+  nameWithType: DesignerTransaction.DesignerTransaction()
+  fullName: DesignerTransaction.DesignerTransaction()
+- uid: System.ComponentModel.Design.DesignerTransaction.#ctor(System.String)
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: DesignerTransaction(String)
+  nameWithType: DesignerTransaction.DesignerTransaction(String)
+  fullName: DesignerTransaction.DesignerTransaction(String)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.ComponentModel.Design.DesignerTransaction.Cancel
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: Cancel()
+  nameWithType: DesignerTransaction.Cancel()
+  fullName: DesignerTransaction.Cancel()
+- uid: System.ComponentModel.Design.DesignerTransaction.Canceled
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: Canceled
+  nameWithType: DesignerTransaction.Canceled
+  fullName: DesignerTransaction.Canceled
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.ComponentModel.Design.DesignerTransaction.Commit
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: Commit()
+  nameWithType: DesignerTransaction.Commit()
+  fullName: DesignerTransaction.Commit()
+- uid: System.ComponentModel.Design.DesignerTransaction.Committed
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: Committed
+  nameWithType: DesignerTransaction.Committed
+  fullName: DesignerTransaction.Committed
+- uid: System.ComponentModel.Design.DesignerTransaction.Description
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: Description
+  nameWithType: DesignerTransaction.Description
+  fullName: DesignerTransaction.Description
+- uid: System.ComponentModel.Design.DesignerTransaction.Dispose(System.Boolean)
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: Dispose(Boolean)
+  nameWithType: DesignerTransaction.Dispose(Boolean)
+  fullName: DesignerTransaction.Dispose(Boolean)
+- uid: System.ComponentModel.Design.DesignerTransaction.Finalize
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: Finalize()
+  nameWithType: DesignerTransaction.Finalize()
+  fullName: DesignerTransaction.Finalize()
+- uid: System.ComponentModel.Design.DesignerTransaction.OnCancel
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: OnCancel()
+  nameWithType: DesignerTransaction.OnCancel()
+  fullName: DesignerTransaction.OnCancel()
+- uid: System.ComponentModel.Design.DesignerTransaction.OnCommit
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: OnCommit()
+  nameWithType: DesignerTransaction.OnCommit()
+  fullName: DesignerTransaction.OnCommit()
+- uid: System.ComponentModel.Design.DesignerTransaction.System#IDisposable#Dispose
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: IDisposable.Dispose()
+  nameWithType: DesignerTransaction.IDisposable.Dispose()
+  fullName: DesignerTransaction.IDisposable.Dispose()
+- uid: System.ComponentModel.Design.DesignerTransaction.#ctor*
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: DesignerTransaction
+  nameWithType: DesignerTransaction.DesignerTransaction
+  fullName: DesignerTransaction.DesignerTransaction
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+- uid: System.ComponentModel.Design.DesignerTransaction.Cancel*
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: Cancel
+  nameWithType: DesignerTransaction.Cancel
+  fullName: DesignerTransaction.Cancel
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+- uid: System.ComponentModel.Design.DesignerTransaction.Canceled*
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: Canceled
+  nameWithType: DesignerTransaction.Canceled
+  fullName: DesignerTransaction.Canceled
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+- uid: System.ComponentModel.Design.DesignerTransaction.Commit*
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: Commit
+  nameWithType: DesignerTransaction.Commit
+  fullName: DesignerTransaction.Commit
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+- uid: System.ComponentModel.Design.DesignerTransaction.Committed*
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: Committed
+  nameWithType: DesignerTransaction.Committed
+  fullName: DesignerTransaction.Committed
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+- uid: System.ComponentModel.Design.DesignerTransaction.Description*
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: Description
+  nameWithType: DesignerTransaction.Description
+  fullName: DesignerTransaction.Description
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+- uid: System.ComponentModel.Design.DesignerTransaction.Dispose*
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: Dispose
+  nameWithType: DesignerTransaction.Dispose
+  fullName: DesignerTransaction.Dispose
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+- uid: System.ComponentModel.Design.DesignerTransaction.Finalize*
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: Finalize
+  nameWithType: DesignerTransaction.Finalize
+  fullName: DesignerTransaction.Finalize
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+- uid: System.ComponentModel.Design.DesignerTransaction.OnCancel*
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: OnCancel
+  nameWithType: DesignerTransaction.OnCancel
+  fullName: DesignerTransaction.OnCancel
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+- uid: System.ComponentModel.Design.DesignerTransaction.OnCommit*
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: OnCommit
+  nameWithType: DesignerTransaction.OnCommit
+  fullName: DesignerTransaction.OnCommit
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+- uid: System.ComponentModel.Design.DesignerTransaction.System#IDisposable#Dispose*
+  parent: System.ComponentModel.Design.DesignerTransaction
+  isExternal: false
+  name: System.IDisposable.Dispose
+  nameWithType: DesignerTransaction.System.IDisposable.Dispose
+  fullName: DesignerTransaction.System.IDisposable.Dispose
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ComponentModel.Design/DesignerTransaction.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.IDisposable
+  parent: System
+  isExternal: false
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable

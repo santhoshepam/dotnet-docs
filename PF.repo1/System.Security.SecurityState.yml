@@ -1,0 +1,353 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Security.SecurityState
+  commentId: T:System.Security.SecurityState
+  id: SecurityState
+  children:
+  - System.Security.SecurityState.#ctor
+  - System.Security.SecurityState.EnsureState
+  - System.Security.SecurityState.IsStateAvailable
+  langs:
+  - csharp
+  name: SecurityState
+  nameWithType: SecurityState
+  fullName: System.Security.SecurityState
+  type: Class
+  assemblies:
+  - mscorlib
+  - System.Security.Permissions
+  namespace: System.Security
+  summary: Provides a base class for requesting the security status of an action from the <xref href="System.AppDomainManager"></xref> object.
+  remarks: "You must inherit from this class to provide a class that includes a property that specifies the security-sensitive action to be performed. The <xref:System.Security.SecurityState> object that is instantiated from the derived class is passed to the <xref:System.AppDomainManager.CheckSecuritySettings%2A?displayProperty=fullName> method to determine whether the host allows that action to be performed. The default implementation of the <xref:System.AppDomainManager.CheckSecuritySettings%2A> method always returns `false`.  The method must be overridden to detect the actions that are allowed.  \n  \n For example, if you want to access a Web camera in your library code, you would create a `WebcamSecurityState` object and call the <xref:System.Security.SecurityState.EnsureState%2A> method to determine whether the host allows Web camera access, as shown in the following example.  (You can find the code for `WebcamSecurityState` in the \"Example\" section.)  \n  \n```  \nWebcamSecurityState securityState = new WebcamSecurityState(\"Safe access to Webcam\", WebcamSecurityOptions.SafeAccess);  \ntry  \n{  \n   securityState.EnsureState();  \n   // Allocate memory.  \n   }  \ncatch (ApplicationException e)  \n{  \n    // Handle any exception that is thrown.  \n    System.Diagnostics.Debug.WriteLine(e.Message);  \n}  \n```  \n  \n To process the call the <xref:System.AppDomainManager> must be made aware of `WebcamSecurityState` through an override of the <xref:System.AppDomainManager.CheckSecuritySettings%2A?displayProperty=fullName> method, as shown in the following example.  \n  \n```  \n[SecurityCritical]  \npublic override bool CheckSecuritySettings(System.Security.SecurityState securityState)  \n{  \n   switch (securityState.ToString())  \n   {  \n      case \"WebcamSecurityState\":  \n      {  \n          if ((securityState as WebcamSecurityState).Options == WebcamSecurityOptions.SafeAccess)  \n              return PromptUser((securityState as WebcamSecurityState).Description);  \n           return false;  \n      }  \n   }  \n      return false;  \n}  \nprivate bool PromptUser(string text)  \n{  \n   // Replace the OpenFileDialog with a custom user prompt.  \n   OpenFileDialog o = new OpenFileDialog();  \n   o.Title = text;  \n   if (o.ShowDialog() == DialogResult.OK)  \n      return true;  \n   else  \n      return false;  \n}  \n  \n```"
+  example:
+  - "The following example shows how to override the <xref:System.Security.SecurityState> class.  \n  \n```  \n[SecurityCritical]  \npublic enum WebcamSecurityOptions  \n    {  \n        SafeAccess,  \n        FullAccess  \n    }  \n[SecurityCritical]  \npublic class WebcamSecurityState : SecurityState  \n{  \n    public WebcamSecurityState(string description, WebcamSecurityOptions options)  \n    {  \n        Options = options;  \n        Description = description;  \n    }  \n    public WebcamSecurityOptions Options { get; set; }  \n    public string Description { get; set; }  \n    public override void EnsureState()  \n    {  \n       if (!IsStateAvailable())  \n           throw new ApplicationException(\"WebcamSecurityState not available\");  \n    }  \n }  \n  \n```"
+  syntax:
+    content: public abstract class SecurityState
+  inheritance:
+  - System.Object
+  derivedClasses:
+  - System.IO.IsolatedStorage.IsolatedStorageSecurityState
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Security/SecurityState.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Security.SecurityState.#ctor
+  commentId: M:System.Security.SecurityState.#ctor
+  id: '#ctor'
+  parent: System.Security.SecurityState
+  langs:
+  - csharp
+  name: SecurityState()
+  nameWithType: SecurityState.SecurityState()
+  fullName: SecurityState.SecurityState()
+  type: Constructor
+  assemblies:
+  - mscorlib
+  - System.Security.Permissions
+  namespace: System.Security
+  summary: Initializes a new instance of the <xref href="System.Security.SecurityState"></xref> class.
+  syntax:
+    content: protected SecurityState ();
+    parameters: []
+  overload: System.Security.SecurityState.#ctor*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Security/SecurityState.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Security.SecurityState.EnsureState
+  commentId: M:System.Security.SecurityState.EnsureState
+  id: EnsureState
+  parent: System.Security.SecurityState
+  langs:
+  - csharp
+  name: EnsureState()
+  nameWithType: SecurityState.EnsureState()
+  fullName: SecurityState.EnsureState()
+  type: Method
+  assemblies:
+  - mscorlib
+  - System.Security.Permissions
+  namespace: System.Security
+  summary: When overridden in a derived class, ensures that the state that is represented by <xref href="System.Security.SecurityState"></xref> is available on the host.
+  remarks: "The implementation of this method should be similar to the following example.  \n  \n```  \npublic override void EnsureState()  \n{  \n    if (!IsStateAvailable())  \n          throw new ApplicationException(\"WebcamSecurityState not available\");  \n}  \n  \n```"
+  syntax:
+    content: public abstract void EnsureState ();
+    parameters: []
+  overload: System.Security.SecurityState.EnsureState*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Security/SecurityState.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Security.SecurityState.IsStateAvailable
+  commentId: M:System.Security.SecurityState.IsStateAvailable
+  id: IsStateAvailable
+  parent: System.Security.SecurityState
+  langs:
+  - csharp
+  name: IsStateAvailable()
+  nameWithType: SecurityState.IsStateAvailable()
+  fullName: SecurityState.IsStateAvailable()
+  type: Method
+  assemblies:
+  - mscorlib
+  - System.Security.Permissions
+  namespace: System.Security
+  summary: Gets a value that indicates whether the state for this implementation of the <xref href="System.Security.SecurityState"></xref> class is available on the current host.
+  remarks: "<xref:System.Security.SecurityState.IsStateAvailable%2A> calls the <xref:System.AppDomainManager.CheckSecuritySettings%2A?displayProperty=fullName> method to determine whether the state that is represented by this class is available on the host.  \n  \n See the <xref:System.Security.SecurityState> class for an example implementation of the <xref:System.AppDomainManager.CheckSecuritySettings%2A> method."
+  syntax:
+    content: public bool IsStateAvailable ();
+    parameters: []
+    return:
+      type: System.Boolean
+      description: '`true` if the state is available; otherwise, `false`.'
+  overload: System.Security.SecurityState.IsStateAvailable*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Security/SecurityState.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Security.SecurityState.#ctor
+  parent: System.Security.SecurityState
+  isExternal: false
+  name: SecurityState()
+  nameWithType: SecurityState.SecurityState()
+  fullName: SecurityState.SecurityState()
+- uid: System.Security.SecurityState.EnsureState
+  parent: System.Security.SecurityState
+  isExternal: false
+  name: EnsureState()
+  nameWithType: SecurityState.EnsureState()
+  fullName: SecurityState.EnsureState()
+- uid: System.Security.SecurityState.IsStateAvailable
+  parent: System.Security.SecurityState
+  isExternal: false
+  name: IsStateAvailable()
+  nameWithType: SecurityState.IsStateAvailable()
+  fullName: SecurityState.IsStateAvailable()
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Security.SecurityState.#ctor*
+  parent: System.Security.SecurityState
+  isExternal: false
+  name: SecurityState
+  nameWithType: SecurityState.SecurityState
+  fullName: SecurityState.SecurityState
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Security/SecurityState.xml
+- uid: System.Security.SecurityState.EnsureState*
+  parent: System.Security.SecurityState
+  isExternal: false
+  name: EnsureState
+  nameWithType: SecurityState.EnsureState
+  fullName: SecurityState.EnsureState
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Security/SecurityState.xml
+- uid: System.Security.SecurityState.IsStateAvailable*
+  parent: System.Security.SecurityState
+  isExternal: false
+  name: IsStateAvailable
+  nameWithType: SecurityState.IsStateAvailable
+  fullName: SecurityState.IsStateAvailable
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Security/SecurityState.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

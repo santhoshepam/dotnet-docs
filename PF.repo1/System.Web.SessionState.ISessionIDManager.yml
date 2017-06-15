@@ -1,0 +1,560 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Web.SessionState.ISessionIDManager
+  commentId: T:System.Web.SessionState.ISessionIDManager
+  id: ISessionIDManager
+  children:
+  - System.Web.SessionState.ISessionIDManager.CreateSessionID(System.Web.HttpContext)
+  - System.Web.SessionState.ISessionIDManager.GetSessionID(System.Web.HttpContext)
+  - System.Web.SessionState.ISessionIDManager.Initialize
+  - System.Web.SessionState.ISessionIDManager.InitializeRequest(System.Web.HttpContext,System.Boolean,System.Boolean@)
+  - System.Web.SessionState.ISessionIDManager.RemoveSessionID(System.Web.HttpContext)
+  - System.Web.SessionState.ISessionIDManager.SaveSessionID(System.Web.HttpContext,System.String,System.Boolean@,System.Boolean@)
+  - System.Web.SessionState.ISessionIDManager.Validate(System.String)
+  langs:
+  - csharp
+  name: ISessionIDManager
+  nameWithType: ISessionIDManager
+  fullName: System.Web.SessionState.ISessionIDManager
+  type: Interface
+  assemblies:
+  - System.Web
+  namespace: System.Web.SessionState
+  summary: Defines the contract that a custom session-state identifier manager must implement.
+  remarks: "The <xref:System.Web.SessionState.ISessionIDManager> interface identifies the methods that you must implement to create a custom manager for session-identifier values. An <xref:System.Web.SessionState.ISessionIDManager> interface implementation creates and validates session-identifier values, and manages the storage of a session identifier in the HTTP response as well as the retrieval of a session-identifier value from the HTTP request. You enable the custom session-ID manager using the `sessionIDManagerType` attribute of the [sessionState Element (ASP.NET Settings Schema)](http://msdn.microsoft.com/en-us/bda6fb8c-0076-43e3-9ce2-8cf1f8bdaa7d) configuration element.  \n  \n If your <xref:System.Web.SessionState.ISessionIDManager> interface implementation will support cookieless session identifiers, you will need to implement a solution for sending and retrieving session identifiers in the URL, such as an ISAPI filter.  \n  \n If you only want to supply custom session-identifier values to be used by ASP.NET session state, you can create a class that inherits the <xref:System.Web.SessionState.SessionIDManager> class and override only the <xref:System.Web.SessionState.SessionIDManager.CreateSessionID%2A> and <xref:System.Web.SessionState.SessionIDManager.Validate%2A> methods with your own custom implementation. This enables you to supply your own session-identifier values, while relying on the base <xref:System.Web.SessionState.SessionIDManager> class to store values to the HTTP response and retrieve values from the HTTP request. For an example of overriding the <xref:System.Web.SessionState.SessionIDManager> class and implementing these methods, see the example provided for the <xref:System.Web.SessionState.SessionIDManager.CreateSessionID%2A> method of the <xref:System.Web.SessionState.SessionIDManager> class."
+  example:
+  - "The following code example shows a class that implements a cookie-based session-ID manager.  \n  \n [!code-csharp[System.Web.SessionState.ISessionIDModule#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.SessionState.ISessionIDModule/CS/isessionidmodulesnippets.cs#1)]\n [!code-vb[System.Web.SessionState.ISessionIDModule#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.SessionState.ISessionIDModule/VB/isessionidmodulesnippets.vb#1)]"
+  syntax:
+    content: public interface ISessionIDManager
+  derivedClasses:
+  - System.Web.SessionState.SessionIDManager
+  implements: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.SessionState/ISessionIDManager.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.SessionState.ISessionIDManager.CreateSessionID(System.Web.HttpContext)
+  commentId: M:System.Web.SessionState.ISessionIDManager.CreateSessionID(System.Web.HttpContext)
+  id: CreateSessionID(System.Web.HttpContext)
+  parent: System.Web.SessionState.ISessionIDManager
+  langs:
+  - csharp
+  name: CreateSessionID(HttpContext)
+  nameWithType: ISessionIDManager.CreateSessionID(HttpContext)
+  fullName: ISessionIDManager.CreateSessionID(HttpContext)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.SessionState
+  summary: Creates a unique session identifier.
+  remarks: The <xref:System.Web.SessionState.ISessionIDManager.CreateSessionID%2A> method is used to generate a unique session identifier that the <xref:System.Web.SessionState.SessionStateModule> object will use to identify a new session. The value returned by <xref:System.Web.SessionState.ISessionIDManager.CreateSessionID%2A> must be unique and must contain valid characters that can be stored in an HTTP response and request. If it is possible that the value returned by your <xref:System.Web.SessionState.ISessionIDManager.CreateSessionID%2A> implementation contains characters that are not valid in an HTTP response or request, you should use the <xref:System.Web.HttpUtility.UrlEncode%2A> method to encode the session-identifier value in your <xref:System.Web.SessionState.ISessionIDManager.SaveSessionID%2A> method implementation and the <xref:System.Web.HttpUtility.UrlDecode%2A> method to decode the session-identifier value in your <xref:System.Web.SessionState.ISessionIDManager.GetSessionID%2A> method implementation.
+  example:
+  - "The following code example implements the <xref:System.Web.SessionState.ISessionIDManager.CreateSessionID%2A> method. The method creates a new <xref:System.Guid> to be used as a session identifier.  \n  \n [!code-csharp[System.Web.SessionState.ISessionIDModule#3](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.SessionState.ISessionIDModule/CS/isessionidmodulesnippets.cs#3)]\n [!code-vb[System.Web.SessionState.ISessionIDModule#3](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.SessionState.ISessionIDModule/VB/isessionidmodulesnippets.vb#3)]"
+  syntax:
+    content: public string CreateSessionID (System.Web.HttpContext context);
+    parameters:
+    - id: context
+      type: System.Web.HttpContext
+      description: The current <xref href="System.Web.HttpContext"></xref> object that references server objects used to process HTTP requests (for example, the <xref href="System.Web.HttpContext.Request"></xref> and <xref href="System.Web.HttpContext.Response"></xref> properties).
+    return:
+      type: System.String
+      description: A unique session identifier.
+  overload: System.Web.SessionState.ISessionIDManager.CreateSessionID*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.SessionState/ISessionIDManager.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.SessionState.ISessionIDManager.GetSessionID(System.Web.HttpContext)
+  commentId: M:System.Web.SessionState.ISessionIDManager.GetSessionID(System.Web.HttpContext)
+  id: GetSessionID(System.Web.HttpContext)
+  parent: System.Web.SessionState.ISessionIDManager
+  langs:
+  - csharp
+  name: GetSessionID(HttpContext)
+  nameWithType: ISessionIDManager.GetSessionID(HttpContext)
+  fullName: ISessionIDManager.GetSessionID(HttpContext)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.SessionState
+  summary: Gets the session identifier from the context of the current HTTP request.
+  remarks: "The <xref:System.Web.SessionState.ISessionIDManager.GetSessionID%2A> method is called by the <xref:System.Web.SessionState.SessionStateModule> during the <xref:System.Web.HttpApplication.AcquireRequestState?displayProperty=fullName> and <xref:System.Web.HttpApplication.EndRequest?displayProperty=fullName> events. If you cannot retrieve a valid session identifier from the HTTP request, return `null`. If the <xref:System.Web.SessionState.SessionStateModule> receives `null` from the <xref:System.Web.SessionState.ISessionIDManager.GetSessionID%2A> method, it will call the <xref:System.Web.SessionState.ISessionIDManager.CreateSessionID%2A> method to get a new session identifier for a new session.  \n  \n If it is possible that the value returned by your <xref:System.Web.SessionState.ISessionIDManager.CreateSessionID%2A> implementation contains characters that are not valid in an HTTP response or request, you should use the <xref:System.Web.HttpUtility.UrlEncode%2A> method to encode the session-identifier value in your <xref:System.Web.SessionState.ISessionIDManager.SaveSessionID%2A> method implementation and the <xref:System.Web.HttpUtility.UrlDecode%2A> method to decode the session-identifier value in your <xref:System.Web.SessionState.ISessionIDManager.GetSessionID%2A> method implementation."
+  example:
+  - "The following code example shows a partially implemented <xref:System.Web.SessionState.ISessionIDManager.GetSessionID%2A> method. If your custom session-ID manager supports cookieless session identifiers, you will need to implement a solution for sending and retrieving session identifiers in the URL, such as an ISAPI filter.  \n  \n [!code-csharp[System.Web.SessionState.ISessionIDModule#2](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.SessionState.ISessionIDModule/CS/isessionidmodulesnippets.cs#2)]\n [!code-vb[System.Web.SessionState.ISessionIDModule#2](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.SessionState.ISessionIDModule/VB/isessionidmodulesnippets.vb#2)]"
+  syntax:
+    content: public string GetSessionID (System.Web.HttpContext context);
+    parameters:
+    - id: context
+      type: System.Web.HttpContext
+      description: The current <xref href="System.Web.HttpContext"></xref> object that references server objects used to process HTTP requests (for example, the <xref href="System.Web.HttpContext.Request"></xref> and <xref href="System.Web.HttpContext.Response"></xref> properties).
+    return:
+      type: System.String
+      description: The current session identifier sent with the HTTP request.
+  overload: System.Web.SessionState.ISessionIDManager.GetSessionID*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.SessionState/ISessionIDManager.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.SessionState.ISessionIDManager.Initialize
+  commentId: M:System.Web.SessionState.ISessionIDManager.Initialize
+  id: Initialize
+  parent: System.Web.SessionState.ISessionIDManager
+  langs:
+  - csharp
+  name: Initialize()
+  nameWithType: ISessionIDManager.Initialize()
+  fullName: ISessionIDManager.Initialize()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.SessionState
+  summary: Initializes the <xref href="System.Web.SessionState.SessionIDManager"></xref> object.
+  remarks: Use the <xref:System.Web.SessionState.ISessionIDManager.Initialize%2A> method to initialize the <xref:System.Web.SessionState.ISessionIDManager> object.
+  syntax:
+    content: public void Initialize ();
+    parameters: []
+  overload: System.Web.SessionState.ISessionIDManager.Initialize*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.SessionState/ISessionIDManager.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.SessionState.ISessionIDManager.InitializeRequest(System.Web.HttpContext,System.Boolean,System.Boolean@)
+  commentId: M:System.Web.SessionState.ISessionIDManager.InitializeRequest(System.Web.HttpContext,System.Boolean,System.Boolean@)
+  id: InitializeRequest(System.Web.HttpContext,System.Boolean,System.Boolean@)
+  parent: System.Web.SessionState.ISessionIDManager
+  langs:
+  - csharp
+  name: InitializeRequest(HttpContext, Boolean, Boolean)
+  nameWithType: ISessionIDManager.InitializeRequest(HttpContext, Boolean, Boolean)
+  fullName: ISessionIDManager.InitializeRequest(HttpContext, Boolean, Boolean)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.SessionState
+  summary: Performs per-request initialization of the <xref href="System.Web.SessionState.SessionIDManager"></xref> object.
+  remarks: "The <xref:System.Web.SessionState.ISessionIDManager.InitializeRequest%2A> method is called for each request handled by the <xref:System.Web.SessionState.ISessionIDManager> object. Use the <xref:System.Web.SessionState.ISessionIDManager.InitializeRequest%2A> method to initialize per-request data for the <xref:System.Web.SessionState.SessionIDManager> object.  \n  \n When the `suppressAutoDetectRedirect` parameter is `true`, the <xref:System.Web.SessionState.ISessionIDManager> object should not use redirection to determine whether the browser supports cookies.  \n  \n The `supportSessionIDReissue` parameter should be returned `false` if cookies are used for session identification; otherwise, return `true` if your <xref:System.Web.SessionState.ISessionIDManager> implementation supports re-issuing session IDs."
+  syntax:
+    content: public bool InitializeRequest (System.Web.HttpContext context, bool suppressAutoDetectRedirect, out bool supportSessionIDReissue);
+    parameters:
+    - id: context
+      type: System.Web.HttpContext
+      description: The <xref href="System.Web.HttpContext"></xref> object that contains information about the current request.
+    - id: suppressAutoDetectRedirect
+      type: System.Boolean
+      description: '`true` if the session-ID manager should redirect to determine cookie support; otherwise, `false` to suppress automatic redirection to determine cookie support.'
+    - id: supportSessionIDReissue
+      type: System.Boolean
+      description: "When this method returns, contains a Boolean that indicates whether the <xref href=\"System.Web.SessionState.ISessionIDManager\"></xref> object supports issuing new session IDs when the original ID is out of date. This parameter is passed uninitialized.  \n  \n Session ID reuse is appropriate when the session-state ID is encoded on a URL and the potential exists for the URL to be shared or emailed.  \n  \n If a custom session-state implementation partitions cookies by virtual path, session state should also be supported."
+    return:
+      type: System.Boolean
+      description: '`true` to indicate that the initialization performed a redirect; otherwise, `false`.'
+  overload: System.Web.SessionState.ISessionIDManager.InitializeRequest*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.SessionState/ISessionIDManager.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.SessionState.ISessionIDManager.RemoveSessionID(System.Web.HttpContext)
+  commentId: M:System.Web.SessionState.ISessionIDManager.RemoveSessionID(System.Web.HttpContext)
+  id: RemoveSessionID(System.Web.HttpContext)
+  parent: System.Web.SessionState.ISessionIDManager
+  langs:
+  - csharp
+  name: RemoveSessionID(HttpContext)
+  nameWithType: ISessionIDManager.RemoveSessionID(HttpContext)
+  fullName: ISessionIDManager.RemoveSessionID(HttpContext)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.SessionState
+  summary: Deletes the session identifier from the cookie or from the URL.
+  remarks: The <xref:System.Web.SessionState.SessionStateModule> calls the <xref:System.Web.SessionState.SessionIDManager.RemoveSessionID%2A> method during the <xref:System.Web.HttpApplication.ReleaseRequestState?displayProperty=fullName> event to remove the session identifier from the <xref:System.Web.HttpResponse.Cookies%2A?displayProperty=fullName> collection if a new session was created but was not used.
+  example:
+  - "The following code example implements the <xref:System.Web.SessionState.ISessionIDManager.RemoveSessionID%2A> method.  \n  \n [!code-csharp[System.Web.SessionState.ISessionIDModule#4](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.SessionState.ISessionIDModule/CS/isessionidmodulesnippets.cs#4)]\n [!code-vb[System.Web.SessionState.ISessionIDModule#4](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.SessionState.ISessionIDModule/VB/isessionidmodulesnippets.vb#4)]"
+  syntax:
+    content: public void RemoveSessionID (System.Web.HttpContext context);
+    parameters:
+    - id: context
+      type: System.Web.HttpContext
+      description: The current <xref href="System.Web.HttpContext"></xref> object that references server objects used to process HTTP requests (for example, the <xref href="System.Web.HttpContext.Request"></xref> and <xref href="System.Web.HttpContext.Response"></xref> properties).
+  overload: System.Web.SessionState.ISessionIDManager.RemoveSessionID*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.SessionState/ISessionIDManager.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.SessionState.ISessionIDManager.SaveSessionID(System.Web.HttpContext,System.String,System.Boolean@,System.Boolean@)
+  commentId: M:System.Web.SessionState.ISessionIDManager.SaveSessionID(System.Web.HttpContext,System.String,System.Boolean@,System.Boolean@)
+  id: SaveSessionID(System.Web.HttpContext,System.String,System.Boolean@,System.Boolean@)
+  parent: System.Web.SessionState.ISessionIDManager
+  langs:
+  - csharp
+  name: SaveSessionID(HttpContext, String, Boolean, Boolean)
+  nameWithType: ISessionIDManager.SaveSessionID(HttpContext, String, Boolean, Boolean)
+  fullName: ISessionIDManager.SaveSessionID(HttpContext, String, Boolean, Boolean)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.SessionState
+  summary: Saves a newly created session identifier to the HTTP response.
+  remarks: "The <xref:System.Web.SessionState.ISessionIDManager.SaveSessionID%2A> method is called by the <xref:System.Web.SessionState.SessionStateModule> object during the <xref:System.Web.HttpApplication.AcquireRequestState?displayProperty=fullName> event. The <xref:System.Web.SessionState.ISessionIDManager.SaveSessionID%2A> method stores the session identifier either in the URL (when cookieless session state is used) or in a non-expiring session cookie.  \n  \n If it is possible that the value returned from your <xref:System.Web.SessionState.ISessionIDManager.CreateSessionID%2A> implementation contains characters that are not valid in an HTTP response or request, you should use the <xref:System.Web.HttpUtility.UrlEncode%2A> method to encode the session-identifier value in your <xref:System.Web.SessionState.ISessionIDManager.SaveSessionID%2A> method implementation and the <xref:System.Web.HttpUtility.UrlDecode%2A> method to decode the session-identifier value in your <xref:System.Web.SessionState.ISessionIDManager.GetSessionID%2A> method implementation."
+  example:
+  - "The following code example shows a partially implemented <xref:System.Web.SessionState.ISessionIDManager.GetSessionID%2A> method. If your custom session-ID manager supports cookieless session identifiers, you will need to implement a solution for sending and retrieving session identifiers in the URL, such as an ISAPI filter.  \n  \n [!code-csharp[System.Web.SessionState.ISessionIDModule#5](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.SessionState.ISessionIDModule/CS/isessionidmodulesnippets.cs#5)]\n [!code-vb[System.Web.SessionState.ISessionIDModule#5](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.SessionState.ISessionIDModule/VB/isessionidmodulesnippets.vb#5)]"
+  syntax:
+    content: public void SaveSessionID (System.Web.HttpContext context, string id, out bool redirected, out bool cookieAdded);
+    parameters:
+    - id: context
+      type: System.Web.HttpContext
+      description: The current <xref href="System.Web.HttpContext"></xref> object that references server objects used to process HTTP requests (for example, the <xref href="System.Web.HttpContext.Request"></xref> and <xref href="System.Web.HttpContext.Response"></xref> properties).
+    - id: id
+      type: System.String
+      description: The session identifier.
+    - id: redirected
+      type: System.Boolean
+      description: When this method returns, contains a Boolean value that is `true` if the response is redirected to the current URL with the session identifier added to the URL; otherwise, `false`.
+    - id: cookieAdded
+      type: System.Boolean
+      description: When this method returns, contains a Boolean value that is `true` if a cookie has been added to the HTTP response; otherwise, `false`.
+  overload: System.Web.SessionState.ISessionIDManager.SaveSessionID*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.SessionState/ISessionIDManager.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.SessionState.ISessionIDManager.Validate(System.String)
+  commentId: M:System.Web.SessionState.ISessionIDManager.Validate(System.String)
+  id: Validate(System.String)
+  parent: System.Web.SessionState.ISessionIDManager
+  langs:
+  - csharp
+  name: Validate(String)
+  nameWithType: ISessionIDManager.Validate(String)
+  fullName: ISessionIDManager.Validate(String)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.SessionState
+  summary: Confirms that the supplied session identifier is valid.
+  remarks: "The <xref:System.Web.SessionState.ISessionIDManager.Validate%2A> method verifies that the supplied `id` is a valid session identifier.  \n  \n Your <xref:System.Web.SessionState.ISessionIDManager> implementation should call the <xref:System.Web.SessionState.ISessionIDManager.Validate%2A> method from the <xref:System.Web.SessionState.ISessionIDManager.GetSessionID%2A> method when retrieving a session identifier from an HTTP request to ensure that the supplied session identifier is properly formatted."
+  example:
+  - "The following code example implements the <xref:System.Web.SessionState.ISessionIDManager.Validate%2A> method and ensures the session-identifier value is a valid <xref:System.Guid>.  \n  \n [!code-csharp[System.Web.SessionState.ISessionIDModule#6](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.SessionState.ISessionIDModule/CS/isessionidmodulesnippets.cs#6)]\n [!code-vb[System.Web.SessionState.ISessionIDModule#6](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.SessionState.ISessionIDModule/VB/isessionidmodulesnippets.vb#6)]"
+  syntax:
+    content: public bool Validate (string id);
+    parameters:
+    - id: id
+      type: System.String
+      description: The session identifier to validate.
+    return:
+      type: System.Boolean
+      description: '`true` if the session identifier is valid; otherwise, `false`.'
+  overload: System.Web.SessionState.ISessionIDManager.Validate*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.SessionState/ISessionIDManager.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+references:
+- uid: System.Web.SessionState.ISessionIDManager.CreateSessionID(System.Web.HttpContext)
+  parent: System.Web.SessionState.ISessionIDManager
+  isExternal: false
+  name: CreateSessionID(HttpContext)
+  nameWithType: ISessionIDManager.CreateSessionID(HttpContext)
+  fullName: ISessionIDManager.CreateSessionID(HttpContext)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Web.HttpContext
+  parent: System.Web
+  isExternal: false
+  name: HttpContext
+  nameWithType: HttpContext
+  fullName: System.Web.HttpContext
+- uid: System.Web.SessionState.ISessionIDManager.GetSessionID(System.Web.HttpContext)
+  parent: System.Web.SessionState.ISessionIDManager
+  isExternal: false
+  name: GetSessionID(HttpContext)
+  nameWithType: ISessionIDManager.GetSessionID(HttpContext)
+  fullName: ISessionIDManager.GetSessionID(HttpContext)
+- uid: System.Web.SessionState.ISessionIDManager.Initialize
+  parent: System.Web.SessionState.ISessionIDManager
+  isExternal: false
+  name: Initialize()
+  nameWithType: ISessionIDManager.Initialize()
+  fullName: ISessionIDManager.Initialize()
+- uid: System.Web.SessionState.ISessionIDManager.InitializeRequest(System.Web.HttpContext,System.Boolean,System.Boolean@)
+  parent: System.Web.SessionState.ISessionIDManager
+  isExternal: false
+  name: InitializeRequest(HttpContext, Boolean, Boolean)
+  nameWithType: ISessionIDManager.InitializeRequest(HttpContext, Boolean, Boolean)
+  fullName: ISessionIDManager.InitializeRequest(HttpContext, Boolean, Boolean)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Web.SessionState.ISessionIDManager.RemoveSessionID(System.Web.HttpContext)
+  parent: System.Web.SessionState.ISessionIDManager
+  isExternal: false
+  name: RemoveSessionID(HttpContext)
+  nameWithType: ISessionIDManager.RemoveSessionID(HttpContext)
+  fullName: ISessionIDManager.RemoveSessionID(HttpContext)
+- uid: System.Web.SessionState.ISessionIDManager.SaveSessionID(System.Web.HttpContext,System.String,System.Boolean@,System.Boolean@)
+  parent: System.Web.SessionState.ISessionIDManager
+  isExternal: false
+  name: SaveSessionID(HttpContext, String, Boolean, Boolean)
+  nameWithType: ISessionIDManager.SaveSessionID(HttpContext, String, Boolean, Boolean)
+  fullName: ISessionIDManager.SaveSessionID(HttpContext, String, Boolean, Boolean)
+- uid: System.Web.SessionState.ISessionIDManager.Validate(System.String)
+  parent: System.Web.SessionState.ISessionIDManager
+  isExternal: false
+  name: Validate(String)
+  nameWithType: ISessionIDManager.Validate(String)
+  fullName: ISessionIDManager.Validate(String)
+- uid: System.Web.SessionState.ISessionIDManager.CreateSessionID*
+  parent: System.Web.SessionState.ISessionIDManager
+  isExternal: false
+  name: CreateSessionID
+  nameWithType: ISessionIDManager.CreateSessionID
+  fullName: ISessionIDManager.CreateSessionID
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.SessionState/ISessionIDManager.xml
+- uid: System.Web.SessionState.ISessionIDManager.GetSessionID*
+  parent: System.Web.SessionState.ISessionIDManager
+  isExternal: false
+  name: GetSessionID
+  nameWithType: ISessionIDManager.GetSessionID
+  fullName: ISessionIDManager.GetSessionID
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.SessionState/ISessionIDManager.xml
+- uid: System.Web.SessionState.ISessionIDManager.Initialize*
+  parent: System.Web.SessionState.ISessionIDManager
+  isExternal: false
+  name: Initialize
+  nameWithType: ISessionIDManager.Initialize
+  fullName: ISessionIDManager.Initialize
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.SessionState/ISessionIDManager.xml
+- uid: System.Web.SessionState.ISessionIDManager.InitializeRequest*
+  parent: System.Web.SessionState.ISessionIDManager
+  isExternal: false
+  name: InitializeRequest
+  nameWithType: ISessionIDManager.InitializeRequest
+  fullName: ISessionIDManager.InitializeRequest
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.SessionState/ISessionIDManager.xml
+- uid: System.Web.SessionState.ISessionIDManager.RemoveSessionID*
+  parent: System.Web.SessionState.ISessionIDManager
+  isExternal: false
+  name: RemoveSessionID
+  nameWithType: ISessionIDManager.RemoveSessionID
+  fullName: ISessionIDManager.RemoveSessionID
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.SessionState/ISessionIDManager.xml
+- uid: System.Web.SessionState.ISessionIDManager.SaveSessionID*
+  parent: System.Web.SessionState.ISessionIDManager
+  isExternal: false
+  name: SaveSessionID
+  nameWithType: ISessionIDManager.SaveSessionID
+  fullName: ISessionIDManager.SaveSessionID
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.SessionState/ISessionIDManager.xml
+- uid: System.Web.SessionState.ISessionIDManager.Validate*
+  parent: System.Web.SessionState.ISessionIDManager
+  isExternal: false
+  name: Validate
+  nameWithType: ISessionIDManager.Validate
+  fullName: ISessionIDManager.Validate
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.SessionState/ISessionIDManager.xml

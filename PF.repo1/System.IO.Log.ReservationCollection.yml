@@ -1,0 +1,2982 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.IO.Log.ReservationCollection
+  commentId: T:System.IO.Log.ReservationCollection
+  id: ReservationCollection
+  children:
+  - System.IO.Log.ReservationCollection.#ctor
+  - System.IO.Log.ReservationCollection.Add(System.Int64)
+  - System.IO.Log.ReservationCollection.Clear
+  - System.IO.Log.ReservationCollection.Contains(System.Int64)
+  - System.IO.Log.ReservationCollection.CopyTo(System.Int64[],System.Int32)
+  - System.IO.Log.ReservationCollection.Count
+  - System.IO.Log.ReservationCollection.Finalize
+  - System.IO.Log.ReservationCollection.FreeReservation(System.Int64)
+  - System.IO.Log.ReservationCollection.GetBestMatchingReservation(System.Int64)
+  - System.IO.Log.ReservationCollection.GetEnumerator
+  - System.IO.Log.ReservationCollection.IsReadOnly
+  - System.IO.Log.ReservationCollection.MakeReservation(System.Int64)
+  - System.IO.Log.ReservationCollection.Remove(System.Int64)
+  - System.IO.Log.ReservationCollection.ReservationFreed(System.Int64)
+  - System.IO.Log.ReservationCollection.ReservationMade(System.Int64)
+  - System.IO.Log.ReservationCollection.System#Collections#IEnumerable#GetEnumerator
+  langs:
+  - csharp
+  name: ReservationCollection
+  nameWithType: ReservationCollection
+  fullName: System.IO.Log.ReservationCollection
+  type: Class
+  assemblies:
+  - System.IO.Log
+  namespace: System.IO.Log
+  summary: Manages the collection of space reservations made in a record sequence.
+  remarks: "This class represents a set of reservation areas that are made in a record sequence. Adding items to the collection allocates new reservations. Removing items from the collection frees those reservations.  \n  \n An application reserves space in the log when it has data that is to be written to the log in the future, but cannot write it immediately. Reservations provide a guarantee that the data can be written to the log when the data is available to be written. When using logs, applications often reserve one or more log records in a marshalling area. You must reserve records prior to appending them.  \n  \n Reservations can be used to guarantee that an operation can be completed before the data is committed; otherwise, the changes are rolled back. It can also be used to record an \"undo action\" in the log. During a rollback operation, a transactional resource manager (RM) must be able to recover its state if the RM is interrupted during the rollback operation. By using a reservation area, an RM can reserve space in a log before it is used.  \n  \n The <xref:System.IO.Log.IRecordSequence.ReserveAndAppend%2A> method can either reserve space or append data, or both, depending on the parameters that are specified when making the call. As work progresses in a transaction, an application can append the undo information and reserve space for compensation records. During a rollback operation, compensation records that are created indicate what has been undone on the disk. The records are appended using space that has been previously reserved. This guarantees that an RM does not run out of log space, which is a fatal condition, while performing a rollback operation. If a log fills up during a transaction, an application can safely roll back a transaction without corrupting durable data.  \n  \n CLFS is an ARIES-compliant logging system, meant for write-ahead logging. In write-ahead logging, an application writes an undo record before it performs the operation, reserving the amount of space it takes in the log to write a compensating record, which may be used during rollback. Later, the reserved space is used when the compensation record is actually written.  \n  \n Applications can either reserve or access long space at any given time (they are mutually exclusive operations). After a commit record is written to the log, an application can free up the reservations for the compensation records. This action can be done by calling either the <xref:System.IO.Log.ReservationCollection.FreeReservation%2A> or <xref:System.IO.Log.IRecordSequence.ReserveAndAppend%2A> method. Calling the <xref:System.IO.Log.IRecordSequence.ReserveAndAppend%2A> method guarantees that the operation is atomic, while calling the <xref:System.IO.Log.ReservationCollection.FreeReservation%2A> method does not.  \n  \n When you free records, you must free the same records that you reserved together in a previous call to the <xref:System.IO.Log.IRecordSequence.ReserveAndAppend%2A> method.  \n  \n> [!NOTE]\n>  Your implementation of <xref:System.IO.Log.IRecordSequence> must implement the <xref:System.IO.Log.ReservationCollection.MakeReservation%2A> and <xref:System.IO.Log.ReservationCollection.FreeReservation%2A> methods to perform the actual reservation allocation and deallocation. In addition, your implementation must also call <xref:System.IO.Log.ReservationCollection.ReservationFreed%2A> when a record is written into a reserved space."
+  example:
+  - "Reservations can be performed in two ways as shown in the following examples. You can adopt the practices in the samples for robust processing. Notice that this task can only be performed when using the CLFS-based <xref:System.IO.Log.LogRecordSequence> class.  \n  \n```  \n//Using the ReserveAndAppend Method  \nReservationCollection reservations = recordSequence.CreateReservationCollection();  \nlong[] lengthOfUndoRecords = new long[] { 1000 };  \nrecordSequence.ReserveAndAppend(recordData,  \n                                                     userSqn,  \n                                                     previousSqn,  \n                                                     RecordSequenceAppendOptions.None,  \n                                                     reservations,  \n                                                     lengthOfUndoRecords);  \nrecordSequence.Append(undoRecordData,    // If necessary …  \n                                    userSqn,  \n                                    previousSqn,  \n                                    RecordSequenceAppendOptions.ForceFlush,  \n                                    reservations);  \n  \n// Using the Manual Approach  \nReservationCollection reservations = recordSequence.CreateReservationCollection();  \nreservations.Add(lengthOfUndoRecord);  \ntry  \n{  \n   recordSequence.Append(recordData, userSqn, previousSqn, RecordAppendOptions.None);  \n}  \ncatch (Exception)  \n{  \n   reservations.Remove(lengthOfUndoRecord);  \n   throw;  \n}  \n  \nrecordSequence.Append(undoRecordData, userSqn, previousSqn, RecordAppendOptions.ForceFlush, reservations);  \n```"
+  syntax:
+    content: 'public abstract class ReservationCollection : System.Collections.Generic.ICollection<long>, System.Collections.Generic.IEnumerable<long>'
+  inheritance:
+  - System.Object
+  implements:
+  - System.Collections.Generic.ICollection{System.Int64}
+  - System.Collections.Generic.IEnumerable{System.Int64}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Collections.Immutable.ImmutableArray.ToImmutableArray``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Collections.Immutable.ImmutableDictionary.ToImmutableDictionary``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  - System.Collections.Immutable.ImmutableDictionary.ToImmutableDictionary``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IEqualityComparer{``1})
+  - System.Collections.Immutable.ImmutableDictionary.ToImmutableDictionary``2(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``1}})
+  - System.Collections.Immutable.ImmutableDictionary.ToImmutableDictionary``2(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``1}},System.Collections.Generic.IEqualityComparer{``0})
+  - System.Collections.Immutable.ImmutableDictionary.ToImmutableDictionary``2(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``1}},System.Collections.Generic.IEqualityComparer{``0},System.Collections.Generic.IEqualityComparer{``1})
+  - System.Collections.Immutable.ImmutableDictionary.ToImmutableDictionary``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2})
+  - System.Collections.Immutable.ImmutableDictionary.ToImmutableDictionary``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Collections.Generic.IEqualityComparer{``1})
+  - System.Collections.Immutable.ImmutableDictionary.ToImmutableDictionary``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Collections.Generic.IEqualityComparer{``1},System.Collections.Generic.IEqualityComparer{``2})
+  - System.Collections.Immutable.ImmutableHashSet.ToImmutableHashSet``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Collections.Immutable.ImmutableHashSet.ToImmutableHashSet``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})
+  - System.Collections.Immutable.ImmutableList.ToImmutableList``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Collections.Immutable.ImmutableSortedDictionary.ToImmutableSortedDictionary``2(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``1}})
+  - System.Collections.Immutable.ImmutableSortedDictionary.ToImmutableSortedDictionary``2(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``1}},System.Collections.Generic.IComparer{``0})
+  - System.Collections.Immutable.ImmutableSortedDictionary.ToImmutableSortedDictionary``2(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``1}},System.Collections.Generic.IComparer{``0},System.Collections.Generic.IEqualityComparer{``1})
+  - System.Collections.Immutable.ImmutableSortedDictionary.ToImmutableSortedDictionary``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2})
+  - System.Collections.Immutable.ImmutableSortedDictionary.ToImmutableSortedDictionary``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Collections.Generic.IComparer{``1})
+  - System.Collections.Immutable.ImmutableSortedDictionary.ToImmutableSortedDictionary``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Collections.Generic.IComparer{``1},System.Collections.Generic.IEqualityComparer{``2})
+  - System.Collections.Immutable.ImmutableSortedSet.ToImmutableSortedSet``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Collections.Immutable.ImmutableSortedSet.ToImmutableSortedSet``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IComparer{``0})
+  - System.Data.DataTableExtensions.CopyToDataTable``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Data.DataTableExtensions.CopyToDataTable``1(System.Collections.Generic.IEnumerable{``0},System.Data.DataTable,System.Data.LoadOption)
+  - System.Data.DataTableExtensions.CopyToDataTable``1(System.Collections.Generic.IEnumerable{``0},System.Data.DataTable,System.Data.LoadOption,System.Data.FillErrorEventHandler)
+  - System.Linq.Enumerable.Aggregate``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``0,``0})
+  - System.Linq.Enumerable.Aggregate``2(System.Collections.Generic.IEnumerable{``0},``1,System.Func{``1,``0,``1})
+  - System.Linq.Enumerable.Aggregate``3(System.Collections.Generic.IEnumerable{``0},``1,System.Func{``1,``0,``1},System.Func{``1,``2})
+  - System.Linq.Enumerable.All``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  - System.Linq.Enumerable.Any``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.Any``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  - System.Linq.Enumerable.Append``1(System.Collections.Generic.IEnumerable{``0},``0)
+  - System.Linq.Enumerable.AsEnumerable``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Decimal})
+  - System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Double})
+  - System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Int32})
+  - System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Int64})
+  - System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Nullable{System.Decimal}})
+  - System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Nullable{System.Double}})
+  - System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Nullable{System.Int32}})
+  - System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Nullable{System.Int64}})
+  - System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Nullable{System.Single}})
+  - System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Single})
+  - System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Decimal})
+  - System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Double})
+  - System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32})
+  - System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int64})
+  - System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Decimal}})
+  - System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Double}})
+  - System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Int32}})
+  - System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Int64}})
+  - System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Single}})
+  - System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Single})
+  - System.Linq.Enumerable.Cast``1(System.Collections.IEnumerable)
+  - System.Linq.Enumerable.Concat``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.Contains``1(System.Collections.Generic.IEnumerable{``0},``0)
+  - System.Linq.Enumerable.Contains``1(System.Collections.Generic.IEnumerable{``0},``0,System.Collections.Generic.IEqualityComparer{``0})
+  - System.Linq.Enumerable.Count``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.Count``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  - System.Linq.Enumerable.DefaultIfEmpty``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.DefaultIfEmpty``1(System.Collections.Generic.IEnumerable{``0},``0)
+  - System.Linq.Enumerable.Distinct``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.Distinct``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})
+  - System.Linq.Enumerable.ElementAt``1(System.Collections.Generic.IEnumerable{``0},System.Int32)
+  - System.Linq.Enumerable.ElementAtOrDefault``1(System.Collections.Generic.IEnumerable{``0},System.Int32)
+  - System.Linq.Enumerable.Except``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.Except``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})
+  - System.Linq.Enumerable.First``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.First``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  - System.Linq.Enumerable.FirstOrDefault``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.FirstOrDefault``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  - System.Linq.Enumerable.GroupBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  - System.Linq.Enumerable.GroupBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IEqualityComparer{``1})
+  - System.Linq.Enumerable.GroupBy``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2})
+  - System.Linq.Enumerable.GroupBy``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Collections.Generic.IEqualityComparer{``1})
+  - System.Linq.Enumerable.GroupBy``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``1,System.Collections.Generic.IEnumerable{``0},``2})
+  - System.Linq.Enumerable.GroupBy``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``1,System.Collections.Generic.IEnumerable{``0},``2},System.Collections.Generic.IEqualityComparer{``1})
+  - System.Linq.Enumerable.GroupBy``4(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Func{``1,System.Collections.Generic.IEnumerable{``2},``3})
+  - System.Linq.Enumerable.GroupBy``4(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Func{``1,System.Collections.Generic.IEnumerable{``2},``3},System.Collections.Generic.IEqualityComparer{``1})
+  - System.Linq.Enumerable.GroupJoin``4(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1},System.Func{``0,``2},System.Func{``1,``2},System.Func{``0,System.Collections.Generic.IEnumerable{``1},``3})
+  - System.Linq.Enumerable.GroupJoin``4(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1},System.Func{``0,``2},System.Func{``1,``2},System.Func{``0,System.Collections.Generic.IEnumerable{``1},``3},System.Collections.Generic.IEqualityComparer{``2})
+  - System.Linq.Enumerable.Intersect``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.Intersect``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})
+  - System.Linq.Enumerable.Join``4(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1},System.Func{``0,``2},System.Func{``1,``2},System.Func{``0,``1,``3})
+  - System.Linq.Enumerable.Join``4(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1},System.Func{``0,``2},System.Func{``1,``2},System.Func{``0,``1,``3},System.Collections.Generic.IEqualityComparer{``2})
+  - System.Linq.Enumerable.Last``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.Last``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  - System.Linq.Enumerable.LastOrDefault``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.LastOrDefault``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  - System.Linq.Enumerable.LongCount``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.LongCount``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  - System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Decimal})
+  - System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Double})
+  - System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Int32})
+  - System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Int64})
+  - System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Nullable{System.Decimal}})
+  - System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Nullable{System.Double}})
+  - System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Nullable{System.Int32}})
+  - System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Nullable{System.Int64}})
+  - System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Nullable{System.Single}})
+  - System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Single})
+  - System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Decimal})
+  - System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Double})
+  - System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32})
+  - System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int64})
+  - System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Decimal}})
+  - System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Double}})
+  - System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Int32}})
+  - System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Int64}})
+  - System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Single}})
+  - System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Single})
+  - System.Linq.Enumerable.Max``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  - System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Decimal})
+  - System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Double})
+  - System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Int32})
+  - System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Int64})
+  - System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Nullable{System.Decimal}})
+  - System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Nullable{System.Double}})
+  - System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Nullable{System.Int32}})
+  - System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Nullable{System.Int64}})
+  - System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Nullable{System.Single}})
+  - System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Single})
+  - System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Decimal})
+  - System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Double})
+  - System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32})
+  - System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int64})
+  - System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Decimal}})
+  - System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Double}})
+  - System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Int32}})
+  - System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Int64}})
+  - System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Single}})
+  - System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Single})
+  - System.Linq.Enumerable.Min``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  - System.Linq.Enumerable.OfType``1(System.Collections.IEnumerable)
+  - System.Linq.Enumerable.OrderBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  - System.Linq.Enumerable.OrderBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IComparer{``1})
+  - System.Linq.Enumerable.OrderByDescending``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  - System.Linq.Enumerable.OrderByDescending``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IComparer{``1})
+  - System.Linq.Enumerable.Prepend``1(System.Collections.Generic.IEnumerable{``0},``0)
+  - System.Linq.Enumerable.Reverse``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.Select``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  - System.Linq.Enumerable.Select``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32,``1})
+  - System.Linq.Enumerable.SelectMany``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Collections.Generic.IEnumerable{``1}})
+  - System.Linq.Enumerable.SelectMany``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32,System.Collections.Generic.IEnumerable{``1}})
+  - System.Linq.Enumerable.SelectMany``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Collections.Generic.IEnumerable{``1}},System.Func{``0,``1,``2})
+  - System.Linq.Enumerable.SelectMany``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32,System.Collections.Generic.IEnumerable{``1}},System.Func{``0,``1,``2})
+  - System.Linq.Enumerable.SequenceEqual``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.SequenceEqual``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})
+  - System.Linq.Enumerable.Single``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.Single``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  - System.Linq.Enumerable.SingleOrDefault``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.SingleOrDefault``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  - System.Linq.Enumerable.Skip``1(System.Collections.Generic.IEnumerable{``0},System.Int32)
+  - System.Linq.Enumerable.SkipLast``1(System.Collections.Generic.IEnumerable{``0},System.Int32)
+  - System.Linq.Enumerable.SkipWhile``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  - System.Linq.Enumerable.SkipWhile``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32,System.Boolean})
+  - System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Decimal})
+  - System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Double})
+  - System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Int32})
+  - System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Int64})
+  - System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Nullable{System.Decimal}})
+  - System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Nullable{System.Double}})
+  - System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Nullable{System.Int32}})
+  - System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Nullable{System.Int64}})
+  - System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Nullable{System.Single}})
+  - System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Single})
+  - System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Decimal})
+  - System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Double})
+  - System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32})
+  - System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int64})
+  - System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Decimal}})
+  - System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Double}})
+  - System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Int32}})
+  - System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Int64}})
+  - System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Single}})
+  - System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Single})
+  - System.Linq.Enumerable.Take``1(System.Collections.Generic.IEnumerable{``0},System.Int32)
+  - System.Linq.Enumerable.TakeLast``1(System.Collections.Generic.IEnumerable{``0},System.Int32)
+  - System.Linq.Enumerable.TakeWhile``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  - System.Linq.Enumerable.TakeWhile``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32,System.Boolean})
+  - System.Linq.Enumerable.ToArray``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.ToDictionary``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  - System.Linq.Enumerable.ToDictionary``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IEqualityComparer{``1})
+  - System.Linq.Enumerable.ToDictionary``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2})
+  - System.Linq.Enumerable.ToDictionary``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Collections.Generic.IEqualityComparer{``1})
+  - System.Linq.Enumerable.ToHashSet``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.ToHashSet``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})
+  - System.Linq.Enumerable.ToList``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.ToLookup``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  - System.Linq.Enumerable.ToLookup``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IEqualityComparer{``1})
+  - System.Linq.Enumerable.ToLookup``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2})
+  - System.Linq.Enumerable.ToLookup``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Collections.Generic.IEqualityComparer{``1})
+  - System.Linq.Enumerable.Union``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Enumerable.Union``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})
+  - System.Linq.Enumerable.Where``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  - System.Linq.Enumerable.Where``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32,System.Boolean})
+  - System.Linq.Enumerable.Zip``3(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1},System.Func{``0,``1,``2})
+  - System.Linq.ParallelEnumerable.AsParallel(System.Collections.IEnumerable)
+  - System.Linq.ParallelEnumerable.AsParallel``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Linq.Queryable.AsQueryable(System.Collections.IEnumerable)
+  - System.Linq.Queryable.AsQueryable``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Xml.Linq.Extensions.Ancestors``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Xml.Linq.Extensions.Ancestors``1(System.Collections.Generic.IEnumerable{``0},System.Xml.Linq.XName)
+  - System.Xml.Linq.Extensions.AncestorsAndSelf(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement})
+  - System.Xml.Linq.Extensions.AncestorsAndSelf(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement},System.Xml.Linq.XName)
+  - System.Xml.Linq.Extensions.Attributes(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement})
+  - System.Xml.Linq.Extensions.Attributes(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement},System.Xml.Linq.XName)
+  - System.Xml.Linq.Extensions.DescendantNodes``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Xml.Linq.Extensions.DescendantNodesAndSelf(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement})
+  - System.Xml.Linq.Extensions.Descendants``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Xml.Linq.Extensions.Descendants``1(System.Collections.Generic.IEnumerable{``0},System.Xml.Linq.XName)
+  - System.Xml.Linq.Extensions.DescendantsAndSelf(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement})
+  - System.Xml.Linq.Extensions.DescendantsAndSelf(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement},System.Xml.Linq.XName)
+  - System.Xml.Linq.Extensions.Elements``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Xml.Linq.Extensions.Elements``1(System.Collections.Generic.IEnumerable{``0},System.Xml.Linq.XName)
+  - System.Xml.Linq.Extensions.InDocumentOrder``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Xml.Linq.Extensions.Nodes``1(System.Collections.Generic.IEnumerable{``0})
+  - System.Xml.Linq.Extensions.Remove(System.Collections.Generic.IEnumerable{System.Xml.Linq.XAttribute})
+  - System.Xml.Linq.Extensions.Remove``1(System.Collections.Generic.IEnumerable{``0})
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IO.Log.ReservationCollection.#ctor
+  commentId: M:System.IO.Log.ReservationCollection.#ctor
+  id: '#ctor'
+  parent: System.IO.Log.ReservationCollection
+  langs:
+  - csharp
+  name: ReservationCollection()
+  nameWithType: ReservationCollection.ReservationCollection()
+  fullName: ReservationCollection.ReservationCollection()
+  type: Constructor
+  assemblies:
+  - System.IO.Log
+  namespace: System.IO.Log
+  summary: Initializes a new instance of the <xref href="System.IO.Log.ReservationCollection"></xref> class.
+  syntax:
+    content: protected ReservationCollection ();
+    parameters: []
+  overload: System.IO.Log.ReservationCollection.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IO.Log.ReservationCollection.Add(System.Int64)
+  commentId: M:System.IO.Log.ReservationCollection.Add(System.Int64)
+  id: Add(System.Int64)
+  parent: System.IO.Log.ReservationCollection
+  langs:
+  - csharp
+  name: Add(Int64)
+  nameWithType: ReservationCollection.Add(Int64)
+  fullName: ReservationCollection.Add(Int64)
+  type: Method
+  assemblies:
+  - System.IO.Log
+  namespace: System.IO.Log
+  summary: Allocates a reservation and adds it to the collection. This method cannot be inherited.
+  remarks: ''
+  example:
+  - "The following example shows how to manually make a reservation. Notice that this task can only be performed when using the CLFS-based <xref:System.IO.Log.LogRecordSequence> class.  \n  \n```  \nReservationCollection reservations = recordSequence.CreateReservationCollection();  \nreservations.Add(lengthOfUndoRecord);  \ntry  \n{  \n   recordSequence.Append(recordData, userSqn, previousSqn, RecordAppendOptions.None);  \n}  \ncatch (Exception)  \n{  \n   reservations.Remove(lengthOfUndoRecord);  \n   throw;  \n}  \n  \nrecordSequence.Append(undoRecordData, userSqn, previousSqn, RecordAppendOptions.ForceFlush, reservations);  \n```"
+  syntax:
+    content: public void Add (long size);
+    parameters:
+    - id: size
+      type: System.Int64
+      description: The size of the requested reservation, in bytes.
+  overload: System.IO.Log.ReservationCollection.Add*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>archiveTail</code> is not between the base and last sequence numbers of this sequence.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>size</code> is invalid or exceeds maximum reservation size.
+  - type: System.IO.IOException
+    commentId: T:System.IO.IOException
+    description: An I/O error occurs when creating the archive snapshot.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The method was called after the sequence has been disposed of.
+  - type: System.OutOfMemoryException
+    commentId: T:System.OutOfMemoryException
+    description: There is not enough memory to continue the execution of the program.
+  - type: System.UnauthorizedAccessException
+    commentId: T:System.UnauthorizedAccessException
+    description: Access for the specified log store is denied by the operating system.
+  - type: System.IO.Log.SequenceFullException
+    commentId: T:System.IO.Log.SequenceFullException
+    description: The record sequence is full.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IO.Log.ReservationCollection.Clear
+  commentId: M:System.IO.Log.ReservationCollection.Clear
+  id: Clear
+  parent: System.IO.Log.ReservationCollection
+  langs:
+  - csharp
+  name: Clear()
+  nameWithType: ReservationCollection.Clear()
+  fullName: ReservationCollection.Clear()
+  type: Method
+  assemblies:
+  - System.IO.Log
+  namespace: System.IO.Log
+  summary: Releases all of the reservations in the collection. This method cannot be inherited.
+  syntax:
+    content: public void Clear ();
+    parameters: []
+  overload: System.IO.Log.ReservationCollection.Clear*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>size</code> is invalid or exceeds maximum reservation size.
+  - type: System.IO.IOException
+    commentId: T:System.IO.IOException
+    description: An I/O error occurs when creating the archive snapshot.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The method was called after the sequence has been disposed of.
+  - type: System.OutOfMemoryException
+    commentId: T:System.OutOfMemoryException
+    description: There is not enough memory to continue the execution of the program.
+  - type: System.IO.Log.SequenceFullException
+    commentId: T:System.IO.Log.SequenceFullException
+    description: The record sequence is full.
+  - type: System.UnauthorizedAccessException
+    commentId: T:System.UnauthorizedAccessException
+    description: Access for the specified log store is denied by the operating system.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IO.Log.ReservationCollection.Contains(System.Int64)
+  commentId: M:System.IO.Log.ReservationCollection.Contains(System.Int64)
+  id: Contains(System.Int64)
+  parent: System.IO.Log.ReservationCollection
+  langs:
+  - csharp
+  name: Contains(Int64)
+  nameWithType: ReservationCollection.Contains(Int64)
+  fullName: ReservationCollection.Contains(Int64)
+  type: Method
+  assemblies:
+  - System.IO.Log
+  namespace: System.IO.Log
+  summary: Determines whether a reservation of the specified size has been made. This method cannot be inherited.
+  syntax:
+    content: public bool Contains (long size);
+    parameters:
+    - id: size
+      type: System.Int64
+      description: The size to locate in the collection.
+    return:
+      type: System.Boolean
+      description: '`true` if at least one reservation of the specified size has been made; otherwise, `false`.'
+  overload: System.IO.Log.ReservationCollection.Contains*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The method was called after the sequence has been disposed of.
+  - type: System.OutOfMemoryException
+    commentId: T:System.OutOfMemoryException
+    description: There is not enough memory to continue the execution of the program.
+  - type: System.UnauthorizedAccessException
+    commentId: T:System.UnauthorizedAccessException
+    description: Access for the specified log store is denied by the operating system.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IO.Log.ReservationCollection.CopyTo(System.Int64[],System.Int32)
+  commentId: M:System.IO.Log.ReservationCollection.CopyTo(System.Int64[],System.Int32)
+  id: CopyTo(System.Int64[],System.Int32)
+  parent: System.IO.Log.ReservationCollection
+  langs:
+  - csharp
+  name: CopyTo(Int64[], Int32)
+  nameWithType: ReservationCollection.CopyTo(Int64[], Int32)
+  fullName: ReservationCollection.CopyTo(Int64[], Int32)
+  type: Method
+  assemblies:
+  - System.IO.Log
+  namespace: System.IO.Log
+  summary: Copies the entire collection to a one-dimensional array, starting at the specified index of the target array. This method cannot be inherited.
+  syntax:
+    content: public void CopyTo (long[] array, int arrayIndex);
+    parameters:
+    - id: array
+      type: System.Int64[]
+      description: The array that is the destination of the copy.
+    - id: arrayIndex
+      type: System.Int32
+      description: The zero-based index in the array at which copying begins.
+  overload: System.IO.Log.ReservationCollection.CopyTo*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>array</code> or <code>arrayIndex</code> is `null`.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>arrayIndex</code> is less than zero, or greater than or equal to the length of <code>array</code>.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: "There is not enough space in the specified array to copy the data.  \n  \n -or-  \n  \n <code>array</code> is not a single dimensional array, which is the only type supported for the requested action."
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The method was called after the sequence has been disposed of.
+  - type: System.OutOfMemoryException
+    commentId: T:System.OutOfMemoryException
+    description: There is not enough memory to continue the execution of the program.
+  - type: System.UnauthorizedAccessException
+    commentId: T:System.UnauthorizedAccessException
+    description: Access for the specified log store is denied by the operating system.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IO.Log.ReservationCollection.Count
+  commentId: P:System.IO.Log.ReservationCollection.Count
+  id: Count
+  parent: System.IO.Log.ReservationCollection
+  langs:
+  - csharp
+  name: Count
+  nameWithType: ReservationCollection.Count
+  fullName: ReservationCollection.Count
+  type: Property
+  assemblies:
+  - System.IO.Log
+  namespace: System.IO.Log
+  summary: Gets the number of reservations in the collection.
+  syntax:
+    content: public int Count { get; }
+    return:
+      type: System.Int32
+      description: The number of reservations in the collection.
+  overload: System.IO.Log.ReservationCollection.Count*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IO.Log.ReservationCollection.Finalize
+  commentId: M:System.IO.Log.ReservationCollection.Finalize
+  id: Finalize
+  parent: System.IO.Log.ReservationCollection
+  langs:
+  - csharp
+  name: Finalize()
+  nameWithType: ReservationCollection.Finalize()
+  fullName: ReservationCollection.Finalize()
+  type: Method
+  assemblies:
+  - System.IO.Log
+  namespace: System.IO.Log
+  summary: Allows the <xref href="System.IO.Log.ReservationCollection"></xref> to free resources before it is destroyed by the garbage collector.
+  syntax:
+    content: ~ReservationCollection ();
+    parameters: []
+  overload: System.IO.Log.ReservationCollection.Finalize*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IO.Log.ReservationCollection.FreeReservation(System.Int64)
+  commentId: M:System.IO.Log.ReservationCollection.FreeReservation(System.Int64)
+  id: FreeReservation(System.Int64)
+  parent: System.IO.Log.ReservationCollection
+  langs:
+  - csharp
+  name: FreeReservation(Int64)
+  nameWithType: ReservationCollection.FreeReservation(Int64)
+  fullName: ReservationCollection.FreeReservation(Int64)
+  type: Method
+  assemblies:
+  - System.IO.Log
+  namespace: System.IO.Log
+  summary: When overridden in a derived class, releases a reservation of the specified size.
+  syntax:
+    content: protected abstract void FreeReservation (long size);
+    parameters:
+    - id: size
+      type: System.Int64
+      description: The size of the reservation to release.
+  overload: System.IO.Log.ReservationCollection.FreeReservation*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IO.Log.ReservationCollection.GetBestMatchingReservation(System.Int64)
+  commentId: M:System.IO.Log.ReservationCollection.GetBestMatchingReservation(System.Int64)
+  id: GetBestMatchingReservation(System.Int64)
+  parent: System.IO.Log.ReservationCollection
+  langs:
+  - csharp
+  name: GetBestMatchingReservation(Int64)
+  nameWithType: ReservationCollection.GetBestMatchingReservation(Int64)
+  fullName: ReservationCollection.GetBestMatchingReservation(Int64)
+  type: Method
+  assemblies:
+  - System.IO.Log
+  namespace: System.IO.Log
+  summary: When overridden in a derived class, gets the best matching reservation for a given size.
+  remarks: This method is typically called when appending a record from reserved space to a record sequence. When it returns, a reservation of the returned size has been removed from the collection. If, for some reason, the reserved space is not actually accessed, the <xref:System.IO.Log.ReservationCollection.ReservationMade%2A> method should be called to ensure that the <xref:System.IO.Log.ReservationCollection> accurately represents the amount of reserved space in the record sequence.
+  syntax:
+    content: protected long GetBestMatchingReservation (long size);
+    parameters:
+    - id: size
+      type: System.Int64
+      description: The size of the reservation that must be fit.
+    return:
+      type: System.Int64
+      description: A reservation from the collection that is greater than or equal to the specified size, or -1 if no such reservation exists.
+  overload: System.IO.Log.ReservationCollection.GetBestMatchingReservation*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IO.Log.ReservationCollection.GetEnumerator
+  commentId: M:System.IO.Log.ReservationCollection.GetEnumerator
+  id: GetEnumerator
+  parent: System.IO.Log.ReservationCollection
+  langs:
+  - csharp
+  name: GetEnumerator()
+  nameWithType: ReservationCollection.GetEnumerator()
+  fullName: ReservationCollection.GetEnumerator()
+  type: Method
+  assemblies:
+  - System.IO.Log
+  namespace: System.IO.Log
+  summary: Returns an enumerator that can iterate through the <xref href="System.IO.Log.ReservationCollection"></xref>. This method cannot be inherited.
+  syntax:
+    content: public System.Collections.Generic.IEnumerator<long> GetEnumerator ();
+    parameters: []
+    return:
+      type: System.Collections.Generic.IEnumerator{System.Int64}
+      description: An enumerator that can iterate through the <xref href="System.IO.Log.ReservationCollection"></xref>.
+  overload: System.IO.Log.ReservationCollection.GetEnumerator*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: "The operation is invalid for one of the following reasons:  \n  \n-   The enumeration has ended.  \n  \n-   The collection has been modified.  \n  \n-   The enumeration has not been started. A call to <xref href=\"System.Collections.IEnumerator.MoveNext\"></xref> must be made."
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The method was called after the sequence has been disposed of.
+  - type: System.OutOfMemoryException
+    commentId: T:System.OutOfMemoryException
+    description: There is not enough memory to continue the execution of the program.
+  - type: System.UnauthorizedAccessException
+    commentId: T:System.UnauthorizedAccessException
+    description: Access for the specified log store is denied by the operating system.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IO.Log.ReservationCollection.IsReadOnly
+  commentId: P:System.IO.Log.ReservationCollection.IsReadOnly
+  id: IsReadOnly
+  parent: System.IO.Log.ReservationCollection
+  langs:
+  - csharp
+  name: IsReadOnly
+  nameWithType: ReservationCollection.IsReadOnly
+  fullName: ReservationCollection.IsReadOnly
+  type: Property
+  assemblies:
+  - System.IO.Log
+  namespace: System.IO.Log
+  summary: Gets a value that indicates whether the collection is read-only.
+  remarks: A <xref:System.IO.Log.ReservationCollection> is never read-only.
+  syntax:
+    content: public bool IsReadOnly { get; }
+    return:
+      type: System.Boolean
+      description: This property always returns `false`.
+  overload: System.IO.Log.ReservationCollection.IsReadOnly*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IO.Log.ReservationCollection.MakeReservation(System.Int64)
+  commentId: M:System.IO.Log.ReservationCollection.MakeReservation(System.Int64)
+  id: MakeReservation(System.Int64)
+  parent: System.IO.Log.ReservationCollection
+  langs:
+  - csharp
+  name: MakeReservation(Int64)
+  nameWithType: ReservationCollection.MakeReservation(Int64)
+  fullName: ReservationCollection.MakeReservation(Int64)
+  type: Method
+  assemblies:
+  - System.IO.Log
+  namespace: System.IO.Log
+  summary: When overridden in a derived class, allocates a reservation of the specified size.
+  syntax:
+    content: protected abstract void MakeReservation (long size);
+    parameters:
+    - id: size
+      type: System.Int64
+      description: The size of the reservation to allocate.
+  overload: System.IO.Log.ReservationCollection.MakeReservation*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IO.Log.ReservationCollection.Remove(System.Int64)
+  commentId: M:System.IO.Log.ReservationCollection.Remove(System.Int64)
+  id: Remove(System.Int64)
+  parent: System.IO.Log.ReservationCollection
+  langs:
+  - csharp
+  name: Remove(Int64)
+  nameWithType: ReservationCollection.Remove(Int64)
+  fullName: ReservationCollection.Remove(Int64)
+  type: Method
+  assemblies:
+  - System.IO.Log
+  namespace: System.IO.Log
+  summary: Releases a reservation of the specified size, if one has been made. This method cannot be inherited.
+  remarks: ''
+  example:
+  - "The following example shows how to manually make a reservation. Notice that this task can only be performed when using the CLFS-based <xref:System.IO.Log.LogRecordSequence> class.  \n  \n```  \nReservationCollection reservations = recordSequence.CreateReservationCollection();  \nreservations.Add(lengthOfUndoRecord);  \ntry  \n{  \n   recordSequence.Append(recordData, userSqn, previousSqn, RecordAppendOptions.None);  \n}  \ncatch (Exception)  \n{  \n   reservations.Remove(lengthOfUndoRecord);  \n   throw;  \n}  \n  \nrecordSequence.Append(undoRecordData, userSqn, previousSqn, RecordAppendOptions.ForceFlush, reservations);  \n```"
+  syntax:
+    content: public bool Remove (long item);
+    parameters:
+    - id: item
+      type: System.Int64
+      description: The size of the reservation to release.
+    return:
+      type: System.Boolean
+      description: '`true` if a reservation of the specified size was found and removed; otherwise, `false`.'
+  overload: System.IO.Log.ReservationCollection.Remove*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: No reservation large enough to fit the provided record can be found in the specified reservation collection.
+  - type: System.IO.IOException
+    commentId: T:System.IO.IOException
+    description: An I/O error occurs when creating the archive snapshot.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The method was called after the sequence has been disposed of.
+  - type: System.OutOfMemoryException
+    commentId: T:System.OutOfMemoryException
+    description: There is not enough memory to continue the execution of the program.
+  - type: System.IO.Log.SequenceFullException
+    commentId: T:System.IO.Log.SequenceFullException
+    description: The record sequence is full.
+  - type: System.UnauthorizedAccessException
+    commentId: T:System.UnauthorizedAccessException
+    description: Access for the specified log store is denied by the operating system.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IO.Log.ReservationCollection.ReservationFreed(System.Int64)
+  commentId: M:System.IO.Log.ReservationCollection.ReservationFreed(System.Int64)
+  id: ReservationFreed(System.Int64)
+  parent: System.IO.Log.ReservationCollection
+  langs:
+  - csharp
+  name: ReservationFreed(Int64)
+  nameWithType: ReservationCollection.ReservationFreed(Int64)
+  fullName: ReservationCollection.ReservationFreed(Int64)
+  type: Method
+  assemblies:
+  - System.IO.Log
+  namespace: System.IO.Log
+  summary: When overridden in a derived class, indicates that a reservation has been released.
+  remarks: When you inherit from <xref:System.IO.Log.ReservationCollection>, you must call this method when a reservation is released for a reason other than removing it from the collection.
+  syntax:
+    content: protected void ReservationFreed (long size);
+    parameters:
+    - id: size
+      type: System.Int64
+      description: The size of the reservation that has been released.
+  overload: System.IO.Log.ReservationCollection.ReservationFreed*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IO.Log.ReservationCollection.ReservationMade(System.Int64)
+  commentId: M:System.IO.Log.ReservationCollection.ReservationMade(System.Int64)
+  id: ReservationMade(System.Int64)
+  parent: System.IO.Log.ReservationCollection
+  langs:
+  - csharp
+  name: ReservationMade(Int64)
+  nameWithType: ReservationCollection.ReservationMade(Int64)
+  fullName: ReservationCollection.ReservationMade(Int64)
+  type: Method
+  assemblies:
+  - System.IO.Log
+  namespace: System.IO.Log
+  summary: When overridden in a derived class, indicates that a reservation has been made.
+  remarks: When you inherit from <xref:System.IO.Log.ReservationCollection>, you must call this method when a reservation is made outside of a call to <xref:System.IO.Log.ReservationCollection.Add%2A>.
+  syntax:
+    content: protected void ReservationMade (long size);
+    parameters:
+    - id: size
+      type: System.Int64
+      description: The size of the reservation that has been made.
+  overload: System.IO.Log.ReservationCollection.ReservationMade*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.IO.Log.ReservationCollection.System#Collections#IEnumerable#GetEnumerator
+  commentId: M:System.IO.Log.ReservationCollection.System#Collections#IEnumerable#GetEnumerator
+  id: System#Collections#IEnumerable#GetEnumerator
+  isEii: true
+  parent: System.IO.Log.ReservationCollection
+  langs:
+  - csharp
+  name: IEnumerable.GetEnumerator()
+  nameWithType: ReservationCollection.IEnumerable.GetEnumerator()
+  fullName: ReservationCollection.IEnumerable.GetEnumerator()
+  type: Method
+  assemblies:
+  - System.IO.Log
+  namespace: System.IO.Log
+  summary: Returns an enumerator that can iterate through the <xref href="System.IO.Log.ReservationCollection"></xref>. This method cannot be inherited.
+  syntax:
+    content: System.Collections.IEnumerator IEnumerable.GetEnumerator ();
+    parameters: []
+    return:
+      type: System.Collections.IEnumerator
+      description: An enumerator that can iterate through the <xref href="System.IO.Log.ReservationCollection"></xref>.
+  overload: System.IO.Log.ReservationCollection.System#Collections#IEnumerable#GetEnumerator*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: "The operation is invalid for one of the following reasons:  \n  \n-   The enumeration has ended.  \n  \n-   The collection has been modified.  \n  \n-   The enumeration has not been started. A call to <xref href=\"System.Collections.IEnumerator.MoveNext\"></xref> must be made."
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The method was called after the sequence has been disposed of.
+  - type: System.OutOfMemoryException
+    commentId: T:System.OutOfMemoryException
+    description: There is not enough memory to continue the execution of the program.
+  - type: System.UnauthorizedAccessException
+    commentId: T:System.UnauthorizedAccessException
+    description: Access for the specified log store is denied by the operating system.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ArgumentOutOfRangeException
+  parent: System
+  isExternal: false
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.IO.IOException
+  parent: System.IO
+  isExternal: false
+  name: IOException
+  nameWithType: IOException
+  fullName: System.IO.IOException
+- uid: System.ObjectDisposedException
+  parent: System
+  isExternal: false
+  name: ObjectDisposedException
+  nameWithType: ObjectDisposedException
+  fullName: System.ObjectDisposedException
+- uid: System.OutOfMemoryException
+  parent: System
+  isExternal: false
+  name: OutOfMemoryException
+  nameWithType: OutOfMemoryException
+  fullName: System.OutOfMemoryException
+- uid: System.UnauthorizedAccessException
+  parent: System
+  isExternal: false
+  name: UnauthorizedAccessException
+  nameWithType: UnauthorizedAccessException
+  fullName: System.UnauthorizedAccessException
+- uid: System.IO.Log.SequenceFullException
+  parent: System.IO.Log
+  isExternal: false
+  name: SequenceFullException
+  nameWithType: SequenceFullException
+  fullName: System.IO.Log.SequenceFullException
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.InvalidOperationException
+  parent: System
+  isExternal: false
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.IO.Log.ReservationCollection.#ctor
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: ReservationCollection()
+  nameWithType: ReservationCollection.ReservationCollection()
+  fullName: ReservationCollection.ReservationCollection()
+- uid: System.IO.Log.ReservationCollection.Add(System.Int64)
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: Add(Int64)
+  nameWithType: ReservationCollection.Add(Int64)
+  fullName: ReservationCollection.Add(Int64)
+- uid: System.Int64
+  parent: System
+  isExternal: false
+  name: Int64
+  nameWithType: Int64
+  fullName: System.Int64
+- uid: System.IO.Log.ReservationCollection.Clear
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: Clear()
+  nameWithType: ReservationCollection.Clear()
+  fullName: ReservationCollection.Clear()
+- uid: System.IO.Log.ReservationCollection.Contains(System.Int64)
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: Contains(Int64)
+  nameWithType: ReservationCollection.Contains(Int64)
+  fullName: ReservationCollection.Contains(Int64)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.IO.Log.ReservationCollection.CopyTo(System.Int64[],System.Int32)
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: CopyTo(Int64[], Int32)
+  nameWithType: ReservationCollection.CopyTo(Int64[], Int32)
+  fullName: ReservationCollection.CopyTo(Int64[], Int32)
+- uid: System.Int64[]
+  parent: System
+  isExternal: false
+  name: Int64[]
+  nameWithType: Int64[]
+  fullName: System.Int64[]
+  spec.csharp:
+  - uid: System.Int64
+    name: Int64
+    nameWithType: Int64
+    fullName: System.Int64
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.IO.Log.ReservationCollection.Count
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: Count
+  nameWithType: ReservationCollection.Count
+  fullName: ReservationCollection.Count
+- uid: System.IO.Log.ReservationCollection.Finalize
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: Finalize()
+  nameWithType: ReservationCollection.Finalize()
+  fullName: ReservationCollection.Finalize()
+- uid: System.IO.Log.ReservationCollection.FreeReservation(System.Int64)
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: FreeReservation(Int64)
+  nameWithType: ReservationCollection.FreeReservation(Int64)
+  fullName: ReservationCollection.FreeReservation(Int64)
+- uid: System.IO.Log.ReservationCollection.GetBestMatchingReservation(System.Int64)
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: GetBestMatchingReservation(Int64)
+  nameWithType: ReservationCollection.GetBestMatchingReservation(Int64)
+  fullName: ReservationCollection.GetBestMatchingReservation(Int64)
+- uid: System.IO.Log.ReservationCollection.GetEnumerator
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: GetEnumerator()
+  nameWithType: ReservationCollection.GetEnumerator()
+  fullName: ReservationCollection.GetEnumerator()
+- uid: System.Collections.Generic.IEnumerator`1
+  name: IEnumerator<T>
+  nameWithType: IEnumerator<T>
+  fullName: System.Collections.Generic.IEnumerator<T>
+- uid: System.Collections.Generic.IEnumerator{System.Int64}
+  parent: System.Collections.Generic
+  isExternal: false
+  name: IEnumerator<Int64>
+  nameWithType: IEnumerator<Int64>
+  fullName: System.Collections.Generic.IEnumerator<System.Int64>
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerator`1
+    name: IEnumerator
+    nameWithType: IEnumerator
+    fullName: System.Collections.Generic.IEnumerator
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Int64
+    name: Int64
+    nameWithType: Int64
+    fullName: System.Int64
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.IO.Log.ReservationCollection.IsReadOnly
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: IsReadOnly
+  nameWithType: ReservationCollection.IsReadOnly
+  fullName: ReservationCollection.IsReadOnly
+- uid: System.IO.Log.ReservationCollection.MakeReservation(System.Int64)
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: MakeReservation(Int64)
+  nameWithType: ReservationCollection.MakeReservation(Int64)
+  fullName: ReservationCollection.MakeReservation(Int64)
+- uid: System.IO.Log.ReservationCollection.Remove(System.Int64)
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: Remove(Int64)
+  nameWithType: ReservationCollection.Remove(Int64)
+  fullName: ReservationCollection.Remove(Int64)
+- uid: System.IO.Log.ReservationCollection.ReservationFreed(System.Int64)
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: ReservationFreed(Int64)
+  nameWithType: ReservationCollection.ReservationFreed(Int64)
+  fullName: ReservationCollection.ReservationFreed(Int64)
+- uid: System.IO.Log.ReservationCollection.ReservationMade(System.Int64)
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: ReservationMade(Int64)
+  nameWithType: ReservationCollection.ReservationMade(Int64)
+  fullName: ReservationCollection.ReservationMade(Int64)
+- uid: System.IO.Log.ReservationCollection.System#Collections#IEnumerable#GetEnumerator
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: IEnumerable.GetEnumerator()
+  nameWithType: ReservationCollection.IEnumerable.GetEnumerator()
+  fullName: ReservationCollection.IEnumerable.GetEnumerator()
+- uid: System.Collections.IEnumerator
+  parent: System.Collections
+  isExternal: false
+  name: IEnumerator
+  nameWithType: IEnumerator
+  fullName: System.Collections.IEnumerator
+- uid: System.IO.Log.ReservationCollection.#ctor*
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: ReservationCollection
+  nameWithType: ReservationCollection.ReservationCollection
+  fullName: ReservationCollection.ReservationCollection
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+- uid: System.IO.Log.ReservationCollection.Add*
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: Add
+  nameWithType: ReservationCollection.Add
+  fullName: ReservationCollection.Add
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+- uid: System.IO.Log.ReservationCollection.Clear*
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: Clear
+  nameWithType: ReservationCollection.Clear
+  fullName: ReservationCollection.Clear
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+- uid: System.IO.Log.ReservationCollection.Contains*
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: Contains
+  nameWithType: ReservationCollection.Contains
+  fullName: ReservationCollection.Contains
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+- uid: System.IO.Log.ReservationCollection.CopyTo*
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: CopyTo
+  nameWithType: ReservationCollection.CopyTo
+  fullName: ReservationCollection.CopyTo
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+- uid: System.IO.Log.ReservationCollection.Count*
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: Count
+  nameWithType: ReservationCollection.Count
+  fullName: ReservationCollection.Count
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+- uid: System.IO.Log.ReservationCollection.Finalize*
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: Finalize
+  nameWithType: ReservationCollection.Finalize
+  fullName: ReservationCollection.Finalize
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+- uid: System.IO.Log.ReservationCollection.FreeReservation*
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: FreeReservation
+  nameWithType: ReservationCollection.FreeReservation
+  fullName: ReservationCollection.FreeReservation
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+- uid: System.IO.Log.ReservationCollection.GetBestMatchingReservation*
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: GetBestMatchingReservation
+  nameWithType: ReservationCollection.GetBestMatchingReservation
+  fullName: ReservationCollection.GetBestMatchingReservation
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+- uid: System.IO.Log.ReservationCollection.GetEnumerator*
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: GetEnumerator
+  nameWithType: ReservationCollection.GetEnumerator
+  fullName: ReservationCollection.GetEnumerator
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+- uid: System.IO.Log.ReservationCollection.IsReadOnly*
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: IsReadOnly
+  nameWithType: ReservationCollection.IsReadOnly
+  fullName: ReservationCollection.IsReadOnly
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+- uid: System.IO.Log.ReservationCollection.MakeReservation*
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: MakeReservation
+  nameWithType: ReservationCollection.MakeReservation
+  fullName: ReservationCollection.MakeReservation
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+- uid: System.IO.Log.ReservationCollection.Remove*
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: Remove
+  nameWithType: ReservationCollection.Remove
+  fullName: ReservationCollection.Remove
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+- uid: System.IO.Log.ReservationCollection.ReservationFreed*
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: ReservationFreed
+  nameWithType: ReservationCollection.ReservationFreed
+  fullName: ReservationCollection.ReservationFreed
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+- uid: System.IO.Log.ReservationCollection.ReservationMade*
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: ReservationMade
+  nameWithType: ReservationCollection.ReservationMade
+  fullName: ReservationCollection.ReservationMade
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+- uid: System.IO.Log.ReservationCollection.System#Collections#IEnumerable#GetEnumerator*
+  parent: System.IO.Log.ReservationCollection
+  isExternal: false
+  name: System.Collections.IEnumerable.GetEnumerator
+  nameWithType: ReservationCollection.System.Collections.IEnumerable.GetEnumerator
+  fullName: ReservationCollection.System.Collections.IEnumerable.GetEnumerator
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IO.Log/ReservationCollection.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Collections.Immutable.ImmutableArray.ToImmutableArray``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Collections.Immutable.ImmutableArray
+  isExternal: false
+  name: ToImmutableArray<TSource>(IEnumerable<TSource>)
+  nameWithType: ImmutableArray.ToImmutableArray<TSource>(IEnumerable<TSource>)
+  fullName: ImmutableArray.ToImmutableArray<TSource>(IEnumerable<TSource>)
+- uid: System.Collections.Immutable.ImmutableDictionary.ToImmutableDictionary``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  parent: System.Collections.Immutable.ImmutableDictionary
+  isExternal: false
+  name: ToImmutableDictionary<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+  nameWithType: ImmutableDictionary.ToImmutableDictionary<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+  fullName: ImmutableDictionary.ToImmutableDictionary<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+- uid: System.Collections.Immutable.ImmutableDictionary.ToImmutableDictionary``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IEqualityComparer{``1})
+  parent: System.Collections.Immutable.ImmutableDictionary
+  isExternal: false
+  name: ToImmutableDictionary<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IEqualityComparer<TKey>)
+  nameWithType: ImmutableDictionary.ToImmutableDictionary<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IEqualityComparer<TKey>)
+  fullName: ImmutableDictionary.ToImmutableDictionary<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IEqualityComparer<TKey>)
+- uid: System.Collections.Immutable.ImmutableDictionary.ToImmutableDictionary``2(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``1}})
+  parent: System.Collections.Immutable.ImmutableDictionary
+  isExternal: false
+  name: ToImmutableDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>)
+  nameWithType: ImmutableDictionary.ToImmutableDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>)
+  fullName: ImmutableDictionary.ToImmutableDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>)
+- uid: System.Collections.Immutable.ImmutableDictionary.ToImmutableDictionary``2(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``1}},System.Collections.Generic.IEqualityComparer{``0})
+  parent: System.Collections.Immutable.ImmutableDictionary
+  isExternal: false
+  name: ToImmutableDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>, IEqualityComparer<TKey>)
+  nameWithType: ImmutableDictionary.ToImmutableDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>, IEqualityComparer<TKey>)
+  fullName: ImmutableDictionary.ToImmutableDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>, IEqualityComparer<TKey>)
+- uid: System.Collections.Immutable.ImmutableDictionary.ToImmutableDictionary``2(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``1}},System.Collections.Generic.IEqualityComparer{``0},System.Collections.Generic.IEqualityComparer{``1})
+  parent: System.Collections.Immutable.ImmutableDictionary
+  isExternal: false
+  name: ToImmutableDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>, IEqualityComparer<TKey>, IEqualityComparer<TValue>)
+  nameWithType: ImmutableDictionary.ToImmutableDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>, IEqualityComparer<TKey>, IEqualityComparer<TValue>)
+  fullName: ImmutableDictionary.ToImmutableDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>, IEqualityComparer<TKey>, IEqualityComparer<TValue>)
+- uid: System.Collections.Immutable.ImmutableDictionary.ToImmutableDictionary``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2})
+  parent: System.Collections.Immutable.ImmutableDictionary
+  isExternal: false
+  name: ToImmutableDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>)
+  nameWithType: ImmutableDictionary.ToImmutableDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>)
+  fullName: ImmutableDictionary.ToImmutableDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>)
+- uid: System.Collections.Immutable.ImmutableDictionary.ToImmutableDictionary``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Collections.Generic.IEqualityComparer{``1})
+  parent: System.Collections.Immutable.ImmutableDictionary
+  isExternal: false
+  name: ToImmutableDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>, IEqualityComparer<TKey>)
+  nameWithType: ImmutableDictionary.ToImmutableDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>, IEqualityComparer<TKey>)
+  fullName: ImmutableDictionary.ToImmutableDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>, IEqualityComparer<TKey>)
+- uid: System.Collections.Immutable.ImmutableDictionary.ToImmutableDictionary``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Collections.Generic.IEqualityComparer{``1},System.Collections.Generic.IEqualityComparer{``2})
+  parent: System.Collections.Immutable.ImmutableDictionary
+  isExternal: false
+  name: ToImmutableDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>, IEqualityComparer<TKey>, IEqualityComparer<TValue>)
+  nameWithType: ImmutableDictionary.ToImmutableDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>, IEqualityComparer<TKey>, IEqualityComparer<TValue>)
+  fullName: ImmutableDictionary.ToImmutableDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>, IEqualityComparer<TKey>, IEqualityComparer<TValue>)
+- uid: System.Collections.Immutable.ImmutableHashSet.ToImmutableHashSet``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Collections.Immutable.ImmutableHashSet
+  isExternal: false
+  name: ToImmutableHashSet<TSource>(IEnumerable<TSource>)
+  nameWithType: ImmutableHashSet.ToImmutableHashSet<TSource>(IEnumerable<TSource>)
+  fullName: ImmutableHashSet.ToImmutableHashSet<TSource>(IEnumerable<TSource>)
+- uid: System.Collections.Immutable.ImmutableHashSet.ToImmutableHashSet``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})
+  parent: System.Collections.Immutable.ImmutableHashSet
+  isExternal: false
+  name: ToImmutableHashSet<TSource>(IEnumerable<TSource>, IEqualityComparer<TSource>)
+  nameWithType: ImmutableHashSet.ToImmutableHashSet<TSource>(IEnumerable<TSource>, IEqualityComparer<TSource>)
+  fullName: ImmutableHashSet.ToImmutableHashSet<TSource>(IEnumerable<TSource>, IEqualityComparer<TSource>)
+- uid: System.Collections.Immutable.ImmutableList.ToImmutableList``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Collections.Immutable.ImmutableList
+  isExternal: false
+  name: ToImmutableList<TSource>(IEnumerable<TSource>)
+  nameWithType: ImmutableList.ToImmutableList<TSource>(IEnumerable<TSource>)
+  fullName: ImmutableList.ToImmutableList<TSource>(IEnumerable<TSource>)
+- uid: System.Collections.Immutable.ImmutableSortedDictionary.ToImmutableSortedDictionary``2(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``1}})
+  parent: System.Collections.Immutable.ImmutableSortedDictionary
+  isExternal: false
+  name: ToImmutableSortedDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>)
+  nameWithType: ImmutableSortedDictionary.ToImmutableSortedDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>)
+  fullName: ImmutableSortedDictionary.ToImmutableSortedDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>)
+- uid: System.Collections.Immutable.ImmutableSortedDictionary.ToImmutableSortedDictionary``2(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``1}},System.Collections.Generic.IComparer{``0})
+  parent: System.Collections.Immutable.ImmutableSortedDictionary
+  isExternal: false
+  name: ToImmutableSortedDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>, IComparer<TKey>)
+  nameWithType: ImmutableSortedDictionary.ToImmutableSortedDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>, IComparer<TKey>)
+  fullName: ImmutableSortedDictionary.ToImmutableSortedDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>, IComparer<TKey>)
+- uid: System.Collections.Immutable.ImmutableSortedDictionary.ToImmutableSortedDictionary``2(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``1}},System.Collections.Generic.IComparer{``0},System.Collections.Generic.IEqualityComparer{``1})
+  parent: System.Collections.Immutable.ImmutableSortedDictionary
+  isExternal: false
+  name: ToImmutableSortedDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>, IComparer<TKey>, IEqualityComparer<TValue>)
+  nameWithType: ImmutableSortedDictionary.ToImmutableSortedDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>, IComparer<TKey>, IEqualityComparer<TValue>)
+  fullName: ImmutableSortedDictionary.ToImmutableSortedDictionary<TKey,TValue>(IEnumerable<KeyValuePair<TKey,TValue>>, IComparer<TKey>, IEqualityComparer<TValue>)
+- uid: System.Collections.Immutable.ImmutableSortedDictionary.ToImmutableSortedDictionary``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2})
+  parent: System.Collections.Immutable.ImmutableSortedDictionary
+  isExternal: false
+  name: ToImmutableSortedDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>)
+  nameWithType: ImmutableSortedDictionary.ToImmutableSortedDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>)
+  fullName: ImmutableSortedDictionary.ToImmutableSortedDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>)
+- uid: System.Collections.Immutable.ImmutableSortedDictionary.ToImmutableSortedDictionary``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Collections.Generic.IComparer{``1})
+  parent: System.Collections.Immutable.ImmutableSortedDictionary
+  isExternal: false
+  name: ToImmutableSortedDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>, IComparer<TKey>)
+  nameWithType: ImmutableSortedDictionary.ToImmutableSortedDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>, IComparer<TKey>)
+  fullName: ImmutableSortedDictionary.ToImmutableSortedDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>, IComparer<TKey>)
+- uid: System.Collections.Immutable.ImmutableSortedDictionary.ToImmutableSortedDictionary``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Collections.Generic.IComparer{``1},System.Collections.Generic.IEqualityComparer{``2})
+  parent: System.Collections.Immutable.ImmutableSortedDictionary
+  isExternal: false
+  name: ToImmutableSortedDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>, IComparer<TKey>, IEqualityComparer<TValue>)
+  nameWithType: ImmutableSortedDictionary.ToImmutableSortedDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>, IComparer<TKey>, IEqualityComparer<TValue>)
+  fullName: ImmutableSortedDictionary.ToImmutableSortedDictionary<TSource,TKey,TValue>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TValue>, IComparer<TKey>, IEqualityComparer<TValue>)
+- uid: System.Collections.Immutable.ImmutableSortedSet.ToImmutableSortedSet``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Collections.Immutable.ImmutableSortedSet
+  isExternal: false
+  name: ToImmutableSortedSet<TSource>(IEnumerable<TSource>)
+  nameWithType: ImmutableSortedSet.ToImmutableSortedSet<TSource>(IEnumerable<TSource>)
+  fullName: ImmutableSortedSet.ToImmutableSortedSet<TSource>(IEnumerable<TSource>)
+- uid: System.Collections.Immutable.ImmutableSortedSet.ToImmutableSortedSet``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IComparer{``0})
+  parent: System.Collections.Immutable.ImmutableSortedSet
+  isExternal: false
+  name: ToImmutableSortedSet<TSource>(IEnumerable<TSource>, IComparer<TSource>)
+  nameWithType: ImmutableSortedSet.ToImmutableSortedSet<TSource>(IEnumerable<TSource>, IComparer<TSource>)
+  fullName: ImmutableSortedSet.ToImmutableSortedSet<TSource>(IEnumerable<TSource>, IComparer<TSource>)
+- uid: System.Data.DataTableExtensions.CopyToDataTable``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Data.DataTableExtensions
+  isExternal: false
+  name: CopyToDataTable<T>(IEnumerable<T>)
+  nameWithType: DataTableExtensions.CopyToDataTable<T>(IEnumerable<T>)
+  fullName: DataTableExtensions.CopyToDataTable<T>(IEnumerable<T>)
+- uid: System.Data.DataTableExtensions.CopyToDataTable``1(System.Collections.Generic.IEnumerable{``0},System.Data.DataTable,System.Data.LoadOption)
+  parent: System.Data.DataTableExtensions
+  isExternal: false
+  name: CopyToDataTable<T>(IEnumerable<T>, DataTable, LoadOption)
+  nameWithType: DataTableExtensions.CopyToDataTable<T>(IEnumerable<T>, DataTable, LoadOption)
+  fullName: DataTableExtensions.CopyToDataTable<T>(IEnumerable<T>, DataTable, LoadOption)
+- uid: System.Data.DataTableExtensions.CopyToDataTable``1(System.Collections.Generic.IEnumerable{``0},System.Data.DataTable,System.Data.LoadOption,System.Data.FillErrorEventHandler)
+  parent: System.Data.DataTableExtensions
+  isExternal: false
+  name: CopyToDataTable<T>(IEnumerable<T>, DataTable, LoadOption, FillErrorEventHandler)
+  nameWithType: DataTableExtensions.CopyToDataTable<T>(IEnumerable<T>, DataTable, LoadOption, FillErrorEventHandler)
+  fullName: DataTableExtensions.CopyToDataTable<T>(IEnumerable<T>, DataTable, LoadOption, FillErrorEventHandler)
+- uid: System.Linq.Enumerable.Aggregate``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``0,``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Aggregate<TSource>(IEnumerable<TSource>, Func<TSource,TSource,TSource>)
+  nameWithType: Enumerable.Aggregate<TSource>(IEnumerable<TSource>, Func<TSource,TSource,TSource>)
+  fullName: Enumerable.Aggregate<TSource>(IEnumerable<TSource>, Func<TSource,TSource,TSource>)
+- uid: System.Linq.Enumerable.Aggregate``2(System.Collections.Generic.IEnumerable{``0},``1,System.Func{``1,``0,``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Aggregate<TSource,TAccumulate>(IEnumerable<TSource>, TAccumulate, Func<TAccumulate,TSource,TAccumulate>)
+  nameWithType: Enumerable.Aggregate<TSource,TAccumulate>(IEnumerable<TSource>, TAccumulate, Func<TAccumulate,TSource,TAccumulate>)
+  fullName: Enumerable.Aggregate<TSource,TAccumulate>(IEnumerable<TSource>, TAccumulate, Func<TAccumulate,TSource,TAccumulate>)
+- uid: System.Linq.Enumerable.Aggregate``3(System.Collections.Generic.IEnumerable{``0},``1,System.Func{``1,``0,``1},System.Func{``1,``2})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Aggregate<TSource,TAccumulate,TResult>(IEnumerable<TSource>, TAccumulate, Func<TAccumulate,TSource,TAccumulate>, Func<TAccumulate,TResult>)
+  nameWithType: Enumerable.Aggregate<TSource,TAccumulate,TResult>(IEnumerable<TSource>, TAccumulate, Func<TAccumulate,TSource,TAccumulate>, Func<TAccumulate,TResult>)
+  fullName: Enumerable.Aggregate<TSource,TAccumulate,TResult>(IEnumerable<TSource>, TAccumulate, Func<TAccumulate,TSource,TAccumulate>, Func<TAccumulate,TResult>)
+- uid: System.Linq.Enumerable.All``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: All<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  nameWithType: Enumerable.All<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  fullName: Enumerable.All<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+- uid: System.Linq.Enumerable.Any``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Any<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.Any<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.Any<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.Any``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Any<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  nameWithType: Enumerable.Any<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  fullName: Enumerable.Any<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+- uid: System.Linq.Enumerable.Append``1(System.Collections.Generic.IEnumerable{``0},``0)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Append<TSource>(IEnumerable<TSource>, TSource)
+  nameWithType: Enumerable.Append<TSource>(IEnumerable<TSource>, TSource)
+  fullName: Enumerable.Append<TSource>(IEnumerable<TSource>, TSource)
+- uid: System.Linq.Enumerable.AsEnumerable``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: AsEnumerable<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.AsEnumerable<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.AsEnumerable<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Decimal})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average(IEnumerable<Decimal>)
+  nameWithType: Enumerable.Average(IEnumerable<Decimal>)
+  fullName: Enumerable.Average(IEnumerable<Decimal>)
+- uid: System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Double})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average(IEnumerable<Double>)
+  nameWithType: Enumerable.Average(IEnumerable<Double>)
+  fullName: Enumerable.Average(IEnumerable<Double>)
+- uid: System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Int32})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average(IEnumerable<Int32>)
+  nameWithType: Enumerable.Average(IEnumerable<Int32>)
+  fullName: Enumerable.Average(IEnumerable<Int32>)
+- uid: System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Int64})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average(IEnumerable<Int64>)
+  nameWithType: Enumerable.Average(IEnumerable<Int64>)
+  fullName: Enumerable.Average(IEnumerable<Int64>)
+- uid: System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Nullable{System.Decimal}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average(IEnumerable<Nullable<Decimal>>)
+  nameWithType: Enumerable.Average(IEnumerable<Nullable<Decimal>>)
+  fullName: Enumerable.Average(IEnumerable<Nullable<Decimal>>)
+- uid: System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Nullable{System.Double}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average(IEnumerable<Nullable<Double>>)
+  nameWithType: Enumerable.Average(IEnumerable<Nullable<Double>>)
+  fullName: Enumerable.Average(IEnumerable<Nullable<Double>>)
+- uid: System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Nullable{System.Int32}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average(IEnumerable<Nullable<Int32>>)
+  nameWithType: Enumerable.Average(IEnumerable<Nullable<Int32>>)
+  fullName: Enumerable.Average(IEnumerable<Nullable<Int32>>)
+- uid: System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Nullable{System.Int64}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average(IEnumerable<Nullable<Int64>>)
+  nameWithType: Enumerable.Average(IEnumerable<Nullable<Int64>>)
+  fullName: Enumerable.Average(IEnumerable<Nullable<Int64>>)
+- uid: System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Nullable{System.Single}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average(IEnumerable<Nullable<Single>>)
+  nameWithType: Enumerable.Average(IEnumerable<Nullable<Single>>)
+  fullName: Enumerable.Average(IEnumerable<Nullable<Single>>)
+- uid: System.Linq.Enumerable.Average(System.Collections.Generic.IEnumerable{System.Single})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average(IEnumerable<Single>)
+  nameWithType: Enumerable.Average(IEnumerable<Single>)
+  fullName: Enumerable.Average(IEnumerable<Single>)
+- uid: System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Decimal})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average<TSource>(IEnumerable<TSource>, Func<TSource,Decimal>)
+  nameWithType: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Decimal>)
+  fullName: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Decimal>)
+- uid: System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Double})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average<TSource>(IEnumerable<TSource>, Func<TSource,Double>)
+  nameWithType: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Double>)
+  fullName: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Double>)
+- uid: System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average<TSource>(IEnumerable<TSource>, Func<TSource,Int32>)
+  nameWithType: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Int32>)
+  fullName: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Int32>)
+- uid: System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int64})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average<TSource>(IEnumerable<TSource>, Func<TSource,Int64>)
+  nameWithType: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Int64>)
+  fullName: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Int64>)
+- uid: System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Decimal}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Decimal>>)
+  nameWithType: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Decimal>>)
+  fullName: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Decimal>>)
+- uid: System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Double}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Double>>)
+  nameWithType: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Double>>)
+  fullName: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Double>>)
+- uid: System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Int32}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int32>>)
+  nameWithType: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int32>>)
+  fullName: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int32>>)
+- uid: System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Int64}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int64>>)
+  nameWithType: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int64>>)
+  fullName: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int64>>)
+- uid: System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Single}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Single>>)
+  nameWithType: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Single>>)
+  fullName: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Single>>)
+- uid: System.Linq.Enumerable.Average``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Single})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Average<TSource>(IEnumerable<TSource>, Func<TSource,Single>)
+  nameWithType: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Single>)
+  fullName: Enumerable.Average<TSource>(IEnumerable<TSource>, Func<TSource,Single>)
+- uid: System.Linq.Enumerable.Cast``1(System.Collections.IEnumerable)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Cast<TResult>(IEnumerable)
+  nameWithType: Enumerable.Cast<TResult>(IEnumerable)
+  fullName: Enumerable.Cast<TResult>(IEnumerable)
+- uid: System.Linq.Enumerable.Concat``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Concat<TSource>(IEnumerable<TSource>, IEnumerable<TSource>)
+  nameWithType: Enumerable.Concat<TSource>(IEnumerable<TSource>, IEnumerable<TSource>)
+  fullName: Enumerable.Concat<TSource>(IEnumerable<TSource>, IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.Contains``1(System.Collections.Generic.IEnumerable{``0},``0)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Contains<TSource>(IEnumerable<TSource>, TSource)
+  nameWithType: Enumerable.Contains<TSource>(IEnumerable<TSource>, TSource)
+  fullName: Enumerable.Contains<TSource>(IEnumerable<TSource>, TSource)
+- uid: System.Linq.Enumerable.Contains``1(System.Collections.Generic.IEnumerable{``0},``0,System.Collections.Generic.IEqualityComparer{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Contains<TSource>(IEnumerable<TSource>, TSource, IEqualityComparer<TSource>)
+  nameWithType: Enumerable.Contains<TSource>(IEnumerable<TSource>, TSource, IEqualityComparer<TSource>)
+  fullName: Enumerable.Contains<TSource>(IEnumerable<TSource>, TSource, IEqualityComparer<TSource>)
+- uid: System.Linq.Enumerable.Count``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Count<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.Count<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.Count<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.Count``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Count<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  nameWithType: Enumerable.Count<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  fullName: Enumerable.Count<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+- uid: System.Linq.Enumerable.DefaultIfEmpty``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: DefaultIfEmpty<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.DefaultIfEmpty<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.DefaultIfEmpty<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.DefaultIfEmpty``1(System.Collections.Generic.IEnumerable{``0},``0)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: DefaultIfEmpty<TSource>(IEnumerable<TSource>, TSource)
+  nameWithType: Enumerable.DefaultIfEmpty<TSource>(IEnumerable<TSource>, TSource)
+  fullName: Enumerable.DefaultIfEmpty<TSource>(IEnumerable<TSource>, TSource)
+- uid: System.Linq.Enumerable.Distinct``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Distinct<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.Distinct<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.Distinct<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.Distinct``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Distinct<TSource>(IEnumerable<TSource>, IEqualityComparer<TSource>)
+  nameWithType: Enumerable.Distinct<TSource>(IEnumerable<TSource>, IEqualityComparer<TSource>)
+  fullName: Enumerable.Distinct<TSource>(IEnumerable<TSource>, IEqualityComparer<TSource>)
+- uid: System.Linq.Enumerable.ElementAt``1(System.Collections.Generic.IEnumerable{``0},System.Int32)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: ElementAt<TSource>(IEnumerable<TSource>, Int32)
+  nameWithType: Enumerable.ElementAt<TSource>(IEnumerable<TSource>, Int32)
+  fullName: Enumerable.ElementAt<TSource>(IEnumerable<TSource>, Int32)
+- uid: System.Linq.Enumerable.ElementAtOrDefault``1(System.Collections.Generic.IEnumerable{``0},System.Int32)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: ElementAtOrDefault<TSource>(IEnumerable<TSource>, Int32)
+  nameWithType: Enumerable.ElementAtOrDefault<TSource>(IEnumerable<TSource>, Int32)
+  fullName: Enumerable.ElementAtOrDefault<TSource>(IEnumerable<TSource>, Int32)
+- uid: System.Linq.Enumerable.Except``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Except<TSource>(IEnumerable<TSource>, IEnumerable<TSource>)
+  nameWithType: Enumerable.Except<TSource>(IEnumerable<TSource>, IEnumerable<TSource>)
+  fullName: Enumerable.Except<TSource>(IEnumerable<TSource>, IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.Except``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Except<TSource>(IEnumerable<TSource>, IEnumerable<TSource>, IEqualityComparer<TSource>)
+  nameWithType: Enumerable.Except<TSource>(IEnumerable<TSource>, IEnumerable<TSource>, IEqualityComparer<TSource>)
+  fullName: Enumerable.Except<TSource>(IEnumerable<TSource>, IEnumerable<TSource>, IEqualityComparer<TSource>)
+- uid: System.Linq.Enumerable.First``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: First<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.First<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.First<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.First``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: First<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  nameWithType: Enumerable.First<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  fullName: Enumerable.First<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+- uid: System.Linq.Enumerable.FirstOrDefault``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: FirstOrDefault<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.FirstOrDefault<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.FirstOrDefault<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.FirstOrDefault``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: FirstOrDefault<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  nameWithType: Enumerable.FirstOrDefault<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  fullName: Enumerable.FirstOrDefault<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+- uid: System.Linq.Enumerable.GroupBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: GroupBy<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+  nameWithType: Enumerable.GroupBy<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+  fullName: Enumerable.GroupBy<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+- uid: System.Linq.Enumerable.GroupBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IEqualityComparer{``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: GroupBy<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IEqualityComparer<TKey>)
+  nameWithType: Enumerable.GroupBy<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IEqualityComparer<TKey>)
+  fullName: Enumerable.GroupBy<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IEqualityComparer<TKey>)
+- uid: System.Linq.Enumerable.GroupBy``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: GroupBy<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>)
+  nameWithType: Enumerable.GroupBy<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>)
+  fullName: Enumerable.GroupBy<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>)
+- uid: System.Linq.Enumerable.GroupBy``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Collections.Generic.IEqualityComparer{``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: GroupBy<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>, IEqualityComparer<TKey>)
+  nameWithType: Enumerable.GroupBy<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>, IEqualityComparer<TKey>)
+  fullName: Enumerable.GroupBy<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>, IEqualityComparer<TKey>)
+- uid: System.Linq.Enumerable.GroupBy``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``1,System.Collections.Generic.IEnumerable{``0},``2})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: GroupBy<TSource,TKey,TResult>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TKey,IEnumerable<TSource>,TResult>)
+  nameWithType: Enumerable.GroupBy<TSource,TKey,TResult>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TKey,IEnumerable<TSource>,TResult>)
+  fullName: Enumerable.GroupBy<TSource,TKey,TResult>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TKey,IEnumerable<TSource>,TResult>)
+- uid: System.Linq.Enumerable.GroupBy``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``1,System.Collections.Generic.IEnumerable{``0},``2},System.Collections.Generic.IEqualityComparer{``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: GroupBy<TSource,TKey,TResult>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TKey,IEnumerable<TSource>,TResult>, IEqualityComparer<TKey>)
+  nameWithType: Enumerable.GroupBy<TSource,TKey,TResult>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TKey,IEnumerable<TSource>,TResult>, IEqualityComparer<TKey>)
+  fullName: Enumerable.GroupBy<TSource,TKey,TResult>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TKey,IEnumerable<TSource>,TResult>, IEqualityComparer<TKey>)
+- uid: System.Linq.Enumerable.GroupBy``4(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Func{``1,System.Collections.Generic.IEnumerable{``2},``3})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: GroupBy<TSource,TKey,TElement,TResult>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>, Func<TKey,IEnumerable<TElement>,TResult>)
+  nameWithType: Enumerable.GroupBy<TSource,TKey,TElement,TResult>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>, Func<TKey,IEnumerable<TElement>,TResult>)
+  fullName: Enumerable.GroupBy<TSource,TKey,TElement,TResult>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>, Func<TKey,IEnumerable<TElement>,TResult>)
+- uid: System.Linq.Enumerable.GroupBy``4(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Func{``1,System.Collections.Generic.IEnumerable{``2},``3},System.Collections.Generic.IEqualityComparer{``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: GroupBy<TSource,TKey,TElement,TResult>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>, Func<TKey,IEnumerable<TElement>,TResult>, IEqualityComparer<TKey>)
+  nameWithType: Enumerable.GroupBy<TSource,TKey,TElement,TResult>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>, Func<TKey,IEnumerable<TElement>,TResult>, IEqualityComparer<TKey>)
+  fullName: Enumerable.GroupBy<TSource,TKey,TElement,TResult>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>, Func<TKey,IEnumerable<TElement>,TResult>, IEqualityComparer<TKey>)
+- uid: System.Linq.Enumerable.GroupJoin``4(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1},System.Func{``0,``2},System.Func{``1,``2},System.Func{``0,System.Collections.Generic.IEnumerable{``1},``3})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: GroupJoin<TOuter,TInner,TKey,TResult>(IEnumerable<TOuter>, IEnumerable<TInner>, Func<TOuter,TKey>, Func<TInner,TKey>, Func<TOuter,IEnumerable<TInner>,TResult>)
+  nameWithType: Enumerable.GroupJoin<TOuter,TInner,TKey,TResult>(IEnumerable<TOuter>, IEnumerable<TInner>, Func<TOuter,TKey>, Func<TInner,TKey>, Func<TOuter,IEnumerable<TInner>,TResult>)
+  fullName: Enumerable.GroupJoin<TOuter,TInner,TKey,TResult>(IEnumerable<TOuter>, IEnumerable<TInner>, Func<TOuter,TKey>, Func<TInner,TKey>, Func<TOuter,IEnumerable<TInner>,TResult>)
+- uid: System.Linq.Enumerable.GroupJoin``4(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1},System.Func{``0,``2},System.Func{``1,``2},System.Func{``0,System.Collections.Generic.IEnumerable{``1},``3},System.Collections.Generic.IEqualityComparer{``2})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: GroupJoin<TOuter,TInner,TKey,TResult>(IEnumerable<TOuter>, IEnumerable<TInner>, Func<TOuter,TKey>, Func<TInner,TKey>, Func<TOuter,IEnumerable<TInner>,TResult>, IEqualityComparer<TKey>)
+  nameWithType: Enumerable.GroupJoin<TOuter,TInner,TKey,TResult>(IEnumerable<TOuter>, IEnumerable<TInner>, Func<TOuter,TKey>, Func<TInner,TKey>, Func<TOuter,IEnumerable<TInner>,TResult>, IEqualityComparer<TKey>)
+  fullName: Enumerable.GroupJoin<TOuter,TInner,TKey,TResult>(IEnumerable<TOuter>, IEnumerable<TInner>, Func<TOuter,TKey>, Func<TInner,TKey>, Func<TOuter,IEnumerable<TInner>,TResult>, IEqualityComparer<TKey>)
+- uid: System.Linq.Enumerable.Intersect``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Intersect<TSource>(IEnumerable<TSource>, IEnumerable<TSource>)
+  nameWithType: Enumerable.Intersect<TSource>(IEnumerable<TSource>, IEnumerable<TSource>)
+  fullName: Enumerable.Intersect<TSource>(IEnumerable<TSource>, IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.Intersect``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Intersect<TSource>(IEnumerable<TSource>, IEnumerable<TSource>, IEqualityComparer<TSource>)
+  nameWithType: Enumerable.Intersect<TSource>(IEnumerable<TSource>, IEnumerable<TSource>, IEqualityComparer<TSource>)
+  fullName: Enumerable.Intersect<TSource>(IEnumerable<TSource>, IEnumerable<TSource>, IEqualityComparer<TSource>)
+- uid: System.Linq.Enumerable.Join``4(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1},System.Func{``0,``2},System.Func{``1,``2},System.Func{``0,``1,``3})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Join<TOuter,TInner,TKey,TResult>(IEnumerable<TOuter>, IEnumerable<TInner>, Func<TOuter,TKey>, Func<TInner,TKey>, Func<TOuter,TInner,TResult>)
+  nameWithType: Enumerable.Join<TOuter,TInner,TKey,TResult>(IEnumerable<TOuter>, IEnumerable<TInner>, Func<TOuter,TKey>, Func<TInner,TKey>, Func<TOuter,TInner,TResult>)
+  fullName: Enumerable.Join<TOuter,TInner,TKey,TResult>(IEnumerable<TOuter>, IEnumerable<TInner>, Func<TOuter,TKey>, Func<TInner,TKey>, Func<TOuter,TInner,TResult>)
+- uid: System.Linq.Enumerable.Join``4(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1},System.Func{``0,``2},System.Func{``1,``2},System.Func{``0,``1,``3},System.Collections.Generic.IEqualityComparer{``2})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Join<TOuter,TInner,TKey,TResult>(IEnumerable<TOuter>, IEnumerable<TInner>, Func<TOuter,TKey>, Func<TInner,TKey>, Func<TOuter,TInner,TResult>, IEqualityComparer<TKey>)
+  nameWithType: Enumerable.Join<TOuter,TInner,TKey,TResult>(IEnumerable<TOuter>, IEnumerable<TInner>, Func<TOuter,TKey>, Func<TInner,TKey>, Func<TOuter,TInner,TResult>, IEqualityComparer<TKey>)
+  fullName: Enumerable.Join<TOuter,TInner,TKey,TResult>(IEnumerable<TOuter>, IEnumerable<TInner>, Func<TOuter,TKey>, Func<TInner,TKey>, Func<TOuter,TInner,TResult>, IEqualityComparer<TKey>)
+- uid: System.Linq.Enumerable.Last``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Last<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.Last<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.Last<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.Last``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Last<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  nameWithType: Enumerable.Last<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  fullName: Enumerable.Last<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+- uid: System.Linq.Enumerable.LastOrDefault``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: LastOrDefault<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.LastOrDefault<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.LastOrDefault<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.LastOrDefault``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: LastOrDefault<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  nameWithType: Enumerable.LastOrDefault<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  fullName: Enumerable.LastOrDefault<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+- uid: System.Linq.Enumerable.LongCount``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: LongCount<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.LongCount<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.LongCount<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.LongCount``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: LongCount<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  nameWithType: Enumerable.LongCount<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  fullName: Enumerable.LongCount<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+- uid: System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Decimal})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max(IEnumerable<Decimal>)
+  nameWithType: Enumerable.Max(IEnumerable<Decimal>)
+  fullName: Enumerable.Max(IEnumerable<Decimal>)
+- uid: System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Double})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max(IEnumerable<Double>)
+  nameWithType: Enumerable.Max(IEnumerable<Double>)
+  fullName: Enumerable.Max(IEnumerable<Double>)
+- uid: System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Int32})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max(IEnumerable<Int32>)
+  nameWithType: Enumerable.Max(IEnumerable<Int32>)
+  fullName: Enumerable.Max(IEnumerable<Int32>)
+- uid: System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Int64})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max(IEnumerable<Int64>)
+  nameWithType: Enumerable.Max(IEnumerable<Int64>)
+  fullName: Enumerable.Max(IEnumerable<Int64>)
+- uid: System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Nullable{System.Decimal}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max(IEnumerable<Nullable<Decimal>>)
+  nameWithType: Enumerable.Max(IEnumerable<Nullable<Decimal>>)
+  fullName: Enumerable.Max(IEnumerable<Nullable<Decimal>>)
+- uid: System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Nullable{System.Double}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max(IEnumerable<Nullable<Double>>)
+  nameWithType: Enumerable.Max(IEnumerable<Nullable<Double>>)
+  fullName: Enumerable.Max(IEnumerable<Nullable<Double>>)
+- uid: System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Nullable{System.Int32}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max(IEnumerable<Nullable<Int32>>)
+  nameWithType: Enumerable.Max(IEnumerable<Nullable<Int32>>)
+  fullName: Enumerable.Max(IEnumerable<Nullable<Int32>>)
+- uid: System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Nullable{System.Int64}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max(IEnumerable<Nullable<Int64>>)
+  nameWithType: Enumerable.Max(IEnumerable<Nullable<Int64>>)
+  fullName: Enumerable.Max(IEnumerable<Nullable<Int64>>)
+- uid: System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Nullable{System.Single}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max(IEnumerable<Nullable<Single>>)
+  nameWithType: Enumerable.Max(IEnumerable<Nullable<Single>>)
+  fullName: Enumerable.Max(IEnumerable<Nullable<Single>>)
+- uid: System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable{System.Single})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max(IEnumerable<Single>)
+  nameWithType: Enumerable.Max(IEnumerable<Single>)
+  fullName: Enumerable.Max(IEnumerable<Single>)
+- uid: System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.Max<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.Max<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Decimal})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max<TSource>(IEnumerable<TSource>, Func<TSource,Decimal>)
+  nameWithType: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Decimal>)
+  fullName: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Decimal>)
+- uid: System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Double})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max<TSource>(IEnumerable<TSource>, Func<TSource,Double>)
+  nameWithType: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Double>)
+  fullName: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Double>)
+- uid: System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max<TSource>(IEnumerable<TSource>, Func<TSource,Int32>)
+  nameWithType: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Int32>)
+  fullName: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Int32>)
+- uid: System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int64})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max<TSource>(IEnumerable<TSource>, Func<TSource,Int64>)
+  nameWithType: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Int64>)
+  fullName: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Int64>)
+- uid: System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Decimal}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Decimal>>)
+  nameWithType: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Decimal>>)
+  fullName: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Decimal>>)
+- uid: System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Double}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Double>>)
+  nameWithType: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Double>>)
+  fullName: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Double>>)
+- uid: System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Int32}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int32>>)
+  nameWithType: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int32>>)
+  fullName: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int32>>)
+- uid: System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Int64}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int64>>)
+  nameWithType: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int64>>)
+  fullName: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int64>>)
+- uid: System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Single}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Single>>)
+  nameWithType: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Single>>)
+  fullName: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Single>>)
+- uid: System.Linq.Enumerable.Max``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Single})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max<TSource>(IEnumerable<TSource>, Func<TSource,Single>)
+  nameWithType: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Single>)
+  fullName: Enumerable.Max<TSource>(IEnumerable<TSource>, Func<TSource,Single>)
+- uid: System.Linq.Enumerable.Max``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Max<TSource,TResult>(IEnumerable<TSource>, Func<TSource,TResult>)
+  nameWithType: Enumerable.Max<TSource,TResult>(IEnumerable<TSource>, Func<TSource,TResult>)
+  fullName: Enumerable.Max<TSource,TResult>(IEnumerable<TSource>, Func<TSource,TResult>)
+- uid: System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Decimal})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min(IEnumerable<Decimal>)
+  nameWithType: Enumerable.Min(IEnumerable<Decimal>)
+  fullName: Enumerable.Min(IEnumerable<Decimal>)
+- uid: System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Double})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min(IEnumerable<Double>)
+  nameWithType: Enumerable.Min(IEnumerable<Double>)
+  fullName: Enumerable.Min(IEnumerable<Double>)
+- uid: System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Int32})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min(IEnumerable<Int32>)
+  nameWithType: Enumerable.Min(IEnumerable<Int32>)
+  fullName: Enumerable.Min(IEnumerable<Int32>)
+- uid: System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Int64})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min(IEnumerable<Int64>)
+  nameWithType: Enumerable.Min(IEnumerable<Int64>)
+  fullName: Enumerable.Min(IEnumerable<Int64>)
+- uid: System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Nullable{System.Decimal}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min(IEnumerable<Nullable<Decimal>>)
+  nameWithType: Enumerable.Min(IEnumerable<Nullable<Decimal>>)
+  fullName: Enumerable.Min(IEnumerable<Nullable<Decimal>>)
+- uid: System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Nullable{System.Double}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min(IEnumerable<Nullable<Double>>)
+  nameWithType: Enumerable.Min(IEnumerable<Nullable<Double>>)
+  fullName: Enumerable.Min(IEnumerable<Nullable<Double>>)
+- uid: System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Nullable{System.Int32}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min(IEnumerable<Nullable<Int32>>)
+  nameWithType: Enumerable.Min(IEnumerable<Nullable<Int32>>)
+  fullName: Enumerable.Min(IEnumerable<Nullable<Int32>>)
+- uid: System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Nullable{System.Int64}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min(IEnumerable<Nullable<Int64>>)
+  nameWithType: Enumerable.Min(IEnumerable<Nullable<Int64>>)
+  fullName: Enumerable.Min(IEnumerable<Nullable<Int64>>)
+- uid: System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Nullable{System.Single}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min(IEnumerable<Nullable<Single>>)
+  nameWithType: Enumerable.Min(IEnumerable<Nullable<Single>>)
+  fullName: Enumerable.Min(IEnumerable<Nullable<Single>>)
+- uid: System.Linq.Enumerable.Min(System.Collections.Generic.IEnumerable{System.Single})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min(IEnumerable<Single>)
+  nameWithType: Enumerable.Min(IEnumerable<Single>)
+  fullName: Enumerable.Min(IEnumerable<Single>)
+- uid: System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.Min<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.Min<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Decimal})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min<TSource>(IEnumerable<TSource>, Func<TSource,Decimal>)
+  nameWithType: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Decimal>)
+  fullName: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Decimal>)
+- uid: System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Double})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min<TSource>(IEnumerable<TSource>, Func<TSource,Double>)
+  nameWithType: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Double>)
+  fullName: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Double>)
+- uid: System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min<TSource>(IEnumerable<TSource>, Func<TSource,Int32>)
+  nameWithType: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Int32>)
+  fullName: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Int32>)
+- uid: System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int64})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min<TSource>(IEnumerable<TSource>, Func<TSource,Int64>)
+  nameWithType: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Int64>)
+  fullName: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Int64>)
+- uid: System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Decimal}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Decimal>>)
+  nameWithType: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Decimal>>)
+  fullName: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Decimal>>)
+- uid: System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Double}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Double>>)
+  nameWithType: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Double>>)
+  fullName: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Double>>)
+- uid: System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Int32}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int32>>)
+  nameWithType: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int32>>)
+  fullName: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int32>>)
+- uid: System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Int64}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int64>>)
+  nameWithType: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int64>>)
+  fullName: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int64>>)
+- uid: System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Single}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Single>>)
+  nameWithType: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Single>>)
+  fullName: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Single>>)
+- uid: System.Linq.Enumerable.Min``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Single})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min<TSource>(IEnumerable<TSource>, Func<TSource,Single>)
+  nameWithType: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Single>)
+  fullName: Enumerable.Min<TSource>(IEnumerable<TSource>, Func<TSource,Single>)
+- uid: System.Linq.Enumerable.Min``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Min<TSource,TResult>(IEnumerable<TSource>, Func<TSource,TResult>)
+  nameWithType: Enumerable.Min<TSource,TResult>(IEnumerable<TSource>, Func<TSource,TResult>)
+  fullName: Enumerable.Min<TSource,TResult>(IEnumerable<TSource>, Func<TSource,TResult>)
+- uid: System.Linq.Enumerable.OfType``1(System.Collections.IEnumerable)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: OfType<TResult>(IEnumerable)
+  nameWithType: Enumerable.OfType<TResult>(IEnumerable)
+  fullName: Enumerable.OfType<TResult>(IEnumerable)
+- uid: System.Linq.Enumerable.OrderBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: OrderBy<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+  nameWithType: Enumerable.OrderBy<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+  fullName: Enumerable.OrderBy<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+- uid: System.Linq.Enumerable.OrderBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IComparer{``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: OrderBy<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IComparer<TKey>)
+  nameWithType: Enumerable.OrderBy<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IComparer<TKey>)
+  fullName: Enumerable.OrderBy<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IComparer<TKey>)
+- uid: System.Linq.Enumerable.OrderByDescending``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: OrderByDescending<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+  nameWithType: Enumerable.OrderByDescending<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+  fullName: Enumerable.OrderByDescending<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+- uid: System.Linq.Enumerable.OrderByDescending``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IComparer{``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: OrderByDescending<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IComparer<TKey>)
+  nameWithType: Enumerable.OrderByDescending<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IComparer<TKey>)
+  fullName: Enumerable.OrderByDescending<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IComparer<TKey>)
+- uid: System.Linq.Enumerable.Prepend``1(System.Collections.Generic.IEnumerable{``0},``0)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Prepend<TSource>(IEnumerable<TSource>, TSource)
+  nameWithType: Enumerable.Prepend<TSource>(IEnumerable<TSource>, TSource)
+  fullName: Enumerable.Prepend<TSource>(IEnumerable<TSource>, TSource)
+- uid: System.Linq.Enumerable.Reverse``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Reverse<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.Reverse<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.Reverse<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.Select``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Select<TSource,TResult>(IEnumerable<TSource>, Func<TSource,TResult>)
+  nameWithType: Enumerable.Select<TSource,TResult>(IEnumerable<TSource>, Func<TSource,TResult>)
+  fullName: Enumerable.Select<TSource,TResult>(IEnumerable<TSource>, Func<TSource,TResult>)
+- uid: System.Linq.Enumerable.Select``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32,``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Select<TSource,TResult>(IEnumerable<TSource>, Func<TSource,Int32,TResult>)
+  nameWithType: Enumerable.Select<TSource,TResult>(IEnumerable<TSource>, Func<TSource,Int32,TResult>)
+  fullName: Enumerable.Select<TSource,TResult>(IEnumerable<TSource>, Func<TSource,Int32,TResult>)
+- uid: System.Linq.Enumerable.SelectMany``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Collections.Generic.IEnumerable{``1}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: SelectMany<TSource,TResult>(IEnumerable<TSource>, Func<TSource,IEnumerable<TResult>>)
+  nameWithType: Enumerable.SelectMany<TSource,TResult>(IEnumerable<TSource>, Func<TSource,IEnumerable<TResult>>)
+  fullName: Enumerable.SelectMany<TSource,TResult>(IEnumerable<TSource>, Func<TSource,IEnumerable<TResult>>)
+- uid: System.Linq.Enumerable.SelectMany``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32,System.Collections.Generic.IEnumerable{``1}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: SelectMany<TSource,TResult>(IEnumerable<TSource>, Func<TSource,Int32,IEnumerable<TResult>>)
+  nameWithType: Enumerable.SelectMany<TSource,TResult>(IEnumerable<TSource>, Func<TSource,Int32,IEnumerable<TResult>>)
+  fullName: Enumerable.SelectMany<TSource,TResult>(IEnumerable<TSource>, Func<TSource,Int32,IEnumerable<TResult>>)
+- uid: System.Linq.Enumerable.SelectMany``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Collections.Generic.IEnumerable{``1}},System.Func{``0,``1,``2})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: SelectMany<TSource,TCollection,TResult>(IEnumerable<TSource>, Func<TSource,IEnumerable<TCollection>>, Func<TSource,TCollection,TResult>)
+  nameWithType: Enumerable.SelectMany<TSource,TCollection,TResult>(IEnumerable<TSource>, Func<TSource,IEnumerable<TCollection>>, Func<TSource,TCollection,TResult>)
+  fullName: Enumerable.SelectMany<TSource,TCollection,TResult>(IEnumerable<TSource>, Func<TSource,IEnumerable<TCollection>>, Func<TSource,TCollection,TResult>)
+- uid: System.Linq.Enumerable.SelectMany``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32,System.Collections.Generic.IEnumerable{``1}},System.Func{``0,``1,``2})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: SelectMany<TSource,TCollection,TResult>(IEnumerable<TSource>, Func<TSource,Int32,IEnumerable<TCollection>>, Func<TSource,TCollection,TResult>)
+  nameWithType: Enumerable.SelectMany<TSource,TCollection,TResult>(IEnumerable<TSource>, Func<TSource,Int32,IEnumerable<TCollection>>, Func<TSource,TCollection,TResult>)
+  fullName: Enumerable.SelectMany<TSource,TCollection,TResult>(IEnumerable<TSource>, Func<TSource,Int32,IEnumerable<TCollection>>, Func<TSource,TCollection,TResult>)
+- uid: System.Linq.Enumerable.SequenceEqual``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: SequenceEqual<TSource>(IEnumerable<TSource>, IEnumerable<TSource>)
+  nameWithType: Enumerable.SequenceEqual<TSource>(IEnumerable<TSource>, IEnumerable<TSource>)
+  fullName: Enumerable.SequenceEqual<TSource>(IEnumerable<TSource>, IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.SequenceEqual``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: SequenceEqual<TSource>(IEnumerable<TSource>, IEnumerable<TSource>, IEqualityComparer<TSource>)
+  nameWithType: Enumerable.SequenceEqual<TSource>(IEnumerable<TSource>, IEnumerable<TSource>, IEqualityComparer<TSource>)
+  fullName: Enumerable.SequenceEqual<TSource>(IEnumerable<TSource>, IEnumerable<TSource>, IEqualityComparer<TSource>)
+- uid: System.Linq.Enumerable.Single``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Single<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.Single<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.Single<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.Single``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Single<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  nameWithType: Enumerable.Single<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  fullName: Enumerable.Single<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+- uid: System.Linq.Enumerable.SingleOrDefault``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: SingleOrDefault<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.SingleOrDefault<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.SingleOrDefault<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.SingleOrDefault``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: SingleOrDefault<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  nameWithType: Enumerable.SingleOrDefault<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  fullName: Enumerable.SingleOrDefault<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+- uid: System.Linq.Enumerable.Skip``1(System.Collections.Generic.IEnumerable{``0},System.Int32)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Skip<TSource>(IEnumerable<TSource>, Int32)
+  nameWithType: Enumerable.Skip<TSource>(IEnumerable<TSource>, Int32)
+  fullName: Enumerable.Skip<TSource>(IEnumerable<TSource>, Int32)
+- uid: System.Linq.Enumerable.SkipLast``1(System.Collections.Generic.IEnumerable{``0},System.Int32)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: SkipLast<TSource>(IEnumerable<TSource>, Int32)
+  nameWithType: Enumerable.SkipLast<TSource>(IEnumerable<TSource>, Int32)
+  fullName: Enumerable.SkipLast<TSource>(IEnumerable<TSource>, Int32)
+- uid: System.Linq.Enumerable.SkipWhile``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: SkipWhile<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  nameWithType: Enumerable.SkipWhile<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  fullName: Enumerable.SkipWhile<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+- uid: System.Linq.Enumerable.SkipWhile``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32,System.Boolean})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: SkipWhile<TSource>(IEnumerable<TSource>, Func<TSource,Int32,Boolean>)
+  nameWithType: Enumerable.SkipWhile<TSource>(IEnumerable<TSource>, Func<TSource,Int32,Boolean>)
+  fullName: Enumerable.SkipWhile<TSource>(IEnumerable<TSource>, Func<TSource,Int32,Boolean>)
+- uid: System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Decimal})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum(IEnumerable<Decimal>)
+  nameWithType: Enumerable.Sum(IEnumerable<Decimal>)
+  fullName: Enumerable.Sum(IEnumerable<Decimal>)
+- uid: System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Double})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum(IEnumerable<Double>)
+  nameWithType: Enumerable.Sum(IEnumerable<Double>)
+  fullName: Enumerable.Sum(IEnumerable<Double>)
+- uid: System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Int32})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum(IEnumerable<Int32>)
+  nameWithType: Enumerable.Sum(IEnumerable<Int32>)
+  fullName: Enumerable.Sum(IEnumerable<Int32>)
+- uid: System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Int64})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum(IEnumerable<Int64>)
+  nameWithType: Enumerable.Sum(IEnumerable<Int64>)
+  fullName: Enumerable.Sum(IEnumerable<Int64>)
+- uid: System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Nullable{System.Decimal}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum(IEnumerable<Nullable<Decimal>>)
+  nameWithType: Enumerable.Sum(IEnumerable<Nullable<Decimal>>)
+  fullName: Enumerable.Sum(IEnumerable<Nullable<Decimal>>)
+- uid: System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Nullable{System.Double}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum(IEnumerable<Nullable<Double>>)
+  nameWithType: Enumerable.Sum(IEnumerable<Nullable<Double>>)
+  fullName: Enumerable.Sum(IEnumerable<Nullable<Double>>)
+- uid: System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Nullable{System.Int32}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum(IEnumerable<Nullable<Int32>>)
+  nameWithType: Enumerable.Sum(IEnumerable<Nullable<Int32>>)
+  fullName: Enumerable.Sum(IEnumerable<Nullable<Int32>>)
+- uid: System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Nullable{System.Int64}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum(IEnumerable<Nullable<Int64>>)
+  nameWithType: Enumerable.Sum(IEnumerable<Nullable<Int64>>)
+  fullName: Enumerable.Sum(IEnumerable<Nullable<Int64>>)
+- uid: System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Nullable{System.Single}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum(IEnumerable<Nullable<Single>>)
+  nameWithType: Enumerable.Sum(IEnumerable<Nullable<Single>>)
+  fullName: Enumerable.Sum(IEnumerable<Nullable<Single>>)
+- uid: System.Linq.Enumerable.Sum(System.Collections.Generic.IEnumerable{System.Single})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum(IEnumerable<Single>)
+  nameWithType: Enumerable.Sum(IEnumerable<Single>)
+  fullName: Enumerable.Sum(IEnumerable<Single>)
+- uid: System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Decimal})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum<TSource>(IEnumerable<TSource>, Func<TSource,Decimal>)
+  nameWithType: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Decimal>)
+  fullName: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Decimal>)
+- uid: System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Double})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum<TSource>(IEnumerable<TSource>, Func<TSource,Double>)
+  nameWithType: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Double>)
+  fullName: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Double>)
+- uid: System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum<TSource>(IEnumerable<TSource>, Func<TSource,Int32>)
+  nameWithType: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Int32>)
+  fullName: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Int32>)
+- uid: System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int64})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum<TSource>(IEnumerable<TSource>, Func<TSource,Int64>)
+  nameWithType: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Int64>)
+  fullName: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Int64>)
+- uid: System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Decimal}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Decimal>>)
+  nameWithType: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Decimal>>)
+  fullName: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Decimal>>)
+- uid: System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Double}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Double>>)
+  nameWithType: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Double>>)
+  fullName: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Double>>)
+- uid: System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Int32}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int32>>)
+  nameWithType: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int32>>)
+  fullName: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int32>>)
+- uid: System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Int64}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int64>>)
+  nameWithType: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int64>>)
+  fullName: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Int64>>)
+- uid: System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Nullable{System.Single}})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Single>>)
+  nameWithType: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Single>>)
+  fullName: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Nullable<Single>>)
+- uid: System.Linq.Enumerable.Sum``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Single})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Sum<TSource>(IEnumerable<TSource>, Func<TSource,Single>)
+  nameWithType: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Single>)
+  fullName: Enumerable.Sum<TSource>(IEnumerable<TSource>, Func<TSource,Single>)
+- uid: System.Linq.Enumerable.Take``1(System.Collections.Generic.IEnumerable{``0},System.Int32)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Take<TSource>(IEnumerable<TSource>, Int32)
+  nameWithType: Enumerable.Take<TSource>(IEnumerable<TSource>, Int32)
+  fullName: Enumerable.Take<TSource>(IEnumerable<TSource>, Int32)
+- uid: System.Linq.Enumerable.TakeLast``1(System.Collections.Generic.IEnumerable{``0},System.Int32)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: TakeLast<TSource>(IEnumerable<TSource>, Int32)
+  nameWithType: Enumerable.TakeLast<TSource>(IEnumerable<TSource>, Int32)
+  fullName: Enumerable.TakeLast<TSource>(IEnumerable<TSource>, Int32)
+- uid: System.Linq.Enumerable.TakeWhile``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: TakeWhile<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  nameWithType: Enumerable.TakeWhile<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  fullName: Enumerable.TakeWhile<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+- uid: System.Linq.Enumerable.TakeWhile``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32,System.Boolean})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: TakeWhile<TSource>(IEnumerable<TSource>, Func<TSource,Int32,Boolean>)
+  nameWithType: Enumerable.TakeWhile<TSource>(IEnumerable<TSource>, Func<TSource,Int32,Boolean>)
+  fullName: Enumerable.TakeWhile<TSource>(IEnumerable<TSource>, Func<TSource,Int32,Boolean>)
+- uid: System.Linq.Enumerable.ToArray``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: ToArray<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.ToArray<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.ToArray<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.ToDictionary``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: ToDictionary<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+  nameWithType: Enumerable.ToDictionary<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+  fullName: Enumerable.ToDictionary<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+- uid: System.Linq.Enumerable.ToDictionary``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IEqualityComparer{``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: ToDictionary<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IEqualityComparer<TKey>)
+  nameWithType: Enumerable.ToDictionary<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IEqualityComparer<TKey>)
+  fullName: Enumerable.ToDictionary<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IEqualityComparer<TKey>)
+- uid: System.Linq.Enumerable.ToDictionary``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: ToDictionary<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>)
+  nameWithType: Enumerable.ToDictionary<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>)
+  fullName: Enumerable.ToDictionary<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>)
+- uid: System.Linq.Enumerable.ToDictionary``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Collections.Generic.IEqualityComparer{``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: ToDictionary<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>, IEqualityComparer<TKey>)
+  nameWithType: Enumerable.ToDictionary<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>, IEqualityComparer<TKey>)
+  fullName: Enumerable.ToDictionary<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>, IEqualityComparer<TKey>)
+- uid: System.Linq.Enumerable.ToHashSet``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: ToHashSet<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.ToHashSet<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.ToHashSet<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.ToHashSet``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: ToHashSet<TSource>(IEnumerable<TSource>, IEqualityComparer<TSource>)
+  nameWithType: Enumerable.ToHashSet<TSource>(IEnumerable<TSource>, IEqualityComparer<TSource>)
+  fullName: Enumerable.ToHashSet<TSource>(IEnumerable<TSource>, IEqualityComparer<TSource>)
+- uid: System.Linq.Enumerable.ToList``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: ToList<TSource>(IEnumerable<TSource>)
+  nameWithType: Enumerable.ToList<TSource>(IEnumerable<TSource>)
+  fullName: Enumerable.ToList<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.ToLookup``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: ToLookup<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+  nameWithType: Enumerable.ToLookup<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+  fullName: Enumerable.ToLookup<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>)
+- uid: System.Linq.Enumerable.ToLookup``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Collections.Generic.IEqualityComparer{``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: ToLookup<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IEqualityComparer<TKey>)
+  nameWithType: Enumerable.ToLookup<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IEqualityComparer<TKey>)
+  fullName: Enumerable.ToLookup<TSource,TKey>(IEnumerable<TSource>, Func<TSource,TKey>, IEqualityComparer<TKey>)
+- uid: System.Linq.Enumerable.ToLookup``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: ToLookup<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>)
+  nameWithType: Enumerable.ToLookup<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>)
+  fullName: Enumerable.ToLookup<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>)
+- uid: System.Linq.Enumerable.ToLookup``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2},System.Collections.Generic.IEqualityComparer{``1})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: ToLookup<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>, IEqualityComparer<TKey>)
+  nameWithType: Enumerable.ToLookup<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>, IEqualityComparer<TKey>)
+  fullName: Enumerable.ToLookup<TSource,TKey,TElement>(IEnumerable<TSource>, Func<TSource,TKey>, Func<TSource,TElement>, IEqualityComparer<TKey>)
+- uid: System.Linq.Enumerable.Union``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Union<TSource>(IEnumerable<TSource>, IEnumerable<TSource>)
+  nameWithType: Enumerable.Union<TSource>(IEnumerable<TSource>, IEnumerable<TSource>)
+  fullName: Enumerable.Union<TSource>(IEnumerable<TSource>, IEnumerable<TSource>)
+- uid: System.Linq.Enumerable.Union``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Union<TSource>(IEnumerable<TSource>, IEnumerable<TSource>, IEqualityComparer<TSource>)
+  nameWithType: Enumerable.Union<TSource>(IEnumerable<TSource>, IEnumerable<TSource>, IEqualityComparer<TSource>)
+  fullName: Enumerable.Union<TSource>(IEnumerable<TSource>, IEnumerable<TSource>, IEqualityComparer<TSource>)
+- uid: System.Linq.Enumerable.Where``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Where<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  nameWithType: Enumerable.Where<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+  fullName: Enumerable.Where<TSource>(IEnumerable<TSource>, Func<TSource,Boolean>)
+- uid: System.Linq.Enumerable.Where``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32,System.Boolean})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Where<TSource>(IEnumerable<TSource>, Func<TSource,Int32,Boolean>)
+  nameWithType: Enumerable.Where<TSource>(IEnumerable<TSource>, Func<TSource,Int32,Boolean>)
+  fullName: Enumerable.Where<TSource>(IEnumerable<TSource>, Func<TSource,Int32,Boolean>)
+- uid: System.Linq.Enumerable.Zip``3(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1},System.Func{``0,``1,``2})
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Zip<TFirst,TSecond,TResult>(IEnumerable<TFirst>, IEnumerable<TSecond>, Func<TFirst,TSecond,TResult>)
+  nameWithType: Enumerable.Zip<TFirst,TSecond,TResult>(IEnumerable<TFirst>, IEnumerable<TSecond>, Func<TFirst,TSecond,TResult>)
+  fullName: Enumerable.Zip<TFirst,TSecond,TResult>(IEnumerable<TFirst>, IEnumerable<TSecond>, Func<TFirst,TSecond,TResult>)
+- uid: System.Linq.ParallelEnumerable.AsParallel(System.Collections.IEnumerable)
+  parent: System.Linq.ParallelEnumerable
+  isExternal: false
+  name: AsParallel(IEnumerable)
+  nameWithType: ParallelEnumerable.AsParallel(IEnumerable)
+  fullName: ParallelEnumerable.AsParallel(IEnumerable)
+- uid: System.Linq.ParallelEnumerable.AsParallel``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.ParallelEnumerable
+  isExternal: false
+  name: AsParallel<TSource>(IEnumerable<TSource>)
+  nameWithType: ParallelEnumerable.AsParallel<TSource>(IEnumerable<TSource>)
+  fullName: ParallelEnumerable.AsParallel<TSource>(IEnumerable<TSource>)
+- uid: System.Linq.Queryable.AsQueryable(System.Collections.IEnumerable)
+  parent: System.Linq.Queryable
+  isExternal: false
+  name: AsQueryable(IEnumerable)
+  nameWithType: Queryable.AsQueryable(IEnumerable)
+  fullName: Queryable.AsQueryable(IEnumerable)
+- uid: System.Linq.Queryable.AsQueryable``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Linq.Queryable
+  isExternal: false
+  name: AsQueryable<TElement>(IEnumerable<TElement>)
+  nameWithType: Queryable.AsQueryable<TElement>(IEnumerable<TElement>)
+  fullName: Queryable.AsQueryable<TElement>(IEnumerable<TElement>)
+- uid: System.Xml.Linq.Extensions.Ancestors``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: Ancestors<T>(IEnumerable<T>)
+  nameWithType: Extensions.Ancestors<T>(IEnumerable<T>)
+  fullName: Extensions.Ancestors<T>(IEnumerable<T>)
+- uid: System.Xml.Linq.Extensions.Ancestors``1(System.Collections.Generic.IEnumerable{``0},System.Xml.Linq.XName)
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: Ancestors<T>(IEnumerable<T>, XName)
+  nameWithType: Extensions.Ancestors<T>(IEnumerable<T>, XName)
+  fullName: Extensions.Ancestors<T>(IEnumerable<T>, XName)
+- uid: System.Xml.Linq.Extensions.AncestorsAndSelf(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement})
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: AncestorsAndSelf(IEnumerable<XElement>)
+  nameWithType: Extensions.AncestorsAndSelf(IEnumerable<XElement>)
+  fullName: Extensions.AncestorsAndSelf(IEnumerable<XElement>)
+- uid: System.Xml.Linq.Extensions.AncestorsAndSelf(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement},System.Xml.Linq.XName)
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: AncestorsAndSelf(IEnumerable<XElement>, XName)
+  nameWithType: Extensions.AncestorsAndSelf(IEnumerable<XElement>, XName)
+  fullName: Extensions.AncestorsAndSelf(IEnumerable<XElement>, XName)
+- uid: System.Xml.Linq.Extensions.Attributes(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement})
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: Attributes(IEnumerable<XElement>)
+  nameWithType: Extensions.Attributes(IEnumerable<XElement>)
+  fullName: Extensions.Attributes(IEnumerable<XElement>)
+- uid: System.Xml.Linq.Extensions.Attributes(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement},System.Xml.Linq.XName)
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: Attributes(IEnumerable<XElement>, XName)
+  nameWithType: Extensions.Attributes(IEnumerable<XElement>, XName)
+  fullName: Extensions.Attributes(IEnumerable<XElement>, XName)
+- uid: System.Xml.Linq.Extensions.DescendantNodes``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: DescendantNodes<T>(IEnumerable<T>)
+  nameWithType: Extensions.DescendantNodes<T>(IEnumerable<T>)
+  fullName: Extensions.DescendantNodes<T>(IEnumerable<T>)
+- uid: System.Xml.Linq.Extensions.DescendantNodesAndSelf(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement})
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: DescendantNodesAndSelf(IEnumerable<XElement>)
+  nameWithType: Extensions.DescendantNodesAndSelf(IEnumerable<XElement>)
+  fullName: Extensions.DescendantNodesAndSelf(IEnumerable<XElement>)
+- uid: System.Xml.Linq.Extensions.Descendants``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: Descendants<T>(IEnumerable<T>)
+  nameWithType: Extensions.Descendants<T>(IEnumerable<T>)
+  fullName: Extensions.Descendants<T>(IEnumerable<T>)
+- uid: System.Xml.Linq.Extensions.Descendants``1(System.Collections.Generic.IEnumerable{``0},System.Xml.Linq.XName)
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: Descendants<T>(IEnumerable<T>, XName)
+  nameWithType: Extensions.Descendants<T>(IEnumerable<T>, XName)
+  fullName: Extensions.Descendants<T>(IEnumerable<T>, XName)
+- uid: System.Xml.Linq.Extensions.DescendantsAndSelf(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement})
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: DescendantsAndSelf(IEnumerable<XElement>)
+  nameWithType: Extensions.DescendantsAndSelf(IEnumerable<XElement>)
+  fullName: Extensions.DescendantsAndSelf(IEnumerable<XElement>)
+- uid: System.Xml.Linq.Extensions.DescendantsAndSelf(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement},System.Xml.Linq.XName)
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: DescendantsAndSelf(IEnumerable<XElement>, XName)
+  nameWithType: Extensions.DescendantsAndSelf(IEnumerable<XElement>, XName)
+  fullName: Extensions.DescendantsAndSelf(IEnumerable<XElement>, XName)
+- uid: System.Xml.Linq.Extensions.Elements``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: Elements<T>(IEnumerable<T>)
+  nameWithType: Extensions.Elements<T>(IEnumerable<T>)
+  fullName: Extensions.Elements<T>(IEnumerable<T>)
+- uid: System.Xml.Linq.Extensions.Elements``1(System.Collections.Generic.IEnumerable{``0},System.Xml.Linq.XName)
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: Elements<T>(IEnumerable<T>, XName)
+  nameWithType: Extensions.Elements<T>(IEnumerable<T>, XName)
+  fullName: Extensions.Elements<T>(IEnumerable<T>, XName)
+- uid: System.Xml.Linq.Extensions.InDocumentOrder``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: InDocumentOrder<T>(IEnumerable<T>)
+  nameWithType: Extensions.InDocumentOrder<T>(IEnumerable<T>)
+  fullName: Extensions.InDocumentOrder<T>(IEnumerable<T>)
+- uid: System.Xml.Linq.Extensions.Nodes``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: Nodes<T>(IEnumerable<T>)
+  nameWithType: Extensions.Nodes<T>(IEnumerable<T>)
+  fullName: Extensions.Nodes<T>(IEnumerable<T>)
+- uid: System.Xml.Linq.Extensions.Remove(System.Collections.Generic.IEnumerable{System.Xml.Linq.XAttribute})
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: Remove(IEnumerable<XAttribute>)
+  nameWithType: Extensions.Remove(IEnumerable<XAttribute>)
+  fullName: Extensions.Remove(IEnumerable<XAttribute>)
+- uid: System.Xml.Linq.Extensions.Remove``1(System.Collections.Generic.IEnumerable{``0})
+  parent: System.Xml.Linq.Extensions
+  isExternal: false
+  name: Remove<T>(IEnumerable<T>)
+  nameWithType: Extensions.Remove<T>(IEnumerable<T>)
+  fullName: Extensions.Remove<T>(IEnumerable<T>)
+- uid: System.Collections.Generic.ICollection`1
+  name: ICollection<T>
+  nameWithType: ICollection<T>
+  fullName: System.Collections.Generic.ICollection<T>
+- uid: System.Collections.Generic.ICollection{System.Int64}
+  parent: System.Collections.Generic
+  isExternal: false
+  name: ICollection<Int64>
+  nameWithType: ICollection<Int64>
+  fullName: System.Collections.Generic.ICollection<System.Int64>
+  spec.csharp:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    nameWithType: ICollection
+    fullName: System.Collections.Generic.ICollection
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Int64
+    name: Int64
+    nameWithType: Int64
+    fullName: System.Int64
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+- uid: System.Collections.Generic.IEnumerable{System.Int64}
+  parent: System.Collections.Generic
+  isExternal: false
+  name: IEnumerable<Int64>
+  nameWithType: IEnumerable<Int64>
+  fullName: System.Collections.Generic.IEnumerable<System.Int64>
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Int64
+    name: Int64
+    nameWithType: Int64
+    fullName: System.Int64
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'

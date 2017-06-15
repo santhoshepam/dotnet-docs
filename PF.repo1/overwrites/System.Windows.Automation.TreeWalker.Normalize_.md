@@ -1,0 +1,5 @@
+---
+summary: Retrieves the ancestor element nearest to the specified <xref href="System.Windows.Automation.AutomationElement"></xref> in the tree view used by this instance of <xref href="System.Windows.Automation.TreeWalker"></xref>.
+remarks: "The element is normalized by navigating up the ancestor chain in the tree until an element that satisfies the view condition for the <xref:System.Windows.Automation.TreeWalker> object is reached. If the root element is reached, the root element is returned even if it does not satisfy the view condition.  \n  \n This method is useful for applications that obtain references to [!INCLUDE[TLA2#tla_uiautomation](~/includes/tla2sharptla-uiautomation-md.md)] elements by hit-testing. The application might want to work only with specific types of elements, and can use <xref:System.Windows.Automation.TreeWalker.Normalize%2A> to make sure that no matter what element is initially retrieved (for example, when a scroll bar gets the input focus), only the element of interest (such as a content element) is ultimately retrieved."
+uid: System.Windows.Automation.TreeWalker.Normalize*
+---

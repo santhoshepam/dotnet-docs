@@ -1,0 +1,1493 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Threading.CancellationTokenSource
+  commentId: T:System.Threading.CancellationTokenSource
+  id: CancellationTokenSource
+  children:
+  - System.Threading.CancellationTokenSource.#ctor
+  - System.Threading.CancellationTokenSource.#ctor(System.Int32)
+  - System.Threading.CancellationTokenSource.#ctor(System.TimeSpan)
+  - System.Threading.CancellationTokenSource.Cancel
+  - System.Threading.CancellationTokenSource.Cancel(System.Boolean)
+  - System.Threading.CancellationTokenSource.CancelAfter(System.Int32)
+  - System.Threading.CancellationTokenSource.CancelAfter(System.TimeSpan)
+  - System.Threading.CancellationTokenSource.CreateLinkedTokenSource(System.Threading.CancellationToken[])
+  - System.Threading.CancellationTokenSource.CreateLinkedTokenSource(System.Threading.CancellationToken,System.Threading.CancellationToken)
+  - System.Threading.CancellationTokenSource.Dispose
+  - System.Threading.CancellationTokenSource.Dispose(System.Boolean)
+  - System.Threading.CancellationTokenSource.IsCancellationRequested
+  - System.Threading.CancellationTokenSource.Token
+  langs:
+  - csharp
+  name: CancellationTokenSource
+  nameWithType: CancellationTokenSource
+  fullName: System.Threading.CancellationTokenSource
+  type: Class
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Signals to a <xref href="System.Threading.CancellationToken"></xref> that it should be canceled.
+  remarks: "Starting with the [!INCLUDE[net_v40_long](~/includes/net-v40-long-md.md)], the .NET Framework uses a unified model for cooperative cancellation of asynchronous or long-running synchronous operations that involves two objects:  \n  \n-   A <xref:System.Threading.CancellationTokenSource> object, which provides a cancellation token through its <xref:System.Threading.CancellationTokenSource.Token%2A> property and sends a cancellation message by calling its <xref:System.Threading.CancellationTokenSource.Cancel%2A> or <xref:System.Threading.CancellationTokenSource.CancelAfter%2A> method.  \n  \n-   A <xref:System.Threading.CancellationToken> object, which indicates whether cancellation is requested.  \n  \n The general pattern for implementing the cooperative cancellation model is:  \n  \n-   Instantiate a <xref:System.Threading.CancellationTokenSource> object, which manages and sends cancellation notification to the individual cancellation tokens.  \n  \n-   Pass the token returned by the <xref:System.Threading.CancellationTokenSource.Token%2A?displayProperty=fullName> property to each task or thread that listens for cancellation.  \n  \n-   Call the <xref:System.Threading.CancellationToken.IsCancellationRequested%2A?displayProperty=fullName> method from operations that receive the cancellation token. Provide a mechanism for each task or thread to respond to a cancellation request. Whether you choose to cancel an operation, and exactly how you do it, depends on your application logic.  \n  \n-   Call the <xref:System.Threading.CancellationTokenSource.Cancel%2A?displayProperty=fullName> method to provide notification of cancellation. This sets the <xref:System.Threading.CancellationToken.IsCancellationRequested%2A?displayProperty=fullName> property on every copy of the cancellation token to `true`.  \n  \n-   Call the <xref:System.Threading.CancellationTokenSource.Dispose%2A> method when you are finished with the <xref:System.Threading.CancellationTokenSource> object.  \n  \n For more information, see [Cancellation in Managed Threads](~/docs/standard/threading/cancellation-in-managed-threads.md).  \n  \n> [!IMPORTANT]\n>  This type implements the <xref:System.IDisposable> interface. When you have finished using an instance of the type, you should dispose of it either directly or indirectly. To dispose of the type directly, call its <xref:System.IDisposable.Dispose%2A> method in a `try`/`catch` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the \"Using an Object that Implements IDisposable\" section in the <xref:System.IDisposable> interface topic."
+  example:
+  - "The following example uses a random number generator to emulate a data collection application that reads 10 integral values from eleven different instruments. A value of zero indicates that the measurement has failed for one instrument, in which case the operation should be cancelled and no overall mean should be computed.  \n  \n To handle the possible cancellation of the operation, the example instantiates a <xref:System.Threading.CancellationTokenSource> object that generates a cancellation token which is passed to a <xref:System.Threading.Tasks.TaskFactory> object. The <xref:System.Threading.Tasks.TaskFactory> object in turn passes the cancellation token to each of the tasks responsible for collecting readings for a particular instrument. The <xref:System.Threading.Tasks.TaskFactory.ContinueWhenAll%60%602%28System.Threading.Tasks.Task%7B%60%600%7D%5B%5D%2CSystem.Func%7BSystem.Threading.Tasks.Task%7B%60%600%7D%5B%5D%2C%60%601%7D%2CSystem.Threading.CancellationToken%29?displayProperty=fullName> method is called to ensure that the mean is computed only after all readings have been gathered successfully. If a task has not because it has been cancelled, the call to the <xref:System.Threading.Tasks.TaskFactory.ContinueWhenAll%2A?displayProperty=fullName> method throws an exception.  \n  \n [!code-csharp[System.Threading.CancellationTokenSource.Class#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.cancellationtokensource.class/cs/cancel1.cs#1)]\n [!code-vb[System.Threading.CancellationTokenSource.Class#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.cancellationtokensource.class/vb/cancel1.vb#1)]"
+  syntax:
+    content: >-
+      [System.Runtime.InteropServices.ComVisible(false)]
+
+      public class CancellationTokenSource : IDisposable
+  inheritance:
+  - System.Object
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: System.Runtime.InteropServices.ComVisibleAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.CancellationTokenSource.#ctor
+  commentId: M:System.Threading.CancellationTokenSource.#ctor
+  id: '#ctor'
+  parent: System.Threading.CancellationTokenSource
+  langs:
+  - csharp
+  name: CancellationTokenSource()
+  nameWithType: CancellationTokenSource.CancellationTokenSource()
+  fullName: CancellationTokenSource.CancellationTokenSource()
+  type: Constructor
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Initializes a new instance of the <xref href="System.Threading.CancellationTokenSource"></xref> class.
+  syntax:
+    content: public CancellationTokenSource ();
+    parameters: []
+  overload: System.Threading.CancellationTokenSource.#ctor*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.CancellationTokenSource.#ctor(System.Int32)
+  commentId: M:System.Threading.CancellationTokenSource.#ctor(System.Int32)
+  id: '#ctor(System.Int32)'
+  parent: System.Threading.CancellationTokenSource
+  langs:
+  - csharp
+  name: CancellationTokenSource(Int32)
+  nameWithType: CancellationTokenSource.CancellationTokenSource(Int32)
+  fullName: CancellationTokenSource.CancellationTokenSource(Int32)
+  type: Constructor
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Initializes a new instance of the <xref href="System.Threading.CancellationTokenSource"></xref> class that will be canceled after the specified delay in milliseconds.
+  remarks: "The countdown for the `millisecondsDelay` starts during the call to the constructor.  When the `millisecondsDelay` expires, the constructed <xref:System.Threading.CancellationTokenSource> is canceled (if it has not been canceled already).  \n  \n Subsequent calls to <xref:System.Threading.CancellationTokenSource.CancelAfter%2A> will reset the `millisecondsDelay` for the constructed <xref:System.Threading.CancellationTokenSource>, if it has not been canceled already."
+  syntax:
+    content: public CancellationTokenSource (int millisecondsDelay);
+    parameters:
+    - id: millisecondsDelay
+      type: System.Int32
+      description: The time interval in milliseconds to wait before canceling this <xref href="System.Threading.CancellationTokenSource"></xref>.
+  overload: System.Threading.CancellationTokenSource.#ctor*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>millisecondsDelay</code> is less than -1.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.CancellationTokenSource.#ctor(System.TimeSpan)
+  commentId: M:System.Threading.CancellationTokenSource.#ctor(System.TimeSpan)
+  id: '#ctor(System.TimeSpan)'
+  parent: System.Threading.CancellationTokenSource
+  langs:
+  - csharp
+  name: CancellationTokenSource(TimeSpan)
+  nameWithType: CancellationTokenSource.CancellationTokenSource(TimeSpan)
+  fullName: CancellationTokenSource.CancellationTokenSource(TimeSpan)
+  type: Constructor
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Initializes a new instance of the <xref href="System.Threading.CancellationTokenSource"></xref> class that will be canceled after the specified time span.
+  remarks: "The countdown for the delay starts during the call to the constructor. When the delay expires, the constructed <xref:System.Threading.CancellationTokenSource> is canceled, if it has not been canceled already.  \n  \n Subsequent calls to <xref:System.Threading.CancellationTokenSource.CancelAfter%2A> will reset the delay for the constructed <xref:System.Threading.CancellationTokenSource>, if it has not been canceled already."
+  syntax:
+    content: public CancellationTokenSource (TimeSpan delay);
+    parameters:
+    - id: delay
+      type: System.TimeSpan
+      description: The time interval to wait before canceling this <xref href="System.Threading.CancellationTokenSource"></xref>.
+  overload: System.Threading.CancellationTokenSource.#ctor*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: >-
+      <code>delay</code>
+          `.`
+          <xref href="System.TimeSpan.TotalMilliseconds"></xref> is less than -1 or greater than <xref href="System.Int32.MaxValue"></xref>.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.CancellationTokenSource.Cancel
+  commentId: M:System.Threading.CancellationTokenSource.Cancel
+  id: Cancel
+  parent: System.Threading.CancellationTokenSource
+  langs:
+  - csharp
+  name: Cancel()
+  nameWithType: CancellationTokenSource.Cancel()
+  fullName: CancellationTokenSource.Cancel()
+  type: Method
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Communicates a request for cancellation.
+  remarks: "The associated <xref:System.Threading.CancellationToken> will be notified of the cancellation and will transition to a state where <xref:System.Threading.CancellationToken.IsCancellationRequested%2A> returns true.  \n  \n Any callbacks or cancelable operations registered with the <xref:System.Threading.CancellationToken> will be executed.  \n  \n Cancelable operations and callbacks registered with the token should not throw exceptions.  \n  \n However, this overload of Cancel will aggregate any exceptions thrown into an <xref:System.AggregateException>, such that one callback throwing an exception will not prevent other registered callbacks from being executed.  \n  \n The <xref:System.Threading.ExecutionContext> that was captured when each callback was registered will be reestablished when the callback is invoked."
+  example:
+  - "The following example uses a random number generator to emulate a data collection application that reads 10 integral values from eleven different instruments. A value of zero indicates that the measurement has failed for one instrument, in which case the operation should be cancelled and no overall mean should be computed.  \n  \n To handle the possible cancellation of the operation, the example instantiates a <xref:System.Threading.CancellationTokenSource> object that generates a cancellation token which is passed to a <xref:System.Threading.Tasks.TaskFactory> object. The <xref:System.Threading.Tasks.TaskFactory> object in turn passes the cancellation token to each of the tasks responsible for collecting readings for a particular instrument. The <xref:System.Threading.Tasks.TaskFactory.ContinueWhenAll%60%602%28System.Threading.Tasks.Task%7B%60%600%7D%5B%5D%2CSystem.Func%7BSystem.Threading.Tasks.Task%7B%60%600%7D%5B%5D%2C%60%601%7D%2CSystem.Threading.CancellationToken%29?displayProperty=fullName> method is called to ensure that the mean is computed only after all readings have been gathered successfully. If a task has not because it has been cancelled, the call to the <xref:System.Threading.Tasks.TaskFactory.ContinueWhenAll%2A?displayProperty=fullName> method throws an exception.  \n  \n [!code-csharp[System.Threading.CancellationTokenSource.Class#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.cancellationtokensource.class/cs/cancel1.cs#1)]\n [!code-vb[System.Threading.CancellationTokenSource.Class#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.cancellationtokensource.class/vb/cancel1.vb#1)]"
+  syntax:
+    content: public void Cancel ();
+    parameters: []
+  overload: System.Threading.CancellationTokenSource.Cancel*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: This <xref href="System.Threading.CancellationTokenSource"></xref> has been disposed.
+  - type: System.AggregateException
+    commentId: T:System.AggregateException
+    description: An aggregate exception containing all the exceptions thrown by the registered callbacks on the associated <xref href="System.Threading.CancellationToken"></xref>.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.CancellationTokenSource.Cancel(System.Boolean)
+  commentId: M:System.Threading.CancellationTokenSource.Cancel(System.Boolean)
+  id: Cancel(System.Boolean)
+  parent: System.Threading.CancellationTokenSource
+  langs:
+  - csharp
+  name: Cancel(Boolean)
+  nameWithType: CancellationTokenSource.Cancel(Boolean)
+  fullName: CancellationTokenSource.Cancel(Boolean)
+  type: Method
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Communicates a request for cancellation, and specifies whether remaining callbacks and cancelable operations should be processed.
+  remarks: "The associated <xref:System.Threading.CancellationToken> will be notified of the cancellation and will transition to a state where <xref:System.Threading.CancellationToken.IsCancellationRequested%2A> returns `true`.  \n  \n Any callbacks or cancelable operations registered with the <xref:System.Threading.CancellationToken> will be executed.  \n  \n Cancelable operations and callbacks registered with the token should not throw exceptions.  \n  \n If `throwOnFirstException` is `true`, an exception will immediately propagate out of the call to <xref:System.Threading.CancellationTokenSource.Cancel%2A>, preventing the remaining callbacks and cancelable operations from being processed.  \n  \n If `throwOnFirstException` is `false`, this overload will aggregate any exceptions thrown into an <xref:System.AggregateException>, such that one callback throwing an exception will not prevent other registered callbacks from being executed.  \n  \n The <xref:System.Threading.ExecutionContext> that was captured when each callback was registered will be reestablished when the callback is invoked."
+  syntax:
+    content: public void Cancel (bool throwOnFirstException);
+    parameters:
+    - id: throwOnFirstException
+      type: System.Boolean
+      description: '`true` if exceptions should immediately propagate; otherwise, `false`.'
+  overload: System.Threading.CancellationTokenSource.Cancel*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: This <xref href="System.Threading.CancellationTokenSource"></xref> has been disposed.
+  - type: System.AggregateException
+    commentId: T:System.AggregateException
+    description: An aggregate exception containing all the exceptions thrown by the registered callbacks on the associated <xref href="System.Threading.CancellationToken"></xref>.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.CancellationTokenSource.CancelAfter(System.Int32)
+  commentId: M:System.Threading.CancellationTokenSource.CancelAfter(System.Int32)
+  id: CancelAfter(System.Int32)
+  parent: System.Threading.CancellationTokenSource
+  langs:
+  - csharp
+  name: CancelAfter(Int32)
+  nameWithType: CancellationTokenSource.CancelAfter(Int32)
+  fullName: CancellationTokenSource.CancelAfter(Int32)
+  type: Method
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Schedules a cancel operation on this <xref href="System.Threading.CancellationTokenSource"></xref> after the specified number of milliseconds.
+  remarks: "The countdown for the `millisecondsDelay` starts during this call. When the `millisecondsDelay` expires, this <xref:System.Threading.CancellationTokenSource> is canceled, if it has not been canceled already.  \n  \n Subsequent calls to CancelAfter will reset the `millisecondsDelay` for this <xref:System.Threading.CancellationTokenSource>, if it has not been canceled already."
+  syntax:
+    content: public void CancelAfter (int millisecondsDelay);
+    parameters:
+    - id: millisecondsDelay
+      type: System.Int32
+      description: The time span to wait before canceling this <xref href="System.Threading.CancellationTokenSource"></xref>.
+  overload: System.Threading.CancellationTokenSource.CancelAfter*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The exception thrown when this <xref href="System.Threading.CancellationTokenSource"></xref> has been disposed.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The exception thrown when <code>millisecondsDelay</code> is less than -1.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.CancellationTokenSource.CancelAfter(System.TimeSpan)
+  commentId: M:System.Threading.CancellationTokenSource.CancelAfter(System.TimeSpan)
+  id: CancelAfter(System.TimeSpan)
+  parent: System.Threading.CancellationTokenSource
+  langs:
+  - csharp
+  name: CancelAfter(TimeSpan)
+  nameWithType: CancellationTokenSource.CancelAfter(TimeSpan)
+  fullName: CancellationTokenSource.CancelAfter(TimeSpan)
+  type: Method
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Schedules a cancel operation on this <xref href="System.Threading.CancellationTokenSource"></xref> after the specified time span.
+  syntax:
+    content: public void CancelAfter (TimeSpan delay);
+    parameters:
+    - id: delay
+      type: System.TimeSpan
+      description: The time span to wait before canceling this <xref href="System.Threading.CancellationTokenSource"></xref>.
+  overload: System.Threading.CancellationTokenSource.CancelAfter*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The exception thrown when this <xref href="System.Threading.CancellationTokenSource"></xref> has been disposed.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The exception that is thrown when <code>delay</code> is less than -1 or greater than Int32.MaxValue.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.CancellationTokenSource.CreateLinkedTokenSource(System.Threading.CancellationToken[])
+  commentId: M:System.Threading.CancellationTokenSource.CreateLinkedTokenSource(System.Threading.CancellationToken[])
+  id: CreateLinkedTokenSource(System.Threading.CancellationToken[])
+  parent: System.Threading.CancellationTokenSource
+  langs:
+  - csharp
+  name: CreateLinkedTokenSource(CancellationToken[])
+  nameWithType: CancellationTokenSource.CreateLinkedTokenSource(CancellationToken[])
+  fullName: CancellationTokenSource.CreateLinkedTokenSource(CancellationToken[])
+  type: Method
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Creates a <xref href="System.Threading.CancellationTokenSource"></xref> that will be in the canceled state when any of the source tokens in the specified array are in the canceled state.
+  syntax:
+    content: public static System.Threading.CancellationTokenSource CreateLinkedTokenSource (System.Threading.CancellationToken[] tokens);
+    parameters:
+    - id: tokens
+      type: System.Threading.CancellationToken[]
+      description: An array that contains the cancellation token instances to observe.
+    return:
+      type: System.Threading.CancellationTokenSource
+      description: A <xref href="System.Threading.CancellationTokenSource"></xref> that is linked to the source tokens.
+  overload: System.Threading.CancellationTokenSource.CreateLinkedTokenSource*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: A <xref href="System.Threading.CancellationTokenSource"></xref> associated with one of the source tokens has been disposed.
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>tokens</code> is `null`.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>tokens</code> is empty.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.CancellationTokenSource.CreateLinkedTokenSource(System.Threading.CancellationToken,System.Threading.CancellationToken)
+  commentId: M:System.Threading.CancellationTokenSource.CreateLinkedTokenSource(System.Threading.CancellationToken,System.Threading.CancellationToken)
+  id: CreateLinkedTokenSource(System.Threading.CancellationToken,System.Threading.CancellationToken)
+  parent: System.Threading.CancellationTokenSource
+  langs:
+  - csharp
+  name: CreateLinkedTokenSource(CancellationToken, CancellationToken)
+  nameWithType: CancellationTokenSource.CreateLinkedTokenSource(CancellationToken, CancellationToken)
+  fullName: CancellationTokenSource.CreateLinkedTokenSource(CancellationToken, CancellationToken)
+  type: Method
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Creates a <xref href="System.Threading.CancellationTokenSource"></xref> that will be in the canceled state when any of the source tokens are in the canceled state.
+  syntax:
+    content: public static System.Threading.CancellationTokenSource CreateLinkedTokenSource (System.Threading.CancellationToken token1, System.Threading.CancellationToken token2);
+    parameters:
+    - id: token1
+      type: System.Threading.CancellationToken
+      description: The first cancellation token to observe.
+    - id: token2
+      type: System.Threading.CancellationToken
+      description: The second cancellation token to observe.
+    return:
+      type: System.Threading.CancellationTokenSource
+      description: A <xref href="System.Threading.CancellationTokenSource"></xref> that is linked to the source tokens.
+  overload: System.Threading.CancellationTokenSource.CreateLinkedTokenSource*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: A <xref href="System.Threading.CancellationTokenSource"></xref> associated with one of the source tokens has been disposed.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.CancellationTokenSource.Dispose
+  commentId: M:System.Threading.CancellationTokenSource.Dispose
+  id: Dispose
+  parent: System.Threading.CancellationTokenSource
+  langs:
+  - csharp
+  name: Dispose()
+  nameWithType: CancellationTokenSource.Dispose()
+  fullName: CancellationTokenSource.Dispose()
+  type: Method
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Releases all resources used by the current instance of the <xref href="System.Threading.CancellationTokenSource"></xref> class.
+  remarks: "Call `Dispose` when you are finished using the <xref:System.Threading.CancellationTokenSource>. The `Dispose` method leaves the <xref:System.Threading.CancellationTokenSource> in an unusable state. After calling `Dispose`, you must release all references to the <xref:System.Threading.CancellationTokenSource> so the garbage collector can reclaim the memory that the <xref:System.Threading.CancellationTokenSource> was occupying.  \n  \n For more information, see [Cleaning Up Unmanaged Resources](~/docs/standard/garbage-collection/unmanaged.md) and [Implementing a Dispose Method](~/docs/standard/garbage-collection/implementing-dispose.md).  \n  \n> [!NOTE]\n>  Always call `Dispose` before you release your last reference to the <xref:System.Threading.CancellationTokenSource>. Otherwise, the resources it is using will not be freed until the garbage collector calls the <xref:System.Threading.CancellationTokenSource> object's `Finalize` method."
+  syntax:
+    content: public void Dispose ();
+    parameters: []
+  overload: System.Threading.CancellationTokenSource.Dispose*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.CancellationTokenSource.Dispose(System.Boolean)
+  commentId: M:System.Threading.CancellationTokenSource.Dispose(System.Boolean)
+  id: Dispose(System.Boolean)
+  parent: System.Threading.CancellationTokenSource
+  langs:
+  - csharp
+  name: Dispose(Boolean)
+  nameWithType: CancellationTokenSource.Dispose(Boolean)
+  fullName: CancellationTokenSource.Dispose(Boolean)
+  type: Method
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Releases the unmanaged resources used by the <xref href="System.Threading.CancellationTokenSource"></xref> class and optionally releases the managed resources.
+  syntax:
+    content: protected virtual void Dispose (bool disposing);
+    parameters:
+    - id: disposing
+      type: System.Boolean
+      description: '`true` to release both managed and unmanaged resources; `false` to release only unmanaged resources.'
+  overload: System.Threading.CancellationTokenSource.Dispose*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.CancellationTokenSource.IsCancellationRequested
+  commentId: P:System.Threading.CancellationTokenSource.IsCancellationRequested
+  id: IsCancellationRequested
+  parent: System.Threading.CancellationTokenSource
+  langs:
+  - csharp
+  name: IsCancellationRequested
+  nameWithType: CancellationTokenSource.IsCancellationRequested
+  fullName: CancellationTokenSource.IsCancellationRequested
+  type: Property
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Gets whether cancellation has been requested for this <xref href="System.Threading.CancellationTokenSource"></xref>.
+  remarks: "This property indicates whether cancellation has been requested for this token source, such as due to a call to its <xref:System.Threading.CancellationTokenSource.Cancel%2A> method.  \n  \n If this property returns `true`, it only guarantees that cancellation has been requested. It does not guarantee that every handler registered with the corresponding token has finished executing, nor that cancellation requests have finished propagating to all registered handlers. Additional synchronization may be required, particularly in situations where related objects are being canceled concurrently."
+  syntax:
+    content: public bool IsCancellationRequested { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if cancellation has been requested for this <xref href="System.Threading.CancellationTokenSource"></xref>; otherwise, `false`.'
+  overload: System.Threading.CancellationTokenSource.IsCancellationRequested*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.CancellationTokenSource.Token
+  commentId: P:System.Threading.CancellationTokenSource.Token
+  id: Token
+  parent: System.Threading.CancellationTokenSource
+  langs:
+  - csharp
+  name: Token
+  nameWithType: CancellationTokenSource.Token
+  fullName: CancellationTokenSource.Token
+  type: Property
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Gets the <xref href="System.Threading.CancellationToken"></xref> associated with this <xref href="System.Threading.CancellationTokenSource"></xref>.
+  syntax:
+    content: public System.Threading.CancellationToken Token { get; }
+    return:
+      type: System.Threading.CancellationToken
+      description: The <xref href="System.Threading.CancellationToken"></xref> associated with this <xref href="System.Threading.CancellationTokenSource"></xref>.
+  overload: System.Threading.CancellationTokenSource.Token*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The token source has been disposed.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ArgumentOutOfRangeException
+  parent: System
+  isExternal: false
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: System.ObjectDisposedException
+  parent: System
+  isExternal: false
+  name: ObjectDisposedException
+  nameWithType: ObjectDisposedException
+  fullName: System.ObjectDisposedException
+- uid: System.AggregateException
+  parent: System
+  isExternal: false
+  name: AggregateException
+  nameWithType: AggregateException
+  fullName: System.AggregateException
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.Threading.CancellationTokenSource.#ctor
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: CancellationTokenSource()
+  nameWithType: CancellationTokenSource.CancellationTokenSource()
+  fullName: CancellationTokenSource.CancellationTokenSource()
+- uid: System.Threading.CancellationTokenSource.#ctor(System.Int32)
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: CancellationTokenSource(Int32)
+  nameWithType: CancellationTokenSource.CancellationTokenSource(Int32)
+  fullName: CancellationTokenSource.CancellationTokenSource(Int32)
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Threading.CancellationTokenSource.#ctor(System.TimeSpan)
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: CancellationTokenSource(TimeSpan)
+  nameWithType: CancellationTokenSource.CancellationTokenSource(TimeSpan)
+  fullName: CancellationTokenSource.CancellationTokenSource(TimeSpan)
+- uid: System.TimeSpan
+  parent: System
+  isExternal: false
+  name: TimeSpan
+  nameWithType: TimeSpan
+  fullName: System.TimeSpan
+- uid: System.Threading.CancellationTokenSource.Cancel
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: Cancel()
+  nameWithType: CancellationTokenSource.Cancel()
+  fullName: CancellationTokenSource.Cancel()
+- uid: System.Threading.CancellationTokenSource.Cancel(System.Boolean)
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: Cancel(Boolean)
+  nameWithType: CancellationTokenSource.Cancel(Boolean)
+  fullName: CancellationTokenSource.Cancel(Boolean)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Threading.CancellationTokenSource.CancelAfter(System.Int32)
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: CancelAfter(Int32)
+  nameWithType: CancellationTokenSource.CancelAfter(Int32)
+  fullName: CancellationTokenSource.CancelAfter(Int32)
+- uid: System.Threading.CancellationTokenSource.CancelAfter(System.TimeSpan)
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: CancelAfter(TimeSpan)
+  nameWithType: CancellationTokenSource.CancelAfter(TimeSpan)
+  fullName: CancellationTokenSource.CancelAfter(TimeSpan)
+- uid: System.Threading.CancellationTokenSource.CreateLinkedTokenSource(System.Threading.CancellationToken[])
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: CreateLinkedTokenSource(CancellationToken[])
+  nameWithType: CancellationTokenSource.CreateLinkedTokenSource(CancellationToken[])
+  fullName: CancellationTokenSource.CreateLinkedTokenSource(CancellationToken[])
+- uid: System.Threading.CancellationTokenSource
+  parent: System.Threading
+  isExternal: false
+  name: CancellationTokenSource
+  nameWithType: CancellationTokenSource
+  fullName: System.Threading.CancellationTokenSource
+- uid: System.Threading.CancellationToken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.CancellationToken[]
+  parent: System.Threading
+  isExternal: false
+  name: CancellationToken[]
+  nameWithType: CancellationToken[]
+  fullName: System.Threading.CancellationToken[]
+  spec.csharp:
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    nameWithType: CancellationToken
+    fullName: System.Threading.CancellationToken
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+- uid: System.Threading.CancellationTokenSource.CreateLinkedTokenSource(System.Threading.CancellationToken,System.Threading.CancellationToken)
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: CreateLinkedTokenSource(CancellationToken, CancellationToken)
+  nameWithType: CancellationTokenSource.CreateLinkedTokenSource(CancellationToken, CancellationToken)
+  fullName: CancellationTokenSource.CreateLinkedTokenSource(CancellationToken, CancellationToken)
+- uid: System.Threading.CancellationTokenSource.Dispose
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: Dispose()
+  nameWithType: CancellationTokenSource.Dispose()
+  fullName: CancellationTokenSource.Dispose()
+- uid: System.Threading.CancellationTokenSource.Dispose(System.Boolean)
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: Dispose(Boolean)
+  nameWithType: CancellationTokenSource.Dispose(Boolean)
+  fullName: CancellationTokenSource.Dispose(Boolean)
+- uid: System.Threading.CancellationTokenSource.IsCancellationRequested
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: IsCancellationRequested
+  nameWithType: CancellationTokenSource.IsCancellationRequested
+  fullName: CancellationTokenSource.IsCancellationRequested
+- uid: System.Threading.CancellationTokenSource.Token
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: Token
+  nameWithType: CancellationTokenSource.Token
+  fullName: CancellationTokenSource.Token
+- uid: System.Threading.CancellationTokenSource.#ctor*
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: CancellationTokenSource
+  nameWithType: CancellationTokenSource.CancellationTokenSource
+  fullName: CancellationTokenSource.CancellationTokenSource
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+- uid: System.Threading.CancellationTokenSource.Cancel*
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: Cancel
+  nameWithType: CancellationTokenSource.Cancel
+  fullName: CancellationTokenSource.Cancel
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+- uid: System.Threading.CancellationTokenSource.CancelAfter*
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: CancelAfter
+  nameWithType: CancellationTokenSource.CancelAfter
+  fullName: CancellationTokenSource.CancelAfter
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+- uid: System.Threading.CancellationTokenSource.CreateLinkedTokenSource*
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: CreateLinkedTokenSource
+  nameWithType: CancellationTokenSource.CreateLinkedTokenSource
+  fullName: CancellationTokenSource.CreateLinkedTokenSource
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+- uid: System.Threading.CancellationTokenSource.Dispose*
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: Dispose
+  nameWithType: CancellationTokenSource.Dispose
+  fullName: CancellationTokenSource.Dispose
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+- uid: System.Threading.CancellationTokenSource.IsCancellationRequested*
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: IsCancellationRequested
+  nameWithType: CancellationTokenSource.IsCancellationRequested
+  fullName: CancellationTokenSource.IsCancellationRequested
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+- uid: System.Threading.CancellationTokenSource.Token*
+  parent: System.Threading.CancellationTokenSource
+  isExternal: false
+  name: Token
+  nameWithType: CancellationTokenSource.Token
+  fullName: CancellationTokenSource.Token
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/CancellationTokenSource.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.IDisposable
+  parent: System
+  isExternal: false
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable

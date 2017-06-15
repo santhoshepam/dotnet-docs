@@ -1,0 +1,523 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Activities.Bookmark
+  commentId: T:System.Activities.Bookmark
+  id: Bookmark
+  children:
+  - System.Activities.Bookmark.#ctor(System.String)
+  - System.Activities.Bookmark.Equals(System.Activities.Bookmark)
+  - System.Activities.Bookmark.Equals(System.Object)
+  - System.Activities.Bookmark.GetHashCode
+  - System.Activities.Bookmark.Name
+  - System.Activities.Bookmark.ToString
+  langs:
+  - csharp
+  name: Bookmark
+  nameWithType: Bookmark
+  fullName: System.Activities.Bookmark
+  type: Class
+  assemblies:
+  - System.Activities
+  namespace: System.Activities
+  summary: Represents a point at which a workflow or activity can passively wait to be resumed.
+  remarks: "When an activity creates a <xref:System.Activities.Bookmark>, it becomes idle and waits for the <xref:System.Activities.Bookmark> to be resumed. If there are other activities in parallel with the activity that created the <xref:System.Activities.Bookmark>, they will be scheduled for execution.  \n  \n Bookmarks can be resumed by the host application using one of the <xref:System.Activities.WorkflowApplication.ResumeBookmark%2A> overloads.  \n  \n [!INCLUDE[crabout](~/includes/crabout-md.md)] bookmarks, see [Using WorkflowInvoker and WorkflowApplication](~/docs/framework/windows-workflow-foundation/using-workflowinvoker-and-workflowapplication.md), [Bookmarks](~/docs/framework/windows-workflow-foundation/bookmarks.md), and the [Bookmarks &#91; WF Samples&#93;](~/docs/framework/windows-workflow-foundation/samples/bookmarks.md) and [Wait For Input Activity &#91;WF Samples&#93;](~/docs/framework/windows-workflow-foundation/samples/wait-for-input-activity.md) samples."
+  example:
+  - "In the following example, a `ReadLine` activity is created. When executed, the `ReadLine` activity creates a <xref:System.Activities.Bookmark>, registers a callback, and then waits for the <xref:System.Activities.Bookmark> to be resumed. When it is resumed, the `ReadLine` activity assigns the data that was passed with the <xref:System.Activities.Bookmark> to its <xref:System.Activities.Activity%601.Result%2A> argument.  \n  \n```csharp  \npublic sealed class ReadLine : NativeActivity<string>  \n{  \n    [RequiredArgument]  \n    public  InArgument<string> BookmarkName { get; set; }  \n  \n    protected override void Execute(NativeActivityContext context)  \n    {  \n        // Create a Bookmark and wait for it to be resumed.  \n        context.CreateBookmark(BookmarkName.Get(context),   \n            new BookmarkCallback(OnResumeBookmark));  \n    }  \n  \n    // NativeActivity derived activities that do asynchronous operations by calling   \n    // one of the CreateBookmark overloads defined on System.Activities.NativeActivityContext   \n    // must override the CanInduceIdle property and return true.  \n    protected override bool CanInduceIdle  \n    {  \n        get { return true; }  \n    }  \n  \n    public void OnResumeBookmark(NativeActivityContext context, Bookmark bookmark, object obj)  \n    {  \n        // When the Bookmark is resumed, assign its value to  \n        // the Result argument.  \n        Result.Set(context, (string)obj);  \n    }  \n}  \n```  \n  \n In the following example, a workflow is created that uses the `ReadLine` activity to gather the user’s name and display it to the console window. The host application performs the actual work of gathering the input and passes it to the workflow by resuming the <xref:System.Activities.Bookmark>.  \n  \n```csharp  \nVariable<string> name = new Variable<string>  \n{  \n    Name = \"name\"  \n};  \n  \nActivity wf = new Sequence  \n{  \n    Variables =  \n    {  \n        name  \n    },  \n    Activities =  \n    {  \n        new WriteLine()  \n        {  \n            Text = \"What is your name?\"  \n        },  \n        new ReadLine()  \n        {  \n            BookmarkName = \"UserName\",  \n            Result = name  \n        },  \n        new WriteLine()  \n        {  \n            Text = new InArgument<string>((env) => \"Hello, \" + name.Get(env))  \n        }  \n    }  \n};  \n  \nAutoResetEvent syncEvent = new AutoResetEvent(false);  \n  \n// Create the WorkflowApplication using the desired  \n// workflow definition.  \nWorkflowApplication wfApp = new WorkflowApplication(wf);  \n  \n// Handle the desired lifecycle events.  \nwfApp.Completed = delegate(WorkflowApplicationCompletedEventArgs e)  \n{  \n    // Signal the host that the workflow is complete.  \n    syncEvent.Set();  \n};  \n  \n// Start the workflow.  \nwfApp.Run();  \n  \n// Collect the user's name and resume the bookmark.  \n// Bookmark resumption only occurs when the workflow  \n// is idle. If a call to ResumeBookmark is made and the workflow  \n// is not idle, ResumeBookmark blocks until the workflow becomes  \n// idle before resuming the bookmark.  \nwfApp.ResumeBookmark(\"UserName\", Console.ReadLine());  \n  \n// Wait for Completed to arrive and signal that  \n// the workflow is complete.  \nsyncEvent.WaitOne();  \n```  \n  \n When the `ReadLine` activity is executed, it creates a <xref:System.Activities.Bookmark> named `UserName` and then waits for the bookmark to be resumed. The host collects the desired data and then resumes the <xref:System.Activities.Bookmark>. The workflow resumes, displays the name, and then completes. Note that no synchronization code is required with regard to resuming the bookmark. A <xref:System.Activities.Bookmark> can only be resumed when the workflow is idle, and if the workflow is not idle, the call to <xref:System.Activities.WorkflowApplication.ResumeBookmark%2A> blocks until the workflow becomes idle."
+  syntax:
+    content: >-
+      [System.Runtime.Serialization.DataContract]
+
+      public class Bookmark : IEquatable<System.Activities.Bookmark>
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{System.Activities.Bookmark}
+  inheritedMembers:
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  attributes:
+  - type: System.Runtime.Serialization.DataContractAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities/Bookmark.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Activities.Bookmark.#ctor(System.String)
+  commentId: M:System.Activities.Bookmark.#ctor(System.String)
+  id: '#ctor(System.String)'
+  parent: System.Activities.Bookmark
+  langs:
+  - csharp
+  name: Bookmark(String)
+  nameWithType: Bookmark.Bookmark(String)
+  fullName: Bookmark.Bookmark(String)
+  type: Constructor
+  assemblies:
+  - System.Activities
+  namespace: System.Activities
+  summary: Initializes a new instance of the <xref href="System.Activities.Bookmark"></xref> class using the specified name.
+  syntax:
+    content: public Bookmark (string name);
+    parameters:
+    - id: name
+      type: System.String
+      description: A name that identifies the bookmark.
+  overload: System.Activities.Bookmark.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities/Bookmark.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Activities.Bookmark.Equals(System.Activities.Bookmark)
+  commentId: M:System.Activities.Bookmark.Equals(System.Activities.Bookmark)
+  id: Equals(System.Activities.Bookmark)
+  parent: System.Activities.Bookmark
+  langs:
+  - csharp
+  name: Equals(Bookmark)
+  nameWithType: Bookmark.Equals(Bookmark)
+  fullName: Bookmark.Equals(Bookmark)
+  type: Method
+  assemblies:
+  - System.Activities
+  namespace: System.Activities
+  summary: Determines whether the current <xref href="System.Activities.Bookmark"></xref> and the specified <xref href="System.Activities.Bookmark"></xref> refer to the same continuation point in a workflow.
+  syntax:
+    content: public bool Equals (System.Activities.Bookmark other);
+    parameters:
+    - id: other
+      type: System.Activities.Bookmark
+      description: The bookmark to compare.
+    return:
+      type: System.Boolean
+      description: '`true` if the <xref href="System.Activities.Bookmark"></xref> objects are equal; otherwise, `false`.'
+  overload: System.Activities.Bookmark.Equals*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities/Bookmark.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Activities.Bookmark.Equals(System.Object)
+  commentId: M:System.Activities.Bookmark.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: System.Activities.Bookmark
+  langs:
+  - csharp
+  name: Equals(Object)
+  nameWithType: Bookmark.Equals(Object)
+  fullName: Bookmark.Equals(Object)
+  type: Method
+  assemblies:
+  - System.Activities
+  namespace: System.Activities
+  summary: Determines whether the current <xref href="System.Activities.Bookmark"></xref> and the specified object refer to the same continuation point in a workflow.
+  syntax:
+    content: public override bool Equals (object obj);
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object to compare.
+    return:
+      type: System.Boolean
+      description: '`true` if the <xref href="System.Activities.Bookmark"></xref> objects are equal; otherwise, `false`.'
+  overload: System.Activities.Bookmark.Equals*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities/Bookmark.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Activities.Bookmark.GetHashCode
+  commentId: M:System.Activities.Bookmark.GetHashCode
+  id: GetHashCode
+  parent: System.Activities.Bookmark
+  langs:
+  - csharp
+  name: GetHashCode()
+  nameWithType: Bookmark.GetHashCode()
+  fullName: Bookmark.GetHashCode()
+  type: Method
+  assemblies:
+  - System.Activities
+  namespace: System.Activities
+  summary: Returns a unique identifier for this <xref href="System.Activities.Bookmark"></xref> instance.
+  syntax:
+    content: public override int GetHashCode ();
+    parameters: []
+    return:
+      type: System.Int32
+      description: The unique identifier of this <xref href="System.Activities.Bookmark"></xref> instance.
+  overload: System.Activities.Bookmark.GetHashCode*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities/Bookmark.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Activities.Bookmark.Name
+  commentId: P:System.Activities.Bookmark.Name
+  id: Name
+  parent: System.Activities.Bookmark
+  langs:
+  - csharp
+  name: Name
+  nameWithType: Bookmark.Name
+  fullName: Bookmark.Name
+  type: Property
+  assemblies:
+  - System.Activities
+  namespace: System.Activities
+  summary: Gets the bookmark name.
+  syntax:
+    content: public string Name { get; }
+    return:
+      type: System.String
+      description: The bookmark name.
+  overload: System.Activities.Bookmark.Name*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities/Bookmark.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Activities.Bookmark.ToString
+  commentId: M:System.Activities.Bookmark.ToString
+  id: ToString
+  parent: System.Activities.Bookmark
+  langs:
+  - csharp
+  name: ToString()
+  nameWithType: Bookmark.ToString()
+  fullName: Bookmark.ToString()
+  type: Method
+  assemblies:
+  - System.Activities
+  namespace: System.Activities
+  summary: Returns the bookmark name for a named bookmark or the bookmark ID for an unnamed bookmark.
+  syntax:
+    content: public override string ToString ();
+    parameters: []
+    return:
+      type: System.String
+      description: The bookmark name or ID.
+  overload: System.Activities.Bookmark.ToString*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities/Bookmark.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Activities.Bookmark.#ctor(System.String)
+  parent: System.Activities.Bookmark
+  isExternal: false
+  name: Bookmark(String)
+  nameWithType: Bookmark.Bookmark(String)
+  fullName: Bookmark.Bookmark(String)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Activities.Bookmark.Equals(System.Activities.Bookmark)
+  parent: System.Activities.Bookmark
+  isExternal: false
+  name: Equals(Bookmark)
+  nameWithType: Bookmark.Equals(Bookmark)
+  fullName: Bookmark.Equals(Bookmark)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Activities.Bookmark
+  parent: System.Activities
+  isExternal: false
+  name: Bookmark
+  nameWithType: Bookmark
+  fullName: System.Activities.Bookmark
+- uid: System.Activities.Bookmark.Equals(System.Object)
+  parent: System.Activities.Bookmark
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Bookmark.Equals(Object)
+  fullName: Bookmark.Equals(Object)
+- uid: System.Activities.Bookmark.GetHashCode
+  parent: System.Activities.Bookmark
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Bookmark.GetHashCode()
+  fullName: Bookmark.GetHashCode()
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Activities.Bookmark.Name
+  parent: System.Activities.Bookmark
+  isExternal: false
+  name: Name
+  nameWithType: Bookmark.Name
+  fullName: Bookmark.Name
+- uid: System.Activities.Bookmark.ToString
+  parent: System.Activities.Bookmark
+  isExternal: false
+  name: ToString()
+  nameWithType: Bookmark.ToString()
+  fullName: Bookmark.ToString()
+- uid: System.Activities.Bookmark.#ctor*
+  parent: System.Activities.Bookmark
+  isExternal: false
+  name: Bookmark
+  nameWithType: Bookmark.Bookmark
+  fullName: Bookmark.Bookmark
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities/Bookmark.xml
+- uid: System.Activities.Bookmark.Equals*
+  parent: System.Activities.Bookmark
+  isExternal: false
+  name: Equals
+  nameWithType: Bookmark.Equals
+  fullName: Bookmark.Equals
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities/Bookmark.xml
+- uid: System.Activities.Bookmark.GetHashCode*
+  parent: System.Activities.Bookmark
+  isExternal: false
+  name: GetHashCode
+  nameWithType: Bookmark.GetHashCode
+  fullName: Bookmark.GetHashCode
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities/Bookmark.xml
+- uid: System.Activities.Bookmark.Name*
+  parent: System.Activities.Bookmark
+  isExternal: false
+  name: Name
+  nameWithType: Bookmark.Name
+  fullName: Bookmark.Name
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities/Bookmark.xml
+- uid: System.Activities.Bookmark.ToString*
+  parent: System.Activities.Bookmark
+  isExternal: false
+  name: ToString
+  nameWithType: Bookmark.ToString
+  fullName: Bookmark.ToString
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities/Bookmark.xml
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.IEquatable`1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+- uid: System.IEquatable{System.Activities.Bookmark}
+  parent: System
+  isExternal: false
+  name: IEquatable<Bookmark>
+  nameWithType: IEquatable<Bookmark>
+  fullName: System.IEquatable<System.Activities.Bookmark>
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    nameWithType: IEquatable
+    fullName: System.IEquatable
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Activities.Bookmark
+    name: Bookmark
+    nameWithType: Bookmark
+    fullName: System.Activities.Bookmark
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'

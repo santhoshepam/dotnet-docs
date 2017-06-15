@@ -1,0 +1,1427 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Web.UI.WebControls.QueryExtender
+  commentId: T:System.Web.UI.WebControls.QueryExtender
+  id: QueryExtender
+  children:
+  - System.Web.UI.WebControls.QueryExtender.#ctor
+  - System.Web.UI.WebControls.QueryExtender.DataSource
+  - System.Web.UI.WebControls.QueryExtender.Expressions
+  - System.Web.UI.WebControls.QueryExtender.LoadViewState(System.Object)
+  - System.Web.UI.WebControls.QueryExtender.OnInit(System.EventArgs)
+  - System.Web.UI.WebControls.QueryExtender.SaveViewState
+  - System.Web.UI.WebControls.QueryExtender.TargetControlID
+  - System.Web.UI.WebControls.QueryExtender.TrackViewState
+  langs:
+  - csharp
+  name: QueryExtender
+  nameWithType: QueryExtender
+  fullName: System.Web.UI.WebControls.QueryExtender
+  type: Class
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI.WebControls
+  summary: Enables data from a data source to be filtered without an explicit `Where` clause in the data source.
+  remarks: "In this topic:  \n  \n-   [Introduction](#Introduction)  \n  \n-   [Background](#background)  \n  \n-   [Filter Options](#filter_options)  \n  \n-   [Tasks](#Tasks)  \n  \n-   [Declarative Syntax](#declarative_syntax)  \n  \n<a name=\"Introduction\"></a>   \n## Introduction  \n The <xref:System.Web.UI.WebControls.QueryExtender> control is used to create filters for data that is retrieved from a data source, without using an explicit `Where` clause in the data source. The <xref:System.Web.UI.WebControls.QueryExtender> control can be used to specify filtering by using declarative syntax.  \n  \n<a name=\"background\"></a>   \n## Background  \n Filtering excludes data from a data source by displaying only the records that meet specified criteria. Filtering enables you to present different views of the data that is in a data set without affecting the data in the data set.  \n  \n Filtering typically requires that you create a `Where` clause to apply to the command that queries the data source. However, the `Where` property of the data source control might not expose the full functionality that is available. For example, the QueryExtender control enables you to query a table by searching for strings at the beginning, end or anywhere in .data field.  \n  \n To expose the full functionality that is available in LINQ and to make filtering data easier, [!INCLUDE[vstecasp](~/includes/vstecasp-md.md)] provides the <xref:System.Web.UI.WebControls.QueryExtender> control. The <xref:System.Web.UI.WebControls.QueryExtender> control has the following benefits:  \n  \n-   It provides a richer filtering experience than writing a `Where` clause. For example, you can search a Products table for Boolean values by using the <xref:System.Web.UI.WebControls.Expressions.PropertyExpression> filter without writing a query.  \n  \n-   It lets you specify filters by using the same syntax for the <xref:System.Web.UI.WebControls.LinqDataSource> and <xref:System.Web.UI.WebControls.EntityDataSource> controls and for any other data source controls that you might use.  \n  \n-   It can be used with <xref:System.Web.UI.WebControls.LinqDataSource> control, with a <xref:System.Web.UI.WebControls.EntityDataSource> control, or with third-party data sources.  \n  \n<a name=\"filter_options\"></a>   \n## Filter Options  \n The <xref:System.Web.UI.WebControls.QueryExtender> control supports a variety of options that you can use to filter data. The control lets you search strings, search numeric values in a specified range, and compare a property value in a table to a specified value. The control also lets you sort the data and provide custom queries.  \n  \n These options are provided as LINQ expressions in the <xref:System.Web.UI.WebControls.QueryExtender> control. The <xref:System.Web.UI.WebControls.QueryExtender> control also supports expressions that are specific to [!INCLUDE[vstecasp](~/includes/vstecasp-md.md)] Dynamic Data applications.  \n  \n The following table lists the options that you can use to filter data in the <xref:System.Web.UI.WebControls.QueryExtender> control.  \n  \n|Expression|Description|  \n|----------------|-----------------|  \n|<xref:System.Web.DynamicData.ControlFilterExpression>|(Dynamic Data only) Builds a database query by using the data key that is selected in a source data-bound control.<br /><br /> For information about how to use this filter option, see [How to: Filter Table Rows Using Values from a Parent Table in Dynamic Data](http://msdn.microsoft.com/en-us/a5566986-7c30-4e71-b4a4-81cd16095749).|  \n|<xref:System.Web.UI.WebControls.Expressions.CustomExpression>|Specifies a user-defined expression for a data source. The custom LINQ expression can be invoked in an event handler.|  \n|<xref:System.Web.DynamicData.DynamicFilterExpression>|(Dynamic Data only) Builds a database query by using the specified <xref:System.Web.DynamicData.DynamicFilter> control.<br /><br /> For information about how to use this filter option, see [How to: Filter Table Rows Using Foreign Key in Dynamic Data](http://msdn.microsoft.com/en-us/b774e56a-a5b9-41b7-b114-699313ef2056).|  \n|<xref:System.Web.UI.WebControls.Expressions.MethodExpression>|Specifies a user-defined LINQ expression for a data source. The expression is invoked in a method.|  \n|<xref:System.Web.UI.WebControls.Expressions.OrderByExpression>|Applies a sort expression to an <xref:System.Linq.IQueryable> data source object. After you apply the <xref:System.Web.UI.WebControls.Expressions.OrderByExpression> value, you can apply additional sort operations by specifying a <xref:System.Web.UI.WebControls.Expressions.OrderByExpression.ThenByExpressions%2A> value.|  \n|<xref:System.Web.UI.WebControls.Expressions.PropertyExpression>|Compares the properties the data field and property values that are specified in the <xref:System.Web.UI.WebControls.LinqDataSource.WhereParameters%2A> collection.|  \n|<xref:System.Web.UI.WebControls.Expressions.RangeExpression>|Determines whether a value is greater than or less than a specified value, or whether a value is between two values.|  \n|<xref:System.Web.UI.WebControls.Expressions.SearchExpression>|Compares values in a field or fields to a specified string value.|  \n  \n You can use these <xref:System.Web.UI.WebControls.QueryExtender> options individually or you can combine them to provide complex filtering in a Web page. For more information, see [QueryExtender Web Server Control Overview](http://msdn.microsoft.com/library/b93e32b9-af41-4539-a009-6cbbe809c702). [Walkthrough: Filtering Data in a Web Page Using Declarative Syntax](http://msdn.microsoft.com/en-us/b305ae31-1a1b-4d07-a678-51457c17614f)  \n  \n<a name=\"Tasks\"></a>   \n## Tasks  \n The following table lists tasks that show how to use the <xref:System.Web.UI.WebControls.QueryExtender> control to filter data.  \n  \n|Document|Task|  \n|--------------|----------|  \n|[Walkthrough: Filtering Data in a Web Page Using Declarative Syntax](http://msdn.microsoft.com/en-us/b305ae31-1a1b-4d07-a678-51457c17614f)|Shows how to use the filter options that the <xref:System.Web.UI.WebControls.QueryExtender> control provides.|  \n  \n<a name=\"declarative_syntax\"></a>   \n## Declarative Syntax  \n  \n```  \n<asp:QueryExtender   \n    EnableViewState=\"True|False\"  \n    ID=\"string\"  \n    OnDataBinding=\"DataBiding event handler\"  \n    OnDisposed=\"Disposed event handler\"  \n    OnInit=\"Init event handler  \n    OnLoad=\"Load event handler\"  \n    OnPreRender=\"PreRender event handler\"  \n    OnUnload=\"UnLoad event hadler\"  \n    Runat=\"server\"  \n    TargetControlID=\"string\"  \n    Visible=\"True|False\"  \n>  \n        <asp:ControlFilterExpression   \n            ControlD=\"string\"  \n            Column=\"string\">   \n        </asp:ControlFilterExpression>  \n        <asp:DynamicFilterExpression  \n            ControlD=\"string\"  \n        </asp:DynamicFilterExpression>  \n        <asp:CustomExpression=\"string\"  \n            OnQuerying=\"OnQerying event handler\">  \n        </asp:CustomExpression>  \n        <asp:OrderByExpression=\"string\"  \n            DataField=\"string\"  \n            Direction=\"string\">  \n            <asp:ThenByExpression  \n                 DataField=\"string\"  \n                 Direction=\"string\"  \n            </asp:ThenBy>  \n        </asp:OrderByExpression>  \n        <asp:PropertyExpression=\"string\">  \n                <!-- child controls -->  \n        </asp:PropertyExpression  \n        >  \n        <asp:RangeExpression=\"integer\"  \n            Datafield=\"string\"  \n            MaxType=\"Exclusive|Inclusive|None\"  \n            MinType=\"Exclusive|Inclusive|None\">  \n                <!--child controls-->  \n        </asp:RangeExpression>  \n        <asp:SearchExpression=\"string\"  \n            ComparisonType=\"CurrentCulture|CurrentCultureIgnoreCase|  \n                InavariantCulture|InvariantCultureIgnoreCase|  \n                Ordinal|OrdinalIgnoreCase\"  \n            DataField=\"string\"  \n            SearchType=\"Contains|EndsWith|StartsWith\">  \n                <!--child controls-->  \n        </asp:SearchExpression>  \n</asp:QueryExtender>  \n```"
+  example:
+  - "The following example shows how to use the <xref:System.Web.UI.WebControls.QueryExtender> control to provide a search function in a Web page. The <xref:System.Web.UI.WebControls.QueryExtender> control uses the text that is entered in the `TextBoxSearch` control to search for contents in the ProductName and Supplier.CompanyName columns of a Products table in the data that is returned from the <xref:System.Web.UI.WebControls.LinqDataSource> control. The <xref:System.Web.UI.WebControls.Expressions.SearchExpression> object is used to perform the search. The <xref:System.Web.UI.WebControls.Expressions.SearchExpression.DataFields%2A> property specifies the data fields to search. The <xref:System.Web.UI.WebControls.Expressions.SearchExpression.SearchType%2A> property specifies the type of search to perform. The <xref:System.Web.UI.WebControls.ControlParameter> element specifies the control that contains the text to use for the search. This code example is part of a larger example that is provided in [Walkthrough: Filtering Data in a Web Page Using Declarative Syntax](http://msdn.microsoft.com/en-us/b305ae31-1a1b-4d07-a678-51457c17614f).  \n  \n```  \n<asp:LinqDataSource ID=\"dataSource\" runat=\"server\"   \n    TableName=\"Products\">  \n</asp:LinqDataSource>  \n<asp:QueryExtender TargetControlID=\"dataSource\" runat=\"server\">  \n  <asp:SearchExpression DataFields=\"ProductName, Supplier.CompanyName\"   \n        SearchType=\"StartsWith\">  \n    <asp:ControlParameter ControlID=\"TextBoxSearch\" />  \n  </asp:SearchExpression>  \n</asp:QueryExtender>  \n```  \n  \n The following example shows how to use the <xref:System.Web.UI.WebControls.QueryExtender> control to search a Web page for values in a specified range. The <xref:System.Web.UI.WebControls.QueryExtender> control uses the values that are entered in the `TextBoxFrom` and `TextBoxTo` controls to search for values in the ProductName and Supplier.CompanyName columns of a Products table in the data that is returned from the <xref:System.Web.UI.WebControls.LinqDataSource> control. The <xref:System.Web.UI.WebControls.ControlParameter> element specifies the text box controls that contain the minimum and maximum values to use for searching the range. The <xref:System.Web.UI.WebControls.Expressions.RangeExpression.MinType%2A> and <xref:System.Web.UI.WebControls.Expressions.RangeExpression.MaxType%2A> properties specify that the minimum and maximum values must be included in the data that is returned. This code example is part of a larger example provided in [Walkthrough: Filtering Data in a Web Page Using Declarative Syntax](http://msdn.microsoft.com/en-us/b305ae31-1a1b-4d07-a678-51457c17614f).  \n  \n```  \n<asp:LinqDataSource ID=\"dataSource\" runat=\"server\"   \n    TableName=\"Products\">  \n</asp:LinqDataSource>  \n<asp:QueryExtender TargetControlID=\"dataSource\" runat=\"server\">  \n  <asp:RangeExpression DataField=\"UnitPrice\" MinType=\"Inclusive\"   \n        MaxType=\"Inclusive\">  \n    <asp:ControlParameter ControlID=\"TextBoxFrom\" />  \n    <asp:ControlParameter ControlID=\"TexBoxTo\" />  \n  </asp:RangeExpression>  \n</asp:QueryExtender>  \n```"
+  syntax:
+    content: >-
+      [System.Drawing.ToolboxBitmap(typeof(System.Web.UI.WebControls.QueryExtender), "QueryExtender.bmp")]
+
+      public class QueryExtender : System.Web.UI.Control
+  inheritance:
+  - System.Object
+  - System.Web.UI.Control
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  - System.Web.UI.Control.Adapter
+  - System.Web.UI.Control.AddedControl(System.Web.UI.Control,System.Int32)
+  - System.Web.UI.Control.AddParsedSubObject(System.Object)
+  - System.Web.UI.Control.ApplyStyleSheetSkin(System.Web.UI.Page)
+  - System.Web.UI.Control.AppRelativeTemplateSourceDirectory
+  - System.Web.UI.Control.BeginRenderTracing(System.IO.TextWriter,System.Object)
+  - System.Web.UI.Control.BindingContainer
+  - System.Web.UI.Control.BuildProfileTree(System.String,System.Boolean)
+  - System.Web.UI.Control.ChildControlsCreated
+  - System.Web.UI.Control.ClearCachedClientID
+  - System.Web.UI.Control.ClearChildControlState
+  - System.Web.UI.Control.ClearChildState
+  - System.Web.UI.Control.ClearChildViewState
+  - System.Web.UI.Control.ClearEffectiveClientIDMode
+  - System.Web.UI.Control.ClientID
+  - System.Web.UI.Control.ClientIDMode
+  - System.Web.UI.Control.ClientIDSeparator
+  - System.Web.UI.Control.Context
+  - System.Web.UI.Control.Controls
+  - System.Web.UI.Control.CreateChildControls
+  - System.Web.UI.Control.CreateControlCollection
+  - System.Web.UI.Control.DataBind
+  - System.Web.UI.Control.DataBind(System.Boolean)
+  - System.Web.UI.Control.DataBindChildren
+  - System.Web.UI.Control.DataBinding
+  - System.Web.UI.Control.DataItemContainer
+  - System.Web.UI.Control.DataKeysContainer
+  - System.Web.UI.Control.DesignMode
+  - System.Web.UI.Control.Dispose
+  - System.Web.UI.Control.Disposed
+  - System.Web.UI.Control.EnableTheming
+  - System.Web.UI.Control.EnableViewState
+  - System.Web.UI.Control.EndRenderTracing(System.IO.TextWriter,System.Object)
+  - System.Web.UI.Control.EnsureChildControls
+  - System.Web.UI.Control.EnsureID
+  - System.Web.UI.Control.Events
+  - System.Web.UI.Control.FindControl(System.String)
+  - System.Web.UI.Control.FindControl(System.String,System.Int32)
+  - System.Web.UI.Control.Focus
+  - System.Web.UI.Control.GetDesignModeState
+  - System.Web.UI.Control.GetRouteUrl(System.Object)
+  - System.Web.UI.Control.GetRouteUrl(System.String,System.Object)
+  - System.Web.UI.Control.GetRouteUrl(System.String,System.Web.Routing.RouteValueDictionary)
+  - System.Web.UI.Control.GetRouteUrl(System.Web.Routing.RouteValueDictionary)
+  - System.Web.UI.Control.GetUniqueIDRelativeTo(System.Web.UI.Control)
+  - System.Web.UI.Control.HasChildViewState
+  - System.Web.UI.Control.HasControls
+  - System.Web.UI.Control.HasEvents
+  - System.Web.UI.Control.ID
+  - System.Web.UI.Control.IdSeparator
+  - System.Web.UI.Control.Init
+  - System.Web.UI.Control.IsChildControlStateCleared
+  - System.Web.UI.Control.IsLiteralContent
+  - System.Web.UI.Control.IsTrackingViewState
+  - System.Web.UI.Control.IsViewStateEnabled
+  - System.Web.UI.Control.Load
+  - System.Web.UI.Control.LoadControlState(System.Object)
+  - System.Web.UI.Control.LoadViewStateByID
+  - System.Web.UI.Control.MapPathSecure(System.String)
+  - System.Web.UI.Control.NamingContainer
+  - System.Web.UI.Control.OnBubbleEvent(System.Object,System.EventArgs)
+  - System.Web.UI.Control.OnDataBinding(System.EventArgs)
+  - System.Web.UI.Control.OnLoad(System.EventArgs)
+  - System.Web.UI.Control.OnPreRender(System.EventArgs)
+  - System.Web.UI.Control.OnUnload(System.EventArgs)
+  - System.Web.UI.Control.OpenFile(System.String)
+  - System.Web.UI.Control.Page
+  - System.Web.UI.Control.Parent
+  - System.Web.UI.Control.PreRender
+  - System.Web.UI.Control.RaiseBubbleEvent(System.Object,System.EventArgs)
+  - System.Web.UI.Control.RemovedControl(System.Web.UI.Control)
+  - System.Web.UI.Control.Render(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.Control.RenderChildren(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter,System.Web.UI.Adapters.ControlAdapter)
+  - System.Web.UI.Control.RenderingCompatibility
+  - System.Web.UI.Control.ResolveAdapter
+  - System.Web.UI.Control.ResolveClientUrl(System.String)
+  - System.Web.UI.Control.ResolveUrl(System.String)
+  - System.Web.UI.Control.SaveControlState
+  - System.Web.UI.Control.SetDesignModeState(System.Collections.IDictionary)
+  - System.Web.UI.Control.SetRenderMethodDelegate(System.Web.UI.RenderMethod)
+  - System.Web.UI.Control.SetTraceData(System.Object,System.Object)
+  - System.Web.UI.Control.SetTraceData(System.Object,System.Object,System.Object)
+  - System.Web.UI.Control.Site
+  - System.Web.UI.Control.SkinID
+  - System.Web.UI.Control.System#Web#UI#IControlBuilderAccessor#ControlBuilder
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#GetDesignModeState
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetDesignModeState(System.Collections.IDictionary)
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetOwnerControl(System.Web.UI.Control)
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#UserData
+  - System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#DataBindings
+  - System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#HasDataBindings
+  - System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#Expressions
+  - System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#HasExpressions
+  - System.Web.UI.Control.System#Web#UI#IParserAccessor#AddParsedSubObject(System.Object)
+  - System.Web.UI.Control.TemplateControl
+  - System.Web.UI.Control.TemplateSourceDirectory
+  - System.Web.UI.Control.UniqueID
+  - System.Web.UI.Control.Unload
+  - System.Web.UI.Control.ValidateRequestMode
+  - System.Web.UI.Control.ViewState
+  - System.Web.UI.Control.ViewStateIgnoresCase
+  - System.Web.UI.Control.ViewStateMode
+  - System.Web.UI.Control.Visible
+  extensionMethods:
+  - System.Web.DynamicData.DynamicDataExtensions.FindDataSourceControl(System.Web.UI.Control)
+  - System.Web.DynamicData.DynamicDataExtensions.FindFieldTemplate(System.Web.UI.Control,System.String)
+  - System.Web.DynamicData.DynamicDataExtensions.FindMetaTable(System.Web.UI.Control)
+  attributes:
+  - type: System.Drawing.ToolboxBitmapAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/QueryExtender.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.WebControls.QueryExtender.#ctor
+  commentId: M:System.Web.UI.WebControls.QueryExtender.#ctor
+  id: '#ctor'
+  parent: System.Web.UI.WebControls.QueryExtender
+  langs:
+  - csharp
+  name: QueryExtender()
+  nameWithType: QueryExtender.QueryExtender()
+  fullName: QueryExtender.QueryExtender()
+  type: Constructor
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI.WebControls
+  summary: Initializes a new instance of the <xref href="System.Web.UI.WebControls.QueryExtender"></xref> Class.
+  syntax:
+    content: public QueryExtender ();
+    parameters: []
+  overload: System.Web.UI.WebControls.QueryExtender.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/QueryExtender.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.WebControls.QueryExtender.DataSource
+  commentId: P:System.Web.UI.WebControls.QueryExtender.DataSource
+  id: DataSource
+  parent: System.Web.UI.WebControls.QueryExtender
+  langs:
+  - csharp
+  name: DataSource
+  nameWithType: QueryExtender.DataSource
+  fullName: QueryExtender.DataSource
+  type: Property
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI.WebControls
+  summary: Gets the data source control (<xref href="System.Web.UI.IDataSource"></xref> object) to use for the query.
+  remarks: The <xref:System.Web.UI.WebControls.QueryExtender> control supports the <xref:System.Web.UI.WebControls.LinqDataSource> and <xref:System.Web.UI.WebControls.EntityDataSource> controls.
+  syntax:
+    content: >-
+      [System.ComponentModel.Browsable(false)]
+
+      public virtual System.Web.UI.WebControls.IQueryableDataSource DataSource { get; }
+    return:
+      type: System.Web.UI.WebControls.IQueryableDataSource
+      description: The data source control to use for the query.
+  overload: System.Web.UI.WebControls.QueryExtender.DataSource*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The <xref href="System.Web.UI.WebControls.QueryExtender.DataSource"></xref> property is `null`.
+  attributes:
+  - type: System.ComponentModel.BrowsableAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/QueryExtender.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.WebControls.QueryExtender.Expressions
+  commentId: P:System.Web.UI.WebControls.QueryExtender.Expressions
+  id: Expressions
+  parent: System.Web.UI.WebControls.QueryExtender
+  langs:
+  - csharp
+  name: Expressions
+  nameWithType: QueryExtender.Expressions
+  fullName: QueryExtender.Expressions
+  type: Property
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI.WebControls
+  summary: Gets the collection of expressions that are applied to the <xref href="System.Web.UI.IDataSource"></xref> control.
+  syntax:
+    content: >-
+      [System.Web.UI.PersistenceMode(System.Web.UI.PersistenceMode.InnerDefaultProperty)]
+
+      public System.Web.UI.WebControls.Expressions.DataSourceExpressionCollection Expressions { get; }
+    return:
+      type: System.Web.UI.WebControls.Expressions.DataSourceExpressionCollection
+      description: The collection of expressions that are applied to the data source control.
+  overload: System.Web.UI.WebControls.QueryExtender.Expressions*
+  exceptions: []
+  attributes:
+  - type: System.Web.UI.PersistenceModeAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/QueryExtender.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.WebControls.QueryExtender.LoadViewState(System.Object)
+  commentId: M:System.Web.UI.WebControls.QueryExtender.LoadViewState(System.Object)
+  id: LoadViewState(System.Object)
+  parent: System.Web.UI.WebControls.QueryExtender
+  langs:
+  - csharp
+  name: LoadViewState(Object)
+  nameWithType: QueryExtender.LoadViewState(Object)
+  fullName: QueryExtender.LoadViewState(Object)
+  type: Method
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI.WebControls
+  summary: Loads the state of the values in the <xref href="System.Web.UI.WebControls.QueryExtender"></xref> control that must be persisted.
+  syntax:
+    content: protected override void LoadViewState (object savedState);
+    parameters:
+    - id: savedState
+      type: System.Object
+      description: An object that represents the state of the <xref href="System.Web.UI.WebControls.QueryExtender"></xref> control.
+  overload: System.Web.UI.WebControls.QueryExtender.LoadViewState*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/QueryExtender.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.WebControls.QueryExtender.OnInit(System.EventArgs)
+  commentId: M:System.Web.UI.WebControls.QueryExtender.OnInit(System.EventArgs)
+  id: OnInit(System.EventArgs)
+  parent: System.Web.UI.WebControls.QueryExtender
+  langs:
+  - csharp
+  name: OnInit(EventArgs)
+  nameWithType: QueryExtender.OnInit(EventArgs)
+  fullName: QueryExtender.OnInit(EventArgs)
+  type: Method
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI.WebControls
+  summary: Occurs when a new instance of the <xref href="System.Web.UI.WebControls.QueryExtender"></xref> class is initialized.
+  syntax:
+    content: protected override void OnInit (EventArgs e);
+    parameters:
+    - id: e
+      type: System.EventArgs
+      description: The event data.
+  overload: System.Web.UI.WebControls.QueryExtender.OnInit*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/QueryExtender.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.WebControls.QueryExtender.SaveViewState
+  commentId: M:System.Web.UI.WebControls.QueryExtender.SaveViewState
+  id: SaveViewState
+  parent: System.Web.UI.WebControls.QueryExtender
+  langs:
+  - csharp
+  name: SaveViewState()
+  nameWithType: QueryExtender.SaveViewState()
+  fullName: QueryExtender.SaveViewState()
+  type: Method
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI.WebControls
+  summary: Saves the current view state of the <xref href="System.Web.UI.WebControls.QueryExtender"></xref> control.
+  syntax:
+    content: protected override object SaveViewState ();
+    parameters: []
+    return:
+      type: System.Object
+      description: An object that contains the saved state of the <xref href="System.Web.UI.WebControls.QueryExtender"></xref> control.
+  overload: System.Web.UI.WebControls.QueryExtender.SaveViewState*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/QueryExtender.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.WebControls.QueryExtender.TargetControlID
+  commentId: P:System.Web.UI.WebControls.QueryExtender.TargetControlID
+  id: TargetControlID
+  parent: System.Web.UI.WebControls.QueryExtender
+  langs:
+  - csharp
+  name: TargetControlID
+  nameWithType: QueryExtender.TargetControlID
+  fullName: QueryExtender.TargetControlID
+  type: Property
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI.WebControls
+  summary: Gets or sets the ID of the <xref href="System.Web.UI.IDataSource"></xref> control to use for the query.
+  syntax:
+    content: public virtual string TargetControlID { get; set; }
+    return:
+      type: System.String
+      description: The ID of the data source control to use for the query.
+  overload: System.Web.UI.WebControls.QueryExtender.TargetControlID*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/QueryExtender.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+- uid: System.Web.UI.WebControls.QueryExtender.TrackViewState
+  commentId: M:System.Web.UI.WebControls.QueryExtender.TrackViewState
+  id: TrackViewState
+  parent: System.Web.UI.WebControls.QueryExtender
+  langs:
+  - csharp
+  name: TrackViewState()
+  nameWithType: QueryExtender.TrackViewState()
+  fullName: QueryExtender.TrackViewState()
+  type: Method
+  assemblies:
+  - System.Web.Extensions
+  namespace: System.Web.UI.WebControls
+  summary: Tracks view-state changes of the <xref href="System.Web.UI.WebControls.QueryExtender"></xref> control so that the changes can be stored in the <xref href="System.Web.UI.StateBag"></xref> object for the control.
+  syntax:
+    content: protected override void TrackViewState ();
+    parameters: []
+  overload: System.Web.UI.WebControls.QueryExtender.TrackViewState*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/QueryExtender.xml
+  ms.technology:
+  - dotnet-webforms
+  ms.author: riande
+  manager: wpickett
+references:
+- uid: System.Web.UI.Control
+  parent: System.Web.UI
+  isExternal: false
+  name: Control
+  nameWithType: Control
+  fullName: System.Web.UI.Control
+- uid: System.InvalidOperationException
+  parent: System
+  isExternal: false
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.Web.UI.WebControls.QueryExtender.#ctor
+  parent: System.Web.UI.WebControls.QueryExtender
+  isExternal: false
+  name: QueryExtender()
+  nameWithType: QueryExtender.QueryExtender()
+  fullName: QueryExtender.QueryExtender()
+- uid: System.Web.UI.WebControls.QueryExtender.DataSource
+  parent: System.Web.UI.WebControls.QueryExtender
+  isExternal: false
+  name: DataSource
+  nameWithType: QueryExtender.DataSource
+  fullName: QueryExtender.DataSource
+- uid: System.Web.UI.WebControls.IQueryableDataSource
+  parent: System.Web.UI.WebControls
+  isExternal: false
+  name: IQueryableDataSource
+  nameWithType: IQueryableDataSource
+  fullName: System.Web.UI.WebControls.IQueryableDataSource
+- uid: System.Web.UI.WebControls.QueryExtender.Expressions
+  parent: System.Web.UI.WebControls.QueryExtender
+  isExternal: false
+  name: Expressions
+  nameWithType: QueryExtender.Expressions
+  fullName: QueryExtender.Expressions
+- uid: System.Web.UI.WebControls.Expressions.DataSourceExpressionCollection
+  parent: System.Web.UI.WebControls.Expressions
+  isExternal: false
+  name: DataSourceExpressionCollection
+  nameWithType: DataSourceExpressionCollection
+  fullName: System.Web.UI.WebControls.Expressions.DataSourceExpressionCollection
+- uid: System.Web.UI.WebControls.QueryExtender.LoadViewState(System.Object)
+  parent: System.Web.UI.WebControls.QueryExtender
+  isExternal: false
+  name: LoadViewState(Object)
+  nameWithType: QueryExtender.LoadViewState(Object)
+  fullName: QueryExtender.LoadViewState(Object)
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Web.UI.WebControls.QueryExtender.OnInit(System.EventArgs)
+  parent: System.Web.UI.WebControls.QueryExtender
+  isExternal: false
+  name: OnInit(EventArgs)
+  nameWithType: QueryExtender.OnInit(EventArgs)
+  fullName: QueryExtender.OnInit(EventArgs)
+- uid: System.EventArgs
+  parent: System
+  isExternal: false
+  name: EventArgs
+  nameWithType: EventArgs
+  fullName: System.EventArgs
+- uid: System.Web.UI.WebControls.QueryExtender.SaveViewState
+  parent: System.Web.UI.WebControls.QueryExtender
+  isExternal: false
+  name: SaveViewState()
+  nameWithType: QueryExtender.SaveViewState()
+  fullName: QueryExtender.SaveViewState()
+- uid: System.Web.UI.WebControls.QueryExtender.TargetControlID
+  parent: System.Web.UI.WebControls.QueryExtender
+  isExternal: false
+  name: TargetControlID
+  nameWithType: QueryExtender.TargetControlID
+  fullName: QueryExtender.TargetControlID
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Web.UI.WebControls.QueryExtender.TrackViewState
+  parent: System.Web.UI.WebControls.QueryExtender
+  isExternal: false
+  name: TrackViewState()
+  nameWithType: QueryExtender.TrackViewState()
+  fullName: QueryExtender.TrackViewState()
+- uid: System.Web.UI.WebControls.QueryExtender.#ctor*
+  parent: System.Web.UI.WebControls.QueryExtender
+  isExternal: false
+  name: QueryExtender
+  nameWithType: QueryExtender.QueryExtender
+  fullName: QueryExtender.QueryExtender
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/QueryExtender.xml
+- uid: System.Web.UI.WebControls.QueryExtender.DataSource*
+  parent: System.Web.UI.WebControls.QueryExtender
+  isExternal: false
+  name: DataSource
+  nameWithType: QueryExtender.DataSource
+  fullName: QueryExtender.DataSource
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/QueryExtender.xml
+- uid: System.Web.UI.WebControls.QueryExtender.Expressions*
+  parent: System.Web.UI.WebControls.QueryExtender
+  isExternal: false
+  name: Expressions
+  nameWithType: QueryExtender.Expressions
+  fullName: QueryExtender.Expressions
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/QueryExtender.xml
+- uid: System.Web.UI.WebControls.QueryExtender.LoadViewState*
+  parent: System.Web.UI.WebControls.QueryExtender
+  isExternal: false
+  name: LoadViewState
+  nameWithType: QueryExtender.LoadViewState
+  fullName: QueryExtender.LoadViewState
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/QueryExtender.xml
+- uid: System.Web.UI.WebControls.QueryExtender.OnInit*
+  parent: System.Web.UI.WebControls.QueryExtender
+  isExternal: false
+  name: OnInit
+  nameWithType: QueryExtender.OnInit
+  fullName: QueryExtender.OnInit
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/QueryExtender.xml
+- uid: System.Web.UI.WebControls.QueryExtender.SaveViewState*
+  parent: System.Web.UI.WebControls.QueryExtender
+  isExternal: false
+  name: SaveViewState
+  nameWithType: QueryExtender.SaveViewState
+  fullName: QueryExtender.SaveViewState
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/QueryExtender.xml
+- uid: System.Web.UI.WebControls.QueryExtender.TargetControlID*
+  parent: System.Web.UI.WebControls.QueryExtender
+  isExternal: false
+  name: TargetControlID
+  nameWithType: QueryExtender.TargetControlID
+  fullName: QueryExtender.TargetControlID
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/QueryExtender.xml
+- uid: System.Web.UI.WebControls.QueryExtender.TrackViewState*
+  parent: System.Web.UI.WebControls.QueryExtender
+  isExternal: false
+  name: TrackViewState
+  nameWithType: QueryExtender.TrackViewState
+  fullName: QueryExtender.TrackViewState
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/QueryExtender.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Web.UI.Control.Adapter
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Adapter
+  nameWithType: Control.Adapter
+  fullName: Control.Adapter
+- uid: System.Web.UI.Control.AddedControl(System.Web.UI.Control,System.Int32)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AddedControl(Control, Int32)
+  nameWithType: Control.AddedControl(Control, Int32)
+  fullName: Control.AddedControl(Control, Int32)
+- uid: System.Web.UI.Control.AddParsedSubObject(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AddParsedSubObject(Object)
+  nameWithType: Control.AddParsedSubObject(Object)
+  fullName: Control.AddParsedSubObject(Object)
+- uid: System.Web.UI.Control.ApplyStyleSheetSkin(System.Web.UI.Page)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ApplyStyleSheetSkin(Page)
+  nameWithType: Control.ApplyStyleSheetSkin(Page)
+  fullName: Control.ApplyStyleSheetSkin(Page)
+- uid: System.Web.UI.Control.AppRelativeTemplateSourceDirectory
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AppRelativeTemplateSourceDirectory
+  nameWithType: Control.AppRelativeTemplateSourceDirectory
+  fullName: Control.AppRelativeTemplateSourceDirectory
+- uid: System.Web.UI.Control.BeginRenderTracing(System.IO.TextWriter,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BeginRenderTracing(TextWriter, Object)
+  nameWithType: Control.BeginRenderTracing(TextWriter, Object)
+  fullName: Control.BeginRenderTracing(TextWriter, Object)
+- uid: System.Web.UI.Control.BindingContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BindingContainer
+  nameWithType: Control.BindingContainer
+  fullName: Control.BindingContainer
+- uid: System.Web.UI.Control.BuildProfileTree(System.String,System.Boolean)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BuildProfileTree(String, Boolean)
+  nameWithType: Control.BuildProfileTree(String, Boolean)
+  fullName: Control.BuildProfileTree(String, Boolean)
+- uid: System.Web.UI.Control.ChildControlsCreated
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ChildControlsCreated
+  nameWithType: Control.ChildControlsCreated
+  fullName: Control.ChildControlsCreated
+- uid: System.Web.UI.Control.ClearCachedClientID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearCachedClientID()
+  nameWithType: Control.ClearCachedClientID()
+  fullName: Control.ClearCachedClientID()
+- uid: System.Web.UI.Control.ClearChildControlState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildControlState()
+  nameWithType: Control.ClearChildControlState()
+  fullName: Control.ClearChildControlState()
+- uid: System.Web.UI.Control.ClearChildState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildState()
+  nameWithType: Control.ClearChildState()
+  fullName: Control.ClearChildState()
+- uid: System.Web.UI.Control.ClearChildViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildViewState()
+  nameWithType: Control.ClearChildViewState()
+  fullName: Control.ClearChildViewState()
+- uid: System.Web.UI.Control.ClearEffectiveClientIDMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearEffectiveClientIDMode()
+  nameWithType: Control.ClearEffectiveClientIDMode()
+  fullName: Control.ClearEffectiveClientIDMode()
+- uid: System.Web.UI.Control.ClientID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClientID
+  nameWithType: Control.ClientID
+  fullName: Control.ClientID
+- uid: System.Web.UI.Control.ClientIDMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClientIDMode
+  nameWithType: Control.ClientIDMode
+  fullName: Control.ClientIDMode
+- uid: System.Web.UI.Control.ClientIDSeparator
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClientIDSeparator
+  nameWithType: Control.ClientIDSeparator
+  fullName: Control.ClientIDSeparator
+- uid: System.Web.UI.Control.Context
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Context
+  nameWithType: Control.Context
+  fullName: Control.Context
+- uid: System.Web.UI.Control.Controls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Controls
+  nameWithType: Control.Controls
+  fullName: Control.Controls
+- uid: System.Web.UI.Control.CreateChildControls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: CreateChildControls()
+  nameWithType: Control.CreateChildControls()
+  fullName: Control.CreateChildControls()
+- uid: System.Web.UI.Control.CreateControlCollection
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: CreateControlCollection()
+  nameWithType: Control.CreateControlCollection()
+  fullName: Control.CreateControlCollection()
+- uid: System.Web.UI.Control.DataBind
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBind()
+  nameWithType: Control.DataBind()
+  fullName: Control.DataBind()
+- uid: System.Web.UI.Control.DataBind(System.Boolean)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBind(Boolean)
+  nameWithType: Control.DataBind(Boolean)
+  fullName: Control.DataBind(Boolean)
+- uid: System.Web.UI.Control.DataBindChildren
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBindChildren()
+  nameWithType: Control.DataBindChildren()
+  fullName: Control.DataBindChildren()
+- uid: System.Web.UI.Control.DataBinding
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBinding
+  nameWithType: Control.DataBinding
+  fullName: Control.DataBinding
+- uid: System.Web.UI.Control.DataItemContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataItemContainer
+  nameWithType: Control.DataItemContainer
+  fullName: Control.DataItemContainer
+- uid: System.Web.UI.Control.DataKeysContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataKeysContainer
+  nameWithType: Control.DataKeysContainer
+  fullName: Control.DataKeysContainer
+- uid: System.Web.UI.Control.DesignMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DesignMode
+  nameWithType: Control.DesignMode
+  fullName: Control.DesignMode
+- uid: System.Web.UI.Control.Dispose
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Dispose()
+  nameWithType: Control.Dispose()
+  fullName: Control.Dispose()
+- uid: System.Web.UI.Control.Disposed
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Disposed
+  nameWithType: Control.Disposed
+  fullName: Control.Disposed
+- uid: System.Web.UI.Control.EnableTheming
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnableTheming
+  nameWithType: Control.EnableTheming
+  fullName: Control.EnableTheming
+- uid: System.Web.UI.Control.EnableViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnableViewState
+  nameWithType: Control.EnableViewState
+  fullName: Control.EnableViewState
+- uid: System.Web.UI.Control.EndRenderTracing(System.IO.TextWriter,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EndRenderTracing(TextWriter, Object)
+  nameWithType: Control.EndRenderTracing(TextWriter, Object)
+  fullName: Control.EndRenderTracing(TextWriter, Object)
+- uid: System.Web.UI.Control.EnsureChildControls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnsureChildControls()
+  nameWithType: Control.EnsureChildControls()
+  fullName: Control.EnsureChildControls()
+- uid: System.Web.UI.Control.EnsureID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnsureID()
+  nameWithType: Control.EnsureID()
+  fullName: Control.EnsureID()
+- uid: System.Web.UI.Control.Events
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Events
+  nameWithType: Control.Events
+  fullName: Control.Events
+- uid: System.Web.UI.Control.FindControl(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: FindControl(String)
+  nameWithType: Control.FindControl(String)
+  fullName: Control.FindControl(String)
+- uid: System.Web.UI.Control.FindControl(System.String,System.Int32)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: FindControl(String, Int32)
+  nameWithType: Control.FindControl(String, Int32)
+  fullName: Control.FindControl(String, Int32)
+- uid: System.Web.UI.Control.Focus
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Focus()
+  nameWithType: Control.Focus()
+  fullName: Control.Focus()
+- uid: System.Web.UI.Control.GetDesignModeState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetDesignModeState()
+  nameWithType: Control.GetDesignModeState()
+  fullName: Control.GetDesignModeState()
+- uid: System.Web.UI.Control.GetRouteUrl(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(Object)
+  nameWithType: Control.GetRouteUrl(Object)
+  fullName: Control.GetRouteUrl(Object)
+- uid: System.Web.UI.Control.GetRouteUrl(System.Web.Routing.RouteValueDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(RouteValueDictionary)
+  nameWithType: Control.GetRouteUrl(RouteValueDictionary)
+  fullName: Control.GetRouteUrl(RouteValueDictionary)
+- uid: System.Web.UI.Control.GetRouteUrl(System.String,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(String, Object)
+  nameWithType: Control.GetRouteUrl(String, Object)
+  fullName: Control.GetRouteUrl(String, Object)
+- uid: System.Web.UI.Control.GetRouteUrl(System.String,System.Web.Routing.RouteValueDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(String, RouteValueDictionary)
+  nameWithType: Control.GetRouteUrl(String, RouteValueDictionary)
+  fullName: Control.GetRouteUrl(String, RouteValueDictionary)
+- uid: System.Web.UI.Control.GetUniqueIDRelativeTo(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetUniqueIDRelativeTo(Control)
+  nameWithType: Control.GetUniqueIDRelativeTo(Control)
+  fullName: Control.GetUniqueIDRelativeTo(Control)
+- uid: System.Web.UI.Control.HasChildViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: HasChildViewState
+  nameWithType: Control.HasChildViewState
+  fullName: Control.HasChildViewState
+- uid: System.Web.UI.Control.HasControls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: HasControls()
+  nameWithType: Control.HasControls()
+  fullName: Control.HasControls()
+- uid: System.Web.UI.Control.HasEvents
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: HasEvents()
+  nameWithType: Control.HasEvents()
+  fullName: Control.HasEvents()
+- uid: System.Web.UI.Control.ID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ID
+  nameWithType: Control.ID
+  fullName: Control.ID
+- uid: System.Web.UI.Control.IdSeparator
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IdSeparator
+  nameWithType: Control.IdSeparator
+  fullName: Control.IdSeparator
+- uid: System.Web.UI.Control.Init
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Init
+  nameWithType: Control.Init
+  fullName: Control.Init
+- uid: System.Web.UI.Control.IsChildControlStateCleared
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsChildControlStateCleared
+  nameWithType: Control.IsChildControlStateCleared
+  fullName: Control.IsChildControlStateCleared
+- uid: System.Web.UI.Control.IsLiteralContent
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsLiteralContent()
+  nameWithType: Control.IsLiteralContent()
+  fullName: Control.IsLiteralContent()
+- uid: System.Web.UI.Control.IsTrackingViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsTrackingViewState
+  nameWithType: Control.IsTrackingViewState
+  fullName: Control.IsTrackingViewState
+- uid: System.Web.UI.Control.IsViewStateEnabled
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsViewStateEnabled
+  nameWithType: Control.IsViewStateEnabled
+  fullName: Control.IsViewStateEnabled
+- uid: System.Web.UI.Control.Load
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Load
+  nameWithType: Control.Load
+  fullName: Control.Load
+- uid: System.Web.UI.Control.LoadControlState(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: LoadControlState(Object)
+  nameWithType: Control.LoadControlState(Object)
+  fullName: Control.LoadControlState(Object)
+- uid: System.Web.UI.Control.LoadViewStateByID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: LoadViewStateByID
+  nameWithType: Control.LoadViewStateByID
+  fullName: Control.LoadViewStateByID
+- uid: System.Web.UI.Control.MapPathSecure(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: MapPathSecure(String)
+  nameWithType: Control.MapPathSecure(String)
+  fullName: Control.MapPathSecure(String)
+- uid: System.Web.UI.Control.NamingContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: NamingContainer
+  nameWithType: Control.NamingContainer
+  fullName: Control.NamingContainer
+- uid: System.Web.UI.Control.OnBubbleEvent(System.Object,System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnBubbleEvent(Object, EventArgs)
+  nameWithType: Control.OnBubbleEvent(Object, EventArgs)
+  fullName: Control.OnBubbleEvent(Object, EventArgs)
+- uid: System.Web.UI.Control.OnDataBinding(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnDataBinding(EventArgs)
+  nameWithType: Control.OnDataBinding(EventArgs)
+  fullName: Control.OnDataBinding(EventArgs)
+- uid: System.Web.UI.Control.OnLoad(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnLoad(EventArgs)
+  nameWithType: Control.OnLoad(EventArgs)
+  fullName: Control.OnLoad(EventArgs)
+- uid: System.Web.UI.Control.OnPreRender(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnPreRender(EventArgs)
+  nameWithType: Control.OnPreRender(EventArgs)
+  fullName: Control.OnPreRender(EventArgs)
+- uid: System.Web.UI.Control.OnUnload(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnUnload(EventArgs)
+  nameWithType: Control.OnUnload(EventArgs)
+  fullName: Control.OnUnload(EventArgs)
+- uid: System.Web.UI.Control.OpenFile(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OpenFile(String)
+  nameWithType: Control.OpenFile(String)
+  fullName: Control.OpenFile(String)
+- uid: System.Web.UI.Control.Page
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Page
+  nameWithType: Control.Page
+  fullName: Control.Page
+- uid: System.Web.UI.Control.Parent
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Parent
+  nameWithType: Control.Parent
+  fullName: Control.Parent
+- uid: System.Web.UI.Control.PreRender
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: PreRender
+  nameWithType: Control.PreRender
+  fullName: Control.PreRender
+- uid: System.Web.UI.Control.RaiseBubbleEvent(System.Object,System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RaiseBubbleEvent(Object, EventArgs)
+  nameWithType: Control.RaiseBubbleEvent(Object, EventArgs)
+  fullName: Control.RaiseBubbleEvent(Object, EventArgs)
+- uid: System.Web.UI.Control.RemovedControl(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RemovedControl(Control)
+  nameWithType: Control.RemovedControl(Control)
+  fullName: Control.RemovedControl(Control)
+- uid: System.Web.UI.Control.Render(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Render(HtmlTextWriter)
+  nameWithType: Control.Render(HtmlTextWriter)
+  fullName: Control.Render(HtmlTextWriter)
+- uid: System.Web.UI.Control.RenderChildren(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderChildren(HtmlTextWriter)
+  nameWithType: Control.RenderChildren(HtmlTextWriter)
+  fullName: Control.RenderChildren(HtmlTextWriter)
+- uid: System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderControl(HtmlTextWriter)
+  nameWithType: Control.RenderControl(HtmlTextWriter)
+  fullName: Control.RenderControl(HtmlTextWriter)
+- uid: System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter,System.Web.UI.Adapters.ControlAdapter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderControl(HtmlTextWriter, ControlAdapter)
+  nameWithType: Control.RenderControl(HtmlTextWriter, ControlAdapter)
+  fullName: Control.RenderControl(HtmlTextWriter, ControlAdapter)
+- uid: System.Web.UI.Control.RenderingCompatibility
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderingCompatibility
+  nameWithType: Control.RenderingCompatibility
+  fullName: Control.RenderingCompatibility
+- uid: System.Web.UI.Control.ResolveAdapter
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveAdapter()
+  nameWithType: Control.ResolveAdapter()
+  fullName: Control.ResolveAdapter()
+- uid: System.Web.UI.Control.ResolveClientUrl(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveClientUrl(String)
+  nameWithType: Control.ResolveClientUrl(String)
+  fullName: Control.ResolveClientUrl(String)
+- uid: System.Web.UI.Control.ResolveUrl(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveUrl(String)
+  nameWithType: Control.ResolveUrl(String)
+  fullName: Control.ResolveUrl(String)
+- uid: System.Web.UI.Control.SaveControlState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SaveControlState()
+  nameWithType: Control.SaveControlState()
+  fullName: Control.SaveControlState()
+- uid: System.Web.UI.Control.SetDesignModeState(System.Collections.IDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetDesignModeState(IDictionary)
+  nameWithType: Control.SetDesignModeState(IDictionary)
+  fullName: Control.SetDesignModeState(IDictionary)
+- uid: System.Web.UI.Control.SetRenderMethodDelegate(System.Web.UI.RenderMethod)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetRenderMethodDelegate(RenderMethod)
+  nameWithType: Control.SetRenderMethodDelegate(RenderMethod)
+  fullName: Control.SetRenderMethodDelegate(RenderMethod)
+- uid: System.Web.UI.Control.SetTraceData(System.Object,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetTraceData(Object, Object)
+  nameWithType: Control.SetTraceData(Object, Object)
+  fullName: Control.SetTraceData(Object, Object)
+- uid: System.Web.UI.Control.SetTraceData(System.Object,System.Object,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetTraceData(Object, Object, Object)
+  nameWithType: Control.SetTraceData(Object, Object, Object)
+  fullName: Control.SetTraceData(Object, Object, Object)
+- uid: System.Web.UI.Control.Site
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Site
+  nameWithType: Control.Site
+  fullName: Control.Site
+- uid: System.Web.UI.Control.SkinID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SkinID
+  nameWithType: Control.SkinID
+  fullName: Control.SkinID
+- uid: System.Web.UI.Control.TemplateControl
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: TemplateControl
+  nameWithType: Control.TemplateControl
+  fullName: Control.TemplateControl
+- uid: System.Web.UI.Control.TemplateSourceDirectory
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: TemplateSourceDirectory
+  nameWithType: Control.TemplateSourceDirectory
+  fullName: Control.TemplateSourceDirectory
+- uid: System.Web.UI.Control.UniqueID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: UniqueID
+  nameWithType: Control.UniqueID
+  fullName: Control.UniqueID
+- uid: System.Web.UI.Control.Unload
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Unload
+  nameWithType: Control.Unload
+  fullName: Control.Unload
+- uid: System.Web.UI.Control.ValidateRequestMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ValidateRequestMode
+  nameWithType: Control.ValidateRequestMode
+  fullName: Control.ValidateRequestMode
+- uid: System.Web.UI.Control.ViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewState
+  nameWithType: Control.ViewState
+  fullName: Control.ViewState
+- uid: System.Web.UI.Control.ViewStateIgnoresCase
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewStateIgnoresCase
+  nameWithType: Control.ViewStateIgnoresCase
+  fullName: Control.ViewStateIgnoresCase
+- uid: System.Web.UI.Control.ViewStateMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewStateMode
+  nameWithType: Control.ViewStateMode
+  fullName: Control.ViewStateMode
+- uid: System.Web.UI.Control.Visible
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Visible
+  nameWithType: Control.Visible
+  fullName: Control.Visible
+- uid: System.Web.UI.Control.System#Web#UI#IControlBuilderAccessor#ControlBuilder
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlBuilderAccessor.ControlBuilder
+  nameWithType: Control.IControlBuilderAccessor.ControlBuilder
+  fullName: Control.IControlBuilderAccessor.ControlBuilder
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#GetDesignModeState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.GetDesignModeState()
+  nameWithType: Control.IControlDesignerAccessor.GetDesignModeState()
+  fullName: Control.IControlDesignerAccessor.GetDesignModeState()
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetDesignModeState(System.Collections.IDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.SetDesignModeState(IDictionary)
+  nameWithType: Control.IControlDesignerAccessor.SetDesignModeState(IDictionary)
+  fullName: Control.IControlDesignerAccessor.SetDesignModeState(IDictionary)
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetOwnerControl(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.SetOwnerControl(Control)
+  nameWithType: Control.IControlDesignerAccessor.SetOwnerControl(Control)
+  fullName: Control.IControlDesignerAccessor.SetOwnerControl(Control)
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#UserData
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.UserData
+  nameWithType: Control.IControlDesignerAccessor.UserData
+  fullName: Control.IControlDesignerAccessor.UserData
+- uid: System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#DataBindings
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IDataBindingsAccessor.DataBindings
+  nameWithType: Control.IDataBindingsAccessor.DataBindings
+  fullName: Control.IDataBindingsAccessor.DataBindings
+- uid: System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#HasDataBindings
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IDataBindingsAccessor.HasDataBindings
+  nameWithType: Control.IDataBindingsAccessor.HasDataBindings
+  fullName: Control.IDataBindingsAccessor.HasDataBindings
+- uid: System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#Expressions
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IExpressionsAccessor.Expressions
+  nameWithType: Control.IExpressionsAccessor.Expressions
+  fullName: Control.IExpressionsAccessor.Expressions
+- uid: System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#HasExpressions
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IExpressionsAccessor.HasExpressions
+  nameWithType: Control.IExpressionsAccessor.HasExpressions
+  fullName: Control.IExpressionsAccessor.HasExpressions
+- uid: System.Web.UI.Control.System#Web#UI#IParserAccessor#AddParsedSubObject(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IParserAccessor.AddParsedSubObject(Object)
+  nameWithType: Control.IParserAccessor.AddParsedSubObject(Object)
+  fullName: Control.IParserAccessor.AddParsedSubObject(Object)
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindDataSourceControl(System.Web.UI.Control)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindDataSourceControl(Control)
+  nameWithType: DynamicDataExtensions.FindDataSourceControl(Control)
+  fullName: DynamicDataExtensions.FindDataSourceControl(Control)
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindFieldTemplate(System.Web.UI.Control,System.String)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindFieldTemplate(Control, String)
+  nameWithType: DynamicDataExtensions.FindFieldTemplate(Control, String)
+  fullName: DynamicDataExtensions.FindFieldTemplate(Control, String)
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindMetaTable(System.Web.UI.Control)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindMetaTable(Control)
+  nameWithType: DynamicDataExtensions.FindMetaTable(Control)
+  fullName: DynamicDataExtensions.FindMetaTable(Control)

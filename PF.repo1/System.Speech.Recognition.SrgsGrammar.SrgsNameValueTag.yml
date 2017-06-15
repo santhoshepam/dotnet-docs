@@ -1,0 +1,475 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag
+  commentId: T:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag
+  id: SrgsNameValueTag
+  children:
+  - System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor
+  - System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor(System.Object)
+  - System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor(System.String,System.Object)
+  - System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Name
+  - System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Value
+  langs:
+  - csharp
+  name: SrgsNameValueTag
+  nameWithType: SrgsNameValueTag
+  fullName: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag
+  type: Class
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition.SrgsGrammar
+  summary: Represents an element for associating a semantic value with a phrase in a grammar.
+  remarks: "This object is similar to the `tag` element defined by the World Wide Web Consortium (W3C) [Speech Recognition Grammar Specification (SRGS) Version 1.0.](http://go.microsoft.com/fwlink/?LinkId=201761). However, the <xref:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Value%2A> property of this object cannot be script. The contents of <xref:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Value%2A> can be of the type <xref:System.Boolean>, <xref:System.Double>, <xref:System.Int32>, or <xref:System.String>. String values must be enclosed in double quotes.  \n  \n To add semantics as script, use <xref:System.Speech.Recognition.SrgsGrammar.SrgsSemanticInterpretationTag>."
+  example:
+  - "The following example creates a grammar for choosing the cities for a flight. The example uses <xref:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.%23ctor%2A> to assign a semantic value to each city, which is the code for the city's airport.  \n  \n The example constructs two <xref:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef> instances, each of which specifies a semantic key. Both rule references target the same <xref:System.Speech.Recognition.SrgsGrammar.SrgsRule> object, named `cities`, but tag the recognition result from the rule reference with a different semantic key. The semantic key identifies a recognized city as the departure city or the arrival city for the flight. The handler for the <xref:System.Speech.Recognition.SpeechRecognitionEngine.SpeechRecognized> event uses the keys to retrieve the semantics values created using <xref:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.%23ctor%2A> from the recognition result.  \n  \n```  \nusing System;  \nusing System.Speech.Recognition;  \nusing System.Speech.Recognition.SrgsGrammar;  \n  \nnamespace SampleRecognition  \n{  \n  class Program  \n  {  \n    static void Main(string[] args)  \n  \n    // Initialize a SpeechRecognitionEngine object.  \n    {  \n      using (SpeechRecognitionEngine recognizer =  \n         new SpeechRecognitionEngine(new System.Globalization.CultureInfo(\"en-US\")))  \n      {  \n  \n        // Build a rule with a list of cities, assign a semantic value to each city.  \n        SrgsItem chi = new SrgsItem(\"Chicago\");  \n        chi.Add(new SrgsNameValueTag(\"ORD\"));  \n        SrgsItem bos = new SrgsItem(\"Boston\");  \n        bos.Add(new SrgsNameValueTag(\"BOS\"));  \n        SrgsItem mia = new SrgsItem(\"Miami\");  \n        mia.Add(new SrgsNameValueTag(\"MIA\"));  \n        SrgsItem dal = new SrgsItem(\"Dallas\");  \n        dal.Add(new SrgsNameValueTag(\"DFW\"));  \n  \n        SrgsOneOf cities = new SrgsOneOf(new SrgsItem[] { chi, bos, mia, dal });  \n        SrgsRule citiesRule = new SrgsRule(\"flightCities\");  \n        citiesRule.Add(cities);  \n  \n        // Build the root rule, add rule references to the cities rule.  \n        SrgsRule flightBooker = new SrgsRule(\"bookFlight\");  \n        flightBooker.Add(new SrgsItem(\"I want to fly from\"));  \n        flightBooker.Add(new SrgsRuleRef(citiesRule, \"departureCity\"));  \n        flightBooker.Add(new SrgsItem(\"to\"));  \n        flightBooker.Add(new SrgsRuleRef(citiesRule, \"arrivalCity\"));  \n  \n        // Build an SrgsDocument object from the flightBooker rule and add the cities rule.  \n        SrgsDocument cityChooser = new SrgsDocument(flightBooker);  \n        cityChooser.Rules.Add(citiesRule);  \n  \n        // Create a Grammar object from the SrgsDocument and load it to the recognizer.  \n        Grammar departArrive = new Grammar(cityChooser);  \n        departArrive.Name = (\"Cities Grammar\");  \n        recognizer.LoadGrammarAsync(departArrive);  \n  \n        // Configure recognizer input.  \n        recognizer.SetInputToDefaultAudioDevice();  \n  \n        // Attach a handler for the SpeechRecognized event.  \n        recognizer.SpeechRecognized +=  \n          new EventHandler<SpeechRecognizedEventArgs>(recognizer_SpeechRecognized);  \n  \n        // Start asynchronous recognition.  \n        recognizer.RecognizeAsync();  \n        Console.WriteLine(\"Starting asynchronous recognition...\");  \n  \n        // Keep the console window open.  \n        Console.ReadLine();  \n      }  \n    }  \n  \n    // Handle the SpeechRecognized event.  \n    static void recognizer_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)  \n    {  \n      Console.WriteLine(\"Speech recognized: \" + e.Result.Text);  \n      Console.WriteLine();  \n      Console.WriteLine(\"Semantic results:\");  \n      Console.WriteLine(\"  The departure city is: \" + e.Result.Semantics[\"departureCity\"].Value);  \n      Console.WriteLine(\"  The destination city is: \" + e.Result.Semantics[\"arrivalCity\"].Value);  \n    }  \n  }  \n}  \n```"
+  syntax:
+    content: 'public class SrgsNameValueTag : System.Speech.Recognition.SrgsGrammar.SrgsElement'
+  inheritance:
+  - System.Object
+  - System.MarshalByRefObject
+  - System.Speech.Recognition.SrgsGrammar.SrgsElement
+  implements: []
+  inheritedMembers:
+  - System.MarshalByRefObject.CreateObjRef(System.Type)
+  - System.MarshalByRefObject.GetLifetimeService
+  - System.MarshalByRefObject.InitializeLifetimeService
+  - System.MarshalByRefObject.MemberwiseClone(System.Boolean)
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition.SrgsGrammar/SrgsNameValueTag.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor
+  commentId: M:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor
+  id: '#ctor'
+  parent: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag
+  langs:
+  - csharp
+  name: SrgsNameValueTag()
+  nameWithType: SrgsNameValueTag.SrgsNameValueTag()
+  fullName: SrgsNameValueTag.SrgsNameValueTag()
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition.SrgsGrammar
+  summary: Initializes a new instance of the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag"></xref> class.
+  syntax:
+    content: public SrgsNameValueTag ();
+    parameters: []
+  overload: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition.SrgsGrammar/SrgsNameValueTag.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor(System.Object)
+  commentId: M:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor(System.Object)
+  id: '#ctor(System.Object)'
+  parent: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag
+  langs:
+  - csharp
+  name: SrgsNameValueTag(Object)
+  nameWithType: SrgsNameValueTag.SrgsNameValueTag(Object)
+  fullName: SrgsNameValueTag.SrgsNameValueTag(Object)
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition.SrgsGrammar
+  summary: Initializes a new instance of the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag"></xref> class, specifying a value for the instance.
+  remarks: ''
+  example:
+  - "The following example creates a grammar for choosing the cities for a flight. The example uses <xref:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.%23ctor%2A> to assign a semantic value to each city, which is the code for the city's airport.  \n  \n The example constructs two <xref:System.Speech.Recognition.SrgsGrammar.SrgsRuleRef> instances, each of which specifies a semantic key. Both rule references target the same <xref:System.Speech.Recognition.SrgsGrammar.SrgsRule> object, named `cities`, but tag the recognition result from the rule reference with a different semantic key. The semantic key identifies a recognized city as the departure city or the arrival city for the flight. The handler for the <xref:System.Speech.Recognition.SpeechRecognitionEngine.SpeechRecognized> event uses the keys to retrieve the semantics values created using <xref:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.%23ctor%2A> from the recognition result.  \n  \n```  \nusing System;  \nusing System.Speech.Recognition;  \nusing System.Speech.Recognition.SrgsGrammar;  \n  \nnamespace SampleRecognition  \n{  \n  class Program  \n  {  \n    static void Main(string[] args)  \n  \n    // Initialize a SpeechRecognitionEngine object.  \n    {  \n      using (SpeechRecognitionEngine recognizer =  \n         new SpeechRecognitionEngine(new System.Globalization.CultureInfo(\"en-US\")))  \n      {  \n  \n        // Build a rule with a list of cities, assign a semantic value to each city.  \n        SrgsItem chi = new SrgsItem(\"Chicago\");  \n        chi.Add(new SrgsNameValueTag(\"ORD\"));  \n        SrgsItem bos = new SrgsItem(\"Boston\");  \n        bos.Add(new SrgsNameValueTag(\"BOS\"));  \n        SrgsItem mia = new SrgsItem(\"Miami\");  \n        mia.Add(new SrgsNameValueTag(\"MIA\"));  \n        SrgsItem dal = new SrgsItem(\"Dallas\");  \n        dal.Add(new SrgsNameValueTag(\"DFW\"));  \n  \n        SrgsOneOf cities = new SrgsOneOf(new SrgsItem[] { chi, bos, mia, dal });  \n        SrgsRule citiesRule = new SrgsRule(\"flightCities\");  \n        citiesRule.Add(cities);  \n  \n        // Build the root rule, add rule references to the cities rule.  \n        SrgsRule flightBooker = new SrgsRule(\"bookFlight\");  \n        flightBooker.Add(new SrgsItem(\"I want to fly from\"));  \n        flightBooker.Add(new SrgsRuleRef(citiesRule, \"departureCity\"));  \n        flightBooker.Add(new SrgsItem(\"to\"));  \n        flightBooker.Add(new SrgsRuleRef(citiesRule, \"arrivalCity\"));  \n  \n        // Build an SrgsDocument object from the flightBooker rule and add the cities rule.  \n        SrgsDocument cityChooser = new SrgsDocument(flightBooker);  \n        cityChooser.Rules.Add(citiesRule);  \n  \n        // Create a Grammar object from the SrgsDocument and load it to the recognizer.  \n        Grammar departArrive = new Grammar(cityChooser);  \n        departArrive.Name = (\"Cities Grammar\");  \n        recognizer.LoadGrammarAsync(departArrive);  \n  \n        // Configure recognizer input.  \n        recognizer.SetInputToDefaultAudioDevice();  \n  \n        // Attach a handler for the SpeechRecognized event.  \n        recognizer.SpeechRecognized +=  \n          new EventHandler<SpeechRecognizedEventArgs>(recognizer_SpeechRecognized);  \n  \n        // Start asynchronous recognition.  \n        recognizer.RecognizeAsync();  \n        Console.WriteLine(\"Starting asynchronous recognition...\");  \n  \n        // Keep the console window open.  \n        Console.ReadLine();  \n      }  \n    }  \n  \n    // Handle the SpeechRecognized event.  \n    static void recognizer_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)  \n    {  \n      Console.WriteLine(\"Speech recognized: \" + e.Result.Text);  \n      Console.WriteLine();  \n      Console.WriteLine(\"Semantic results:\");  \n      Console.WriteLine(\"  The departure city is: \" + e.Result.Semantics[\"departureCity\"].Value);  \n      Console.WriteLine(\"  The destination city is: \" + e.Result.Semantics[\"arrivalCity\"].Value);  \n    }  \n  }  \n}  \n```"
+  syntax:
+    content: public SrgsNameValueTag (object value);
+    parameters:
+    - id: value
+      type: System.Object
+      description: The value used to set the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Value"></xref> property.
+  overload: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>value</code> is `null`.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition.SrgsGrammar/SrgsNameValueTag.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor(System.String,System.Object)
+  commentId: M:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor(System.String,System.Object)
+  id: '#ctor(System.String,System.Object)'
+  parent: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag
+  langs:
+  - csharp
+  name: SrgsNameValueTag(String, Object)
+  nameWithType: SrgsNameValueTag.SrgsNameValueTag(String, Object)
+  fullName: SrgsNameValueTag.SrgsNameValueTag(String, Object)
+  type: Constructor
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition.SrgsGrammar
+  summary: Initializes a new instance of the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag"></xref> class, specifying a name and a value for the instance.
+  syntax:
+    content: public SrgsNameValueTag (string name, object value);
+    parameters:
+    - id: name
+      type: System.String
+      description: The string used to set the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Name"></xref> property on the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag"></xref> object.
+    - id: value
+      type: System.Object
+      description: The object used to set the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Value"></xref> property on the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag"></xref> object.
+  overload: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: "<code>value</code> is `null`.  \n  \n <code>name</code> is `null`."
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>name</code> is an empty string.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition.SrgsGrammar/SrgsNameValueTag.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Name
+  commentId: P:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Name
+  id: Name
+  parent: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag
+  langs:
+  - csharp
+  name: Name
+  nameWithType: SrgsNameValueTag.Name
+  fullName: SrgsNameValueTag.Name
+  type: Property
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition.SrgsGrammar
+  summary: Gets or sets the name of the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag"></xref> instance.
+  syntax:
+    content: public string Name { get; set; }
+    return:
+      type: System.String
+      description: A string that contains the name of the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag"></xref> instance.
+  overload: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Name*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: An attempt is made to set <xref href="System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Name"></xref> to `null`.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: An attempt is made to set <xref href="System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Name"></xref> to an empty string.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition.SrgsGrammar/SrgsNameValueTag.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+- uid: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Value
+  commentId: P:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Value
+  id: Value
+  parent: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag
+  langs:
+  - csharp
+  name: Value
+  nameWithType: SrgsNameValueTag.Value
+  fullName: SrgsNameValueTag.Value
+  type: Property
+  assemblies:
+  - System.Speech
+  namespace: System.Speech.Recognition.SrgsGrammar
+  summary: Gets or sets the value contained in the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag"></xref> instance.
+  remarks: "The valid types for the <xref:System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Value%2A> property are:  \n  \n-   <xref:System.Boolean>  \n  \n-   <xref:System.Double>  \n  \n-   <xref:System.Int32>  \n  \n-   <xref:System.String>"
+  syntax:
+    content: public object Value { get; set; }
+    return:
+      type: System.Object
+      description: The value contained in the <xref href="System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag"></xref> instance.
+  overload: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Value*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: An attempt is made to set <xref href="System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Value"></xref> to `null`.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: An attempt is made to set <xref href="System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Value"></xref> to an invalid type.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition.SrgsGrammar/SrgsNameValueTag.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: kbridge
+  manager: ghogen
+references:
+- uid: System.Speech.Recognition.SrgsGrammar.SrgsElement
+  parent: System.Speech.Recognition.SrgsGrammar
+  isExternal: false
+  name: SrgsElement
+  nameWithType: SrgsElement
+  fullName: System.Speech.Recognition.SrgsGrammar.SrgsElement
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor
+  parent: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag
+  isExternal: false
+  name: SrgsNameValueTag()
+  nameWithType: SrgsNameValueTag.SrgsNameValueTag()
+  fullName: SrgsNameValueTag.SrgsNameValueTag()
+- uid: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor(System.Object)
+  parent: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag
+  isExternal: false
+  name: SrgsNameValueTag(Object)
+  nameWithType: SrgsNameValueTag.SrgsNameValueTag(Object)
+  fullName: SrgsNameValueTag.SrgsNameValueTag(Object)
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor(System.String,System.Object)
+  parent: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag
+  isExternal: false
+  name: SrgsNameValueTag(String, Object)
+  nameWithType: SrgsNameValueTag.SrgsNameValueTag(String, Object)
+  fullName: SrgsNameValueTag.SrgsNameValueTag(String, Object)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Name
+  parent: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag
+  isExternal: false
+  name: Name
+  nameWithType: SrgsNameValueTag.Name
+  fullName: SrgsNameValueTag.Name
+- uid: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Value
+  parent: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag
+  isExternal: false
+  name: Value
+  nameWithType: SrgsNameValueTag.Value
+  fullName: SrgsNameValueTag.Value
+- uid: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.#ctor*
+  parent: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag
+  isExternal: false
+  name: SrgsNameValueTag
+  nameWithType: SrgsNameValueTag.SrgsNameValueTag
+  fullName: SrgsNameValueTag.SrgsNameValueTag
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition.SrgsGrammar/SrgsNameValueTag.xml
+- uid: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Name*
+  parent: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag
+  isExternal: false
+  name: Name
+  nameWithType: SrgsNameValueTag.Name
+  fullName: SrgsNameValueTag.Name
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition.SrgsGrammar/SrgsNameValueTag.xml
+- uid: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag.Value*
+  parent: System.Speech.Recognition.SrgsGrammar.SrgsNameValueTag
+  isExternal: false
+  name: Value
+  nameWithType: SrgsNameValueTag.Value
+  fullName: SrgsNameValueTag.Value
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Speech.Recognition.SrgsGrammar/SrgsNameValueTag.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.MarshalByRefObject.CreateObjRef(System.Type)
+  parent: System.MarshalByRefObject
+  isExternal: false
+  name: CreateObjRef(Type)
+  nameWithType: MarshalByRefObject.CreateObjRef(Type)
+  fullName: MarshalByRefObject.CreateObjRef(Type)
+- uid: System.MarshalByRefObject.GetLifetimeService
+  parent: System.MarshalByRefObject
+  isExternal: false
+  name: GetLifetimeService()
+  nameWithType: MarshalByRefObject.GetLifetimeService()
+  fullName: MarshalByRefObject.GetLifetimeService()
+- uid: System.MarshalByRefObject.InitializeLifetimeService
+  parent: System.MarshalByRefObject
+  isExternal: false
+  name: InitializeLifetimeService()
+  nameWithType: MarshalByRefObject.InitializeLifetimeService()
+  fullName: MarshalByRefObject.InitializeLifetimeService()
+- uid: System.MarshalByRefObject.MemberwiseClone(System.Boolean)
+  parent: System.MarshalByRefObject
+  isExternal: false
+  name: MemberwiseClone(Boolean)
+  nameWithType: MarshalByRefObject.MemberwiseClone(Boolean)
+  fullName: MarshalByRefObject.MemberwiseClone(Boolean)

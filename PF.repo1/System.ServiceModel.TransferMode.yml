@@ -1,0 +1,266 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.ServiceModel.TransferMode
+  commentId: T:System.ServiceModel.TransferMode
+  id: TransferMode
+  children:
+  - System.ServiceModel.TransferMode.Buffered
+  - System.ServiceModel.TransferMode.Streamed
+  - System.ServiceModel.TransferMode.StreamedRequest
+  - System.ServiceModel.TransferMode.StreamedResponse
+  langs:
+  - csharp
+  name: TransferMode
+  nameWithType: TransferMode
+  fullName: System.ServiceModel.TransferMode
+  type: Enum
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: Indicates whether a channel uses streamed or buffered modes for the transfer of request and response messages.
+  remarks: "[!INCLUDE[indigo1](~/includes/indigo1-md.md)] transports support two modes of transferring messages in each direction:  \n  \n-   Buffered transfers hold the entire message in a memory buffer until the transfer is complete.  \n  \n-   Streamed transfers only buffer the message headers and expose the message body as a stream, from which smaller portions can be read at a time.  \n  \n Setting the transfer mode to Streamed enables streaming communication in both directions. Setting the transfer mode to StreamedRequest or StreamedResponse enables streaming communication only in the indicated direction.  \n  \n Streamed transfers can improve the scalability of a service by eliminating the need for large memory buffers. Whether changing the transfer mode actually improves scalability in practice depends on the size of the messages being transferred. Improvements in scalability should be most evident when large messages use streamed instead of buffered transfers.  \n  \n By default, the HTTP, TCP/IP and named pipe transports use buffered message transfers. You can set the values of <xref:System.ServiceModel.TransferMode.Streamed> on the <xref:System.ServiceModel.BasicHttpBinding>, <xref:System.ServiceModel.NetTcpBinding>, <xref:System.ServiceModel.NetNamedPipeBinding> system-provided bindings using the transfer mode properties exposed on them. The mode can be set on the <xref:System.ServiceModel.NetTcpBinding>, for example, by using the <xref:System.ServiceModel.NetTcpBinding.TransferMode%2A> property. It can also be set in the configuration section for the binding.  \n  \n For bindings that do not expose the transfer mode property, the transfer mode can be set on the binding element of the transport and this element can then be added to a custom binding. For example, create an <xref:System.ServiceModel.Channels.HttpTransportBindingElement> and use the <xref:System.ServiceModel.Channels.ConnectionOrientedTransportBindingElement.TransferMode%2A> property to set the transfer mode when creating a custom binding. The transfer mode can also be set in the configuration section for the custom binding.  \n  \n The decision to use either buffered or streamed transfers is a local decision of the endpoint for HTTP transports. For HTTP transports, the transfer mode does not propagate across a connection, or to proxy servers or other intermediaries. Setting the transfer mode is not reflected in the description of the service contract. After generating a proxy to a service, you can (it is allowed but not required) edit the configuration file for services intended to be used with streamed transfers to set the transfer mode. For TCP and named pipe transports, the transfer mode is propagated as a policy assertion.  \n  \n Using the Streamed transfer mode causes the [!INCLUDE[indigo2](~/includes/indigo2-md.md)] runtime to enforce some restrictions.  \n  \n-   Operations that occur across a streamed transport can have a contract with at most one input and/or one output parameter at the programming model layer. That parameter corresponds to the entire body of the message and must be a <xref:System.ServiceModel.Channels.Message>, be a subtype of <xref:System.IO.Stream>, or implement the <xref:System.Xml.Serialization.IXmlSerializable> interface. Having a return value for an operation is equivalent to having an output parameter.  \n  \n-   Some [!INCLUDE[indigo2](~/includes/indigo2-md.md)] features such as Reliable Messaging and SOAP message-level security rely on buffering messages for transmissions. Using these features may reduce or eliminate the performance benefits gained by using streaming. To secure a streamed transport, use transport level security only or use mixed-mode security, which combines WS-Security claims with transport security.  \n  \n-   SOAP headers are always buffered, even when the transfer mode is set to Streamed. The headers for a message must not exceed the size of the MaxBufferSize transport quota which is exposed on the various bindings and binding elements.  \n  \n Changing the transfer mode from Buffered to Streamed also changes the native channel shape of the TCP and named pipe transports. For buffered transfers, the native channel shape is <xref:System.ServiceModel.Channels.IDuplexSessionChannel>. For streamed transfers, the native channels are <xref:System.ServiceModel.Channels.IRequestChannel> and <xref:System.ServiceModel.Channels.IReplyChannel>. A consequence of this is that sessionful service contracts cannot be used with transport streaming."
+  example:
+  - "The following code sample shows setting the <xref:System.ServiceModel.TransferMode> property to Streamed through code:  \n  \n **c#**  \n  \n```  \nTcpTransportBindingElement transport = new TcpTransportBindingElement();  \ntransport.TransferMode = TransferMode.Streamed;  \nBinaryMessageEncodingBindingElement encoder = new BinaryMessageEncodingBindingElement();  \nCustomBinding binding = new CustomBinding(encoder, transport);  \n```  \n  \n The following sample shows <xref:System.ServiceModel.TransferMode.Streamed> property to Streamed through configuration:  \n  \n```  \n<customBinding>  \n    <binding name=\"streamingBinding\">  \n        <binaryMessageEncoding />  \n            <tcpTransport transferMode=\"Streamed\" />  \n     </binding>  \n</customBinding>  \n```"
+  syntax:
+    content: public enum TransferMode
+  inheritance:
+  - System.Object
+  - System.ValueType
+  - System.Enum
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransferMode.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.TransferMode.Buffered
+  commentId: F:System.ServiceModel.TransferMode.Buffered
+  id: Buffered
+  parent: System.ServiceModel.TransferMode
+  langs:
+  - csharp
+  name: Buffered
+  nameWithType: TransferMode.Buffered
+  fullName: TransferMode.Buffered
+  type: Field
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: The request and response messages are both buffered.
+  syntax:
+    content: Buffered
+    return:
+      type: System.ServiceModel.TransferMode
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransferMode.xml
+- uid: System.ServiceModel.TransferMode.Streamed
+  commentId: F:System.ServiceModel.TransferMode.Streamed
+  id: Streamed
+  parent: System.ServiceModel.TransferMode
+  langs:
+  - csharp
+  name: Streamed
+  nameWithType: TransferMode.Streamed
+  fullName: TransferMode.Streamed
+  type: Field
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: The request and response messages are both streamed.
+  syntax:
+    content: Streamed
+    return:
+      type: System.ServiceModel.TransferMode
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransferMode.xml
+- uid: System.ServiceModel.TransferMode.StreamedRequest
+  commentId: F:System.ServiceModel.TransferMode.StreamedRequest
+  id: StreamedRequest
+  parent: System.ServiceModel.TransferMode
+  langs:
+  - csharp
+  name: StreamedRequest
+  nameWithType: TransferMode.StreamedRequest
+  fullName: TransferMode.StreamedRequest
+  type: Field
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: The request message is streamed and the response message is buffered.
+  syntax:
+    content: StreamedRequest
+    return:
+      type: System.ServiceModel.TransferMode
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransferMode.xml
+- uid: System.ServiceModel.TransferMode.StreamedResponse
+  commentId: F:System.ServiceModel.TransferMode.StreamedResponse
+  id: StreamedResponse
+  parent: System.ServiceModel.TransferMode
+  langs:
+  - csharp
+  name: StreamedResponse
+  nameWithType: TransferMode.StreamedResponse
+  fullName: TransferMode.StreamedResponse
+  type: Field
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel
+  summary: The request message is buffered and the response message is streamed.
+  syntax:
+    content: StreamedResponse
+    return:
+      type: System.ServiceModel.TransferMode
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel/TransferMode.xml
+references:
+- uid: System.Enum
+  parent: System
+  isExternal: false
+  name: Enum
+  nameWithType: Enum
+  fullName: System.Enum
+- uid: System.ServiceModel.TransferMode.Buffered
+  parent: System.ServiceModel.TransferMode
+  isExternal: false
+  name: Buffered
+  nameWithType: TransferMode.Buffered
+  fullName: TransferMode.Buffered
+- uid: System.ServiceModel.TransferMode
+  parent: System.ServiceModel
+  isExternal: false
+  name: TransferMode
+  nameWithType: TransferMode
+  fullName: System.ServiceModel.TransferMode
+- uid: System.ServiceModel.TransferMode.Streamed
+  parent: System.ServiceModel.TransferMode
+  isExternal: false
+  name: Streamed
+  nameWithType: TransferMode.Streamed
+  fullName: TransferMode.Streamed
+- uid: System.ServiceModel.TransferMode.StreamedRequest
+  parent: System.ServiceModel.TransferMode
+  isExternal: false
+  name: StreamedRequest
+  nameWithType: TransferMode.StreamedRequest
+  fullName: TransferMode.StreamedRequest
+- uid: System.ServiceModel.TransferMode.StreamedResponse
+  parent: System.ServiceModel.TransferMode
+  isExternal: false
+  name: StreamedResponse
+  nameWithType: TransferMode.StreamedResponse
+  fullName: TransferMode.StreamedResponse

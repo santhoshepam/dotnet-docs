@@ -1,0 +1,416 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.ServiceModel.Description.IContractBehavior
+  commentId: T:System.ServiceModel.Description.IContractBehavior
+  id: IContractBehavior
+  children:
+  - System.ServiceModel.Description.IContractBehavior.AddBindingParameters(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Channels.BindingParameterCollection)
+  - System.ServiceModel.Description.IContractBehavior.ApplyClientBehavior(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.ClientRuntime)
+  - System.ServiceModel.Description.IContractBehavior.ApplyDispatchBehavior(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.DispatchRuntime)
+  - System.ServiceModel.Description.IContractBehavior.Validate(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint)
+  langs:
+  - csharp
+  name: IContractBehavior
+  nameWithType: IContractBehavior
+  fullName: System.ServiceModel.Description.IContractBehavior
+  type: Interface
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Implements methods that can be used to extend run-time behavior for a contract in either a service or client application.
+  remarks: "Implement the <xref:System.ServiceModel.Description.IContractBehavior> interface to modify, examine, or extend some aspect of contract-wide execution at the application level. Unlike <xref:System.ServiceModel.Description.IServiceBehavior> and <xref:System.ServiceModel.Description.IEndpointBehavior> objects, <xref:System.ServiceModel.Description.IContractBehavior> objects cannot be added to the runtime using an application configuration file; they can only be added programmatically or using an attribute.  \n  \n For more information about choosing between service, endpoint, and contract behaviors, see [Configuring and Extending the Runtime with Behaviors](~/docs/framework/wcf/extending/configuring-and-extending-the-runtime-with-behaviors.md).  \n  \n-   Use the <xref:System.ServiceModel.Description.IContractBehavior.AddBindingParameters%2A> method to provide binding elements with custom data to support the behavior.  \n  \n-   Use the <xref:System.ServiceModel.Description.IContractBehavior.ApplyClientBehavior%2A> method to modify, examine, or insert extensions to a contract in a client application.  \n  \n-   Use the <xref:System.ServiceModel.Description.IContractBehavior.ApplyDispatchBehavior%2A> method to modify, examine, or insert extensions to a contract in a service application.  \n  \n-   Use the <xref:System.ServiceModel.Description.IContractBehavior.Validate%2A> method to ensure that a contract can support a particular feature.  \n  \n <xref:System.ServiceModel.Description.IContractBehavior> objects can make use of any of these methods, but often only one is important; in such cases, the unused methods can return without any value.  \n  \n> [!NOTE]\n>  All of the <xref:System.ServiceModel.Description.IContractBehavior> methods pass <xref:System.ServiceModel.Description.ContractDescription?displayProperty=fullName> and <xref:System.ServiceModel.Description.ServiceEndpoint?displayProperty=fullName> as parameters. These parameters are for examination; if you modify the objects the execution behavior is undefined.  \n  \n <xref:System.ServiceModel.Description.IContractBehavior> types can be used on either the service or the client, or both. To perform a customization task on the service, the <xref:System.ServiceModel.Description.IContractBehavior> object must be added to the <xref:System.ServiceModel.Description.ContractDescription.Behaviors%2A> property prior to the construction of the service runtime, which occurs when the <xref:System.ServiceModel.ICommunicationObject.Open%2A?displayProperty=fullName> method is called on the <xref:System.ServiceModel.ServiceHost?displayProperty=fullName> object. There are two ways to do this.  \n  \n The first method is to programmatically add the custom contract behavior to the <xref:System.ServiceModel.Description.ContractDescription.Behaviors%2A> property prior to the point when the <xref:System.ServiceModel.ICommunicationObject.Open%2A?displayProperty=fullName> method is called on the <xref:System.ServiceModel.ServiceHost?displayProperty=fullName> object. When applied this way, the behavior is applied for all messages flowing through that contract on any endpoint.  \n  \n> [!NOTE]\n>  The behavior is applied to all contracts of the same type. For example, if you programmatically add the same contract type to more than one endpoint, the behavior modifies all endpoints that refer to the same contract object.  \n  \n The second method is to create a custom attribute that implements <xref:System.ServiceModel.Description.IContractBehavior> and apply that to:  \n  \n-   A contract interface. In this case, the behavior is applied to all contracts of that type in any endpoint.  \n  \n-   A service class.  In this case, the behavior is applied to all endpoints regardless of contract.  \n  \n-   A callback class.  In this case, the behavior is applied to the duplex client's endpoint.  \n  \n The behavior of the second approach varies slightly if the custom attribute also implements <xref:System.ServiceModel.Description.IContractBehaviorAttribute?displayProperty=fullName>. In this case, the behavior is as follows:  \n  \n-   A contract interface. In this case, the behavior is applied to all contracts of that type in any endpoint and [!INCLUDE[indigo1](~/includes/indigo1-md.md)] ignores the value of the <xref:System.ServiceModel.Description.IContractBehaviorAttribute.TargetContract%2A?displayProperty=fullName> property.  \n  \n-   A service class.  In this case, the behavior is applied only to endpoints the contract of which is the value of the <xref:System.ServiceModel.Description.IContractBehaviorAttribute.TargetContract%2A?displayProperty=fullName> property.  \n  \n-   A callback class.  In this case, the behavior is applied to the duplex client's endpoint and [!INCLUDE[indigo2](~/includes/indigo2-md.md)] ignores the value of the <xref:System.ServiceModel.Description.IContractBehaviorAttribute.TargetContract%2A?displayProperty=fullName> property.  \n  \n To perform the customization task on the client for which it is intended, the <xref:System.ServiceModel.Description.IContractBehavior> object must be added to the <xref:System.ServiceModel.Description.ContractDescription.Behaviors%2A> property prior to the construction of the client runtime, which occurs when <xref:System.ServiceModel.ChannelFactory%601.CreateChannel%2A?displayProperty=fullName> is called. There are two ways to do this:  \n  \n-   Programmatically add the custom contract behavior to the <xref:System.ServiceModel.Description.ContractDescription.Behaviors%2A> property prior to the point when the <xref:System.ServiceModel.ChannelFactory%601.CreateChannel%2A?displayProperty=fullName> is called.  \n  \n-   Create a custom attribute that also implements <xref:System.ServiceModel.Description.IContractBehavior>.  \n  \n For more information on programmatically adding <xref:System.ServiceModel.Description.IContractBehavior> types to either the client or service application, see [Configuring and Extending the Runtime with Behaviors](~/docs/framework/wcf/extending/configuring-and-extending-the-runtime-with-behaviors.md)."
+  example:
+  - "The following code example assumes a custom <xref:System.ServiceModel.Dispatcher.IInstanceProvider> implementation called `ObjectProviderBehavior` that provides a \"singleton\" behavior; it always returns the same service instance and does not recycle it.  \n  \n To insert the instance provider customization, the example shows how to implement a custom attribute (`SingletonBehaviorAttribute`) that implements <xref:System.ServiceModel.Description.IContractBehavior> to insert the custom service instance provider. It also implements <xref:System.ServiceModel.Description.IContractBehaviorAttribute>, which binds its use to the `ISampleService` contract.  \n  \n [!code-csharp[IContractBehavior#2](~/samples/snippets/csharp/VS_Snippets_CFX/icontractbehavior/cs/objectproviderbehavior.cs#2)]\n [!code-vb[IContractBehavior#2](~/samples/snippets/visualbasic/VS_Snippets_CFX/icontractbehavior/vb/objectproviderbehavior.vb#2)]"
+  syntax:
+    content: public interface IContractBehavior
+  derivedClasses:
+  - System.ServiceModel.DeliveryRequirementsAttribute
+  - System.ServiceModel.Activities.Description.WorkflowContractBehaviorAttribute
+  - System.ServiceModel.Description.ServiceMetadataContractBehavior
+  - System.ServiceModel.Security.WSTrustServiceContract
+  - System.ServiceModel.Web.JavascriptCallbackBehaviorAttribute
+  implements: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IContractBehavior.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Description.IContractBehavior.AddBindingParameters(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Channels.BindingParameterCollection)
+  commentId: M:System.ServiceModel.Description.IContractBehavior.AddBindingParameters(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Channels.BindingParameterCollection)
+  id: AddBindingParameters(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Description.IContractBehavior
+  langs:
+  - csharp
+  name: AddBindingParameters(ContractDescription, ServiceEndpoint, BindingParameterCollection)
+  nameWithType: IContractBehavior.AddBindingParameters(ContractDescription, ServiceEndpoint, BindingParameterCollection)
+  fullName: IContractBehavior.AddBindingParameters(ContractDescription, ServiceEndpoint, BindingParameterCollection)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Configures any binding elements to support the contract behavior.
+  remarks: "Implement the <xref:System.ServiceModel.Description.IContractBehavior.AddBindingParameters%2A> method to provide binding elements with the extra objects they require to support the contract behavior.  \n  \n This method is called once for each endpoint that uses the specified service contract."
+  syntax:
+    content: public void AddBindingParameters (System.ServiceModel.Description.ContractDescription contractDescription, System.ServiceModel.Description.ServiceEndpoint endpoint, System.ServiceModel.Channels.BindingParameterCollection bindingParameters);
+    parameters:
+    - id: contractDescription
+      type: System.ServiceModel.Description.ContractDescription
+      description: The contract description to modify.
+    - id: endpoint
+      type: System.ServiceModel.Description.ServiceEndpoint
+      description: The endpoint to modify.
+    - id: bindingParameters
+      type: System.ServiceModel.Channels.BindingParameterCollection
+      description: The objects that binding elements require to support the behavior.
+  overload: System.ServiceModel.Description.IContractBehavior.AddBindingParameters*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IContractBehavior.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Description.IContractBehavior.ApplyClientBehavior(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.ClientRuntime)
+  commentId: M:System.ServiceModel.Description.IContractBehavior.ApplyClientBehavior(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.ClientRuntime)
+  id: ApplyClientBehavior(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.ClientRuntime)
+  parent: System.ServiceModel.Description.IContractBehavior
+  langs:
+  - csharp
+  name: ApplyClientBehavior(ContractDescription, ServiceEndpoint, ClientRuntime)
+  nameWithType: IContractBehavior.ApplyClientBehavior(ContractDescription, ServiceEndpoint, ClientRuntime)
+  fullName: IContractBehavior.ApplyClientBehavior(ContractDescription, ServiceEndpoint, ClientRuntime)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Implements a modification or extension of the client across a contract.
+  remarks: "Implement the <xref:System.ServiceModel.Description.IContractBehavior.ApplyClientBehavior%2A> method to view, modify, or add custom extensions to the client runtime across all messages or for one specific operation. For details about what customizations you can do with a client run-time object, see <xref:System.ServiceModel.Dispatcher.ClientRuntime> and <xref:System.ServiceModel.Dispatcher.ClientOperation>.  \n  \n The <xref:System.ServiceModel.Description.IContractBehavior.ApplyClientBehavior%2A> method can throw a <xref:System.NotImplementedException> exception if the behavior is only intended for use in a service application.  \n  \n This method is called once for each endpoint that uses the specified service contract.  \n  \n Note that there can be two operations with the same name in the description (one in each direction), so if you must iterate through operations where the contract is a duplex contract, you must correlate the message direction between the endpoint <xref:System.ServiceModel.Dispatcher.ClientRuntime> and that returned by the <xref:System.ServiceModel.Dispatcher.ClientRuntime.CallbackDispatchRuntime%2A> property.  \n  \n Because other behaviors may have already added or removed some operations from the runtime, there is no guarantee that there are the same number of operations in the description as there are <xref:System.ServiceModel.Dispatcher.ClientOperation> objects in the <xref:System.ServiceModel.Dispatcher.ClientRuntime.Operations%2A> property."
+  example:
+  - "The following code example assumes a custom <xref:System.ServiceModel.Dispatcher.IInstanceProvider> implementation called `ObjectProviderBehavior` that provides a \"singleton\" behavior; it always returns the same service instance and does not recycle it.  \n  \n To insert the instance provider customization, the example shows how to implement a custom attribute (`SingletonBehaviorAttribute`) that implements <xref:System.ServiceModel.Description.IContractBehavior> to insert the custom service instance provider. It also implements <xref:System.ServiceModel.Description.IContractBehaviorAttribute>, which binds its use to the `ISampleService` contract.  \n  \n [!code-csharp[IContractBehavior#2](~/samples/snippets/csharp/VS_Snippets_CFX/icontractbehavior/cs/objectproviderbehavior.cs#2)]\n [!code-vb[IContractBehavior#2](~/samples/snippets/visualbasic/VS_Snippets_CFX/icontractbehavior/vb/objectproviderbehavior.vb#2)]"
+  syntax:
+    content: public void ApplyClientBehavior (System.ServiceModel.Description.ContractDescription contractDescription, System.ServiceModel.Description.ServiceEndpoint endpoint, System.ServiceModel.Dispatcher.ClientRuntime clientRuntime);
+    parameters:
+    - id: contractDescription
+      type: System.ServiceModel.Description.ContractDescription
+      description: The contract description for which the extension is intended.
+    - id: endpoint
+      type: System.ServiceModel.Description.ServiceEndpoint
+      description: The endpoint.
+    - id: clientRuntime
+      type: System.ServiceModel.Dispatcher.ClientRuntime
+      description: The client runtime.
+  overload: System.ServiceModel.Description.IContractBehavior.ApplyClientBehavior*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IContractBehavior.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Description.IContractBehavior.ApplyDispatchBehavior(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.DispatchRuntime)
+  commentId: M:System.ServiceModel.Description.IContractBehavior.ApplyDispatchBehavior(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.DispatchRuntime)
+  id: ApplyDispatchBehavior(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.DispatchRuntime)
+  parent: System.ServiceModel.Description.IContractBehavior
+  langs:
+  - csharp
+  name: ApplyDispatchBehavior(ContractDescription, ServiceEndpoint, DispatchRuntime)
+  nameWithType: IContractBehavior.ApplyDispatchBehavior(ContractDescription, ServiceEndpoint, DispatchRuntime)
+  fullName: IContractBehavior.ApplyDispatchBehavior(ContractDescription, ServiceEndpoint, DispatchRuntime)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Implements a modification or extension of the client across a contract.
+  remarks: "Implement the <xref:System.ServiceModel.Description.IContractBehavior.ApplyDispatchBehavior%2A> to view, modify, or add custom extensions to the service runtime across all messages in a specific contract or for one specific operation in that contract. For details about what customizations you can perform in a service application, see <xref:System.ServiceModel.Dispatcher.DispatchRuntime> and <xref:System.ServiceModel.Dispatcher.DispatchOperation>.  \n  \n The <xref:System.ServiceModel.Description.IContractBehavior.ApplyDispatchBehavior%2A> method can throw a <xref:System.NotImplementedException> exception if the behavior is only intended for use in a client application.  \n  \n This method is called once for each endpoint that uses the specified service contract.  \n  \n Note that there can be two operations with the same name in the description (one in each direction), so if you must iterate through operations where the contract is a duplex contract, you must correlate the message direction between the endpoint <xref:System.ServiceModel.Dispatcher.DispatchRuntime> and that returned by the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.CallbackClientRuntime%2A> property.  \n  \n In addition, because other behaviors may have already added or removed some operations from the runtime, there is no guarantee that there are the same number of operations in description as there are <xref:System.ServiceModel.Dispatcher.DispatchOperation> objects in the <xref:System.ServiceModel.Dispatcher.DispatchRuntime.Operations%2A> property."
+  example:
+  - "The following code example assumes a custom <xref:System.ServiceModel.Dispatcher.IInstanceProvider> implementation called `ObjectProviderBehavior` that provides a \"singleton\" behavior; it always returns the same service instance and does not recycle it.  \n  \n To insert the instance provider customization, the example shows how to implement a custom attribute (`SingletonBehaviorAttribute`) that implements <xref:System.ServiceModel.Description.IContractBehavior> to insert the custom service instance provider. It also implements <xref:System.ServiceModel.Description.IContractBehaviorAttribute>, which binds its use to the `ISampleService` contract.  \n  \n [!code-csharp[IContractBehavior#2](~/samples/snippets/csharp/VS_Snippets_CFX/icontractbehavior/cs/objectproviderbehavior.cs#2)]\n [!code-vb[IContractBehavior#2](~/samples/snippets/visualbasic/VS_Snippets_CFX/icontractbehavior/vb/objectproviderbehavior.vb#2)]"
+  syntax:
+    content: public void ApplyDispatchBehavior (System.ServiceModel.Description.ContractDescription contractDescription, System.ServiceModel.Description.ServiceEndpoint endpoint, System.ServiceModel.Dispatcher.DispatchRuntime dispatchRuntime);
+    parameters:
+    - id: contractDescription
+      type: System.ServiceModel.Description.ContractDescription
+      description: The contract description to be modified.
+    - id: endpoint
+      type: System.ServiceModel.Description.ServiceEndpoint
+      description: The endpoint that exposes the contract.
+    - id: dispatchRuntime
+      type: System.ServiceModel.Dispatcher.DispatchRuntime
+      description: The dispatch runtime that controls service execution.
+  overload: System.ServiceModel.Description.IContractBehavior.ApplyDispatchBehavior*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IContractBehavior.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Description.IContractBehavior.Validate(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint)
+  commentId: M:System.ServiceModel.Description.IContractBehavior.Validate(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint)
+  id: Validate(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint)
+  parent: System.ServiceModel.Description.IContractBehavior
+  langs:
+  - csharp
+  name: Validate(ContractDescription, ServiceEndpoint)
+  nameWithType: IContractBehavior.Validate(ContractDescription, ServiceEndpoint)
+  fullName: IContractBehavior.Validate(ContractDescription, ServiceEndpoint)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Implement to confirm that the contract and endpoint can support the contract behavior.
+  remarks: "Implement the <xref:System.ServiceModel.Description.IContractBehavior.Validate%2A> method to confirm that the contract description is sufficient to support the custom contract behavior. Implementations can inspect the description and either throw or return no value.  \n  \n This method is called once for each endpoint that uses the specified service contract."
+  syntax:
+    content: public void Validate (System.ServiceModel.Description.ContractDescription contractDescription, System.ServiceModel.Description.ServiceEndpoint endpoint);
+    parameters:
+    - id: contractDescription
+      type: System.ServiceModel.Description.ContractDescription
+      description: The contract to validate.
+    - id: endpoint
+      type: System.ServiceModel.Description.ServiceEndpoint
+      description: The endpoint to validate.
+  overload: System.ServiceModel.Description.IContractBehavior.Validate*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IContractBehavior.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+references:
+- uid: System.ServiceModel.Description.IContractBehavior.AddBindingParameters(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Channels.BindingParameterCollection)
+  parent: System.ServiceModel.Description.IContractBehavior
+  isExternal: false
+  name: AddBindingParameters(ContractDescription, ServiceEndpoint, BindingParameterCollection)
+  nameWithType: IContractBehavior.AddBindingParameters(ContractDescription, ServiceEndpoint, BindingParameterCollection)
+  fullName: IContractBehavior.AddBindingParameters(ContractDescription, ServiceEndpoint, BindingParameterCollection)
+- uid: System.ServiceModel.Description.ContractDescription
+  parent: System.ServiceModel.Description
+  isExternal: false
+  name: ContractDescription
+  nameWithType: ContractDescription
+  fullName: System.ServiceModel.Description.ContractDescription
+- uid: System.ServiceModel.Description.ServiceEndpoint
+  parent: System.ServiceModel.Description
+  isExternal: false
+  name: ServiceEndpoint
+  nameWithType: ServiceEndpoint
+  fullName: System.ServiceModel.Description.ServiceEndpoint
+- uid: System.ServiceModel.Channels.BindingParameterCollection
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: BindingParameterCollection
+  nameWithType: BindingParameterCollection
+  fullName: System.ServiceModel.Channels.BindingParameterCollection
+- uid: System.ServiceModel.Description.IContractBehavior.ApplyClientBehavior(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.ClientRuntime)
+  parent: System.ServiceModel.Description.IContractBehavior
+  isExternal: false
+  name: ApplyClientBehavior(ContractDescription, ServiceEndpoint, ClientRuntime)
+  nameWithType: IContractBehavior.ApplyClientBehavior(ContractDescription, ServiceEndpoint, ClientRuntime)
+  fullName: IContractBehavior.ApplyClientBehavior(ContractDescription, ServiceEndpoint, ClientRuntime)
+- uid: System.ServiceModel.Dispatcher.ClientRuntime
+  parent: System.ServiceModel.Dispatcher
+  isExternal: false
+  name: ClientRuntime
+  nameWithType: ClientRuntime
+  fullName: System.ServiceModel.Dispatcher.ClientRuntime
+- uid: System.ServiceModel.Description.IContractBehavior.ApplyDispatchBehavior(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint,System.ServiceModel.Dispatcher.DispatchRuntime)
+  parent: System.ServiceModel.Description.IContractBehavior
+  isExternal: false
+  name: ApplyDispatchBehavior(ContractDescription, ServiceEndpoint, DispatchRuntime)
+  nameWithType: IContractBehavior.ApplyDispatchBehavior(ContractDescription, ServiceEndpoint, DispatchRuntime)
+  fullName: IContractBehavior.ApplyDispatchBehavior(ContractDescription, ServiceEndpoint, DispatchRuntime)
+- uid: System.ServiceModel.Dispatcher.DispatchRuntime
+  parent: System.ServiceModel.Dispatcher
+  isExternal: false
+  name: DispatchRuntime
+  nameWithType: DispatchRuntime
+  fullName: System.ServiceModel.Dispatcher.DispatchRuntime
+- uid: System.ServiceModel.Description.IContractBehavior.Validate(System.ServiceModel.Description.ContractDescription,System.ServiceModel.Description.ServiceEndpoint)
+  parent: System.ServiceModel.Description.IContractBehavior
+  isExternal: false
+  name: Validate(ContractDescription, ServiceEndpoint)
+  nameWithType: IContractBehavior.Validate(ContractDescription, ServiceEndpoint)
+  fullName: IContractBehavior.Validate(ContractDescription, ServiceEndpoint)
+- uid: System.ServiceModel.Description.IContractBehavior.AddBindingParameters*
+  parent: System.ServiceModel.Description.IContractBehavior
+  isExternal: false
+  name: AddBindingParameters
+  nameWithType: IContractBehavior.AddBindingParameters
+  fullName: IContractBehavior.AddBindingParameters
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IContractBehavior.xml
+- uid: System.ServiceModel.Description.IContractBehavior.ApplyClientBehavior*
+  parent: System.ServiceModel.Description.IContractBehavior
+  isExternal: false
+  name: ApplyClientBehavior
+  nameWithType: IContractBehavior.ApplyClientBehavior
+  fullName: IContractBehavior.ApplyClientBehavior
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IContractBehavior.xml
+- uid: System.ServiceModel.Description.IContractBehavior.ApplyDispatchBehavior*
+  parent: System.ServiceModel.Description.IContractBehavior
+  isExternal: false
+  name: ApplyDispatchBehavior
+  nameWithType: IContractBehavior.ApplyDispatchBehavior
+  fullName: IContractBehavior.ApplyDispatchBehavior
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IContractBehavior.xml
+- uid: System.ServiceModel.Description.IContractBehavior.Validate*
+  parent: System.ServiceModel.Description.IContractBehavior
+  isExternal: false
+  name: Validate
+  nameWithType: IContractBehavior.Validate
+  fullName: IContractBehavior.Validate
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/IContractBehavior.xml

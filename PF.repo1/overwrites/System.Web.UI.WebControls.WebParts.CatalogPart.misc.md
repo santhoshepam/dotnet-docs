@@ -1,0 +1,8 @@
+---
+uid: System.Web.UI.WebControls.WebParts.CatalogPart
+additional_notes.overrides: *content
+---
+
+<p>Because the <xref href="System.Web.UI.WebControls.WebParts.CatalogPart"></xref> class is abstract, you cannot use it directly on a Web page. The Web Parts control set provides three <xref href="System.Web.UI.WebControls.WebParts.CatalogPart"></xref> controls (listed in the table in the Remarks section of this topic) that derive from the base class and that can be used on Web Parts pages. These controls should provide most of the features needed to create catalogs of Web server controls. However, you might have specialized needs that would require developing a custom <xref href="System.Web.UI.WebControls.WebParts.CatalogPart"></xref> control. For example, you can create a special type of <xref href="System.Web.UI.WebControls.WebParts.CatalogPart"></xref> control that makes server controls available through a Web service, or directly from a database. To do this, you must inherit from the <xref href="System.Web.UI.WebControls.WebParts.CatalogPart"></xref> class. You must also override the abstract <xref href="System.Web.UI.WebControls.WebParts.CatalogPart.GetAvailableWebPartDescriptions"></xref> and <xref href="System.Web.UI.WebControls.WebParts.CatalogPart.GetWebPart(System.Web.UI.WebControls.WebParts.WebPartDescription)"></xref> methods to provide an implementation that returns the <xref href="System.Web.UI.WebControls.WebParts.WebPart"></xref> or other server controls, and their descriptions. You will also need methods to load the various server controls from your database or Web service.</p>
+
+

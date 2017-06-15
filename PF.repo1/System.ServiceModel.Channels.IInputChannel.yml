@@ -1,0 +1,1105 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.ServiceModel.Channels.IInputChannel
+  commentId: T:System.ServiceModel.Channels.IInputChannel
+  id: IInputChannel
+  children:
+  - System.ServiceModel.Channels.IInputChannel.BeginReceive(System.AsyncCallback,System.Object)
+  - System.ServiceModel.Channels.IInputChannel.BeginReceive(System.TimeSpan,System.AsyncCallback,System.Object)
+  - System.ServiceModel.Channels.IInputChannel.BeginTryReceive(System.TimeSpan,System.AsyncCallback,System.Object)
+  - System.ServiceModel.Channels.IInputChannel.BeginWaitForMessage(System.TimeSpan,System.AsyncCallback,System.Object)
+  - System.ServiceModel.Channels.IInputChannel.EndReceive(System.IAsyncResult)
+  - System.ServiceModel.Channels.IInputChannel.EndTryReceive(System.IAsyncResult,System.ServiceModel.Channels.Message@)
+  - System.ServiceModel.Channels.IInputChannel.EndWaitForMessage(System.IAsyncResult)
+  - System.ServiceModel.Channels.IInputChannel.LocalAddress
+  - System.ServiceModel.Channels.IInputChannel.Receive
+  - System.ServiceModel.Channels.IInputChannel.Receive(System.TimeSpan)
+  - System.ServiceModel.Channels.IInputChannel.TryReceive(System.TimeSpan,System.ServiceModel.Channels.Message@)
+  - System.ServiceModel.Channels.IInputChannel.WaitForMessage(System.TimeSpan)
+  langs:
+  - csharp
+  name: IInputChannel
+  nameWithType: IInputChannel
+  fullName: System.ServiceModel.Channels.IInputChannel
+  type: Interface
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Defines the interface that a channel must implement to receive a message.
+  remarks: "The <xref:System.ServiceModel.Channels.IInputChannel> contract includes synchronous and asynchronous variants of receive, try-to-receive and wait-for-a-message functionality.  \n  \n The pull model is used typically with an <xref:System.ServiceModel.Channels.IInputChannel> to receive messages: you call <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A> (to \"pull\" a message out of the channel) and then wait for a message to arrive. An alternative usage pattern is to call <xref:System.ServiceModel.Channels.IInputChannel.BeginWaitForMessage%28System.TimeSpan%2CSystem.AsyncCallback%2CSystem.Object%29> or <xref:System.ServiceModel.Channels.IInputChannel.BeginWaitForMessage%28System.TimeSpan%2CSystem.AsyncCallback%2CSystem.Object%29>, and then call <xref:System.ServiceModel.Channels.IInputChannel.Receive%28System.TimeSpan%29>. This approach is common for transactional usages where you start the transaction between the calls to <xref:System.ServiceModel.Channels.IInputChannel.WaitForMessage%28System.TimeSpan%29> and <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A>.  \n  \n An <xref:System.ServiceModel.Channels.IInputChannel> is not necessarily bound to a single sender. Other channels and channel interfaces can provide a correlation between particular senders and an <xref:System.ServiceModel.Channels.IInputChannel>, but the base contract makes no such restriction. An implementation can create a new <xref:System.ServiceModel.Channels.IInputChannel> for each message or reuse the same <xref:System.ServiceModel.Channels.IInputChannel> for multiple messages and senders."
+  syntax:
+    content: 'public interface IInputChannel : System.ServiceModel.Channels.IChannel'
+  derivedClasses:
+  - System.ServiceModel.Channels.IDuplexChannel
+  - System.ServiceModel.Channels.IInputSessionChannel
+  implements:
+  - System.ServiceModel.Channels.IChannel
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.IInputChannel.BeginReceive(System.AsyncCallback,System.Object)
+  commentId: M:System.ServiceModel.Channels.IInputChannel.BeginReceive(System.AsyncCallback,System.Object)
+  id: BeginReceive(System.AsyncCallback,System.Object)
+  parent: System.ServiceModel.Channels.IInputChannel
+  langs:
+  - csharp
+  name: BeginReceive(AsyncCallback, Object)
+  nameWithType: IInputChannel.BeginReceive(AsyncCallback, Object)
+  fullName: IInputChannel.BeginReceive(AsyncCallback, Object)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Begins an asynchronous operation to receive a message that has a state object associated with it.
+  remarks: "Use the asynchronous <xref:System.ServiceModel.Channels.IInputChannel.BeginReceive%2A> method when you want the application processing to continue without waiting for the request to be received. Use the synchronous <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A> method when it is acceptable for the current thread to be blocked until the request message is received or the interval of time specified by the `timeout` has been exceeded. The asynchronous operation is available with or without an explicit timeout.  \n  \n This method receives notification, through a callback, of the identity of the event handler for the operation. The operation is not complete until a message becomes available in the channel."
+  example:
+  - "The following code illustrates how to implement this method:  \n  \n [!code-csharp[S_UE_MessageInterceptor#15](~/samples/snippets/csharp/VS_Snippets_CFX/s_ue_messageinterceptor/cs/interceptingduplexchannel.cs#15)]"
+  syntax:
+    content: public IAsyncResult BeginReceive (AsyncCallback callback, object state);
+    parameters:
+    - id: callback
+      type: System.AsyncCallback
+      description: The <xref href="System.AsyncCallback"></xref> delegate that receives the notification of the asynchronous operation completion.
+    - id: state
+      type: System.Object
+      description: An object, specified by the application, that contains state information associated with the asynchronous operation.
+    return:
+      type: System.IAsyncResult
+      description: The <xref href="System.IAsyncResult"></xref> that references the asynchronous message reception.
+  overload: System.ServiceModel.Channels.IInputChannel.BeginReceive*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.IInputChannel.BeginReceive(System.TimeSpan,System.AsyncCallback,System.Object)
+  commentId: M:System.ServiceModel.Channels.IInputChannel.BeginReceive(System.TimeSpan,System.AsyncCallback,System.Object)
+  id: BeginReceive(System.TimeSpan,System.AsyncCallback,System.Object)
+  parent: System.ServiceModel.Channels.IInputChannel
+  langs:
+  - csharp
+  name: BeginReceive(TimeSpan, AsyncCallback, Object)
+  nameWithType: IInputChannel.BeginReceive(TimeSpan, AsyncCallback, Object)
+  fullName: IInputChannel.BeginReceive(TimeSpan, AsyncCallback, Object)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Begins an asynchronous operation to receive a message that has a specified time out and state object associated with it.
+  remarks: "Use the asynchronous <xref:System.ServiceModel.Channels.IInputChannel.BeginReceive%2A> method when you want the application processing to continue without waiting for the request to be received. Use the synchronous <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A> method when it is acceptable for the current thread to be blocked until the request message is received or the interval of time specified by the `timeout` has been exceeded. The asynchronous operation is available with or without an explicit timeout.  \n  \n The operation is not complete until either a message becomes available in the channel or the time out occurs."
+  example:
+  - "The following code illustrates how to implement this method:  \n  \n [!code-csharp[S_UE_MessageInterceptor#16](~/samples/snippets/csharp/VS_Snippets_CFX/s_ue_messageinterceptor/cs/interceptingduplexchannel.cs#16)]"
+  syntax:
+    content: public IAsyncResult BeginReceive (TimeSpan timeout, AsyncCallback callback, object state);
+    parameters:
+    - id: timeout
+      type: System.TimeSpan
+      description: The <xref href="System.TimeSpan"></xref> that specifies the interval of time to wait for a message to become available.
+    - id: callback
+      type: System.AsyncCallback
+      description: The <xref href="System.AsyncCallback"></xref> delegate that receives the notification of the asynchronous operation completion.
+    - id: state
+      type: System.Object
+      description: An object, specified by the application, that contains state information associated with the asynchronous operation.
+    return:
+      type: System.IAsyncResult
+      description: The <xref href="System.IAsyncResult"></xref> that references the asynchronous receive operation.
+  overload: System.ServiceModel.Channels.IInputChannel.BeginReceive*
+  exceptions:
+  - type: System.TimeoutException
+    commentId: T:System.TimeoutException
+    description: The specified <code>timeout</code> is exceeded before the operation is completed.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The timeout specified is less than zero.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.IInputChannel.BeginTryReceive(System.TimeSpan,System.AsyncCallback,System.Object)
+  commentId: M:System.ServiceModel.Channels.IInputChannel.BeginTryReceive(System.TimeSpan,System.AsyncCallback,System.Object)
+  id: BeginTryReceive(System.TimeSpan,System.AsyncCallback,System.Object)
+  parent: System.ServiceModel.Channels.IInputChannel
+  langs:
+  - csharp
+  name: BeginTryReceive(TimeSpan, AsyncCallback, Object)
+  nameWithType: IInputChannel.BeginTryReceive(TimeSpan, AsyncCallback, Object)
+  fullName: IInputChannel.BeginTryReceive(TimeSpan, AsyncCallback, Object)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Begins an asynchronous operation to receive a message that has a specified time out and state object associated with it.
+  remarks: "Use the asynchronous <xref:System.ServiceModel.Channels.IInputChannel.BeginTryReceive%28System.TimeSpan%2CSystem.AsyncCallback%2CSystem.Object%29> method when you want the application processing to continue without waiting. Use the synchronous <xref:System.ServiceModel.Channels.IInputChannel.TryReceive%28System.TimeSpan%2CSystem.ServiceModel.Channels.Message%40%29> method when it is acceptable for the current thread to be blocked while it replies to the request message or until the timeout interval is exceeded.  \n  \n The operation is not complete until either a message becomes available in the channel or the timeout occurs.  \n  \n If you are going to handle timeouts and not just re-throw or wrap the <xref:System.TimeoutException>, then you should call <xref:System.ServiceModel.Channels.IInputChannel.BeginTryReceive%28System.TimeSpan%2CSystem.AsyncCallback%2CSystem.Object%29> instead of <xref:System.ServiceModel.Channels.IInputChannel.BeginReceive%2A>.  \n  \n If you are not going to treat timeouts specially then just call <xref:System.ServiceModel.Channels.IInputChannel.BeginReceive%2A>, otherwise you lose error information."
+  example:
+  - "The following code illustrates how to implement this method:  \n  \n [!code-csharp[S_UE_MessageInterceptor#19](~/samples/snippets/csharp/VS_Snippets_CFX/s_ue_messageinterceptor/cs/interceptingduplexchannel.cs#19)]"
+  syntax:
+    content: public IAsyncResult BeginTryReceive (TimeSpan timeout, AsyncCallback callback, object state);
+    parameters:
+    - id: timeout
+      type: System.TimeSpan
+      description: The <xref href="System.TimeSpan"></xref> that specifies the interval of time to wait for a message to become available.
+    - id: callback
+      type: System.AsyncCallback
+      description: The <xref href="System.AsyncCallback"></xref> delegate that receives the notification of the asynchronous operation completion.
+    - id: state
+      type: System.Object
+      description: An object, specified by the application, that contains state information associated with the asynchronous operation.
+    return:
+      type: System.IAsyncResult
+      description: The <xref href="System.IAsyncResult"></xref> that references the asynchronous receive operation.
+  overload: System.ServiceModel.Channels.IInputChannel.BeginTryReceive*
+  exceptions:
+  - type: System.TimeoutException
+    commentId: T:System.TimeoutException
+    description: The specified <code>timeout</code> is exceeded before the operation is completed.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The timeout specified is less than zero.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.IInputChannel.BeginWaitForMessage(System.TimeSpan,System.AsyncCallback,System.Object)
+  commentId: M:System.ServiceModel.Channels.IInputChannel.BeginWaitForMessage(System.TimeSpan,System.AsyncCallback,System.Object)
+  id: BeginWaitForMessage(System.TimeSpan,System.AsyncCallback,System.Object)
+  parent: System.ServiceModel.Channels.IInputChannel
+  langs:
+  - csharp
+  name: BeginWaitForMessage(TimeSpan, AsyncCallback, Object)
+  nameWithType: IInputChannel.BeginWaitForMessage(TimeSpan, AsyncCallback, Object)
+  fullName: IInputChannel.BeginWaitForMessage(TimeSpan, AsyncCallback, Object)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Begins an asynchronous wait-for-a-message-to-arrive operation that has a specified time out and state object associated with it.
+  remarks: "Use the asynchronous <xref:System.ServiceModel.Channels.IInputChannel.BeginWaitForMessage%28System.TimeSpan%2CSystem.AsyncCallback%2CSystem.Object%29> method if you need the application processing to continue without waiting for the message to arrive. Use the synchronous <xref:System.ServiceModel.Channels.IInputChannel.WaitForMessage%28System.TimeSpan%29> method when it is acceptable for the current thread to be blocked while it waits for a message to arrive in the queue. The thread is blocked up to the specified `timeout`.  \n  \n This method receives notification, through a callback, of the identity of the event handler for the operation. The operation is not complete until either a message becomes available in the channel or the time out occurs."
+  example:
+  - "The following code illustrates how to implement this method:  \n  \n [!code-csharp[S_UE_MessageInterceptor#22](~/samples/snippets/csharp/VS_Snippets_CFX/s_ue_messageinterceptor/cs/interceptingduplexchannel.cs#22)]"
+  syntax:
+    content: public IAsyncResult BeginWaitForMessage (TimeSpan timeout, AsyncCallback callback, object state);
+    parameters:
+    - id: timeout
+      type: System.TimeSpan
+      description: The <xref href="System.TimeSpan"></xref> that specifies the interval of time to wait for a message to become available.
+    - id: callback
+      type: System.AsyncCallback
+      description: The <xref href="System.AsyncCallback"></xref> delegate that receives the notification of the asynchronous operation completion.
+    - id: state
+      type: System.Object
+      description: An object, specified by the application, that contains state information associated with the asynchronous operation.
+    return:
+      type: System.IAsyncResult
+      description: The <xref href="System.IAsyncResult"></xref> that references the asynchronous operation to wait for a message to arrive.
+  overload: System.ServiceModel.Channels.IInputChannel.BeginWaitForMessage*
+  exceptions:
+  - type: System.TimeoutException
+    commentId: T:System.TimeoutException
+    description: The specified <code>timeout</code> is exceeded before the operation is completed.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The timeout specified is less than zero.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.IInputChannel.EndReceive(System.IAsyncResult)
+  commentId: M:System.ServiceModel.Channels.IInputChannel.EndReceive(System.IAsyncResult)
+  id: EndReceive(System.IAsyncResult)
+  parent: System.ServiceModel.Channels.IInputChannel
+  langs:
+  - csharp
+  name: EndReceive(IAsyncResult)
+  nameWithType: IInputChannel.EndReceive(IAsyncResult)
+  fullName: IInputChannel.EndReceive(IAsyncResult)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Completes an asynchronous operation to receive a message.
+  remarks: ''
+  example:
+  - "The following code illustrates how to implement this method:  \n  \n [!code-csharp[S_UE_MessageInterceptor#17](~/samples/snippets/csharp/VS_Snippets_CFX/s_ue_messageinterceptor/cs/interceptingduplexchannel.cs#17)]"
+  syntax:
+    content: public System.ServiceModel.Channels.Message EndReceive (IAsyncResult result);
+    parameters:
+    - id: result
+      type: System.IAsyncResult
+      description: The <xref href="System.IAsyncResult"></xref> returned by a call to one of the <xref href="System.ServiceModel.Channels.IInputChannel.BeginReceive*"></xref> methods.
+    return:
+      type: System.ServiceModel.Channels.Message
+      description: The <xref href="System.ServiceModel.Channels.Message"></xref> received.
+  overload: System.ServiceModel.Channels.IInputChannel.EndReceive*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.IInputChannel.EndTryReceive(System.IAsyncResult,System.ServiceModel.Channels.Message@)
+  commentId: M:System.ServiceModel.Channels.IInputChannel.EndTryReceive(System.IAsyncResult,System.ServiceModel.Channels.Message@)
+  id: EndTryReceive(System.IAsyncResult,System.ServiceModel.Channels.Message@)
+  parent: System.ServiceModel.Channels.IInputChannel
+  langs:
+  - csharp
+  name: EndTryReceive(IAsyncResult, Message)
+  nameWithType: IInputChannel.EndTryReceive(IAsyncResult, Message)
+  fullName: IInputChannel.EndTryReceive(IAsyncResult, Message)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Completes the specified asynchronous operation to receive a message.
+  remarks: ''
+  example:
+  - "The following code illustrates how to implement this method:  \n  \n [!code-csharp[S_UE_MessageInterceptor#20](~/samples/snippets/csharp/VS_Snippets_CFX/s_ue_messageinterceptor/cs/interceptingduplexchannel.cs#20)]"
+  syntax:
+    content: public bool EndTryReceive (IAsyncResult result, out System.ServiceModel.Channels.Message message);
+    parameters:
+    - id: result
+      type: System.IAsyncResult
+      description: The <xref href="System.IAsyncResult"></xref> returned by a call to the <xref href="System.ServiceModel.Channels.IInputChannel.BeginTryReceive(System.TimeSpan,System.AsyncCallback,System.Object)"></xref> method.
+    - id: message
+      type: System.ServiceModel.Channels.Message
+      description: The <xref href="System.ServiceModel.Channels.Message"></xref> received.
+    return:
+      type: System.Boolean
+      description: '`true` if a message is received before the specified interval of time elapses; otherwise `false`.'
+  overload: System.ServiceModel.Channels.IInputChannel.EndTryReceive*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.IInputChannel.EndWaitForMessage(System.IAsyncResult)
+  commentId: M:System.ServiceModel.Channels.IInputChannel.EndWaitForMessage(System.IAsyncResult)
+  id: EndWaitForMessage(System.IAsyncResult)
+  parent: System.ServiceModel.Channels.IInputChannel
+  langs:
+  - csharp
+  name: EndWaitForMessage(IAsyncResult)
+  nameWithType: IInputChannel.EndWaitForMessage(IAsyncResult)
+  fullName: IInputChannel.EndWaitForMessage(IAsyncResult)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Completes the specified asynchronous wait-for-a-message operation.
+  remarks: ''
+  example:
+  - "The following code illustrates how to implement this method:  \n  \n [!code-csharp[S_UE_MessageInterceptor#23](~/samples/snippets/csharp/VS_Snippets_CFX/s_ue_messageinterceptor/cs/interceptingduplexchannel.cs#23)]"
+  syntax:
+    content: public bool EndWaitForMessage (IAsyncResult result);
+    parameters:
+    - id: result
+      type: System.IAsyncResult
+      description: The <xref href="System.IAsyncResult"></xref> that identifies the <xref href="System.ServiceModel.Channels.IInputChannel.BeginWaitForMessage(System.TimeSpan,System.AsyncCallback,System.Object)"></xref> operation to finish, and from which to retrieve an end result.
+    return:
+      type: System.Boolean
+      description: '`true` if a message has arrived before the <code>timeout</code> has been exceeded; otherwise `false`.'
+  overload: System.ServiceModel.Channels.IInputChannel.EndWaitForMessage*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.IInputChannel.LocalAddress
+  commentId: P:System.ServiceModel.Channels.IInputChannel.LocalAddress
+  id: LocalAddress
+  parent: System.ServiceModel.Channels.IInputChannel
+  langs:
+  - csharp
+  name: LocalAddress
+  nameWithType: IInputChannel.LocalAddress
+  fullName: IInputChannel.LocalAddress
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Gets the address on which the input channel receives messages.
+  remarks: "If this input channel does not have a standalone address (for example, it is the input-side of a client-initiated TCP channel), then this property is `null`.  \n  \n This property can be used by higher-level channels for correlation purposes. For example, if a higher-level channel implements request-reply on top of a <xref:System.ServiceModel.Channels.IDuplexChannel>, it can use the <xref:System.ServiceModel.Channels.IInputChannel.LocalAddress%2A> property in the WS-Addressing ReplyTo header."
+  example:
+  - "The following code illustrates how to implement this property:  \n  \n [!code-csharp[S_UE_MessageInterceptor#12](~/samples/snippets/csharp/VS_Snippets_CFX/s_ue_messageinterceptor/cs/interceptingduplexchannel.cs#12)]"
+  syntax:
+    content: public System.ServiceModel.EndpointAddress LocalAddress { get; }
+    return:
+      type: System.ServiceModel.EndpointAddress
+      description: The <xref href="System.ServiceModel.EndpointAddress"></xref> on which the input channel receives messages.
+  overload: System.ServiceModel.Channels.IInputChannel.LocalAddress*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.IInputChannel.Receive
+  commentId: M:System.ServiceModel.Channels.IInputChannel.Receive
+  id: Receive
+  parent: System.ServiceModel.Channels.IInputChannel
+  langs:
+  - csharp
+  name: Receive()
+  nameWithType: IInputChannel.Receive()
+  fullName: IInputChannel.Receive()
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Returns the message received, if one is available. If a message is not available, blocks for a default interval of time.
+  remarks: "Use the synchronous <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A> method when it is acceptable for the current thread to be blocked until it receives the request message or exceeds the interval of time specified by `timeout`. Use the asynchronous <xref:System.ServiceModel.Channels.IInputChannel.BeginReceive%2A> method when you want the application processing to continue without waiting for the request to be received.  \n  \n The synchronous <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A> operation is available with or without an explicit timeout.  \n  \n If a message is not available, it blocks until one is available or until the timeout is exceeded.  \n  \n <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A> can be called multiple times or concurrently. Only one <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A> call can complete for each message received."
+  example:
+  - "The following code illustrates how to implement this method:  \n  \n [!code-csharp[S_UE_MessageInterceptor#13](~/samples/snippets/csharp/VS_Snippets_CFX/s_ue_messageinterceptor/cs/interceptingduplexchannel.cs#13)]"
+  syntax:
+    content: public System.ServiceModel.Channels.Message Receive ();
+    parameters: []
+    return:
+      type: System.ServiceModel.Channels.Message
+      description: The <xref href="System.ServiceModel.Channels.Message"></xref> received.
+  overload: System.ServiceModel.Channels.IInputChannel.Receive*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.IInputChannel.Receive(System.TimeSpan)
+  commentId: M:System.ServiceModel.Channels.IInputChannel.Receive(System.TimeSpan)
+  id: Receive(System.TimeSpan)
+  parent: System.ServiceModel.Channels.IInputChannel
+  langs:
+  - csharp
+  name: Receive(TimeSpan)
+  nameWithType: IInputChannel.Receive(TimeSpan)
+  fullName: IInputChannel.Receive(TimeSpan)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Returns the message received, if one is available. If a message is not available, blocks for a specified interval of time.
+  remarks: "Use the synchronous <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A> method when it is acceptable for the current thread to be blocked until it receives the request message or exceeds the interval of time specified by `timeout`. Use the asynchronous <xref:System.ServiceModel.Channels.IInputChannel.BeginReceive%2A> method when you want the application processing to continue without waiting for the request to be received.  \n  \n The synchronous <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A> operation is available with or without an explicit timeout.  \n  \n If a message is not available, it blocks until one is available or until the timeout is exceeded.  \n  \n <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A> can be called multiple times or concurrently. Only one <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A> call can complete for each message received."
+  example:
+  - "The following code illustrates how to implement this method:  \n  \n [!code-csharp[S_UE_MessageInterceptor#14](~/samples/snippets/csharp/VS_Snippets_CFX/s_ue_messageinterceptor/cs/interceptingduplexchannel.cs#14)]"
+  syntax:
+    content: public System.ServiceModel.Channels.Message Receive (TimeSpan timeout);
+    parameters:
+    - id: timeout
+      type: System.TimeSpan
+      description: The <xref href="System.TimeSpan"></xref> that specifies how long the receive operation has to complete before timing out and throwing a <xref href="System.TimeoutException"></xref>.
+    return:
+      type: System.ServiceModel.Channels.Message
+      description: The <xref href="System.ServiceModel.Channels.Message"></xref> received.
+  overload: System.ServiceModel.Channels.IInputChannel.Receive*
+  exceptions:
+  - type: System.TimeoutException
+    commentId: T:System.TimeoutException
+    description: The specified <code>timeout</code> is exceeded before the operation is completed.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The timeout specified is less than zero.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.IInputChannel.TryReceive(System.TimeSpan,System.ServiceModel.Channels.Message@)
+  commentId: M:System.ServiceModel.Channels.IInputChannel.TryReceive(System.TimeSpan,System.ServiceModel.Channels.Message@)
+  id: TryReceive(System.TimeSpan,System.ServiceModel.Channels.Message@)
+  parent: System.ServiceModel.Channels.IInputChannel
+  langs:
+  - csharp
+  name: TryReceive(TimeSpan, Message)
+  nameWithType: IInputChannel.TryReceive(TimeSpan, Message)
+  fullName: IInputChannel.TryReceive(TimeSpan, Message)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Tries to receive a message within a specified interval of time.
+  remarks: "If you are going to handle timeouts and not just re-throw or wrap the <xref:System.TimeoutException>, then you should call <xref:System.ServiceModel.Channels.IInputChannel.TryReceive%28System.TimeSpan%2CSystem.ServiceModel.Channels.Message%40%29> instead of <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A>.  \n  \n If you are not going to treat timeouts specially then just call <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A>, otherwise you will lose error information."
+  example:
+  - "The following code illustrates how to implement this method:  \n  \n [!code-csharp[S_UE_MessageInterceptor#18](~/samples/snippets/csharp/VS_Snippets_CFX/s_ue_messageinterceptor/cs/interceptingduplexchannel.cs#18)]"
+  syntax:
+    content: public bool TryReceive (TimeSpan timeout, out System.ServiceModel.Channels.Message message);
+    parameters:
+    - id: timeout
+      type: System.TimeSpan
+      description: The <xref href="System.IAsyncResult"></xref> returned by a call to one of the <xref href="System.ServiceModel.Channels.IInputChannel.BeginReceive*"></xref> methods.
+    - id: message
+      type: System.ServiceModel.Channels.Message
+      description: The <xref href="System.ServiceModel.Channels.Message"></xref> received.
+    return:
+      type: System.Boolean
+      description: '`true` if a message is received before the <code>timeout</code> has been exceeded; otherwise `false`.'
+  overload: System.ServiceModel.Channels.IInputChannel.TryReceive*
+  exceptions:
+  - type: System.TimeoutException
+    commentId: T:System.TimeoutException
+    description: The specified <code>timeout</code> is exceeded before the operation is completed.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The timeout specified is less than zero.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.IInputChannel.WaitForMessage(System.TimeSpan)
+  commentId: M:System.ServiceModel.Channels.IInputChannel.WaitForMessage(System.TimeSpan)
+  id: WaitForMessage(System.TimeSpan)
+  parent: System.ServiceModel.Channels.IInputChannel
+  langs:
+  - csharp
+  name: WaitForMessage(TimeSpan)
+  nameWithType: IInputChannel.WaitForMessage(TimeSpan)
+  fullName: IInputChannel.WaitForMessage(TimeSpan)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Returns a value that indicates whether a message has arrived within a specified interval of time.
+  remarks: "Calling <xref:System.ServiceModel.Channels.IInputChannel.WaitForMessage%28System.TimeSpan%29> does not result in a message being received or processed in any other way.  \n  \n The <xref:System.ServiceModel.Channels.IInputChannel.WaitForMessage%28System.TimeSpan%29> method exists primarily for transacted scenarios where the user wants to receive the message using a transaction. When using just <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A> normally for this, the user must create the transaction and then call <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A> and hope the message arrives before the transaction times out, which may not be possible.  \n  \n Instead, the user can call <xref:System.ServiceModel.Channels.IInputChannel.WaitForMessage%28System.TimeSpan%29> with whatever time out they want (even infinite), then when a message arrives they can open the transaction, call <xref:System.ServiceModel.Channels.IInputChannel.Receive%2A> and be confident that they can get the message back before the transaction expires.  \n  \n This method is synchronous, so it blocks the current thread until a message is available or the time out occurs. Use <xref:System.ServiceModel.Channels.IInputChannel.WaitForMessage%28System.TimeSpan%29> when it is acceptable for the current thread to be blocked while it waits for a message to arrive in the queue. The thread is blocked up to the specified `timeout`. If you need the application processing to continue without waiting, use the asynchronous <xref:System.ServiceModel.Channels.IInputChannel.BeginWaitForMessage%28System.TimeSpan%2CSystem.AsyncCallback%2CSystem.Object%29> method."
+  example:
+  - "The following code illustrates how to implement this method:  \n  \n [!code-csharp[S_UE_MessageInterceptor#21](~/samples/snippets/csharp/VS_Snippets_CFX/s_ue_messageinterceptor/cs/interceptingduplexchannel.cs#21)]"
+  syntax:
+    content: public bool WaitForMessage (TimeSpan timeout);
+    parameters:
+    - id: timeout
+      type: System.TimeSpan
+      description: The <xref href="System.TimeSpan"></xref> specifies the maximum interval of time to wait for a message to arrive before timing out.
+    return:
+      type: System.Boolean
+      description: '`true` if a message has arrived before the <code>timeout</code> has been exceeded; otherwise `false`.'
+  overload: System.ServiceModel.Channels.IInputChannel.WaitForMessage*
+  exceptions:
+  - type: System.TimeoutException
+    commentId: T:System.TimeoutException
+    description: The specified <code>timeout</code> is exceeded before the operation is completed.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The timeout specified is less than zero.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+references:
+- uid: System.TimeoutException
+  parent: System
+  isExternal: false
+  name: TimeoutException
+  nameWithType: TimeoutException
+  fullName: System.TimeoutException
+- uid: System.ArgumentOutOfRangeException
+  parent: System
+  isExternal: false
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: System.ServiceModel.Channels.IInputChannel.BeginReceive(System.AsyncCallback,System.Object)
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: BeginReceive(AsyncCallback, Object)
+  nameWithType: IInputChannel.BeginReceive(AsyncCallback, Object)
+  fullName: IInputChannel.BeginReceive(AsyncCallback, Object)
+- uid: System.IAsyncResult
+  parent: System
+  isExternal: false
+  name: IAsyncResult
+  nameWithType: IAsyncResult
+  fullName: System.IAsyncResult
+- uid: System.AsyncCallback
+  parent: System
+  isExternal: false
+  name: AsyncCallback
+  nameWithType: AsyncCallback
+  fullName: System.AsyncCallback
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ServiceModel.Channels.IInputChannel.BeginReceive(System.TimeSpan,System.AsyncCallback,System.Object)
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: BeginReceive(TimeSpan, AsyncCallback, Object)
+  nameWithType: IInputChannel.BeginReceive(TimeSpan, AsyncCallback, Object)
+  fullName: IInputChannel.BeginReceive(TimeSpan, AsyncCallback, Object)
+- uid: System.TimeSpan
+  parent: System
+  isExternal: false
+  name: TimeSpan
+  nameWithType: TimeSpan
+  fullName: System.TimeSpan
+- uid: System.ServiceModel.Channels.IInputChannel.BeginTryReceive(System.TimeSpan,System.AsyncCallback,System.Object)
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: BeginTryReceive(TimeSpan, AsyncCallback, Object)
+  nameWithType: IInputChannel.BeginTryReceive(TimeSpan, AsyncCallback, Object)
+  fullName: IInputChannel.BeginTryReceive(TimeSpan, AsyncCallback, Object)
+- uid: System.ServiceModel.Channels.IInputChannel.BeginWaitForMessage(System.TimeSpan,System.AsyncCallback,System.Object)
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: BeginWaitForMessage(TimeSpan, AsyncCallback, Object)
+  nameWithType: IInputChannel.BeginWaitForMessage(TimeSpan, AsyncCallback, Object)
+  fullName: IInputChannel.BeginWaitForMessage(TimeSpan, AsyncCallback, Object)
+- uid: System.ServiceModel.Channels.IInputChannel.EndReceive(System.IAsyncResult)
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: EndReceive(IAsyncResult)
+  nameWithType: IInputChannel.EndReceive(IAsyncResult)
+  fullName: IInputChannel.EndReceive(IAsyncResult)
+- uid: System.ServiceModel.Channels.Message
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: Message
+  nameWithType: Message
+  fullName: System.ServiceModel.Channels.Message
+- uid: System.ServiceModel.Channels.IInputChannel.EndTryReceive(System.IAsyncResult,System.ServiceModel.Channels.Message@)
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: EndTryReceive(IAsyncResult, Message)
+  nameWithType: IInputChannel.EndTryReceive(IAsyncResult, Message)
+  fullName: IInputChannel.EndTryReceive(IAsyncResult, Message)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.ServiceModel.Channels.IInputChannel.EndWaitForMessage(System.IAsyncResult)
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: EndWaitForMessage(IAsyncResult)
+  nameWithType: IInputChannel.EndWaitForMessage(IAsyncResult)
+  fullName: IInputChannel.EndWaitForMessage(IAsyncResult)
+- uid: System.ServiceModel.Channels.IInputChannel.LocalAddress
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: LocalAddress
+  nameWithType: IInputChannel.LocalAddress
+  fullName: IInputChannel.LocalAddress
+- uid: System.ServiceModel.EndpointAddress
+  parent: System.ServiceModel
+  isExternal: false
+  name: EndpointAddress
+  nameWithType: EndpointAddress
+  fullName: System.ServiceModel.EndpointAddress
+- uid: System.ServiceModel.Channels.IInputChannel.Receive
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: Receive()
+  nameWithType: IInputChannel.Receive()
+  fullName: IInputChannel.Receive()
+- uid: System.ServiceModel.Channels.IInputChannel.Receive(System.TimeSpan)
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: Receive(TimeSpan)
+  nameWithType: IInputChannel.Receive(TimeSpan)
+  fullName: IInputChannel.Receive(TimeSpan)
+- uid: System.ServiceModel.Channels.IInputChannel.TryReceive(System.TimeSpan,System.ServiceModel.Channels.Message@)
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: TryReceive(TimeSpan, Message)
+  nameWithType: IInputChannel.TryReceive(TimeSpan, Message)
+  fullName: IInputChannel.TryReceive(TimeSpan, Message)
+- uid: System.ServiceModel.Channels.IInputChannel.WaitForMessage(System.TimeSpan)
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: WaitForMessage(TimeSpan)
+  nameWithType: IInputChannel.WaitForMessage(TimeSpan)
+  fullName: IInputChannel.WaitForMessage(TimeSpan)
+- uid: System.ServiceModel.Channels.IInputChannel.BeginReceive*
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: BeginReceive
+  nameWithType: IInputChannel.BeginReceive
+  fullName: IInputChannel.BeginReceive
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+- uid: System.ServiceModel.Channels.IInputChannel.Receive*
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: Receive
+  nameWithType: IInputChannel.Receive
+  fullName: IInputChannel.Receive
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+- uid: System.ServiceModel.Channels.IInputChannel.BeginTryReceive*
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: BeginTryReceive
+  nameWithType: IInputChannel.BeginTryReceive
+  fullName: IInputChannel.BeginTryReceive
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+- uid: System.ServiceModel.Channels.IInputChannel.BeginWaitForMessage*
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: BeginWaitForMessage
+  nameWithType: IInputChannel.BeginWaitForMessage
+  fullName: IInputChannel.BeginWaitForMessage
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+- uid: System.ServiceModel.Channels.IInputChannel.EndReceive*
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: EndReceive
+  nameWithType: IInputChannel.EndReceive
+  fullName: IInputChannel.EndReceive
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+- uid: System.ServiceModel.Channels.IInputChannel.EndTryReceive*
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: EndTryReceive
+  nameWithType: IInputChannel.EndTryReceive
+  fullName: IInputChannel.EndTryReceive
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+- uid: System.ServiceModel.Channels.IInputChannel.EndWaitForMessage*
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: EndWaitForMessage
+  nameWithType: IInputChannel.EndWaitForMessage
+  fullName: IInputChannel.EndWaitForMessage
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+- uid: System.ServiceModel.Channels.IInputChannel.LocalAddress*
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: LocalAddress
+  nameWithType: IInputChannel.LocalAddress
+  fullName: IInputChannel.LocalAddress
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+- uid: System.ServiceModel.Channels.IInputChannel.TryReceive*
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: TryReceive
+  nameWithType: IInputChannel.TryReceive
+  fullName: IInputChannel.TryReceive
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+- uid: System.ServiceModel.Channels.IInputChannel.WaitForMessage*
+  parent: System.ServiceModel.Channels.IInputChannel
+  isExternal: false
+  name: WaitForMessage
+  nameWithType: IInputChannel.WaitForMessage
+  fullName: IInputChannel.WaitForMessage
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/IInputChannel.xml
+- uid: System.ServiceModel.Channels.IChannel
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: IChannel
+  nameWithType: IChannel
+  fullName: System.ServiceModel.Channels.IChannel

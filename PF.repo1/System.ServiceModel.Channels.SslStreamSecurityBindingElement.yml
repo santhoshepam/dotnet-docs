@@ -1,0 +1,1363 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  commentId: T:System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  id: SslStreamSecurityBindingElement
+  children:
+  - System.ServiceModel.Channels.SslStreamSecurityBindingElement.#ctor
+  - System.ServiceModel.Channels.SslStreamSecurityBindingElement.#ctor(System.ServiceModel.Channels.SslStreamSecurityBindingElement)
+  - System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildChannelFactory``1(System.ServiceModel.Channels.BindingContext)
+  - System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildChannelListener``1(System.ServiceModel.Channels.BindingContext)
+  - System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildClientStreamUpgradeProvider(System.ServiceModel.Channels.BindingContext)
+  - System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildServerStreamUpgradeProvider(System.ServiceModel.Channels.BindingContext)
+  - System.ServiceModel.Channels.SslStreamSecurityBindingElement.CanBuildChannelFactory``1(System.ServiceModel.Channels.BindingContext)
+  - System.ServiceModel.Channels.SslStreamSecurityBindingElement.CanBuildChannelListener``1(System.ServiceModel.Channels.BindingContext)
+  - System.ServiceModel.Channels.SslStreamSecurityBindingElement.Clone
+  - System.ServiceModel.Channels.SslStreamSecurityBindingElement.GetProperty``1(System.ServiceModel.Channels.BindingContext)
+  - System.ServiceModel.Channels.SslStreamSecurityBindingElement.GetTransportTokenAssertion
+  - System.ServiceModel.Channels.SslStreamSecurityBindingElement.IdentityVerifier
+  - System.ServiceModel.Channels.SslStreamSecurityBindingElement.RequireClientCertificate
+  - System.ServiceModel.Channels.SslStreamSecurityBindingElement.ShouldSerializeIdentityVerifier
+  - System.ServiceModel.Channels.SslStreamSecurityBindingElement.SslProtocols
+  - System.ServiceModel.Channels.SslStreamSecurityBindingElement.System#ServiceModel#Description#IPolicyExportExtension#ExportPolicy(System.ServiceModel.Description.MetadataExporter,System.ServiceModel.Description.PolicyConversionContext)
+  langs:
+  - csharp
+  name: SslStreamSecurityBindingElement
+  nameWithType: SslStreamSecurityBindingElement
+  fullName: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  type: Class
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Represents a custom binding element that supports channel security using an SSL stream.
+  remarks: "Transports that use a stream-oriented protocol such as TCP and named pipes support stream-based transport upgrades. Specifically, [!INCLUDE[indigo1](~/includes/indigo1-md.md)] provides security upgrades. The configuration of this transport security is encapsulated by this class as well as by <xref:System.ServiceModel.Channels.SslStreamSecurityBindingElement>, which can be configured and added to a custom binding. In addition, a third party can write their own custom `StreamSecurityBindingElement`. These binding elements extend the <xref:System.ServiceModel.Channels.StreamUpgradeBindingElement> class that is called to build the client and server stream upgrade providers.  \n  \n A custom binding contains a collection of binding elements arranged in a specific order: the element that represents the top of the binding stack is added first, the next element down in the binding stack is added second, and so on.  \n  \n### To add this class to a binding  \n  \n1.  Create a <xref:System.ServiceModel.Channels.BindingElementCollection>.  \n  \n2.  Create custom binding elements that are above this binding element in the binding stack, such as the optional <xref:System.ServiceModel.Channels.TransactionFlowBindingElement> and <xref:System.ServiceModel.Channels.ReliableSessionBindingElement>.  \n  \n3.  Add the created elements in the order described previously to the <xref:System.ServiceModel.Channels.BindingElementCollection> using the <xref:System.ServiceModel.Channels.BindingElementCollection.InsertItem%2A> method.  \n  \n4.  Create an instance of <xref:System.ServiceModel.Channels.SslStreamSecurityBindingElement> and add it to the collection.  \n  \n5.  Add any additional custom binding elements to the collection, such as <xref:System.ServiceModel.Channels.TcpTransportBindingElement>.  \n  \n There are three scenarios in which you must either manually specify the correct UPN/SPN on the client endpoint after importing the WSDL, or specify a custom <xref:System.ServiceModel.Security.IdentityVerifier> on the client’s <xref:System.ServiceModel.Channels.SslStreamSecurityBindingElement>.  \n  \n1.  No service identity is published in WSDL. <xref:System.ServiceModel.Configuration.AuthenticationMode.SspiNegotiatedOverTransport> and HTTPS are used (for example, a <xref:System.ServiceModel.WSHttpBinding> with SecurityMode = <xref:System.ServiceModel.SecurityMode.TransportWithMessageCredential>). If the service is not running with the machine identity, you must manually specify the correct UPN/SPN on the client endpoint after importing the WSDL.  \n  \n2.  DNSservice identity is published in WSDL. <xref:System.ServiceModel.Configuration.AuthenticationMode.SspiNegotiatedOverTransport> and <xref:System.ServiceModel.Channels.SslStreamSecurityBindingElement> are used (for example, <xref:System.ServiceModel.NetTcpBinding> with SecurityMode = <xref:System.ServiceModel.SecurityMode.TransportWithMessageCredential>) instead of a UPN/SPN. If the service is not running with the machine identity, or the DNS identity is not the machine's identity, you must manually specify the correct UPN/SPN on the client endpoint after importing the WSDL.  \n  \n3.  DNS identity is published in WSDL. If <xref:System.ServiceModel.Channels.SslStreamSecurityBindingElement> is overridden on the client, you must specify a custom <xref:System.ServiceModel.Security.IdentityVerifier> on the client's <xref:System.ServiceModel.Channels.SslStreamSecurityBindingElement>.  \n  \n The following code shows how to manually specify the correct UPN/SPN on the client endpoint, as well as how to specify a custom <xref:System.ServiceModel.Security.IdentityVerifier> on the client's <xref:System.ServiceModel.Channels.SslStreamSecurityBindingElement>.  \n  \n```  \n  \nusing System;  \nusing System.Collections.Generic;  \nusing System.Linq;  \nusing System.Net;  \nusing System.IdentityModel.Claims;  \nusing System.IdentityModel.Policy;  \nusing System.Security.Cryptography.X509Certificates;  \nusing System.ServiceModel;  \nusing System.ServiceModel.Channels;  \nusing System.ServiceModel.Description;  \nusing System.ServiceModel.Security;  \nusing System.Xml;  \n  \nnamespace ServiceNamespace  \n{  \n    [ServiceContract]  \n    interface IService  \n    {  \n        [OperationContract]  \n        void DoSomething();  \n    }  \n  \n    class DnsIdentityVerifier : IdentityVerifier  \n    {  \n        DnsEndpointIdentity _expectedIdentity;  \n  \n        public DnsIdentityVerifier(EndpointAddress serviceEndpoint)  \n        {  \n            _expectedIdentity = new DnsEndpointIdentity(serviceEndpoint.Uri.DnsSafeHost);  \n        }  \n  \n        public override bool CheckAccess(EndpointIdentity identity, AuthorizationContext authContext)  \n        {  \n            Claim dnsClaim = authContext.Claims().Single(claim => claim.ClaimType == ClaimTypes.Dns);  \n            return String.Equals(_expectedIdentity.IdentityClaim.Resource, dnsClaim.Resource);  \n        }  \n  \n        public override bool TryGetIdentity(EndpointAddress reference, out EndpointIdentity identity)  \n        {  \n            identity = _expectedIdentity;  \n            return true;  \n        }  \n    }  \n  \n    static class LinqExtensionForClaims  \n    {  \n        public static IEnumerable<Claim> Claims(this AuthorizationContext authContext)  \n        {  \n            if (null != authContext.ClaimSets)  \n            {  \n                foreach (ClaimSet claimSet in authContext.ClaimSets)  \n                {  \n                    if (null != claimSet)  \n                    {  \n                        foreach (Claim claim in claimSet)  \n                        {  \n                            yield return claim;  \n                        }  \n                    }  \n                }  \n            }  \n        }  \n    }  \n  \n    class Service : IService  \n    {  \n        public void DoSomething()  \n        {  \n            Console.WriteLine(\"Service called.\");  \n        }  \n    }  \n  \n    class Program  \n    {  \n        static void Main(string[] args)  \n        {  \n            string hostname = Dns.GetHostEntry(String.Empty).HostName;  \n            NetTcpBinding serviceBinding = new NetTcpBinding(SecurityMode.TransportWithMessageCredential);  \n  \n            ServiceHost serviceHost = new ServiceHost(typeof(Service), new Uri(String.Format(\"net.tcp://{0}:8080/Service\", hostname)));  \n            serviceHost.Credentials.ServiceCertificate.SetCertificate(StoreLocation.LocalMachine, StoreName.My, X509FindType.FindByThumbprint, \"8a 42 1b eb cf 8a 14 b1 de 83 d9 a5 70 88 0a 62 f9 bf 69 06\");  \n            ServiceEndpoint serviceEndpoint = serviceHost.AddServiceEndpoint(typeof(IService), serviceBinding, \"Endpoint\");  \n            serviceHost.Open();  \n  \n            CustomBinding clientBinding = new CustomBinding(serviceBinding.CreateBindingElements());  \n            SslStreamSecurityBindingElement sslStream = clientBinding.Elements.Find<SslStreamSecurityBindingElement>();  \n            sslStream.IdentityVerifier = new DnsIdentityVerifier(serviceEndpoint.Address);  \n  \n            ChannelFactory<IService> channelFactory = new ChannelFactory<IService>(clientBinding, new EndpointAddress(serviceEndpoint.Address.Uri, UpnEndpointIdentity.CreateUpnIdentity(\"username@domain\")));  \n            channelFactory.Credentials.Windows.AllowNtlm = false;  \n            IService channel = channelFactory.CreateChannel();  \n            channel.DoSomething();  \n        }  \n    }  \n  \n```"
+  syntax:
+    content: 'public class SslStreamSecurityBindingElement : System.ServiceModel.Channels.BindingElement, System.ServiceModel.Channels.ITransportTokenAssertionProvider, System.ServiceModel.Description.IPolicyExportExtension'
+  inheritance:
+  - System.Object
+  - System.ServiceModel.Channels.BindingElement
+  - System.ServiceModel.Channels.StreamUpgradeBindingElement
+  implements:
+  - System.ServiceModel.Channels.ITransportTokenAssertionProvider
+  - System.ServiceModel.Description.IPolicyExportExtension
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.#ctor
+  commentId: M:System.ServiceModel.Channels.SslStreamSecurityBindingElement.#ctor
+  id: '#ctor'
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  langs:
+  - csharp
+  name: SslStreamSecurityBindingElement()
+  nameWithType: SslStreamSecurityBindingElement.SslStreamSecurityBindingElement()
+  fullName: SslStreamSecurityBindingElement.SslStreamSecurityBindingElement()
+  type: Constructor
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Initializes a new instance of the <xref href="System.ServiceModel.Channels.SslStreamSecurityBindingElement"></xref> class.
+  syntax:
+    content: public SslStreamSecurityBindingElement ();
+    parameters: []
+  overload: System.ServiceModel.Channels.SslStreamSecurityBindingElement.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.#ctor(System.ServiceModel.Channels.SslStreamSecurityBindingElement)
+  commentId: M:System.ServiceModel.Channels.SslStreamSecurityBindingElement.#ctor(System.ServiceModel.Channels.SslStreamSecurityBindingElement)
+  id: '#ctor(System.ServiceModel.Channels.SslStreamSecurityBindingElement)'
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  langs:
+  - csharp
+  name: SslStreamSecurityBindingElement(SslStreamSecurityBindingElement)
+  nameWithType: SslStreamSecurityBindingElement.SslStreamSecurityBindingElement(SslStreamSecurityBindingElement)
+  fullName: SslStreamSecurityBindingElement.SslStreamSecurityBindingElement(SslStreamSecurityBindingElement)
+  type: Constructor
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Initializes a new instance of the <xref href="System.ServiceModel.Channels.SslStreamSecurityBindingElement"></xref> class using the values from another <xref href="System.ServiceModel.Channels.SslStreamSecurityBindingElement"></xref>.
+  syntax:
+    content: protected SslStreamSecurityBindingElement (System.ServiceModel.Channels.SslStreamSecurityBindingElement elementToBeCloned);
+    parameters:
+    - id: elementToBeCloned
+      type: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+      description: The <xref href="System.ServiceModel.Channels.SslStreamSecurityBindingElement"></xref> to clone.
+  overload: System.ServiceModel.Channels.SslStreamSecurityBindingElement.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildChannelFactory``1(System.ServiceModel.Channels.BindingContext)
+  commentId: M:System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildChannelFactory``1(System.ServiceModel.Channels.BindingContext)
+  id: BuildChannelFactory``1(System.ServiceModel.Channels.BindingContext)
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  langs:
+  - csharp
+  name: BuildChannelFactory<TChannel>(BindingContext)
+  nameWithType: SslStreamSecurityBindingElement.BuildChannelFactory<TChannel>(BindingContext)
+  fullName: SslStreamSecurityBindingElement.BuildChannelFactory<TChannel>(BindingContext)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Creates a channel factory of a specified type.
+  remarks: This method creates a channel factory, which is used to create a channel that processes outgoing messages for this binding.
+  syntax:
+    content: public override System.ServiceModel.Channels.IChannelFactory<TChannel> BuildChannelFactory<TChannel> (System.ServiceModel.Channels.BindingContext context);
+    parameters:
+    - id: context
+      type: System.ServiceModel.Channels.BindingContext
+      description: The <xref href="System.ServiceModel.Channels.BindingContext"></xref>.
+    typeParameters:
+    - id: TChannel
+      description: Type of channel factory.
+    return:
+      type: System.ServiceModel.Channels.IChannelFactory`1
+      description: An <xref href="System.ServiceModel.Channels.IChannelFactory"></xref> object that represents the channel factory of type <code>TChannel</code>.
+  overload: System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildChannelFactory``1*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>context</code> is `null`.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildChannelListener``1(System.ServiceModel.Channels.BindingContext)
+  commentId: M:System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildChannelListener``1(System.ServiceModel.Channels.BindingContext)
+  id: BuildChannelListener``1(System.ServiceModel.Channels.BindingContext)
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  langs:
+  - csharp
+  name: BuildChannelListener<TChannel>(BindingContext)
+  nameWithType: SslStreamSecurityBindingElement.BuildChannelListener<TChannel>(BindingContext)
+  fullName: SslStreamSecurityBindingElement.BuildChannelListener<TChannel>(BindingContext)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Creates a channel listener of a specified type.
+  remarks: This method creates a channel listener, which is used to create a channel that processes incoming messages for this binding.
+  syntax:
+    content: 'public override System.ServiceModel.Channels.IChannelListener<TChannel> BuildChannelListener<TChannel> (System.ServiceModel.Channels.BindingContext context) where TChannel : class, System.ServiceModel.Channels.IChannel;'
+    parameters:
+    - id: context
+      type: System.ServiceModel.Channels.BindingContext
+      description: The <xref href="System.ServiceModel.Channels.BindingContext"></xref>.
+    typeParameters:
+    - id: TChannel
+      description: Type of channel listener.
+    return:
+      type: System.ServiceModel.Channels.IChannelListener`1
+      description: An <xref href="System.ServiceModel.Channels.IChannelListener"></xref> object that represents a channel listener of type <code>TChannel</code>.
+  overload: System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildChannelListener``1*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>context</code> is `null`.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildClientStreamUpgradeProvider(System.ServiceModel.Channels.BindingContext)
+  commentId: M:System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildClientStreamUpgradeProvider(System.ServiceModel.Channels.BindingContext)
+  id: BuildClientStreamUpgradeProvider(System.ServiceModel.Channels.BindingContext)
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  langs:
+  - csharp
+  name: BuildClientStreamUpgradeProvider(BindingContext)
+  nameWithType: SslStreamSecurityBindingElement.BuildClientStreamUpgradeProvider(BindingContext)
+  fullName: SslStreamSecurityBindingElement.BuildClientStreamUpgradeProvider(BindingContext)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Creates an instance on the client of the <xref href="System.ServiceModel.Channels.StreamUpgradeProvider"></xref> based on the channel context provided.
+  remarks: "This method is called when opening the client channel factory and provides a custom implementation of the <xref:System.ServiceModel.Channels.StreamUpgradeProvider> abstract class.  \n  \n The <xref:System.ServiceModel.Channels.BindingContext> parameter enables reacting to other elements in the channel stack."
+  syntax:
+    content: public override System.ServiceModel.Channels.StreamUpgradeProvider BuildClientStreamUpgradeProvider (System.ServiceModel.Channels.BindingContext context);
+    parameters:
+    - id: context
+      type: System.ServiceModel.Channels.BindingContext
+      description: The <xref href="System.ServiceModel.Channels.BindingContext"></xref> for the entire channel stack.
+    return:
+      type: System.ServiceModel.Channels.StreamUpgradeProvider
+      description: An instance of the <xref href="System.ServiceModel.Channels.StreamUpgradeProvider"></xref>.
+  overload: System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildClientStreamUpgradeProvider*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildServerStreamUpgradeProvider(System.ServiceModel.Channels.BindingContext)
+  commentId: M:System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildServerStreamUpgradeProvider(System.ServiceModel.Channels.BindingContext)
+  id: BuildServerStreamUpgradeProvider(System.ServiceModel.Channels.BindingContext)
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  langs:
+  - csharp
+  name: BuildServerStreamUpgradeProvider(BindingContext)
+  nameWithType: SslStreamSecurityBindingElement.BuildServerStreamUpgradeProvider(BindingContext)
+  fullName: SslStreamSecurityBindingElement.BuildServerStreamUpgradeProvider(BindingContext)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Creates an instance on the server of the <xref href="System.ServiceModel.Channels.StreamUpgradeProvider"></xref> based on the channel context provided.
+  remarks: "This method is called when opening the service and provides a custom implementation of the <xref:System.ServiceModel.Channels.StreamUpgradeProvider> abstract class.  \n  \n The <xref:System.ServiceModel.Channels.BindingContext> parameter enables reacting to other elements in the channel stack."
+  syntax:
+    content: public override System.ServiceModel.Channels.StreamUpgradeProvider BuildServerStreamUpgradeProvider (System.ServiceModel.Channels.BindingContext context);
+    parameters:
+    - id: context
+      type: System.ServiceModel.Channels.BindingContext
+      description: The <xref href="System.ServiceModel.Channels.BindingContext"></xref> for the entire channel stack.
+    return:
+      type: System.ServiceModel.Channels.StreamUpgradeProvider
+      description: An instance of the <xref href="System.ServiceModel.Channels.StreamUpgradeProvider"></xref>.
+  overload: System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildServerStreamUpgradeProvider*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.CanBuildChannelFactory``1(System.ServiceModel.Channels.BindingContext)
+  commentId: M:System.ServiceModel.Channels.SslStreamSecurityBindingElement.CanBuildChannelFactory``1(System.ServiceModel.Channels.BindingContext)
+  id: CanBuildChannelFactory``1(System.ServiceModel.Channels.BindingContext)
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  langs:
+  - csharp
+  name: CanBuildChannelFactory<TChannel>(BindingContext)
+  nameWithType: SslStreamSecurityBindingElement.CanBuildChannelFactory<TChannel>(BindingContext)
+  fullName: SslStreamSecurityBindingElement.CanBuildChannelFactory<TChannel>(BindingContext)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Gets a value that indicates whether a channel factory of the specified type can be built.
+  remarks: You should call this method before trying to create a channel factory.
+  syntax:
+    content: public override bool CanBuildChannelFactory<TChannel> (System.ServiceModel.Channels.BindingContext context);
+    parameters:
+    - id: context
+      type: System.ServiceModel.Channels.BindingContext
+      description: The <xref href="System.ServiceModel.Channels.BindingContext"></xref>.
+    typeParameters:
+    - id: TChannel
+      description: Type of channel factory.
+    return:
+      type: System.Boolean
+      description: '`true` if a channel factory of the specified type can be built; otherwise, `false`.'
+  overload: System.ServiceModel.Channels.SslStreamSecurityBindingElement.CanBuildChannelFactory``1*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>context</code> is `null`.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.CanBuildChannelListener``1(System.ServiceModel.Channels.BindingContext)
+  commentId: M:System.ServiceModel.Channels.SslStreamSecurityBindingElement.CanBuildChannelListener``1(System.ServiceModel.Channels.BindingContext)
+  id: CanBuildChannelListener``1(System.ServiceModel.Channels.BindingContext)
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  langs:
+  - csharp
+  name: CanBuildChannelListener<TChannel>(BindingContext)
+  nameWithType: SslStreamSecurityBindingElement.CanBuildChannelListener<TChannel>(BindingContext)
+  fullName: SslStreamSecurityBindingElement.CanBuildChannelListener<TChannel>(BindingContext)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Gets a value that indicates whether a channel listener of the specified type can be built.
+  remarks: You should call this method before trying to create a channel listener.
+  syntax:
+    content: 'public override bool CanBuildChannelListener<TChannel> (System.ServiceModel.Channels.BindingContext context) where TChannel : class, System.ServiceModel.Channels.IChannel;'
+    parameters:
+    - id: context
+      type: System.ServiceModel.Channels.BindingContext
+      description: The <xref href="System.ServiceModel.Channels.BindingContext"></xref>.
+    typeParameters:
+    - id: TChannel
+      description: Type of channel listener.
+    return:
+      type: System.Boolean
+      description: '`true` if a channel listener of the specified type can be built; otherwise, `false`.'
+  overload: System.ServiceModel.Channels.SslStreamSecurityBindingElement.CanBuildChannelListener``1*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>context</code> is `null`.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.Clone
+  commentId: M:System.ServiceModel.Channels.SslStreamSecurityBindingElement.Clone
+  id: Clone
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  langs:
+  - csharp
+  name: Clone()
+  nameWithType: SslStreamSecurityBindingElement.Clone()
+  fullName: SslStreamSecurityBindingElement.Clone()
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Creates a new instance that is a copy of the current instance.
+  syntax:
+    content: public override System.ServiceModel.Channels.BindingElement Clone ();
+    parameters: []
+    return:
+      type: System.ServiceModel.Channels.BindingElement
+      description: A <xref href="System.ServiceModel.Channels.SslStreamSecurityBindingElement"></xref> instance that is a copy of the current instance.
+  overload: System.ServiceModel.Channels.SslStreamSecurityBindingElement.Clone*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.GetProperty``1(System.ServiceModel.Channels.BindingContext)
+  commentId: M:System.ServiceModel.Channels.SslStreamSecurityBindingElement.GetProperty``1(System.ServiceModel.Channels.BindingContext)
+  id: GetProperty``1(System.ServiceModel.Channels.BindingContext)
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  langs:
+  - csharp
+  name: GetProperty<T>(BindingContext)
+  nameWithType: SslStreamSecurityBindingElement.GetProperty<T>(BindingContext)
+  fullName: SslStreamSecurityBindingElement.GetProperty<T>(BindingContext)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Gets a specified object from the <xref href="System.ServiceModel.Channels.BindingContext"></xref>.
+  remarks: This method gets the specified object from the base class or from one of that class's ancestors. The object returned is usually a collection of properties, for example, an object that implements <xref:System.ServiceModel.Channels.ISecurityCapabilities>.
+  syntax:
+    content: 'public override T GetProperty<T> (System.ServiceModel.Channels.BindingContext context) where T : class;'
+    parameters:
+    - id: context
+      type: System.ServiceModel.Channels.BindingContext
+      description: A <xref href="System.ServiceModel.Channels.BindingContext"></xref>.
+    typeParameters:
+    - id: T
+      description: The type of the object to get.
+    return:
+      type: T
+      description: The  object of type <code>T</code> from the <xref href="System.ServiceModel.Channels.BindingContext"></xref>, or `null` if the object is not found.
+  overload: System.ServiceModel.Channels.SslStreamSecurityBindingElement.GetProperty``1*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.GetTransportTokenAssertion
+  commentId: M:System.ServiceModel.Channels.SslStreamSecurityBindingElement.GetTransportTokenAssertion
+  id: GetTransportTokenAssertion
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  langs:
+  - csharp
+  name: GetTransportTokenAssertion()
+  nameWithType: SslStreamSecurityBindingElement.GetTransportTokenAssertion()
+  fullName: SslStreamSecurityBindingElement.GetTransportTokenAssertion()
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Gets the <xref href="System.Xml.XmlElement"></xref> that represents the transport token used in the security binding.
+  remarks: This method is used to generate WSDL for the associated service.
+  syntax:
+    content: public System.Xml.XmlElement GetTransportTokenAssertion ();
+    parameters: []
+    return:
+      type: System.Xml.XmlElement
+      description: An <xref href="System.Xml.XmlElement"></xref> that represents the transport token used in the security binding.
+  overload: System.ServiceModel.Channels.SslStreamSecurityBindingElement.GetTransportTokenAssertion*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.IdentityVerifier
+  commentId: P:System.ServiceModel.Channels.SslStreamSecurityBindingElement.IdentityVerifier
+  id: IdentityVerifier
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  langs:
+  - csharp
+  name: IdentityVerifier
+  nameWithType: SslStreamSecurityBindingElement.IdentityVerifier
+  fullName: SslStreamSecurityBindingElement.IdentityVerifier
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Gets or sets the identity verifier for this binding.
+  syntax:
+    content: public System.ServiceModel.Security.IdentityVerifier IdentityVerifier { get; set; }
+    return:
+      type: System.ServiceModel.Security.IdentityVerifier
+      description: An <xref href="System.ServiceModel.Security.IdentityVerifier"></xref> object.
+  overload: System.ServiceModel.Channels.SslStreamSecurityBindingElement.IdentityVerifier*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The value to set is null.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.RequireClientCertificate
+  commentId: P:System.ServiceModel.Channels.SslStreamSecurityBindingElement.RequireClientCertificate
+  id: RequireClientCertificate
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  langs:
+  - csharp
+  name: RequireClientCertificate
+  nameWithType: SslStreamSecurityBindingElement.RequireClientCertificate
+  fullName: SslStreamSecurityBindingElement.RequireClientCertificate
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Gets or sets a value that specifies whether a client certificate is required for this binding.
+  syntax:
+    content: public bool RequireClientCertificate { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if a client certificate is required for this binding; otherwise, `false`. The default is `false`.'
+  overload: System.ServiceModel.Channels.SslStreamSecurityBindingElement.RequireClientCertificate*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.ShouldSerializeIdentityVerifier
+  commentId: M:System.ServiceModel.Channels.SslStreamSecurityBindingElement.ShouldSerializeIdentityVerifier
+  id: ShouldSerializeIdentityVerifier
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  langs:
+  - csharp
+  name: ShouldSerializeIdentityVerifier()
+  nameWithType: SslStreamSecurityBindingElement.ShouldSerializeIdentityVerifier()
+  fullName: SslStreamSecurityBindingElement.ShouldSerializeIdentityVerifier()
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Gets a value that indicates whether the identify verifier should be serialized.
+  syntax:
+    content: public bool ShouldSerializeIdentityVerifier ();
+    parameters: []
+    return:
+      type: System.Boolean
+      description: '`true` if the identity verifier should be serialized; otherwise, `false`.'
+  overload: System.ServiceModel.Channels.SslStreamSecurityBindingElement.ShouldSerializeIdentityVerifier*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.SslProtocols
+  commentId: P:System.ServiceModel.Channels.SslStreamSecurityBindingElement.SslProtocols
+  id: SslProtocols
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  langs:
+  - csharp
+  name: SslProtocols
+  nameWithType: SslStreamSecurityBindingElement.SslProtocols
+  fullName: SslStreamSecurityBindingElement.SslProtocols
+  type: Property
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: 'Specifies the list of SSL/TLS protocols to negotiate when using a client credential type of TcpClientCredentialType.Certificate. The value can be a combination of one of more of the following enumeration members: Ssl3, Tls, Tls11, Tls12.'
+  remarks: The default value is Ssl3 &#124; Tls &#124; Tls11 &#124; Tls12. Versions of the framework prior to 4.6 only support Ssl3 and Tls. If these are not included, communication with earlier versions of the framework will not be possible. Specifying Tls11 and/or Tls12 will disable the usage of Ssl3, even if it has been included.
+  example:
+  - "```  \nNetTcpBinding netTcpBinding = new NetTcpBinding(SecurityMode.Transport);  \nnetTcpBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;  \nCustomBinding b = new CustomBinding(netTcpBinding);  \nSslStreamSecurityBindingElement sslStream = b.Elements.Find<SslStreamSecurityBindingElement>();  \nsslStream.SslProtocols = SslProtocols.Tls11 | SslProtocols.Tls12;  \nEndpointAddress a = new EndpointAddress(\"net.tcp://contoso.com/TcpAddress\");  \nChannelFactory<ICalculator> cf = new ChannelFactory<ICalculator>(b, a);  \ncf.Credentials.ClientCertificate.SetCertificate(  \n    StoreLocation.LocalMachine,  \n    StoreName.My,  \n    X509FindType.FindByThumbprint,  \n    \"0000000000000000000000000000000000000000\");  \n```"
+  syntax:
+    content: public System.Security.Authentication.SslProtocols SslProtocols { get; set; }
+    return:
+      type: System.Security.Authentication.SslProtocols
+      description: Returns <xref href="System.Security.Authentication.SslProtocols"></xref>.
+  overload: System.ServiceModel.Channels.SslStreamSecurityBindingElement.SslProtocols*
+  exceptions: []
+  version:
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.System#ServiceModel#Description#IPolicyExportExtension#ExportPolicy(System.ServiceModel.Description.MetadataExporter,System.ServiceModel.Description.PolicyConversionContext)
+  commentId: M:System.ServiceModel.Channels.SslStreamSecurityBindingElement.System#ServiceModel#Description#IPolicyExportExtension#ExportPolicy(System.ServiceModel.Description.MetadataExporter,System.ServiceModel.Description.PolicyConversionContext)
+  id: System#ServiceModel#Description#IPolicyExportExtension#ExportPolicy(System.ServiceModel.Description.MetadataExporter,System.ServiceModel.Description.PolicyConversionContext)
+  isEii: true
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  langs:
+  - csharp
+  name: IPolicyExportExtension.ExportPolicy(MetadataExporter, PolicyConversionContext)
+  nameWithType: SslStreamSecurityBindingElement.IPolicyExportExtension.ExportPolicy(MetadataExporter, PolicyConversionContext)
+  fullName: SslStreamSecurityBindingElement.IPolicyExportExtension.ExportPolicy(MetadataExporter, PolicyConversionContext)
+  type: Method
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Channels
+  summary: Exports a custom policy assertion about bindings.
+  remarks: "This method writes binding-related statements into the WSDL information exposed by a particular contract and is used by [!INCLUDE[indigo2](~/includes/indigo2-md.md)] to communicate to clients the existence of this custom binding element in the binding stack.  \n  \n This method takes two parameters: the <xref:System.ServiceModel.Description.MetadataExporter> and <xref:System.ServiceModel.Description.PolicyConversionContext> objects. Use the <xref:System.ServiceModel.Description.PolicyConversionContext.GetBindingAssertions%2A>, <xref:System.ServiceModel.Description.PolicyConversionContext.GetMessageBindingAssertions%2A>, and <xref:System.ServiceModel.Description.PolicyConversionContext.GetOperationBindingAssertions%2A> methods to obtain collections of policy assertions that have already been exported at various scopes. Then use this method to add your own policy assertions to the appropriate collection.  \n  \n The <xref:System.ServiceModel.Description.PolicyConversionContext.Contract%2A> property exposes the <xref:System.ServiceModel.Description.ContractDescription> for the endpoint that is being exported. This enables this method to correctly scope their exported policy assertions. For example, security attributes in code can add behaviors to the <xref:System.ServiceModel.Description.ContractDescription> that indicate where security policy assertions should be added.  \n  \n Once custom policy assertions are attached to the WSDL information, clients can detect and import the custom binding assertions by implementing an <xref:System.ServiceModel.Description.IPolicyImportExtension> interface."
+  syntax:
+    content: void IPolicyExportExtension.ExportPolicy (System.ServiceModel.Description.MetadataExporter exporter, System.ServiceModel.Description.PolicyConversionContext context);
+    parameters:
+    - id: exporter
+      type: System.ServiceModel.Description.MetadataExporter
+      description: The <xref href="System.ServiceModel.Description.MetadataExporter"></xref> that you can use to modify the exporting process.
+    - id: context
+      type: System.ServiceModel.Description.PolicyConversionContext
+      description: The <xref href="System.ServiceModel.Description.PolicyConversionContext"></xref> that you can use to insert your custom policy assertion.
+  overload: System.ServiceModel.Channels.SslStreamSecurityBindingElement.System#ServiceModel#Description#IPolicyExportExtension#ExportPolicy*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+references:
+- uid: System.ServiceModel.Channels.StreamUpgradeBindingElement
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: StreamUpgradeBindingElement
+  nameWithType: StreamUpgradeBindingElement
+  fullName: System.ServiceModel.Channels.StreamUpgradeBindingElement
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.#ctor
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: SslStreamSecurityBindingElement()
+  nameWithType: SslStreamSecurityBindingElement.SslStreamSecurityBindingElement()
+  fullName: SslStreamSecurityBindingElement.SslStreamSecurityBindingElement()
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.#ctor(System.ServiceModel.Channels.SslStreamSecurityBindingElement)
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: SslStreamSecurityBindingElement(SslStreamSecurityBindingElement)
+  nameWithType: SslStreamSecurityBindingElement.SslStreamSecurityBindingElement(SslStreamSecurityBindingElement)
+  fullName: SslStreamSecurityBindingElement.SslStreamSecurityBindingElement(SslStreamSecurityBindingElement)
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: SslStreamSecurityBindingElement
+  nameWithType: SslStreamSecurityBindingElement
+  fullName: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildChannelFactory``1(System.ServiceModel.Channels.BindingContext)
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: BuildChannelFactory<TChannel>(BindingContext)
+  nameWithType: SslStreamSecurityBindingElement.BuildChannelFactory<TChannel>(BindingContext)
+  fullName: SslStreamSecurityBindingElement.BuildChannelFactory<TChannel>(BindingContext)
+- uid: System.ServiceModel.Channels.IChannelFactory`1
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: IChannelFactory<TChannel>
+  nameWithType: IChannelFactory<TChannel>
+  fullName: System.ServiceModel.Channels.IChannelFactory<TChannel>
+- uid: System.ServiceModel.Channels.BindingContext
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: BindingContext
+  nameWithType: BindingContext
+  fullName: System.ServiceModel.Channels.BindingContext
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildChannelListener``1(System.ServiceModel.Channels.BindingContext)
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: BuildChannelListener<TChannel>(BindingContext)
+  nameWithType: SslStreamSecurityBindingElement.BuildChannelListener<TChannel>(BindingContext)
+  fullName: SslStreamSecurityBindingElement.BuildChannelListener<TChannel>(BindingContext)
+- uid: System.ServiceModel.Channels.IChannelListener`1
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: IChannelListener<TChannel>
+  nameWithType: IChannelListener<TChannel>
+  fullName: System.ServiceModel.Channels.IChannelListener<TChannel>
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildClientStreamUpgradeProvider(System.ServiceModel.Channels.BindingContext)
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: BuildClientStreamUpgradeProvider(BindingContext)
+  nameWithType: SslStreamSecurityBindingElement.BuildClientStreamUpgradeProvider(BindingContext)
+  fullName: SslStreamSecurityBindingElement.BuildClientStreamUpgradeProvider(BindingContext)
+- uid: System.ServiceModel.Channels.StreamUpgradeProvider
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: StreamUpgradeProvider
+  nameWithType: StreamUpgradeProvider
+  fullName: System.ServiceModel.Channels.StreamUpgradeProvider
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildServerStreamUpgradeProvider(System.ServiceModel.Channels.BindingContext)
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: BuildServerStreamUpgradeProvider(BindingContext)
+  nameWithType: SslStreamSecurityBindingElement.BuildServerStreamUpgradeProvider(BindingContext)
+  fullName: SslStreamSecurityBindingElement.BuildServerStreamUpgradeProvider(BindingContext)
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.CanBuildChannelFactory``1(System.ServiceModel.Channels.BindingContext)
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: CanBuildChannelFactory<TChannel>(BindingContext)
+  nameWithType: SslStreamSecurityBindingElement.CanBuildChannelFactory<TChannel>(BindingContext)
+  fullName: SslStreamSecurityBindingElement.CanBuildChannelFactory<TChannel>(BindingContext)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.CanBuildChannelListener``1(System.ServiceModel.Channels.BindingContext)
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: CanBuildChannelListener<TChannel>(BindingContext)
+  nameWithType: SslStreamSecurityBindingElement.CanBuildChannelListener<TChannel>(BindingContext)
+  fullName: SslStreamSecurityBindingElement.CanBuildChannelListener<TChannel>(BindingContext)
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.Clone
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: Clone()
+  nameWithType: SslStreamSecurityBindingElement.Clone()
+  fullName: SslStreamSecurityBindingElement.Clone()
+- uid: System.ServiceModel.Channels.BindingElement
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: BindingElement
+  nameWithType: BindingElement
+  fullName: System.ServiceModel.Channels.BindingElement
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.GetProperty``1(System.ServiceModel.Channels.BindingContext)
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: GetProperty<T>(BindingContext)
+  nameWithType: SslStreamSecurityBindingElement.GetProperty<T>(BindingContext)
+  fullName: SslStreamSecurityBindingElement.GetProperty<T>(BindingContext)
+- uid: T
+  isExternal: true
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.GetTransportTokenAssertion
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: GetTransportTokenAssertion()
+  nameWithType: SslStreamSecurityBindingElement.GetTransportTokenAssertion()
+  fullName: SslStreamSecurityBindingElement.GetTransportTokenAssertion()
+- uid: System.Xml.XmlElement
+  parent: System.Xml
+  isExternal: false
+  name: XmlElement
+  nameWithType: XmlElement
+  fullName: System.Xml.XmlElement
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.IdentityVerifier
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: IdentityVerifier
+  nameWithType: SslStreamSecurityBindingElement.IdentityVerifier
+  fullName: SslStreamSecurityBindingElement.IdentityVerifier
+- uid: System.ServiceModel.Security.IdentityVerifier
+  parent: System.ServiceModel.Security
+  isExternal: false
+  name: IdentityVerifier
+  nameWithType: IdentityVerifier
+  fullName: System.ServiceModel.Security.IdentityVerifier
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.RequireClientCertificate
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: RequireClientCertificate
+  nameWithType: SslStreamSecurityBindingElement.RequireClientCertificate
+  fullName: SslStreamSecurityBindingElement.RequireClientCertificate
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.ShouldSerializeIdentityVerifier
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: ShouldSerializeIdentityVerifier()
+  nameWithType: SslStreamSecurityBindingElement.ShouldSerializeIdentityVerifier()
+  fullName: SslStreamSecurityBindingElement.ShouldSerializeIdentityVerifier()
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.SslProtocols
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: SslProtocols
+  nameWithType: SslStreamSecurityBindingElement.SslProtocols
+  fullName: SslStreamSecurityBindingElement.SslProtocols
+- uid: System.Security.Authentication.SslProtocols
+  parent: System.Security.Authentication
+  isExternal: false
+  name: SslProtocols
+  nameWithType: SslProtocols
+  fullName: System.Security.Authentication.SslProtocols
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.System#ServiceModel#Description#IPolicyExportExtension#ExportPolicy(System.ServiceModel.Description.MetadataExporter,System.ServiceModel.Description.PolicyConversionContext)
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: IPolicyExportExtension.ExportPolicy(MetadataExporter, PolicyConversionContext)
+  nameWithType: SslStreamSecurityBindingElement.IPolicyExportExtension.ExportPolicy(MetadataExporter, PolicyConversionContext)
+  fullName: SslStreamSecurityBindingElement.IPolicyExportExtension.ExportPolicy(MetadataExporter, PolicyConversionContext)
+- uid: System.ServiceModel.Description.MetadataExporter
+  parent: System.ServiceModel.Description
+  isExternal: false
+  name: MetadataExporter
+  nameWithType: MetadataExporter
+  fullName: System.ServiceModel.Description.MetadataExporter
+- uid: System.ServiceModel.Description.PolicyConversionContext
+  parent: System.ServiceModel.Description
+  isExternal: false
+  name: PolicyConversionContext
+  nameWithType: PolicyConversionContext
+  fullName: System.ServiceModel.Description.PolicyConversionContext
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.#ctor*
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: SslStreamSecurityBindingElement
+  nameWithType: SslStreamSecurityBindingElement.SslStreamSecurityBindingElement
+  fullName: SslStreamSecurityBindingElement.SslStreamSecurityBindingElement
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildChannelFactory``1*
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: BuildChannelFactory<TChannel>
+  nameWithType: SslStreamSecurityBindingElement.BuildChannelFactory<TChannel>
+  fullName: SslStreamSecurityBindingElement.BuildChannelFactory<TChannel>
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildChannelListener``1*
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: BuildChannelListener<TChannel>
+  nameWithType: SslStreamSecurityBindingElement.BuildChannelListener<TChannel>
+  fullName: SslStreamSecurityBindingElement.BuildChannelListener<TChannel>
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildClientStreamUpgradeProvider*
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: BuildClientStreamUpgradeProvider
+  nameWithType: SslStreamSecurityBindingElement.BuildClientStreamUpgradeProvider
+  fullName: SslStreamSecurityBindingElement.BuildClientStreamUpgradeProvider
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.BuildServerStreamUpgradeProvider*
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: BuildServerStreamUpgradeProvider
+  nameWithType: SslStreamSecurityBindingElement.BuildServerStreamUpgradeProvider
+  fullName: SslStreamSecurityBindingElement.BuildServerStreamUpgradeProvider
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.CanBuildChannelFactory``1*
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: CanBuildChannelFactory<TChannel>
+  nameWithType: SslStreamSecurityBindingElement.CanBuildChannelFactory<TChannel>
+  fullName: SslStreamSecurityBindingElement.CanBuildChannelFactory<TChannel>
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.CanBuildChannelListener``1*
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: CanBuildChannelListener<TChannel>
+  nameWithType: SslStreamSecurityBindingElement.CanBuildChannelListener<TChannel>
+  fullName: SslStreamSecurityBindingElement.CanBuildChannelListener<TChannel>
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.Clone*
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: Clone
+  nameWithType: SslStreamSecurityBindingElement.Clone
+  fullName: SslStreamSecurityBindingElement.Clone
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.GetProperty``1*
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: GetProperty<T>
+  nameWithType: SslStreamSecurityBindingElement.GetProperty<T>
+  fullName: SslStreamSecurityBindingElement.GetProperty<T>
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.GetTransportTokenAssertion*
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: GetTransportTokenAssertion
+  nameWithType: SslStreamSecurityBindingElement.GetTransportTokenAssertion
+  fullName: SslStreamSecurityBindingElement.GetTransportTokenAssertion
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.IdentityVerifier*
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: IdentityVerifier
+  nameWithType: SslStreamSecurityBindingElement.IdentityVerifier
+  fullName: SslStreamSecurityBindingElement.IdentityVerifier
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.RequireClientCertificate*
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: RequireClientCertificate
+  nameWithType: SslStreamSecurityBindingElement.RequireClientCertificate
+  fullName: SslStreamSecurityBindingElement.RequireClientCertificate
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.ShouldSerializeIdentityVerifier*
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: ShouldSerializeIdentityVerifier
+  nameWithType: SslStreamSecurityBindingElement.ShouldSerializeIdentityVerifier
+  fullName: SslStreamSecurityBindingElement.ShouldSerializeIdentityVerifier
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.SslProtocols*
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: SslProtocols
+  nameWithType: SslStreamSecurityBindingElement.SslProtocols
+  fullName: SslStreamSecurityBindingElement.SslProtocols
+  monikers:
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+- uid: System.ServiceModel.Channels.SslStreamSecurityBindingElement.System#ServiceModel#Description#IPolicyExportExtension#ExportPolicy*
+  parent: System.ServiceModel.Channels.SslStreamSecurityBindingElement
+  isExternal: false
+  name: System.ServiceModel.Description.IPolicyExportExtension.ExportPolicy
+  nameWithType: SslStreamSecurityBindingElement.System.ServiceModel.Description.IPolicyExportExtension.ExportPolicy
+  fullName: SslStreamSecurityBindingElement.System.ServiceModel.Description.IPolicyExportExtension.ExportPolicy
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Channels/SslStreamSecurityBindingElement.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.ServiceModel.Channels.ITransportTokenAssertionProvider
+  parent: System.ServiceModel.Channels
+  isExternal: false
+  name: ITransportTokenAssertionProvider
+  nameWithType: ITransportTokenAssertionProvider
+  fullName: System.ServiceModel.Channels.ITransportTokenAssertionProvider
+- uid: System.ServiceModel.Description.IPolicyExportExtension
+  parent: System.ServiceModel.Description
+  isExternal: false
+  name: IPolicyExportExtension
+  nameWithType: IPolicyExportExtension
+  fullName: System.ServiceModel.Description.IPolicyExportExtension

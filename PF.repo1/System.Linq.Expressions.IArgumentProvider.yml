@@ -1,0 +1,255 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Linq.Expressions.IArgumentProvider
+  commentId: T:System.Linq.Expressions.IArgumentProvider
+  id: IArgumentProvider
+  children:
+  - System.Linq.Expressions.IArgumentProvider.ArgumentCount
+  - System.Linq.Expressions.IArgumentProvider.GetArgument(System.Int32)
+  langs:
+  - csharp
+  name: IArgumentProvider
+  nameWithType: IArgumentProvider
+  fullName: System.Linq.Expressions.IArgumentProvider
+  type: Interface
+  assemblies:
+  - System.Linq.Expressions
+  - System.Core
+  - netstandard
+  namespace: System.Linq.Expressions
+  summary: "Provides an internal interface for accessing the arguments of multiple tree nodes (DynamicExpression, ElementInit, MethodCallExpression, InvocationExpression, NewExpression, and InexExpression).  You should not use this API.  It is only public due to DLL refactoring and exists only for internal performance optimizations.  \n  \n This enables two optimizations which reduce the size of expression trees.  The first enables the tree nodes to hold onto an IList<T> instead of a ReadOnlyCollection.  IList<T> saves the cost of allocating the ReadOnlyCollection for each node.  The second enables creating specialized subclasses that hold onto a specific number of arguments (for example, Block2, Block3, Block4).  Therefore, these nodes avoid allocating both a ReadOnlyCollection and an array for storing their elements, saving 32 bytes per node.  \n  \n The expression tree nodes continue to expose the original LINQ properties of ReadOnlyCollections.  The nodes do this by re-using a field for storing both the array or an element that would normally be stored in the array.  \n  \n For the array case, the collection is typed to IList<T> instead of ReadOnlyCollection<T>.  When the node is initially constructed it is an array.  When the compiler accesses the members it uses this interface.  Accessing array elements promotes the array to a ReadOnlyCollection.  \n  \n For the object case we store the first argument in a field typed to object.  When the node is initially constructed, the field holds the Expression.  The compiler accesses arguments through this interface, and the accessor for the first argument uses Expression.ReturnObject to return the object that handles the Expression or ReadOnlyCollection case.  When the user accesses the ReadOnlyCollection, then the object field is updated to hold directly onto the ReadOnlyCollection.  \n  \n It is important that the Expressions consistently return the same ReadOnlyCollection.  Otherwise, the re-writer tree walker will break.  It is a breaking change from LINQ v1 to return different ReadOnlyCollections form the same Expression node.  Currently users can rely on object identity to tell if the node has changed.  Storing the ReadOnlyCollection in an overloaded field both reduces memory usage and maintains compatibility for the public API."
+  syntax:
+    content: public interface IArgumentProvider
+  derivedClasses:
+  - System.Linq.Expressions.ElementInit
+  - System.Linq.Expressions.IDynamicExpression
+  - System.Linq.Expressions.IndexExpression
+  - System.Linq.Expressions.InvocationExpression
+  - System.Linq.Expressions.MethodCallExpression
+  - System.Linq.Expressions.NewExpression
+  implements: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Linq.Expressions/IArgumentProvider.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: billchi
+  manager: ghogen
+- uid: System.Linq.Expressions.IArgumentProvider.ArgumentCount
+  commentId: P:System.Linq.Expressions.IArgumentProvider.ArgumentCount
+  id: ArgumentCount
+  parent: System.Linq.Expressions.IArgumentProvider
+  langs:
+  - csharp
+  name: ArgumentCount
+  nameWithType: IArgumentProvider.ArgumentCount
+  fullName: IArgumentProvider.ArgumentCount
+  type: Property
+  assemblies:
+  - System.Linq.Expressions
+  - System.Core
+  - netstandard
+  namespace: System.Linq.Expressions
+  summary: Returns the number of arguments to the expression tree node.  You should not use this type.  It is only public due to assembly refactoring, and it is used internally for performance optimizations.
+  syntax:
+    content: public int ArgumentCount { get; }
+    return:
+      type: System.Int32
+      description: The number of arguments to the expression tree node as <xref href="System.Int32"></xref>.
+  overload: System.Linq.Expressions.IArgumentProvider.ArgumentCount*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Linq.Expressions/IArgumentProvider.xml
+  ms.technology:
+  - dotnet-standard
+  author: BillWagner
+  ms.author: wiwagn
+  manager: wpickett
+- uid: System.Linq.Expressions.IArgumentProvider.GetArgument(System.Int32)
+  commentId: M:System.Linq.Expressions.IArgumentProvider.GetArgument(System.Int32)
+  id: GetArgument(System.Int32)
+  parent: System.Linq.Expressions.IArgumentProvider
+  langs:
+  - csharp
+  name: GetArgument(Int32)
+  nameWithType: IArgumentProvider.GetArgument(Int32)
+  fullName: IArgumentProvider.GetArgument(Int32)
+  type: Method
+  assemblies:
+  - System.Linq.Expressions
+  - System.Core
+  - netstandard
+  namespace: System.Linq.Expressions
+  summary: Returns the argument at index, throwing if index is out of bounds.  You should not use this type.  It is only public due to assembly refactoring, and it is used internally for performance optimizations.
+  syntax:
+    content: public System.Linq.Expressions.Expression GetArgument (int index);
+    parameters:
+    - id: index
+      type: System.Int32
+      description: The index of the argument.
+    return:
+      type: System.Linq.Expressions.Expression
+      description: The argument at index, throwing if index is out of bounds as <xref href="System.Linq.Expressions.Expression"></xref>.
+  overload: System.Linq.Expressions.IArgumentProvider.GetArgument*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Linq.Expressions/IArgumentProvider.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: billchi
+  manager: ghogen
+references:
+- uid: System.Linq.Expressions.IArgumentProvider.ArgumentCount
+  parent: System.Linq.Expressions.IArgumentProvider
+  isExternal: false
+  name: ArgumentCount
+  nameWithType: IArgumentProvider.ArgumentCount
+  fullName: IArgumentProvider.ArgumentCount
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Linq.Expressions.IArgumentProvider.GetArgument(System.Int32)
+  parent: System.Linq.Expressions.IArgumentProvider
+  isExternal: false
+  name: GetArgument(Int32)
+  nameWithType: IArgumentProvider.GetArgument(Int32)
+  fullName: IArgumentProvider.GetArgument(Int32)
+- uid: System.Linq.Expressions.Expression
+  parent: System.Linq.Expressions
+  isExternal: false
+  name: Expression
+  nameWithType: Expression
+  fullName: System.Linq.Expressions.Expression
+- uid: System.Linq.Expressions.IArgumentProvider.ArgumentCount*
+  parent: System.Linq.Expressions.IArgumentProvider
+  isExternal: false
+  name: ArgumentCount
+  nameWithType: IArgumentProvider.ArgumentCount
+  fullName: IArgumentProvider.ArgumentCount
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Linq.Expressions/IArgumentProvider.xml
+- uid: System.Linq.Expressions.IArgumentProvider.GetArgument*
+  parent: System.Linq.Expressions.IArgumentProvider
+  isExternal: false
+  name: GetArgument
+  nameWithType: IArgumentProvider.GetArgument
+  fullName: IArgumentProvider.GetArgument
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Linq.Expressions/IArgumentProvider.xml

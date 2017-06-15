@@ -1,0 +1,1635 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Xml.Linq.XStreamingElement
+  commentId: T:System.Xml.Linq.XStreamingElement
+  id: XStreamingElement
+  children:
+  - System.Xml.Linq.XStreamingElement.#ctor(System.Xml.Linq.XName)
+  - System.Xml.Linq.XStreamingElement.#ctor(System.Xml.Linq.XName,System.Object)
+  - System.Xml.Linq.XStreamingElement.#ctor(System.Xml.Linq.XName,System.Object[])
+  - System.Xml.Linq.XStreamingElement.Add(System.Object)
+  - System.Xml.Linq.XStreamingElement.Add(System.Object[])
+  - System.Xml.Linq.XStreamingElement.Name
+  - System.Xml.Linq.XStreamingElement.Save(System.IO.Stream)
+  - System.Xml.Linq.XStreamingElement.Save(System.IO.TextWriter)
+  - System.Xml.Linq.XStreamingElement.Save(System.String)
+  - System.Xml.Linq.XStreamingElement.Save(System.Xml.XmlWriter)
+  - System.Xml.Linq.XStreamingElement.Save(System.IO.Stream,System.Xml.Linq.SaveOptions)
+  - System.Xml.Linq.XStreamingElement.Save(System.IO.TextWriter,System.Xml.Linq.SaveOptions)
+  - System.Xml.Linq.XStreamingElement.Save(System.String,System.Xml.Linq.SaveOptions)
+  - System.Xml.Linq.XStreamingElement.ToString
+  - System.Xml.Linq.XStreamingElement.ToString(System.Xml.Linq.SaveOptions)
+  - System.Xml.Linq.XStreamingElement.WriteTo(System.Xml.XmlWriter)
+  langs:
+  - csharp
+  name: XStreamingElement
+  nameWithType: XStreamingElement
+  fullName: System.Xml.Linq.XStreamingElement
+  type: Class
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Represents elements in an XML tree that supports deferred streaming output.
+  remarks: "This class allows you to create an XML tree that supports deferred streaming output. You use this class to create an XML tree in a very similar fashion to creating an XML tree using <xref:System.Xml.Linq.XElement>. However, there is a fundamental difference. When you use a LINQ query to specify content when creating an XML tree using <xref:System.Xml.Linq.XElement>, the query variable is iterated at the time of construction of the XML tree, and the results of the query are added to the XML tree. In contrast, when you create an XML tree using <xref:System.Xml.Linq.XStreamingElement>, a reference to the query variable is stored in the XML tree without being iterated. Queries are iterated only upon serialization. This allows you to create larger XML trees while maintaining a smaller memory footprint.  \n  \n If you are streaming from an input source, such as a text file, then you can read a very large text file, and generate a very large XML document while maintaining a small memory footprint.  \n  \n Another scenario is that you have a large XML tree that has been loaded into memory, and you want to create a transformed version of the document. If you create a new document using <xref:System.Xml.Linq.XElement>, then you will have two large XML trees in memory upon completion of the transformation. However, if you create the new XML tree using <xref:System.Xml.Linq.XStreamingElement>, then your working set will be effectively cut in half.  \n  \n Note that when debugging a program that uses <xref:System.Xml.Linq.XStreamingElement>, displaying the value of an object causes its <xref:System.Xml.Linq.XStreamingElement.ToString%2A> method to be called. This causes the XML to be serialized. If the semantics of your streaming element query are such that the streaming element can only be streamed once, this may cause undesirable behavior in your debugging experience."
+  example:
+  - "The following example first creates a source XML tree. It then creates a transform of the source XML tree using <xref:System.Xml.Linq.XElement>. This transform creates a new tree in memory. It then creates a transform of the source XML tree using <xref:System.Xml.Linq.XStreamingElement>. This transform doesn't execute the query until the transformed tree is serialized to the console. Its memory usage is less.  \n  \n```csharp  \n  \n                XElement srcTree = new XElement(\"Root\",  \n                       new XElement(\"Child\", 1),  \n                       new XElement(\"Child\", 2),  \n                       new XElement(\"Child\", 3),  \n                       new XElement(\"Child\", 4),  \n                       new XElement(\"Child\", 5)  \n                   );  \n  \nXElement dstTree1 = new XElement(\"NewRoot\",  \n                        from el in srcTree.Elements()  \n                        where (int)el >= 3  \n                        select new XElement(\"DifferentChild\", (int)el)  \n                    );  \n  \nXStreamingElement dstTree2 = new XStreamingElement(\"NewRoot\",  \n                        from el in srcTree.Elements()  \n                        where (int)el >= 3  \n                        select new XElement(\"DifferentChild\", (int)el)  \n                    );  \n  \nConsole.WriteLine(dstTree1);  \nConsole.WriteLine(\"------\");  \nConsole.WriteLine(dstTree2);  \n```  \n  \n```vb  \n  \n                Dim srcTree As XElement = _  \n        <Root>  \n            <Child>1</Child>  \n            <Child>2</Child>  \n            <Child>3</Child>  \n            <Child>4</Child>  \n            <Child>5</Child>  \n        </Root>  \n  \nDim dstTree1 As XElement = _  \n    <NewRoot>  \n        <%= From el In srcTree.Elements _  \n            Where (el.Value >= 3) _  \n            Select <DifferentChild><%= el.Value %></DifferentChild> %>  \n    </NewRoot>  \n  \nDim dstTree2 As XStreamingElement = New XStreamingElement(\"NewRoot\", _  \n                From el In srcTree.Elements _  \n                Where el.Value >= 3 _  \n                Select <DifferentChild><%= el.Value %></DifferentChild> _  \n            )  \n  \nConsole.WriteLine(dstTree1)  \nConsole.WriteLine(\"------\")  \nConsole.WriteLine(dstTree2)  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \n                <NewRoot>  \n  <DifferentChild>3</DifferentChild>  \n  <DifferentChild>4</DifferentChild>  \n  <DifferentChild>5</DifferentChild>  \n</NewRoot>  \n------  \n<NewRoot>  \n  <DifferentChild>3</DifferentChild>  \n  <DifferentChild>4</DifferentChild>  \n  <DifferentChild>5</DifferentChild>  \n</NewRoot>  \n```  \n  \n One approach to processing a text file is to write an extension method that streams the text file a line at a time using the `yield return` construct. You then can write a LINQ query that processes the text file in a lazy deferred fashion. If you then use the <xref:System.Xml.Linq.XStreamingElement> to stream output, you then can create a transform from the text file to XML that uses a minimal amount of memory, regardless of the size of the source text file.  \n  \n The following text file, People.txt, is the source for this example.  \n  \n```  \n  \n                #This is a comment  \n1,Tai,Yee,Writer  \n2,Nikolay,Grachev,Programmer  \n3,David,Wright,Inventor  \n```  \n  \n The following code contains an extension method that streams the lines of the text file in a deferred fashion.  \n  \n```csharp  \n  \n                public static class StreamReaderSequence  \n{  \n    public static IEnumerable<string> Lines(this StreamReader source)  \n    {  \n        String line;  \n  \n        if (source == null)  \n            throw new ArgumentNullException(\"source\");  \n        while ((line = source.ReadLine()) != null)  \n        {  \n            yield return line;  \n        }  \n    }  \n}  \n  \nclass Program  \n{  \n    static void Main(string[] args)  \n    {  \n        StreamReader sr = new StreamReader(\"People.txt\");  \n        XStreamingElement xmlTree = new XStreamingElement(\"Root\",  \n            from line in sr.Lines()  \n            let items = line.Split(',')  \n            where !line.StartsWith(\"#\")  \n            select new XElement(\"Person\",  \n                       new XAttribute(\"ID\", items[0]),  \n                       new XElement(\"First\", items[1]),  \n                       new XElement(\"Last\", items[2]),  \n                       new XElement(\"Occupation\", items[3])  \n                   )  \n        );  \n        Console.WriteLine(xmlTree);  \n        sr.Close();  \n    }  \n}  \n```  \n  \n```vb  \nModule StreamReaderSequence  \n  \n    <Runtime.CompilerServices.Extension>  \n    Public Iterator Function Lines(source As IO.StreamReader) As IEnumerable(Of String)  \n        If source Is Nothing Then Throw New ArgumentNullException(\"source\")  \n        Dim line As String = source.ReadLine()  \n        While (line <> Nothing)  \n            Yield line  \n            line = source.ReadLine()  \n        End While  \n    End Function  \n  \nEnd Module  \n  \nModule Module1  \n    Sub Main()  \n        Dim sr As New IO.StreamReader(\"People.txt\")  \n        Dim xmlTree As New XStreamingElement(\"Root\",  \n            From line In sr.Lines()  \n            Let items = line.Split(\",\"c)  \n            Where Not line.StartsWith(\"#\")  \n            Select <Person ID=<%= items(0) %>>  \n                       <First><%= items(1) %></First>  \n                       <Last><%= items(2) %></Last>  \n                       <Occupation><%= items(3) %></Occupation>  \n                   </Person>)  \n        Console.WriteLine(xmlTree)  \n        sr.Close()  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```xml  \n  \n                <Root>  \n  <Person ID=\"1\">  \n    <First>Tai</First>  \n    <Last>Yee</Last>  \n    <Occupation>Writer</Occupation>  \n  </Person>  \n  <Person ID=\"2\">  \n    <First>Nikolay</First>  \n    <Last>Grachev</Last>  \n    <Occupation>Programmer</Occupation>  \n  </Person>  \n  <Person ID=\"3\">  \n    <First>David</First>  \n    <Last>Wright</Last>  \n    <Occupation>Inventor</Occupation>  \n  </Person>  \n</Root>  \n```  \n  \n Sometimes you have to transform large XML files, and write your application so that the memory footprint of the application is predictable. If you try to populate an XML tree with a very large XML file, your memory usage will be proportional to the size of the file (that is, excessive). Therefore, you should use a streaming technique instead.  \n  \n Certain standard query operators, such as <xref:System.Linq.Enumerable.OrderBy%2A>, iterate their source, collect all of the data, sort it, and then finally yield the first item in the sequence. Note that if you use a query operator that materializes its source before yielding the first item, you will not retain a small memory footprint for your application.  \n  \n Even if you use the technique described in , if you try to assemble an XML tree that contains the transformed document, memory usage may be too great.  \n  \n The following example builds on the example in [How to: Stream XML Fragments with Access to Header Information](http://msdn.microsoft.com/library/01311522-9d03-4977-8641-2932c6f56092).  \n  \n This example uses the deferred execution capabilities of <xref:System.Xml.Linq.XStreamingElement> to stream the output.  \n  \n Note that the custom axis (`StreamCustomerItem`) is specifically written so that it expects a document that has `Customer`, `Name`, and `Item` elements, and that those elements will be arranged as in the following Source.xml document. A more robust implementation, however, would either validate the source document with an XSD, or would be prepared to parse an invalid document.  \n  \n The following is the source document, Source.xml:  \n  \n```xml  \n  \n                <?xml version=\"1.0\" encoding=\"utf-8\" ?>   \n<Root>  \n  <Customer>  \n    <Name>A. Datum Corporation</Name>  \n    <Item>  \n      <Key>0001</Key>  \n    </Item>  \n    <Item>  \n      <Key>0002</Key>  \n    </Item>  \n    <Item>  \n      <Key>0003</Key>  \n    </Item>  \n    <Item>  \n      <Key>0004</Key>  \n    </Item>  \n  </Customer>  \n  <Customer>  \n    <Name>Fabrikam, Inc.</Name>  \n    <Item>  \n      <Key>0005</Key>  \n    </Item>  \n    <Item>  \n      <Key>0006</Key>  \n    </Item>  \n    <Item>  \n      <Key>0007</Key>  \n    </Item>  \n    <Item>  \n      <Key>0008</Key>  \n    </Item>  \n  </Customer>  \n  <Customer>  \n    <Name>Southridge Video</Name>  \n    <Item>  \n      <Key>0009</Key>  \n    </Item>  \n    <Item>  \n      <Key>0010</Key>  \n    </Item>  \n  </Customer>  \n</Root>  \n```  \n  \n The following code contains a method that uses an <xref:System.Xml.XmlReader> to stream the source XML. It uses <xref:System.Xml.Linq.XStreamingElement> to stream the new XML.  \n  \n```csharp  \n  \n                static IEnumerable<XElement> StreamCustomerItem(string uri)  \n{  \n    using (XmlReader reader = XmlReader.Create(uri))  \n    {  \n        XElement name = null;  \n        XElement item = null;  \n  \n        reader.MoveToContent();  \n  \n        // Parse the file, save header information when encountered, and yield the  \n        // Item XElement objects as they are created.  \n  \n        // loop through Customer elements  \n        while (reader.Read())  \n        {  \n            if (reader.NodeType == XmlNodeType.Element  \n                && reader.Name == \"Customer\")  \n            {  \n                // move to Name element  \n                while (reader.Read())  \n                {  \n                    if (reader.NodeType == XmlNodeType.Element &&  \n                        reader.Name == \"Name\")  \n                    {  \n                        name = XElement.ReadFrom(reader) as XElement;  \n                        break;  \n                    }  \n                }  \n  \n                // loop through Item elements  \n                while (reader.Read())  \n                {  \n                    if (reader.NodeType == XmlNodeType.EndElement)  \n                        break;  \n                    if (reader.NodeType == XmlNodeType.Element  \n                        && reader.Name == \"Item\")  \n                    {  \n                        item = XElement.ReadFrom(reader) as XElement;  \n                        if (item != null)  \n                        {  \n                            XElement tempRoot = new XElement(\"Root\",  \n                                new XElement(name)  \n                            );  \n                            tempRoot.Add(item);  \n                            yield return item;  \n                        }  \n                    }  \n                }  \n            }  \n        }  \n    }  \n}  \n  \nstatic void Main(string[] args)  \n{  \n    XStreamingElement root = new XStreamingElement(\"Root\",  \n        from el in StreamCustomerItem(\"Source.xml\")  \n        select new XElement(\"Item\",  \n            new XElement(\"Customer\", (string)el.Parent.Element(\"Name\")),  \n            new XElement(el.Element(\"Key\"))  \n        )  \n    );  \n    root.Save(\"Test.xml\");  \n    Console.WriteLine(File.ReadAllText(\"Test.xml\"));  \n}  \n```  \n  \n```vb  \nIterator Function StreamCustomerItem(uri As String) As IEnumerable(Of XElement)  \n  \n    Dim name As XElement = Nothing  \n    Dim item As XElement = Nothing  \n  \n    Dim reader As XmlReader = XmlReader.Create(uri)  \n    reader.MoveToContent()  \n  \n    ' Parse the file, save header information when encountered, and yield the  \n    ' Item XElement objects as they are created.  \n  \n    ' Loop through Customer elements.  \n    While (reader.Read())  \n        If (reader.NodeType = XmlNodeType.Element And reader.Name = \"Customer\") Then  \n            While (reader.Read())  \n                ' Move to Name element  \n                If (reader.NodeType = XmlNodeType.Element And reader.Name = \"Name\") Then  \n                    name = CType(XElement.ReadFrom(reader), XElement)  \n                    Exit While  \n                End If  \n            End While  \n  \n            ' Loop through Item elements  \n            While (reader.Read())  \n                If (reader.NodeType = XmlNodeType.EndElement) Then  \n                    Exit While  \n                End If  \n  \n                If (reader.NodeType = XmlNodeType.Element And reader.Name = \"Item\") Then  \n                    item = CType(XElement.ReadFrom(reader), XElement)  \n                    If (Not (item Is Nothing)) Then  \n                        Dim tempRoot = New XElement(\"Root\",  \n                            New XElement(name)  \n                        )  \n                        tempRoot.Add(item)  \n                        Yield item  \n                     End If  \n                End If  \n            End While  \n        End If  \n     End While  \n    reader.Close()  \nEnd Function  \n  \nSub Main()  \n    Dim root As New XStreamingElement(\"Root\",  \n        From el In StreamCustomerItem(\"c:\\trash\\Source.xml\")  \n        Select New XElement(\"Item\",  \n            New XElement(\"Customer\", CStr(el.Parent.Element(\"Name\"))),  \n            New XElement(el.Element(\"Key\"))))  \n    root.Save(\"c:\\trash\\Test.xml\")  \n    Console.WriteLine(System.IO.File.ReadAllText(\"c:\\trash\\Test.xml\"))  \nEnd Sub  \n  \n```  \n  \n This example produces the following output:  \n  \n```xml  \n  \n                <?xml version=\"1.0\" encoding=\"utf-8\"?>  \n<Root>  \n  <Item>  \n    <Customer>A. Datum Corporation</Customer>  \n    <Key>0001</Key>  \n  </Item>  \n  <Item>  \n    <Customer>A. Datum Corporation</Customer>  \n    <Key>0002</Key>  \n  </Item>  \n  <Item>  \n    <Customer>A. Datum Corporation</Customer>  \n    <Key>0003</Key>  \n  </Item>  \n  <Item>  \n    <Customer>A. Datum Corporation</Customer>  \n    <Key>0004</Key>  \n  </Item>  \n  <Item>  \n    <Customer>Fabrikam, Inc.</Customer>  \n    <Key>0005</Key>  \n  </Item>  \n  <Item>  \n    <Customer>Fabrikam, Inc.</Customer>  \n    <Key>0006</Key>  \n  </Item>  \n  <Item>  \n    <Customer>Fabrikam, Inc.</Customer>  \n    <Key>0007</Key>  \n  </Item>  \n  <Item>  \n    <Customer>Fabrikam, Inc.</Customer>  \n    <Key>0008</Key>  \n  </Item>  \n  <Item>  \n    <Customer>Southridge Video</Customer>  \n    <Key>0009</Key>  \n  </Item>  \n  <Item>  \n    <Customer>Southridge Video</Customer>  \n    <Key>0010</Key>  \n  </Item>  \n</Root>  \n```"
+  syntax:
+    content: public class XStreamingElement
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XStreamingElement.#ctor(System.Xml.Linq.XName)
+  commentId: M:System.Xml.Linq.XStreamingElement.#ctor(System.Xml.Linq.XName)
+  id: '#ctor(System.Xml.Linq.XName)'
+  parent: System.Xml.Linq.XStreamingElement
+  langs:
+  - csharp
+  name: XStreamingElement(XName)
+  nameWithType: XStreamingElement.XStreamingElement(XName)
+  fullName: XStreamingElement.XStreamingElement(XName)
+  type: Constructor
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Initializes a new instance of the <xref href="System.Xml.Linq.XElement"></xref> class from the specified <xref href="System.Xml.Linq.XName"></xref>.
+  remarks: "This constructor creates a streaming element with no content and no attributes.  \n  \n There is an implicit conversion from string to <xref:System.Xml.Linq.XName>. Typical use of this constructor is to specify a string as the parameter instead of creating a new <xref:System.Xml.Linq.XName>."
+  example:
+  - "```csharp  \n  \n                XElement srcTree = new XElement(\"Root\",  \n                       new XElement(\"Child\", 1),  \n                       new XElement(\"Child\", 2),  \n                       new XElement(\"Child\", 3),  \n                       new XElement(\"Child\", 4),  \n                       new XElement(\"Child\", 5)  \n                   );  \n  \nXStreamingElement dstTree = new XStreamingElement(\"NewRoot\",  \n                        from el in srcTree.Elements()  \n                        where (int)el >= 3  \n                        select new XElement(\"DifferentChild\", (int)el)  \n                    );  \n  \nConsole.WriteLine(dstTree);  \n```  \n  \n```vb  \n  \n                Dim srcTree As XElement = _  \n        <Root>  \n            <Child>1</Child>  \n            <Child>2</Child>  \n            <Child>3</Child>  \n            <Child>4</Child>  \n            <Child>5</Child>  \n        </Root>  \n  \nDim dstTree As XStreamingElement = New XStreamingElement(\"NewRoot\", _  \n                From el In srcTree.Elements _  \n                Where el.Value >= 3 _  \n                Select <DifferentChild><%= el.Value %></DifferentChild> _  \n            )  \n  \nConsole.WriteLine(dstTree)  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \n                <NewRoot>  \n  <DifferentChild>3</DifferentChild>  \n  <DifferentChild>4</DifferentChild>  \n  <DifferentChild>5</DifferentChild>  \n</NewRoot>  \n```"
+  syntax:
+    content: public XStreamingElement (System.Xml.Linq.XName name);
+    parameters:
+    - id: name
+      type: System.Xml.Linq.XName
+      description: An <xref href="System.Xml.Linq.XName"></xref> that contains the name of the element.
+  overload: System.Xml.Linq.XStreamingElement.#ctor*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XStreamingElement.#ctor(System.Xml.Linq.XName,System.Object)
+  commentId: M:System.Xml.Linq.XStreamingElement.#ctor(System.Xml.Linq.XName,System.Object)
+  id: '#ctor(System.Xml.Linq.XName,System.Object)'
+  parent: System.Xml.Linq.XStreamingElement
+  langs:
+  - csharp
+  name: XStreamingElement(XName, Object)
+  nameWithType: XStreamingElement.XStreamingElement(XName, Object)
+  fullName: XStreamingElement.XStreamingElement(XName, Object)
+  type: Constructor
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Initializes a new instance of the <xref href="System.Xml.Linq.XStreamingElement"></xref> class with the specified name and content.
+  remarks: "This constructor creates a streaming element with the specified content and attributes.  \n  \n There is an implicit conversion from string to <xref:System.Xml.Linq.XName>. Typical use of this constructor is to specify a string as the parameter instead of creating a new <xref:System.Xml.Linq.XName>.  \n  \n Queries are not iterated until the <xref:System.Xml.Linq.XStreamingElement> is serialized. This is in contrast to using queries for content for an <xref:System.Xml.Linq.XElement>, where queries are iterated at the time of construction of the new <xref:System.Xml.Linq.XElement>.  \n  \n For details about the valid content that can be passed to this constructor, see [Valid Content of XElement and XDocument Objects](http://msdn.microsoft.com/library/aee2d319-5c5f-4b99-9bb4-2f58232577ae)."
+  example:
+  - "This example uses the following XML file, named Source.xml:  \n  \n```xml  \n  \n                <?xml version=\"1.0\" encoding=\"utf-8\" ?>   \n<Root>  \n  <Child Key=\"01\">  \n    <GrandChild>aaa</GrandChild>  \n  </Child>  \n  <Child Key=\"02\">  \n    <GrandChild>bbb</GrandChild>  \n  </Child>  \n  <Child Key=\"03\">  \n    <GrandChild>ccc</GrandChild>  \n  </Child>  \n</Root>  \n```"
+  syntax:
+    content: public XStreamingElement (System.Xml.Linq.XName name, object content);
+    parameters:
+    - id: name
+      type: System.Xml.Linq.XName
+      description: An <xref href="System.Xml.Linq.XName"></xref> that contains the element name.
+    - id: content
+      type: System.Object
+      description: The contents of the element.
+  overload: System.Xml.Linq.XStreamingElement.#ctor*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XStreamingElement.#ctor(System.Xml.Linq.XName,System.Object[])
+  commentId: M:System.Xml.Linq.XStreamingElement.#ctor(System.Xml.Linq.XName,System.Object[])
+  id: '#ctor(System.Xml.Linq.XName,System.Object[])'
+  parent: System.Xml.Linq.XStreamingElement
+  langs:
+  - csharp
+  name: XStreamingElement(XName, Object[])
+  nameWithType: XStreamingElement.XStreamingElement(XName, Object[])
+  fullName: XStreamingElement.XStreamingElement(XName, Object[])
+  type: Constructor
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Initializes a new instance of the <xref href="System.Xml.Linq.XStreamingElement"></xref> class with the specified name and content.
+  remarks: "This constructor creates a streaming element with the specified content and attributes.  \n  \n There is an implicit conversion from string to <xref:System.Xml.Linq.XName>. Typical use of this constructor is to specify a string as the parameter instead of creating a new <xref:System.Xml.Linq.XName>.  \n  \n Queries are not iterated until the <xref:System.Xml.Linq.XStreamingElement> is serialized. This is in contrast to using queries for content for an <xref:System.Xml.Linq.XElement>, where queries are iterated at the time of construction of the new <xref:System.Xml.Linq.XElement>.  \n  \n For details about the valid content that can be passed to this function, see [Valid Content of XElement and XDocument Objects](http://msdn.microsoft.com/library/aee2d319-5c5f-4b99-9bb4-2f58232577ae)."
+  example:
+  - "This example uses the following XML file, named Source.xml:  \n  \n```xml  \n  \n                <?xml version=\"1.0\" encoding=\"utf-8\" ?>   \n<Root>  \n  <Child Key=\"01\">  \n    <GrandChild>aaa</GrandChild>  \n  </Child>  \n  <Child Key=\"02\">  \n    <GrandChild>bbb</GrandChild>  \n  </Child>  \n  <Child Key=\"03\">  \n    <GrandChild>ccc</GrandChild>  \n  </Child>  \n</Root>  \n```"
+  syntax:
+    content: public XStreamingElement (System.Xml.Linq.XName name, object[] content);
+    parameters:
+    - id: name
+      type: System.Xml.Linq.XName
+      description: An <xref href="System.Xml.Linq.XName"></xref> that contains the element name.
+    - id: content
+      type: System.Object[]
+      description: The contents of the element.
+  overload: System.Xml.Linq.XStreamingElement.#ctor*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XStreamingElement.Add(System.Object)
+  commentId: M:System.Xml.Linq.XStreamingElement.Add(System.Object)
+  id: Add(System.Object)
+  parent: System.Xml.Linq.XStreamingElement
+  langs:
+  - csharp
+  name: Add(Object)
+  nameWithType: XStreamingElement.Add(Object)
+  fullName: XStreamingElement.Add(Object)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Adds the specified content as children to this <xref href="System.Xml.Linq.XStreamingElement"></xref>.
+  remarks: "This constructor adds the specified content and attributes to the <xref:System.Xml.Linq.XStreamingElement>. While it is often possible to construct the <xref:System.Xml.Linq.XStreamingElement> in a single statement, it is sometimes more convenient to add content to the streaming element incrementally.  \n  \n Queries are not iterated until the <xref:System.Xml.Linq.XStreamingElement> is serialized. This is in contrast to using queries for content for an <xref:System.Xml.Linq.XElement>, where queries are iterated at the time of construction of the new <xref:System.Xml.Linq.XElement>.  \n  \n For details about the valid content that can be passed to this function, see [Valid Content of XElement and XDocument Objects](http://msdn.microsoft.com/library/aee2d319-5c5f-4b99-9bb4-2f58232577ae)."
+  example:
+  - "The following example creates a new <xref:System.Xml.Linq.XStreamingElement>. It then adds two queries to the streaming element. The queries are not iterated until the streaming element is serialized.  \n  \n```csharp  \n  \n                XElement srcTree = new XElement(\"Root\",  \n                       new XElement(\"Child\", 1),  \n                       new XElement(\"Child\", 2),  \n                       new XElement(\"Child\", 3),  \n                       new XElement(\"Child\", 4),  \n                       new XElement(\"Child\", 5)  \n                   );  \n  \nXStreamingElement dstTree = new XStreamingElement(\"NewRoot\");  \n  \ndstTree.Add(  \n    from el in srcTree.Elements()  \n    where (int)el <= 1  \n    select new XElement(\"Child\", (int)el)  \n);  \n  \ndstTree.Add(  \n    from el in srcTree.Elements()  \n    where (int)el >= 3  \n    select new XElement(\"DifferentChild\", (int)el)  \n);  \n  \nConsole.WriteLine(dstTree);  \n```  \n  \n```vb  \n  \n                Dim srcTree As XElement = _  \n    <Root>  \n        <Child>1</Child>  \n        <Child>2</Child>  \n        <Child>3</Child>  \n        <Child>4</Child>  \n        <Child>5</Child>  \n    </Root>  \n  \nDim dstTree As XStreamingElement = New XStreamingElement(\"NewRoot\")  \n  \ndstTree.Add( _  \n    From el In srcTree.Elements() _  \n    Where el.Value <= 1 _  \n    Select <Child><%= el.Value %></Child> _  \n)  \n  \ndstTree.Add( _  \n    From el In srcTree.Elements() _  \n    Where el.Value >= 3 _  \n    Select <DifferentChild><%= el.Value %></DifferentChild> _  \n)  \n  \nConsole.WriteLine(dstTree)  \n```  \n  \n This example produces the following output:  \n  \n```xml  \n  \n                <NewRoot>  \n  <Child>1</Child>  \n  <DifferentChild>3</DifferentChild>  \n  <DifferentChild>4</DifferentChild>  \n  <DifferentChild>5</DifferentChild>  \n</NewRoot>  \n```"
+  syntax:
+    content: public void Add (object content);
+    parameters:
+    - id: content
+      type: System.Object
+      description: Content to be added to the streaming element.
+  overload: System.Xml.Linq.XStreamingElement.Add*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XStreamingElement.Add(System.Object[])
+  commentId: M:System.Xml.Linq.XStreamingElement.Add(System.Object[])
+  id: Add(System.Object[])
+  parent: System.Xml.Linq.XStreamingElement
+  langs:
+  - csharp
+  name: Add(Object[])
+  nameWithType: XStreamingElement.Add(Object[])
+  fullName: XStreamingElement.Add(Object[])
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Adds the specified content as children to this <xref href="System.Xml.Linq.XStreamingElement"></xref>.
+  remarks: "This constructor adds the specified content and attributes to the <xref:System.Xml.Linq.XStreamingElement>. While it is often possible to construct the <xref:System.Xml.Linq.XStreamingElement> in a single statement, it is sometimes more convenient to add content to the streaming element incrementally.  \n  \n Queries are not iterated until the <xref:System.Xml.Linq.XStreamingElement> is serialized. This is in contrast to using queries for content for an <xref:System.Xml.Linq.XElement>, where queries are iterated at the time of construction of the new <xref:System.Xml.Linq.XElement>.  \n  \n For details about the valid content that can be passed to this function, see [Valid Content of XElement and XDocument Objects](http://msdn.microsoft.com/library/aee2d319-5c5f-4b99-9bb4-2f58232577ae)."
+  example:
+  - "The following example creates a new <xref:System.Xml.Linq.XStreamingElement>. It then adds two queries to the streaming element. The queries are not iterated until the streaming element is serialized.  \n  \n```csharp  \n  \n                XElement srcTree = new XElement(\"Root\",  \n                       new XElement(\"Child\", 1),  \n                       new XElement(\"Child\", 2),  \n                       new XElement(\"Child\", 3),  \n                       new XElement(\"Child\", 4),  \n                       new XElement(\"Child\", 5)  \n                   );  \n  \nXStreamingElement dstTree = new XStreamingElement(\"NewRoot\");  \n  \ndstTree.Add(  \n    from el in srcTree.Elements()  \n    where (int)el <= 1  \n    select new XElement(\"Child\", (int)el)  \n);  \n  \ndstTree.Add(  \n    from el in srcTree.Elements()  \n    where (int)el >= 3  \n    select new XElement(\"DifferentChild\", (int)el)  \n);  \n  \nConsole.WriteLine(dstTree);  \n```  \n  \n```vb  \n  \n                Dim srcTree As XElement = _  \n    <Root>  \n        <Child>1</Child>  \n        <Child>2</Child>  \n        <Child>3</Child>  \n        <Child>4</Child>  \n        <Child>5</Child>  \n    </Root>  \n  \nDim dstTree As XStreamingElement = New XStreamingElement(\"NewRoot\")  \n  \ndstTree.Add( _  \n    From el In srcTree.Elements() _  \n    Where el.Value <= 1 _  \n    Select <Child><%= el.Value %></Child> _  \n)  \n  \ndstTree.Add( _  \n    From el In srcTree.Elements() _  \n    Where el.Value >= 3 _  \n    Select <DifferentChild><%= el.Value %></DifferentChild> _  \n)  \n  \nConsole.WriteLine(dstTree)  \n```  \n  \n This example produces the following output:  \n  \n```xml  \n  \n                <NewRoot>  \n  <Child>1</Child>  \n  <DifferentChild>3</DifferentChild>  \n  <DifferentChild>4</DifferentChild>  \n  <DifferentChild>5</DifferentChild>  \n</NewRoot>  \n```"
+  syntax:
+    content: public void Add (object[] content);
+    parameters:
+    - id: content
+      type: System.Object[]
+      description: Content to be added to the streaming element.
+  overload: System.Xml.Linq.XStreamingElement.Add*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XStreamingElement.Name
+  commentId: P:System.Xml.Linq.XStreamingElement.Name
+  id: Name
+  parent: System.Xml.Linq.XStreamingElement
+  langs:
+  - csharp
+  name: Name
+  nameWithType: XStreamingElement.Name
+  fullName: XStreamingElement.Name
+  type: Property
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets or sets the name of this streaming element.
+  remarks: ''
+  example:
+  - "This example creates a new streaming element, and then prints the name of the element.  \n  \n```csharp  \n  \n                XElement srcTree = new XElement(\"Root\",  \n                       new XElement(\"Child\", 1),  \n                       new XElement(\"Child\", 2),  \n                       new XElement(\"Child\", 3),  \n                       new XElement(\"Child\", 4),  \n                       new XElement(\"Child\", 5)  \n                   );  \n  \nXStreamingElement dstTree = new XStreamingElement(\"NewRoot\",  \n                        from el in srcTree.Elements()  \n                        where (int)el >= 3  \n                        select new XElement(\"DifferentChild\", (int)el)  \n                    );  \n  \nConsole.WriteLine(dstTree.Name);  \n```  \n  \n```vb  \n  \n                Dim srcTree As XElement = _  \n        <Root>  \n            <Child>1</Child>  \n            <Child>2</Child>  \n            <Child>3</Child>  \n            <Child>4</Child>  \n            <Child>5</Child>  \n        </Root>  \n  \nDim dstTree As XStreamingElement = New XStreamingElement(\"NewRoot\", _  \n                From el In srcTree.Elements _  \n                Where el.Value >= 3 _  \n                Select <DifferentChild><%= el.Value %></DifferentChild> _  \n            )  \n  \nConsole.WriteLine(dstTree.Name)  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \nNewRoot  \n```"
+  syntax:
+    content: public System.Xml.Linq.XName Name { get; set; }
+    return:
+      type: System.Xml.Linq.XName
+      description: An <xref href="System.Xml.Linq.XName"></xref> that contains the name of this streaming element.
+  overload: System.Xml.Linq.XStreamingElement.Name*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XStreamingElement.Save(System.IO.Stream)
+  commentId: M:System.Xml.Linq.XStreamingElement.Save(System.IO.Stream)
+  id: Save(System.IO.Stream)
+  parent: System.Xml.Linq.XStreamingElement
+  langs:
+  - csharp
+  name: Save(Stream)
+  nameWithType: XStreamingElement.Save(Stream)
+  fullName: XStreamingElement.Save(Stream)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Outputs this <xref href="System.Xml.Linq.XStreamingElement"></xref> to the specified <xref href="System.IO.Stream"></xref>.
+  remarks: "The serialized XML will be indented. All insignificant white space will be removed, and additional white space will be added so that the XML will be properly indented. The behavior of this method is that insignificant white space will not be preserved.  \n  \n If you want to control white space, use the overload of <xref:System.Xml.Linq.XStreamingElement.Save%2A> that takes <xref:System.Xml.Linq.SaveOptions> as a parameter. Use the <xref:System.Xml.Linq.SaveOptions.DisableFormatting> option to save unindented XML. This will cause the writer to write all white spaces exactly as represented in the XML tree.  \n  \n Use <xref:System.Xml.Linq.SaveOptions.OmitDuplicateNamespaces> option if you want to remove duplicate namespace declarations."
+  syntax:
+    content: public void Save (System.IO.Stream stream);
+    parameters:
+    - id: stream
+      type: System.IO.Stream
+      description: The stream to output this <xref href="System.Xml.Linq.XDocument"></xref> to.
+  overload: System.Xml.Linq.XStreamingElement.Save*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XStreamingElement.Save(System.IO.TextWriter)
+  commentId: M:System.Xml.Linq.XStreamingElement.Save(System.IO.TextWriter)
+  id: Save(System.IO.TextWriter)
+  parent: System.Xml.Linq.XStreamingElement
+  langs:
+  - csharp
+  name: Save(TextWriter)
+  nameWithType: XStreamingElement.Save(TextWriter)
+  fullName: XStreamingElement.Save(TextWriter)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Serialize this streaming element to a <xref href="System.IO.TextWriter"></xref>.
+  remarks: "The serialized XML will be indented. All insignificant white space will be removed, and additional white space will be added so that the XML will be properly indented. The behavior of this method is that insignificant white space nodes in the XML tree will not be preserved.  \n  \n If you want to control white space, use one of the overloads of <xref:System.Xml.Linq.XStreamingElement.Save%2A> that take <xref:System.Xml.Linq.SaveOptions> as a parameter. For more information, see [Preserving White Space while Loading or Parsing XML](http://msdn.microsoft.com/library/093a7169-a04e-4638-b08c-d1cb98aa650d) and [Preserving White Space While Serializing](http://msdn.microsoft.com/library/fb146217-0a49-4efc-ac84-7265b91d3939)."
+  example:
+  - "The following example creates a source XML tree, then instantiates an <xref:System.Xml.Linq.XStreamingElement> using a query on the source XML tree. It then writes the streaming element to a <xref:System.IO.StringWriter>.  \n  \n```csharp  \n  \n                XElement srcTree = new XElement(\"Root\",  \n                       new XElement(\"Child\", 1),  \n                       new XElement(\"Child\", 2),  \n                       new XElement(\"Child\", 3),  \n                       new XElement(\"Child\", 4),  \n                       new XElement(\"Child\", 5)  \n                   );  \n  \nXStreamingElement dstTree = new XStreamingElement(\"NewRoot\",  \n                        from el in srcTree.Elements()  \n                        where (int)el >= 3  \n                        select new XElement(\"DifferentChild\", (int)el)  \n                    );  \n  \nStringBuilder sb = new StringBuilder();  \ndstTree.Save(new StringWriter(sb));  \nConsole.WriteLine(sb.ToString());  \n```  \n  \n```vb  \n  \n                Dim srcTree As XElement = _  \n    <Root>  \n        <Child>1</Child>  \n        <Child>2</Child>  \n        <Child>3</Child>  \n        <Child>4</Child>  \n        <Child>5</Child>  \n    </Root>  \n  \nDim dstTree As XStreamingElement = New XStreamingElement(\"NewRoot\", _  \n                        From el In srcTree.Elements() _  \n                        Where el.Value >= 3 _  \n                        Select <DifferentChild><%= el.Value %></DifferentChild> _  \n                    )  \n  \nDim sb As StringBuilder = New StringBuilder()  \ndstTree.Save(New StringWriter(sb))  \nConsole.WriteLine(sb.ToString())  \n```  \n  \n This example produces the following output:  \n  \n```xml  \n  \n                <?xml version=\"1.0\" encoding=\"utf-16\"?>  \n<NewRoot>  \n  <DifferentChild>3</DifferentChild>  \n  <DifferentChild>4</DifferentChild>  \n  <DifferentChild>5</DifferentChild>  \n</NewRoot>  \n```"
+  syntax:
+    content: public void Save (System.IO.TextWriter textWriter);
+    parameters:
+    - id: textWriter
+      type: System.IO.TextWriter
+      description: A <xref href="System.IO.TextWriter"></xref> that the <xref href="System.Xml.Linq.XStreamingElement"></xref> will be written to.
+  overload: System.Xml.Linq.XStreamingElement.Save*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XStreamingElement.Save(System.String)
+  commentId: M:System.Xml.Linq.XStreamingElement.Save(System.String)
+  id: Save(System.String)
+  parent: System.Xml.Linq.XStreamingElement
+  langs:
+  - csharp
+  name: Save(String)
+  nameWithType: XStreamingElement.Save(String)
+  fullName: XStreamingElement.Save(String)
+  type: Method
+  assemblies:
+  - System.Xml.Linq
+  - netstandard
+  - System.Xml.XDocument
+  namespace: System.Xml.Linq
+  summary: Serialize this streaming element to a file.
+  remarks: "The serialized XML will be indented. All insignificant white space will be removed, and additional white space will be added so that the XML will be properly indented. The behavior of this method is that insignificant white space nodes in the XML tree will not be preserved.  \n  \n If you want to control white space, use one of the overloads of <xref:System.Xml.Linq.XStreamingElement.Save%2A> that take <xref:System.Xml.Linq.SaveOptions> as a parameter. For more information, see [Preserving White Space while Loading or Parsing XML](http://msdn.microsoft.com/library/093a7169-a04e-4638-b08c-d1cb98aa650d) and [Preserving White Space While Serializing](http://msdn.microsoft.com/library/fb146217-0a49-4efc-ac84-7265b91d3939)."
+  example:
+  - "The following example creates a streaming XML tree. It then serializes the streaming XML tree to a file.  \n  \n```csharp  \n  \n                XElement srcTree = new XElement(\"Root\",  \n                       new XElement(\"Child\", 1),  \n                       new XElement(\"Child\", 2),  \n                       new XElement(\"Child\", 3),  \n                       new XElement(\"Child\", 4),  \n                       new XElement(\"Child\", 5)  \n                   );  \n  \nXStreamingElement dstTree = new XStreamingElement(\"NewRoot\",  \n                        from el in srcTree.Elements()  \n                        where (int)el >= 3  \n                        select new XElement(\"DifferentChild\", (int)el)  \n                    );  \n  \ndstTree.Save(\"Test.xml\");  \nConsole.WriteLine(File.ReadAllText(\"Test.xml\"));  \n```  \n  \n```vb  \n  \n                Dim srcTree As XElement = _  \n    <Root>  \n        <Child>1</Child>  \n        <Child>2</Child>  \n        <Child>3</Child>  \n        <Child>4</Child>  \n        <Child>5</Child>  \n    </Root>  \n  \nDim dstTree As XStreamingElement = New XStreamingElement(\"NewRoot\", _  \n                        From el In srcTree.Elements() _  \n                        Where el.Value >= 3 _  \n                        Select <DifferentChild><%= el.Value %></DifferentChild> _  \n                    )  \n  \ndstTree.Save(\"Test.xml\")  \nConsole.WriteLine(File.ReadAllText(\"Test.xml\"))  \n```  \n  \n This example produces the following output:  \n  \n```xml  \n  \n                <?xml version=\"1.0\" encoding=\"utf-8\"?>  \n<NewRoot>  \n  <DifferentChild>3</DifferentChild>  \n  <DifferentChild>4</DifferentChild>  \n  <DifferentChild>5</DifferentChild>  \n</NewRoot>  \n```"
+  syntax:
+    content: public void Save (string fileName);
+    parameters:
+    - id: fileName
+      type: System.String
+      description: A <xref href="System.String"></xref> that contains the name of the file.
+  overload: System.Xml.Linq.XStreamingElement.Save*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XStreamingElement.Save(System.Xml.XmlWriter)
+  commentId: M:System.Xml.Linq.XStreamingElement.Save(System.Xml.XmlWriter)
+  id: Save(System.Xml.XmlWriter)
+  parent: System.Xml.Linq.XStreamingElement
+  langs:
+  - csharp
+  name: Save(XmlWriter)
+  nameWithType: XStreamingElement.Save(XmlWriter)
+  fullName: XStreamingElement.Save(XmlWriter)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Serialize this streaming element to an <xref href="System.Xml.XmlWriter"></xref>.
+  remarks: ''
+  example:
+  - "The following example creates an <xref:System.Xml.Linq.XStreamingElement> and writes it to an <xref:System.Xml.XmlWriter>.  \n  \n```csharp  \n  \n                XElement srcTree = new XElement(\"Root\",  \n                       new XElement(\"Child\", 1),  \n                       new XElement(\"Child\", 2),  \n                       new XElement(\"Child\", 3),  \n                       new XElement(\"Child\", 4),  \n                       new XElement(\"Child\", 5)  \n                   );  \n  \nStringBuilder sb = new StringBuilder();  \nXmlWriterSettings xws = new XmlWriterSettings();  \nxws.OmitXmlDeclaration = true;  \nusing (XmlWriter xw = XmlWriter.Create(sb, xws))  \n{  \n    XStreamingElement dstTree = new XStreamingElement(\"NewRoot\",  \n                            from el in srcTree.Elements()  \n                            where (int)el == 5  \n                            select new XElement(\"DifferentChild\", (int)el)  \n                        );  \n  \n    dstTree.Save(xw);  \n}  \nConsole.WriteLine(sb.ToString());  \n```  \n  \n```vb  \n  \n                Dim srcTree As XElement = _  \n    <Root>  \n        <Child>1</Child>  \n        <Child>2</Child>  \n        <Child>3</Child>  \n        <Child>4</Child>  \n        <Child>5</Child>  \n    </Root>  \n  \nDim sb As StringBuilder = New StringBuilder()  \nDim xws As XmlWriterSettings = New XmlWriterSettings()  \nxws.OmitXmlDeclaration = True  \nUsing xw As XmlWriter = XmlWriter.Create(sb, xws)  \n    Dim dstTree As XStreamingElement = New XStreamingElement(\"NewRoot\", _  \n                            From el In srcTree.Elements() _  \n                            Where el.Value = 5 _  \n                            Select <DifferentChild><%= el.Value %></DifferentChild> _  \n                        )  \n    dstTree.Save(xw)  \nEnd Using  \nConsole.WriteLine(sb.ToString())  \n```  \n  \n This example produces the following output:  \n  \n```xml  \n  \n<NewRoot><DifferentChild>5</DifferentChild></NewRoot>  \n```"
+  syntax:
+    content: public void Save (System.Xml.XmlWriter writer);
+    parameters:
+    - id: writer
+      type: System.Xml.XmlWriter
+      description: A <xref href="System.Xml.XmlWriter"></xref> that the <xref href="System.Xml.Linq.XElement"></xref> will be written to.
+  overload: System.Xml.Linq.XStreamingElement.Save*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XStreamingElement.Save(System.IO.Stream,System.Xml.Linq.SaveOptions)
+  commentId: M:System.Xml.Linq.XStreamingElement.Save(System.IO.Stream,System.Xml.Linq.SaveOptions)
+  id: Save(System.IO.Stream,System.Xml.Linq.SaveOptions)
+  parent: System.Xml.Linq.XStreamingElement
+  langs:
+  - csharp
+  name: Save(Stream, SaveOptions)
+  nameWithType: XStreamingElement.Save(Stream, SaveOptions)
+  fullName: XStreamingElement.Save(Stream, SaveOptions)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Outputs this <xref href="System.Xml.Linq.XStreamingElement"></xref> to the specified <xref href="System.IO.Stream"></xref>, optionally specifying formatting behavior.
+  remarks: "By default the `options` are set to <xref:System.Xml.Linq.SaveOptions.None>. This option will remove all extraneous insignificant white space, and add appropriate insignificant white space so that the XML is properly indented.  \n  \n If you want to save unindented XML, specify the <xref:System.Xml.Linq.SaveOptions.DisableFormatting> flag for `options`. This will cause the writer to write all white spaces exactly as represented in the XML tree.  \n  \n Use <xref:System.Xml.Linq.SaveOptions.OmitDuplicateNamespaces> option if you want to remove duplicate namespace declarations."
+  syntax:
+    content: public void Save (System.IO.Stream stream, System.Xml.Linq.SaveOptions options);
+    parameters:
+    - id: stream
+      type: System.IO.Stream
+      description: The stream to output this <xref href="System.Xml.Linq.XDocument"></xref> to.
+    - id: options
+      type: System.Xml.Linq.SaveOptions
+      description: A <xref href="System.Xml.Linq.SaveOptions"></xref> object that specifies formatting behavior.
+  overload: System.Xml.Linq.XStreamingElement.Save*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XStreamingElement.Save(System.IO.TextWriter,System.Xml.Linq.SaveOptions)
+  commentId: M:System.Xml.Linq.XStreamingElement.Save(System.IO.TextWriter,System.Xml.Linq.SaveOptions)
+  id: Save(System.IO.TextWriter,System.Xml.Linq.SaveOptions)
+  parent: System.Xml.Linq.XStreamingElement
+  langs:
+  - csharp
+  name: Save(TextWriter, SaveOptions)
+  nameWithType: XStreamingElement.Save(TextWriter, SaveOptions)
+  fullName: XStreamingElement.Save(TextWriter, SaveOptions)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Serialize this streaming element to a <xref href="System.IO.TextWriter"></xref>, optionally disabling formatting.
+  remarks: "If you want to save unindented XML, specify the <xref:System.Xml.Linq.SaveOptions.DisableFormatting> flag for `options`. This will cause the writer to write all white space exactly as represented in the XML tree.  \n  \n If you want to save indented XML, do not specify the <xref:System.Xml.Linq.SaveOptions.DisableFormatting> flag for `options`. This will remove all extraneous insignificant white space, and add appropriate insignificant white space so that the XML is properly indented. This is the default behavior, and the behavior of the overloads of the <xref:System.Xml.Linq.XElement.Save%2A> methods that do not take `options` as a parameter.  \n  \n For more information, see [Preserving White Space while Loading or Parsing XML](http://msdn.microsoft.com/library/093a7169-a04e-4638-b08c-d1cb98aa650d) and [Preserving White Space While Serializing](http://msdn.microsoft.com/library/fb146217-0a49-4efc-ac84-7265b91d3939)."
+  example:
+  - "The following example shows two uses of this method. The first use preserves white space. The second one serializes the <xref:System.Xml.Linq.XStreamingElement> with formatting.  \n  \n```csharp  \n  \n                XElement srcTree = new XElement(\"Root\",  \n                       new XElement(\"Child\", 1),  \n                       new XElement(\"Child\", 2),  \n                       new XElement(\"Child\", 3),  \n                       new XElement(\"Child\", 4),  \n                       new XElement(\"Child\", 5)  \n                   );  \n  \nXStreamingElement dstTree = new XStreamingElement(\"NewRoot\",  \n                        from el in srcTree.Elements()  \n                        where (int)el == 3  \n                        select new XElement(\"DifferentChild\", (int)el)  \n                    );  \n  \nStringBuilder sb = new StringBuilder();  \ndstTree.Save(new StringWriter(sb), SaveOptions.DisableFormatting);  \nConsole.WriteLine(sb.ToString());  \nConsole.WriteLine(\"------\");  \nsb = new StringBuilder();  \ndstTree.Save(new StringWriter(sb), SaveOptions.None);  \nConsole.WriteLine(sb.ToString());  \n```  \n  \n```vb  \n  \n                Dim srcTree As XElement = _  \n    <Root>  \n        <Child>1</Child>  \n        <Child>2</Child>  \n        <Child>3</Child>  \n        <Child>4</Child>  \n        <Child>5</Child>  \n    </Root>  \n  \nDim dstTree As XStreamingElement = New XStreamingElement(\"NewRoot\", _  \n                        From el In srcTree.Elements() _  \n                        Where el.Value = 3 _  \n                        Select <DifferentChild><%= el.Value %></DifferentChild> _  \n                    )  \n  \nDim sb As StringBuilder = New StringBuilder()  \ndstTree.Save(New StringWriter(sb), SaveOptions.DisableFormatting)  \nConsole.WriteLine(sb.ToString())  \nConsole.WriteLine(\"------\")  \nsb = New StringBuilder()  \ndstTree.Save(New StringWriter(sb), SaveOptions.None)  \nConsole.WriteLine(sb.ToString())  \n```  \n  \n This example produces the following output:  \n  \n```xml  \n  \n                <?xml version=\"1.0\" encoding=\"utf-16\"?><NewRoot><DifferentChild>3</DifferentChild></NewRoot>  \n------  \n<?xml version=\"1.0\" encoding=\"utf-16\"?>  \n<NewRoot>  \n  <DifferentChild>3</DifferentChild>  \n</NewRoot>  \n```"
+  syntax:
+    content: public void Save (System.IO.TextWriter textWriter, System.Xml.Linq.SaveOptions options);
+    parameters:
+    - id: textWriter
+      type: System.IO.TextWriter
+      description: The <xref href="System.IO.TextWriter"></xref> to output the XML to.
+    - id: options
+      type: System.Xml.Linq.SaveOptions
+      description: A <xref href="System.Xml.Linq.SaveOptions"></xref> that specifies formatting behavior.
+  overload: System.Xml.Linq.XStreamingElement.Save*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XStreamingElement.Save(System.String,System.Xml.Linq.SaveOptions)
+  commentId: M:System.Xml.Linq.XStreamingElement.Save(System.String,System.Xml.Linq.SaveOptions)
+  id: Save(System.String,System.Xml.Linq.SaveOptions)
+  parent: System.Xml.Linq.XStreamingElement
+  langs:
+  - csharp
+  name: Save(String, SaveOptions)
+  nameWithType: XStreamingElement.Save(String, SaveOptions)
+  fullName: XStreamingElement.Save(String, SaveOptions)
+  type: Method
+  assemblies:
+  - System.Xml.Linq
+  - netstandard
+  - System.Xml.XDocument
+  namespace: System.Xml.Linq
+  summary: Serialize this streaming element to a file, optionally disabling formatting.
+  remarks: "If you want to save unindented XML, specify the <xref:System.Xml.Linq.SaveOptions.DisableFormatting> flag for `options`. This will cause the writer to write all white space exactly as represented in the XML tree.  \n  \n If you want to save indented XML, do not specify the <xref:System.Xml.Linq.SaveOptions.DisableFormatting> flag for `options`. This will remove all extraneous insignificant white space, and add appropriate insignificant white space so that the XML is properly indented. This is the default behavior, and the behavior of the overloads of the <xref:System.Xml.Linq.XElement.Save%2A> methods that do not take `options` as a parameter.  \n  \n For more information, see [Preserving White Space while Loading or Parsing XML](http://msdn.microsoft.com/library/093a7169-a04e-4638-b08c-d1cb98aa650d) and [Preserving White Space While Serializing](http://msdn.microsoft.com/library/fb146217-0a49-4efc-ac84-7265b91d3939)."
+  example:
+  - "The following example shows two uses of this method. The first use preserves white space. The second one serializes the <xref:System.Xml.Linq.XStreamingElement> with formatting.  \n  \n```csharp  \n  \n                XElement srcTree = new XElement(\"Root\",  \n                       new XElement(\"Child\", 1),  \n                       new XElement(\"Child\", 2),  \n                       new XElement(\"Child\", 3),  \n                       new XElement(\"Child\", 4),  \n                       new XElement(\"Child\", 5)  \n                   );  \n  \nXStreamingElement dstTree = new XStreamingElement(\"NewRoot\",  \n                        from el in srcTree.Elements()  \n                        where (int)el == 3  \n                        select new XElement(\"DifferentChild\", (int)el)  \n                    );  \n  \ndstTree.Save(\"Test1.xml\", SaveOptions.DisableFormatting);  \ndstTree.Save(\"Test2.xml\", SaveOptions.None);  \nConsole.WriteLine(File.ReadAllText(\"Test1.xml\"));  \nConsole.WriteLine(\"------\");  \nConsole.WriteLine(File.ReadAllText(\"Test2.xml\"));  \n```  \n  \n```vb  \n  \n                Dim srcTree As XElement = _  \n    <Root>  \n        <Child>1</Child>  \n        <Child>2</Child>  \n        <Child>3</Child>  \n        <Child>4</Child>  \n        <Child>5</Child>  \n    </Root>  \n  \nDim dstTree As XStreamingElement = New XStreamingElement(\"NewRoot\", _  \n                        From el In srcTree.Elements() _  \n                        Where el.Value = 3 _  \n                        Select <DifferentChild><%= el.Value %></DifferentChild> _  \n                    )  \n  \ndstTree.Save(\"Test1.xml\", SaveOptions.DisableFormatting)  \ndstTree.Save(\"Test2.xml\", SaveOptions.None)  \nConsole.WriteLine(File.ReadAllText(\"Test1.xml\"))  \nConsole.WriteLine(\"------\")  \nConsole.WriteLine(File.ReadAllText(\"Test2.xml\"))  \n  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \n                <?xml version=\"1.0\" encoding=\"utf-8\"?><NewRoot><DifferentChild>3</DifferentChild></NewRoot>  \n------  \n<?xml version=\"1.0\" encoding=\"utf-8\"?>  \n<NewRoot>  \n  <DifferentChild>3</DifferentChild>  \n</NewRoot>  \n```"
+  syntax:
+    content: public void Save (string fileName, System.Xml.Linq.SaveOptions options);
+    parameters:
+    - id: fileName
+      type: System.String
+      description: A <xref href="System.String"></xref> that contains the name of the file.
+    - id: options
+      type: System.Xml.Linq.SaveOptions
+      description: A <xref href="System.Xml.Linq.SaveOptions"></xref> object that specifies formatting behavior.
+  overload: System.Xml.Linq.XStreamingElement.Save*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XStreamingElement.ToString
+  commentId: M:System.Xml.Linq.XStreamingElement.ToString
+  id: ToString
+  parent: System.Xml.Linq.XStreamingElement
+  langs:
+  - csharp
+  name: ToString()
+  nameWithType: XStreamingElement.ToString()
+  fullName: XStreamingElement.ToString()
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Returns the formatted (indented) XML for this streaming element.
+  remarks: Note that when debugging a program that uses <xref:System.Xml.Linq.XStreamingElement>, displaying the value of an object causes its <xref:System.Xml.Linq.XStreamingElement.ToString%2A> method to be called. This causes the XML to be serialized. If the semantics of your streaming element query are such that the streaming element can only be streamed once, this may cause undesirable behavior in your debugging experience.
+  example:
+  - "The following example shows two uses of <xref:System.Xml.Linq.XStreamingElement.ToString%2A>. The first use preserves white space. The second one serializes the <xref:System.Xml.Linq.XStreamingElement> with formatting.  \n  \n```csharp  \n  \n                XElement srcTree = new XElement(\"Root\",  \n                       new XElement(\"Child\", 1),  \n                       new XElement(\"Child\", 2),  \n                       new XElement(\"Child\", 3),  \n                       new XElement(\"Child\", 4),  \n                       new XElement(\"Child\", 5)  \n                   );  \n  \nXStreamingElement dstTree = new XStreamingElement(\"NewRoot\",  \n                        from el in srcTree.Elements()  \n                        where (int)el == 3  \n                        select new XElement(\"DifferentChild\", (int)el)  \n                    );  \n  \nConsole.WriteLine(dstTree.ToString(SaveOptions.DisableFormatting));  \nConsole.WriteLine(\"------\");  \nConsole.WriteLine(dstTree.ToString());  \n```  \n  \n```vb  \n  \n                Dim srcTree As XElement = _  \n    <Root>  \n        <Child>1</Child>  \n        <Child>2</Child>  \n        <Child>3</Child>  \n        <Child>4</Child>  \n        <Child>5</Child>  \n    </Root>  \n  \nDim dstTree As XStreamingElement = New XStreamingElement(\"NewRoot\", _  \n                        From el In srcTree.Elements() _  \n                        Where el.Value = 3 _  \n                        Select <DifferentChild><%= el.Value %></DifferentChild> _  \n                    )  \n  \nConsole.WriteLine(dstTree.ToString(SaveOptions.DisableFormatting))  \nConsole.WriteLine(\"------\")  \nConsole.WriteLine(dstTree.ToString())  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \n                <NewRoot><DifferentChild>3</DifferentChild></NewRoot>  \n------  \n<NewRoot>  \n  <DifferentChild>3</DifferentChild>  \n</NewRoot>  \n```"
+  syntax:
+    content: public override string ToString ();
+    parameters: []
+    return:
+      type: System.String
+      description: A <xref href="System.String"></xref> containing the indented XML.
+  overload: System.Xml.Linq.XStreamingElement.ToString*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XStreamingElement.ToString(System.Xml.Linq.SaveOptions)
+  commentId: M:System.Xml.Linq.XStreamingElement.ToString(System.Xml.Linq.SaveOptions)
+  id: ToString(System.Xml.Linq.SaveOptions)
+  parent: System.Xml.Linq.XStreamingElement
+  langs:
+  - csharp
+  name: ToString(SaveOptions)
+  nameWithType: XStreamingElement.ToString(SaveOptions)
+  fullName: XStreamingElement.ToString(SaveOptions)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Returns the XML for this streaming element, optionally disabling formatting.
+  remarks: Note that when debugging a program that uses <xref:System.Xml.Linq.XStreamingElement>, displaying the value of an object causes its <xref:System.Xml.Linq.XStreamingElement.ToString%2A> method to be called. This causes the XML to be serialized. If the semantics of your streaming element query are such that the streaming element can only be streamed once, this may cause undesirable behavior in your debugging experience.
+  example:
+  - "The following example shows two uses of <xref:System.Xml.Linq.XStreamingElement.ToString%2A>. The first use preserves white space. The second one serializes the <xref:System.Xml.Linq.XStreamingElement> with formatting.  \n  \n```csharp  \n  \n                XElement srcTree = new XElement(\"Root\",  \n                       new XElement(\"Child\", 1),  \n                       new XElement(\"Child\", 2),  \n                       new XElement(\"Child\", 3),  \n                       new XElement(\"Child\", 4),  \n                       new XElement(\"Child\", 5)  \n                   );  \n  \nXStreamingElement dstTree = new XStreamingElement(\"NewRoot\",  \n                        from el in srcTree.Elements()  \n                        where (int)el == 3  \n                        select new XElement(\"DifferentChild\", (int)el)  \n                    );  \n  \nConsole.WriteLine(dstTree.ToString(SaveOptions.DisableFormatting));  \nConsole.WriteLine(\"------\");  \nConsole.WriteLine(dstTree.ToString());  \n```  \n  \n```vb  \n  \n                Dim srcTree As XElement = _  \n    <Root>  \n        <Child>1</Child>  \n        <Child>2</Child>  \n        <Child>3</Child>  \n        <Child>4</Child>  \n        <Child>5</Child>  \n    </Root>  \n  \nDim dstTree As XStreamingElement = New XStreamingElement(\"NewRoot\", _  \n                        From el In srcTree.Elements() _  \n                        Where el.Value = 3 _  \n                        Select <DifferentChild><%= el.Value %></DifferentChild> _  \n                    )  \n  \nConsole.WriteLine(dstTree.ToString(SaveOptions.DisableFormatting))  \nConsole.WriteLine(\"------\")  \nConsole.WriteLine(dstTree.ToString())  \n```  \n  \n This example produces the following output:  \n  \n```  \n  \n                <NewRoot><DifferentChild>3</DifferentChild></NewRoot>  \n------  \n<NewRoot>  \n  <DifferentChild>3</DifferentChild>  \n</NewRoot>  \n```"
+  syntax:
+    content: public string ToString (System.Xml.Linq.SaveOptions options);
+    parameters:
+    - id: options
+      type: System.Xml.Linq.SaveOptions
+      description: A <xref href="System.Xml.Linq.SaveOptions"></xref> that specifies formatting behavior.
+    return:
+      type: System.String
+      description: A <xref href="System.String"></xref> containing the XML.
+  overload: System.Xml.Linq.XStreamingElement.ToString*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XStreamingElement.WriteTo(System.Xml.XmlWriter)
+  commentId: M:System.Xml.Linq.XStreamingElement.WriteTo(System.Xml.XmlWriter)
+  id: WriteTo(System.Xml.XmlWriter)
+  parent: System.Xml.Linq.XStreamingElement
+  langs:
+  - csharp
+  name: WriteTo(XmlWriter)
+  nameWithType: XStreamingElement.WriteTo(XmlWriter)
+  fullName: XStreamingElement.WriteTo(XmlWriter)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Writes this streaming element to an <xref href="System.Xml.XmlWriter"></xref>.
+  remarks: ''
+  example:
+  - "The following example creates an XML tree using <xref:System.Xml.Linq.XStreamingElement>. It then writes the streaming element to an <xref:System.Xml.XmlWriter>.  \n  \n```csharp  \n  \n                XElement srcTree = new XElement(\"Root\",  \n                       new XElement(\"Child\", 1),  \n                       new XElement(\"Child\", 2),  \n                       new XElement(\"Child\", 3),  \n                       new XElement(\"Child\", 4),  \n                       new XElement(\"Child\", 5)  \n                   );  \n  \nXStreamingElement dstTree = new XStreamingElement(\"NewRoot\",  \n                        from el in srcTree.Elements()  \n                        where (int)el == 3  \n                        select new XElement(\"DifferentChild\", (int)el)  \n                    );  \n  \nStringBuilder sb = new StringBuilder();  \nXmlWriterSettings xws = new XmlWriterSettings();  \nxws.OmitXmlDeclaration = true;  \nxws.Indent = true;  \n  \nusing (XmlWriter xw = XmlWriter.Create(sb, xws))  \n{  \n    dstTree.WriteTo(xw);  \n}  \nConsole.WriteLine(sb.ToString());  \n```  \n  \n```vb  \n  \n                Dim srcTree As XElement = _  \n    <Root>  \n        <Child>1</Child>  \n        <Child>2</Child>  \n        <Child>3</Child>  \n        <Child>4</Child>  \n        <Child>5</Child>  \n    </Root>  \n  \nDim dstTree As XStreamingElement = _   \n    New XStreamingElement(\"NewRoot\", _  \n        From el In srcTree.Elements() _  \n        Where el.Value = 3 _  \n        Select <DifferentChild><%= el.Value %></DifferentChild> )  \n  \nDim sb As StringBuilder = New StringBuilder()  \nDim xws As XmlWriterSettings = New XmlWriterSettings()  \nxws.OmitXmlDeclaration = True  \nxws.Indent = True  \n  \nUsing xw As XmlWriter = XmlWriter.Create(sb, xws)  \n    dstTree.WriteTo(xw)  \nEnd Using  \nConsole.WriteLine(sb.ToString())  \n```  \n  \n This example produces the following output:  \n  \n```xml  \n  \n                <NewRoot>  \n  <DifferentChild>3</DifferentChild>  \n</NewRoot>  \n```"
+  syntax:
+    content: public void WriteTo (System.Xml.XmlWriter writer);
+    parameters:
+    - id: writer
+      type: System.Xml.XmlWriter
+      description: An <xref href="System.Xml.XmlWriter"></xref> into which this method will write.
+  overload: System.Xml.Linq.XStreamingElement.WriteTo*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Xml.Linq.XStreamingElement.#ctor(System.Xml.Linq.XName)
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: XStreamingElement(XName)
+  nameWithType: XStreamingElement.XStreamingElement(XName)
+  fullName: XStreamingElement.XStreamingElement(XName)
+- uid: System.Xml.Linq.XName
+  parent: System.Xml.Linq
+  isExternal: false
+  name: XName
+  nameWithType: XName
+  fullName: System.Xml.Linq.XName
+- uid: System.Xml.Linq.XStreamingElement.#ctor(System.Xml.Linq.XName,System.Object)
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: XStreamingElement(XName, Object)
+  nameWithType: XStreamingElement.XStreamingElement(XName, Object)
+  fullName: XStreamingElement.XStreamingElement(XName, Object)
+- uid: System.Xml.Linq.XStreamingElement.#ctor(System.Xml.Linq.XName,System.Object[])
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: XStreamingElement(XName, Object[])
+  nameWithType: XStreamingElement.XStreamingElement(XName, Object[])
+  fullName: XStreamingElement.XStreamingElement(XName, Object[])
+- uid: System.Object[]
+  parent: System
+  isExternal: false
+  name: Object[]
+  nameWithType: Object[]
+  fullName: System.Object[]
+  spec.csharp:
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+- uid: System.Xml.Linq.XStreamingElement.Add(System.Object)
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: Add(Object)
+  nameWithType: XStreamingElement.Add(Object)
+  fullName: XStreamingElement.Add(Object)
+- uid: System.Xml.Linq.XStreamingElement.Add(System.Object[])
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: Add(Object[])
+  nameWithType: XStreamingElement.Add(Object[])
+  fullName: XStreamingElement.Add(Object[])
+- uid: System.Xml.Linq.XStreamingElement.Name
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: Name
+  nameWithType: XStreamingElement.Name
+  fullName: XStreamingElement.Name
+- uid: System.Xml.Linq.XStreamingElement.Save(System.IO.Stream)
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: Save(Stream)
+  nameWithType: XStreamingElement.Save(Stream)
+  fullName: XStreamingElement.Save(Stream)
+- uid: System.IO.Stream
+  parent: System.IO
+  isExternal: false
+  name: Stream
+  nameWithType: Stream
+  fullName: System.IO.Stream
+- uid: System.Xml.Linq.XStreamingElement.Save(System.IO.TextWriter)
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: Save(TextWriter)
+  nameWithType: XStreamingElement.Save(TextWriter)
+  fullName: XStreamingElement.Save(TextWriter)
+- uid: System.IO.TextWriter
+  parent: System.IO
+  isExternal: false
+  name: TextWriter
+  nameWithType: TextWriter
+  fullName: System.IO.TextWriter
+- uid: System.Xml.Linq.XStreamingElement.Save(System.String)
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: Save(String)
+  nameWithType: XStreamingElement.Save(String)
+  fullName: XStreamingElement.Save(String)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Xml.Linq.XStreamingElement.Save(System.Xml.XmlWriter)
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: Save(XmlWriter)
+  nameWithType: XStreamingElement.Save(XmlWriter)
+  fullName: XStreamingElement.Save(XmlWriter)
+- uid: System.Xml.XmlWriter
+  parent: System.Xml
+  isExternal: false
+  name: XmlWriter
+  nameWithType: XmlWriter
+  fullName: System.Xml.XmlWriter
+- uid: System.Xml.Linq.XStreamingElement.Save(System.IO.Stream,System.Xml.Linq.SaveOptions)
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: Save(Stream, SaveOptions)
+  nameWithType: XStreamingElement.Save(Stream, SaveOptions)
+  fullName: XStreamingElement.Save(Stream, SaveOptions)
+- uid: System.Xml.Linq.SaveOptions
+  parent: System.Xml.Linq
+  isExternal: false
+  name: SaveOptions
+  nameWithType: SaveOptions
+  fullName: System.Xml.Linq.SaveOptions
+- uid: System.Xml.Linq.XStreamingElement.Save(System.IO.TextWriter,System.Xml.Linq.SaveOptions)
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: Save(TextWriter, SaveOptions)
+  nameWithType: XStreamingElement.Save(TextWriter, SaveOptions)
+  fullName: XStreamingElement.Save(TextWriter, SaveOptions)
+- uid: System.Xml.Linq.XStreamingElement.Save(System.String,System.Xml.Linq.SaveOptions)
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: Save(String, SaveOptions)
+  nameWithType: XStreamingElement.Save(String, SaveOptions)
+  fullName: XStreamingElement.Save(String, SaveOptions)
+- uid: System.Xml.Linq.XStreamingElement.ToString
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: ToString()
+  nameWithType: XStreamingElement.ToString()
+  fullName: XStreamingElement.ToString()
+- uid: System.Xml.Linq.XStreamingElement.ToString(System.Xml.Linq.SaveOptions)
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: ToString(SaveOptions)
+  nameWithType: XStreamingElement.ToString(SaveOptions)
+  fullName: XStreamingElement.ToString(SaveOptions)
+- uid: System.Xml.Linq.XStreamingElement.WriteTo(System.Xml.XmlWriter)
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: WriteTo(XmlWriter)
+  nameWithType: XStreamingElement.WriteTo(XmlWriter)
+  fullName: XStreamingElement.WriteTo(XmlWriter)
+- uid: System.Xml.Linq.XStreamingElement.#ctor*
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: XStreamingElement
+  nameWithType: XStreamingElement.XStreamingElement
+  fullName: XStreamingElement.XStreamingElement
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+- uid: System.Xml.Linq.XStreamingElement.ToString*
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: ToString
+  nameWithType: XStreamingElement.ToString
+  fullName: XStreamingElement.ToString
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+- uid: System.Xml.Linq.XStreamingElement.Add*
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: Add
+  nameWithType: XStreamingElement.Add
+  fullName: XStreamingElement.Add
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+- uid: System.Xml.Linq.XStreamingElement.Name*
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: Name
+  nameWithType: XStreamingElement.Name
+  fullName: XStreamingElement.Name
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+- uid: System.Xml.Linq.XStreamingElement.Save*
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: Save
+  nameWithType: XStreamingElement.Save
+  fullName: XStreamingElement.Save
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+- uid: System.Xml.Linq.XStreamingElement.WriteTo*
+  parent: System.Xml.Linq.XStreamingElement
+  isExternal: false
+  name: WriteTo
+  nameWithType: XStreamingElement.WriteTo
+  fullName: XStreamingElement.WriteTo
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XStreamingElement.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)

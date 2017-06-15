@@ -1,0 +1,611 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Activities.Persistence.PersistenceIOParticipant
+  commentId: T:System.Activities.Persistence.PersistenceIOParticipant
+  id: PersistenceIOParticipant
+  children:
+  - System.Activities.Persistence.PersistenceIOParticipant.#ctor(System.Boolean,System.Boolean)
+  - System.Activities.Persistence.PersistenceIOParticipant.Abort
+  - System.Activities.Persistence.PersistenceIOParticipant.BeginOnLoad(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.TimeSpan,System.AsyncCallback,System.Object)
+  - System.Activities.Persistence.PersistenceIOParticipant.BeginOnSave(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.TimeSpan,System.AsyncCallback,System.Object)
+  - System.Activities.Persistence.PersistenceIOParticipant.EndOnLoad(System.IAsyncResult)
+  - System.Activities.Persistence.PersistenceIOParticipant.EndOnSave(System.IAsyncResult)
+  langs:
+  - csharp
+  name: PersistenceIOParticipant
+  nameWithType: PersistenceIOParticipant
+  fullName: System.Activities.Persistence.PersistenceIOParticipant
+  type: Class
+  assemblies:
+  - System.Activities
+  namespace: System.Activities.Persistence
+  summary: A derived vclass of the <xref href="System.Activities.Persistence.PersistenceParticipant"></xref> class with methods that perform input and output operations in addition to the persisting and loading of workflow instances through the persistence process.
+  remarks: "A host executes the following steps (or stages) when persisting an instance:  \n  \n1.  Collects values to be persisted.  \n  \n2.  Maps fields of monolithic structured values to individual values.  \n  \n3.  Issues the <xref:System.Activities.DurableInstancing.SaveWorkflowCommand> to the persistence provider.  \n  \n4.  Performs I/O under the persistence transaction.  \n  \n A host completes a stage before beginning the next stage. For example when persisting, the host collects values from all the persistence participants before moving to the second stage. In the second stage, the host provides all the values collected in the first stage to all persistence participants in the second stage for mapping. In the third stage, the host provides all the collected values in the first and second stages to the persistence provider when invoking the <xref:System.Activities.DurableInstancing.SaveWorkflowCommand>. Then in the fourth stage, the host provides all the collected values to all the persistence IO participants under the persistence transaction.  \n  \n A host executes the following stages when loading a persistence instance:  \n  \n1.  Issues the <xref:System.Activities.DurableInstancing.LoadWorkflowCommand> and <xref:System.Activities.DurableInstancing.LoadWorkflowByInstanceKeyCommand> to the persistence provider.  \n  \n2.  Performs I/O under the persistence transaction.  \n  \n3.  Publishes the loaded values.  \n  \n At the highest level, workflow instance extensions that derive from the <xref:System.Activities.Persistence.PersistenceParticipant> class can participate in the first (Collect) and second (Map) stages of persisting process and the third stage (Publish) of loading process.  Workflow instance extensions deriving from the PersistenceIOParticipant class can additionally participate in the fourth stage of the persisting process and the second stage of the loading process (I/O)."
+  syntax:
+    content: 'public abstract class PersistenceIOParticipant : System.Activities.Persistence.PersistenceParticipant'
+  inheritance:
+  - System.Object
+  - System.Activities.Persistence.PersistenceParticipant
+  implements: []
+  inheritedMembers:
+  - System.Activities.Persistence.PersistenceParticipant.CollectValues(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object}@,System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object}@)
+  - System.Activities.Persistence.PersistenceParticipant.MapValues(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object})
+  - System.Activities.Persistence.PersistenceParticipant.PublishValues(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object})
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Persistence/PersistenceIOParticipant.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Activities.Persistence.PersistenceIOParticipant.#ctor(System.Boolean,System.Boolean)
+  commentId: M:System.Activities.Persistence.PersistenceIOParticipant.#ctor(System.Boolean,System.Boolean)
+  id: '#ctor(System.Boolean,System.Boolean)'
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  langs:
+  - csharp
+  name: PersistenceIOParticipant(Boolean, Boolean)
+  nameWithType: PersistenceIOParticipant.PersistenceIOParticipant(Boolean, Boolean)
+  fullName: PersistenceIOParticipant.PersistenceIOParticipant(Boolean, Boolean)
+  type: Constructor
+  assemblies:
+  - System.Activities
+  namespace: System.Activities.Persistence
+  summary: Initializes an instance of the <xref href="System.Activities.Persistence.PersistenceIOParticipant"></xref> class.
+  syntax:
+    content: protected PersistenceIOParticipant (bool isSaveTransactionRequired, bool isLoadTransactionRequired);
+    parameters:
+    - id: isSaveTransactionRequired
+      type: System.Boolean
+      description: '`true` if a transaction is required for the Save operation. If the <xref href="System.Activities.Persistence.PersistenceIOParticipant"></xref> object is created with this parameter set to `true`,  Transaction.Current is guaranteed to be set when BeginOnSave is invoked. The transaction is shared between the persistence provider, all PersistenceIOParticipant extensions, and potentially other transaction participants.'
+    - id: isLoadTransactionRequired
+      type: System.Boolean
+      description: '`true` if a transaction is required for the Load operation. If the <xref href="System.Activities.Persistence.PersistenceIOParticipant"></xref> object is created with this parameter set to `true`,  Transaction.Current is guaranteed to be set  when BeginOnLoad is invoked. The transaction is shared between the persistence provider, all PersistenceIOParticipant extensions, and potentially other transaction participants.'
+  overload: System.Activities.Persistence.PersistenceIOParticipant.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Persistence/PersistenceIOParticipant.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Activities.Persistence.PersistenceIOParticipant.Abort
+  commentId: M:System.Activities.Persistence.PersistenceIOParticipant.Abort
+  id: Abort
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  langs:
+  - csharp
+  name: Abort()
+  nameWithType: PersistenceIOParticipant.Abort()
+  fullName: PersistenceIOParticipant.Abort()
+  type: Method
+  assemblies:
+  - System.Activities
+  namespace: System.Activities.Persistence
+  summary: Aborts the pending IO (Load or Save) operation.
+  remarks: Derived classes that override BeginOnSave or BeginOnLoad and might not always complete immediately must override Abort. If Abort is invoked, any pending IO operations must be canceled. If an operation is canceled in this way, the corresponding End method should throw OperationCanceledException.
+  syntax:
+    content: protected abstract void Abort ();
+    parameters: []
+  overload: System.Activities.Persistence.PersistenceIOParticipant.Abort*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Persistence/PersistenceIOParticipant.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Activities.Persistence.PersistenceIOParticipant.BeginOnLoad(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.TimeSpan,System.AsyncCallback,System.Object)
+  commentId: M:System.Activities.Persistence.PersistenceIOParticipant.BeginOnLoad(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.TimeSpan,System.AsyncCallback,System.Object)
+  id: BeginOnLoad(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.TimeSpan,System.AsyncCallback,System.Object)
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  langs:
+  - csharp
+  name: BeginOnLoad(IDictionary<XName,Object>, TimeSpan, AsyncCallback, Object)
+  nameWithType: PersistenceIOParticipant.BeginOnLoad(IDictionary<XName,Object>, TimeSpan, AsyncCallback, Object)
+  fullName: PersistenceIOParticipant.BeginOnLoad(IDictionary<XName,Object>, TimeSpan, AsyncCallback, Object)
+  type: Method
+  assemblies:
+  - System.Activities
+  namespace: System.Activities.Persistence
+  summary: Begins an asynchronous operation to load additional state in conjunction with an instance being loaded from the instance store.
+  syntax:
+    content: protected virtual IAsyncResult BeginOnLoad (System.Collections.Generic.IDictionary<System.Xml.Linq.XName,object> readWriteValues, TimeSpan timeout, AsyncCallback callback, object state);
+    parameters:
+    - id: readWriteValues
+      type: System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object}
+      description: A dictionary of read-write values loaded by the persistence provider. This corresponds to the set of read-write values passed to BeginOnSave in the most recent persistence episode for this instance.
+    - id: timeout
+      type: System.TimeSpan
+      description: The time span within which the operation should be completed without timing out.
+    - id: callback
+      type: System.AsyncCallback
+      description: The asynchronous callback delegate that receives notification of the completion of the asynchronous Load operation.
+    - id: state
+      type: System.Object
+      description: The state information associated with the asynchronous operation.
+    return:
+      type: System.IAsyncResult
+      description: The status of an asynchronous operation.
+  overload: System.Activities.Persistence.PersistenceIOParticipant.BeginOnLoad*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Persistence/PersistenceIOParticipant.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Activities.Persistence.PersistenceIOParticipant.BeginOnSave(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.TimeSpan,System.AsyncCallback,System.Object)
+  commentId: M:System.Activities.Persistence.PersistenceIOParticipant.BeginOnSave(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.TimeSpan,System.AsyncCallback,System.Object)
+  id: BeginOnSave(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.TimeSpan,System.AsyncCallback,System.Object)
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  langs:
+  - csharp
+  name: BeginOnSave(IDictionary<XName,Object>, IDictionary<XName,Object>, TimeSpan, AsyncCallback, Object)
+  nameWithType: PersistenceIOParticipant.BeginOnSave(IDictionary<XName,Object>, IDictionary<XName,Object>, TimeSpan, AsyncCallback, Object)
+  fullName: PersistenceIOParticipant.BeginOnSave(IDictionary<XName,Object>, IDictionary<XName,Object>, TimeSpan, AsyncCallback, Object)
+  type: Method
+  assemblies:
+  - System.Activities
+  namespace: System.Activities.Persistence
+  summary: Begins an asynchronous operation to save additional state in conjunction with an instance being persisted to the instance store.
+  syntax:
+    content: protected virtual IAsyncResult BeginOnSave (System.Collections.Generic.IDictionary<System.Xml.Linq.XName,object> readWriteValues, System.Collections.Generic.IDictionary<System.Xml.Linq.XName,object> writeOnlyValues, TimeSpan timeout, AsyncCallback callback, object state);
+    parameters:
+    - id: readWriteValues
+      type: System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object}
+      description: A dictionary of read-write values collected in the CollectValues and MapValues stages.
+    - id: writeOnlyValues
+      type: System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object}
+      description: A dictionary of write-only values collected in the CollectValues and MapValues stages.
+    - id: timeout
+      type: System.TimeSpan
+      description: The time span within which the operation should be completed without timing out.
+    - id: callback
+      type: System.AsyncCallback
+      description: The asynchronous callback delegate that receives notification of the completion of the asynchronous operation.
+    - id: state
+      type: System.Object
+      description: The state information associated with the asynchronous operation.
+    return:
+      type: System.IAsyncResult
+      description: The status of an asynchronous operation.
+  overload: System.Activities.Persistence.PersistenceIOParticipant.BeginOnSave*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Persistence/PersistenceIOParticipant.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Activities.Persistence.PersistenceIOParticipant.EndOnLoad(System.IAsyncResult)
+  commentId: M:System.Activities.Persistence.PersistenceIOParticipant.EndOnLoad(System.IAsyncResult)
+  id: EndOnLoad(System.IAsyncResult)
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  langs:
+  - csharp
+  name: EndOnLoad(IAsyncResult)
+  nameWithType: PersistenceIOParticipant.EndOnLoad(IAsyncResult)
+  fullName: PersistenceIOParticipant.EndOnLoad(IAsyncResult)
+  type: Method
+  assemblies:
+  - System.Activities
+  namespace: System.Activities.Persistence
+  summary: Completes the asynchronous Load operation.
+  syntax:
+    content: protected virtual void EndOnLoad (IAsyncResult result);
+    parameters:
+    - id: result
+      type: System.IAsyncResult
+      description: The asynchronous result returned by a call to the <xref href="System.Activities.Persistence.PersistenceIOParticipant.BeginOnSave(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.TimeSpan,System.AsyncCallback,System.Object)"></xref> method.
+  overload: System.Activities.Persistence.PersistenceIOParticipant.EndOnLoad*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Persistence/PersistenceIOParticipant.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Activities.Persistence.PersistenceIOParticipant.EndOnSave(System.IAsyncResult)
+  commentId: M:System.Activities.Persistence.PersistenceIOParticipant.EndOnSave(System.IAsyncResult)
+  id: EndOnSave(System.IAsyncResult)
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  langs:
+  - csharp
+  name: EndOnSave(IAsyncResult)
+  nameWithType: PersistenceIOParticipant.EndOnSave(IAsyncResult)
+  fullName: PersistenceIOParticipant.EndOnSave(IAsyncResult)
+  type: Method
+  assemblies:
+  - System.Activities
+  namespace: System.Activities.Persistence
+  summary: Completes the asynchronous Save operation.
+  syntax:
+    content: protected virtual void EndOnSave (IAsyncResult result);
+    parameters:
+    - id: result
+      type: System.IAsyncResult
+      description: The asynchronous result returned by a call to the <xref href="System.Activities.Persistence.PersistenceIOParticipant.BeginOnSave(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.TimeSpan,System.AsyncCallback,System.Object)"></xref> method.
+  overload: System.Activities.Persistence.PersistenceIOParticipant.EndOnSave*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Persistence/PersistenceIOParticipant.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+references:
+- uid: System.Activities.Persistence.PersistenceParticipant
+  parent: System.Activities.Persistence
+  isExternal: false
+  name: PersistenceParticipant
+  nameWithType: PersistenceParticipant
+  fullName: System.Activities.Persistence.PersistenceParticipant
+- uid: System.Activities.Persistence.PersistenceIOParticipant.#ctor(System.Boolean,System.Boolean)
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  isExternal: false
+  name: PersistenceIOParticipant(Boolean, Boolean)
+  nameWithType: PersistenceIOParticipant.PersistenceIOParticipant(Boolean, Boolean)
+  fullName: PersistenceIOParticipant.PersistenceIOParticipant(Boolean, Boolean)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Activities.Persistence.PersistenceIOParticipant.Abort
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  isExternal: false
+  name: Abort()
+  nameWithType: PersistenceIOParticipant.Abort()
+  fullName: PersistenceIOParticipant.Abort()
+- uid: System.Activities.Persistence.PersistenceIOParticipant.BeginOnLoad(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.TimeSpan,System.AsyncCallback,System.Object)
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  isExternal: false
+  name: BeginOnLoad(IDictionary<XName,Object>, TimeSpan, AsyncCallback, Object)
+  nameWithType: PersistenceIOParticipant.BeginOnLoad(IDictionary<XName,Object>, TimeSpan, AsyncCallback, Object)
+  fullName: PersistenceIOParticipant.BeginOnLoad(IDictionary<XName,Object>, TimeSpan, AsyncCallback, Object)
+- uid: System.IAsyncResult
+  parent: System
+  isExternal: false
+  name: IAsyncResult
+  nameWithType: IAsyncResult
+  fullName: System.IAsyncResult
+- uid: System.Collections.Generic.IDictionary`2
+  name: IDictionary<TKey,TValue>
+  nameWithType: IDictionary<TKey,TValue>
+  fullName: System.Collections.Generic.IDictionary<TKey,TValue>
+- uid: System.Xml.Linq.XName
+  name: XName
+  nameWithType: XName
+  fullName: System.Xml.Linq.XName
+- uid: System.Object
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object}
+  parent: System.Collections.Generic
+  isExternal: false
+  name: IDictionary<XName,Object>
+  nameWithType: IDictionary<XName,Object>
+  fullName: System.Collections.Generic.IDictionary<System.Xml.Linq.XName,System.Object>
+  spec.csharp:
+  - uid: System.Collections.Generic.IDictionary`2
+    name: IDictionary
+    nameWithType: IDictionary
+    fullName: System.Collections.Generic.IDictionary
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Xml.Linq.XName
+    name: XName
+    nameWithType: XName
+    fullName: System.Xml.Linq.XName
+  - name: ','
+    nameWithType: ','
+    fullName: ','
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.TimeSpan
+  parent: System
+  isExternal: false
+  name: TimeSpan
+  nameWithType: TimeSpan
+  fullName: System.TimeSpan
+- uid: System.AsyncCallback
+  parent: System
+  isExternal: false
+  name: AsyncCallback
+  nameWithType: AsyncCallback
+  fullName: System.AsyncCallback
+- uid: System.Activities.Persistence.PersistenceIOParticipant.BeginOnSave(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.TimeSpan,System.AsyncCallback,System.Object)
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  isExternal: false
+  name: BeginOnSave(IDictionary<XName,Object>, IDictionary<XName,Object>, TimeSpan, AsyncCallback, Object)
+  nameWithType: PersistenceIOParticipant.BeginOnSave(IDictionary<XName,Object>, IDictionary<XName,Object>, TimeSpan, AsyncCallback, Object)
+  fullName: PersistenceIOParticipant.BeginOnSave(IDictionary<XName,Object>, IDictionary<XName,Object>, TimeSpan, AsyncCallback, Object)
+- uid: System.Activities.Persistence.PersistenceIOParticipant.EndOnLoad(System.IAsyncResult)
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  isExternal: false
+  name: EndOnLoad(IAsyncResult)
+  nameWithType: PersistenceIOParticipant.EndOnLoad(IAsyncResult)
+  fullName: PersistenceIOParticipant.EndOnLoad(IAsyncResult)
+- uid: System.Activities.Persistence.PersistenceIOParticipant.EndOnSave(System.IAsyncResult)
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  isExternal: false
+  name: EndOnSave(IAsyncResult)
+  nameWithType: PersistenceIOParticipant.EndOnSave(IAsyncResult)
+  fullName: PersistenceIOParticipant.EndOnSave(IAsyncResult)
+- uid: System.Activities.Persistence.PersistenceIOParticipant.#ctor*
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  isExternal: false
+  name: PersistenceIOParticipant
+  nameWithType: PersistenceIOParticipant.PersistenceIOParticipant
+  fullName: PersistenceIOParticipant.PersistenceIOParticipant
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Persistence/PersistenceIOParticipant.xml
+- uid: System.Activities.Persistence.PersistenceIOParticipant.Abort*
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  isExternal: false
+  name: Abort
+  nameWithType: PersistenceIOParticipant.Abort
+  fullName: PersistenceIOParticipant.Abort
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Persistence/PersistenceIOParticipant.xml
+- uid: System.Activities.Persistence.PersistenceIOParticipant.BeginOnLoad*
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  isExternal: false
+  name: BeginOnLoad
+  nameWithType: PersistenceIOParticipant.BeginOnLoad
+  fullName: PersistenceIOParticipant.BeginOnLoad
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Persistence/PersistenceIOParticipant.xml
+- uid: System.Activities.Persistence.PersistenceIOParticipant.BeginOnSave*
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  isExternal: false
+  name: BeginOnSave
+  nameWithType: PersistenceIOParticipant.BeginOnSave
+  fullName: PersistenceIOParticipant.BeginOnSave
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Persistence/PersistenceIOParticipant.xml
+- uid: System.Activities.Persistence.PersistenceIOParticipant.EndOnLoad*
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  isExternal: false
+  name: EndOnLoad
+  nameWithType: PersistenceIOParticipant.EndOnLoad
+  fullName: PersistenceIOParticipant.EndOnLoad
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Persistence/PersistenceIOParticipant.xml
+- uid: System.Activities.Persistence.PersistenceIOParticipant.EndOnSave*
+  parent: System.Activities.Persistence.PersistenceIOParticipant
+  isExternal: false
+  name: EndOnSave
+  nameWithType: PersistenceIOParticipant.EndOnSave
+  fullName: PersistenceIOParticipant.EndOnSave
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Persistence/PersistenceIOParticipant.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Activities.Persistence.PersistenceParticipant.CollectValues(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object}@,System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object}@)
+  parent: System.Activities.Persistence.PersistenceParticipant
+  isExternal: false
+  name: CollectValues(IDictionary<XName,Object>, IDictionary<XName,Object>)
+  nameWithType: PersistenceParticipant.CollectValues(IDictionary<XName,Object>, IDictionary<XName,Object>)
+  fullName: PersistenceParticipant.CollectValues(IDictionary<XName,Object>, IDictionary<XName,Object>)
+- uid: System.Activities.Persistence.PersistenceParticipant.MapValues(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object},System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object})
+  parent: System.Activities.Persistence.PersistenceParticipant
+  isExternal: false
+  name: MapValues(IDictionary<XName,Object>, IDictionary<XName,Object>)
+  nameWithType: PersistenceParticipant.MapValues(IDictionary<XName,Object>, IDictionary<XName,Object>)
+  fullName: PersistenceParticipant.MapValues(IDictionary<XName,Object>, IDictionary<XName,Object>)
+- uid: System.Activities.Persistence.PersistenceParticipant.PublishValues(System.Collections.Generic.IDictionary{System.Xml.Linq.XName,System.Object})
+  parent: System.Activities.Persistence.PersistenceParticipant
+  isExternal: false
+  name: PublishValues(IDictionary<XName,Object>)
+  nameWithType: PersistenceParticipant.PublishValues(IDictionary<XName,Object>)
+  fullName: PersistenceParticipant.PublishValues(IDictionary<XName,Object>)

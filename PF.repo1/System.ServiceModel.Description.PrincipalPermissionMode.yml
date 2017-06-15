@@ -1,0 +1,310 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.ServiceModel.Description.PrincipalPermissionMode
+  commentId: T:System.ServiceModel.Description.PrincipalPermissionMode
+  id: PrincipalPermissionMode
+  children:
+  - System.ServiceModel.Description.PrincipalPermissionMode.Always
+  - System.ServiceModel.Description.PrincipalPermissionMode.Custom
+  - System.ServiceModel.Description.PrincipalPermissionMode.None
+  - System.ServiceModel.Description.PrincipalPermissionMode.UseAspNetRoles
+  - System.ServiceModel.Description.PrincipalPermissionMode.UseWindowsGroups
+  langs:
+  - csharp
+  name: PrincipalPermissionMode
+  nameWithType: PrincipalPermissionMode
+  fullName: System.ServiceModel.Description.PrincipalPermissionMode
+  type: Enum
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Sets the mode for authorization checks when using the <xref href="System.Security.Permissions.PrincipalPermissionAttribute"></xref> to control access to a method.
+  remarks: "When applying the <xref:System.Security.Permissions.PrincipalPermissionAttribute> to a method, this mode specifies which set of roles to use when authorizing access. By default, the attribute uses Windows groups (such as `Administrator` or `Users`) to specify the role to which the user must belong.  \n  \n To set the mode programmatically, create an instance of the `ServiceHost` class, then find the <xref:System.ServiceModel.Description.ServiceAuthorizationBehavior> in its collection of behaviors, and set the <xref:System.ServiceModel.Description.ServiceAuthorizationBehavior.PrincipalPermissionMode%2A> to the appropriate enumeration. The following example sets the property to UseAspNetRoles.  \n  \n [!code-csharp[PrincipalPermissionMode#1](~/samples/snippets/csharp/VS_Snippets_CFX/principalpermissionmode/cs/source.cs#1)]\n [!code-vb[PrincipalPermissionMode#1](~/samples/snippets/visualbasic/VS_Snippets_CFX/principalpermissionmode/vb/source.vb#1)]  \n  \n You can also set the behavior in configuration by adding a [\\&lt;serviceAuthorization\\&gt;](~/docs/framework/configure-apps/file-schema/wcf/serviceauthorization-element.md) to the [\\&lt;serviceBehaviors\\&gt;](~/docs/framework/configure-apps/file-schema/wcf/servicebehaviors.md) of a configuration file, as shown in the following code.  \n  \n [!code-csharp[PrincipalPermissionMode#10](~/samples/snippets/csharp/VS_Snippets_CFX/principalpermissionmode/cs/source.cs#10)]\n [!code-vb[PrincipalPermissionMode#10](~/samples/snippets/visualbasic/VS_Snippets_CFX/principalpermissionmode/vb/source.vb#10)]  \n  \n The enumeration affects how the <xref:System.Security.Permissions.PrincipalPermissionAttribute> attribute authorizes a user when it is applied to a method. The following example applies the attribute to a method and demands that the user belong to the Users group on the computer. This code works only when the <xref:System.ServiceModel.Description.ServiceAuthorizationBehavior.PrincipalPermissionMode%2A> is set to `UseWindowsGroup` (the default setting).  \n  \n [!code-csharp[PrincipalPermissionMode#2](~/samples/snippets/csharp/VS_Snippets_CFX/principalpermissionmode/cs/source.cs#2)]\n [!code-vb[PrincipalPermissionMode#2](~/samples/snippets/visualbasic/VS_Snippets_CFX/principalpermissionmode/vb/source.vb#2)]  \n  \n## UseAspNetRoles  \n The UseAspNetRoles value is used for all credential types. This mode enables [!INCLUDE[indigo1](~/includes/indigo1-md.md)] to use the ASP.NET role provider to make authorization decisions.  \n  \n When the credential for a service is an X.509 certificate, you can set the `Name` property of the <xref:System.Security.Permissions.PrincipalPermissionAttribute> to a string that consists of the concatenated values of the Subject field and the Thumbprint field, as shown in the following example.  \n  \n [!code-csharp[PrincipalPermissionMode#3](~/samples/snippets/csharp/VS_Snippets_CFX/principalpermissionmode/cs/source.cs#3)]\n [!code-vb[PrincipalPermissionMode#3](~/samples/snippets/visualbasic/VS_Snippets_CFX/principalpermissionmode/vb/source.vb#3)]  \n  \n The concatenated string consists of the subject and thumbprint values separated by a semicolon and a space.  \n  \n It is also possible for a certificate to have a Subject field set to a null string. In that case, you can set the `Name` property to a semicolon followed by a space and then the thumbprint, as shown in the following example.  \n  \n [!code-csharp[PrincipalPermissionMode#4](~/samples/snippets/csharp/VS_Snippets_CFX/principalpermissionmode/cs/source.cs#4)]\n [!code-vb[PrincipalPermissionMode#4](~/samples/snippets/visualbasic/VS_Snippets_CFX/principalpermissionmode/vb/source.vb#4)]  \n  \n If an ASP.NET role provider is present, you can also set the <xref:System.Security.Permissions.PrincipalPermissionAttribute.Role%2A> property to a role in the database. By default, the database is represented by the <xref:System.Web.Security.SqlRoleProvider>. You can also set a custom role provider with the <xref:System.ServiceModel.Description.ServiceAuthorizationBehavior.RoleProvider%2A> property of the <xref:System.ServiceModel.Description.ServiceAuthorizationBehavior> class. The following code sets the role to `Administrators`. Note that the role provider must map the user account to that role.  \n  \n [!code-csharp[PrincipalPermissionMode#13](~/samples/snippets/csharp/VS_Snippets_CFX/principalpermissionmode/cs/source.cs#13)]\n [!code-vb[PrincipalPermissionMode#13](~/samples/snippets/visualbasic/VS_Snippets_CFX/principalpermissionmode/vb/source.vb#13)]  \n  \n [!INCLUDE[crabout](~/includes/crabout-md.md)] the ASP.NET Role provider, see [How To: Use Role Manager in ASP.NET 2.0](http://go.microsoft.com/fwlink/?LinkId=96692).  \n  \n [!INCLUDE[crabout](~/includes/crabout-md.md)] using [!INCLUDE[indigo2](~/includes/indigo2-md.md)] and the role provider, see [How to: Use the ASP.NET Role Provider with a Service](~/docs/framework/wcf/feature-details/how-to-use-the-aspnet-role-provider-with-a-service.md).  \n  \n## Custom  \n When the property is set to Custom, you must also provide a custom class that implements the <xref:System.IdentityModel.Policy.IAuthorizationPolicy> class. This class is responsible for providing the caller's `IPrincipal` representation inside the <xref:System.IdentityModel.Policy.EvaluationContext.Properties%2A> collection. It must store the `IPrincipal` instance to the properties collection using the \"Principal\" string key, as shown in the following example.  \n  \n```  \nevaluationContext.Properties[\"Principal\"]=new CustomPrincipal(identity);  \n```  \n  \n## Background  \n The role-based security in [!INCLUDE[dnprdnshort](~/includes/dnprdnshort-md.md)] enables applications to specify authorizations through code. By specifying the <xref:System.Security.Permissions.PrincipalPermission> demand, the <xref:System.Threading.Thread.CurrentPrincipal%2A> must satisfy the `PrincipalPermission` requirement. For example, that the user must be in a specific role or group. Otherwise, the thread is not authorized to execute the code, which results in an exception. [!INCLUDE[indigo2](~/includes/indigo2-md.md)] provides a set of <xref:System.ServiceModel.Description.PrincipalPermissionMode> selections to specify the <xref:System.Threading.Thread.CurrentPrincipal%2A> based on <xref:System.Security.SecurityContext> accordingly."
+  example:
+  - "The following example shows how to specify UseAspNetRoles.  \n  \n [!code-csharp[PrincipalPermissionMode#7](~/samples/snippets/csharp/VS_Snippets_CFX/principalpermissionmode/cs/source.cs#7)]\n [!code-vb[PrincipalPermissionMode#7](~/samples/snippets/visualbasic/VS_Snippets_CFX/principalpermissionmode/vb/source.vb#7)]  \n  \n The following example shows how to specify Custom.  \n  \n [!code-csharp[PrincipalPermissionMode#8](~/samples/snippets/csharp/VS_Snippets_CFX/principalpermissionmode/cs/source.cs#8)]\n [!code-vb[PrincipalPermissionMode#8](~/samples/snippets/visualbasic/VS_Snippets_CFX/principalpermissionmode/vb/source.vb#8)]"
+  syntax:
+    content: public enum PrincipalPermissionMode
+  inheritance:
+  - System.Object
+  - System.ValueType
+  - System.Enum
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/PrincipalPermissionMode.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Description.PrincipalPermissionMode.Always
+  commentId: F:System.ServiceModel.Description.PrincipalPermissionMode.Always
+  id: Always
+  parent: System.ServiceModel.Description.PrincipalPermissionMode
+  langs:
+  - csharp
+  name: Always
+  nameWithType: PrincipalPermissionMode.Always
+  fullName: PrincipalPermissionMode.Always
+  type: Field
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Always enables the user to specify a <xref href="System.Security.Principal.IPrincipal"></xref> class for <xref href="System.Threading.Thread.CurrentPrincipal"></xref>.
+  syntax:
+    content: Always
+    return:
+      type: System.ServiceModel.Description.PrincipalPermissionMode
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/PrincipalPermissionMode.xml
+- uid: System.ServiceModel.Description.PrincipalPermissionMode.Custom
+  commentId: F:System.ServiceModel.Description.PrincipalPermissionMode.Custom
+  id: Custom
+  parent: System.ServiceModel.Description.PrincipalPermissionMode
+  langs:
+  - csharp
+  name: Custom
+  nameWithType: PrincipalPermissionMode.Custom
+  fullName: PrincipalPermissionMode.Custom
+  type: Field
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: Enables the user to specify a custom <xref href="System.Security.Principal.IPrincipal"></xref> class for <xref href="System.Threading.Thread.CurrentPrincipal"></xref>.
+  syntax:
+    content: Custom
+    return:
+      type: System.ServiceModel.Description.PrincipalPermissionMode
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/PrincipalPermissionMode.xml
+- uid: System.ServiceModel.Description.PrincipalPermissionMode.None
+  commentId: F:System.ServiceModel.Description.PrincipalPermissionMode.None
+  id: None
+  parent: System.ServiceModel.Description.PrincipalPermissionMode
+  langs:
+  - csharp
+  name: None
+  nameWithType: PrincipalPermissionMode.None
+  fullName: PrincipalPermissionMode.None
+  type: Field
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: <xref href="System.Threading.Thread.CurrentPrincipal"></xref> is not set.
+  syntax:
+    content: None
+    return:
+      type: System.ServiceModel.Description.PrincipalPermissionMode
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/PrincipalPermissionMode.xml
+- uid: System.ServiceModel.Description.PrincipalPermissionMode.UseAspNetRoles
+  commentId: F:System.ServiceModel.Description.PrincipalPermissionMode.UseAspNetRoles
+  id: UseAspNetRoles
+  parent: System.ServiceModel.Description.PrincipalPermissionMode
+  langs:
+  - csharp
+  name: UseAspNetRoles
+  nameWithType: PrincipalPermissionMode.UseAspNetRoles
+  fullName: PrincipalPermissionMode.UseAspNetRoles
+  type: Field
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: <xref href="System.Threading.Thread.CurrentPrincipal"></xref> is set based on the [!INCLUDE[vstecasp](~/includes/vstecasp-md.md)] role provider (<xref href="System.Web.Security.RoleProvider"></xref>).
+  syntax:
+    content: UseAspNetRoles
+    return:
+      type: System.ServiceModel.Description.PrincipalPermissionMode
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/PrincipalPermissionMode.xml
+- uid: System.ServiceModel.Description.PrincipalPermissionMode.UseWindowsGroups
+  commentId: F:System.ServiceModel.Description.PrincipalPermissionMode.UseWindowsGroups
+  id: UseWindowsGroups
+  parent: System.ServiceModel.Description.PrincipalPermissionMode
+  langs:
+  - csharp
+  name: UseWindowsGroups
+  nameWithType: PrincipalPermissionMode.UseWindowsGroups
+  fullName: PrincipalPermissionMode.UseWindowsGroups
+  type: Field
+  assemblies:
+  - System.ServiceModel
+  namespace: System.ServiceModel.Description
+  summary: <xref href="System.Threading.Thread.CurrentPrincipal"></xref> is set based on Windows (<xref href="System.Security.Principal.WindowsPrincipal"></xref>). If the user identity is not associated with a Windows account, anonymous Windows is used.
+  syntax:
+    content: UseWindowsGroups
+    return:
+      type: System.ServiceModel.Description.PrincipalPermissionMode
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Description/PrincipalPermissionMode.xml
+references:
+- uid: System.Enum
+  parent: System
+  isExternal: false
+  name: Enum
+  nameWithType: Enum
+  fullName: System.Enum
+- uid: System.ServiceModel.Description.PrincipalPermissionMode.Always
+  parent: System.ServiceModel.Description.PrincipalPermissionMode
+  isExternal: false
+  name: Always
+  nameWithType: PrincipalPermissionMode.Always
+  fullName: PrincipalPermissionMode.Always
+- uid: System.ServiceModel.Description.PrincipalPermissionMode
+  parent: System.ServiceModel.Description
+  isExternal: false
+  name: PrincipalPermissionMode
+  nameWithType: PrincipalPermissionMode
+  fullName: System.ServiceModel.Description.PrincipalPermissionMode
+- uid: System.ServiceModel.Description.PrincipalPermissionMode.Custom
+  parent: System.ServiceModel.Description.PrincipalPermissionMode
+  isExternal: false
+  name: Custom
+  nameWithType: PrincipalPermissionMode.Custom
+  fullName: PrincipalPermissionMode.Custom
+- uid: System.ServiceModel.Description.PrincipalPermissionMode.None
+  parent: System.ServiceModel.Description.PrincipalPermissionMode
+  isExternal: false
+  name: None
+  nameWithType: PrincipalPermissionMode.None
+  fullName: PrincipalPermissionMode.None
+- uid: System.ServiceModel.Description.PrincipalPermissionMode.UseAspNetRoles
+  parent: System.ServiceModel.Description.PrincipalPermissionMode
+  isExternal: false
+  name: UseAspNetRoles
+  nameWithType: PrincipalPermissionMode.UseAspNetRoles
+  fullName: PrincipalPermissionMode.UseAspNetRoles
+- uid: System.ServiceModel.Description.PrincipalPermissionMode.UseWindowsGroups
+  parent: System.ServiceModel.Description.PrincipalPermissionMode
+  isExternal: false
+  name: UseWindowsGroups
+  nameWithType: PrincipalPermissionMode.UseWindowsGroups
+  fullName: PrincipalPermissionMode.UseWindowsGroups

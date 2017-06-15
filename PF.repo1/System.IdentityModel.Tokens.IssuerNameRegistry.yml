@@ -1,0 +1,467 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.IdentityModel.Tokens.IssuerNameRegistry
+  commentId: T:System.IdentityModel.Tokens.IssuerNameRegistry
+  id: IssuerNameRegistry
+  children:
+  - System.IdentityModel.Tokens.IssuerNameRegistry.#ctor
+  - System.IdentityModel.Tokens.IssuerNameRegistry.GetIssuerName(System.IdentityModel.Tokens.SecurityToken)
+  - System.IdentityModel.Tokens.IssuerNameRegistry.GetIssuerName(System.IdentityModel.Tokens.SecurityToken,System.String)
+  - System.IdentityModel.Tokens.IssuerNameRegistry.GetWindowsIssuerName
+  - System.IdentityModel.Tokens.IssuerNameRegistry.LoadCustomConfiguration(System.Xml.XmlNodeList)
+  langs:
+  - csharp
+  name: IssuerNameRegistry
+  nameWithType: IssuerNameRegistry
+  fullName: System.IdentityModel.Tokens.IssuerNameRegistry
+  type: Class
+  assemblies:
+  - System.IdentityModel
+  namespace: System.IdentityModel.Tokens
+  summary: The abstract base class for an issuer name registry. An issuer name registry is used to associate a mnemonic name to the cryptographic material that is needed to verify the signatures of tokens produced by the corresponding issuer. The issuer name registry maintains a list of issuers that are trusted by a relying party (RP) application.
+  remarks: "The issuer name registry is used to associate a mnemonic name to the cryptographic material needed to verify signatures of tokens produced by the corresponding issuer. This name is then used to set the <xref:System.Security.Claims.Claim.Issuer%2A> or the <xref:System.Security.Claims.Claim.OriginalIssuer%2A> property of a claim. The methods exposed by the <xref:System.IdentityModel.Tokens.IssuerNameRegistry> class are called from the pipeline by the security token handler that is processing the token. Tokens signed by material that is not mapped by an issuer name registry are discarded as untrusted. The name returned by the issuer name registry should be unique within the context of an RP application.  \n  \n In code, you can specify the issuer name registry to use by setting the <xref:System.IdentityModel.Tokens.SecurityTokenHandlerConfiguration.IssuerNameRegistry%2A?displayProperty=fullName> property. In a configuration file, the issuer name registry can be specified by specifying the [\\&lt;issuerNameRegistry\\&gt;](~/docs/framework/configure-apps/file-schema/windows-identity-foundation/issuernameregistry.md) element under the [\\&lt;securityTokenHandlerConfiguration\\&gt;](~/docs/framework/configure-apps/file-schema/windows-identity-foundation/securitytokenhandlerconfiguration.md) element.  \n  \n Windows Identity Foundation (WIF) provides an implementation of the <xref:System.IdentityModel.Tokens.IssuerNameRegistry> class out of the box: the <xref:System.IdentityModel.Tokens.ConfigurationBasedIssuerNameRegistry> class. When you use this implementation you can specify the list of trusted issuers in the configuration file of the RP application under the [\\&lt;trustedIssuers\\&gt;](~/docs/framework/configure-apps/file-schema/windows-identity-foundation/trustedissuers.md) element, which is a child element of the `<issuerNameRegistry>` element when the <xref:System.IdentityModel.Tokens.ConfigurationBasedIssuerNameRegistry>.class is referenced in that element’s `type` attribute. Under the `<trustedIssuers>` element, each issuer name is mapped to the X.509 certificate that should be used to verify its signature.  \n  \n To create a custom issuer name registry, you must override the <xref:System.IdentityModel.Tokens.IssuerNameRegistry.GetIssuerName%28System.IdentityModel.Tokens.SecurityToken%29?displayProperty=fullName> method. This method returns the issuer name for the specified security token. You can optionally override the <xref:System.IdentityModel.Tokens.IssuerNameRegistry.GetIssuerName%28System.IdentityModel.Tokens.SecurityToken%2CSystem.String%29?displayProperty=fullName> method to provide a hinting mechanism when retrieving issuer names and the <xref:System.IdentityModel.Tokens.IssuerNameRegistry.GetWindowsIssuerName%2A> method if you want to provide an issuer name for Windows tokens that is different from <xref:System.Security.Claims.ClaimsIdentity.DefaultIssuer>. Override the <xref:System.IdentityModel.Tokens.IssuerNameRegistry.LoadCustomConfiguration%2A> method to enable your issuer name registry to be initialized from a configuration file."
+  example:
+  - "The following code shows an implementation of the <xref:System.IdentityModel.Tokens.IssuerNameRegistry> class that only accepts issuers that use certificates with subject \"CN=localhost\".  \n  \n> [!WARNING]\n>  The following code is for illustrative purposes only. Validating certificates based on subject name is not a good practice. This code should not be used as is in production.  \n  \n [!code-csharp[WifIssuerNameRegistry#1](~/samples/snippets/csharp/VS_Snippets_Misc/wifissuernameregistry/cs/mvcwepapp/trustedissuernameregistry.cs#1)]  \n  \n The following shows the XML necessary to configure an application with the trusted issuer name registry.  \n  \n```xml  \n<system.identityModel>  \n  <identityConfiguration>  \n    <issuerNameRegistry type=\"System.IdentityModel.Samples.TrustedIssuerNameRegistry, MyApp\" />  \n  </identityConfiguration>  \n</system.identityModel>  \n```"
+  syntax:
+    content: 'public abstract class IssuerNameRegistry : System.IdentityModel.Configuration.ICustomIdentityConfiguration'
+  inheritance:
+  - System.Object
+  derivedClasses:
+  - System.IdentityModel.Tokens.ConfigurationBasedIssuerNameRegistry
+  implements:
+  - System.IdentityModel.Configuration.ICustomIdentityConfiguration
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IdentityModel.Tokens/IssuerNameRegistry.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: v-jibran
+  manager: markgal
+- uid: System.IdentityModel.Tokens.IssuerNameRegistry.#ctor
+  commentId: M:System.IdentityModel.Tokens.IssuerNameRegistry.#ctor
+  id: '#ctor'
+  parent: System.IdentityModel.Tokens.IssuerNameRegistry
+  langs:
+  - csharp
+  name: IssuerNameRegistry()
+  nameWithType: IssuerNameRegistry.IssuerNameRegistry()
+  fullName: IssuerNameRegistry.IssuerNameRegistry()
+  type: Constructor
+  assemblies:
+  - System.IdentityModel
+  namespace: System.IdentityModel.Tokens
+  summary: Initializes a new instance of the <xref href="System.IdentityModel.Tokens.IssuerNameRegistry"></xref> class.
+  syntax:
+    content: protected IssuerNameRegistry ();
+    parameters: []
+  overload: System.IdentityModel.Tokens.IssuerNameRegistry.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IdentityModel.Tokens/IssuerNameRegistry.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: v-jibran
+  manager: markgal
+- uid: System.IdentityModel.Tokens.IssuerNameRegistry.GetIssuerName(System.IdentityModel.Tokens.SecurityToken)
+  commentId: M:System.IdentityModel.Tokens.IssuerNameRegistry.GetIssuerName(System.IdentityModel.Tokens.SecurityToken)
+  id: GetIssuerName(System.IdentityModel.Tokens.SecurityToken)
+  parent: System.IdentityModel.Tokens.IssuerNameRegistry
+  langs:
+  - csharp
+  name: GetIssuerName(SecurityToken)
+  nameWithType: IssuerNameRegistry.GetIssuerName(SecurityToken)
+  fullName: IssuerNameRegistry.GetIssuerName(SecurityToken)
+  type: Method
+  assemblies:
+  - System.IdentityModel
+  namespace: System.IdentityModel.Tokens
+  summary: When overridden in a derived class, returns the name of the issuer of the specified security token.
+  remarks: "Implementations should return a non-null and non-empty string to identify a recognized issuer, or a null string to identify an unrecognized issuer.  \n  \n Called from the processing pipeline by the security token handler that is processing the token. The method should return a unique name for the issuer within the context of the RP application."
+  example:
+  - "The following code shows the <xref:System.IdentityModel.Tokens.IssuerNameRegistry.GetIssuerName%2A> method for an issuer name registry. The full sample is in the <xref:System.IdentityModel.Tokens.IssuerNameRegistry> class overview topic.  \n  \n> [!WARNING]\n>  The following code is for illustrative purposes only. Validating certificates based on subject name is not a good practice. This code should not be used as is in production.  \n  \n [!code-csharp[WifIssuerNameRegistry#2](~/samples/snippets/csharp/VS_Snippets_Misc/wifissuernameregistry/cs/mvcwepapp/trustedissuernameregistry.cs#2)]"
+  syntax:
+    content: public abstract string GetIssuerName (System.IdentityModel.Tokens.SecurityToken securityToken);
+    parameters:
+    - id: securityToken
+      type: System.IdentityModel.Tokens.SecurityToken
+      description: The security token for which to return the issuer name.
+    return:
+      type: System.String
+      description: The issuer name.
+  overload: System.IdentityModel.Tokens.IssuerNameRegistry.GetIssuerName*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IdentityModel.Tokens/IssuerNameRegistry.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: v-jibran
+  manager: markgal
+- uid: System.IdentityModel.Tokens.IssuerNameRegistry.GetIssuerName(System.IdentityModel.Tokens.SecurityToken,System.String)
+  commentId: M:System.IdentityModel.Tokens.IssuerNameRegistry.GetIssuerName(System.IdentityModel.Tokens.SecurityToken,System.String)
+  id: GetIssuerName(System.IdentityModel.Tokens.SecurityToken,System.String)
+  parent: System.IdentityModel.Tokens.IssuerNameRegistry
+  langs:
+  - csharp
+  name: GetIssuerName(SecurityToken, String)
+  nameWithType: IssuerNameRegistry.GetIssuerName(SecurityToken, String)
+  fullName: IssuerNameRegistry.GetIssuerName(SecurityToken, String)
+  type: Method
+  assemblies:
+  - System.IdentityModel
+  namespace: System.IdentityModel.Tokens
+  summary: When overridden in a derived class, returns the name of the issuer of the specified security token. The specified issuer name may be considered in determining the issuer name to return.
+  remarks: "The default implementation ignores the `requestedIssuerName` parameter and simply calls the <xref:System.IdentityModel.Tokens.IssuerNameRegistry.GetIssuerName%28System.IdentityModel.Tokens.SecurityToken%29?displayProperty=fullName> method.  \n  \n Called from the processing pipeline by the security token handler that is processing the token. The method should return a unique name for the issuer within the context of the RP application."
+  syntax:
+    content: public virtual string GetIssuerName (System.IdentityModel.Tokens.SecurityToken securityToken, string requestedIssuerName);
+    parameters:
+    - id: securityToken
+      type: System.IdentityModel.Tokens.SecurityToken
+      description: The security token for which to return the issuer name.
+    - id: requestedIssuerName
+      type: System.String
+      description: An issuer name to consider in the request.
+    return:
+      type: System.String
+      description: The issuer name.
+  overload: System.IdentityModel.Tokens.IssuerNameRegistry.GetIssuerName*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IdentityModel.Tokens/IssuerNameRegistry.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: v-jibran
+  manager: markgal
+- uid: System.IdentityModel.Tokens.IssuerNameRegistry.GetWindowsIssuerName
+  commentId: M:System.IdentityModel.Tokens.IssuerNameRegistry.GetWindowsIssuerName
+  id: GetWindowsIssuerName
+  parent: System.IdentityModel.Tokens.IssuerNameRegistry
+  langs:
+  - csharp
+  name: GetWindowsIssuerName()
+  nameWithType: IssuerNameRegistry.GetWindowsIssuerName()
+  fullName: IssuerNameRegistry.GetWindowsIssuerName()
+  type: Method
+  assemblies:
+  - System.IdentityModel
+  namespace: System.IdentityModel.Tokens
+  summary: Returns the default issuer name to be used for Windows claims.
+  remarks: "The default implementation returns <xref:System.Security.Claims.ClaimsIdentity.DefaultIssuer>.  \n  \n Called from the processing pipeline by the security token handler that is processing the token. The method should return a unique name for the issuer within the context of the RP application."
+  syntax:
+    content: public virtual string GetWindowsIssuerName ();
+    parameters: []
+    return:
+      type: System.String
+      description: The default issuer name for Windows claims.
+  overload: System.IdentityModel.Tokens.IssuerNameRegistry.GetWindowsIssuerName*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IdentityModel.Tokens/IssuerNameRegistry.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: v-jibran
+  manager: markgal
+- uid: System.IdentityModel.Tokens.IssuerNameRegistry.LoadCustomConfiguration(System.Xml.XmlNodeList)
+  commentId: M:System.IdentityModel.Tokens.IssuerNameRegistry.LoadCustomConfiguration(System.Xml.XmlNodeList)
+  id: LoadCustomConfiguration(System.Xml.XmlNodeList)
+  parent: System.IdentityModel.Tokens.IssuerNameRegistry
+  langs:
+  - csharp
+  name: LoadCustomConfiguration(XmlNodeList)
+  nameWithType: IssuerNameRegistry.LoadCustomConfiguration(XmlNodeList)
+  fullName: IssuerNameRegistry.LoadCustomConfiguration(XmlNodeList)
+  type: Method
+  assemblies:
+  - System.IdentityModel
+  namespace: System.IdentityModel.Tokens
+  summary: When overridden in a derived class, loads custom configuration from XML.
+  remarks: "The <xref:System.IdentityModel.Tokens.IssuerNameRegistry.LoadCustomConfiguration%2A> method is called by the configuration infrastructure. When this method is called, the `nodelist` will contain the top-level child elements of the [\\&lt;issuerNameRegistry\\&gt;](~/docs/framework/configure-apps/file-schema/windows-identity-foundation/issuernameregistry.md) element from the configuration file. Each of these may, in turn, contain attributes or child elements depending on the configuration schema you define for your derived class.  \n  \n The default implementation throws a <xref:System.NotImplementedException>. Override this method in your derived class to enable initialization of your issuer name registry from a configuration file."
+  syntax:
+    content: public virtual void LoadCustomConfiguration (System.Xml.XmlNodeList nodelist);
+    parameters:
+    - id: nodelist
+      type: System.Xml.XmlNodeList
+      description: The configuration XML elements. Each node in the list is of type <xref href="System.Xml.XmlElement"></xref>.
+  overload: System.IdentityModel.Tokens.IssuerNameRegistry.LoadCustomConfiguration*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IdentityModel.Tokens/IssuerNameRegistry.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: v-jibran
+  manager: markgal
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.IdentityModel.Tokens.IssuerNameRegistry.#ctor
+  parent: System.IdentityModel.Tokens.IssuerNameRegistry
+  isExternal: false
+  name: IssuerNameRegistry()
+  nameWithType: IssuerNameRegistry.IssuerNameRegistry()
+  fullName: IssuerNameRegistry.IssuerNameRegistry()
+- uid: System.IdentityModel.Tokens.IssuerNameRegistry.GetIssuerName(System.IdentityModel.Tokens.SecurityToken)
+  parent: System.IdentityModel.Tokens.IssuerNameRegistry
+  isExternal: false
+  name: GetIssuerName(SecurityToken)
+  nameWithType: IssuerNameRegistry.GetIssuerName(SecurityToken)
+  fullName: IssuerNameRegistry.GetIssuerName(SecurityToken)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.IdentityModel.Tokens.SecurityToken
+  parent: System.IdentityModel.Tokens
+  isExternal: false
+  name: SecurityToken
+  nameWithType: SecurityToken
+  fullName: System.IdentityModel.Tokens.SecurityToken
+- uid: System.IdentityModel.Tokens.IssuerNameRegistry.GetIssuerName(System.IdentityModel.Tokens.SecurityToken,System.String)
+  parent: System.IdentityModel.Tokens.IssuerNameRegistry
+  isExternal: false
+  name: GetIssuerName(SecurityToken, String)
+  nameWithType: IssuerNameRegistry.GetIssuerName(SecurityToken, String)
+  fullName: IssuerNameRegistry.GetIssuerName(SecurityToken, String)
+- uid: System.IdentityModel.Tokens.IssuerNameRegistry.GetWindowsIssuerName
+  parent: System.IdentityModel.Tokens.IssuerNameRegistry
+  isExternal: false
+  name: GetWindowsIssuerName()
+  nameWithType: IssuerNameRegistry.GetWindowsIssuerName()
+  fullName: IssuerNameRegistry.GetWindowsIssuerName()
+- uid: System.IdentityModel.Tokens.IssuerNameRegistry.LoadCustomConfiguration(System.Xml.XmlNodeList)
+  parent: System.IdentityModel.Tokens.IssuerNameRegistry
+  isExternal: false
+  name: LoadCustomConfiguration(XmlNodeList)
+  nameWithType: IssuerNameRegistry.LoadCustomConfiguration(XmlNodeList)
+  fullName: IssuerNameRegistry.LoadCustomConfiguration(XmlNodeList)
+- uid: System.Xml.XmlNodeList
+  parent: System.Xml
+  isExternal: false
+  name: XmlNodeList
+  nameWithType: XmlNodeList
+  fullName: System.Xml.XmlNodeList
+- uid: System.IdentityModel.Tokens.IssuerNameRegistry.GetIssuerName*
+  parent: System.IdentityModel.Tokens.IssuerNameRegistry
+  isExternal: false
+  name: GetIssuerName
+  nameWithType: IssuerNameRegistry.GetIssuerName
+  fullName: IssuerNameRegistry.GetIssuerName
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IdentityModel.Tokens/IssuerNameRegistry.xml
+- uid: System.IdentityModel.Tokens.IssuerNameRegistry.#ctor*
+  parent: System.IdentityModel.Tokens.IssuerNameRegistry
+  isExternal: false
+  name: IssuerNameRegistry
+  nameWithType: IssuerNameRegistry.IssuerNameRegistry
+  fullName: IssuerNameRegistry.IssuerNameRegistry
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IdentityModel.Tokens/IssuerNameRegistry.xml
+- uid: System.IdentityModel.Tokens.IssuerNameRegistry.GetWindowsIssuerName*
+  parent: System.IdentityModel.Tokens.IssuerNameRegistry
+  isExternal: false
+  name: GetWindowsIssuerName
+  nameWithType: IssuerNameRegistry.GetWindowsIssuerName
+  fullName: IssuerNameRegistry.GetWindowsIssuerName
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IdentityModel.Tokens/IssuerNameRegistry.xml
+- uid: System.IdentityModel.Tokens.IssuerNameRegistry.LoadCustomConfiguration*
+  parent: System.IdentityModel.Tokens.IssuerNameRegistry
+  isExternal: false
+  name: LoadCustomConfiguration
+  nameWithType: IssuerNameRegistry.LoadCustomConfiguration
+  fullName: IssuerNameRegistry.LoadCustomConfiguration
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.IdentityModel.Tokens/IssuerNameRegistry.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.IdentityModel.Configuration.ICustomIdentityConfiguration
+  parent: System.IdentityModel.Configuration
+  isExternal: false
+  name: ICustomIdentityConfiguration
+  nameWithType: ICustomIdentityConfiguration
+  fullName: System.IdentityModel.Configuration.ICustomIdentityConfiguration

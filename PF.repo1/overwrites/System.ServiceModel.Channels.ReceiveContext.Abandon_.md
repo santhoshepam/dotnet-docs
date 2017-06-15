@@ -1,0 +1,5 @@
+---
+summary: Causes the state machine to transition to the abandoned state.
+remarks: "<xref:System.ServiceModel.Channels.ReceiveContext.Abandon%2A> may hang when there is an ambient transaction and <xref:System.ServiceModel.Channels.ReceiveContext.Complete%2A> is called and afterwards the transaction is rolled back. If <xref:System.ServiceModel.Channels.ReceiveContext.Abandon%2A> is called prior to the transaction rollback completing, a race condition will exist, causing the call to <xref:System.ServiceModel.Channels.ReceiveContext.Abandon%2A> to hang. This can be illustrated by the following pseudo-code example  \n  \n```  \nusing (TransactionScope ts = new TransactionScope())   \n{  \n   try  \n   {  \n       rc.Complete();  \n      ...  \n   }  \n   Catch (Exception)   \n   {  \n      rc.Abandon()  \n   }  \n}  \n  \n```  \n  \n This is not the recommended pattern for working with T:System.ServiceModel.Channels.RecieveContext. Instead the try/catch block should be placed outside of the transaction scope."
+uid: System.ServiceModel.Channels.ReceiveContext.Abandon*
+---

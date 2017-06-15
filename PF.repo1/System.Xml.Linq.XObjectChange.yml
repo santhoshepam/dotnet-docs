@@ -1,0 +1,376 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Xml.Linq.XObjectChange
+  commentId: T:System.Xml.Linq.XObjectChange
+  id: XObjectChange
+  children:
+  - System.Xml.Linq.XObjectChange.Add
+  - System.Xml.Linq.XObjectChange.Name
+  - System.Xml.Linq.XObjectChange.Remove
+  - System.Xml.Linq.XObjectChange.Value
+  langs:
+  - csharp
+  name: XObjectChange
+  nameWithType: XObjectChange
+  fullName: System.Xml.Linq.XObjectChange
+  type: Enum
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Specifies the event type when an event is raised for an <xref href="System.Xml.Linq.XObject"></xref>.
+  remarks: "This `enum` specifies the event type when an event is raised for an <xref:System.Xml.Linq.XObject>.  \n  \n All operations that modify the XML tree break down to a series of primitives. There are four types of primitives. Two of the primitives (Add and Remove) act on collections. Two of them (Name and Value) act on instances. There is a corresponding event for each of these primitives.  \n  \n You should be careful when modifying an XML tree within one of these events, because doing this might lead to unexpected results. For example, if you receive a <xref:System.Xml.Linq.XObject.Changing> event, and while the event is being processed you remove the node from the tree, you might not receive the <xref:System.Xml.Linq.XObject.Changed> event. When an event is being processed, it is valid to modify an XML tree other than the one that contains the node that is receiving the event; it is even valid to modify the same tree provided the modifications do not affect the specific nodes on which the event was raised. However, if you modify the area of the tree that contains the node receiving the event, the events that you receive and the impact to the tree are undefined."
+  example:
+  - "The following example raises an event by adding an element to the tree.  \n  \n```csharp  \n  \n                XElement root = new XElement(\"Root\", \"content\");  \nroot.Changing += (sender, e) =>  \n    {  \n        Console.WriteLine(\"Changing event raised\");  \n        Console.WriteLine(\"  Sender: \" + sender.GetType());  \n        Console.WriteLine(\"  Changing: \" + e.ObjectChange);  \n    };  \nroot.Changed += (sender, e) =>  \n    {  \n        Console.WriteLine(\"Changed event raised\");  \n        Console.WriteLine(\"  Sender: \" + sender.GetType());  \n        Console.WriteLine(\"  Changed: \" + e.ObjectChange);  \n    };  \nroot.Add(new XElement(\"Child\", \"child content\"));  \n```  \n  \n This example produces the following output:  \n  \n```  \nChanging event raised  \n  Sender: System.Xml.Linq.XElement  \n  Changing: Add  \nChanged event raised  \n  Sender: System.Xml.Linq.XElement  \n  Changed: Add  \n```  \n  \n The following example raises an event by removing an element from the tree.  \n  \n```csharp  \n  \n                XElement root = new XElement(\"Root\",  \n    new XElement(\"Child\", \"content\")  \n);  \nroot.Changing += (sender, e) =>  \n    {  \n        Console.WriteLine(\"Changing event raised\");  \n        Console.WriteLine(\"  Sender: \" + sender.GetType());  \n        Console.WriteLine(\"  Changing: \" + e.ObjectChange);  \n    };  \nroot.Changed += (sender, e) =>  \n    {  \n        Console.WriteLine(\"Changed event raised\");  \n        Console.WriteLine(\"  Sender: \" + sender.GetType());  \n        Console.WriteLine(\"  Changed: \" + e.ObjectChange);  \n    };  \nroot.Element(\"Child\").Remove();  \n```  \n  \n This example produces the following output:  \n  \n```  \nChanging event raised  \n  Sender: System.Xml.Linq.XElement  \n  Changing: Remove  \nChanged event raised  \n  Sender: System.Xml.Linq.XElement  \n  Changed: Remove  \n```  \n  \n The following example raises an event by changing the name of an element.  \n  \n```csharp  \n  \n                XElement root = new XElement(\"Root\", \"content\");  \nroot.Changing += (sender, e) =>  \n    {  \n        Console.WriteLine(\"Changing event raised\");  \n        Console.WriteLine(\"  Sender: \" + sender.GetType());  \n        Console.WriteLine(\"  Changing: \" + e.ObjectChange);  \n    };  \nroot.Changed += (sender, e) =>  \n    {  \n        Console.WriteLine(\"Changed event raised\");  \n        Console.WriteLine(\"  Sender: \" + sender.GetType());  \n        Console.WriteLine(\"  Changed: \" + e.ObjectChange);  \n    };  \nroot.Name = \"NewName\";  \n```  \n  \n This example produces the following output:  \n  \n```  \nChanging event raised  \n  Sender: System.Xml.Linq.XElement  \n  Changing: Name  \nChanged event raised  \n  Sender: System.Xml.Linq.XElement  \n  Changed: Name  \n```  \n  \n The following example raises an event by setting the value of an attribute.  \n  \n```csharp  \n  \n                XElement root = new XElement(\"Root\",  \n    new XAttribute(\"Att\", \"att value\")  \n);  \nroot.Changing += (sender, e) =>  \n    {  \n        Console.WriteLine(\"Changing event raised\");  \n        Console.WriteLine(\"  Sender: \" + sender.GetType());  \n        Console.WriteLine(\"  Changing: \" + e.ObjectChange);  \n    };  \nroot.Changed += (sender, e) =>  \n    {  \n        Console.WriteLine(\"Changed event raised\");  \n        Console.WriteLine(\"  Sender: \" + sender.GetType());  \n        Console.WriteLine(\"  Changed: \" + e.ObjectChange);  \n    };  \nroot.FirstAttribute.Value = \"new contents\";  \n```  \n  \n This example produces the following output:  \n  \n```  \nChanging event raised  \n  Sender: System.Xml.Linq.XAttribute  \n  Changing: Value  \nChanged event raised  \n  Sender: System.Xml.Linq.XAttribute  \n  Changed: Value  \n```"
+  syntax:
+    content: public enum XObjectChange
+  inheritance:
+  - System.Object
+  - System.ValueType
+  - System.Enum
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObjectChange.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XObjectChange.Add
+  commentId: F:System.Xml.Linq.XObjectChange.Add
+  id: Add
+  parent: System.Xml.Linq.XObjectChange
+  langs:
+  - csharp
+  name: Add
+  nameWithType: XObjectChange.Add
+  fullName: XObjectChange.Add
+  type: Field
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: An <xref href="System.Xml.Linq.XObject"></xref> has been or will be added to an <xref href="System.Xml.Linq.XContainer"></xref>.
+  syntax:
+    content: Add
+    return:
+      type: System.Xml.Linq.XObjectChange
+      description: ''
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObjectChange.xml
+- uid: System.Xml.Linq.XObjectChange.Name
+  commentId: F:System.Xml.Linq.XObjectChange.Name
+  id: Name
+  parent: System.Xml.Linq.XObjectChange
+  langs:
+  - csharp
+  name: Name
+  nameWithType: XObjectChange.Name
+  fullName: XObjectChange.Name
+  type: Field
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: An <xref href="System.Xml.Linq.XObject"></xref> has been or will be renamed.
+  syntax:
+    content: Name
+    return:
+      type: System.Xml.Linq.XObjectChange
+      description: ''
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObjectChange.xml
+- uid: System.Xml.Linq.XObjectChange.Remove
+  commentId: F:System.Xml.Linq.XObjectChange.Remove
+  id: Remove
+  parent: System.Xml.Linq.XObjectChange
+  langs:
+  - csharp
+  name: Remove
+  nameWithType: XObjectChange.Remove
+  fullName: XObjectChange.Remove
+  type: Field
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: An <xref href="System.Xml.Linq.XObject"></xref> has been or will be removed from an <xref href="System.Xml.Linq.XContainer"></xref>.
+  syntax:
+    content: Remove
+    return:
+      type: System.Xml.Linq.XObjectChange
+      description: ''
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObjectChange.xml
+- uid: System.Xml.Linq.XObjectChange.Value
+  commentId: F:System.Xml.Linq.XObjectChange.Value
+  id: Value
+  parent: System.Xml.Linq.XObjectChange
+  langs:
+  - csharp
+  name: Value
+  nameWithType: XObjectChange.Value
+  fullName: XObjectChange.Value
+  type: Field
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: The value of an <xref href="System.Xml.Linq.XObject"></xref> has been or will be changed. In addition, a change in the serialization of an empty element (either from an empty tag to start/end tag pair or vice versa) raises this event.
+  syntax:
+    content: Value
+    return:
+      type: System.Xml.Linq.XObjectChange
+      description: ''
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XObjectChange.xml
+references:
+- uid: System.Enum
+  parent: System
+  isExternal: false
+  name: Enum
+  nameWithType: Enum
+  fullName: System.Enum
+- uid: System.Xml.Linq.XObjectChange.Add
+  parent: System.Xml.Linq.XObjectChange
+  isExternal: false
+  name: Add
+  nameWithType: XObjectChange.Add
+  fullName: XObjectChange.Add
+- uid: System.Xml.Linq.XObjectChange
+  parent: System.Xml.Linq
+  isExternal: false
+  name: XObjectChange
+  nameWithType: XObjectChange
+  fullName: System.Xml.Linq.XObjectChange
+- uid: System.Xml.Linq.XObjectChange.Name
+  parent: System.Xml.Linq.XObjectChange
+  isExternal: false
+  name: Name
+  nameWithType: XObjectChange.Name
+  fullName: XObjectChange.Name
+- uid: System.Xml.Linq.XObjectChange.Remove
+  parent: System.Xml.Linq.XObjectChange
+  isExternal: false
+  name: Remove
+  nameWithType: XObjectChange.Remove
+  fullName: XObjectChange.Remove
+- uid: System.Xml.Linq.XObjectChange.Value
+  parent: System.Xml.Linq.XObjectChange
+  isExternal: false
+  name: Value
+  nameWithType: XObjectChange.Value
+  fullName: XObjectChange.Value

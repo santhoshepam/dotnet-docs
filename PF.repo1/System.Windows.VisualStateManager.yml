@@ -1,0 +1,1054 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Windows.VisualStateManager
+  commentId: T:System.Windows.VisualStateManager
+  id: VisualStateManager
+  children:
+  - System.Windows.VisualStateManager.#ctor
+  - System.Windows.VisualStateManager.CustomVisualStateManagerProperty
+  - System.Windows.VisualStateManager.GetCustomVisualStateManager(System.Windows.FrameworkElement)
+  - System.Windows.VisualStateManager.GetVisualStateGroups(System.Windows.FrameworkElement)
+  - System.Windows.VisualStateManager.GoToElementState(System.Windows.FrameworkElement,System.String,System.Boolean)
+  - System.Windows.VisualStateManager.GoToState(System.Windows.FrameworkElement,System.String,System.Boolean)
+  - System.Windows.VisualStateManager.GoToStateCore(System.Windows.FrameworkElement,System.Windows.FrameworkElement,System.String,System.Windows.VisualStateGroup,System.Windows.VisualState,System.Boolean)
+  - System.Windows.VisualStateManager.RaiseCurrentStateChanged(System.Windows.VisualStateGroup,System.Windows.VisualState,System.Windows.VisualState,System.Windows.FrameworkElement,System.Windows.FrameworkElement)
+  - System.Windows.VisualStateManager.RaiseCurrentStateChanging(System.Windows.VisualStateGroup,System.Windows.VisualState,System.Windows.VisualState,System.Windows.FrameworkElement,System.Windows.FrameworkElement)
+  - System.Windows.VisualStateManager.SetCustomVisualStateManager(System.Windows.FrameworkElement,System.Windows.VisualStateManager)
+  - System.Windows.VisualStateManager.VisualStateGroupsProperty
+  langs:
+  - csharp
+  name: VisualStateManager
+  nameWithType: VisualStateManager
+  fullName: System.Windows.VisualStateManager
+  type: Class
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows
+  summary: Manages states and the logic for transitioning between states for controls.
+  remarks: "The <xref:System.Windows.VisualStateManager> enables you to specify states for a control, the appearance of a control when it is in a certain state, and when a control changes states. For example, a <xref:System.Windows.Controls.Button> might have a slightly different appearance when it is pressed than when it is not pressed. Two states that the <xref:System.Windows.Controls.Button> defines correspond to when it is pressed (`\"Pressed\"`) and when it is not (`\"Normal\"`). The appearance of a control when it is in a state is defined by a <xref:System.Windows.VisualState>. A <xref:System.Windows.VisualState> contains a collection of <xref:System.Windows.Media.Animation.Storyboard> objects that specify how the control's appearance changes when the control is in that state. You add visual states to a control by setting the `VisualStateManager.VisualStateGroups` attached property on the control. Each <xref:System.Windows.VisualStateGroup> contains a collection of <xref:System.Windows.VisualState> objects that are mutually exclusive. That is, the control is always in exactly one state of in each <xref:System.Windows.VisualStateGroup>.  \n  \n The <xref:System.Windows.VisualStateManager> also enables you to specify when a control enters a specific state. The method that you should call to change states depends on your scenario. If you create a control that uses the <xref:System.Windows.VisualStateManager> in its <xref:System.Windows.Controls.ControlTemplate>, call the <xref:System.Windows.VisualStateManager.GoToState%2A> method. For more information about how to create controls that use the <xref:System.Windows.VisualStateManager>, see [Creating a Control That Has a Customizable Appearance](~/docs/framework/wpf/controls/creating-a-control-that-has-a-customizable-appearance.md). If you use the <xref:System.Windows.VisualStateManager> outside of a <xref:System.Windows.Controls.ControlTemplate> (for example, if you use a <xref:System.Windows.VisualStateManager> in a <xref:System.Windows.Controls.UserControl> or in a single element), call the <xref:System.Windows.VisualStateManager.GoToElementState%2A> method. In either case, the <xref:System.Windows.VisualStateManager> performs the logic that is required to appropriately start and stop the storyboards that are associated with the involved state. For example, suppose that a control defines the states, `State1` and `State2`, each of which has a storyboard associated with it. If the control is in `State1` and you pass `State2` to <xref:System.Windows.VisualStateManager.GoToState%2A> or <xref:System.Windows.VisualStateManager.GoToElementState%2A>, the <xref:System.Windows.VisualStateManager> starts the storyboard in `State2` and stops the storyboard in `State1`.  \n  \n Controls that are included with [!INCLUDE[TLA#tla_winclient](~/includes/tlasharptla-winclient-md.md)] use the <xref:System.Windows.VisualStateManager> to change visual states. When you create a <xref:System.Windows.Controls.ControlTemplate> for a control that is included with [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)], you can add <xref:System.Windows.VisualState> objects to the control's <xref:System.Windows.Controls.ControlTemplate> to specify the control's appearance in a certain state. To find the names of the visual states for the controls that are included with [!INCLUDE[TLA2#tla_winclient](~/includes/tla2sharptla-winclient-md.md)], see [Control Styles and Templates](~/docs/framework/wpf/controls/control-styles-and-templates.md). The control's logic handles transitioning between states, so you do not need to do anything other than define the <xref:System.Windows.VisualState> objects in the new <xref:System.Windows.Controls.ControlTemplate>. For more information about how to create control templates for existing controls, see [Customizing the Appearance of an Existing Control by Creating a ControlTemplate](~/docs/framework/wpf/controls/customizing-the-appearance-of-an-existing-control.md).  \n  \n If you want to implement your own logic for transitioning between states, you must inherit from <xref:System.Windows.VisualStateManager>, override the <xref:System.Windows.VisualStateManager.GoToStateCore%2A> method, and set the <xref:System.Windows.VisualStateManager.CustomVisualStateManager%2A?displayProperty=fullName> attached property on the control that uses the custom logic."
+  example:
+  - "The following example creates a <xref:System.Windows.Shapes.Rectangle> and adds a <xref:System.Windows.VisualStateGroup> named `CommonStates` to the `VisualStateManager.VisualStatesGroups` attached property. The example defines the `MouseOver` and `Normal`<xref:System.Windows.VisualState> objects in the `CommonStates`<xref:System.Windows.VisualStateGroup>. When the user moves the mouse pointer over the <xref:System.Windows.Shapes.Rectangle>, it changes from red to green over one half second. When the user moves the mouse away from the rectangle, the <xref:System.Windows.Controls.Grid> immediately changes back to red. Note that the `Normal` state does not define a <xref:System.Windows.Media.Animation.Storyboard>. A <xref:System.Windows.Media.Animation.Storyboard> is not required because when the <xref:System.Windows.Shapes.Rectangle> transitions from the `MouseOver` state to the `Normal` state, the <xref:System.Windows.Media.Animation.Storyboard> for `MouseOver` is stopped and the <xref:System.Windows.Media.SolidColorBrush.Color%2A> property for the <xref:System.Windows.Media.SolidColorBrush> returns to red.  \n  \n [!code-xml[VSMCustomControl#VSMNoTemplate](~/samples/snippets/csharp/VS_Snippets_Wpf/vsmcustomcontrol/csharp/window1.xaml#vsmnotemplate)]  \n  \n The following example shows the event handler that is defined in the previous example and calls the <xref:System.Windows.VisualStateManager.GoToElementState%2A> method to transition between states. If the rectangle in the previous example was part of a <xref:System.Windows.Controls.ControlTemplate>, the example would have to call the <xref:System.Windows.VisualStateManager.GoToState%2A> method.  \n  \n [!code-csharp[VSMCustomControl#GoToElementState](~/samples/snippets/csharp/VS_Snippets_Wpf/vsmcustomcontrol/csharp/window1.xaml.cs#gotoelementstate)]\n [!code-vb[VSMCustomControl#GoToElementState](~/samples/snippets/visualbasic/VS_Snippets_Wpf/vsmcustomcontrol/visualbasic/window1.xaml.vb#gotoelementstate)]"
+  syntax:
+    content: 'public class VisualStateManager : System.Windows.DependencyObject'
+  inheritance:
+  - System.Object
+  - System.Windows.Threading.DispatcherObject
+  - System.Windows.DependencyObject
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  - System.Windows.DependencyObject.ClearValue(System.Windows.DependencyProperty)
+  - System.Windows.DependencyObject.ClearValue(System.Windows.DependencyPropertyKey)
+  - System.Windows.DependencyObject.CoerceValue(System.Windows.DependencyProperty)
+  - System.Windows.DependencyObject.DependencyObjectType
+  - System.Windows.DependencyObject.Equals(System.Object)
+  - System.Windows.DependencyObject.GetHashCode
+  - System.Windows.DependencyObject.GetLocalValueEnumerator
+  - System.Windows.DependencyObject.GetValue(System.Windows.DependencyProperty)
+  - System.Windows.DependencyObject.InvalidateProperty(System.Windows.DependencyProperty)
+  - System.Windows.DependencyObject.IsSealed
+  - System.Windows.DependencyObject.OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs)
+  - System.Windows.DependencyObject.ReadLocalValue(System.Windows.DependencyProperty)
+  - System.Windows.DependencyObject.SetCurrentValue(System.Windows.DependencyProperty,System.Object)
+  - System.Windows.DependencyObject.SetValue(System.Windows.DependencyProperty,System.Object)
+  - System.Windows.DependencyObject.SetValue(System.Windows.DependencyPropertyKey,System.Object)
+  - System.Windows.DependencyObject.ShouldSerializeProperty(System.Windows.DependencyProperty)
+  - System.Windows.Threading.DispatcherObject.CheckAccess
+  - System.Windows.Threading.DispatcherObject.Dispatcher
+  - System.Windows.Threading.DispatcherObject.VerifyAccess
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.VisualStateManager.#ctor
+  commentId: M:System.Windows.VisualStateManager.#ctor
+  id: '#ctor'
+  parent: System.Windows.VisualStateManager
+  langs:
+  - csharp
+  name: VisualStateManager()
+  nameWithType: VisualStateManager.VisualStateManager()
+  fullName: VisualStateManager.VisualStateManager()
+  type: Constructor
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows
+  summary: Initializes a new instance of the <xref href="System.Windows.VisualStateManager"></xref> class.
+  syntax:
+    content: public VisualStateManager ();
+    parameters: []
+  overload: System.Windows.VisualStateManager.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.VisualStateManager.CustomVisualStateManagerProperty
+  commentId: F:System.Windows.VisualStateManager.CustomVisualStateManagerProperty
+  id: CustomVisualStateManagerProperty
+  parent: System.Windows.VisualStateManager
+  langs:
+  - csharp
+  name: CustomVisualStateManagerProperty
+  nameWithType: VisualStateManager.CustomVisualStateManagerProperty
+  fullName: VisualStateManager.CustomVisualStateManagerProperty
+  type: Field
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows
+  summary: Identifies the <xref href="System.Windows.VisualStateManager.CustomVisualStateManager"></xref> dependency property.
+  syntax:
+    content: public static readonly System.Windows.DependencyProperty CustomVisualStateManagerProperty;
+    return:
+      type: System.Windows.DependencyProperty
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.VisualStateManager.GetCustomVisualStateManager(System.Windows.FrameworkElement)
+  commentId: M:System.Windows.VisualStateManager.GetCustomVisualStateManager(System.Windows.FrameworkElement)
+  id: GetCustomVisualStateManager(System.Windows.FrameworkElement)
+  parent: System.Windows.VisualStateManager
+  langs:
+  - csharp
+  name: GetCustomVisualStateManager(FrameworkElement)
+  nameWithType: VisualStateManager.GetCustomVisualStateManager(FrameworkElement)
+  fullName: VisualStateManager.GetCustomVisualStateManager(FrameworkElement)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows
+  summary: Gets the <xref href="System.Windows.VisualStateManager.CustomVisualStateManager"></xref> attached property.
+  syntax:
+    content: public static System.Windows.VisualStateManager GetCustomVisualStateManager (System.Windows.FrameworkElement obj);
+    parameters:
+    - id: obj
+      type: System.Windows.FrameworkElement
+      description: The element to get the <xref href="System.Windows.VisualStateManager.CustomVisualStateManager"></xref> attached property from.
+    return:
+      type: System.Windows.VisualStateManager
+      description: The visual state manager that transitions between the states of a control.
+  overload: System.Windows.VisualStateManager.GetCustomVisualStateManager*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.VisualStateManager.GetVisualStateGroups(System.Windows.FrameworkElement)
+  commentId: M:System.Windows.VisualStateManager.GetVisualStateGroups(System.Windows.FrameworkElement)
+  id: GetVisualStateGroups(System.Windows.FrameworkElement)
+  parent: System.Windows.VisualStateManager
+  langs:
+  - csharp
+  name: GetVisualStateGroups(FrameworkElement)
+  nameWithType: VisualStateManager.GetVisualStateGroups(FrameworkElement)
+  fullName: VisualStateManager.GetVisualStateGroups(FrameworkElement)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows
+  summary: Gets the <xref href="System.Windows.VisualStateManager.VisualStateGroups"></xref> attached property.
+  syntax:
+    content: public static System.Collections.IList GetVisualStateGroups (System.Windows.FrameworkElement obj);
+    parameters:
+    - id: obj
+      type: System.Windows.FrameworkElement
+      description: The element to get the <xref href="System.Windows.VisualStateManager.VisualStateGroups"></xref> attached property from.
+    return:
+      type: System.Collections.IList
+      description: The collection of <xref href="System.Windows.VisualStateGroup"></xref> objects that is associated with the specified object.
+  overload: System.Windows.VisualStateManager.GetVisualStateGroups*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.VisualStateManager.GoToElementState(System.Windows.FrameworkElement,System.String,System.Boolean)
+  commentId: M:System.Windows.VisualStateManager.GoToElementState(System.Windows.FrameworkElement,System.String,System.Boolean)
+  id: GoToElementState(System.Windows.FrameworkElement,System.String,System.Boolean)
+  parent: System.Windows.VisualStateManager
+  langs:
+  - csharp
+  name: GoToElementState(FrameworkElement, String, Boolean)
+  nameWithType: VisualStateManager.GoToElementState(FrameworkElement, String, Boolean)
+  fullName: VisualStateManager.GoToElementState(FrameworkElement, String, Boolean)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows
+  summary: Transitions the element between two states. Use this method to transition states that are defined by an application, rather than defined by a control.
+  remarks: Call the <xref:System.Windows.VisualStateManager.GoToElementState%2A> method to change states on an element outside of a <xref:System.Windows.Controls.ControlTemplate> (for example, if you use a <xref:System.Windows.VisualStateManager> in a <xref:System.Windows.DataTemplate> or <xref:System.Windows.Window>). Call the <xref:System.Windows.VisualStateManager.GoToState%2A> method if you are changing states in a control that uses the <xref:System.Windows.VisualStateManager> in its <xref:System.Windows.Controls.ControlTemplate>.
+  example:
+  - "The following example creates an application that prompts the user to guess a number between 1 and 100.  When the user enters a number, the application indicates whether the guess is too high, too low, or correct.  The following [!INCLUDE[TLA2#tla_xaml](~/includes/tla2sharptla-xaml-md.md)] creates the user interface for the application and defines 4 states: `TooLow`, `TooHigh`, `Correct`, and `Guessing`. When the application begins, it is in the `Guessing` state. .  \n  \n [!code-xml[VSMGoToElementState#GoToElementStateXaml](~/samples/snippets/csharp/VS_Snippets_Wpf/vsmgotoelementstate/csharp/mainwindow.xaml#gotoelementstatexaml)]  \n  \n The following code shows the logic of the application.  When the user enters a number and clicks the button, the application calls <xref:System.Windows.VisualStateManager.GoToElementState%2A> to transition to `TooHigh`, `TooLow`, or `Correct` to provide feedback to the user about the guess.  To try this example, call the `GenerateNumber` method when the application begins.  \n  \n [!code-csharp[VSMGoToElementState#GoToElementStateCode](~/samples/snippets/csharp/VS_Snippets_Wpf/vsmgotoelementstate/csharp/mainwindow.xaml.cs#gotoelementstatecode)]\n [!code-vb[VSMGoToElementState#GoToElementStateCode](~/samples/snippets/visualbasic/VS_Snippets_Wpf/vsmgotoelementstate/visualbasic/mainwindow.xaml.vb#gotoelementstatecode)]"
+  syntax:
+    content: public static bool GoToElementState (System.Windows.FrameworkElement stateGroupsRoot, string stateName, bool useTransitions);
+    parameters:
+    - id: stateGroupsRoot
+      type: System.Windows.FrameworkElement
+      description: The root element that contains the <xref href="System.Windows.VisualStateManager"></xref>.
+    - id: stateName
+      type: System.String
+      description: The state to transition to.
+    - id: useTransitions
+      type: System.Boolean
+      description: '`true` to use a <xref href="System.Windows.VisualTransition"></xref> object to transition between states; otherwise, `false`.'
+    return:
+      type: System.Boolean
+      description: '`true` if the control successfully transitioned to the new state; otherwise, `false`.'
+  overload: System.Windows.VisualStateManager.GoToElementState*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: "<code>stateGroupsRoot</code> is `null`.  \n  \n -or-  \n  \n <code>stateName</code> is `null`."
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.VisualStateManager.GoToState(System.Windows.FrameworkElement,System.String,System.Boolean)
+  commentId: M:System.Windows.VisualStateManager.GoToState(System.Windows.FrameworkElement,System.String,System.Boolean)
+  id: GoToState(System.Windows.FrameworkElement,System.String,System.Boolean)
+  parent: System.Windows.VisualStateManager
+  langs:
+  - csharp
+  name: GoToState(FrameworkElement, String, Boolean)
+  nameWithType: VisualStateManager.GoToState(FrameworkElement, String, Boolean)
+  fullName: VisualStateManager.GoToState(FrameworkElement, String, Boolean)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows
+  summary: Transitions the control between two states. Use this method to transition states on control that has a <xref href="System.Windows.Controls.ControlTemplate"></xref>.
+  remarks: Call the <xref:System.Windows.VisualStateManager.GoToState%2A> method if you are changing states in a control that uses the <xref:System.Windows.VisualStateManager> in its <xref:System.Windows.Controls.ControlTemplate>. Call the <xref:System.Windows.VisualStateManager.GoToElementState%2A> method to change states on an element outside of a <xref:System.Windows.Controls.ControlTemplate> (for example, if you use a <xref:System.Windows.VisualStateManager> in a <xref:System.Windows.Controls.UserControl> or in a single element).
+  example:
+  - "The following example demonstrates a control that uses the <xref:System.Windows.VisualStateManager.GoToState%2A> method to transition between states. For the entire example, see [Creating a Control That Has a Customizable Appearance](~/docs/framework/wpf/controls/creating-a-control-that-has-a-customizable-appearance.md).  \n  \n [!code-csharp[VSMCustomControl#UpdateStates](~/samples/snippets/csharp/VS_Snippets_Wpf/vsmcustomcontrol/csharp/numericupdown.cs#updatestates)]\n [!code-vb[VSMCustomControl#UpdateStates](~/samples/snippets/visualbasic/VS_Snippets_Wpf/vsmcustomcontrol/visualbasic/numericupdown.vb#updatestates)]"
+  syntax:
+    content: public static bool GoToState (System.Windows.FrameworkElement control, string stateName, bool useTransitions);
+    parameters:
+    - id: control
+      type: System.Windows.FrameworkElement
+      description: The control to transition between states.
+    - id: stateName
+      type: System.String
+      description: The state to transition to.
+    - id: useTransitions
+      type: System.Boolean
+      description: '`true` to use a <xref href="System.Windows.VisualTransition"></xref> object to transition between states; otherwise, `false`.'
+    return:
+      type: System.Boolean
+      description: '`true` if the control successfully transitioned to the new state; otherwise, `false`.'
+  overload: System.Windows.VisualStateManager.GoToState*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: "<code>control</code> is `null`.  \n  \n -or-  \n  \n <code>stateName</code> is `null`."
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.VisualStateManager.GoToStateCore(System.Windows.FrameworkElement,System.Windows.FrameworkElement,System.String,System.Windows.VisualStateGroup,System.Windows.VisualState,System.Boolean)
+  commentId: M:System.Windows.VisualStateManager.GoToStateCore(System.Windows.FrameworkElement,System.Windows.FrameworkElement,System.String,System.Windows.VisualStateGroup,System.Windows.VisualState,System.Boolean)
+  id: GoToStateCore(System.Windows.FrameworkElement,System.Windows.FrameworkElement,System.String,System.Windows.VisualStateGroup,System.Windows.VisualState,System.Boolean)
+  parent: System.Windows.VisualStateManager
+  langs:
+  - csharp
+  name: GoToStateCore(FrameworkElement, FrameworkElement, String, VisualStateGroup, VisualState, Boolean)
+  nameWithType: VisualStateManager.GoToStateCore(FrameworkElement, FrameworkElement, String, VisualStateGroup, VisualState, Boolean)
+  fullName: VisualStateManager.GoToStateCore(FrameworkElement, FrameworkElement, String, VisualStateGroup, VisualState, Boolean)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows
+  summary: Transitions a control between states.
+  remarks: "The <xref:System.Windows.VisualStateManager.GoToStateCore%2A> method performs the logic necessary to appropriately start and stop the storyboards that are associated with a transition. When a control calls <xref:System.Windows.VisualStateManager.GoToState%2A> to change its state, the <xref:System.Windows.VisualStateManager> does the following:  \n  \n-   First, if the <xref:System.Windows.VisualState> that the control is transitioning to has a <xref:System.Windows.Media.Animation.Storyboard>, the storyboard begins. Then, if the <xref:System.Windows.VisualState> that the control is coming from has a <xref:System.Windows.Media.Animation.Storyboard>, the storyboard ends.  \n  \n-   If the control is already in the `stateName` state, <xref:System.Windows.VisualStateManager.GoToState%2A> takes no action and returns `true`.  \n  \n-   If `stateName` does not exist in the <xref:System.Windows.Controls.ControlTemplate> of `control`, <xref:System.Windows.VisualStateManager.GoToState%2A> takes no action and returns `false`.  \n  \n You can implement your own <xref:System.Windows.VisualStateManager> to provide different logic for transitioning between states. For example, you can change the logic described previously, or you can provide logic to transition between custom animation types.  To implement a <xref:System.Windows.VisualStateManager>, create a class that inherits from <xref:System.Windows.VisualStateManager> and override the <xref:System.Windows.VisualStateManager.GoToStateCore%2A> method. To use the custom class, set the <xref:System.Windows.VisualStateManager.CustomVisualStateManager%2A> property to an object of your custom type."
+  syntax:
+    content: protected virtual bool GoToStateCore (System.Windows.FrameworkElement control, System.Windows.FrameworkElement stateGroupsRoot, string stateName, System.Windows.VisualStateGroup group, System.Windows.VisualState state, bool useTransitions);
+    parameters:
+    - id: control
+      type: System.Windows.FrameworkElement
+      description: The control to transition between states.
+    - id: stateGroupsRoot
+      type: System.Windows.FrameworkElement
+      description: The root element that contains the <xref href="System.Windows.VisualStateManager"></xref>.
+    - id: stateName
+      type: System.String
+      description: The name of the state to transition to.
+    - id: group
+      type: System.Windows.VisualStateGroup
+      description: The <xref href="System.Windows.VisualStateGroup"></xref> that the state belongs to.
+    - id: state
+      type: System.Windows.VisualState
+      description: The representation of the state to transition to.
+    - id: useTransitions
+      type: System.Boolean
+      description: '`true` to use a <xref href="System.Windows.VisualTransition"></xref> object to transition between states; otherwise, `false`.'
+    return:
+      type: System.Boolean
+      description: '`true` if the control successfully transitioned to the new state; otherwise, `false`.'
+  overload: System.Windows.VisualStateManager.GoToStateCore*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.VisualStateManager.RaiseCurrentStateChanged(System.Windows.VisualStateGroup,System.Windows.VisualState,System.Windows.VisualState,System.Windows.FrameworkElement,System.Windows.FrameworkElement)
+  commentId: M:System.Windows.VisualStateManager.RaiseCurrentStateChanged(System.Windows.VisualStateGroup,System.Windows.VisualState,System.Windows.VisualState,System.Windows.FrameworkElement,System.Windows.FrameworkElement)
+  id: RaiseCurrentStateChanged(System.Windows.VisualStateGroup,System.Windows.VisualState,System.Windows.VisualState,System.Windows.FrameworkElement,System.Windows.FrameworkElement)
+  parent: System.Windows.VisualStateManager
+  langs:
+  - csharp
+  name: RaiseCurrentStateChanged(VisualStateGroup, VisualState, VisualState, FrameworkElement, FrameworkElement)
+  nameWithType: VisualStateManager.RaiseCurrentStateChanged(VisualStateGroup, VisualState, VisualState, FrameworkElement, FrameworkElement)
+  fullName: VisualStateManager.RaiseCurrentStateChanged(VisualStateGroup, VisualState, VisualState, FrameworkElement, FrameworkElement)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows
+  summary: Raises the <xref href="System.Windows.VisualStateGroup.CurrentStateChanging"></xref> event on the specified <xref href="System.Windows.VisualStateGroup"></xref> object.
+  remarks: When the <xref:System.Windows.VisualStateGroup> is set on the <xref:System.Windows.Controls.ControlTemplate> of a control, the `control` parameter is set to the control that owns <xref:System.Windows.Controls.ControlTemplate>.  When the <xref:System.Windows.VisualStateGroup> is set on a <xref:System.Windows.FrameworkElement>, `control` is `null` and you should use the `stateGroupsRoot` parameter.
+  syntax:
+    content: protected void RaiseCurrentStateChanged (System.Windows.VisualStateGroup stateGroup, System.Windows.VisualState oldState, System.Windows.VisualState newState, System.Windows.FrameworkElement control, System.Windows.FrameworkElement stateGroupsRoot);
+    parameters:
+    - id: stateGroup
+      type: System.Windows.VisualStateGroup
+      description: The object that the <xref href="System.Windows.VisualStateGroup.CurrentStateChanging"></xref> event occurred on.
+    - id: oldState
+      type: System.Windows.VisualState
+      description: The state that the control is transitioning from.
+    - id: newState
+      type: System.Windows.VisualState
+      description: The state that the control is transitioning to.
+    - id: control
+      type: System.Windows.FrameworkElement
+      description: The control that is transitioning states.
+    - id: stateGroupsRoot
+      type: System.Windows.FrameworkElement
+      description: The root element that contains the <xref href="System.Windows.VisualStateManager"></xref>.
+  overload: System.Windows.VisualStateManager.RaiseCurrentStateChanged*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: "<code>stateGroupsRoot</code> is `null`.  \n  \n -or-  \n  \n <code>newState</code> is `null`."
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.VisualStateManager.RaiseCurrentStateChanging(System.Windows.VisualStateGroup,System.Windows.VisualState,System.Windows.VisualState,System.Windows.FrameworkElement,System.Windows.FrameworkElement)
+  commentId: M:System.Windows.VisualStateManager.RaiseCurrentStateChanging(System.Windows.VisualStateGroup,System.Windows.VisualState,System.Windows.VisualState,System.Windows.FrameworkElement,System.Windows.FrameworkElement)
+  id: RaiseCurrentStateChanging(System.Windows.VisualStateGroup,System.Windows.VisualState,System.Windows.VisualState,System.Windows.FrameworkElement,System.Windows.FrameworkElement)
+  parent: System.Windows.VisualStateManager
+  langs:
+  - csharp
+  name: RaiseCurrentStateChanging(VisualStateGroup, VisualState, VisualState, FrameworkElement, FrameworkElement)
+  nameWithType: VisualStateManager.RaiseCurrentStateChanging(VisualStateGroup, VisualState, VisualState, FrameworkElement, FrameworkElement)
+  fullName: VisualStateManager.RaiseCurrentStateChanging(VisualStateGroup, VisualState, VisualState, FrameworkElement, FrameworkElement)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows
+  summary: Raises the <xref href="System.Windows.VisualStateGroup.CurrentStateChanging"></xref> event on the specified <xref href="System.Windows.VisualStateGroup"></xref> object.
+  remarks: When the <xref:System.Windows.VisualStateGroup> is set on the <xref:System.Windows.Controls.ControlTemplate> of a control, the `control` parameter is set to the control that owns <xref:System.Windows.Controls.ControlTemplate>.  When the <xref:System.Windows.VisualStateGroup> is set on a <xref:System.Windows.FrameworkElement>, `control` is `null` and you should use the `stateGroupsRoot` parameter.
+  syntax:
+    content: protected void RaiseCurrentStateChanging (System.Windows.VisualStateGroup stateGroup, System.Windows.VisualState oldState, System.Windows.VisualState newState, System.Windows.FrameworkElement control, System.Windows.FrameworkElement stateGroupsRoot);
+    parameters:
+    - id: stateGroup
+      type: System.Windows.VisualStateGroup
+      description: The object that the <xref href="System.Windows.VisualStateGroup.CurrentStateChanging"></xref> event occurred on.
+    - id: oldState
+      type: System.Windows.VisualState
+      description: The state that the control is transitioning from.
+    - id: newState
+      type: System.Windows.VisualState
+      description: The state that the control is transitioning to.
+    - id: control
+      type: System.Windows.FrameworkElement
+      description: The control that is transitioning states.
+    - id: stateGroupsRoot
+      type: System.Windows.FrameworkElement
+      description: The root element that contains the <xref href="System.Windows.VisualStateManager"></xref>.
+  overload: System.Windows.VisualStateManager.RaiseCurrentStateChanging*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: "<code>stateGroupsRoot</code> is `null`.  \n  \n -or-  \n  \n <code>newState</code> is `null`."
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.VisualStateManager.SetCustomVisualStateManager(System.Windows.FrameworkElement,System.Windows.VisualStateManager)
+  commentId: M:System.Windows.VisualStateManager.SetCustomVisualStateManager(System.Windows.FrameworkElement,System.Windows.VisualStateManager)
+  id: SetCustomVisualStateManager(System.Windows.FrameworkElement,System.Windows.VisualStateManager)
+  parent: System.Windows.VisualStateManager
+  langs:
+  - csharp
+  name: SetCustomVisualStateManager(FrameworkElement, VisualStateManager)
+  nameWithType: VisualStateManager.SetCustomVisualStateManager(FrameworkElement, VisualStateManager)
+  fullName: VisualStateManager.SetCustomVisualStateManager(FrameworkElement, VisualStateManager)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows
+  summary: Sets the <xref href="System.Windows.VisualStateManager.CustomVisualStateManager"></xref> attached property.
+  syntax:
+    content: public static void SetCustomVisualStateManager (System.Windows.FrameworkElement obj, System.Windows.VisualStateManager value);
+    parameters:
+    - id: obj
+      type: System.Windows.FrameworkElement
+      description: The object to set the property on.
+    - id: value
+      type: System.Windows.VisualStateManager
+      description: The visual state manager that transitions between the states of a control.
+  overload: System.Windows.VisualStateManager.SetCustomVisualStateManager*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.VisualStateManager.VisualStateGroupsProperty
+  commentId: F:System.Windows.VisualStateManager.VisualStateGroupsProperty
+  id: VisualStateGroupsProperty
+  parent: System.Windows.VisualStateManager
+  langs:
+  - csharp
+  name: VisualStateGroupsProperty
+  nameWithType: VisualStateManager.VisualStateGroupsProperty
+  fullName: VisualStateManager.VisualStateGroupsProperty
+  type: Field
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows
+  summary: Identifies the <xref href="System.Windows.VisualStateManager.VisualStateGroups"></xref> dependency property.
+  syntax:
+    content: public static readonly System.Windows.DependencyProperty VisualStateGroupsProperty;
+    return:
+      type: System.Windows.DependencyProperty
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+references:
+- uid: System.Windows.DependencyObject
+  parent: System.Windows
+  isExternal: false
+  name: DependencyObject
+  nameWithType: DependencyObject
+  fullName: System.Windows.DependencyObject
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.Windows.VisualStateManager.#ctor
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: VisualStateManager()
+  nameWithType: VisualStateManager.VisualStateManager()
+  fullName: VisualStateManager.VisualStateManager()
+- uid: System.Windows.VisualStateManager.CustomVisualStateManagerProperty
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: CustomVisualStateManagerProperty
+  nameWithType: VisualStateManager.CustomVisualStateManagerProperty
+  fullName: VisualStateManager.CustomVisualStateManagerProperty
+- uid: System.Windows.DependencyProperty
+  parent: System.Windows
+  isExternal: false
+  name: DependencyProperty
+  nameWithType: DependencyProperty
+  fullName: System.Windows.DependencyProperty
+- uid: System.Windows.VisualStateManager.GetCustomVisualStateManager(System.Windows.FrameworkElement)
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: GetCustomVisualStateManager(FrameworkElement)
+  nameWithType: VisualStateManager.GetCustomVisualStateManager(FrameworkElement)
+  fullName: VisualStateManager.GetCustomVisualStateManager(FrameworkElement)
+- uid: System.Windows.VisualStateManager
+  parent: System.Windows
+  isExternal: false
+  name: VisualStateManager
+  nameWithType: VisualStateManager
+  fullName: System.Windows.VisualStateManager
+- uid: System.Windows.FrameworkElement
+  parent: System.Windows
+  isExternal: false
+  name: FrameworkElement
+  nameWithType: FrameworkElement
+  fullName: System.Windows.FrameworkElement
+- uid: System.Windows.VisualStateManager.GetVisualStateGroups(System.Windows.FrameworkElement)
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: GetVisualStateGroups(FrameworkElement)
+  nameWithType: VisualStateManager.GetVisualStateGroups(FrameworkElement)
+  fullName: VisualStateManager.GetVisualStateGroups(FrameworkElement)
+- uid: System.Collections.IList
+  parent: System.Collections
+  isExternal: false
+  name: IList
+  nameWithType: IList
+  fullName: System.Collections.IList
+- uid: System.Windows.VisualStateManager.GoToElementState(System.Windows.FrameworkElement,System.String,System.Boolean)
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: GoToElementState(FrameworkElement, String, Boolean)
+  nameWithType: VisualStateManager.GoToElementState(FrameworkElement, String, Boolean)
+  fullName: VisualStateManager.GoToElementState(FrameworkElement, String, Boolean)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Windows.VisualStateManager.GoToState(System.Windows.FrameworkElement,System.String,System.Boolean)
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: GoToState(FrameworkElement, String, Boolean)
+  nameWithType: VisualStateManager.GoToState(FrameworkElement, String, Boolean)
+  fullName: VisualStateManager.GoToState(FrameworkElement, String, Boolean)
+- uid: System.Windows.VisualStateManager.GoToStateCore(System.Windows.FrameworkElement,System.Windows.FrameworkElement,System.String,System.Windows.VisualStateGroup,System.Windows.VisualState,System.Boolean)
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: GoToStateCore(FrameworkElement, FrameworkElement, String, VisualStateGroup, VisualState, Boolean)
+  nameWithType: VisualStateManager.GoToStateCore(FrameworkElement, FrameworkElement, String, VisualStateGroup, VisualState, Boolean)
+  fullName: VisualStateManager.GoToStateCore(FrameworkElement, FrameworkElement, String, VisualStateGroup, VisualState, Boolean)
+- uid: System.Windows.VisualStateGroup
+  parent: System.Windows
+  isExternal: false
+  name: VisualStateGroup
+  nameWithType: VisualStateGroup
+  fullName: System.Windows.VisualStateGroup
+- uid: System.Windows.VisualState
+  parent: System.Windows
+  isExternal: false
+  name: VisualState
+  nameWithType: VisualState
+  fullName: System.Windows.VisualState
+- uid: System.Windows.VisualStateManager.RaiseCurrentStateChanged(System.Windows.VisualStateGroup,System.Windows.VisualState,System.Windows.VisualState,System.Windows.FrameworkElement,System.Windows.FrameworkElement)
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: RaiseCurrentStateChanged(VisualStateGroup, VisualState, VisualState, FrameworkElement, FrameworkElement)
+  nameWithType: VisualStateManager.RaiseCurrentStateChanged(VisualStateGroup, VisualState, VisualState, FrameworkElement, FrameworkElement)
+  fullName: VisualStateManager.RaiseCurrentStateChanged(VisualStateGroup, VisualState, VisualState, FrameworkElement, FrameworkElement)
+- uid: System.Windows.VisualStateManager.RaiseCurrentStateChanging(System.Windows.VisualStateGroup,System.Windows.VisualState,System.Windows.VisualState,System.Windows.FrameworkElement,System.Windows.FrameworkElement)
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: RaiseCurrentStateChanging(VisualStateGroup, VisualState, VisualState, FrameworkElement, FrameworkElement)
+  nameWithType: VisualStateManager.RaiseCurrentStateChanging(VisualStateGroup, VisualState, VisualState, FrameworkElement, FrameworkElement)
+  fullName: VisualStateManager.RaiseCurrentStateChanging(VisualStateGroup, VisualState, VisualState, FrameworkElement, FrameworkElement)
+- uid: System.Windows.VisualStateManager.SetCustomVisualStateManager(System.Windows.FrameworkElement,System.Windows.VisualStateManager)
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: SetCustomVisualStateManager(FrameworkElement, VisualStateManager)
+  nameWithType: VisualStateManager.SetCustomVisualStateManager(FrameworkElement, VisualStateManager)
+  fullName: VisualStateManager.SetCustomVisualStateManager(FrameworkElement, VisualStateManager)
+- uid: System.Windows.VisualStateManager.VisualStateGroupsProperty
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: VisualStateGroupsProperty
+  nameWithType: VisualStateManager.VisualStateGroupsProperty
+  fullName: VisualStateManager.VisualStateGroupsProperty
+- uid: System.Windows.VisualStateManager.#ctor*
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: VisualStateManager
+  nameWithType: VisualStateManager.VisualStateManager
+  fullName: VisualStateManager.VisualStateManager
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+- uid: System.Windows.VisualStateManager.GetCustomVisualStateManager*
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: GetCustomVisualStateManager
+  nameWithType: VisualStateManager.GetCustomVisualStateManager
+  fullName: VisualStateManager.GetCustomVisualStateManager
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+- uid: System.Windows.VisualStateManager.GetVisualStateGroups*
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: GetVisualStateGroups
+  nameWithType: VisualStateManager.GetVisualStateGroups
+  fullName: VisualStateManager.GetVisualStateGroups
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+- uid: System.Windows.VisualStateManager.GoToElementState*
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: GoToElementState
+  nameWithType: VisualStateManager.GoToElementState
+  fullName: VisualStateManager.GoToElementState
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+- uid: System.Windows.VisualStateManager.GoToState*
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: GoToState
+  nameWithType: VisualStateManager.GoToState
+  fullName: VisualStateManager.GoToState
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+- uid: System.Windows.VisualStateManager.GoToStateCore*
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: GoToStateCore
+  nameWithType: VisualStateManager.GoToStateCore
+  fullName: VisualStateManager.GoToStateCore
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+- uid: System.Windows.VisualStateManager.RaiseCurrentStateChanged*
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: RaiseCurrentStateChanged
+  nameWithType: VisualStateManager.RaiseCurrentStateChanged
+  fullName: VisualStateManager.RaiseCurrentStateChanged
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+- uid: System.Windows.VisualStateManager.RaiseCurrentStateChanging*
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: RaiseCurrentStateChanging
+  nameWithType: VisualStateManager.RaiseCurrentStateChanging
+  fullName: VisualStateManager.RaiseCurrentStateChanging
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+- uid: System.Windows.VisualStateManager.SetCustomVisualStateManager*
+  parent: System.Windows.VisualStateManager
+  isExternal: false
+  name: SetCustomVisualStateManager
+  nameWithType: VisualStateManager.SetCustomVisualStateManager
+  fullName: VisualStateManager.SetCustomVisualStateManager
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/VisualStateManager.xml
+- uid: System.Windows.DependencyObject.Equals(System.Object)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: DependencyObject.Equals(Object)
+  fullName: DependencyObject.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Windows.DependencyObject.GetHashCode
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: DependencyObject.GetHashCode()
+  fullName: DependencyObject.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Windows.Threading.DispatcherObject.CheckAccess
+  parent: System.Windows.Threading.DispatcherObject
+  isExternal: false
+  name: CheckAccess()
+  nameWithType: DispatcherObject.CheckAccess()
+  fullName: DispatcherObject.CheckAccess()
+- uid: System.Windows.Threading.DispatcherObject.Dispatcher
+  parent: System.Windows.Threading.DispatcherObject
+  isExternal: false
+  name: Dispatcher
+  nameWithType: DispatcherObject.Dispatcher
+  fullName: DispatcherObject.Dispatcher
+- uid: System.Windows.Threading.DispatcherObject.VerifyAccess
+  parent: System.Windows.Threading.DispatcherObject
+  isExternal: false
+  name: VerifyAccess()
+  nameWithType: DispatcherObject.VerifyAccess()
+  fullName: DispatcherObject.VerifyAccess()
+- uid: System.Windows.DependencyObject.ClearValue(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: ClearValue(DependencyProperty)
+  nameWithType: DependencyObject.ClearValue(DependencyProperty)
+  fullName: DependencyObject.ClearValue(DependencyProperty)
+- uid: System.Windows.DependencyObject.ClearValue(System.Windows.DependencyPropertyKey)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: ClearValue(DependencyPropertyKey)
+  nameWithType: DependencyObject.ClearValue(DependencyPropertyKey)
+  fullName: DependencyObject.ClearValue(DependencyPropertyKey)
+- uid: System.Windows.DependencyObject.CoerceValue(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: CoerceValue(DependencyProperty)
+  nameWithType: DependencyObject.CoerceValue(DependencyProperty)
+  fullName: DependencyObject.CoerceValue(DependencyProperty)
+- uid: System.Windows.DependencyObject.DependencyObjectType
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: DependencyObjectType
+  nameWithType: DependencyObject.DependencyObjectType
+  fullName: DependencyObject.DependencyObjectType
+- uid: System.Windows.DependencyObject.GetLocalValueEnumerator
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: GetLocalValueEnumerator()
+  nameWithType: DependencyObject.GetLocalValueEnumerator()
+  fullName: DependencyObject.GetLocalValueEnumerator()
+- uid: System.Windows.DependencyObject.GetValue(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: GetValue(DependencyProperty)
+  nameWithType: DependencyObject.GetValue(DependencyProperty)
+  fullName: DependencyObject.GetValue(DependencyProperty)
+- uid: System.Windows.DependencyObject.InvalidateProperty(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: InvalidateProperty(DependencyProperty)
+  nameWithType: DependencyObject.InvalidateProperty(DependencyProperty)
+  fullName: DependencyObject.InvalidateProperty(DependencyProperty)
+- uid: System.Windows.DependencyObject.IsSealed
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: IsSealed
+  nameWithType: DependencyObject.IsSealed
+  fullName: DependencyObject.IsSealed
+- uid: System.Windows.DependencyObject.OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: OnPropertyChanged(DependencyPropertyChangedEventArgs)
+  nameWithType: DependencyObject.OnPropertyChanged(DependencyPropertyChangedEventArgs)
+  fullName: DependencyObject.OnPropertyChanged(DependencyPropertyChangedEventArgs)
+- uid: System.Windows.DependencyObject.ReadLocalValue(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: ReadLocalValue(DependencyProperty)
+  nameWithType: DependencyObject.ReadLocalValue(DependencyProperty)
+  fullName: DependencyObject.ReadLocalValue(DependencyProperty)
+- uid: System.Windows.DependencyObject.SetCurrentValue(System.Windows.DependencyProperty,System.Object)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: SetCurrentValue(DependencyProperty, Object)
+  nameWithType: DependencyObject.SetCurrentValue(DependencyProperty, Object)
+  fullName: DependencyObject.SetCurrentValue(DependencyProperty, Object)
+- uid: System.Windows.DependencyObject.SetValue(System.Windows.DependencyProperty,System.Object)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: SetValue(DependencyProperty, Object)
+  nameWithType: DependencyObject.SetValue(DependencyProperty, Object)
+  fullName: DependencyObject.SetValue(DependencyProperty, Object)
+- uid: System.Windows.DependencyObject.SetValue(System.Windows.DependencyPropertyKey,System.Object)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: SetValue(DependencyPropertyKey, Object)
+  nameWithType: DependencyObject.SetValue(DependencyPropertyKey, Object)
+  fullName: DependencyObject.SetValue(DependencyPropertyKey, Object)
+- uid: System.Windows.DependencyObject.ShouldSerializeProperty(System.Windows.DependencyProperty)
+  parent: System.Windows.DependencyObject
+  isExternal: false
+  name: ShouldSerializeProperty(DependencyProperty)
+  nameWithType: DependencyObject.ShouldSerializeProperty(DependencyProperty)
+  fullName: DependencyObject.ShouldSerializeProperty(DependencyProperty)

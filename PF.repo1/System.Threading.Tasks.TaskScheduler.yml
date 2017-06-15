@@ -1,0 +1,1563 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Threading.Tasks.TaskScheduler
+  commentId: T:System.Threading.Tasks.TaskScheduler
+  id: TaskScheduler
+  children:
+  - System.Threading.Tasks.TaskScheduler.#ctor
+  - System.Threading.Tasks.TaskScheduler.Current
+  - System.Threading.Tasks.TaskScheduler.Default
+  - System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext
+  - System.Threading.Tasks.TaskScheduler.GetScheduledTasks
+  - System.Threading.Tasks.TaskScheduler.Id
+  - System.Threading.Tasks.TaskScheduler.MaximumConcurrencyLevel
+  - System.Threading.Tasks.TaskScheduler.QueueTask(System.Threading.Tasks.Task)
+  - System.Threading.Tasks.TaskScheduler.TryDequeue(System.Threading.Tasks.Task)
+  - System.Threading.Tasks.TaskScheduler.TryExecuteTask(System.Threading.Tasks.Task)
+  - System.Threading.Tasks.TaskScheduler.TryExecuteTaskInline(System.Threading.Tasks.Task,System.Boolean)
+  - System.Threading.Tasks.TaskScheduler.UnobservedTaskException
+  langs:
+  - csharp
+  name: TaskScheduler
+  nameWithType: TaskScheduler
+  fullName: System.Threading.Tasks.TaskScheduler
+  type: Class
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Threading.Tasks
+  summary: Represents an object that handles the low-level work of queuing tasks onto threads.
+  remarks: "An instance of the <xref:System.Threading.Tasks.TaskScheduler> class represents a task scheduler. A task scheduler ensures that the work of a task is eventually executed.  \n  \n The default task scheduler is based on the .NET Framework 4 thread pool, which provides work-stealing for load-balancing, thread injection/retirement for maximum throughput, and overall good performance. It should be sufficient for most scenarios.  \n  \n The <xref:System.Threading.Tasks.TaskScheduler> class also serves as the extension point for all customizable scheduling logic.  This includes mechanisms such as how to schedule a task for execution, and how scheduled tasks should be exposed to debuggers. If you require special functionality, you can create a custom scheduler and enable it for specific tasks or queries.  \n  \n In this topic:  \n[The default task scheduler and the thread pool](#Default)  \n [The global queue vs. local queues](#Queues)  \n [Work stealing](#Stealing)  \n [Long-running tasks](#LongRunning)  \n [Task inlining](#Inlining)  \n[Specifying a synchronization context](#Sync)  \n  \n<a name=\"Default\"></a>   \n## The default task scheduler and the thread pool  \n The default scheduler for the Task Parallel Library and PLINQ uses the .NET Framework thread pool, which is represented by the <xref:System.Threading.ThreadPool> class, to queue and execute work. The thread pool uses the information that is provided by the <xref:System.Threading.Tasks.Task> type to efficiently     support the fine-grained parallelism (short-lived units of work) that parallel tasks and queries often represent.  \n  \n<a name=\"Queues\"></a>   \n### The global queue vs. local queues  \n The thread pool maintains a global FIFO (first-in, first-out) work queue for threads in each application domain. Whenever a program calls the <xref:System.Threading.ThreadPool.QueueUserWorkItem%2A?displayProperty=fullName> (or <xref:System.Threading.ThreadPool.UnsafeQueueUserWorkItem%2A?displayProperty=fullName>) method, the work is put on this shared queue and eventually de-queued onto the next thread that becomes available. Starting with the .NET Framework 4, this queue has been improved to use a lock-free algorithm that resembles the <xref:System.Collections.Concurrent.ConcurrentQueue%601> class. By using this lock-free implementation, the thread pool spends less time when it queues and de-queues work items. This performance benefit is available to all programs that use the thread pool.  \n  \n Top-level tasks, which are tasks that are not created in the context of another task, are put on the global queue just like any other work item. However, nested or child tasks, which are created in the context of another task, are handled quite differently. A child or nested task is put on a local queue that is specific to the thread on which the parent task is executing. The parent task may be a top-level task or it also may be the child of another task. When this thread is ready for more work, it first looks in the local queue. If work items are waiting there, they can be accessed quickly. The local queues are accessed in last-in, first-out order (LIFO) to preserve cache locality and reduce contention. For more information about child tasks and nested tasks, see [Attached and Detached Child Tasks](~/docs/standard/parallel-programming/attached-and-detached-child-tasks.md).  \n  \n The use of local queues not only reduces pressure on the global queue, but also takes advantage of data locality. Work items in the local queue frequently reference data structures that are physically near one another in memory. In these cases, the data is already in the cache after the first task has run and can be accessed quickly. Both [Parallel LINQ (PLINQ)](~/docs/standard/parallel-programming/parallel-linq-plinq.md) and the <xref:System.Threading.Tasks.Parallel> class use nested tasks and child tasks extensively, and achieve significant speedups by using the local work queues.  \n  \n<a name=\"Stealing\"></a>   \n### Work stealing  \n Starting with the .NET Framework 4, the thread pool also features a work-stealing algorithm to help make sure that no threads are sitting idle while others still have work in their queues. When a thread-pool thread is ready for more work, it first looks at the head of its local queue, then in the global queue, and then in the local queues of other threads. If it finds a work item in the local queue of another thread, it first applies heuristics to make sure that it can run the work efficiently. If it can, it de-queues the work item from the tail (in FIFO order). This reduces contention on each local queue and preserves data locality. This architecture helps the  thread pool load-balance work more efficiently than past versions did.  \n  \n<a name=\"LongRunning\"></a>   \n### Long-running tasks  \n You may want to explicitly prevent a task from being put on a local queue. For example, you may know that a particular work item will run for a relatively long time and is likely to block all other work items on the local queue. In this case, you can specify the <xref:System.Threading.Tasks.TaskCreationOptions?displayProperty=fullName> option, which provides a hint to the scheduler that an additional thread might be required for the task so that it does not block the forward progress of other threads or work items on the local queue. By using this option you avoid the thread pool completely, including the global and local queues.  \n  \n<a name=\"Inlining\"></a>   \n### Task inlining  \n In some cases when a <xref:System.Threading.Tasks.Task> is waited on, it may be executed synchronously on the thread that is performing the wait operation. This enhances performance by preventing the need for an additional thread and instead using the existing thread, which would have blocked otherwise. To prevent errors due to re-entrancy, task inlining only occurs when the wait target is found in the relevant thread's local queue.  \n  \n<a name=\"Sync\"></a>   \n## Specifying a synchronization context  \n You can use the <xref:System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext%2A?displayProperty=fullName> method to specify that a task should be scheduled to run on a particular thread. This is useful in frameworks such as Windows Forms and Windows Presentation Foundation where access to user interface objects is often restricted to code that is running on the same thread on which the UI object was created. For more information, see How to: Schedule Work on the User Interface (UI) Thread.  \n  \n The following example uses the <xref:System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext%2A?displayProperty=fullName> method in a Windows Presentation Foundation (WPF) app to schedule a task on the same thread that the user interface (UI) control was created on.   The example creates a mosaic of images that are randomly selected from a specified directory. The WPF objects are used to load and resize the images. The raw pixels are then passed to a task that uses a `For` loop to write the pixel data into a large single-byte array. No synchronization is required because no two tiles occupy the same array elements. The tiles can also be written in any order because their position is calculated independently of any other tile. The large array is then passed to a task that runs on the UI thread, where the pixel data is loaded into an Image control.  \n  \n The example moves data off the UI thread, modifies it by using parallel loops and <xref:System.Threading.Tasks.Task> objects, and then passes it back to a task that runs on the UI thread. This approach is useful when you have to use the Task Parallel Library to perform operations that either are not supported by the WPF API, or are not sufficiently fast. Another way to create an image mosaic in WPF is to use a <xref:System.Windows.Controls.WrapPanel?displayProperty=fullName> control and add images to it. The <xref:System.Windows.Controls.WrapPanel> handles the work of positioning the tiles. However, this work can only be performed on the UI thread.  \n  \n [!code-csharp[TPL_SyncContext#01](~/samples/snippets/csharp/VS_Snippets_Misc/tpl_synccontext/cs/mainwindow.xaml.cs#01)]\n [!code-vb[TPL_SyncContext#01](~/samples/snippets/visualbasic/VS_Snippets_Misc/tpl_synccontext/vb/MainWindow.xaml.vb#01)]  \n  \n To create the example, crate a WPF application project in Visual Studio and assign it a name of your choice. Then do the following:  \n  \n1.  In design view, drag an <xref:System.Windows.Controls.Image> control from the **Toolbox** to the design surface. In XAML view, specify the horizontal alignment as \"Left.\" The size does not matter because the control is be dynamically resized at run time. Accept the default name, \"image\".  \n  \n2.  Drag a <xref:System.Windows.Controls.Button> control from the **Toolbox** to the lower left part of the application window. Double-click the button to add a <xref:System.Windows.Controls.Primitives.ButtonBase.Click> event handler. In XAML view, specify the <xref:System.Windows.Controls.ContentControl.Content%2A> property of the button as \"Make a Mosaic\" and specify its horizontal alignment as \"Left\". Accept the default name, \"button\".  \n  \n3.  Replace the entire contents of the MainWindow.xaml.cs or MainWindow.xaml.vb file with the code from this example. Make sure that the name of the workspace matches the project name.  \n  \n4.  The example reads JPEG images from a directory named C:\\Users\\Public\\Pictures\\Sample Pictures\\\\. Either create the directory and place some images in it, or change the path to refer to some other directory that contains images.  \n  \n This example has some limitations. For example, only 32-bits-per-pixel images are supported; images in other formats are corrupted by the <xref:System.Windows.Media.Imaging.BitmapImage> object during the resizing operation. Also, the source images must all be larger than the tile size. As a further exercise, you can add functionality to handle multiple pixel formats and file sizes."
+  example:
+  - "The following example is taken from the [Samples for Parallel Programming with the .NET Framework 4](http://go.microsoft.com/fwlink/?LinkID=165717) on the MSDN Code Gallery Web site.  It creates a custom task scheduler that limits the number of threads used by the app. It then launches two sets of tasks and displays information about the task and the thread on which the task is executing.  \n  \n [!code-csharp[TPL_Schedulers#02](~/samples/snippets/csharp/VS_Snippets_Misc/tpl_schedulers/cs/limitex1.cs#02)]\n [!code-vb[TPL_Schedulers#02](~/samples/snippets/visualbasic/VS_Snippets_Misc/tpl_schedulers/vb/module2.vb#02)]  \n  \n In addition, several sample task schedulers are available on Code Gallery: [Samples for Parallel Programming with the .NET Framework 4](http://go.microsoft.com/fwlink/?LinkID=165717)."
+  syntax:
+    content: public abstract class TaskScheduler
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Tasks.TaskScheduler.#ctor
+  commentId: M:System.Threading.Tasks.TaskScheduler.#ctor
+  id: '#ctor'
+  parent: System.Threading.Tasks.TaskScheduler
+  langs:
+  - csharp
+  name: TaskScheduler()
+  nameWithType: TaskScheduler.TaskScheduler()
+  fullName: TaskScheduler.TaskScheduler()
+  type: Constructor
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Threading.Tasks
+  summary: Initializes the <xref href="System.Threading.Tasks.TaskScheduler"></xref>.
+  syntax:
+    content: protected TaskScheduler ();
+    parameters: []
+  overload: System.Threading.Tasks.TaskScheduler.#ctor*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Tasks.TaskScheduler.Current
+  commentId: P:System.Threading.Tasks.TaskScheduler.Current
+  id: Current
+  parent: System.Threading.Tasks.TaskScheduler
+  langs:
+  - csharp
+  name: Current
+  nameWithType: TaskScheduler.Current
+  fullName: TaskScheduler.Current
+  type: Property
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Threading.Tasks
+  summary: Gets the <xref href="System.Threading.Tasks.TaskScheduler"></xref> associated with the currently executing task.
+  remarks: "When not called from within a task, <xref:System.Threading.Tasks.TaskScheduler.Current%2A> will return the <xref:System.Threading.Tasks.TaskScheduler.Default%2A> scheduler.  \n  \n For more information, see [Task Schedulers](http://msdn.microsoft.com/library/638f8ea5-21db-47a2-a934-86e1e961bf65)."
+  syntax:
+    content: public static System.Threading.Tasks.TaskScheduler Current { get; }
+    return:
+      type: System.Threading.Tasks.TaskScheduler
+      description: Returns the <xref href="System.Threading.Tasks.TaskScheduler"></xref> associated with the currently executing task.
+  overload: System.Threading.Tasks.TaskScheduler.Current*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Tasks.TaskScheduler.Default
+  commentId: P:System.Threading.Tasks.TaskScheduler.Default
+  id: Default
+  parent: System.Threading.Tasks.TaskScheduler
+  langs:
+  - csharp
+  name: Default
+  nameWithType: TaskScheduler.Default
+  fullName: TaskScheduler.Default
+  type: Property
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Threading.Tasks
+  summary: Gets the default <xref href="System.Threading.Tasks.TaskScheduler"></xref> instance that is provided by the .NET Framework.
+  remarks: For more information, see [Task Schedulers](http://msdn.microsoft.com/library/638f8ea5-21db-47a2-a934-86e1e961bf65).
+  syntax:
+    content: public static System.Threading.Tasks.TaskScheduler Default { get; }
+    return:
+      type: System.Threading.Tasks.TaskScheduler
+      description: Returns the default <xref href="System.Threading.Tasks.TaskScheduler"></xref> instance.
+  overload: System.Threading.Tasks.TaskScheduler.Default*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext
+  commentId: M:System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext
+  id: FromCurrentSynchronizationContext
+  parent: System.Threading.Tasks.TaskScheduler
+  langs:
+  - csharp
+  name: FromCurrentSynchronizationContext()
+  nameWithType: TaskScheduler.FromCurrentSynchronizationContext()
+  fullName: TaskScheduler.FromCurrentSynchronizationContext()
+  type: Method
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Threading.Tasks
+  summary: Creates a <xref href="System.Threading.Tasks.TaskScheduler"></xref> associated with the current <xref href="System.Threading.SynchronizationContext"></xref>.
+  remarks: "All <xref:System.Threading.Tasks.Task> instances queued to the returned scheduler will be executed through a call to the <xref:System.Threading.SynchronizationContext.Post%2A> method on that context.  \n  \n For more information, see [Task Schedulers](http://msdn.microsoft.com/library/638f8ea5-21db-47a2-a934-86e1e961bf65)."
+  syntax:
+    content: public static System.Threading.Tasks.TaskScheduler FromCurrentSynchronizationContext ();
+    parameters: []
+    return:
+      type: System.Threading.Tasks.TaskScheduler
+      description: A <xref href="System.Threading.Tasks.TaskScheduler"></xref> associated with the current <xref href="System.Threading.SynchronizationContext"></xref>, as determined by <xref href="System.Threading.SynchronizationContext.Current"></xref>.
+  overload: System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The current SynchronizationContext may not be used as a TaskScheduler.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Tasks.TaskScheduler.GetScheduledTasks
+  commentId: M:System.Threading.Tasks.TaskScheduler.GetScheduledTasks
+  id: GetScheduledTasks
+  parent: System.Threading.Tasks.TaskScheduler
+  langs:
+  - csharp
+  name: GetScheduledTasks()
+  nameWithType: TaskScheduler.GetScheduledTasks()
+  fullName: TaskScheduler.GetScheduledTasks()
+  type: Method
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Threading.Tasks
+  summary: For debugger support only, generates an enumerable of <xref href="System.Threading.Tasks.Task"></xref> instances currently queued to the scheduler waiting to be executed.
+  remarks: "A class derived from <xref:System.Threading.Tasks.TaskScheduler> implements this method in order to support integration with debuggers. This method will only be invoked by the .NET Framework when the debugger requests access to the data. The enumerable returned will be traversed by debugging utilities to access the tasks currently queued to this scheduler, enabling the debugger to provide a representation of this information in the user interface.  \n  \n It is important to note that, when this method is called, all other threads in the process will be frozen. Therefore, it's important to avoid synchronization with other threads that may lead to blocking. If synchronization is necessary, and you are unable to acquire the lock in this method, then you should throw an exception so that the debugger does not hang. The following example shows one possible approach in C#:  \n  \n```  \nprotected override IEnumerable<Task> GetScheduledTasks()  \n{  \n    bool lockTaken = false;  \n    try  \n    {  \n        Monitor.TryEnter(_syncObj, ref lockTaken);  \n        if (lockTaken)  \n        {  \n            return _tasks.ToArray();  \n        }  \n        else throw new NotSupportedException();  \n    }  \n    finally  \n    {  \n    if (lockTaken) Monitor.Exit(_syncObj);  \n    }}  \n```  \n  \n Additionally, this method and the enumerable returned must not modify any globally visible state.  \n  \n The returned enumerable should never be null. If there are currently no queued tasks, an empty enumerable should be returned instead.  \n  \n Developers who are implementing custom debuggers shouldn't call this method directly, but should use the internal wrapper method `GetScheduledTasksForDebugger` instead: `internal Task[] GetScheduledTasksForDebugger()`. This wrapper method returns an array of tasks instead of an enumerable. To retrieve a list of active schedulers, use the internal method `internal static TaskScheduler[] GetTaskSchedulersForDebugger()`. This static method returns an array of all active <xref:System.Threading.Tasks.TaskScheduler> instances. You can then use `GetScheduledTasksForDebugger` on each scheduler instance to retrieve its list of scheduled tasks."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      protected abstract System.Collections.Generic.IEnumerable<System.Threading.Tasks.Task> GetScheduledTasks ();
+    parameters: []
+    return:
+      type: System.Collections.Generic.IEnumerable{System.Threading.Tasks.Task}
+      description: An enumerable that allows a debugger to traverse the tasks currently queued to this scheduler.
+  overload: System.Threading.Tasks.TaskScheduler.GetScheduledTasks*
+  exceptions:
+  - type: System.NotSupportedException
+    commentId: T:System.NotSupportedException
+    description: This scheduler is unable to generate a list of queued tasks at this time.
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Tasks.TaskScheduler.Id
+  commentId: P:System.Threading.Tasks.TaskScheduler.Id
+  id: Id
+  parent: System.Threading.Tasks.TaskScheduler
+  langs:
+  - csharp
+  name: Id
+  nameWithType: TaskScheduler.Id
+  fullName: TaskScheduler.Id
+  type: Property
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Threading.Tasks
+  summary: Gets the unique ID for this <xref href="System.Threading.Tasks.TaskScheduler"></xref>.
+  remarks: For more information, see [Task Schedulers](http://msdn.microsoft.com/library/638f8ea5-21db-47a2-a934-86e1e961bf65).
+  syntax:
+    content: public int Id { get; }
+    return:
+      type: System.Int32
+      description: Returns the unique ID for this <xref href="System.Threading.Tasks.TaskScheduler"></xref>.
+  overload: System.Threading.Tasks.TaskScheduler.Id*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Tasks.TaskScheduler.MaximumConcurrencyLevel
+  commentId: P:System.Threading.Tasks.TaskScheduler.MaximumConcurrencyLevel
+  id: MaximumConcurrencyLevel
+  parent: System.Threading.Tasks.TaskScheduler
+  langs:
+  - csharp
+  name: MaximumConcurrencyLevel
+  nameWithType: TaskScheduler.MaximumConcurrencyLevel
+  fullName: TaskScheduler.MaximumConcurrencyLevel
+  type: Property
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Threading.Tasks
+  summary: Indicates the maximum concurrency level this <xref href="System.Threading.Tasks.TaskScheduler"></xref> is able to support.
+  remarks: For more information, see [Task Schedulers](http://msdn.microsoft.com/library/638f8ea5-21db-47a2-a934-86e1e961bf65).
+  syntax:
+    content: public virtual int MaximumConcurrencyLevel { get; }
+    return:
+      type: System.Int32
+      description: Returns an integer that represents the maximum concurrency level. The default scheduler returns <xref href="System.Int32.MaxValue"></xref>.
+  overload: System.Threading.Tasks.TaskScheduler.MaximumConcurrencyLevel*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Tasks.TaskScheduler.QueueTask(System.Threading.Tasks.Task)
+  commentId: M:System.Threading.Tasks.TaskScheduler.QueueTask(System.Threading.Tasks.Task)
+  id: QueueTask(System.Threading.Tasks.Task)
+  parent: System.Threading.Tasks.TaskScheduler
+  langs:
+  - csharp
+  name: QueueTask(Task)
+  nameWithType: TaskScheduler.QueueTask(Task)
+  fullName: TaskScheduler.QueueTask(Task)
+  type: Method
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Threading.Tasks
+  summary: Queues a <xref href="System.Threading.Tasks.Task"></xref> to the scheduler.
+  remarks: "A class derived from <xref:System.Threading.Tasks.TaskScheduler> implements this method to accept tasks being scheduled on the scheduler.  \n  \n A typical implementation would store the task in an internal data structure, which would be serviced by threads that would execute those tasks at some time in the future.  \n  \n This method is only meant to be called by the .NET Framework and should not be called directly by the derived class. This is necessary for maintaining the consistency of the system."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      protected abstract void QueueTask (System.Threading.Tasks.Task task);
+    parameters:
+    - id: task
+      type: System.Threading.Tasks.Task
+      description: The <xref href="System.Threading.Tasks.Task"></xref> to be queued.
+  overload: System.Threading.Tasks.TaskScheduler.QueueTask*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code>task</code> argument is null.
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Tasks.TaskScheduler.TryDequeue(System.Threading.Tasks.Task)
+  commentId: M:System.Threading.Tasks.TaskScheduler.TryDequeue(System.Threading.Tasks.Task)
+  id: TryDequeue(System.Threading.Tasks.Task)
+  parent: System.Threading.Tasks.TaskScheduler
+  langs:
+  - csharp
+  name: TryDequeue(Task)
+  nameWithType: TaskScheduler.TryDequeue(Task)
+  fullName: TaskScheduler.TryDequeue(Task)
+  type: Method
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Threading.Tasks
+  summary: Attempts to dequeue a <xref href="System.Threading.Tasks.Task"></xref> that was previously queued to this scheduler.
+  remarks: "For more information, see [Task Schedulers](http://msdn.microsoft.com/library/638f8ea5-21db-47a2-a934-86e1e961bf65).  \n  \n This method may execute in a finally block; therefore it should return as quickly as possible so that any resources such as <xref:System.Threading.CancellationTokenRegistration> objects can be disposed of in a timely manner."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      protected virtual bool TryDequeue (System.Threading.Tasks.Task task);
+    parameters:
+    - id: task
+      type: System.Threading.Tasks.Task
+      description: The <xref href="System.Threading.Tasks.Task"></xref> to be dequeued.
+    return:
+      type: System.Boolean
+      description: A Boolean denoting whether the <code>task</code> argument was successfully dequeued.
+  overload: System.Threading.Tasks.TaskScheduler.TryDequeue*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code>task</code> argument is null.
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Tasks.TaskScheduler.TryExecuteTask(System.Threading.Tasks.Task)
+  commentId: M:System.Threading.Tasks.TaskScheduler.TryExecuteTask(System.Threading.Tasks.Task)
+  id: TryExecuteTask(System.Threading.Tasks.Task)
+  parent: System.Threading.Tasks.TaskScheduler
+  langs:
+  - csharp
+  name: TryExecuteTask(Task)
+  nameWithType: TaskScheduler.TryExecuteTask(Task)
+  fullName: TaskScheduler.TryExecuteTask(Task)
+  type: Method
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Threading.Tasks
+  summary: Attempts to execute the provided <xref href="System.Threading.Tasks.Task"></xref> on this scheduler.
+  remarks: "Scheduler implementations are provided with <xref:System.Threading.Tasks.Task> instances to be executed through either the <xref:System.Threading.Tasks.TaskScheduler.QueueTask%2A> method or the <xref:System.Threading.Tasks.TaskScheduler.TryExecuteTaskInline%2A> method. When the scheduler deems it appropriate to run the provided task, <xref:System.Threading.Tasks.TaskScheduler.TryExecuteTask%2A> should be used to do so. TryExecuteTask handles all aspects of executing a task, including action invocation, exception handling, state management, and lifecycle control.  \n  \n <xref:System.Threading.Tasks.TaskScheduler.TryExecuteTask%2A> must only be used for tasks provided to this scheduler by the .NET Framework infrastructure. It should not be used to execute arbitrary tasks obtained through custom mechanisms."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      protected bool TryExecuteTask (System.Threading.Tasks.Task task);
+    parameters:
+    - id: task
+      type: System.Threading.Tasks.Task
+      description: A <xref href="System.Threading.Tasks.Task"></xref> object to be executed.
+    return:
+      type: System.Boolean
+      description: A Boolean that is true if <code>task</code> was successfully executed, false if it was not. A common reason for execution failure is that the task had previously been executed or is in the process of being executed by another thread.
+  overload: System.Threading.Tasks.TaskScheduler.TryExecuteTask*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The <code>task</code> is not associated with this scheduler.
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Tasks.TaskScheduler.TryExecuteTaskInline(System.Threading.Tasks.Task,System.Boolean)
+  commentId: M:System.Threading.Tasks.TaskScheduler.TryExecuteTaskInline(System.Threading.Tasks.Task,System.Boolean)
+  id: TryExecuteTaskInline(System.Threading.Tasks.Task,System.Boolean)
+  parent: System.Threading.Tasks.TaskScheduler
+  langs:
+  - csharp
+  name: TryExecuteTaskInline(Task, Boolean)
+  nameWithType: TaskScheduler.TryExecuteTaskInline(Task, Boolean)
+  fullName: TaskScheduler.TryExecuteTaskInline(Task, Boolean)
+  type: Method
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Threading.Tasks
+  summary: Determines whether the provided <xref href="System.Threading.Tasks.Task"></xref> can be executed synchronously in this call, and if it can, executes it.
+  remarks: "A class derived from <xref:System.Threading.Tasks.TaskScheduler> implements this function to support inline execution of a task on a thread that initiates a wait on that task object. Inline execution is optional, and the request may be rejected by returning false. However, the more tasks that can be inlined, the better the scheduler will scale. In fact, a scheduler that inlines too little may be prone to deadlocks. A proper implementation should ensure that a request executing under the policies guaranteed by the scheduler can successfully inline. For example, if a scheduler uses a dedicated thread to execute tasks, any inlining requests from that thread should succeed.  \n  \n If a scheduler decides to perform the inline execution, it should do so by calling to the base TaskScheduler's <xref:System.Threading.Tasks.TaskScheduler.TryExecuteTask%2A> method with the provided task object, propagating the return value. It may also be appropriate for the scheduler to remove an inlined task from its internal data structures if it decides to honor the inlining request. Note, however, that under some circumstances a scheduler may be asked to inline a task that was not previously provided to it with the <xref:System.Threading.Tasks.TaskScheduler.QueueTask%2A> method.  \n  \n The derived scheduler is responsible for making sure that the calling thread is suitable for executing the given task as far as its own scheduling and execution policies are concerned.  \n  \n For more information, see [Task Schedulers](http://msdn.microsoft.com/library/638f8ea5-21db-47a2-a934-86e1e961bf65)."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      protected abstract bool TryExecuteTaskInline (System.Threading.Tasks.Task task, bool taskWasPreviouslyQueued);
+    parameters:
+    - id: task
+      type: System.Threading.Tasks.Task
+      description: The <xref href="System.Threading.Tasks.Task"></xref> to be executed.
+    - id: taskWasPreviouslyQueued
+      type: System.Boolean
+      description: A Boolean denoting whether or not task has previously been queued. If this parameter is True, then the task may have been previously queued (scheduled); if False, then the task is known not to have been queued, and this call is being made in order to execute the task inline without queuing it.
+    return:
+      type: System.Boolean
+      description: A Boolean value indicating whether the task was executed inline.
+  overload: System.Threading.Tasks.TaskScheduler.TryExecuteTaskInline*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code>task</code> argument is null.
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The <code>task</code> was already executed.
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Tasks.TaskScheduler.UnobservedTaskException
+  commentId: E:System.Threading.Tasks.TaskScheduler.UnobservedTaskException
+  id: UnobservedTaskException
+  parent: System.Threading.Tasks.TaskScheduler
+  langs:
+  - csharp
+  name: UnobservedTaskException
+  nameWithType: TaskScheduler.UnobservedTaskException
+  fullName: TaskScheduler.UnobservedTaskException
+  type: Event
+  assemblies:
+  - System.Threading.Tasks
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System.Threading.Tasks
+  summary: Occurs when a faulted task's unobserved exception is about to trigger exception escalation policy, which, by default, would terminate the process.
+  remarks: "This application domain-wide event provides a mechanism to prevent exception escalation policy (which, by default, terminates the process) from triggering.  \n  \n To make it easier for developers to write asynchronous code based on tasks, the [!INCLUDE[net_v45](~/includes/net-v45-md.md)] changes the default exception behavior for unobserved exceptions. Although unobserved exceptions still raise the <xref:System.Threading.Tasks.TaskScheduler.UnobservedTaskException> exception, the process does not terminate by default. Instead, the exception is handled by the runtime after the event is raised, regardless of whether an event handler observes the exception. This behavior can be configured. Starting with the [!INCLUDE[net_v45](~/includes/net-v45-md.md)], you can use the  configuration element to revert to the behavior of the [!INCLUDE[net_v40_long](~/includes/net-v40-long-md.md)] and terminate the process:  \n  \n```xml  \n<configuration>   \n   <runtime>   \n      <ThrowUnobservedTaskExceptions enabled=\"true\"/>   \n   </runtime>   \n</configuration>  \n  \n```"
+  syntax:
+    content: >-
+      [add: System.Security.SecurityCritical]
+
+      [remove: System.Security.SecurityCritical]
+
+      public static event EventHandler<System.Threading.Tasks.UnobservedTaskExceptionEventArgs> UnobservedTaskException;
+    return:
+      type: System.EventHandler{System.Threading.Tasks.UnobservedTaskExceptionEventArgs}
+      description: ''
+  exceptions: []
+  attributes:
+  - type: 'add: System.Security.SecurityCritical'
+  - type: 'remove: System.Security.SecurityCritical'
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.InvalidOperationException
+  parent: System
+  isExternal: false
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.NotSupportedException
+  parent: System
+  isExternal: false
+  name: NotSupportedException
+  nameWithType: NotSupportedException
+  fullName: System.NotSupportedException
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.Threading.Tasks.TaskScheduler.#ctor
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: TaskScheduler()
+  nameWithType: TaskScheduler.TaskScheduler()
+  fullName: TaskScheduler.TaskScheduler()
+- uid: System.Threading.Tasks.TaskScheduler.Current
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: Current
+  nameWithType: TaskScheduler.Current
+  fullName: TaskScheduler.Current
+- uid: System.Threading.Tasks.TaskScheduler
+  parent: System.Threading.Tasks
+  isExternal: false
+  name: TaskScheduler
+  nameWithType: TaskScheduler
+  fullName: System.Threading.Tasks.TaskScheduler
+- uid: System.Threading.Tasks.TaskScheduler.Default
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: Default
+  nameWithType: TaskScheduler.Default
+  fullName: TaskScheduler.Default
+- uid: System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: FromCurrentSynchronizationContext()
+  nameWithType: TaskScheduler.FromCurrentSynchronizationContext()
+  fullName: TaskScheduler.FromCurrentSynchronizationContext()
+- uid: System.Threading.Tasks.TaskScheduler.GetScheduledTasks
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: GetScheduledTasks()
+  nameWithType: TaskScheduler.GetScheduledTasks()
+  fullName: TaskScheduler.GetScheduledTasks()
+- uid: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+- uid: System.Threading.Tasks.Task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.Collections.Generic.IEnumerable{System.Threading.Tasks.Task}
+  parent: System.Collections.Generic
+  isExternal: false
+  name: IEnumerable<Task>
+  nameWithType: IEnumerable<Task>
+  fullName: System.Collections.Generic.IEnumerable<System.Threading.Tasks.Task>
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Threading.Tasks.Task
+    name: Task
+    nameWithType: Task
+    fullName: System.Threading.Tasks.Task
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Threading.Tasks.TaskScheduler.Id
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: Id
+  nameWithType: TaskScheduler.Id
+  fullName: TaskScheduler.Id
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Threading.Tasks.TaskScheduler.MaximumConcurrencyLevel
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: MaximumConcurrencyLevel
+  nameWithType: TaskScheduler.MaximumConcurrencyLevel
+  fullName: TaskScheduler.MaximumConcurrencyLevel
+- uid: System.Threading.Tasks.TaskScheduler.QueueTask(System.Threading.Tasks.Task)
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: QueueTask(Task)
+  nameWithType: TaskScheduler.QueueTask(Task)
+  fullName: TaskScheduler.QueueTask(Task)
+- uid: System.Threading.Tasks.TaskScheduler.TryDequeue(System.Threading.Tasks.Task)
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: TryDequeue(Task)
+  nameWithType: TaskScheduler.TryDequeue(Task)
+  fullName: TaskScheduler.TryDequeue(Task)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Threading.Tasks.TaskScheduler.TryExecuteTask(System.Threading.Tasks.Task)
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: TryExecuteTask(Task)
+  nameWithType: TaskScheduler.TryExecuteTask(Task)
+  fullName: TaskScheduler.TryExecuteTask(Task)
+- uid: System.Threading.Tasks.TaskScheduler.TryExecuteTaskInline(System.Threading.Tasks.Task,System.Boolean)
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: TryExecuteTaskInline(Task, Boolean)
+  nameWithType: TaskScheduler.TryExecuteTaskInline(Task, Boolean)
+  fullName: TaskScheduler.TryExecuteTaskInline(Task, Boolean)
+- uid: System.Threading.Tasks.TaskScheduler.UnobservedTaskException
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: UnobservedTaskException
+  nameWithType: TaskScheduler.UnobservedTaskException
+  fullName: TaskScheduler.UnobservedTaskException
+- uid: System.EventHandler`1
+  name: EventHandler<TEventArgs>
+  nameWithType: EventHandler<TEventArgs>
+  fullName: System.EventHandler<TEventArgs>
+- uid: System.Threading.Tasks.UnobservedTaskExceptionEventArgs
+  name: UnobservedTaskExceptionEventArgs
+  nameWithType: UnobservedTaskExceptionEventArgs
+  fullName: System.Threading.Tasks.UnobservedTaskExceptionEventArgs
+- uid: System.EventHandler{System.Threading.Tasks.UnobservedTaskExceptionEventArgs}
+  parent: System
+  isExternal: false
+  name: EventHandler<UnobservedTaskExceptionEventArgs>
+  nameWithType: EventHandler<UnobservedTaskExceptionEventArgs>
+  fullName: System.EventHandler<System.Threading.Tasks.UnobservedTaskExceptionEventArgs>
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Threading.Tasks.UnobservedTaskExceptionEventArgs
+    name: UnobservedTaskExceptionEventArgs
+    nameWithType: UnobservedTaskExceptionEventArgs
+    fullName: System.Threading.Tasks.UnobservedTaskExceptionEventArgs
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Threading.Tasks.TaskScheduler.#ctor*
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: TaskScheduler
+  nameWithType: TaskScheduler.TaskScheduler
+  fullName: TaskScheduler.TaskScheduler
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+- uid: System.Threading.Tasks.TaskScheduler.Current*
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: Current
+  nameWithType: TaskScheduler.Current
+  fullName: TaskScheduler.Current
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+- uid: System.Threading.Tasks.TaskScheduler.Default*
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: Default
+  nameWithType: TaskScheduler.Default
+  fullName: TaskScheduler.Default
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+- uid: System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext*
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: FromCurrentSynchronizationContext
+  nameWithType: TaskScheduler.FromCurrentSynchronizationContext
+  fullName: TaskScheduler.FromCurrentSynchronizationContext
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+- uid: System.Threading.Tasks.TaskScheduler.GetScheduledTasks*
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: GetScheduledTasks
+  nameWithType: TaskScheduler.GetScheduledTasks
+  fullName: TaskScheduler.GetScheduledTasks
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+- uid: System.Threading.Tasks.TaskScheduler.Id*
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: Id
+  nameWithType: TaskScheduler.Id
+  fullName: TaskScheduler.Id
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+- uid: System.Threading.Tasks.TaskScheduler.MaximumConcurrencyLevel*
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: MaximumConcurrencyLevel
+  nameWithType: TaskScheduler.MaximumConcurrencyLevel
+  fullName: TaskScheduler.MaximumConcurrencyLevel
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+- uid: System.Threading.Tasks.TaskScheduler.QueueTask*
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: QueueTask
+  nameWithType: TaskScheduler.QueueTask
+  fullName: TaskScheduler.QueueTask
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+- uid: System.Threading.Tasks.TaskScheduler.TryDequeue*
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: TryDequeue
+  nameWithType: TaskScheduler.TryDequeue
+  fullName: TaskScheduler.TryDequeue
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+- uid: System.Threading.Tasks.TaskScheduler.TryExecuteTask*
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: TryExecuteTask
+  nameWithType: TaskScheduler.TryExecuteTask
+  fullName: TaskScheduler.TryExecuteTask
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+- uid: System.Threading.Tasks.TaskScheduler.TryExecuteTaskInline*
+  parent: System.Threading.Tasks.TaskScheduler
+  isExternal: false
+  name: TryExecuteTaskInline
+  nameWithType: TaskScheduler.TryExecuteTaskInline
+  fullName: TaskScheduler.TryExecuteTaskInline
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading.Tasks/TaskScheduler.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

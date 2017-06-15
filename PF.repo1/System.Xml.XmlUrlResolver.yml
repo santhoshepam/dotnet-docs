@@ -1,0 +1,836 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Xml.XmlUrlResolver
+  commentId: T:System.Xml.XmlUrlResolver
+  id: XmlUrlResolver
+  children:
+  - System.Xml.XmlUrlResolver.#ctor
+  - System.Xml.XmlUrlResolver.CachePolicy
+  - System.Xml.XmlUrlResolver.Credentials
+  - System.Xml.XmlUrlResolver.GetEntity(System.Uri,System.String,System.Type)
+  - System.Xml.XmlUrlResolver.GetEntityAsync(System.Uri,System.String,System.Type)
+  - System.Xml.XmlUrlResolver.Proxy
+  - System.Xml.XmlUrlResolver.ResolveUri(System.Uri,System.String)
+  langs:
+  - csharp
+  name: XmlUrlResolver
+  nameWithType: XmlUrlResolver
+  fullName: System.Xml.XmlUrlResolver
+  type: Class
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Resolves external XML resources named by a Uniform Resource Identifier (URI).
+  remarks: "<xref:System.Xml.XmlUrlResolver> is used to resolve external XML resources such as entities, document type definitions (DTDs) or schemas. It is also used to process include and import elements found in Extensible StyleSheet Language (XSL) style sheets or XML Schema definition language (XSD) schemas.  \n  \n <xref:System.Xml.XmlUrlResolver> is the default resolver for all classes in the <xref:System.Xml> namespace. It supports the `file://` and `http://` protocols and requests from the <xref:System.Net.WebRequest> class.  \n  \n> [!IMPORTANT]\n>  <xref:System.Xml.XmlUrlResolver> objects can contain sensitive information such as user credentials. You should be careful when you cache <xref:System.Xml.XmlUrlResolver> objects and should not pass <xref:System.Xml.XmlUrlResolver> objects to an untrusted component.  \n  \n## Resolving DTDs  \n If an XML reader (<xref:System.Xml.XmlReader>) is reading an XML file that contains an external DTD, it calls the <xref:System.Xml.XmlUrlResolver.GetEntityAsync%2A?displayProperty=fullName> method to get a stream representation of the DTD. If the URI of the DTD is a relative URI, the XML reader calls the <xref:System.Xml.XmlUrlResolver.ResolveUri%2A?displayProperty=fullName> method and returns an absolute URI for the given `relativeUri` and `baseURi` parameters. If the <xref:System.Xml.XmlUrlResolver> doesn't know how to resolve the URI, it returns `null`.  \n  \n The <xref:System.Xml.XmlUrlResolver.GetEntity%2A?displayProperty=fullName> method uses the information in the <xref:System.Xml.XmlUrlResolver.Credentials%2A> property as appropriate to gain access to the resource. There is no `get` accessor to this property for security reasons. When overwriting <xref:System.Xml.XmlResolver>, **GetEntity** is the method that utilizes the credential information in the **Credentials** property.  \n  \n Resolving all other XML resources is very similar to resolving DTDs. <xref:System.Xml.XmlResolver> negotiates the connection with the external resource and returns a <xref:System.IO.Stream> representation of the content. The object that is making the call to <xref:System.Xml.XmlResolver> interprets the stream.  \n  \n## Extending the XmlUrlResolver class  \n The default behavior of the <xref:System.Xml.XmlUrlResolver> class is to resolve an XML data resource from its source, not from cache. In some cases, resolving a data resource from cache can improve the performance of an application by saving a trip to the data resource's server. The performance gains here must be weighed against the need for up-to-date content.  \n  \n The following example extends <xref:System.Xml.XmlUrlResolver> and builds a new class, `XmlCachingResolver`, to retrieve resources from the cache. This is done by overriding the <xref:System.Xml.XmlUrlResolver.Credentials%2A?displayProperty=fullName> property and the <xref:System.Xml.XmlUrlResolver.GetEntity%2A?displayProperty=fullName> method.  \n  \n [!code-csharp[XmlCachingResolver_ex#1](~/samples/snippets/csharp/VS_Snippets_Data/XmlCachingResolver_ex/CS/XmlCachingResolver_ex.cs#1)]\n [!code-vb[XmlCachingResolver_ex#1](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlCachingResolver_ex/VB/XmlCachingResolver_ex.vb#1)]  \n  \n The caching behavior of the `XmlCachingResolver` class is implemented in the `GetEntity` method. This is done by creating new <xref:System.Net.WebRequest> and <xref:System.Net.Cache.HttpRequestCachePolicy> objects. The <xref:System.Net.Cache.HttpRequestCachePolicy> object is created using the <xref:System.Net.Cache.HttpRequestCacheLevel.Default> member of the <xref:System.Net.Cache.HttpRequestCacheLevel> enumeration.  \n  \n The <xref:System.Net.WebRequest.CachePolicy%2A> property of the <xref:System.Net.WebRequest> object is set with the <xref:System.Net.Cache.HttpRequestCachePolicy> object.  \n  \n An instance of the `XmlCachingResolver` class is created with the `Boolean` `enableHttpCaching`. When this value is set to `true`, the instance resolves a resource from the default cache if possible. When `enableHttpCaching` is set to `false`, the instance uses the default behavior and resolves resources from their source.  \n  \n> [!NOTE]\n>  This example leverages the extensibility of the XML classes in the .NET Framework. Other classes can be extended and customized to suit the needs of a particular application."
+  example:
+  - "The following example creates an <xref:System.Xml.XmlReader> that uses an <xref:System.Xml.XmlUrlResolver> with default credentials.  \n  \n [!code-csharp[XmlResolver_Samples#1](~/samples/snippets/csharp/VS_Snippets_Data/XmlResolver_Samples/CS/XmlResolver_Samples.cs#1)]\n [!code-vb[XmlResolver_Samples#1](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlResolver_Samples/VB/XmlResolver_Samples.vb#1)]"
+  syntax:
+    content: 'public class XmlUrlResolver : System.Xml.XmlResolver'
+  inheritance:
+  - System.Object
+  - System.Xml.XmlResolver
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  - System.Xml.XmlResolver.SupportsType(System.Uri,System.Type)
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlUrlResolver.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlUrlResolver.#ctor
+  commentId: M:System.Xml.XmlUrlResolver.#ctor
+  id: '#ctor'
+  parent: System.Xml.XmlUrlResolver
+  langs:
+  - csharp
+  name: XmlUrlResolver()
+  nameWithType: XmlUrlResolver.XmlUrlResolver()
+  fullName: XmlUrlResolver.XmlUrlResolver()
+  type: Constructor
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Initializes a new instance of the <xref href="System.Xml.XmlUrlResolver"></xref> class.
+  syntax:
+    content: public XmlUrlResolver ();
+    parameters: []
+  overload: System.Xml.XmlUrlResolver.#ctor*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlUrlResolver.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlUrlResolver.CachePolicy
+  commentId: P:System.Xml.XmlUrlResolver.CachePolicy
+  id: CachePolicy
+  parent: System.Xml.XmlUrlResolver
+  langs:
+  - csharp
+  name: CachePolicy
+  nameWithType: XmlUrlResolver.CachePolicy
+  fullName: XmlUrlResolver.CachePolicy
+  type: Property
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Gets or sets the cache policy for the underlying <xref href="System.Net.WebRequest"></xref> object.
+  syntax:
+    content: public System.Net.Cache.RequestCachePolicy CachePolicy { set; }
+    return:
+      type: System.Net.Cache.RequestCachePolicy
+      description: The cache policy for the underlying web request.
+  overload: System.Xml.XmlUrlResolver.CachePolicy*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlUrlResolver.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlUrlResolver.Credentials
+  commentId: P:System.Xml.XmlUrlResolver.Credentials
+  id: Credentials
+  parent: System.Xml.XmlUrlResolver
+  langs:
+  - csharp
+  name: Credentials
+  nameWithType: XmlUrlResolver.Credentials
+  fullName: XmlUrlResolver.Credentials
+  type: Property
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Sets credentials used to authenticate web requests.
+  remarks: "If the virtual directory does not require authentication, this property does not need to be set. Otherwise, the credentials of the user must be supplied.  \n  \n You can associate different credentials with different URIs and add them to a cache. You can then use the credentials to check authentication for different URIs, regardless of the original source of the XML.  \n  \n The following C# code shows how to set the <xref:System.Xml.XmlUrlResolver.Credentials%2A> property to a credential cache.  \n  \n```  \nNetworkCredential myCred = new NetworkCredential(UserName,SecurelyStoredPassword,Domain);   \nCredentialCache myCache = new CredentialCache();   \nmyCache.Add(new Uri(\"http://www.contoso.com/\"), \"Basic\", myCred);   \nmyCache.Add(new Uri(\"http://app.contoso.com/\"), \"Basic\", myCred);  \nXmlUrlResolver resolver = new XmlUrlResolver();  \nresolver.Credentials = myCache;  \n```"
+  example:
+  - "The following example creates an <xref:System.Xml.XmlUrlResolver> object with credentials. The <xref:System.Xml.XmlReader> uses the credentials on the <xref:System.Xml.XmlUrlResolver> object to access a network resource.  \n  \n [!code-csharp[XmlResolver_Samples#2](~/samples/snippets/csharp/VS_Snippets_Data/XmlResolver_Samples/CS/XmlResolver_Samples.cs#2)]\n [!code-vb[XmlResolver_Samples#2](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlResolver_Samples/VB/XmlResolver_Samples.vb#2)]"
+  syntax:
+    content: public override System.Net.ICredentials Credentials { set; }
+    return:
+      type: System.Net.ICredentials
+      description: The credentials to be used to authenticate web requests. If this property is not set, the value defaults to `null`; that is, the `XmlUrlResolver` has no user credentials.
+  overload: System.Xml.XmlUrlResolver.Credentials*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlUrlResolver.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlUrlResolver.GetEntity(System.Uri,System.String,System.Type)
+  commentId: M:System.Xml.XmlUrlResolver.GetEntity(System.Uri,System.String,System.Type)
+  id: GetEntity(System.Uri,System.String,System.Type)
+  parent: System.Xml.XmlUrlResolver
+  langs:
+  - csharp
+  name: GetEntity(Uri, String, Type)
+  nameWithType: XmlUrlResolver.GetEntity(Uri, String, Type)
+  fullName: XmlUrlResolver.GetEntity(Uri, String, Type)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Maps a URI to an object that contains the actual resource.
+  remarks: "This method is used when the caller wants to map a given URI to an object that contains the resource that the URI represents.  \n  \n For the asynchronous version of this method, see <xref:System.Xml.XmlUrlResolver.GetEntityAsync%2A>.  \n  \n> [!IMPORTANT]\n>  Your application can mitigate memory denial of service threats to the <xref:System.Xml.XmlUrlResolver.GetEntity%2A> method by implementing IStream<xref:System.Runtime.InteropServices.ComTypes.IStream> to limit the number of bytes read. This helps guard against situations where malicious code attempts to pass an infinite stream of bytes to the <xref:System.Xml.XmlUrlResolver.GetEntity%2A> method."
+  example:
+  - "The following example demonstrates the `GetEntity` and <xref:System.Xml.XmlResolver.ResolveUri%2A> methods.  \n  \n [!code-cpp[Classic WebData XmlUrlResolver.ResolveUri Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlUrlResolver.ResolveUri Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlUrlResolver.ResolveUri Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlUrlResolver.ResolveUri Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlUrlResolver.ResolveUri Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlUrlResolver.ResolveUri Example/VB/source.vb#1)]"
+  syntax:
+    content: public override object GetEntity (Uri absoluteUri, string role, Type ofObjectToReturn);
+    parameters:
+    - id: absoluteUri
+      type: System.Uri
+      description: The URI returned from <xref href="System.Xml.XmlResolver.ResolveUri(System.Uri,System.String)"></xref>.
+    - id: role
+      type: System.String
+      description: Currently not used.
+    - id: ofObjectToReturn
+      type: System.Type
+      description: The type of object to return. The current implementation only returns <xref href="System.IO.Stream"></xref> objects.
+    return:
+      type: System.Object
+      description: A stream object or `null` if a type other than stream is specified.
+  overload: System.Xml.XmlUrlResolver.GetEntity*
+  exceptions:
+  - type: System.Xml.XmlException
+    commentId: T:System.Xml.XmlException
+    description: <code>ofObjectToReturn</code> is neither `null` nor a `Stream` type.
+  - type: System.UriFormatException
+    commentId: T:System.UriFormatException
+    description: The specified URI is not an absolute URI.
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>absoluteUri</code> is `null`.
+  - type: System.Exception
+    commentId: T:System.Exception
+    description: There is a runtime error (for example, an interrupted server connection).
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlUrlResolver.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlUrlResolver.GetEntityAsync(System.Uri,System.String,System.Type)
+  commentId: M:System.Xml.XmlUrlResolver.GetEntityAsync(System.Uri,System.String,System.Type)
+  id: GetEntityAsync(System.Uri,System.String,System.Type)
+  parent: System.Xml.XmlUrlResolver
+  langs:
+  - csharp
+  name: GetEntityAsync(Uri, String, Type)
+  nameWithType: XmlUrlResolver.GetEntityAsync(Uri, String, Type)
+  fullName: XmlUrlResolver.GetEntityAsync(Uri, String, Type)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Asynchronously maps a URI to an object that contains the actual resource.
+  syntax:
+    content: public override System.Threading.Tasks.Task<object> GetEntityAsync (Uri absoluteUri, string role, Type ofObjectToReturn);
+    parameters:
+    - id: absoluteUri
+      type: System.Uri
+      description: The URI returned from <xref href="System.Xml.XmlResolver.ResolveUri(System.Uri,System.String)"></xref>.
+    - id: role
+      type: System.String
+      description: Currently not used.
+    - id: ofObjectToReturn
+      type: System.Type
+      description: The type of object to return. The current implementation only returns <xref href="System.IO.Stream"></xref> objects.
+    return:
+      type: System.Threading.Tasks.Task{System.Object}
+      description: A stream object or `null` if a type other than stream is specified.
+  overload: System.Xml.XmlUrlResolver.GetEntityAsync*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlUrlResolver.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlUrlResolver.Proxy
+  commentId: P:System.Xml.XmlUrlResolver.Proxy
+  id: Proxy
+  parent: System.Xml.XmlUrlResolver
+  langs:
+  - csharp
+  name: Proxy
+  nameWithType: XmlUrlResolver.Proxy
+  fullName: XmlUrlResolver.Proxy
+  type: Property
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Gets or sets the network proxy for the underlying <xref href="System.Net.WebRequest"></xref> object.
+  syntax:
+    content: public System.Net.IWebProxy Proxy { set; }
+    return:
+      type: System.Net.IWebProxy
+      description: The <xref href="System.Net.IWebProxy"></xref> to use to access the Internet resource.
+  overload: System.Xml.XmlUrlResolver.Proxy*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlUrlResolver.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlUrlResolver.ResolveUri(System.Uri,System.String)
+  commentId: M:System.Xml.XmlUrlResolver.ResolveUri(System.Uri,System.String)
+  id: ResolveUri(System.Uri,System.String)
+  parent: System.Xml.XmlUrlResolver
+  langs:
+  - csharp
+  name: ResolveUri(Uri, String)
+  nameWithType: XmlUrlResolver.ResolveUri(Uri, String)
+  fullName: XmlUrlResolver.ResolveUri(Uri, String)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Resolves the absolute URI from the base and relative URIs.
+  remarks: The absolute URI can be used as the base URI for any subsequent requests for entities that are relative to this URI.
+  syntax:
+    content: public override Uri ResolveUri (Uri baseUri, string relativeUri);
+    parameters:
+    - id: baseUri
+      type: System.Uri
+      description: The base URI used to resolve the relative URI.
+    - id: relativeUri
+      type: System.String
+      description: The URI to resolve. The URI can be absolute or relative. If absolute, this value effectively replaces the <code>baseUri</code> value. If relative, it combines with the <code>baseUri</code> to make an absolute URI.
+    return:
+      type: System.Uri
+      description: The absolute URI, or `null` if the relative URI cannot be resolved.
+  overload: System.Xml.XmlUrlResolver.ResolveUri*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>baseUri</code> is `null` or <code>relativeUri</code> is `null`.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlUrlResolver.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+references:
+- uid: System.Xml.XmlResolver
+  parent: System.Xml
+  isExternal: false
+  name: XmlResolver
+  nameWithType: XmlResolver
+  fullName: System.Xml.XmlResolver
+- uid: System.Xml.XmlException
+  parent: System.Xml
+  isExternal: false
+  name: XmlException
+  nameWithType: XmlException
+  fullName: System.Xml.XmlException
+- uid: System.UriFormatException
+  parent: System
+  isExternal: false
+  name: UriFormatException
+  nameWithType: UriFormatException
+  fullName: System.UriFormatException
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.Exception
+  parent: System
+  isExternal: false
+  name: Exception
+  nameWithType: Exception
+  fullName: System.Exception
+- uid: System.Xml.XmlUrlResolver.#ctor
+  parent: System.Xml.XmlUrlResolver
+  isExternal: false
+  name: XmlUrlResolver()
+  nameWithType: XmlUrlResolver.XmlUrlResolver()
+  fullName: XmlUrlResolver.XmlUrlResolver()
+- uid: System.Xml.XmlUrlResolver.CachePolicy
+  parent: System.Xml.XmlUrlResolver
+  isExternal: false
+  name: CachePolicy
+  nameWithType: XmlUrlResolver.CachePolicy
+  fullName: XmlUrlResolver.CachePolicy
+- uid: System.Net.Cache.RequestCachePolicy
+  parent: System.Net.Cache
+  isExternal: false
+  name: RequestCachePolicy
+  nameWithType: RequestCachePolicy
+  fullName: System.Net.Cache.RequestCachePolicy
+- uid: System.Xml.XmlUrlResolver.Credentials
+  parent: System.Xml.XmlUrlResolver
+  isExternal: false
+  name: Credentials
+  nameWithType: XmlUrlResolver.Credentials
+  fullName: XmlUrlResolver.Credentials
+- uid: System.Net.ICredentials
+  parent: System.Net
+  isExternal: false
+  name: ICredentials
+  nameWithType: ICredentials
+  fullName: System.Net.ICredentials
+- uid: System.Xml.XmlUrlResolver.GetEntity(System.Uri,System.String,System.Type)
+  parent: System.Xml.XmlUrlResolver
+  isExternal: false
+  name: GetEntity(Uri, String, Type)
+  nameWithType: XmlUrlResolver.GetEntity(Uri, String, Type)
+  fullName: XmlUrlResolver.GetEntity(Uri, String, Type)
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Uri
+  parent: System
+  isExternal: false
+  name: Uri
+  nameWithType: Uri
+  fullName: System.Uri
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Type
+  parent: System
+  isExternal: false
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: System.Xml.XmlUrlResolver.GetEntityAsync(System.Uri,System.String,System.Type)
+  parent: System.Xml.XmlUrlResolver
+  isExternal: false
+  name: GetEntityAsync(Uri, String, Type)
+  nameWithType: XmlUrlResolver.GetEntityAsync(Uri, String, Type)
+  fullName: XmlUrlResolver.GetEntityAsync(Uri, String, Type)
+- uid: System.Threading.Tasks.Task`1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+- uid: System.Threading.Tasks.Task{System.Object}
+  parent: System.Threading.Tasks
+  isExternal: false
+  name: Task<Object>
+  nameWithType: Task<Object>
+  fullName: System.Threading.Tasks.Task<System.Object>
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    nameWithType: Task
+    fullName: System.Threading.Tasks.Task
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Xml.XmlUrlResolver.Proxy
+  parent: System.Xml.XmlUrlResolver
+  isExternal: false
+  name: Proxy
+  nameWithType: XmlUrlResolver.Proxy
+  fullName: XmlUrlResolver.Proxy
+- uid: System.Net.IWebProxy
+  parent: System.Net
+  isExternal: false
+  name: IWebProxy
+  nameWithType: IWebProxy
+  fullName: System.Net.IWebProxy
+- uid: System.Xml.XmlUrlResolver.ResolveUri(System.Uri,System.String)
+  parent: System.Xml.XmlUrlResolver
+  isExternal: false
+  name: ResolveUri(Uri, String)
+  nameWithType: XmlUrlResolver.ResolveUri(Uri, String)
+  fullName: XmlUrlResolver.ResolveUri(Uri, String)
+- uid: System.Xml.XmlUrlResolver.#ctor*
+  parent: System.Xml.XmlUrlResolver
+  isExternal: false
+  name: XmlUrlResolver
+  nameWithType: XmlUrlResolver.XmlUrlResolver
+  fullName: XmlUrlResolver.XmlUrlResolver
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlUrlResolver.xml
+- uid: System.Xml.XmlUrlResolver.CachePolicy*
+  parent: System.Xml.XmlUrlResolver
+  isExternal: false
+  name: CachePolicy
+  nameWithType: XmlUrlResolver.CachePolicy
+  fullName: XmlUrlResolver.CachePolicy
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlUrlResolver.xml
+- uid: System.Xml.XmlUrlResolver.Credentials*
+  parent: System.Xml.XmlUrlResolver
+  isExternal: false
+  name: Credentials
+  nameWithType: XmlUrlResolver.Credentials
+  fullName: XmlUrlResolver.Credentials
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlUrlResolver.xml
+- uid: System.Xml.XmlUrlResolver.GetEntity*
+  parent: System.Xml.XmlUrlResolver
+  isExternal: false
+  name: GetEntity
+  nameWithType: XmlUrlResolver.GetEntity
+  fullName: XmlUrlResolver.GetEntity
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlUrlResolver.xml
+- uid: System.Xml.XmlUrlResolver.GetEntityAsync*
+  parent: System.Xml.XmlUrlResolver
+  isExternal: false
+  name: GetEntityAsync
+  nameWithType: XmlUrlResolver.GetEntityAsync
+  fullName: XmlUrlResolver.GetEntityAsync
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlUrlResolver.xml
+- uid: System.Xml.XmlUrlResolver.Proxy*
+  parent: System.Xml.XmlUrlResolver
+  isExternal: false
+  name: Proxy
+  nameWithType: XmlUrlResolver.Proxy
+  fullName: XmlUrlResolver.Proxy
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlUrlResolver.xml
+- uid: System.Xml.XmlUrlResolver.ResolveUri*
+  parent: System.Xml.XmlUrlResolver
+  isExternal: false
+  name: ResolveUri
+  nameWithType: XmlUrlResolver.ResolveUri
+  fullName: XmlUrlResolver.ResolveUri
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlUrlResolver.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Xml.XmlResolver.SupportsType(System.Uri,System.Type)
+  parent: System.Xml.XmlResolver
+  isExternal: false
+  name: SupportsType(Uri, Type)
+  nameWithType: XmlResolver.SupportsType(Uri, Type)
+  fullName: XmlResolver.SupportsType(Uri, Type)

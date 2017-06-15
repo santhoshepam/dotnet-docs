@@ -1,0 +1,5 @@
+---
+summary: When overridden in a derived class, tries to insert a cache entry into the cache, and returns an existing cache entry with a matching key.
+remarks: "The <xref:System.Runtime.Caching.ObjectCache.AddOrGetExisting%2A> method overloads insert an entry into the cache. If a cache entry with a matching key already exists, they return the existing entry. The cache entry can be a <xref:System.Runtime.Caching.CacheItem> object or a generic object.  \n  \n There is one difference between the <xref:System.Runtime.Caching.ObjectCache.AddOrGetExisting%2A> overloads and the <xref:System.Runtime.Caching.ObjectCache.Add%2A> overloads. When these overloaded methods try to insert a cache entry, if an existing entry is found that has a key that matches an existing inserted cache entry, the <xref:System.Runtime.Caching.ObjectCache.AddOrGetExisting%2A> overloads return the existing cache entry. The <xref:System.Runtime.Caching.ObjectCache.Add%2A> overloads do not."
+uid: System.Runtime.Caching.ObjectCache.AddOrGetExisting*
+---

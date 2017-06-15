@@ -1,0 +1,1282 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Windows.Shell.JumpList
+  commentId: T:System.Windows.Shell.JumpList
+  id: JumpList
+  children:
+  - System.Windows.Shell.JumpList.#ctor
+  - System.Windows.Shell.JumpList.#ctor(System.Collections.Generic.IEnumerable{System.Windows.Shell.JumpItem},System.Boolean,System.Boolean)
+  - System.Windows.Shell.JumpList.AddToRecentCategory(System.String)
+  - System.Windows.Shell.JumpList.AddToRecentCategory(System.Windows.Shell.JumpPath)
+  - System.Windows.Shell.JumpList.AddToRecentCategory(System.Windows.Shell.JumpTask)
+  - System.Windows.Shell.JumpList.Apply
+  - System.Windows.Shell.JumpList.BeginInit
+  - System.Windows.Shell.JumpList.EndInit
+  - System.Windows.Shell.JumpList.GetJumpList(System.Windows.Application)
+  - System.Windows.Shell.JumpList.JumpItems
+  - System.Windows.Shell.JumpList.JumpItemsRejected
+  - System.Windows.Shell.JumpList.JumpItemsRemovedByUser
+  - System.Windows.Shell.JumpList.SetJumpList(System.Windows.Application,System.Windows.Shell.JumpList)
+  - System.Windows.Shell.JumpList.ShowFrequentCategory
+  - System.Windows.Shell.JumpList.ShowRecentCategory
+  langs:
+  - csharp
+  name: JumpList
+  nameWithType: JumpList
+  fullName: System.Windows.Shell.JumpList
+  type: Class
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Shell
+  summary: Represents a list of items and tasks displayed as a menu on a Windows 7 taskbar button.
+  remarks: "The [!INCLUDE[win7](~/includes/win7-md.md)] taskbar provides enhanced functionality for starting programs directly from the taskbar button by using Jump Lists. Jump Lists are also used in the [!INCLUDE[win7](~/includes/win7-md.md)] Start menu. You access a Jump List by right-clicking a taskbar button or by clicking the arrow next to a program in the Start menu. For more information about Jump Lists, see the [Taskbar](http://go.microsoft.com/fwlink/?LinkId=178478) section of the Windows User Experience Interaction Guidelines.  \n  \n The <xref:System.Windows.Shell.JumpList> class provides a managed wrapper for the Jump List functionality in the [!INCLUDE[win7](~/includes/win7-md.md)] taskbar and manages the data passed to the [!INCLUDE[TLA#tla_mswin](~/includes/tlasharptla-mswin-md.md)] shell. The functionality exposed by the <xref:System.Windows.Shell.JumpList> class is not available in versions of [!INCLUDE[TLA#tla_mswin](~/includes/tlasharptla-mswin-md.md)] earlier than [!INCLUDE[win7](~/includes/win7-md.md)]. Applications that use the <xref:System.Windows.Shell.JumpList> class will run in other versions of [!INCLUDE[TLA#tla_mswin](~/includes/tlasharptla-mswin-md.md)], but the Jump List will not be available. For more information about the Windows shell and native Jump List APIs, see [Taskbar Extensions](http://go.microsoft.com/fwlink/?LinkId=178479).  \n  \n The following illustration shows the Jump List for Windows Media Player, with items in the **Tasks** and **Frequent** categories.  \n  \n ![Windows Media Player Jump List](~/add/media/wpfshell-jumplist.png \"Windows Media Player Jump List\")  \nWindows Media Player Jump List  \n  \n## Configuring a Jump List  \n Jump Lists can contain two types of items, a <xref:System.Windows.Shell.JumpTask> and a <xref:System.Windows.Shell.JumpPath>. A <xref:System.Windows.Shell.JumpTask> is a link to a program and a <xref:System.Windows.Shell.JumpPath> is a link to a file. You can visually separate items in a Jump List by creating a <xref:System.Windows.Shell.JumpTask> that does not have a <xref:System.Windows.Shell.JumpTask.Title%2A> and <xref:System.Windows.Shell.JumpItem.CustomCategory%2A> specified. This empty <xref:System.Windows.Shell.JumpTask> will be displayed as a horizontal line in the Jump List.  \n  \n> [!NOTE]\n>  If the type of the file specified in a <xref:System.Windows.Shell.JumpPath> is not registered with your application, the file will not appear in the Jump List. For example, if you add a <xref:System.Windows.Shell.JumpPath> that points to a .txt file, your application must be registered to handle .txt files. For more information, see [Introduction to File Associations](http://go.microsoft.com/fwlink/?LinkId=178480).  \n  \n Jump items are placed into categories in the <xref:System.Windows.Shell.JumpList>. By default, a <xref:System.Windows.Shell.JumpItem> is displayed in the **Tasks** category. Alternatively, you can specify a <xref:System.Windows.Shell.JumpItem.CustomCategory%2A> for the <xref:System.Windows.Shell.JumpItem>.  \n  \n You can specify whether the standard **Recent** and **Frequent** categories are displayed in the <xref:System.Windows.Shell.JumpList> by setting the <xref:System.Windows.Shell.JumpList.ShowRecentCategory%2A> and <xref:System.Windows.Shell.JumpList.ShowFrequentCategory%2A> properties. The contents of these categories are managed by the [!INCLUDE[TLA#tla_mswin](~/includes/tlasharptla-mswin-md.md)] shell. Because these categories might contain much of the same data, you typically display one or the other in your <xref:System.Windows.Shell.JumpList>, but not both. [!INCLUDE[TLA#tla_mswin](~/includes/tlasharptla-mswin-md.md)] automatically manages recent items if they are opened through a common file dialog box or used to open an application through file type association. When an item is accessed through the Jump List, you can notify the [!INCLUDE[TLA#tla_mswin](~/includes/tlasharptla-mswin-md.md)] shell to add the item to the **Recent** category by calling the <xref:System.Windows.Shell.JumpList.AddToRecentCategory%2A> method.  \n  \n## Applying a Jump List to the Windows Shell  \n You cannot access the shell’s Jump List directly or read its contents into the <xref:System.Windows.Shell.JumpList> class. Instead, the <xref:System.Windows.Shell.JumpList> class provides a representation of a Jump List that you can work with, and then apply to the [!INCLUDE[TLA#tla_mswin](~/includes/tlasharptla-mswin-md.md)] shell. You typically create a <xref:System.Windows.Shell.JumpList> and set it one time when the application is first run. However, you can modify or replace the <xref:System.Windows.Shell.JumpList> at run time.  \n  \n When you have set the <xref:System.Windows.Shell.JumpList> properties, you must apply the <xref:System.Windows.Shell.JumpList> to the Windows shell before its contents appear in the taskbar Jump List. This is done automatically when the <xref:System.Windows.Shell.JumpList> is first attached to an application, either in XAML or in a call to the <xref:System.Windows.Shell.JumpList.SetJumpList%2A> method. If you modify the contents of the <xref:System.Windows.Shell.JumpList> at run time, you must call the <xref:System.Windows.Shell.JumpList.Apply%2A> method to apply its current contents to the Windows shell.  \n  \n## Setting a Jump List in XAML  \n A <xref:System.Windows.Shell.JumpList> is not automatically attached to an <xref:System.Windows.Application> object. You attach a <xref:System.Windows.Shell.JumpList> to an <xref:System.Windows.Application> object in XAML by using the attached property syntax. The <xref:System.Windows.Shell.JumpList> class implements the <xref:System.ComponentModel.ISupportInitialize> interface to support XAML declaration of a <xref:System.Windows.Shell.JumpList>. If the <xref:System.Windows.Shell.JumpList> is declared in XAML and attached to the current <xref:System.Windows.Application>, it is automatically applied to the [!INCLUDE[TLA#tla_mswin](~/includes/tlasharptla-mswin-md.md)] shell when the <xref:System.Windows.Shell.JumpList> is initialized.  \n  \n## Setting and Modifying a Jump List in Code  \n You attach a <xref:System.Windows.Shell.JumpList> to an <xref:System.Windows.Application> object in code by calling the static <xref:System.Windows.Shell.JumpList.SetJumpList%2A> method. This also applies the <xref:System.Windows.Shell.JumpList> to the [!INCLUDE[TLA#tla_mswin](~/includes/tlasharptla-mswin-md.md)] shell.  \n  \n To modify a <xref:System.Windows.Shell.JumpList> at run time, you call the <xref:System.Windows.Shell.JumpList.GetJumpList%2A> method to get the <xref:System.Windows.Shell.JumpList> that is currently attached to an <xref:System.Windows.Application>. After you have modified the properties of the <xref:System.Windows.Shell.JumpList>, you must call the <xref:System.Windows.Shell.JumpList.Apply%2A> method to apply the changes to the Windows shell.  \n  \n> [!NOTE]\n>  You typically create one <xref:System.Windows.Shell.JumpList> that is attached to the <xref:System.Windows.Application> and applied to the [!INCLUDE[TLA#tla_mswin](~/includes/tlasharptla-mswin-md.md)] shell. However, you can create multiple <xref:System.Windows.Shell.JumpList> objects. Only one <xref:System.Windows.Shell.JumpList> at a time can be applied to the [!INCLUDE[TLA#tla_mswin](~/includes/tlasharptla-mswin-md.md)] shell, and only one <xref:System.Windows.Shell.JumpList> at a time can be associated with an <xref:System.Windows.Application>. The .NET Framework does not require that these be the same <xref:System.Windows.Shell.JumpList>.  \n  \n> [!NOTE]\n>  This class contains a link demand at the class level that applies to all members. A <xref:System.Security.SecurityException> is thrown when the immediate caller does not have full-trust permission. For more information about security demands, see [Link Demands](~/docs/framework/misc/link-demands.md) and [Inheritance Demands](http://msdn.microsoft.com/en-us/28b9adbb-8f08-4f10-b856-dbf59eb932d9)."
+  example:
+  - "The following example shows an application with a Jump List. The application has three buttons that enable you to add a task to the current Jump List, clear the contents of the Jump List, and apply a new Jump List to the application.  \n  \n The following example shows how to declare a <xref:System.Windows.Shell.JumpList> in markup. The <xref:System.Windows.Shell.JumpList> contains two <xref:System.Windows.Shell.JumpTask> links and one <xref:System.Windows.Shell.JumpPath>. Applying the <xref:System.Windows.Shell.JumpPath> to the shell will fail if the application is not registered to handle the .txt file name extension.  \n  \n [!code-xml[Shell_JumpListSample#000](~/samples/snippets/csharp/VS_Snippets_Wpf/shell_jumplistsample/cs/app.xaml#000)]  \n  \n The following example shows the code-behind page for `App.xaml`. This code handles the <xref:System.Windows.Shell.JumpList.JumpItemsRejected> and <xref:System.Windows.Shell.JumpList.JumpItemsRemovedByUser> events.  \n  \n [!code-csharp[Shell_JumpListSample#100](~/samples/snippets/csharp/VS_Snippets_Wpf/shell_jumplistsample/cs/app.xaml.cs#100)]  \n  \n The following example shows the markup used to create the application user interface.  \n  \n [!code-xml[Shell_JumpListSample#300](~/samples/snippets/csharp/VS_Snippets_Wpf/shell_jumplistsample/cs/mainwindow.xaml#300)]  \n  \n The following example shows the code-behind page for `MainWindow.xaml`. This code demonstrates how to modify, clear, and create a <xref:System.Windows.Shell.JumpList> in procedural code. For the new Jump List, the static <xref:System.Windows.Shell.JumpList.SetJumpList%2A> method is called to associate the <xref:System.Windows.Shell.JumpList> with the current application and apply the <xref:System.Windows.Shell.JumpList> to the Windows shell.  \n  \n [!code-csharp[Shell_JumpListSample#200](~/samples/snippets/csharp/VS_Snippets_Wpf/shell_jumplistsample/cs/mainwindow.xaml.cs#200)]"
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      [System.Windows.Markup.ContentProperty("JumpItems")]
+
+      public sealed class JumpList : System.ComponentModel.ISupportInitialize
+  inheritance:
+  - System.Object
+  implements:
+  - System.ComponentModel.ISupportInitialize
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  - type: System.Windows.Markup.ContentPropertyAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Shell.JumpList.#ctor
+  commentId: M:System.Windows.Shell.JumpList.#ctor
+  id: '#ctor'
+  parent: System.Windows.Shell.JumpList
+  langs:
+  - csharp
+  name: JumpList()
+  nameWithType: JumpList.JumpList()
+  fullName: JumpList.JumpList()
+  type: Constructor
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Shell
+  summary: Initializes a new instance of the <xref href="System.Windows.Shell.JumpList"></xref> class.
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public JumpList ();
+    parameters: []
+  overload: System.Windows.Shell.JumpList.#ctor*
+  exceptions: []
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Shell.JumpList.#ctor(System.Collections.Generic.IEnumerable{System.Windows.Shell.JumpItem},System.Boolean,System.Boolean)
+  commentId: M:System.Windows.Shell.JumpList.#ctor(System.Collections.Generic.IEnumerable{System.Windows.Shell.JumpItem},System.Boolean,System.Boolean)
+  id: '#ctor(System.Collections.Generic.IEnumerable{System.Windows.Shell.JumpItem},System.Boolean,System.Boolean)'
+  parent: System.Windows.Shell.JumpList
+  langs:
+  - csharp
+  name: JumpList(IEnumerable<JumpItem>, Boolean, Boolean)
+  nameWithType: JumpList.JumpList(IEnumerable<JumpItem>, Boolean, Boolean)
+  fullName: JumpList.JumpList(IEnumerable<JumpItem>, Boolean, Boolean)
+  type: Constructor
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Shell
+  summary: Initializes a new instance of the <xref href="System.Windows.Shell.JumpList"></xref> class with the specified parameters.
+  remarks: The **Recent** and **Frequent** categories often contain many of the same jump items. As a result, applications typically display either the **Recent** or the **Frequent** category in the Jump List, but not both.
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public JumpList (System.Collections.Generic.IEnumerable<System.Windows.Shell.JumpItem> items, bool showFrequent, bool showRecent);
+    parameters:
+    - id: items
+      type: System.Collections.Generic.IEnumerable{System.Windows.Shell.JumpItem}
+      description: The collection of <xref href="System.Windows.Shell.JumpItem"></xref> objects that are displayed in the Jump List.
+    - id: showFrequent
+      type: System.Boolean
+      description: A value that indicates whether frequently used items are displayed in the Jump List.
+    - id: showRecent
+      type: System.Boolean
+      description: A value that indicates whether recently used items are displayed in the Jump List.
+  overload: System.Windows.Shell.JumpList.#ctor*
+  exceptions: []
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Shell.JumpList.AddToRecentCategory(System.String)
+  commentId: M:System.Windows.Shell.JumpList.AddToRecentCategory(System.String)
+  id: AddToRecentCategory(System.String)
+  parent: System.Windows.Shell.JumpList
+  langs:
+  - csharp
+  name: AddToRecentCategory(String)
+  nameWithType: JumpList.AddToRecentCategory(String)
+  fullName: JumpList.AddToRecentCategory(String)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Shell
+  summary: Adds the specified item path to the **Recent** category of the Jump List.
+  remarks: "The contents of the **Recent** category are managed by the Windows shell. To display recently used items in the Jump List, set the <xref:System.Windows.Shell.JumpList.ShowRecentCategory%2A> property to `true`.  \n  \n You can call the <xref:System.Windows.Shell.JumpList.AddToRecentCategory%28System.String%29> method to request that the Windows shell add an item path to the **Recent** items list. If your application is not registered to handle the file type of the item, it will not appear in the **Recent** list and calls to <xref:System.Windows.Shell.JumpList.AddToRecentCategory%28System.String%29> will fail silently."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public static void AddToRecentCategory (string itemPath);
+    parameters:
+    - id: itemPath
+      type: System.String
+      description: The path to add to the Jump List.
+  overload: System.Windows.Shell.JumpList.AddToRecentCategory*
+  exceptions: []
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Shell.JumpList.AddToRecentCategory(System.Windows.Shell.JumpPath)
+  commentId: M:System.Windows.Shell.JumpList.AddToRecentCategory(System.Windows.Shell.JumpPath)
+  id: AddToRecentCategory(System.Windows.Shell.JumpPath)
+  parent: System.Windows.Shell.JumpList
+  langs:
+  - csharp
+  name: AddToRecentCategory(JumpPath)
+  nameWithType: JumpList.AddToRecentCategory(JumpPath)
+  fullName: JumpList.AddToRecentCategory(JumpPath)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Shell
+  summary: Adds the specified jump path to the **Recent** category of the Jump List.
+  remarks: "The contents of the **Recent** category are managed by the Windows shell. To display recently used items in the Jump List, set the <xref:System.Windows.Shell.JumpList.ShowRecentCategory%2A> property to `true`.  \n  \n You can call the <xref:System.Windows.Shell.JumpList.AddToRecentCategory%28System.Windows.Shell.JumpPath%29> method to request that the Windows shell add the specified jump path to the **Recent** items list. If your application is not registered to handle the file type of the item, it will not appear in the **Recent** list and calls to <xref:System.Windows.Shell.JumpList.AddToRecentCategory%28System.Windows.Shell.JumpPath%29> will fail silently."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public static void AddToRecentCategory (System.Windows.Shell.JumpPath jumpPath);
+    parameters:
+    - id: jumpPath
+      type: System.Windows.Shell.JumpPath
+      description: The <xref href="System.Windows.Shell.JumpPath"></xref> to add to the Jump List.
+  overload: System.Windows.Shell.JumpList.AddToRecentCategory*
+  exceptions: []
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Shell.JumpList.AddToRecentCategory(System.Windows.Shell.JumpTask)
+  commentId: M:System.Windows.Shell.JumpList.AddToRecentCategory(System.Windows.Shell.JumpTask)
+  id: AddToRecentCategory(System.Windows.Shell.JumpTask)
+  parent: System.Windows.Shell.JumpList
+  langs:
+  - csharp
+  name: AddToRecentCategory(JumpTask)
+  nameWithType: JumpList.AddToRecentCategory(JumpTask)
+  fullName: JumpList.AddToRecentCategory(JumpTask)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Shell
+  summary: Adds the specified jump task to the **Recent** category of the Jump List.
+  remarks: "The contents of the **Recent** category are managed by the Windows shell. To display recently used items in the Jump List, set the <xref:System.Windows.Shell.JumpList.ShowRecentCategory%2A> property to `true`.  \n  \n You can call the <xref:System.Windows.Shell.JumpList.AddToRecentCategory%28System.Windows.Shell.JumpTask%29> method to request that the Windows shell add the specified jump task to the **Recent** items list."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public static void AddToRecentCategory (System.Windows.Shell.JumpTask jumpTask);
+    parameters:
+    - id: jumpTask
+      type: System.Windows.Shell.JumpTask
+      description: The <xref href="System.Windows.Shell.JumpTask"></xref> to add to the Jump List.
+  overload: System.Windows.Shell.JumpList.AddToRecentCategory*
+  exceptions: []
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Shell.JumpList.Apply
+  commentId: M:System.Windows.Shell.JumpList.Apply
+  id: Apply
+  parent: System.Windows.Shell.JumpList
+  langs:
+  - csharp
+  name: Apply()
+  nameWithType: JumpList.Apply()
+  fullName: JumpList.Apply()
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Shell
+  summary: Sends the <xref href="System.Windows.Shell.JumpList"></xref> to the Windows shell in its current state.
+  remarks: The <xref:System.Windows.Shell.JumpList.Apply%2A> method sends the content of the <xref:System.Windows.Shell.JumpList> to the Windows shell in its current state. After this call is complete, the <xref:System.Windows.Shell.JumpList.JumpItems%2A> property is modified to contain only those items that the Windows shell successfully added to its taskbar Jump List. You can access the lists of removed items through event handlers for the <xref:System.Windows.Shell.JumpList.JumpItemsRejected> and <xref:System.Windows.Shell.JumpList.JumpItemsRemovedByUser> events.
+  example:
+  - "The following example shows how to get the current <xref:System.Windows.Shell.JumpList> and clear the contents of the <xref:System.Windows.Shell.JumpList.JumpItems%2A> collection. The <xref:System.Windows.Shell.JumpList.Apply%2A> method is then called to apply the <xref:System.Windows.Shell.JumpList> changes to the Windows shell. This example is part of a larger example available in the <xref:System.Windows.Shell.JumpList> class overview.  \n  \n [!code-csharp[Shell_JumpListSample#230](~/samples/snippets/csharp/VS_Snippets_Wpf/shell_jumplistsample/cs/mainwindow.xaml.cs#230)]"
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      public void Apply ();
+    parameters: []
+  overload: System.Windows.Shell.JumpList.Apply*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The <xref href="System.Windows.Shell.JumpList"></xref> is not completely initialized.
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Shell.JumpList.BeginInit
+  commentId: M:System.Windows.Shell.JumpList.BeginInit
+  id: BeginInit
+  parent: System.Windows.Shell.JumpList
+  langs:
+  - csharp
+  name: BeginInit()
+  nameWithType: JumpList.BeginInit()
+  fullName: JumpList.BeginInit()
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Shell
+  summary: Signals the start of the <xref href="System.Windows.Shell.JumpList"></xref> initialization.
+  remarks: The <xref:System.Windows.Shell.JumpList> class implements the <xref:System.ComponentModel.ISupportInitialize> interface to support XAML declaration of a <xref:System.Windows.Shell.JumpList>. The <xref:System.Windows.Shell.JumpList.BeginInit%2A> method is only called when the <xref:System.Windows.Shell.JumpList> is declared in XAML and attached to an <xref:System.Windows.Application> by using the attached property syntax. You do not call this method from your code.
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      [System.Security.SecurityTreatAsSafe]
+
+      public void BeginInit ();
+    parameters: []
+  overload: System.Windows.Shell.JumpList.BeginInit*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: This call to <xref href="System.Windows.Shell.JumpList.BeginInit"></xref> is nested in a previous call to <xref href="System.Windows.Shell.JumpList.BeginInit"></xref>.
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  - type: System.Security.SecurityTreatAsSafeAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Shell.JumpList.EndInit
+  commentId: M:System.Windows.Shell.JumpList.EndInit
+  id: EndInit
+  parent: System.Windows.Shell.JumpList
+  langs:
+  - csharp
+  name: EndInit()
+  nameWithType: JumpList.EndInit()
+  fullName: JumpList.EndInit()
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Shell
+  summary: Signals the end of the <xref href="System.Windows.Shell.JumpList"></xref> initialization.
+  remarks: "The <xref:System.Windows.Shell.JumpList> class implements the <xref:System.ComponentModel.ISupportInitialize> interface to support XAML declaration of a <xref:System.Windows.Shell.JumpList>. The <xref:System.Windows.Shell.JumpList.EndInit%2A> method is only called when the <xref:System.Windows.Shell.JumpList> is declared in XAML and attached to an <xref:System.Windows.Application> by using the attached property syntax. You do not call this method from your code.  \n  \n The <xref:System.Windows.Shell.JumpList.EndInit%2A> method has the same effect as the <xref:System.Windows.Shell.JumpList.Apply%2A> method. <xref:System.Windows.Shell.JumpList.EndInit%2A> sends the content of the <xref:System.Windows.Shell.JumpList> to the Windows shell in its current state. After this call is complete, the <xref:System.Windows.Shell.JumpList.JumpItems%2A> property is modified to contain only those items that the Windows shell successfully added to its Jump List. You can access the lists of removed items through event handlers for the <xref:System.Windows.Shell.JumpList.JumpItemsRejected> and <xref:System.Windows.Shell.JumpList.JumpItemsRemovedByUser> events."
+  syntax:
+    content: >-
+      [System.Security.SecurityCritical]
+
+      [System.Security.SecurityTreatAsSafe]
+
+      public void EndInit ();
+    parameters: []
+  overload: System.Windows.Shell.JumpList.EndInit*
+  exceptions:
+  - type: System.NotSupportedException
+    commentId: T:System.NotSupportedException
+    description: This call to <xref href="System.Windows.Shell.JumpList.EndInit"></xref> is not paired with a call to <xref href="System.Windows.Shell.JumpList.BeginInit"></xref>.
+  attributes:
+  - type: System.Security.SecurityCriticalAttribute
+  - type: System.Security.SecurityTreatAsSafeAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Shell.JumpList.GetJumpList(System.Windows.Application)
+  commentId: M:System.Windows.Shell.JumpList.GetJumpList(System.Windows.Application)
+  id: GetJumpList(System.Windows.Application)
+  parent: System.Windows.Shell.JumpList
+  langs:
+  - csharp
+  name: GetJumpList(Application)
+  nameWithType: JumpList.GetJumpList(Application)
+  fullName: JumpList.GetJumpList(Application)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Shell
+  summary: Returns the <xref href="System.Windows.Shell.JumpList"></xref> object associated with an application.
+  remarks: You can call the <xref:System.Windows.Shell.JumpList.GetJumpList%2A> method to get the <xref:System.Windows.Shell.JumpList> currently associated with an <xref:System.Windows.Application>. The .NET Framework does not require that this be the <xref:System.Windows.Shell.JumpList> that is currently applied to the Windows shell.
+  example:
+  - "The following example shows how to get the <xref:System.Windows.Shell.JumpList> associated with the current application. A <xref:System.Windows.Shell.JumpTask> is added to the <xref:System.Windows.Shell.JumpList.JumpItems%2A> collection and added to the **Recent** category. The <xref:System.Windows.Shell.JumpList.Apply%2A> method is called to apply the updated <xref:System.Windows.Shell.JumpList> to the Windows shell. This example is part of a larger example available in the <xref:System.Windows.Shell.JumpList> class overview.  \n  \n [!code-csharp[Shell_JumpListSample#240](~/samples/snippets/csharp/VS_Snippets_Wpf/shell_jumplistsample/cs/mainwindow.xaml.cs#240)]"
+  syntax:
+    content: public static System.Windows.Shell.JumpList GetJumpList (System.Windows.Application application);
+    parameters:
+    - id: application
+      type: System.Windows.Application
+      description: The application associated with the <xref href="System.Windows.Shell.JumpList"></xref>.
+    return:
+      type: System.Windows.Shell.JumpList
+      description: The <xref href="System.Windows.Shell.JumpList"></xref> object associated with the specified application.
+  overload: System.Windows.Shell.JumpList.GetJumpList*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Shell.JumpList.JumpItems
+  commentId: P:System.Windows.Shell.JumpList.JumpItems
+  id: JumpItems
+  parent: System.Windows.Shell.JumpList
+  langs:
+  - csharp
+  name: JumpItems
+  nameWithType: JumpList.JumpItems
+  fullName: JumpList.JumpItems
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Shell
+  summary: Gets the collection of <xref href="System.Windows.Shell.JumpItem"></xref> objects that are displayed in the Jump List.
+  remarks: "Jump Lists can contain two types of items, a <xref:System.Windows.Shell.JumpTask> and a <xref:System.Windows.Shell.JumpPath>. A <xref:System.Windows.Shell.JumpTask> is a link to a program and a <xref:System.Windows.Shell.JumpPath> is a link to a file.  \n  \n When a <xref:System.Windows.Shell.JumpList> is created, the <xref:System.Windows.Shell.JumpList.JumpItems%2A> collection is empty. You can add any <xref:System.Windows.Shell.JumpTask> or <xref:System.Windows.Shell.JumpPath> objects to the collection. The collection will only contain items that have been added by your program. After the <xref:System.Windows.Shell.JumpList> has been passed to the Windows shell by a successful call to either the <xref:System.Windows.Shell.JumpList.EndInit%2A> or <xref:System.Windows.Shell.JumpList.Apply%2A> methods, the <xref:System.Windows.Shell.JumpList.JumpItems%2A> collection will contain only the items that were successfully added to the taskbar Jump List. Items that were not successfully added are removed from the <xref:System.Windows.Shell.JumpList.JumpItems%2A> collection. You can access the lists of removed items through event handlers for the <xref:System.Windows.Shell.JumpList.JumpItemsRejected> and <xref:System.Windows.Shell.JumpList.JumpItemsRemovedByUser> events."
+  example:
+  - "The following example shows how to get the current <xref:System.Windows.Shell.JumpList> and clear the contents of the <xref:System.Windows.Shell.JumpList.JumpItems%2A> collection. The <xref:System.Windows.Shell.JumpList.Apply%2A> method is then called to apply the <xref:System.Windows.Shell.JumpList> changes to the Windows shell. This example is part of a larger example available in the <xref:System.Windows.Shell.JumpList> class overview.  \n  \n [!code-csharp[Shell_JumpListSample#230](~/samples/snippets/csharp/VS_Snippets_Wpf/shell_jumplistsample/cs/mainwindow.xaml.cs#230)]"
+  syntax:
+    content: public System.Collections.Generic.List<System.Windows.Shell.JumpItem> JumpItems { get; }
+    return:
+      type: System.Collections.Generic.List{System.Windows.Shell.JumpItem}
+      description: The collection of <xref href="System.Windows.Shell.JumpItem"></xref> objects displayed in the Jump List. The default is an empty collection.
+  overload: System.Windows.Shell.JumpList.JumpItems*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Shell.JumpList.JumpItemsRejected
+  commentId: E:System.Windows.Shell.JumpList.JumpItemsRejected
+  id: JumpItemsRejected
+  parent: System.Windows.Shell.JumpList
+  langs:
+  - csharp
+  name: JumpItemsRejected
+  nameWithType: JumpList.JumpItemsRejected
+  fullName: JumpList.JumpItemsRejected
+  type: Event
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Shell
+  summary: Occurs when jump items are not successfully added to the Jump List by the Windows shell.
+  remarks: After the contents of the <xref:System.Windows.Shell.JumpList> are applied to the Windows shell, the <xref:System.Windows.Shell.JumpList.JumpItems%2A> property is modified to contain only those items that the Windows shell successfully added to its Jump List. You can access the lists of removed items through event handlers for the <xref:System.Windows.Shell.JumpList.JumpItemsRejected> and <xref:System.Windows.Shell.JumpList.JumpItemsRemovedByUser> events.
+  example:
+  - "The following example shows how to handle the <xref:System.Windows.Shell.JumpList.JumpItemsRejected> event to display the rejected items in a message box. This example is part of a larger example available in the <xref:System.Windows.Shell.JumpList> class overview.  \n  \n [!code-csharp[Shell_JumpListSample#110](~/samples/snippets/csharp/VS_Snippets_Wpf/shell_jumplistsample/cs/app.xaml.cs#110)]"
+  syntax:
+    content: public event EventHandler<System.Windows.Shell.JumpItemsRejectedEventArgs> JumpItemsRejected;
+    return:
+      type: System.EventHandler{System.Windows.Shell.JumpItemsRejectedEventArgs}
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Shell.JumpList.JumpItemsRemovedByUser
+  commentId: E:System.Windows.Shell.JumpList.JumpItemsRemovedByUser
+  id: JumpItemsRemovedByUser
+  parent: System.Windows.Shell.JumpList
+  langs:
+  - csharp
+  name: JumpItemsRemovedByUser
+  nameWithType: JumpList.JumpItemsRemovedByUser
+  fullName: JumpList.JumpItemsRemovedByUser
+  type: Event
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Shell
+  summary: Occurs when jump items previously in the Jump List are removed from the list by the user.
+  remarks: After the contents of the <xref:System.Windows.Shell.JumpList> are applied to the Windows shell, the <xref:System.Windows.Shell.JumpList.JumpItems%2A> property is modified to contain only those items that the Windows shell successfully added to its Jump List. You can access the lists of removed items through event handlers for the <xref:System.Windows.Shell.JumpList.JumpItemsRejected> and <xref:System.Windows.Shell.JumpList.JumpItemsRemovedByUser> events.
+  example:
+  - "The following example shows how to handle the <xref:System.Windows.Shell.JumpList.JumpItemsRemovedByUser> event to display the rejected items in a message box. This example is part of a larger example available in the <xref:System.Windows.Shell.JumpList> class overview.  \n  \n [!code-csharp[Shell_JumpListSample#120](~/samples/snippets/csharp/VS_Snippets_Wpf/shell_jumplistsample/cs/app.xaml.cs#120)]"
+  syntax:
+    content: public event EventHandler<System.Windows.Shell.JumpItemsRemovedEventArgs> JumpItemsRemovedByUser;
+    return:
+      type: System.EventHandler{System.Windows.Shell.JumpItemsRemovedEventArgs}
+      description: ''
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Shell.JumpList.SetJumpList(System.Windows.Application,System.Windows.Shell.JumpList)
+  commentId: M:System.Windows.Shell.JumpList.SetJumpList(System.Windows.Application,System.Windows.Shell.JumpList)
+  id: SetJumpList(System.Windows.Application,System.Windows.Shell.JumpList)
+  parent: System.Windows.Shell.JumpList
+  langs:
+  - csharp
+  name: SetJumpList(Application, JumpList)
+  nameWithType: JumpList.SetJumpList(Application, JumpList)
+  fullName: JumpList.SetJumpList(Application, JumpList)
+  type: Method
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Shell
+  summary: Sets the <xref href="System.Windows.Shell.JumpList"></xref> object associated with an application.
+  remarks: You can create multiple <xref:System.Windows.Shell.JumpList> objects. However, only one <xref:System.Windows.Shell.JumpList> at a time can be associated with an <xref:System.Windows.Application>. Call the <xref:System.Windows.Shell.JumpList.SetJumpList%2A> method to set the <xref:System.Windows.Shell.JumpList> currently associated with an <xref:System.Windows.Application>.
+  example:
+  - "The following example shows how to create a <xref:System.Windows.Shell.JumpList> in code. The static <xref:System.Windows.Shell.JumpList.SetJumpList%2A> method is called to associate the <xref:System.Windows.Shell.JumpList> with the current application. The <xref:System.Windows.Shell.JumpList> is automatically applied to the Windows shell when it is set. This example is part of a larger example available in the <xref:System.Windows.Shell.JumpList> class overview.  \n  \n [!code-csharp[Shell_JumpListSample#210](~/samples/snippets/csharp/VS_Snippets_Wpf/shell_jumplistsample/cs/mainwindow.xaml.cs#210)]"
+  syntax:
+    content: public static void SetJumpList (System.Windows.Application application, System.Windows.Shell.JumpList value);
+    parameters:
+    - id: application
+      type: System.Windows.Application
+      description: The application associated with the <xref href="System.Windows.Shell.JumpList"></xref>.
+    - id: value
+      type: System.Windows.Shell.JumpList
+      description: The <xref href="System.Windows.Shell.JumpList"></xref> to associate with the application.
+  overload: System.Windows.Shell.JumpList.SetJumpList*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Shell.JumpList.ShowFrequentCategory
+  commentId: P:System.Windows.Shell.JumpList.ShowFrequentCategory
+  id: ShowFrequentCategory
+  parent: System.Windows.Shell.JumpList
+  langs:
+  - csharp
+  name: ShowFrequentCategory
+  nameWithType: JumpList.ShowFrequentCategory
+  fullName: JumpList.ShowFrequentCategory
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Shell
+  summary: Gets or sets a value that indicates whether frequently used items are displayed in the Jump List.
+  remarks: "The contents of the **Frequent** category are managed by the Windows shell. To display frequently used items in the Jump List, set the <xref:System.Windows.Shell.JumpList.ShowFrequentCategory%2A> property to `true`.  \n  \n The **Recent** and **Frequent** categories often contain many of the same jump items. As a result, applications typically display either the **Recent** or the **Frequent** category in the Jump List, but not both."
+  example:
+  - "The following example shows a <xref:System.Windows.Shell.JumpList> configured to show the **Frequent** category. This example is part of a larger example available in the <xref:System.Windows.Shell.JumpList> class overview.  \n  \n [!code-xml[Shell_JumpListSample#001](~/samples/snippets/csharp/VS_Snippets_Wpf/shell_jumplistsample/cs/app.xaml#001)]"
+  syntax:
+    content: >-
+      [get: System.Security.SecurityCritical]
+
+      [set: System.Security.SecurityCritical]
+
+      public bool ShowFrequentCategory { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if frequently used items are displayed in the Jump List; otherwise, `false`. The default is `false`.'
+  overload: System.Windows.Shell.JumpList.ShowFrequentCategory*
+  exceptions: []
+  attributes:
+  - type: 'get: System.Security.SecurityCritical'
+  - type: 'set: System.Security.SecurityCritical'
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Shell.JumpList.ShowRecentCategory
+  commentId: P:System.Windows.Shell.JumpList.ShowRecentCategory
+  id: ShowRecentCategory
+  parent: System.Windows.Shell.JumpList
+  langs:
+  - csharp
+  name: ShowRecentCategory
+  nameWithType: JumpList.ShowRecentCategory
+  fullName: JumpList.ShowRecentCategory
+  type: Property
+  assemblies:
+  - PresentationFramework
+  namespace: System.Windows.Shell
+  summary: Gets or sets a value that indicates whether recently used items are displayed in the Jump List.
+  remarks: "The contents of the **Recent** category are managed by the Windows shell. To display frequently used items in the Jump List, set the <xref:System.Windows.Shell.JumpList.ShowRecentCategory%2A> property to `true`.  \n  \n The **Recent** and **Frequent** categories often contain many of the same jump items. As a result, applications typically display either the **Recent** or the **Frequent** category in the Jump List, but not both.  \n  \n You can call the <xref:System.Windows.Shell.JumpList.AddToRecentCategory%2A> method to request that the Windows shell add items to the **Recent** items list. If your application is not registered to handle the file name type of the item, it will not appear in the **Recent** list and calls to <xref:System.Windows.Shell.JumpList.AddToRecentCategory%2A> will fail silently."
+  example:
+  - "The following example shows a <xref:System.Windows.Shell.JumpList> configured to show the **Recent** category. This example is part of a larger example available in the <xref:System.Windows.Shell.JumpList> class overview.  \n  \n [!code-xml[Shell_JumpListSample#001](~/samples/snippets/csharp/VS_Snippets_Wpf/shell_jumplistsample/cs/app.xaml#001)]"
+  syntax:
+    content: >-
+      [get: System.Security.SecurityCritical]
+
+      [set: System.Security.SecurityCritical]
+
+      public bool ShowRecentCategory { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if recently used items are displayed in the Jump List; otherwise, `false`. The default is `false`.'
+  overload: System.Windows.Shell.JumpList.ShowRecentCategory*
+  exceptions: []
+  attributes:
+  - type: 'get: System.Security.SecurityCritical'
+  - type: 'set: System.Security.SecurityCritical'
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.InvalidOperationException
+  parent: System
+  isExternal: false
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.NotSupportedException
+  parent: System
+  isExternal: false
+  name: NotSupportedException
+  nameWithType: NotSupportedException
+  fullName: System.NotSupportedException
+- uid: System.Windows.Shell.JumpList.#ctor
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: JumpList()
+  nameWithType: JumpList.JumpList()
+  fullName: JumpList.JumpList()
+- uid: System.Windows.Shell.JumpList.#ctor(System.Collections.Generic.IEnumerable{System.Windows.Shell.JumpItem},System.Boolean,System.Boolean)
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: JumpList(IEnumerable<JumpItem>, Boolean, Boolean)
+  nameWithType: JumpList.JumpList(IEnumerable<JumpItem>, Boolean, Boolean)
+  fullName: JumpList.JumpList(IEnumerable<JumpItem>, Boolean, Boolean)
+- uid: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+- uid: System.Windows.Shell.JumpItem
+  name: JumpItem
+  nameWithType: JumpItem
+  fullName: System.Windows.Shell.JumpItem
+- uid: System.Collections.Generic.IEnumerable{System.Windows.Shell.JumpItem}
+  parent: System.Collections.Generic
+  isExternal: false
+  name: IEnumerable<JumpItem>
+  nameWithType: IEnumerable<JumpItem>
+  fullName: System.Collections.Generic.IEnumerable<System.Windows.Shell.JumpItem>
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Windows.Shell.JumpItem
+    name: JumpItem
+    nameWithType: JumpItem
+    fullName: System.Windows.Shell.JumpItem
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Windows.Shell.JumpList.AddToRecentCategory(System.String)
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: AddToRecentCategory(String)
+  nameWithType: JumpList.AddToRecentCategory(String)
+  fullName: JumpList.AddToRecentCategory(String)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Windows.Shell.JumpList.AddToRecentCategory(System.Windows.Shell.JumpPath)
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: AddToRecentCategory(JumpPath)
+  nameWithType: JumpList.AddToRecentCategory(JumpPath)
+  fullName: JumpList.AddToRecentCategory(JumpPath)
+- uid: System.Windows.Shell.JumpPath
+  parent: System.Windows.Shell
+  isExternal: false
+  name: JumpPath
+  nameWithType: JumpPath
+  fullName: System.Windows.Shell.JumpPath
+- uid: System.Windows.Shell.JumpList.AddToRecentCategory(System.Windows.Shell.JumpTask)
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: AddToRecentCategory(JumpTask)
+  nameWithType: JumpList.AddToRecentCategory(JumpTask)
+  fullName: JumpList.AddToRecentCategory(JumpTask)
+- uid: System.Windows.Shell.JumpTask
+  parent: System.Windows.Shell
+  isExternal: false
+  name: JumpTask
+  nameWithType: JumpTask
+  fullName: System.Windows.Shell.JumpTask
+- uid: System.Windows.Shell.JumpList.Apply
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: Apply()
+  nameWithType: JumpList.Apply()
+  fullName: JumpList.Apply()
+- uid: System.Windows.Shell.JumpList.BeginInit
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: BeginInit()
+  nameWithType: JumpList.BeginInit()
+  fullName: JumpList.BeginInit()
+- uid: System.Windows.Shell.JumpList.EndInit
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: EndInit()
+  nameWithType: JumpList.EndInit()
+  fullName: JumpList.EndInit()
+- uid: System.Windows.Shell.JumpList.GetJumpList(System.Windows.Application)
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: GetJumpList(Application)
+  nameWithType: JumpList.GetJumpList(Application)
+  fullName: JumpList.GetJumpList(Application)
+- uid: System.Windows.Shell.JumpList
+  parent: System.Windows.Shell
+  isExternal: false
+  name: JumpList
+  nameWithType: JumpList
+  fullName: System.Windows.Shell.JumpList
+- uid: System.Windows.Application
+  parent: System.Windows
+  isExternal: false
+  name: Application
+  nameWithType: Application
+  fullName: System.Windows.Application
+- uid: System.Windows.Shell.JumpList.JumpItems
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: JumpItems
+  nameWithType: JumpList.JumpItems
+  fullName: JumpList.JumpItems
+- uid: System.Collections.Generic.List`1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+- uid: System.Collections.Generic.List{System.Windows.Shell.JumpItem}
+  parent: System.Collections.Generic
+  isExternal: false
+  name: List<JumpItem>
+  nameWithType: List<JumpItem>
+  fullName: System.Collections.Generic.List<System.Windows.Shell.JumpItem>
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Windows.Shell.JumpItem
+    name: JumpItem
+    nameWithType: JumpItem
+    fullName: System.Windows.Shell.JumpItem
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Windows.Shell.JumpList.JumpItemsRejected
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: JumpItemsRejected
+  nameWithType: JumpList.JumpItemsRejected
+  fullName: JumpList.JumpItemsRejected
+- uid: System.EventHandler`1
+  name: EventHandler<TEventArgs>
+  nameWithType: EventHandler<TEventArgs>
+  fullName: System.EventHandler<TEventArgs>
+- uid: System.Windows.Shell.JumpItemsRejectedEventArgs
+  name: JumpItemsRejectedEventArgs
+  nameWithType: JumpItemsRejectedEventArgs
+  fullName: System.Windows.Shell.JumpItemsRejectedEventArgs
+- uid: System.EventHandler{System.Windows.Shell.JumpItemsRejectedEventArgs}
+  parent: System
+  isExternal: false
+  name: EventHandler<JumpItemsRejectedEventArgs>
+  nameWithType: EventHandler<JumpItemsRejectedEventArgs>
+  fullName: System.EventHandler<System.Windows.Shell.JumpItemsRejectedEventArgs>
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Windows.Shell.JumpItemsRejectedEventArgs
+    name: JumpItemsRejectedEventArgs
+    nameWithType: JumpItemsRejectedEventArgs
+    fullName: System.Windows.Shell.JumpItemsRejectedEventArgs
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Windows.Shell.JumpList.JumpItemsRemovedByUser
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: JumpItemsRemovedByUser
+  nameWithType: JumpList.JumpItemsRemovedByUser
+  fullName: JumpList.JumpItemsRemovedByUser
+- uid: System.Windows.Shell.JumpItemsRemovedEventArgs
+  name: JumpItemsRemovedEventArgs
+  nameWithType: JumpItemsRemovedEventArgs
+  fullName: System.Windows.Shell.JumpItemsRemovedEventArgs
+- uid: System.EventHandler{System.Windows.Shell.JumpItemsRemovedEventArgs}
+  parent: System
+  isExternal: false
+  name: EventHandler<JumpItemsRemovedEventArgs>
+  nameWithType: EventHandler<JumpItemsRemovedEventArgs>
+  fullName: System.EventHandler<System.Windows.Shell.JumpItemsRemovedEventArgs>
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Windows.Shell.JumpItemsRemovedEventArgs
+    name: JumpItemsRemovedEventArgs
+    nameWithType: JumpItemsRemovedEventArgs
+    fullName: System.Windows.Shell.JumpItemsRemovedEventArgs
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Windows.Shell.JumpList.SetJumpList(System.Windows.Application,System.Windows.Shell.JumpList)
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: SetJumpList(Application, JumpList)
+  nameWithType: JumpList.SetJumpList(Application, JumpList)
+  fullName: JumpList.SetJumpList(Application, JumpList)
+- uid: System.Windows.Shell.JumpList.ShowFrequentCategory
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: ShowFrequentCategory
+  nameWithType: JumpList.ShowFrequentCategory
+  fullName: JumpList.ShowFrequentCategory
+- uid: System.Windows.Shell.JumpList.ShowRecentCategory
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: ShowRecentCategory
+  nameWithType: JumpList.ShowRecentCategory
+  fullName: JumpList.ShowRecentCategory
+- uid: System.Windows.Shell.JumpList.#ctor*
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: JumpList
+  nameWithType: JumpList.JumpList
+  fullName: JumpList.JumpList
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+- uid: System.Windows.Shell.JumpList.AddToRecentCategory*
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: AddToRecentCategory
+  nameWithType: JumpList.AddToRecentCategory
+  fullName: JumpList.AddToRecentCategory
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+- uid: System.Windows.Shell.JumpList.Apply*
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: Apply
+  nameWithType: JumpList.Apply
+  fullName: JumpList.Apply
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+- uid: System.Windows.Shell.JumpList.BeginInit*
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: BeginInit
+  nameWithType: JumpList.BeginInit
+  fullName: JumpList.BeginInit
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+- uid: System.Windows.Shell.JumpList.EndInit*
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: EndInit
+  nameWithType: JumpList.EndInit
+  fullName: JumpList.EndInit
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+- uid: System.Windows.Shell.JumpList.GetJumpList*
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: GetJumpList
+  nameWithType: JumpList.GetJumpList
+  fullName: JumpList.GetJumpList
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+- uid: System.Windows.Shell.JumpList.JumpItems*
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: JumpItems
+  nameWithType: JumpList.JumpItems
+  fullName: JumpList.JumpItems
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+- uid: System.Windows.Shell.JumpList.SetJumpList*
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: SetJumpList
+  nameWithType: JumpList.SetJumpList
+  fullName: JumpList.SetJumpList
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+- uid: System.Windows.Shell.JumpList.ShowFrequentCategory*
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: ShowFrequentCategory
+  nameWithType: JumpList.ShowFrequentCategory
+  fullName: JumpList.ShowFrequentCategory
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+- uid: System.Windows.Shell.JumpList.ShowRecentCategory*
+  parent: System.Windows.Shell.JumpList
+  isExternal: false
+  name: ShowRecentCategory
+  nameWithType: JumpList.ShowRecentCategory
+  fullName: JumpList.ShowRecentCategory
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Shell/JumpList.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.ComponentModel.ISupportInitialize
+  parent: System.ComponentModel
+  isExternal: false
+  name: ISupportInitialize
+  nameWithType: ISupportInitialize
+  fullName: System.ComponentModel.ISupportInitialize

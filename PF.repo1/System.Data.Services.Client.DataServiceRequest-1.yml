@@ -1,0 +1,348 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Data.Services.Client.DataServiceRequest`1
+  commentId: T:System.Data.Services.Client.DataServiceRequest`1
+  id: DataServiceRequest`1
+  children:
+  - System.Data.Services.Client.DataServiceRequest`1.#ctor(System.Uri)
+  - System.Data.Services.Client.DataServiceRequest`1.ElementType
+  - System.Data.Services.Client.DataServiceRequest`1.RequestUri
+  langs:
+  - csharp
+  name: DataServiceRequest<TElement>
+  nameWithType: DataServiceRequest<TElement>
+  fullName: System.Data.Services.Client.DataServiceRequest<TElement>
+  type: Class
+  assemblies:
+  - System.Data.Services.Client
+  namespace: System.Data.Services.Client
+  summary: Represents request objects submitted as a batch to the data service.
+  remarks: In a group of queries submitted as a batch to the data service, the queries are specified as <xref:System.Data.Services.Client.DataServiceRequest%601> instances. A <xref:System.Data.Services.Client.DataServiceResponse> is returned that represents the response of the batch request as a whole. Individual query responses are represented as <xref:System.Data.Services.Client.QueryOperationResponse> objects, derived from <xref:System.Data.Services.Client.OperationResponse>, that are accessible by enumerating the <xref:System.Data.Services.Client.DataServiceResponse> instance.
+  example:
+  - "When <xref:System.Data.Services.Client.DataServiceContext.ExecuteBatch%2A> returns, the entire HTTP response for the batch request has been read from the network stream, but the responses have not been processed. Identity resolution and object materialization do not occur for a specified entity in the response until it is iterated as shown in the following example.  \n  \n```  \nDataServiceContext service = new DataServiceContext(new   \n                                                    Uri(\"http://myserviceroot\"));  \n  \n// Create query batches.  \nDataServiceRequest[] reqs = new DataServiceRequest[] {   \n    new DataServiceRequest<Category>(  \n            new Uri(\"http://myserviceroot/Categories\")),  \n            new DataServiceRequest<Customer>(  \n            new Uri(\"http://myserviceroot/Customers\"))  \n};  \n  \nDataServiceResponse dsr;  \ntry  \n{  \n    // Client will not throw an exception on ExecuteBatch because the   \n    // entire response has not been processed yet to know  \n    // whether an exception should be thrown.  \n  \n    dsr = service.ExecuteBatch(reqs);     \n  \n    if (dsr.IsBatchResponse)   \n    {  \n        /*inspect HTTP artifacts associated with the entire batch:  \n                      dsr.BatchHeaders, dsr.BatchStatusCode*/ }  \n  \n    foreach (QueryOperationResponse qr in dsr)  \n    {  \n        if (IsErrorStatusCode(qr.StatusCode))     \n        {  \n            //q.Error.Message contains the full contents of the error.  \n            /* process any part of the Error Contract (<error> element)  \n                      sent from the service.  */  \n            }  \n        }  \n        else  \n        {  \n            if (qr.Query.ElementType == typeof(Customer))  \n            {  \n                //process customers  \n                foreach (Customer c in qr){ /*process the customer*/ }  \n  \n                // the DataServiceContext does not materialize, resolve  \n                // identity on Customer until it is enumerated.  \n            }  \n            else if (qr.Query.ElementType == typeof(Category))  \n            {  \n                // Process categories.  \n                foreach (Category cat in qr)  \n                {   \n                    /*process the category*/   \n                 }  \n                // the DataServiceContext does not materialize or  \n                // resolve identity on the Category until  \n                // it is enumerated.  \n                // This means that instream errors will be thrown  \n                // during iteration.  \n            }  \n        }  \n    }  \n}  \ncatch (DataServiceRequestException e)  \n{  \n    // This error is thrown if the data service returns with  \n    // a response code < 200 or >299 or the top level element.  \n    // If neither of the above or true, this exception is not   \n    // thrown.  \n  \n    dsr = e.Response;  \n  \n    if (dsr.IsBatchResponse)   \n    {   \n        /*inspect HTTP artifacts associated with the entire batch:  \n                        dsr.BatchHeaders, dsr.BatchStatusCode*/   \n    }  \n  \n    /* There will always only be one of these because if the top level  \n     status code was >=200 and =<299 and the first element was not an  \n     error, the call to start the query will not throw. */  \n  \n    foreach (QueryOperationResponse qr in dsr)  \n    {  \n        if (qr.Error != null)  \n        {  \n            // Process error.  \n        }  \n    }     \n}  \n  \n```"
+  syntax:
+    content: 'public sealed class DataServiceRequest<TElement> : System.Data.Services.Client.DataServiceRequest'
+    typeParameters:
+    - id: TElement
+      description: ''
+  inheritance:
+  - System.Object
+  - System.Data.Services.Client.DataServiceRequest
+  implements: []
+  inheritedMembers:
+  - System.Data.Services.Client.DataServiceRequest.ToString
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Services.Client/DataServiceRequest`1.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.Services.Client.DataServiceRequest`1.#ctor(System.Uri)
+  commentId: M:System.Data.Services.Client.DataServiceRequest`1.#ctor(System.Uri)
+  id: '#ctor(System.Uri)'
+  parent: System.Data.Services.Client.DataServiceRequest`1
+  langs:
+  - csharp
+  name: DataServiceRequest<TElement>(Uri)
+  nameWithType: DataServiceRequest<TElement>.DataServiceRequest<TElement>(Uri)
+  fullName: DataServiceRequest<TElement>.DataServiceRequest<TElement>(Uri)
+  type: Constructor
+  assemblies:
+  - System.Data.Services.Client
+  namespace: System.Data.Services.Client
+  summary: Initializes a new instance of the <xref href="System.Data.Services.Client.DataServiceRequest`1"></xref> class.
+  syntax:
+    content: public DataServiceRequest (Uri requestUri);
+    parameters:
+    - id: requestUri
+      type: System.Uri
+      description: The URI object that contains the request string.
+  overload: System.Data.Services.Client.DataServiceRequest`1.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Services.Client/DataServiceRequest`1.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.Services.Client.DataServiceRequest`1.ElementType
+  commentId: P:System.Data.Services.Client.DataServiceRequest`1.ElementType
+  id: ElementType
+  parent: System.Data.Services.Client.DataServiceRequest`1
+  langs:
+  - csharp
+  name: ElementType
+  nameWithType: DataServiceRequest<TElement>.ElementType
+  fullName: DataServiceRequest<TElement>.ElementType
+  type: Property
+  assemblies:
+  - System.Data.Services.Client
+  namespace: System.Data.Services.Client
+  summary: Gets the type of the object used to create the <xref href="System.Data.Services.Client.DataServiceRequest`1"></xref> instance.
+  syntax:
+    content: public override Type ElementType { get; }
+    return:
+      type: System.Type
+      description: A <xref href="System.Type"></xref> value that indicates the type of data returned.
+  overload: System.Data.Services.Client.DataServiceRequest`1.ElementType*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Services.Client/DataServiceRequest`1.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.Services.Client.DataServiceRequest`1.RequestUri
+  commentId: P:System.Data.Services.Client.DataServiceRequest`1.RequestUri
+  id: RequestUri
+  parent: System.Data.Services.Client.DataServiceRequest`1
+  langs:
+  - csharp
+  name: RequestUri
+  nameWithType: DataServiceRequest<TElement>.RequestUri
+  fullName: DataServiceRequest<TElement>.RequestUri
+  type: Property
+  assemblies:
+  - System.Data.Services.Client
+  namespace: System.Data.Services.Client
+  summary: Gets the URI object that contains the request string.
+  syntax:
+    content: public override Uri RequestUri { get; }
+    return:
+      type: System.Uri
+      description: A <xref href="System.Uri"></xref> object that contains the request string.
+  overload: System.Data.Services.Client.DataServiceRequest`1.RequestUri*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Services.Client/DataServiceRequest`1.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+references:
+- uid: System.Data.Services.Client.DataServiceRequest
+  parent: System.Data.Services.Client
+  isExternal: false
+  name: DataServiceRequest
+  nameWithType: DataServiceRequest
+  fullName: System.Data.Services.Client.DataServiceRequest
+- uid: System.Data.Services.Client.DataServiceRequest`1.#ctor(System.Uri)
+  parent: System.Data.Services.Client.DataServiceRequest`1
+  isExternal: false
+  name: DataServiceRequest<TElement>(Uri)
+  nameWithType: DataServiceRequest<TElement>.DataServiceRequest<TElement>(Uri)
+  fullName: DataServiceRequest<TElement>.DataServiceRequest<TElement>(Uri)
+- uid: System.Uri
+  parent: System
+  isExternal: false
+  name: Uri
+  nameWithType: Uri
+  fullName: System.Uri
+- uid: System.Data.Services.Client.DataServiceRequest`1.ElementType
+  parent: System.Data.Services.Client.DataServiceRequest`1
+  isExternal: false
+  name: ElementType
+  nameWithType: DataServiceRequest<TElement>.ElementType
+  fullName: DataServiceRequest<TElement>.ElementType
+- uid: System.Type
+  parent: System
+  isExternal: false
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: System.Data.Services.Client.DataServiceRequest`1.RequestUri
+  parent: System.Data.Services.Client.DataServiceRequest`1
+  isExternal: false
+  name: RequestUri
+  nameWithType: DataServiceRequest<TElement>.RequestUri
+  fullName: DataServiceRequest<TElement>.RequestUri
+- uid: System.Data.Services.Client.DataServiceRequest`1.#ctor*
+  parent: System.Data.Services.Client.DataServiceRequest`1
+  isExternal: false
+  name: DataServiceRequest<TElement>
+  nameWithType: DataServiceRequest<TElement>.DataServiceRequest<TElement>
+  fullName: DataServiceRequest<TElement>.DataServiceRequest<TElement>
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Services.Client/DataServiceRequest`1.xml
+- uid: System.Data.Services.Client.DataServiceRequest`1.ElementType*
+  parent: System.Data.Services.Client.DataServiceRequest`1
+  isExternal: false
+  name: ElementType
+  nameWithType: DataServiceRequest<TElement>.ElementType
+  fullName: DataServiceRequest<TElement>.ElementType
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Services.Client/DataServiceRequest`1.xml
+- uid: System.Data.Services.Client.DataServiceRequest`1.RequestUri*
+  parent: System.Data.Services.Client.DataServiceRequest`1
+  isExternal: false
+  name: RequestUri
+  nameWithType: DataServiceRequest<TElement>.RequestUri
+  fullName: DataServiceRequest<TElement>.RequestUri
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Services.Client/DataServiceRequest`1.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Data.Services.Client.DataServiceRequest.ToString
+  parent: System.Data.Services.Client.DataServiceRequest
+  isExternal: false
+  name: ToString()
+  nameWithType: DataServiceRequest.ToString()
+  fullName: DataServiceRequest.ToString()

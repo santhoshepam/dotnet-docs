@@ -1,0 +1,610 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Runtime.Caching.CacheItemPolicy
+  commentId: T:System.Runtime.Caching.CacheItemPolicy
+  id: CacheItemPolicy
+  children:
+  - System.Runtime.Caching.CacheItemPolicy.#ctor
+  - System.Runtime.Caching.CacheItemPolicy.AbsoluteExpiration
+  - System.Runtime.Caching.CacheItemPolicy.ChangeMonitors
+  - System.Runtime.Caching.CacheItemPolicy.Priority
+  - System.Runtime.Caching.CacheItemPolicy.RemovedCallback
+  - System.Runtime.Caching.CacheItemPolicy.SlidingExpiration
+  - System.Runtime.Caching.CacheItemPolicy.UpdateCallback
+  langs:
+  - csharp
+  name: CacheItemPolicy
+  nameWithType: CacheItemPolicy
+  fullName: System.Runtime.Caching.CacheItemPolicy
+  type: Class
+  assemblies:
+  - System.Runtime.Caching
+  namespace: System.Runtime.Caching
+  summary: Represents a set of eviction and expiration details for a specific cache entry.
+  remarks: "A <xref:System.Runtime.Caching.CacheItemPolicy> instance contains information that can be associated with a cache entry. For example, when a cache entry is about to be removed from the cache, a <xref:System.Runtime.Caching.CacheEntryUpdateArguments> object is passed to a callback method. The <xref:System.Runtime.Caching.CacheEntryUpdateArguments.UpdatedCacheItemPolicy%2A> property of the <xref:System.Runtime.Caching.CacheEntryUpdateArguments> object can pass a reference to a <xref:System.Runtime.Caching.CacheItemPolicy> instance that can include eviction and expiration details about the cache entry.  \n  \n Some methods in the <xref:System.Runtime.Caching.MemoryCache> and <xref:System.Runtime.Caching.ObjectCache> classes accept a <xref:System.Runtime.Caching.CacheItemPolicy> instance to describe eviction or expiration policy."
+  example:
+  - "The following example shows how to create an in-memory cache item that monitors the path for a text file. The cache creates a <xref:System.Runtime.Caching.CacheItemPolicy> object and sets the <xref:System.Runtime.Caching.CacheItemPolicy.AbsoluteExpiration%2A> property to evict the cache after 60 seconds.  \n  \n```vb  \nProtected Sub Button1_Click(ByVal sender As Object, _  \n            ByVal e As System.EventArgs) Handles Button1.Click  \n    Dim cache As ObjectCache = MemoryCache.Default  \n    Dim fileContents As String = TryCast(cache(\"filecontents\"), _  \n            String)  \n    If fileContents Is Nothing Then  \n        Dim policy As New CacheItemPolicy()  \n        policy.AbsoluteExpiration = _  \n            DateTimeOffset.Now.AddSeconds(60.0)  \n        Dim filePaths As New List(Of String)()  \n     Dim cachedFilePath As String = Server.MapPath(\"~\") & _  \n         \"\\cacheText.txt\"  \n        filePaths.Add(cachedFilePath)  \n        policy.ChangeMonitors.Add(New _  \n            HostFileChangeMonitor(filePaths))  \n  \n        ' Fetch the file contents.  \n        fileContents = File.ReadAllText(cachedFilePath)  \n        cache.Set(\"filecontents\", fileContents, policy)  \n    End If  \n    Label1.Text = fileContents  \nEnd Sub  \n```  \n  \n```csharp  \nprotected void Button1_Click(object sender, EventArgs e)  \n    {  \n        ObjectCache cache = MemoryCache.Default;  \n            string fileContents = cache[\"filecontents\"] as string;  \n            if (fileContents == null)  \n            {  \n                CacheItemPolicy policy = new CacheItemPolicy();  \n                policy.AbsoluteExpiration =   \n                    DateTimeOffset.Now.AddSeconds(60.0);  \n  \n                List<string> filePaths = new List<string>();  \n             string cachedFilePath = Server.MapPath(\"~\") +   \n                 \"\\\\cacheText.txt\";  \n             filePaths.Add(cachedFilePath);  \n  \n                policy.ChangeMonitors.Add(new   \n                    HostFileChangeMonitor(filePaths));  \n  \n                // Fetch the file contents.  \n                fileContents = File.ReadAllText(cachedFilePath);  \n  \n                cache.Set(\"filecontents\", fileContents, policy);  \n  \n            }  \n  \n            Label1.Text = fileContents;  \n        }  \n```"
+  syntax:
+    content: public class CacheItemPolicy
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Caching/CacheItemPolicy.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: riande
+  manager: ghogen
+- uid: System.Runtime.Caching.CacheItemPolicy.#ctor
+  commentId: M:System.Runtime.Caching.CacheItemPolicy.#ctor
+  id: '#ctor'
+  parent: System.Runtime.Caching.CacheItemPolicy
+  langs:
+  - csharp
+  name: CacheItemPolicy()
+  nameWithType: CacheItemPolicy.CacheItemPolicy()
+  fullName: CacheItemPolicy.CacheItemPolicy()
+  type: Constructor
+  assemblies:
+  - System.Runtime.Caching
+  namespace: System.Runtime.Caching
+  summary: Initializes a new instance of the <xref href="System.Runtime.Caching.CacheItemPolicy"></xref> class.
+  syntax:
+    content: public CacheItemPolicy ();
+    parameters: []
+  overload: System.Runtime.Caching.CacheItemPolicy.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Caching/CacheItemPolicy.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: riande
+  manager: ghogen
+- uid: System.Runtime.Caching.CacheItemPolicy.AbsoluteExpiration
+  commentId: P:System.Runtime.Caching.CacheItemPolicy.AbsoluteExpiration
+  id: AbsoluteExpiration
+  parent: System.Runtime.Caching.CacheItemPolicy
+  langs:
+  - csharp
+  name: AbsoluteExpiration
+  nameWithType: CacheItemPolicy.AbsoluteExpiration
+  fullName: CacheItemPolicy.AbsoluteExpiration
+  type: Property
+  assemblies:
+  - System.Runtime.Caching
+  namespace: System.Runtime.Caching
+  summary: Gets or sets a value that indicates whether a cache entry should be evicted after a specified duration.
+  syntax:
+    content: public DateTimeOffset AbsoluteExpiration { get; set; }
+    return:
+      type: System.DateTimeOffset
+      description: The period of time that must pass before a cache entry is evicted. The default value is <xref href="System.Runtime.Caching.ObjectCache.InfiniteAbsoluteExpiration"></xref>, meaning that the entry does not expire.
+  overload: System.Runtime.Caching.CacheItemPolicy.AbsoluteExpiration*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Caching/CacheItemPolicy.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: riande
+  manager: ghogen
+- uid: System.Runtime.Caching.CacheItemPolicy.ChangeMonitors
+  commentId: P:System.Runtime.Caching.CacheItemPolicy.ChangeMonitors
+  id: ChangeMonitors
+  parent: System.Runtime.Caching.CacheItemPolicy
+  langs:
+  - csharp
+  name: ChangeMonitors
+  nameWithType: CacheItemPolicy.ChangeMonitors
+  fullName: CacheItemPolicy.ChangeMonitors
+  type: Property
+  assemblies:
+  - System.Runtime.Caching
+  namespace: System.Runtime.Caching
+  summary: Gets a collection of <xref href="System.Runtime.Caching.ChangeMonitor"></xref> objects that are associated with a cache entry.
+  remarks: You can add to or remove change monitors that are associated with a cache entry. However, the set of change monitors must be complete before you pass a <xref:System.Runtime.Caching.CacheItemPolicy> instance to an <xref:System.Runtime.Caching.ObjectCache> implementation. If you change the set of change monitors on a <xref:System.Runtime.Caching.CacheItemPolicy> object after the <xref:System.Runtime.Caching.CacheItemPolicy> object has been passed to an <xref:System.Runtime.Caching.ObjectCache> implementation, the changes have no effect.
+  syntax:
+    content: public System.Collections.ObjectModel.Collection<System.Runtime.Caching.ChangeMonitor> ChangeMonitors { get; }
+    return:
+      type: System.Collections.ObjectModel.Collection{System.Runtime.Caching.ChangeMonitor}
+      description: A collection of change monitors. The default is an empty collection.
+  overload: System.Runtime.Caching.CacheItemPolicy.ChangeMonitors*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Caching/CacheItemPolicy.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: riande
+  manager: ghogen
+- uid: System.Runtime.Caching.CacheItemPolicy.Priority
+  commentId: P:System.Runtime.Caching.CacheItemPolicy.Priority
+  id: Priority
+  parent: System.Runtime.Caching.CacheItemPolicy
+  langs:
+  - csharp
+  name: Priority
+  nameWithType: CacheItemPolicy.Priority
+  fullName: CacheItemPolicy.Priority
+  type: Property
+  assemblies:
+  - System.Runtime.Caching
+  namespace: System.Runtime.Caching
+  summary: Gets or sets a priority setting that is used to determine whether to evict a cache entry.
+  remarks: "In ASP.NET, the priority enumeration only has two possible priorities: <xref:System.Runtime.Caching.CacheItemPriority.Default> (which means no priority), and <xref:System.Runtime.Caching.CacheItemPriority.NotRemovable> (which means the entry cannot be removed). Therefore, the only priority that can be set is whether a cache entry should remain in the cache forever.  \n  \n> [!IMPORTANT]\n>  Adding an entry to the cache with a priority level of <xref:System.Runtime.Caching.CacheItemPriority.NotRemovable> can cause the cache to overflow with entries that can never be removed. Cache implementations should set the <xref:System.Runtime.Caching.CacheItemPriority.NotRemovable> priority for a cache entry only if the cache implementation provides ways to evict entries from the cache and to manage the number of cache entries."
+  syntax:
+    content: public System.Runtime.Caching.CacheItemPriority Priority { get; set; }
+    return:
+      type: System.Runtime.Caching.CacheItemPriority
+      description: One of the enumeration values that indicates the priority for eviction. The default priority value is <xref href="System.Runtime.Caching.CacheItemPriority.Default"></xref>, which means no priority.
+  overload: System.Runtime.Caching.CacheItemPolicy.Priority*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Caching/CacheItemPolicy.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: riande
+  manager: ghogen
+- uid: System.Runtime.Caching.CacheItemPolicy.RemovedCallback
+  commentId: P:System.Runtime.Caching.CacheItemPolicy.RemovedCallback
+  id: RemovedCallback
+  parent: System.Runtime.Caching.CacheItemPolicy
+  langs:
+  - csharp
+  name: RemovedCallback
+  nameWithType: CacheItemPolicy.RemovedCallback
+  fullName: CacheItemPolicy.RemovedCallback
+  type: Property
+  assemblies:
+  - System.Runtime.Caching
+  namespace: System.Runtime.Caching
+  summary: Gets or sets a reference to a <xref href="System.Runtime.Caching.CacheEntryRemovedCallback"></xref> delegate that is called after an entry is removed from the cache.
+  remarks: After a cache entry has been removed from the cache, the cache invokes the callback object that is referenced by the <xref:System.Runtime.Caching.CacheItemPolicy.RemovedCallback%2A> property. A cache implementation can use this callback to notify the calling method that a cache entry has been removed.
+  syntax:
+    content: public System.Runtime.Caching.CacheEntryRemovedCallback RemovedCallback { get; set; }
+    return:
+      type: System.Runtime.Caching.CacheEntryRemovedCallback
+      description: A reference to a delegate that is called by a cache implementation.
+  overload: System.Runtime.Caching.CacheItemPolicy.RemovedCallback*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Caching/CacheItemPolicy.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: riande
+  manager: ghogen
+- uid: System.Runtime.Caching.CacheItemPolicy.SlidingExpiration
+  commentId: P:System.Runtime.Caching.CacheItemPolicy.SlidingExpiration
+  id: SlidingExpiration
+  parent: System.Runtime.Caching.CacheItemPolicy
+  langs:
+  - csharp
+  name: SlidingExpiration
+  nameWithType: CacheItemPolicy.SlidingExpiration
+  fullName: CacheItemPolicy.SlidingExpiration
+  type: Property
+  assemblies:
+  - System.Runtime.Caching
+  namespace: System.Runtime.Caching
+  summary: Gets or sets a value that indicates whether a cache entry should be evicted if it has not been accessed in a given span of time.
+  syntax:
+    content: public TimeSpan SlidingExpiration { get; set; }
+    return:
+      type: System.TimeSpan
+      description: A span of time within which a cache entry must be accessed before the cache entry is evicted from the cache. The default is <xref href="System.Runtime.Caching.ObjectCache.NoSlidingExpiration"></xref>, meaning that the item should not be expired based on a time span.
+  overload: System.Runtime.Caching.CacheItemPolicy.SlidingExpiration*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Caching/CacheItemPolicy.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: riande
+  manager: ghogen
+- uid: System.Runtime.Caching.CacheItemPolicy.UpdateCallback
+  commentId: P:System.Runtime.Caching.CacheItemPolicy.UpdateCallback
+  id: UpdateCallback
+  parent: System.Runtime.Caching.CacheItemPolicy
+  langs:
+  - csharp
+  name: UpdateCallback
+  nameWithType: CacheItemPolicy.UpdateCallback
+  fullName: CacheItemPolicy.UpdateCallback
+  type: Property
+  assemblies:
+  - System.Runtime.Caching
+  namespace: System.Runtime.Caching
+  summary: Gets or sets a reference to a <xref href="System.Runtime.Caching.CacheEntryUpdateCallback"></xref> delegate that is called before a cache entry is removed from the cache.
+  syntax:
+    content: public System.Runtime.Caching.CacheEntryUpdateCallback UpdateCallback { get; set; }
+    return:
+      type: System.Runtime.Caching.CacheEntryUpdateCallback
+      description: A reference to a delegate that is called by a cache implementation.
+  overload: System.Runtime.Caching.CacheItemPolicy.UpdateCallback*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Caching/CacheItemPolicy.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: riande
+  manager: ghogen
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Runtime.Caching.CacheItemPolicy.#ctor
+  parent: System.Runtime.Caching.CacheItemPolicy
+  isExternal: false
+  name: CacheItemPolicy()
+  nameWithType: CacheItemPolicy.CacheItemPolicy()
+  fullName: CacheItemPolicy.CacheItemPolicy()
+- uid: System.Runtime.Caching.CacheItemPolicy.AbsoluteExpiration
+  parent: System.Runtime.Caching.CacheItemPolicy
+  isExternal: false
+  name: AbsoluteExpiration
+  nameWithType: CacheItemPolicy.AbsoluteExpiration
+  fullName: CacheItemPolicy.AbsoluteExpiration
+- uid: System.DateTimeOffset
+  parent: System
+  isExternal: false
+  name: DateTimeOffset
+  nameWithType: DateTimeOffset
+  fullName: System.DateTimeOffset
+- uid: System.Runtime.Caching.CacheItemPolicy.ChangeMonitors
+  parent: System.Runtime.Caching.CacheItemPolicy
+  isExternal: false
+  name: ChangeMonitors
+  nameWithType: CacheItemPolicy.ChangeMonitors
+  fullName: CacheItemPolicy.ChangeMonitors
+- uid: System.Collections.ObjectModel.Collection`1
+  name: Collection<T>
+  nameWithType: Collection<T>
+  fullName: System.Collections.ObjectModel.Collection<T>
+- uid: System.Runtime.Caching.ChangeMonitor
+  name: ChangeMonitor
+  nameWithType: ChangeMonitor
+  fullName: System.Runtime.Caching.ChangeMonitor
+- uid: System.Collections.ObjectModel.Collection{System.Runtime.Caching.ChangeMonitor}
+  parent: System.Collections.ObjectModel
+  isExternal: false
+  name: Collection<ChangeMonitor>
+  nameWithType: Collection<ChangeMonitor>
+  fullName: System.Collections.ObjectModel.Collection<System.Runtime.Caching.ChangeMonitor>
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection`1
+    name: Collection
+    nameWithType: Collection
+    fullName: System.Collections.ObjectModel.Collection
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Runtime.Caching.ChangeMonitor
+    name: ChangeMonitor
+    nameWithType: ChangeMonitor
+    fullName: System.Runtime.Caching.ChangeMonitor
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Runtime.Caching.CacheItemPolicy.Priority
+  parent: System.Runtime.Caching.CacheItemPolicy
+  isExternal: false
+  name: Priority
+  nameWithType: CacheItemPolicy.Priority
+  fullName: CacheItemPolicy.Priority
+- uid: System.Runtime.Caching.CacheItemPriority
+  parent: System.Runtime.Caching
+  isExternal: false
+  name: CacheItemPriority
+  nameWithType: CacheItemPriority
+  fullName: System.Runtime.Caching.CacheItemPriority
+- uid: System.Runtime.Caching.CacheItemPolicy.RemovedCallback
+  parent: System.Runtime.Caching.CacheItemPolicy
+  isExternal: false
+  name: RemovedCallback
+  nameWithType: CacheItemPolicy.RemovedCallback
+  fullName: CacheItemPolicy.RemovedCallback
+- uid: System.Runtime.Caching.CacheEntryRemovedCallback
+  parent: System.Runtime.Caching
+  isExternal: false
+  name: CacheEntryRemovedCallback
+  nameWithType: CacheEntryRemovedCallback
+  fullName: System.Runtime.Caching.CacheEntryRemovedCallback
+- uid: System.Runtime.Caching.CacheItemPolicy.SlidingExpiration
+  parent: System.Runtime.Caching.CacheItemPolicy
+  isExternal: false
+  name: SlidingExpiration
+  nameWithType: CacheItemPolicy.SlidingExpiration
+  fullName: CacheItemPolicy.SlidingExpiration
+- uid: System.TimeSpan
+  parent: System
+  isExternal: false
+  name: TimeSpan
+  nameWithType: TimeSpan
+  fullName: System.TimeSpan
+- uid: System.Runtime.Caching.CacheItemPolicy.UpdateCallback
+  parent: System.Runtime.Caching.CacheItemPolicy
+  isExternal: false
+  name: UpdateCallback
+  nameWithType: CacheItemPolicy.UpdateCallback
+  fullName: CacheItemPolicy.UpdateCallback
+- uid: System.Runtime.Caching.CacheEntryUpdateCallback
+  parent: System.Runtime.Caching
+  isExternal: false
+  name: CacheEntryUpdateCallback
+  nameWithType: CacheEntryUpdateCallback
+  fullName: System.Runtime.Caching.CacheEntryUpdateCallback
+- uid: System.Runtime.Caching.CacheItemPolicy.#ctor*
+  parent: System.Runtime.Caching.CacheItemPolicy
+  isExternal: false
+  name: CacheItemPolicy
+  nameWithType: CacheItemPolicy.CacheItemPolicy
+  fullName: CacheItemPolicy.CacheItemPolicy
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Caching/CacheItemPolicy.xml
+- uid: System.Runtime.Caching.CacheItemPolicy.AbsoluteExpiration*
+  parent: System.Runtime.Caching.CacheItemPolicy
+  isExternal: false
+  name: AbsoluteExpiration
+  nameWithType: CacheItemPolicy.AbsoluteExpiration
+  fullName: CacheItemPolicy.AbsoluteExpiration
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Caching/CacheItemPolicy.xml
+- uid: System.Runtime.Caching.CacheItemPolicy.ChangeMonitors*
+  parent: System.Runtime.Caching.CacheItemPolicy
+  isExternal: false
+  name: ChangeMonitors
+  nameWithType: CacheItemPolicy.ChangeMonitors
+  fullName: CacheItemPolicy.ChangeMonitors
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Caching/CacheItemPolicy.xml
+- uid: System.Runtime.Caching.CacheItemPolicy.Priority*
+  parent: System.Runtime.Caching.CacheItemPolicy
+  isExternal: false
+  name: Priority
+  nameWithType: CacheItemPolicy.Priority
+  fullName: CacheItemPolicy.Priority
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Caching/CacheItemPolicy.xml
+- uid: System.Runtime.Caching.CacheItemPolicy.RemovedCallback*
+  parent: System.Runtime.Caching.CacheItemPolicy
+  isExternal: false
+  name: RemovedCallback
+  nameWithType: CacheItemPolicy.RemovedCallback
+  fullName: CacheItemPolicy.RemovedCallback
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Caching/CacheItemPolicy.xml
+- uid: System.Runtime.Caching.CacheItemPolicy.SlidingExpiration*
+  parent: System.Runtime.Caching.CacheItemPolicy
+  isExternal: false
+  name: SlidingExpiration
+  nameWithType: CacheItemPolicy.SlidingExpiration
+  fullName: CacheItemPolicy.SlidingExpiration
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Caching/CacheItemPolicy.xml
+- uid: System.Runtime.Caching.CacheItemPolicy.UpdateCallback*
+  parent: System.Runtime.Caching.CacheItemPolicy
+  isExternal: false
+  name: UpdateCallback
+  nameWithType: CacheItemPolicy.UpdateCallback
+  fullName: CacheItemPolicy.UpdateCallback
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Caching/CacheItemPolicy.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

@@ -1,0 +1,2127 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Web.UI.WebControls.SiteMapDataSource
+  commentId: T:System.Web.UI.WebControls.SiteMapDataSource
+  id: SiteMapDataSource
+  children:
+  - System.Web.UI.WebControls.SiteMapDataSource.#ctor
+  - System.Web.UI.WebControls.SiteMapDataSource.ContainsListCollection
+  - System.Web.UI.WebControls.SiteMapDataSource.GetHierarchicalView(System.String)
+  - System.Web.UI.WebControls.SiteMapDataSource.GetList
+  - System.Web.UI.WebControls.SiteMapDataSource.GetView(System.String)
+  - System.Web.UI.WebControls.SiteMapDataSource.GetViewNames
+  - System.Web.UI.WebControls.SiteMapDataSource.Provider
+  - System.Web.UI.WebControls.SiteMapDataSource.ShowStartingNode
+  - System.Web.UI.WebControls.SiteMapDataSource.SiteMapProvider
+  - System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode
+  - System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset
+  - System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl
+  - System.Web.UI.WebControls.SiteMapDataSource.System#ComponentModel#IListSource#ContainsListCollection
+  - System.Web.UI.WebControls.SiteMapDataSource.System#ComponentModel#IListSource#GetList
+  - System.Web.UI.WebControls.SiteMapDataSource.System#Web#UI#IDataSource#GetView(System.String)
+  - System.Web.UI.WebControls.SiteMapDataSource.System#Web#UI#IDataSource#GetViewNames
+  langs:
+  - csharp
+  name: SiteMapDataSource
+  nameWithType: SiteMapDataSource
+  fullName: System.Web.UI.WebControls.SiteMapDataSource
+  type: Class
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Provides a data source control that Web server controls and other controls can use to bind to hierarchical site map data.
+  remarks: "In this topic:  \n  \n-   [Introduction](#introduction)  \n  \n-   [Specifying the Starting Node](#specifying_the_starting_node)  \n  \n-   [Retrieving Site Map Data](#retrieving_site_map_data)  \n  \n-   [Declarative Syntax](#declarative_syntax)  \n  \n<a name=\"introduction\"></a>   \n## Introduction  \n The <xref:System.Web.UI.WebControls.SiteMapDataSource> control is a data source to the site map data that is stored by the site map providers that are configured for your site. The <xref:System.Web.UI.WebControls.SiteMapDataSource> enables Web server controls that are not specifically site navigation controls, such as the <xref:System.Web.UI.WebControls.TreeView>, <xref:System.Web.UI.WebControls.Menu>, and <xref:System.Web.UI.WebControls.DropDownList> controls, to bind to hierarchical site map data. You can use these Web server controls to display a site map as a table of contents or to actively navigate a site.  Alternatively, you can use the <xref:System.Web.UI.WebControls.SiteMapPath> control, which is designed specifically as a site navigation control and therefore does not need an instance of the <xref:System.Web.UI.WebControls.SiteMapDataSource> control.  \n  \n<a name=\"specifying_the_starting_node\"></a>   \n## Specifying the Starting Node  \n The <xref:System.Web.UI.WebControls.SiteMapDataSource> binds to site map data and presents its view based on a specified starting node in the site map hierarchy. By default, it is the root node of the hierarchy but it can also be any node within the hierarchy. The starting node is identified by the values of several <xref:System.Web.UI.WebControls.SiteMapDataSource> properties as follows:  \n  \n|Starting Node|Property Values|  \n|-------------------|---------------------|  \n|The root node of the hierarchy (the default setting).|The <xref:System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode%2A> is `false`.<br /><br /> The <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl%2A> is not set.|  \n|The node that represents the currently viewed page.|The <xref:System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode%2A> is `true`.<br /><br /> The <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl%2A> is not set.|  \n|A specific node of the hierarchy.|The <xref:System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode%2A> is `false`.<br /><br /> The <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl%2A> is set.|  \n  \n If the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset%2A> property is set to a value other than 0, it affects the starting node and with it the site map data hierarchy that is exposed by the <xref:System.Web.UI.WebControls.SiteMapDataSource> control. The negative or positive integer value of the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset%2A> identifies the number of levels up or down the site map hierarchy from the starting node that is identified by the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode%2A> and <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl%2A> properties to offset the starting node of the subtree that is exposed by data source control.  \n  \n If the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset%2A> property is set to a negative number *-n*, the starting node of the subtree that is exposed by the data source control is the ancestor node *n* hierarchical levels above the identified starting node. If the value *n* is greater than the number of ancestor levels in the hierarchical tree, the starting node of the subtree is the root node of the site map hierarchy.  \n  \n If the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset%2A> property is set to a positive number +*n*, the starting node of the subtree that is exposed is a child node *n* levels below the identified starting node. Because more than one branch of child nodes might exist in the hierarchy, the <xref:System.Web.UI.WebControls.SiteMapDataSource> attempts to resolve a child node directly on the path between the identified starting node and the node that represents the currently requested page, if possible. If the node that represents the currently requested page is not in the subtree of the identified starting node, the value of the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset%2A> property is ignored. If the node that represents the currently requested page is less than *n* levels below the identified starting node, the currently requested page node is used as the starting node.  \n  \n<a name=\"retrieving_site_map_data\"></a>   \n## Retrieving Site Map Data  \n Site map data is retrieved from an <xref:System.Web.SiteMapProvider> object, such as <xref:System.Web.XmlSiteMapProvider>, which is the default site map provider for ASP.NET. You can specify any provider that is configured for your site to provide the site map data to the <xref:System.Web.UI.WebControls.SiteMapDataSource> and can obtain the list of available providers by accessing the <xref:System.Web.SiteMap.Providers%2A?displayProperty=fullName> collection.  \n  \n Like all data source controls, every instance of a <xref:System.Web.UI.WebControls.SiteMapDataSource> is associated with a single helper object, known as a data source view. The <xref:System.Web.UI.WebControls.SiteMapDataSourceView> is a view on the site map data, according to the properties of the data source, and is retrieved by calling the <xref:System.Web.UI.WebControls.SiteMapDataSource.GetHierarchicalView%2A> method. The <xref:System.Web.UI.WebControls.SiteMapDataSourceView> maintains the <xref:System.Web.SiteMapNodeCollection> object that the controls bind to.  \n  \n By default, the starting node is the root node of the hierarchy, but you can set the starting node to any node. The starting point can be a node that is relative to the current position in the site map or to an absolute position. You can specify the starting node by setting the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl%2A> property.  \n  \n The <xref:System.Web.UI.WebControls.SiteMapDataSource> is specialized for navigation data, and does not support common data source operations such as sorting, filtering, paging, caching, or data record operations such as updates, insertions or deletions.  \n  \n<a name=\"declarative_syntax\"></a>   \n## Declarative Syntax  \n  \n```  \n<asp:SiteMapDataSource  \n    EnableTheming=\"True|False\"  \n    EnableViewState=\"True|False\"  \n    ID=\"string\"  \n    OnDataBinding=\"DataBinding event handler\"  \n    OnDisposed=\"Disposed event handler\"  \n    OnInit=\"Init event handler\"  \n    OnLoad=\"Load event handler\"  \n    OnPreRender=\"PreRender event handler\"  \n    OnUnload=\"Unload event handler\"  \n    runat=\"server\"  \n    ShowStartingNode=\"True|False\"  \n    SiteMapProvider=\"string\"  \n    SkinID=\"string\"  \n    StartFromCurrentNode=\"True|False\"  \n    StartingNodeOffset=\"integer\"  \n    StartingNodeUrl=\"uri\"  \n    Visible=\"True|False\"  \n/>  \n```"
+  example:
+  - "The following code example demonstrates how to declaratively bind a <xref:System.Web.UI.WebControls.TreeView> control to a site map using a <xref:System.Web.UI.WebControls.SiteMapDataSource> control. The site map data is retrieved beginning at the root node level.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.WebControls.SiteMapDataSource_decl_1#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.UI.WebControls.SiteMapDataSource_decl_1/CS/webform1smdscs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.WebControls.SiteMapDataSource_decl_1#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.UI.WebControls.SiteMapDataSource_decl_1/VB/webform1smdsvb.aspx#1)]  -->"
+  syntax:
+    content: >-
+      [System.Drawing.ToolboxBitmap(typeof(System.Web.UI.WebControls.SiteMapDataSource))]
+
+      public class SiteMapDataSource : System.Web.UI.HierarchicalDataSourceControl, System.ComponentModel.IListSource, System.Web.UI.IDataSource
+  inheritance:
+  - System.Object
+  - System.Web.UI.Control
+  - System.Web.UI.HierarchicalDataSourceControl
+  implements:
+  - System.ComponentModel.IListSource
+  - System.Web.UI.IDataSource
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  - System.Web.UI.Control.Adapter
+  - System.Web.UI.Control.AddedControl(System.Web.UI.Control,System.Int32)
+  - System.Web.UI.Control.AddParsedSubObject(System.Object)
+  - System.Web.UI.Control.AppRelativeTemplateSourceDirectory
+  - System.Web.UI.Control.BeginRenderTracing(System.IO.TextWriter,System.Object)
+  - System.Web.UI.Control.BindingContainer
+  - System.Web.UI.Control.BuildProfileTree(System.String,System.Boolean)
+  - System.Web.UI.Control.ChildControlsCreated
+  - System.Web.UI.Control.ClearCachedClientID
+  - System.Web.UI.Control.ClearChildControlState
+  - System.Web.UI.Control.ClearChildState
+  - System.Web.UI.Control.ClearChildViewState
+  - System.Web.UI.Control.ClearEffectiveClientIDMode
+  - System.Web.UI.Control.ClientIDSeparator
+  - System.Web.UI.Control.Context
+  - System.Web.UI.Control.CreateChildControls
+  - System.Web.UI.Control.DataBind
+  - System.Web.UI.Control.DataBind(System.Boolean)
+  - System.Web.UI.Control.DataBindChildren
+  - System.Web.UI.Control.DataBinding
+  - System.Web.UI.Control.DataItemContainer
+  - System.Web.UI.Control.DataKeysContainer
+  - System.Web.UI.Control.DesignMode
+  - System.Web.UI.Control.Dispose
+  - System.Web.UI.Control.Disposed
+  - System.Web.UI.Control.EnableViewState
+  - System.Web.UI.Control.EndRenderTracing(System.IO.TextWriter,System.Object)
+  - System.Web.UI.Control.EnsureChildControls
+  - System.Web.UI.Control.EnsureID
+  - System.Web.UI.Control.Events
+  - System.Web.UI.Control.FindControl(System.String,System.Int32)
+  - System.Web.UI.Control.GetDesignModeState
+  - System.Web.UI.Control.GetRouteUrl(System.Object)
+  - System.Web.UI.Control.GetRouteUrl(System.String,System.Object)
+  - System.Web.UI.Control.GetRouteUrl(System.String,System.Web.Routing.RouteValueDictionary)
+  - System.Web.UI.Control.GetRouteUrl(System.Web.Routing.RouteValueDictionary)
+  - System.Web.UI.Control.GetUniqueIDRelativeTo(System.Web.UI.Control)
+  - System.Web.UI.Control.HasChildViewState
+  - System.Web.UI.Control.HasEvents
+  - System.Web.UI.Control.ID
+  - System.Web.UI.Control.IdSeparator
+  - System.Web.UI.Control.Init
+  - System.Web.UI.Control.IsChildControlStateCleared
+  - System.Web.UI.Control.IsLiteralContent
+  - System.Web.UI.Control.IsTrackingViewState
+  - System.Web.UI.Control.IsViewStateEnabled
+  - System.Web.UI.Control.Load
+  - System.Web.UI.Control.LoadControlState(System.Object)
+  - System.Web.UI.Control.LoadViewState(System.Object)
+  - System.Web.UI.Control.LoadViewStateByID
+  - System.Web.UI.Control.MapPathSecure(System.String)
+  - System.Web.UI.Control.NamingContainer
+  - System.Web.UI.Control.OnBubbleEvent(System.Object,System.EventArgs)
+  - System.Web.UI.Control.OnDataBinding(System.EventArgs)
+  - System.Web.UI.Control.OnInit(System.EventArgs)
+  - System.Web.UI.Control.OnLoad(System.EventArgs)
+  - System.Web.UI.Control.OnPreRender(System.EventArgs)
+  - System.Web.UI.Control.OnUnload(System.EventArgs)
+  - System.Web.UI.Control.OpenFile(System.String)
+  - System.Web.UI.Control.Page
+  - System.Web.UI.Control.Parent
+  - System.Web.UI.Control.PreRender
+  - System.Web.UI.Control.RaiseBubbleEvent(System.Object,System.EventArgs)
+  - System.Web.UI.Control.RemovedControl(System.Web.UI.Control)
+  - System.Web.UI.Control.Render(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.Control.RenderChildren(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter,System.Web.UI.Adapters.ControlAdapter)
+  - System.Web.UI.Control.RenderingCompatibility
+  - System.Web.UI.Control.ResolveAdapter
+  - System.Web.UI.Control.ResolveClientUrl(System.String)
+  - System.Web.UI.Control.ResolveUrl(System.String)
+  - System.Web.UI.Control.SaveControlState
+  - System.Web.UI.Control.SaveViewState
+  - System.Web.UI.Control.SetDesignModeState(System.Collections.IDictionary)
+  - System.Web.UI.Control.SetRenderMethodDelegate(System.Web.UI.RenderMethod)
+  - System.Web.UI.Control.SetTraceData(System.Object,System.Object)
+  - System.Web.UI.Control.SetTraceData(System.Object,System.Object,System.Object)
+  - System.Web.UI.Control.Site
+  - System.Web.UI.Control.System#Web#UI#IControlBuilderAccessor#ControlBuilder
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#GetDesignModeState
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetDesignModeState(System.Collections.IDictionary)
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetOwnerControl(System.Web.UI.Control)
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#UserData
+  - System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#DataBindings
+  - System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#HasDataBindings
+  - System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#Expressions
+  - System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#HasExpressions
+  - System.Web.UI.Control.System#Web#UI#IParserAccessor#AddParsedSubObject(System.Object)
+  - System.Web.UI.Control.TemplateControl
+  - System.Web.UI.Control.TemplateSourceDirectory
+  - System.Web.UI.Control.TrackViewState
+  - System.Web.UI.Control.UniqueID
+  - System.Web.UI.Control.Unload
+  - System.Web.UI.Control.ValidateRequestMode
+  - System.Web.UI.Control.ViewState
+  - System.Web.UI.Control.ViewStateIgnoresCase
+  - System.Web.UI.Control.ViewStateMode
+  - System.Web.UI.HierarchicalDataSourceControl.ApplyStyleSheetSkin(System.Web.UI.Page)
+  - System.Web.UI.HierarchicalDataSourceControl.ClientID
+  - System.Web.UI.HierarchicalDataSourceControl.ClientIDMode
+  - System.Web.UI.HierarchicalDataSourceControl.Controls
+  - System.Web.UI.HierarchicalDataSourceControl.CreateControlCollection
+  - System.Web.UI.HierarchicalDataSourceControl.EnableTheming
+  - System.Web.UI.HierarchicalDataSourceControl.FindControl(System.String)
+  - System.Web.UI.HierarchicalDataSourceControl.Focus
+  - System.Web.UI.HierarchicalDataSourceControl.HasControls
+  - System.Web.UI.HierarchicalDataSourceControl.OnDataSourceChanged(System.EventArgs)
+  - System.Web.UI.HierarchicalDataSourceControl.RenderControl(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.HierarchicalDataSourceControl.SkinID
+  - System.Web.UI.HierarchicalDataSourceControl.System#Web#UI#IHierarchicalDataSource#GetHierarchicalView(System.String)
+  - System.Web.UI.HierarchicalDataSourceControl.Visible
+  extensionMethods:
+  - System.Web.DynamicData.DynamicDataExtensions.FindDataSourceControl(System.Web.UI.Control)
+  - System.Web.DynamicData.DynamicDataExtensions.FindFieldTemplate(System.Web.UI.Control,System.String)
+  - System.Web.DynamicData.DynamicDataExtensions.FindMetaTable(System.Web.UI.Control)
+  - System.Web.DynamicData.DynamicDataExtensions.GetDefaultValues(System.Web.UI.IDataSource)
+  - System.Web.DynamicData.DynamicDataExtensions.GetMetaTable(System.Web.UI.IDataSource)
+  - System.Web.DynamicData.DynamicDataExtensions.TryGetMetaTable(System.Web.UI.IDataSource,System.Web.DynamicData.MetaTable@)
+  attributes:
+  - type: System.Drawing.ToolboxBitmapAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.SiteMapDataSource.#ctor
+  commentId: M:System.Web.UI.WebControls.SiteMapDataSource.#ctor
+  id: '#ctor'
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  langs:
+  - csharp
+  name: SiteMapDataSource()
+  nameWithType: SiteMapDataSource.SiteMapDataSource()
+  fullName: SiteMapDataSource.SiteMapDataSource()
+  type: Constructor
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Initializes a new instance of the <xref href="System.Web.UI.WebControls.SiteMapDataSource"></xref> class.
+  syntax:
+    content: public SiteMapDataSource ();
+    parameters: []
+  overload: System.Web.UI.WebControls.SiteMapDataSource.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.SiteMapDataSource.ContainsListCollection
+  commentId: P:System.Web.UI.WebControls.SiteMapDataSource.ContainsListCollection
+  id: ContainsListCollection
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  langs:
+  - csharp
+  name: ContainsListCollection
+  nameWithType: SiteMapDataSource.ContainsListCollection
+  fullName: SiteMapDataSource.ContainsListCollection
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets a value indicating whether the data source control contains a collection of data source view objects.
+  remarks: The <xref:System.Web.UI.WebControls.SiteMapDataSource.ContainsListCollection%2A> property calls the static <xref:System.Web.UI.ListSourceHelper.ContainsListCollection%2A> method of the <xref:System.Web.UI.ListSourceHelper> class.
+  syntax:
+    content: >-
+      [System.ComponentModel.Browsable(false)]
+
+      public virtual bool ContainsListCollection { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the data source control contains a collection of data source view objects; otherwise, `false`.'
+  overload: System.Web.UI.WebControls.SiteMapDataSource.ContainsListCollection*
+  exceptions: []
+  attributes:
+  - type: System.ComponentModel.BrowsableAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.SiteMapDataSource.GetHierarchicalView(System.String)
+  commentId: M:System.Web.UI.WebControls.SiteMapDataSource.GetHierarchicalView(System.String)
+  id: GetHierarchicalView(System.String)
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  langs:
+  - csharp
+  name: GetHierarchicalView(String)
+  nameWithType: SiteMapDataSource.GetHierarchicalView(String)
+  fullName: SiteMapDataSource.GetHierarchicalView(String)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Retrieves a single view on the site map data for the <xref href="System.Web.SiteMapProvider"></xref> object according to the starting node and other properties of the data source.
+  syntax:
+    content: protected override System.Web.UI.HierarchicalDataSourceView GetHierarchicalView (string viewPath);
+    parameters:
+    - id: viewPath
+      type: System.String
+      description: The URL of the starting node, specified by the <xref href="System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl"></xref>.
+    return:
+      type: System.Web.UI.HierarchicalDataSourceView
+      description: A <xref href="System.Web.UI.HierarchicalDataSourceView"></xref> helper object on the site map data, starting with the node that is identified by the <xref href="System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl"></xref> or its child, if the <xref href="System.Web.UI.WebControls.SiteMapDataSource.ShowStartingNode"></xref> is `false`.
+  overload: System.Web.UI.WebControls.SiteMapDataSource.GetHierarchicalView*
+  exceptions:
+  - type: System.Web.HttpException
+    commentId: T:System.Web.HttpException
+    description: No <xref href="System.Web.SiteMapProvider"></xref> is configured or available for the site.
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The <xref href="System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode"></xref> is `true` but the <xref href="System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl"></xref> is set.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The <xref href="System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl"></xref> is set but the <xref href="System.Web.UI.WebControls.SiteMapDataSource"></xref> cannot resolve a node for the specified URL.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.SiteMapDataSource.GetList
+  commentId: M:System.Web.UI.WebControls.SiteMapDataSource.GetList
+  id: GetList
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  langs:
+  - csharp
+  name: GetList()
+  nameWithType: SiteMapDataSource.GetList()
+  fullName: SiteMapDataSource.GetList()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Retrieves a list of data source controls that can be used as sources of lists of data.
+  remarks: "Use the <xref:System.Web.UI.WebControls.SiteMapDataSource.GetList%2A> method to retrieve a set of objects that can be used as sources for the <xref:System.Web.UI.WebControls.SiteMapDataSource> control. Site map data source controls encapsulate their lists of data as <xref:System.Web.UI.WebControls.SiteMapDataSourceView> objects. Therefore, when associated with one or more <xref:System.Web.UI.WebControls.SiteMapDataSourceView> objects, a <xref:System.Web.UI.WebControls.SiteMapDataSource> control represents a list source object and the <xref:System.Web.UI.WebControls.SiteMapDataSource.GetList%2A> method returns a list containing one element — the data source control itself.  \n  \n The <xref:System.Web.UI.WebControls.SiteMapDataSource.GetList%2A> method calls the static <xref:System.Web.UI.ListSourceHelper.GetList%2A?displayProperty=fullName> method to retrieve a list of objects that can be used as sources of data. The <xref:System.Web.UI.ListSourceHelper> checks whether the <xref:System.Web.UI.WebControls.SiteMapDataSource.GetViewNames%2A> method returns a valid collection of view names. If it does, the <xref:System.Web.UI.ListSourceHelper> returns a list containing one element — the <xref:System.Web.UI.WebControls.SiteMapDataSource>."
+  syntax:
+    content: public virtual System.Collections.IList GetList ();
+    parameters: []
+    return:
+      type: System.Collections.IList
+      description: An <xref href="System.Collections.IList"></xref> of data source controls that can be used as sources of lists of data.
+  overload: System.Web.UI.WebControls.SiteMapDataSource.GetList*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.SiteMapDataSource.GetView(System.String)
+  commentId: M:System.Web.UI.WebControls.SiteMapDataSource.GetView(System.String)
+  id: GetView(System.String)
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  langs:
+  - csharp
+  name: GetView(String)
+  nameWithType: SiteMapDataSource.GetView(String)
+  fullName: SiteMapDataSource.GetView(String)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Retrieves a named view on the site map data of the site map provider according to the starting node and other properties of the data source.
+  remarks: The `viewName` parameter is the URL for the root node of the view, not the name of the data source view as it is with other data source controls that support named views.
+  syntax:
+    content: public virtual System.Web.UI.DataSourceView GetView (string viewName);
+    parameters:
+    - id: viewName
+      type: System.String
+      description: The name of the data source view to retrieve.
+    return:
+      type: System.Web.UI.DataSourceView
+      description: A <xref href="System.Web.UI.HierarchicalDataSourceView"></xref> helper object on the site map data, according to the starting node that is identified by the <xref href="System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl"></xref> property or its child, if the <xref href="System.Web.UI.WebControls.SiteMapDataSource.ShowStartingNode"></xref> is `false`.
+  overload: System.Web.UI.WebControls.SiteMapDataSource.GetView*
+  exceptions:
+  - type: System.Web.HttpException
+    commentId: T:System.Web.HttpException
+    description: The <xref href="System.Web.UI.WebControls.SiteMapDataSource.Provider"></xref> is `null`.
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The <xref href="System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode"></xref> is `true` but the <xref href="System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl"></xref> is set.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The <xref href="System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl"></xref> is set but the <xref href="System.Web.UI.WebControls.SiteMapDataSource"></xref> cannot resolve a node for the specified URL.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.SiteMapDataSource.GetViewNames
+  commentId: M:System.Web.UI.WebControls.SiteMapDataSource.GetViewNames
+  id: GetViewNames
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  langs:
+  - csharp
+  name: GetViewNames()
+  nameWithType: SiteMapDataSource.GetViewNames()
+  fullName: SiteMapDataSource.GetViewNames()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Retrieves a collection of named views for the data source control.
+  remarks: The <xref:System.Web.UI.WebControls.SiteMapDataSource.GetViewNames%2A> method returns a collection with one element (the default name) instead of `null` so that the <xref:System.Web.UI.WebControls.SiteMapDataSource.ContainsListCollection%2A> method returns `true`.
+  syntax:
+    content: public virtual System.Collections.ICollection GetViewNames ();
+    parameters: []
+    return:
+      type: System.Collections.ICollection
+      description: An <xref href="System.Collections.ICollection"></xref> of named <xref href="System.Web.UI.WebControls.SiteMapDataSourceView"></xref> objects associated with the <xref href="System.Web.UI.WebControls.SiteMapDataSource"></xref>. Because the <xref href="System.Web.UI.WebControls.SiteMapDataSource"></xref> supports only one named view, the <xref href="System.Web.UI.WebControls.SiteMapDataSource.GetViewNames"></xref> method returns an <xref href="System.Collections.ICollection"></xref> with one <xref href="System.String.Empty"></xref> element.
+  overload: System.Web.UI.WebControls.SiteMapDataSource.GetViewNames*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.SiteMapDataSource.Provider
+  commentId: P:System.Web.UI.WebControls.SiteMapDataSource.Provider
+  id: Provider
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  langs:
+  - csharp
+  name: Provider
+  nameWithType: SiteMapDataSource.Provider
+  fullName: SiteMapDataSource.Provider
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets or sets a <xref href="System.Web.SiteMapProvider"></xref> object that is associated with the data source control.
+  remarks: Use the <xref:System.Web.UI.WebControls.SiteMapDataSource.Provider%2A> property to specify the site map provider instance to use with the data source control. The instance can be different than the provider that is identified by the <xref:System.Web.UI.WebControls.SiteMapDataSource.SiteMapProvider%2A> property, if set.
+  syntax:
+    content: >-
+      [System.ComponentModel.Browsable(false)]
+
+      public System.Web.SiteMapProvider Provider { get; set; }
+    return:
+      type: System.Web.SiteMapProvider
+      description: A <xref href="System.Web.SiteMapProvider"></xref> that is associated with the data source control; otherwise, if no provider is explicitly set, the default site map provider.
+  overload: System.Web.UI.WebControls.SiteMapDataSource.Provider*
+  exceptions:
+  - type: System.Web.HttpException
+    commentId: T:System.Web.HttpException
+    description: "The provider named by the <xref href=\"System.Web.UI.WebControls.SiteMapDataSource.SiteMapProvider\"></xref> is not available.  \n  \n \\- or -  \n  \n No default provider is configured for the site."
+  attributes:
+  - type: System.ComponentModel.BrowsableAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.SiteMapDataSource.ShowStartingNode
+  commentId: P:System.Web.UI.WebControls.SiteMapDataSource.ShowStartingNode
+  id: ShowStartingNode
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  langs:
+  - csharp
+  name: ShowStartingNode
+  nameWithType: SiteMapDataSource.ShowStartingNode
+  fullName: SiteMapDataSource.ShowStartingNode
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets or sets a value indicating whether the starting node is retrieved and displayed.
+  remarks: "The <xref:System.Web.UI.WebControls.SiteMapDataSource.ShowStartingNode%2A> property is evaluated during calls to the <xref:System.Web.UI.WebControls.SiteMapDataSource.GetView%2A> and <xref:System.Web.UI.WebControls.SiteMapDataSource.GetHierarchicalView%2A> methods, when the node tree that is returned by these methods is populated.  \n  \n The value of the <xref:System.Web.UI.WebControls.SiteMapDataSource.ShowStartingNode%2A> property is stored in view state."
+  syntax:
+    content: public virtual bool ShowStartingNode { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if the starting node is displayed; otherwise, `false`. The default is `true`.'
+  overload: System.Web.UI.WebControls.SiteMapDataSource.ShowStartingNode*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.SiteMapDataSource.SiteMapProvider
+  commentId: P:System.Web.UI.WebControls.SiteMapDataSource.SiteMapProvider
+  id: SiteMapProvider
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  langs:
+  - csharp
+  name: SiteMapProvider
+  nameWithType: SiteMapDataSource.SiteMapProvider
+  fullName: SiteMapDataSource.SiteMapProvider
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets or sets the name of the site map provider that the data source binds to.
+  remarks: The value of the <xref:System.Web.UI.WebControls.SiteMapDataSource.SiteMapProvider%2A> property is stored in view state.
+  example:
+  - "The following code example demonstrates how to declaratively bind a <xref:System.Web.UI.WebControls.TreeView> control to site map data that is provided by an <xref:System.Web.SiteMapProvider> object other than the default provider. The Web.config file makes a custom <xref:System.Web.SiteMapProvider> object available to the `SiteMapDataSource` control:  \n  \n```  \n<system.web>      \n  <siteMap>  \n    <providers>  \n      <add name=\"AsciiTextProvider\"  \n        description=\"SiteMap provider which reads in .sitemap text files.\"  \n        type=\"Samples.AspNet.CS.SimpleTextSiteMapProvider\"  \n      siteMapFile=\"test.txt\"/>  \n    </providers>  \n  </siteMap>  \n</system.web>  \n```  \n  \n The code for the `SimpleTextSiteMapProvider` class that this Web.config file example references can be found in the <xref:System.Web.SiteMapProvider> class overview. If you use the Visual Basic example, the namespace ends in \"VB\" instead of \"CS\". You can also find sample content for the \"text.txt\" site map file in the <xref:System.Web.SiteMapProvider> class overview.  \n  \n> [!NOTE]\n>  The `AsciiTextProvider` is not the default provider for the site, which (in this case) remains the <xref:System.Web.XmlSiteMapProvider> object. The <xref:System.Web.UI.WebControls.SiteMapDataSource.SiteMapProvider%2A> property of the <xref:System.Web.UI.WebControls.SiteMapDataSource> control is set to the name of a custom site map provider, and the <xref:System.Web.UI.WebControls.TreeView> binds to the corresponding site map data.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.WebControls.SiteMapDataSource_decl_3#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.UI.WebControls.SiteMapDataSource_decl_3/CS/webform3smdscs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.WebControls.SiteMapDataSource_decl_3#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.UI.WebControls.SiteMapDataSource_decl_3/VB/webform3smdsvb.aspx#1)]  -->"
+  syntax:
+    content: public virtual string SiteMapProvider { get; set; }
+    return:
+      type: System.String
+      description: The name of the site map provider that the <xref href="System.Web.UI.WebControls.SiteMapDataSource"></xref> binds to. By default, the value is <xref href="System.String.Empty"></xref>, and the default site map provider for the site is used.
+  overload: System.Web.UI.WebControls.SiteMapDataSource.SiteMapProvider*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode
+  commentId: P:System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode
+  id: StartFromCurrentNode
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  langs:
+  - csharp
+  name: StartFromCurrentNode
+  nameWithType: SiteMapDataSource.StartFromCurrentNode
+  fullName: SiteMapDataSource.StartFromCurrentNode
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets or sets a value indicating whether the site map node tree is retrieved using the node that represents the current page.
+  remarks: "The <xref:System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode%2A> property is evaluated during calls to the <xref:System.Web.UI.WebControls.SiteMapDataSource.GetView%2A> and the <xref:System.Web.UI.WebControls.SiteMapDataSource.GetHierarchicalView%2A> methods to help determine which site map node to use as a starting point to build the node tree. The <xref:System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode%2A> and <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl%2A> properties are mutually exclusive — if you set the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl%2A> property, ensure that the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode%2A> property is `false`.  \n  \n The value of the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode%2A> property is stored in view state."
+  syntax:
+    content: public virtual bool StartFromCurrentNode { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if the node tree is retrieved relative to the current page; otherwise, `false`. The default is `false`.'
+  overload: System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset
+  commentId: P:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset
+  id: StartingNodeOffset
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  langs:
+  - csharp
+  name: StartingNodeOffset
+  nameWithType: SiteMapDataSource.StartingNodeOffset
+  fullName: SiteMapDataSource.StartingNodeOffset
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets or sets a positive or negative integer offset from the starting node that determines the root hierarchy that is exposed by the data source control.
+  remarks: "If the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset%2A> property is set to a value other than 0, it affects the starting node and with it the site map data hierarchy that is exposed by the <xref:System.Web.UI.WebControls.SiteMapDataSource> control. The negative or positive integer value of the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset%2A> identifies the number of levels up or down the site map hierarchy from the starting node that is identified by the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode%2A> and <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl%2A> properties to offset the starting node of the subtree that is exposed by data source control.  \n  \n If the identified starting node is the node that represents the currently requested page, the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset%2A> is ignored.  \n  \n If the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset%2A> property is set to a negative number -*n*, the starting node of the subtree that is exposed by the data source control is the ancestor node *n* hierarchical levels above the identified starting node. If the value *n* is greater than the number of ancestor levels in the hierarchical tree, the starting node of the subtree is the root node of the site map hierarchy.  \n  \n If the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset%2A> property is set to a positive number +*n*, the starting node of the subtree that is exposed is a child node *n* levels below the identified starting node. Because more than one branch of child nodes might exist in the hierarchy, the <xref:System.Web.UI.WebControls.SiteMapDataSource> attempts to resolve a child node directly on the path between the identified starting node and the node that represents the currently requested page, if possible. If the node that represents the currently requested page is not in the subtree of the identified starting node, the value of the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset%2A> property is ignored. If the node that represents the currently requested page is less than *n* levels below the identified starting node, the currently requested page node is used as the starting node.  \n  \n The value of the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset%2A> property is stored in view state."
+  example:
+  - "The following code example demonstrates the effect of the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl%2A> and <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset%2A> properties. The example consists of several ASP.NET pages, a master page, master page section, and a Web.sitemap file. The Web.sitemap file defines the hierarchical structure of the site. For this code example, it defines a number of pages identified by unique URLs, such as 1.aspx, 2.aspx, A.aspx, and B.aspx, as follows:  \n  \n <!-- TODO: review snippet reference [!code[System.Web.UI.WebControls.SiteMapDataSource_2#1](~/samples/snippets/common/VS_Snippets_WebNet/System.Web.UI.WebControls.SiteMapDataSource_2/Common/Web.sitemap#1)]  -->  \n  \n The Site.master page contains the <xref:System.Web.UI.WebControls.SiteMapDataSource> and a <xref:System.Web.UI.WebControls.TreeView> controls inside a <xref:System.Web.UI.WebControls.ContentPlaceHolder> control. It identifies the starting node of the exposed hierarchy as Default.aspx, using the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl%2A> property. The Site.master file is used by the Default.aspx page only.  \n  \n <!-- TODO: review snippet reference [!code[System.Web.UI.WebControls.SiteMapDataSource_2#2](~/samples/snippets/common/VS_Snippets_WebNet/System.Web.UI.WebControls.SiteMapDataSource_2/Common/Site.master#2)]  -->  \n  \n All other pages, such as 1.aspx, 2.aspx, A.aspx, and so on, use the Section.master master page. This master page is very similar to Site.master, however it contains several <xref:System.Web.UI.WebControls.SiteMapDataSource> controls that you can experiment with. The <xref:System.Web.UI.WebControls.TreeView> control that displays site map data is initially bound to `SiteMapDataSource1`, which specifies a <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset%2A> of 1. This indicates that the parent node of the currently requested page is displayed. If you view page 1.aspx, the hierarchy displayed by the <xref:System.Web.UI.WebControls.TreeView> is A, 1, 2. However, if you view page 4.aspx, the hierarchy is B, 3, 4.  \n  \n If you change the <xref:System.Web.UI.WebControls.HierarchicalDataBoundControl.DataSourceID%2A> for the <xref:System.Web.UI.WebControls.TreeView> to `SiteMapDataSource2`, the <xref:System.Web.UI.WebControls.TreeView> control displays site map data differently. When you use `SiteMapDataSource2`, the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode%2A> property is set to `true`, which means that the site map data is displayed relative to the currently requested page and the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset%2A> property is set to -1, indicating that one level of child nodes is displayed, when possible.  When you view the A.aspx page, the hierarchy that is displayed is the hierarchy of the current level, including all siblings, such as B and C. When you view 1.aspx, the parent nodes are no longer displayed.  \n  \n <!-- TODO: review snippet reference [!code[System.Web.UI.WebControls.SiteMapDataSource_2#3](~/samples/snippets/common/VS_Snippets_WebNet/System.Web.UI.WebControls.SiteMapDataSource_2/Common/Section.master#3)]  -->  \n  \n The following code example demonstrates one of the ASP.NET pages you can use with the other components of this code example.  \n  \n```  \n<%@ Page MasterPageFile=\"~/Section.master\" Title=\"Untitled Page\" %>  \n  \n<asp:Content ID=\"Content1\" ContentPlaceHolderID=MainBody Runat=Server>  \n  <h2>1.aspx</h2>  \n</asp:Content>  \n```"
+  syntax:
+    content: public virtual int StartingNodeOffset { get; set; }
+    return:
+      type: System.Int32
+      description: The default is 0, which indicates that the root hierarchy exposed by the <xref href="System.Web.UI.WebControls.SiteMapDataSource"></xref> is the same as the starting node.
+  overload: System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl
+  commentId: P:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl
+  id: StartingNodeUrl
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  langs:
+  - csharp
+  name: StartingNodeUrl
+  nameWithType: SiteMapDataSource.StartingNodeUrl
+  fullName: SiteMapDataSource.StartingNodeUrl
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets or sets a node in the site map that the data source then uses as a reference point to retrieve nodes from a hierarchical site map.
+  remarks: "The <xref:System.Web.UI.WebControls.SiteMapDataSource> property binds to site map data and presents its view based on a specified starting node in the site map hierarchy. By default, the starting node is the root node of the hierarchy, but you can set the starting node to any node with the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl%2A> property or set the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode%2A> property to `true`.  \n  \n The value of the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl%2A> property is stored in view state."
+  example:
+  - "The following code example demonstrates how to declaratively set the <xref:System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl%2A> property and bind a <xref:System.Web.UI.WebControls.TreeView> control to a <xref:System.Web.UI.WebControls.SiteMapDataSource> control.  \n  \n <!-- TODO: review snippet reference [!code-csharp[System.Web.UI.WebControls.SiteMapDataSource_decl_6#1](~/samples/snippets/csharp/VS_Snippets_WebNet/System.Web.UI.WebControls.SiteMapDataSource_decl_6/CS/webform2smdsnocustomcs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[System.Web.UI.WebControls.SiteMapDataSource_decl_6#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/System.Web.UI.WebControls.SiteMapDataSource_decl_6/VB/webform2smdsnocustomvb.aspx#1)]  -->"
+  syntax:
+    content: public virtual string StartingNodeUrl { get; set; }
+    return:
+      type: System.String
+      description: The URL of a node in the site map. The <xref href="System.Web.UI.WebControls.SiteMapDataSource"></xref> retrieves the identified <xref href="System.Web.SiteMapNode"></xref> and any child nodes from the site map. The default is an <xref href="System.String.Empty"></xref>.
+  overload: System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.SiteMapDataSource.System#ComponentModel#IListSource#ContainsListCollection
+  commentId: P:System.Web.UI.WebControls.SiteMapDataSource.System#ComponentModel#IListSource#ContainsListCollection
+  id: System#ComponentModel#IListSource#ContainsListCollection
+  isEii: true
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  langs:
+  - csharp
+  name: IListSource.ContainsListCollection
+  nameWithType: SiteMapDataSource.IListSource.ContainsListCollection
+  fullName: SiteMapDataSource.IListSource.ContainsListCollection
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: Gets a value that indicates whether the collection is a collection of <xref href="System.Collections.IList"></xref> objects.
+  remarks: This member is an explicit interface member implementation. It can be used only when the <xref:System.Web.UI.WebControls.SiteMapDataSource> instance is cast to an <xref:System.ComponentModel.IListSource> interface.
+  syntax:
+    content: bool System.ComponentModel.IListSource.ContainsListCollection { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the <xref href="System.Web.UI.WebControls.SiteMapDataSource"></xref> is associated with one or more <xref href="System.Web.UI.WebControls.SiteMapDataSourceView"></xref> objects; otherwise, `false`.'
+  overload: System.Web.UI.WebControls.SiteMapDataSource.System#ComponentModel#IListSource#ContainsListCollection*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.SiteMapDataSource.System#ComponentModel#IListSource#GetList
+  commentId: M:System.Web.UI.WebControls.SiteMapDataSource.System#ComponentModel#IListSource#GetList
+  id: System#ComponentModel#IListSource#GetList
+  isEii: true
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  langs:
+  - csharp
+  name: IListSource.GetList()
+  nameWithType: SiteMapDataSource.IListSource.GetList()
+  fullName: SiteMapDataSource.IListSource.GetList()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: For a description of this member, see <xref href="System.ComponentModel.IListSource.GetList"></xref>.
+  remarks: This member is an explicit interface member implementation. It can be used only when the <xref:System.Web.UI.WebControls.SiteMapDataSource> instance is cast to an <xref:System.ComponentModel.IListSource> interface.
+  syntax:
+    content: System.Collections.IList IListSource.GetList ();
+    parameters: []
+    return:
+      type: System.Collections.IList
+      description: An <xref href="System.Collections.IList"></xref> of data source controls that can be used as sources of lists of data.
+  overload: System.Web.UI.WebControls.SiteMapDataSource.System#ComponentModel#IListSource#GetList*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.SiteMapDataSource.System#Web#UI#IDataSource#GetView(System.String)
+  commentId: M:System.Web.UI.WebControls.SiteMapDataSource.System#Web#UI#IDataSource#GetView(System.String)
+  id: System#Web#UI#IDataSource#GetView(System.String)
+  isEii: true
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  langs:
+  - csharp
+  name: IDataSource.GetView(String)
+  nameWithType: SiteMapDataSource.IDataSource.GetView(String)
+  fullName: SiteMapDataSource.IDataSource.GetView(String)
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: For a description of this member, see <xref href="System.Web.UI.IDataSource.GetView(System.String)"></xref>.
+  remarks: This member is an explicit interface member implementation. It can be used only when the <xref:System.Web.UI.WebControls.SiteMapDataSource> instance is cast to an <xref:System.Web.UI.IDataSource> interface.
+  syntax:
+    content: System.Web.UI.DataSourceView IDataSource.GetView (string viewName);
+    parameters:
+    - id: viewName
+      type: System.String
+      description: The URL of the root node of the view.
+    return:
+      type: System.Web.UI.DataSourceView
+      description: A <xref href="System.Web.UI.HierarchicalDataSourceView"></xref> helper object on the site map data, according to the starting node identified by the <xref href="System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl"></xref> property or its child, if the <xref href="System.Web.UI.WebControls.SiteMapDataSource.ShowStartingNode"></xref> is `false`.
+  overload: System.Web.UI.WebControls.SiteMapDataSource.System#Web#UI#IDataSource#GetView*
+  exceptions:
+  - type: System.Web.HttpException
+    commentId: T:System.Web.HttpException
+    description: No <xref href="System.Web.SiteMapProvider"></xref> is configured or available for the site.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.SiteMapDataSource.System#Web#UI#IDataSource#GetViewNames
+  commentId: M:System.Web.UI.WebControls.SiteMapDataSource.System#Web#UI#IDataSource#GetViewNames
+  id: System#Web#UI#IDataSource#GetViewNames
+  isEii: true
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  langs:
+  - csharp
+  name: IDataSource.GetViewNames()
+  nameWithType: SiteMapDataSource.IDataSource.GetViewNames()
+  fullName: SiteMapDataSource.IDataSource.GetViewNames()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls
+  summary: For a description of this member, see <xref href="System.Web.UI.IDataSource.GetViewNames"></xref>.
+  remarks: This member is an explicit interface member implementation. It can be used only when the <xref:System.Web.UI.WebControls.SiteMapDataSource> instance is cast to an <xref:System.Web.UI.IDataSource> interface.
+  syntax:
+    content: System.Collections.ICollection IDataSource.GetViewNames ();
+    parameters: []
+    return:
+      type: System.Collections.ICollection
+      description: An <xref href="System.Collections.ICollection"></xref> of named <xref href="System.Web.UI.WebControls.SiteMapDataSourceView"></xref> objects associated with the <xref href="System.Web.UI.WebControls.SiteMapDataSource"></xref>. Because the <xref href="System.Web.UI.WebControls.SiteMapDataSource"></xref> supports only one named view, the <xref href="System.Web.UI.WebControls.SiteMapDataSource.GetViewNames"></xref> returns a collection containing one element set to <xref href="System.String.Empty"></xref>.
+  overload: System.Web.UI.WebControls.SiteMapDataSource.System#Web#UI#IDataSource#GetViewNames*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+references:
+- uid: System.Web.UI.HierarchicalDataSourceControl
+  parent: System.Web.UI
+  isExternal: false
+  name: HierarchicalDataSourceControl
+  nameWithType: HierarchicalDataSourceControl
+  fullName: System.Web.UI.HierarchicalDataSourceControl
+- uid: System.Web.HttpException
+  parent: System.Web
+  isExternal: false
+  name: HttpException
+  nameWithType: HttpException
+  fullName: System.Web.HttpException
+- uid: System.InvalidOperationException
+  parent: System
+  isExternal: false
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.Web.UI.WebControls.SiteMapDataSource.#ctor
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: SiteMapDataSource()
+  nameWithType: SiteMapDataSource.SiteMapDataSource()
+  fullName: SiteMapDataSource.SiteMapDataSource()
+- uid: System.Web.UI.WebControls.SiteMapDataSource.ContainsListCollection
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: ContainsListCollection
+  nameWithType: SiteMapDataSource.ContainsListCollection
+  fullName: SiteMapDataSource.ContainsListCollection
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Web.UI.WebControls.SiteMapDataSource.GetHierarchicalView(System.String)
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: GetHierarchicalView(String)
+  nameWithType: SiteMapDataSource.GetHierarchicalView(String)
+  fullName: SiteMapDataSource.GetHierarchicalView(String)
+- uid: System.Web.UI.HierarchicalDataSourceView
+  parent: System.Web.UI
+  isExternal: false
+  name: HierarchicalDataSourceView
+  nameWithType: HierarchicalDataSourceView
+  fullName: System.Web.UI.HierarchicalDataSourceView
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Web.UI.WebControls.SiteMapDataSource.GetList
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: GetList()
+  nameWithType: SiteMapDataSource.GetList()
+  fullName: SiteMapDataSource.GetList()
+- uid: System.Collections.IList
+  parent: System.Collections
+  isExternal: false
+  name: IList
+  nameWithType: IList
+  fullName: System.Collections.IList
+- uid: System.Web.UI.WebControls.SiteMapDataSource.GetView(System.String)
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: GetView(String)
+  nameWithType: SiteMapDataSource.GetView(String)
+  fullName: SiteMapDataSource.GetView(String)
+- uid: System.Web.UI.DataSourceView
+  parent: System.Web.UI
+  isExternal: false
+  name: DataSourceView
+  nameWithType: DataSourceView
+  fullName: System.Web.UI.DataSourceView
+- uid: System.Web.UI.WebControls.SiteMapDataSource.GetViewNames
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: GetViewNames()
+  nameWithType: SiteMapDataSource.GetViewNames()
+  fullName: SiteMapDataSource.GetViewNames()
+- uid: System.Collections.ICollection
+  parent: System.Collections
+  isExternal: false
+  name: ICollection
+  nameWithType: ICollection
+  fullName: System.Collections.ICollection
+- uid: System.Web.UI.WebControls.SiteMapDataSource.Provider
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: Provider
+  nameWithType: SiteMapDataSource.Provider
+  fullName: SiteMapDataSource.Provider
+- uid: System.Web.SiteMapProvider
+  parent: System.Web
+  isExternal: false
+  name: SiteMapProvider
+  nameWithType: SiteMapProvider
+  fullName: System.Web.SiteMapProvider
+- uid: System.Web.UI.WebControls.SiteMapDataSource.ShowStartingNode
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: ShowStartingNode
+  nameWithType: SiteMapDataSource.ShowStartingNode
+  fullName: SiteMapDataSource.ShowStartingNode
+- uid: System.Web.UI.WebControls.SiteMapDataSource.SiteMapProvider
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: SiteMapProvider
+  nameWithType: SiteMapDataSource.SiteMapProvider
+  fullName: SiteMapDataSource.SiteMapProvider
+- uid: System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: StartFromCurrentNode
+  nameWithType: SiteMapDataSource.StartFromCurrentNode
+  fullName: SiteMapDataSource.StartFromCurrentNode
+- uid: System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: StartingNodeOffset
+  nameWithType: SiteMapDataSource.StartingNodeOffset
+  fullName: SiteMapDataSource.StartingNodeOffset
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: StartingNodeUrl
+  nameWithType: SiteMapDataSource.StartingNodeUrl
+  fullName: SiteMapDataSource.StartingNodeUrl
+- uid: System.Web.UI.WebControls.SiteMapDataSource.System#ComponentModel#IListSource#ContainsListCollection
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: IListSource.ContainsListCollection
+  nameWithType: SiteMapDataSource.IListSource.ContainsListCollection
+  fullName: SiteMapDataSource.IListSource.ContainsListCollection
+- uid: System.Web.UI.WebControls.SiteMapDataSource.System#ComponentModel#IListSource#GetList
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: IListSource.GetList()
+  nameWithType: SiteMapDataSource.IListSource.GetList()
+  fullName: SiteMapDataSource.IListSource.GetList()
+- uid: System.Web.UI.WebControls.SiteMapDataSource.System#Web#UI#IDataSource#GetView(System.String)
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: IDataSource.GetView(String)
+  nameWithType: SiteMapDataSource.IDataSource.GetView(String)
+  fullName: SiteMapDataSource.IDataSource.GetView(String)
+- uid: System.Web.UI.WebControls.SiteMapDataSource.System#Web#UI#IDataSource#GetViewNames
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: IDataSource.GetViewNames()
+  nameWithType: SiteMapDataSource.IDataSource.GetViewNames()
+  fullName: SiteMapDataSource.IDataSource.GetViewNames()
+- uid: System.Web.UI.WebControls.SiteMapDataSource.#ctor*
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: SiteMapDataSource
+  nameWithType: SiteMapDataSource.SiteMapDataSource
+  fullName: SiteMapDataSource.SiteMapDataSource
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+- uid: System.Web.UI.WebControls.SiteMapDataSource.ContainsListCollection*
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: ContainsListCollection
+  nameWithType: SiteMapDataSource.ContainsListCollection
+  fullName: SiteMapDataSource.ContainsListCollection
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+- uid: System.Web.UI.WebControls.SiteMapDataSource.GetHierarchicalView*
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: GetHierarchicalView
+  nameWithType: SiteMapDataSource.GetHierarchicalView
+  fullName: SiteMapDataSource.GetHierarchicalView
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+- uid: System.Web.UI.WebControls.SiteMapDataSource.GetList*
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: GetList
+  nameWithType: SiteMapDataSource.GetList
+  fullName: SiteMapDataSource.GetList
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+- uid: System.Web.UI.WebControls.SiteMapDataSource.GetView*
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: GetView
+  nameWithType: SiteMapDataSource.GetView
+  fullName: SiteMapDataSource.GetView
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+- uid: System.Web.UI.WebControls.SiteMapDataSource.GetViewNames*
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: GetViewNames
+  nameWithType: SiteMapDataSource.GetViewNames
+  fullName: SiteMapDataSource.GetViewNames
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+- uid: System.Web.UI.WebControls.SiteMapDataSource.Provider*
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: Provider
+  nameWithType: SiteMapDataSource.Provider
+  fullName: SiteMapDataSource.Provider
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+- uid: System.Web.UI.WebControls.SiteMapDataSource.ShowStartingNode*
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: ShowStartingNode
+  nameWithType: SiteMapDataSource.ShowStartingNode
+  fullName: SiteMapDataSource.ShowStartingNode
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+- uid: System.Web.UI.WebControls.SiteMapDataSource.SiteMapProvider*
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: SiteMapProvider
+  nameWithType: SiteMapDataSource.SiteMapProvider
+  fullName: SiteMapDataSource.SiteMapProvider
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+- uid: System.Web.UI.WebControls.SiteMapDataSource.StartFromCurrentNode*
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: StartFromCurrentNode
+  nameWithType: SiteMapDataSource.StartFromCurrentNode
+  fullName: SiteMapDataSource.StartFromCurrentNode
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+- uid: System.Web.UI.WebControls.SiteMapDataSource.StartingNodeOffset*
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: StartingNodeOffset
+  nameWithType: SiteMapDataSource.StartingNodeOffset
+  fullName: SiteMapDataSource.StartingNodeOffset
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+- uid: System.Web.UI.WebControls.SiteMapDataSource.StartingNodeUrl*
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: StartingNodeUrl
+  nameWithType: SiteMapDataSource.StartingNodeUrl
+  fullName: SiteMapDataSource.StartingNodeUrl
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+- uid: System.Web.UI.WebControls.SiteMapDataSource.System#ComponentModel#IListSource#ContainsListCollection*
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: System.ComponentModel.IListSource.ContainsListCollection
+  nameWithType: SiteMapDataSource.System.ComponentModel.IListSource.ContainsListCollection
+  fullName: SiteMapDataSource.System.ComponentModel.IListSource.ContainsListCollection
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+- uid: System.Web.UI.WebControls.SiteMapDataSource.System#ComponentModel#IListSource#GetList*
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: System.ComponentModel.IListSource.GetList
+  nameWithType: SiteMapDataSource.System.ComponentModel.IListSource.GetList
+  fullName: SiteMapDataSource.System.ComponentModel.IListSource.GetList
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+- uid: System.Web.UI.WebControls.SiteMapDataSource.System#Web#UI#IDataSource#GetView*
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: System.Web.UI.IDataSource.GetView
+  nameWithType: SiteMapDataSource.System.Web.UI.IDataSource.GetView
+  fullName: SiteMapDataSource.System.Web.UI.IDataSource.GetView
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+- uid: System.Web.UI.WebControls.SiteMapDataSource.System#Web#UI#IDataSource#GetViewNames*
+  parent: System.Web.UI.WebControls.SiteMapDataSource
+  isExternal: false
+  name: System.Web.UI.IDataSource.GetViewNames
+  nameWithType: SiteMapDataSource.System.Web.UI.IDataSource.GetViewNames
+  fullName: SiteMapDataSource.System.Web.UI.IDataSource.GetViewNames
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls/SiteMapDataSource.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Web.UI.Control.Adapter
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Adapter
+  nameWithType: Control.Adapter
+  fullName: Control.Adapter
+- uid: System.Web.UI.Control.AddedControl(System.Web.UI.Control,System.Int32)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AddedControl(Control, Int32)
+  nameWithType: Control.AddedControl(Control, Int32)
+  fullName: Control.AddedControl(Control, Int32)
+- uid: System.Web.UI.Control.AddParsedSubObject(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AddParsedSubObject(Object)
+  nameWithType: Control.AddParsedSubObject(Object)
+  fullName: Control.AddParsedSubObject(Object)
+- uid: System.Web.UI.HierarchicalDataSourceControl.ApplyStyleSheetSkin(System.Web.UI.Page)
+  parent: System.Web.UI.HierarchicalDataSourceControl
+  isExternal: false
+  name: ApplyStyleSheetSkin(Page)
+  nameWithType: HierarchicalDataSourceControl.ApplyStyleSheetSkin(Page)
+  fullName: HierarchicalDataSourceControl.ApplyStyleSheetSkin(Page)
+- uid: System.Web.UI.Control.AppRelativeTemplateSourceDirectory
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AppRelativeTemplateSourceDirectory
+  nameWithType: Control.AppRelativeTemplateSourceDirectory
+  fullName: Control.AppRelativeTemplateSourceDirectory
+- uid: System.Web.UI.Control.BeginRenderTracing(System.IO.TextWriter,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BeginRenderTracing(TextWriter, Object)
+  nameWithType: Control.BeginRenderTracing(TextWriter, Object)
+  fullName: Control.BeginRenderTracing(TextWriter, Object)
+- uid: System.Web.UI.Control.BindingContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BindingContainer
+  nameWithType: Control.BindingContainer
+  fullName: Control.BindingContainer
+- uid: System.Web.UI.Control.BuildProfileTree(System.String,System.Boolean)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BuildProfileTree(String, Boolean)
+  nameWithType: Control.BuildProfileTree(String, Boolean)
+  fullName: Control.BuildProfileTree(String, Boolean)
+- uid: System.Web.UI.Control.ChildControlsCreated
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ChildControlsCreated
+  nameWithType: Control.ChildControlsCreated
+  fullName: Control.ChildControlsCreated
+- uid: System.Web.UI.Control.ClearCachedClientID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearCachedClientID()
+  nameWithType: Control.ClearCachedClientID()
+  fullName: Control.ClearCachedClientID()
+- uid: System.Web.UI.Control.ClearChildControlState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildControlState()
+  nameWithType: Control.ClearChildControlState()
+  fullName: Control.ClearChildControlState()
+- uid: System.Web.UI.Control.ClearChildState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildState()
+  nameWithType: Control.ClearChildState()
+  fullName: Control.ClearChildState()
+- uid: System.Web.UI.Control.ClearChildViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildViewState()
+  nameWithType: Control.ClearChildViewState()
+  fullName: Control.ClearChildViewState()
+- uid: System.Web.UI.Control.ClearEffectiveClientIDMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearEffectiveClientIDMode()
+  nameWithType: Control.ClearEffectiveClientIDMode()
+  fullName: Control.ClearEffectiveClientIDMode()
+- uid: System.Web.UI.HierarchicalDataSourceControl.ClientID
+  parent: System.Web.UI.HierarchicalDataSourceControl
+  isExternal: false
+  name: ClientID
+  nameWithType: HierarchicalDataSourceControl.ClientID
+  fullName: HierarchicalDataSourceControl.ClientID
+- uid: System.Web.UI.HierarchicalDataSourceControl.ClientIDMode
+  parent: System.Web.UI.HierarchicalDataSourceControl
+  isExternal: false
+  name: ClientIDMode
+  nameWithType: HierarchicalDataSourceControl.ClientIDMode
+  fullName: HierarchicalDataSourceControl.ClientIDMode
+- uid: System.Web.UI.Control.ClientIDSeparator
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClientIDSeparator
+  nameWithType: Control.ClientIDSeparator
+  fullName: Control.ClientIDSeparator
+- uid: System.Web.UI.Control.Context
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Context
+  nameWithType: Control.Context
+  fullName: Control.Context
+- uid: System.Web.UI.HierarchicalDataSourceControl.Controls
+  parent: System.Web.UI.HierarchicalDataSourceControl
+  isExternal: false
+  name: Controls
+  nameWithType: HierarchicalDataSourceControl.Controls
+  fullName: HierarchicalDataSourceControl.Controls
+- uid: System.Web.UI.Control.CreateChildControls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: CreateChildControls()
+  nameWithType: Control.CreateChildControls()
+  fullName: Control.CreateChildControls()
+- uid: System.Web.UI.HierarchicalDataSourceControl.CreateControlCollection
+  parent: System.Web.UI.HierarchicalDataSourceControl
+  isExternal: false
+  name: CreateControlCollection()
+  nameWithType: HierarchicalDataSourceControl.CreateControlCollection()
+  fullName: HierarchicalDataSourceControl.CreateControlCollection()
+- uid: System.Web.UI.Control.DataBind
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBind()
+  nameWithType: Control.DataBind()
+  fullName: Control.DataBind()
+- uid: System.Web.UI.Control.DataBind(System.Boolean)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBind(Boolean)
+  nameWithType: Control.DataBind(Boolean)
+  fullName: Control.DataBind(Boolean)
+- uid: System.Web.UI.Control.DataBindChildren
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBindChildren()
+  nameWithType: Control.DataBindChildren()
+  fullName: Control.DataBindChildren()
+- uid: System.Web.UI.Control.DataBinding
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBinding
+  nameWithType: Control.DataBinding
+  fullName: Control.DataBinding
+- uid: System.Web.UI.Control.DataItemContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataItemContainer
+  nameWithType: Control.DataItemContainer
+  fullName: Control.DataItemContainer
+- uid: System.Web.UI.Control.DataKeysContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataKeysContainer
+  nameWithType: Control.DataKeysContainer
+  fullName: Control.DataKeysContainer
+- uid: System.Web.UI.Control.DesignMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DesignMode
+  nameWithType: Control.DesignMode
+  fullName: Control.DesignMode
+- uid: System.Web.UI.Control.Dispose
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Dispose()
+  nameWithType: Control.Dispose()
+  fullName: Control.Dispose()
+- uid: System.Web.UI.Control.Disposed
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Disposed
+  nameWithType: Control.Disposed
+  fullName: Control.Disposed
+- uid: System.Web.UI.HierarchicalDataSourceControl.EnableTheming
+  parent: System.Web.UI.HierarchicalDataSourceControl
+  isExternal: false
+  name: EnableTheming
+  nameWithType: HierarchicalDataSourceControl.EnableTheming
+  fullName: HierarchicalDataSourceControl.EnableTheming
+- uid: System.Web.UI.Control.EnableViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnableViewState
+  nameWithType: Control.EnableViewState
+  fullName: Control.EnableViewState
+- uid: System.Web.UI.Control.EndRenderTracing(System.IO.TextWriter,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EndRenderTracing(TextWriter, Object)
+  nameWithType: Control.EndRenderTracing(TextWriter, Object)
+  fullName: Control.EndRenderTracing(TextWriter, Object)
+- uid: System.Web.UI.Control.EnsureChildControls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnsureChildControls()
+  nameWithType: Control.EnsureChildControls()
+  fullName: Control.EnsureChildControls()
+- uid: System.Web.UI.Control.EnsureID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnsureID()
+  nameWithType: Control.EnsureID()
+  fullName: Control.EnsureID()
+- uid: System.Web.UI.Control.Events
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Events
+  nameWithType: Control.Events
+  fullName: Control.Events
+- uid: System.Web.UI.HierarchicalDataSourceControl.FindControl(System.String)
+  parent: System.Web.UI.HierarchicalDataSourceControl
+  isExternal: false
+  name: FindControl(String)
+  nameWithType: HierarchicalDataSourceControl.FindControl(String)
+  fullName: HierarchicalDataSourceControl.FindControl(String)
+- uid: System.Web.UI.Control.FindControl(System.String,System.Int32)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: FindControl(String, Int32)
+  nameWithType: Control.FindControl(String, Int32)
+  fullName: Control.FindControl(String, Int32)
+- uid: System.Web.UI.HierarchicalDataSourceControl.Focus
+  parent: System.Web.UI.HierarchicalDataSourceControl
+  isExternal: false
+  name: Focus()
+  nameWithType: HierarchicalDataSourceControl.Focus()
+  fullName: HierarchicalDataSourceControl.Focus()
+- uid: System.Web.UI.Control.GetDesignModeState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetDesignModeState()
+  nameWithType: Control.GetDesignModeState()
+  fullName: Control.GetDesignModeState()
+- uid: System.Web.UI.Control.GetRouteUrl(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(Object)
+  nameWithType: Control.GetRouteUrl(Object)
+  fullName: Control.GetRouteUrl(Object)
+- uid: System.Web.UI.Control.GetRouteUrl(System.Web.Routing.RouteValueDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(RouteValueDictionary)
+  nameWithType: Control.GetRouteUrl(RouteValueDictionary)
+  fullName: Control.GetRouteUrl(RouteValueDictionary)
+- uid: System.Web.UI.Control.GetRouteUrl(System.String,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(String, Object)
+  nameWithType: Control.GetRouteUrl(String, Object)
+  fullName: Control.GetRouteUrl(String, Object)
+- uid: System.Web.UI.Control.GetRouteUrl(System.String,System.Web.Routing.RouteValueDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(String, RouteValueDictionary)
+  nameWithType: Control.GetRouteUrl(String, RouteValueDictionary)
+  fullName: Control.GetRouteUrl(String, RouteValueDictionary)
+- uid: System.Web.UI.Control.GetUniqueIDRelativeTo(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetUniqueIDRelativeTo(Control)
+  nameWithType: Control.GetUniqueIDRelativeTo(Control)
+  fullName: Control.GetUniqueIDRelativeTo(Control)
+- uid: System.Web.UI.Control.HasChildViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: HasChildViewState
+  nameWithType: Control.HasChildViewState
+  fullName: Control.HasChildViewState
+- uid: System.Web.UI.HierarchicalDataSourceControl.HasControls
+  parent: System.Web.UI.HierarchicalDataSourceControl
+  isExternal: false
+  name: HasControls()
+  nameWithType: HierarchicalDataSourceControl.HasControls()
+  fullName: HierarchicalDataSourceControl.HasControls()
+- uid: System.Web.UI.Control.HasEvents
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: HasEvents()
+  nameWithType: Control.HasEvents()
+  fullName: Control.HasEvents()
+- uid: System.Web.UI.Control.ID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ID
+  nameWithType: Control.ID
+  fullName: Control.ID
+- uid: System.Web.UI.Control.IdSeparator
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IdSeparator
+  nameWithType: Control.IdSeparator
+  fullName: Control.IdSeparator
+- uid: System.Web.UI.Control.Init
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Init
+  nameWithType: Control.Init
+  fullName: Control.Init
+- uid: System.Web.UI.Control.IsChildControlStateCleared
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsChildControlStateCleared
+  nameWithType: Control.IsChildControlStateCleared
+  fullName: Control.IsChildControlStateCleared
+- uid: System.Web.UI.Control.IsLiteralContent
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsLiteralContent()
+  nameWithType: Control.IsLiteralContent()
+  fullName: Control.IsLiteralContent()
+- uid: System.Web.UI.Control.IsTrackingViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsTrackingViewState
+  nameWithType: Control.IsTrackingViewState
+  fullName: Control.IsTrackingViewState
+- uid: System.Web.UI.Control.IsViewStateEnabled
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsViewStateEnabled
+  nameWithType: Control.IsViewStateEnabled
+  fullName: Control.IsViewStateEnabled
+- uid: System.Web.UI.Control.Load
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Load
+  nameWithType: Control.Load
+  fullName: Control.Load
+- uid: System.Web.UI.Control.LoadControlState(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: LoadControlState(Object)
+  nameWithType: Control.LoadControlState(Object)
+  fullName: Control.LoadControlState(Object)
+- uid: System.Web.UI.Control.LoadViewState(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: LoadViewState(Object)
+  nameWithType: Control.LoadViewState(Object)
+  fullName: Control.LoadViewState(Object)
+- uid: System.Web.UI.Control.LoadViewStateByID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: LoadViewStateByID
+  nameWithType: Control.LoadViewStateByID
+  fullName: Control.LoadViewStateByID
+- uid: System.Web.UI.Control.MapPathSecure(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: MapPathSecure(String)
+  nameWithType: Control.MapPathSecure(String)
+  fullName: Control.MapPathSecure(String)
+- uid: System.Web.UI.Control.NamingContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: NamingContainer
+  nameWithType: Control.NamingContainer
+  fullName: Control.NamingContainer
+- uid: System.Web.UI.Control.OnBubbleEvent(System.Object,System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnBubbleEvent(Object, EventArgs)
+  nameWithType: Control.OnBubbleEvent(Object, EventArgs)
+  fullName: Control.OnBubbleEvent(Object, EventArgs)
+- uid: System.Web.UI.Control.OnDataBinding(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnDataBinding(EventArgs)
+  nameWithType: Control.OnDataBinding(EventArgs)
+  fullName: Control.OnDataBinding(EventArgs)
+- uid: System.Web.UI.Control.OnInit(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnInit(EventArgs)
+  nameWithType: Control.OnInit(EventArgs)
+  fullName: Control.OnInit(EventArgs)
+- uid: System.Web.UI.Control.OnLoad(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnLoad(EventArgs)
+  nameWithType: Control.OnLoad(EventArgs)
+  fullName: Control.OnLoad(EventArgs)
+- uid: System.Web.UI.Control.OnPreRender(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnPreRender(EventArgs)
+  nameWithType: Control.OnPreRender(EventArgs)
+  fullName: Control.OnPreRender(EventArgs)
+- uid: System.Web.UI.Control.OnUnload(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnUnload(EventArgs)
+  nameWithType: Control.OnUnload(EventArgs)
+  fullName: Control.OnUnload(EventArgs)
+- uid: System.Web.UI.Control.OpenFile(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OpenFile(String)
+  nameWithType: Control.OpenFile(String)
+  fullName: Control.OpenFile(String)
+- uid: System.Web.UI.Control.Page
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Page
+  nameWithType: Control.Page
+  fullName: Control.Page
+- uid: System.Web.UI.Control.Parent
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Parent
+  nameWithType: Control.Parent
+  fullName: Control.Parent
+- uid: System.Web.UI.Control.PreRender
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: PreRender
+  nameWithType: Control.PreRender
+  fullName: Control.PreRender
+- uid: System.Web.UI.Control.RaiseBubbleEvent(System.Object,System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RaiseBubbleEvent(Object, EventArgs)
+  nameWithType: Control.RaiseBubbleEvent(Object, EventArgs)
+  fullName: Control.RaiseBubbleEvent(Object, EventArgs)
+- uid: System.Web.UI.Control.RemovedControl(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RemovedControl(Control)
+  nameWithType: Control.RemovedControl(Control)
+  fullName: Control.RemovedControl(Control)
+- uid: System.Web.UI.Control.Render(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Render(HtmlTextWriter)
+  nameWithType: Control.Render(HtmlTextWriter)
+  fullName: Control.Render(HtmlTextWriter)
+- uid: System.Web.UI.Control.RenderChildren(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderChildren(HtmlTextWriter)
+  nameWithType: Control.RenderChildren(HtmlTextWriter)
+  fullName: Control.RenderChildren(HtmlTextWriter)
+- uid: System.Web.UI.HierarchicalDataSourceControl.RenderControl(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.HierarchicalDataSourceControl
+  isExternal: false
+  name: RenderControl(HtmlTextWriter)
+  nameWithType: HierarchicalDataSourceControl.RenderControl(HtmlTextWriter)
+  fullName: HierarchicalDataSourceControl.RenderControl(HtmlTextWriter)
+- uid: System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter,System.Web.UI.Adapters.ControlAdapter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderControl(HtmlTextWriter, ControlAdapter)
+  nameWithType: Control.RenderControl(HtmlTextWriter, ControlAdapter)
+  fullName: Control.RenderControl(HtmlTextWriter, ControlAdapter)
+- uid: System.Web.UI.Control.RenderingCompatibility
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderingCompatibility
+  nameWithType: Control.RenderingCompatibility
+  fullName: Control.RenderingCompatibility
+- uid: System.Web.UI.Control.ResolveAdapter
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveAdapter()
+  nameWithType: Control.ResolveAdapter()
+  fullName: Control.ResolveAdapter()
+- uid: System.Web.UI.Control.ResolveClientUrl(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveClientUrl(String)
+  nameWithType: Control.ResolveClientUrl(String)
+  fullName: Control.ResolveClientUrl(String)
+- uid: System.Web.UI.Control.ResolveUrl(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveUrl(String)
+  nameWithType: Control.ResolveUrl(String)
+  fullName: Control.ResolveUrl(String)
+- uid: System.Web.UI.Control.SaveControlState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SaveControlState()
+  nameWithType: Control.SaveControlState()
+  fullName: Control.SaveControlState()
+- uid: System.Web.UI.Control.SaveViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SaveViewState()
+  nameWithType: Control.SaveViewState()
+  fullName: Control.SaveViewState()
+- uid: System.Web.UI.Control.SetDesignModeState(System.Collections.IDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetDesignModeState(IDictionary)
+  nameWithType: Control.SetDesignModeState(IDictionary)
+  fullName: Control.SetDesignModeState(IDictionary)
+- uid: System.Web.UI.Control.SetRenderMethodDelegate(System.Web.UI.RenderMethod)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetRenderMethodDelegate(RenderMethod)
+  nameWithType: Control.SetRenderMethodDelegate(RenderMethod)
+  fullName: Control.SetRenderMethodDelegate(RenderMethod)
+- uid: System.Web.UI.Control.SetTraceData(System.Object,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetTraceData(Object, Object)
+  nameWithType: Control.SetTraceData(Object, Object)
+  fullName: Control.SetTraceData(Object, Object)
+- uid: System.Web.UI.Control.SetTraceData(System.Object,System.Object,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetTraceData(Object, Object, Object)
+  nameWithType: Control.SetTraceData(Object, Object, Object)
+  fullName: Control.SetTraceData(Object, Object, Object)
+- uid: System.Web.UI.Control.Site
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Site
+  nameWithType: Control.Site
+  fullName: Control.Site
+- uid: System.Web.UI.HierarchicalDataSourceControl.SkinID
+  parent: System.Web.UI.HierarchicalDataSourceControl
+  isExternal: false
+  name: SkinID
+  nameWithType: HierarchicalDataSourceControl.SkinID
+  fullName: HierarchicalDataSourceControl.SkinID
+- uid: System.Web.UI.Control.TemplateControl
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: TemplateControl
+  nameWithType: Control.TemplateControl
+  fullName: Control.TemplateControl
+- uid: System.Web.UI.Control.TemplateSourceDirectory
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: TemplateSourceDirectory
+  nameWithType: Control.TemplateSourceDirectory
+  fullName: Control.TemplateSourceDirectory
+- uid: System.Web.UI.Control.TrackViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: TrackViewState()
+  nameWithType: Control.TrackViewState()
+  fullName: Control.TrackViewState()
+- uid: System.Web.UI.Control.UniqueID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: UniqueID
+  nameWithType: Control.UniqueID
+  fullName: Control.UniqueID
+- uid: System.Web.UI.Control.Unload
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Unload
+  nameWithType: Control.Unload
+  fullName: Control.Unload
+- uid: System.Web.UI.Control.ValidateRequestMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ValidateRequestMode
+  nameWithType: Control.ValidateRequestMode
+  fullName: Control.ValidateRequestMode
+- uid: System.Web.UI.Control.ViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewState
+  nameWithType: Control.ViewState
+  fullName: Control.ViewState
+- uid: System.Web.UI.Control.ViewStateIgnoresCase
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewStateIgnoresCase
+  nameWithType: Control.ViewStateIgnoresCase
+  fullName: Control.ViewStateIgnoresCase
+- uid: System.Web.UI.Control.ViewStateMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewStateMode
+  nameWithType: Control.ViewStateMode
+  fullName: Control.ViewStateMode
+- uid: System.Web.UI.HierarchicalDataSourceControl.Visible
+  parent: System.Web.UI.HierarchicalDataSourceControl
+  isExternal: false
+  name: Visible
+  nameWithType: HierarchicalDataSourceControl.Visible
+  fullName: HierarchicalDataSourceControl.Visible
+- uid: System.Web.UI.Control.System#Web#UI#IControlBuilderAccessor#ControlBuilder
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlBuilderAccessor.ControlBuilder
+  nameWithType: Control.IControlBuilderAccessor.ControlBuilder
+  fullName: Control.IControlBuilderAccessor.ControlBuilder
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#GetDesignModeState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.GetDesignModeState()
+  nameWithType: Control.IControlDesignerAccessor.GetDesignModeState()
+  fullName: Control.IControlDesignerAccessor.GetDesignModeState()
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetDesignModeState(System.Collections.IDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.SetDesignModeState(IDictionary)
+  nameWithType: Control.IControlDesignerAccessor.SetDesignModeState(IDictionary)
+  fullName: Control.IControlDesignerAccessor.SetDesignModeState(IDictionary)
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetOwnerControl(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.SetOwnerControl(Control)
+  nameWithType: Control.IControlDesignerAccessor.SetOwnerControl(Control)
+  fullName: Control.IControlDesignerAccessor.SetOwnerControl(Control)
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#UserData
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.UserData
+  nameWithType: Control.IControlDesignerAccessor.UserData
+  fullName: Control.IControlDesignerAccessor.UserData
+- uid: System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#DataBindings
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IDataBindingsAccessor.DataBindings
+  nameWithType: Control.IDataBindingsAccessor.DataBindings
+  fullName: Control.IDataBindingsAccessor.DataBindings
+- uid: System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#HasDataBindings
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IDataBindingsAccessor.HasDataBindings
+  nameWithType: Control.IDataBindingsAccessor.HasDataBindings
+  fullName: Control.IDataBindingsAccessor.HasDataBindings
+- uid: System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#Expressions
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IExpressionsAccessor.Expressions
+  nameWithType: Control.IExpressionsAccessor.Expressions
+  fullName: Control.IExpressionsAccessor.Expressions
+- uid: System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#HasExpressions
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IExpressionsAccessor.HasExpressions
+  nameWithType: Control.IExpressionsAccessor.HasExpressions
+  fullName: Control.IExpressionsAccessor.HasExpressions
+- uid: System.Web.UI.Control.System#Web#UI#IParserAccessor#AddParsedSubObject(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IParserAccessor.AddParsedSubObject(Object)
+  nameWithType: Control.IParserAccessor.AddParsedSubObject(Object)
+  fullName: Control.IParserAccessor.AddParsedSubObject(Object)
+- uid: System.Web.UI.HierarchicalDataSourceControl.OnDataSourceChanged(System.EventArgs)
+  parent: System.Web.UI.HierarchicalDataSourceControl
+  isExternal: false
+  name: OnDataSourceChanged(EventArgs)
+  nameWithType: HierarchicalDataSourceControl.OnDataSourceChanged(EventArgs)
+  fullName: HierarchicalDataSourceControl.OnDataSourceChanged(EventArgs)
+- uid: System.Web.UI.HierarchicalDataSourceControl.System#Web#UI#IHierarchicalDataSource#GetHierarchicalView(System.String)
+  parent: System.Web.UI.HierarchicalDataSourceControl
+  isExternal: false
+  name: IHierarchicalDataSource.GetHierarchicalView(String)
+  nameWithType: HierarchicalDataSourceControl.IHierarchicalDataSource.GetHierarchicalView(String)
+  fullName: HierarchicalDataSourceControl.IHierarchicalDataSource.GetHierarchicalView(String)
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindDataSourceControl(System.Web.UI.Control)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindDataSourceControl(Control)
+  nameWithType: DynamicDataExtensions.FindDataSourceControl(Control)
+  fullName: DynamicDataExtensions.FindDataSourceControl(Control)
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindFieldTemplate(System.Web.UI.Control,System.String)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindFieldTemplate(Control, String)
+  nameWithType: DynamicDataExtensions.FindFieldTemplate(Control, String)
+  fullName: DynamicDataExtensions.FindFieldTemplate(Control, String)
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindMetaTable(System.Web.UI.Control)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindMetaTable(Control)
+  nameWithType: DynamicDataExtensions.FindMetaTable(Control)
+  fullName: DynamicDataExtensions.FindMetaTable(Control)
+- uid: System.Web.DynamicData.DynamicDataExtensions.GetDefaultValues(System.Web.UI.IDataSource)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: GetDefaultValues(IDataSource)
+  nameWithType: DynamicDataExtensions.GetDefaultValues(IDataSource)
+  fullName: DynamicDataExtensions.GetDefaultValues(IDataSource)
+- uid: System.Web.DynamicData.DynamicDataExtensions.GetMetaTable(System.Web.UI.IDataSource)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: GetMetaTable(IDataSource)
+  nameWithType: DynamicDataExtensions.GetMetaTable(IDataSource)
+  fullName: DynamicDataExtensions.GetMetaTable(IDataSource)
+- uid: System.Web.DynamicData.DynamicDataExtensions.TryGetMetaTable(System.Web.UI.IDataSource,System.Web.DynamicData.MetaTable@)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: TryGetMetaTable(IDataSource, MetaTable)
+  nameWithType: DynamicDataExtensions.TryGetMetaTable(IDataSource, MetaTable)
+  fullName: DynamicDataExtensions.TryGetMetaTable(IDataSource, MetaTable)
+- uid: System.ComponentModel.IListSource
+  parent: System.ComponentModel
+  isExternal: false
+  name: IListSource
+  nameWithType: IListSource
+  fullName: System.ComponentModel.IListSource
+- uid: System.Web.UI.IDataSource
+  parent: System.Web.UI
+  isExternal: false
+  name: IDataSource
+  nameWithType: IDataSource
+  fullName: System.Web.UI.IDataSource

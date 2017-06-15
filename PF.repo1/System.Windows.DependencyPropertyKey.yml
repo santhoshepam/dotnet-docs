@@ -1,0 +1,277 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Windows.DependencyPropertyKey
+  commentId: T:System.Windows.DependencyPropertyKey
+  id: DependencyPropertyKey
+  children:
+  - System.Windows.DependencyPropertyKey.DependencyProperty
+  - System.Windows.DependencyPropertyKey.OverrideMetadata(System.Type,System.Windows.PropertyMetadata)
+  langs:
+  - csharp
+  name: DependencyPropertyKey
+  nameWithType: DependencyPropertyKey
+  fullName: System.Windows.DependencyPropertyKey
+  type: Class
+  assemblies:
+  - WindowsBase
+  namespace: System.Windows
+  summary: Provides a dependency property identifier for limited write access to a read-only dependency property.
+  remarks: "<xref:System.Windows.DependencyPropertyKey> instances are obtained as the return value of a dependency property registration call using the methods <xref:System.Windows.DependencyProperty.RegisterReadOnly%2A> or <xref:System.Windows.DependencyProperty.RegisterAttachedReadOnly%2A>.  \n  \n The types that register a dependency property can use the <xref:System.Windows.DependencyPropertyKey> in calls to <xref:System.Windows.DependencyObject.SetValue%2A> and <xref:System.Windows.DependencyObject.ClearValue%2A> that adjust the property's value as part of class logic. If permitted by the access level of the key, related classes can use the key and the dependency property also. For instance, you can declare the key as internal, and other types within the same assembly can also set that dependency property.  \n  \n The <xref:System.Windows.DependencyPropertyKey> returned by read-only dependency property registration should not be made public, because exposing the key makes the property settable, thus defeating the point of registering it as a read-only dependency property. Also, exposing the key causes a mismatch between the available dependency property behaviors and its [!INCLUDE[TLA#tla_clr](~/includes/tlasharptla-clr-md.md)] property wrapper implementations, which is bad class design.  \n  \n Instead of exposing the key itself, you should instead expose the <xref:System.Windows.DependencyPropertyKey.DependencyProperty%2A> value of the <xref:System.Windows.DependencyPropertyKey> as a `public static readonly`<xref:System.Windows.DependencyProperty> on your class. This enables the property to return a valid dependency property identifier for certain property system operations such as enumerating locally set values. However, the identifier thus obtained does not have the full capabilities of a <xref:System.Windows.DependencyProperty> for many property system operations."
+  example:
+  - "The following example registers a read-only dependency property, and also uses the key for two purposes in other class members: implementing the get \"wrapper\", and as the identifier for a protected determination operation that sets the value based on calculations of other property values.  \n  \n [!code-csharp[WPFAquariumSln#RODP](~/samples/snippets/csharp/VS_Snippets_Wpf/WPFAquariumSln/CSharp/WPFAquariumObjects/Class1.cs#rodp)]\n [!code-vb[WPFAquariumSln#RODP](~/samples/snippets/visualbasic/VS_Snippets_Wpf/WPFAquariumSln/visualbasic/wpfaquariumobjects/class1.vb#rodp)]"
+  syntax:
+    content: public sealed class DependencyPropertyKey
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/DependencyPropertyKey.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.DependencyPropertyKey.DependencyProperty
+  commentId: P:System.Windows.DependencyPropertyKey.DependencyProperty
+  id: DependencyProperty
+  parent: System.Windows.DependencyPropertyKey
+  langs:
+  - csharp
+  name: DependencyProperty
+  nameWithType: DependencyPropertyKey.DependencyProperty
+  fullName: DependencyPropertyKey.DependencyProperty
+  type: Property
+  assemblies:
+  - WindowsBase
+  namespace: System.Windows
+  summary: Gets the dependency property identifier associated with this specialized read-only dependency property identifier.
+  remarks: "The <xref:System.Windows.DependencyPropertyKey.DependencyProperty%2A> value enables a read-only property's identifier to participate in common property system operations using some of the same interfaces as used for read-write dependency properties.  \n  \n In order to implement the get property accessor for a read-only dependency property, you should create and expose a <xref:System.Windows.DependencyProperty> identifier on your class. This serves two purposes:  \n  \n-   Your own class needs the <xref:System.Windows.DependencyProperty> identifier in order to implement the get accessor for the property wrapper. You use the <xref:System.Windows.DependencyProperty> as a parameter for the <xref:System.Windows.DependencyObject.GetValue%2A> call that implements the get accessor.  \n  \n-   <xref:System.Windows.DependencyProperty> identifiers expose your dependency property to the property system such that other methods that rely on metadata can access it in a standard form. For instance, if you called <xref:System.Windows.DependencyObject.GetLocalValueEnumerator%2A> on some <xref:System.Windows.DependencyObject> and obtained an enumeration of locally set properties (values and identifiers) the identifier returned for a read-only dependency property would be your <xref:System.Windows.DependencyProperty> value rather than the key. Not exposing a <xref:System.Windows.DependencyProperty> identifier does not increase the security of your read-only dependency property in any way, it just makes operations that involve your property more awkward both for subsequent derived classes and class instances.  \n  \n To expose the  <xref:System.Windows.DependencyProperty> identifier on your class, you call <xref:System.Windows.DependencyPropertyKey.DependencyProperty%2A> directly on your key. Use this value to create a `public static readonly`<xref:System.Windows.DependencyProperty> identifier on the class, which parallels the <xref:System.Windows.DependencyPropertyKey>."
+  example:
+  - "The following example calls <xref:System.Windows.DependencyPropertyKey.DependencyProperty%2A> to expose the <xref:System.Windows.DependencyProperty> identifier (`AquariumGraphicProperty`) for the `AquariumGraphic` read-only dependency property on a class. The example also shows the <xref:System.Windows.DependencyPropertyKey> creation (as an internal member) and the get accessor for `AquariumGraphic`.  \n  \n [!code-csharp[WPFAquariumSln#RODP](~/samples/snippets/csharp/VS_Snippets_Wpf/WPFAquariumSln/CSharp/WPFAquariumObjects/Class1.cs#rodp)]\n [!code-vb[WPFAquariumSln#RODP](~/samples/snippets/visualbasic/VS_Snippets_Wpf/WPFAquariumSln/visualbasic/wpfaquariumobjects/class1.vb#rodp)]"
+  syntax:
+    content: public System.Windows.DependencyProperty DependencyProperty { get; }
+    return:
+      type: System.Windows.DependencyProperty
+      description: The relevant dependency property identifier.
+  overload: System.Windows.DependencyPropertyKey.DependencyProperty*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/DependencyPropertyKey.xml
+  ms.technology:
+  - dotnet-wpf
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.DependencyPropertyKey.OverrideMetadata(System.Type,System.Windows.PropertyMetadata)
+  commentId: M:System.Windows.DependencyPropertyKey.OverrideMetadata(System.Type,System.Windows.PropertyMetadata)
+  id: OverrideMetadata(System.Type,System.Windows.PropertyMetadata)
+  parent: System.Windows.DependencyPropertyKey
+  langs:
+  - csharp
+  name: OverrideMetadata(Type, PropertyMetadata)
+  nameWithType: DependencyPropertyKey.OverrideMetadata(Type, PropertyMetadata)
+  fullName: DependencyPropertyKey.OverrideMetadata(Type, PropertyMetadata)
+  type: Method
+  assemblies:
+  - WindowsBase
+  namespace: System.Windows
+  summary: Overrides the metadata of a read-only dependency property that is represented by this dependency property identifier.
+  remarks: "Overriding metadata on a read-only dependency property is done for similar reasons as overriding metadata on a read-write dependency property, and is restricted to access at the key level because behaviors specified in the metadata can change the set behavior (the default value, for instance).  \n  \n As with read-write dependency properties, overriding metadata on a read-only dependency property should only be done prior to that property being placed in use by the property system (this equates to the time that specific instances of objects that register the property are instantiated). Calls to <xref:System.Windows.DependencyPropertyKey.OverrideMetadata%2A> should only be performed within the static constructors of the type that provides itself as the `forType` parameter of this method, or equivalent initialization for that class.  \n  \n This method effectively forwards to the <xref:System.Windows.DependencyProperty.OverrideMetadata%2A> method, passing the <xref:System.Windows.DependencyPropertyKey> instance as the key parameter."
+  example:
+  - "The following example overrides metadata for an existing read-only dependency property that a class inherits. In this case, the scenario goal was to add a coerce value callback that the base property metadata did not have. You could also override metadata for any of the other reasons that overriding metadata is typically appropriate (changing default value, adding <xref:System.Windows.FrameworkPropertyMetadataOptions> values, etc.)  \n  \n [!code-csharp[WPFAquariumSln#RODPOverride](~/samples/snippets/csharp/VS_Snippets_Wpf/WPFAquariumSln/CSharp/WPFAquariumObjects/Class1.cs#rodpoverride)]\n [!code-vb[WPFAquariumSln#RODPOverride](~/samples/snippets/visualbasic/VS_Snippets_Wpf/WPFAquariumSln/visualbasic/wpfaquariumobjects/class1.vb#rodpoverride)]"
+  syntax:
+    content: public void OverrideMetadata (Type forType, System.Windows.PropertyMetadata typeMetadata);
+    parameters:
+    - id: forType
+      type: System.Type
+      description: The type on which this dependency property exists and metadata should be overridden.
+    - id: typeMetadata
+      type: System.Windows.PropertyMetadata
+      description: Metadata supplied for this type.
+  overload: System.Windows.DependencyPropertyKey.OverrideMetadata*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: Attempted metadata override on a read-write dependency property (cannot be done using this signature).
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: Metadata was already established for the property as it exists on the provided type.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/DependencyPropertyKey.xml
+  ms.technology:
+  - dotnet-wpf
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.InvalidOperationException
+  parent: System
+  isExternal: false
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.Windows.DependencyPropertyKey.DependencyProperty
+  parent: System.Windows.DependencyPropertyKey
+  isExternal: false
+  name: DependencyProperty
+  nameWithType: DependencyPropertyKey.DependencyProperty
+  fullName: DependencyPropertyKey.DependencyProperty
+- uid: System.Windows.DependencyProperty
+  parent: System.Windows
+  isExternal: false
+  name: DependencyProperty
+  nameWithType: DependencyProperty
+  fullName: System.Windows.DependencyProperty
+- uid: System.Windows.DependencyPropertyKey.OverrideMetadata(System.Type,System.Windows.PropertyMetadata)
+  parent: System.Windows.DependencyPropertyKey
+  isExternal: false
+  name: OverrideMetadata(Type, PropertyMetadata)
+  nameWithType: DependencyPropertyKey.OverrideMetadata(Type, PropertyMetadata)
+  fullName: DependencyPropertyKey.OverrideMetadata(Type, PropertyMetadata)
+- uid: System.Type
+  parent: System
+  isExternal: false
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: System.Windows.PropertyMetadata
+  parent: System.Windows
+  isExternal: false
+  name: PropertyMetadata
+  nameWithType: PropertyMetadata
+  fullName: System.Windows.PropertyMetadata
+- uid: System.Windows.DependencyPropertyKey.DependencyProperty*
+  parent: System.Windows.DependencyPropertyKey
+  isExternal: false
+  name: DependencyProperty
+  nameWithType: DependencyPropertyKey.DependencyProperty
+  fullName: DependencyPropertyKey.DependencyProperty
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/DependencyPropertyKey.xml
+- uid: System.Windows.DependencyPropertyKey.OverrideMetadata*
+  parent: System.Windows.DependencyPropertyKey
+  isExternal: false
+  name: OverrideMetadata
+  nameWithType: DependencyPropertyKey.OverrideMetadata
+  fullName: DependencyPropertyKey.OverrideMetadata
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows/DependencyPropertyKey.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

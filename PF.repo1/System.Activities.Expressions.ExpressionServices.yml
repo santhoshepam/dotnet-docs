@@ -1,0 +1,504 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Activities.Expressions.ExpressionServices
+  commentId: T:System.Activities.Expressions.ExpressionServices
+  id: ExpressionServices
+  children:
+  - System.Activities.Expressions.ExpressionServices.Convert``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}})
+  - System.Activities.Expressions.ExpressionServices.ConvertReference``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}})
+  - System.Activities.Expressions.ExpressionServices.TryConvert``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}},System.Activities.Activity{``0}@)
+  - System.Activities.Expressions.ExpressionServices.TryConvertReference``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}},System.Activities.Activity{System.Activities.Location{``0}}@)
+  langs:
+  - csharp
+  name: ExpressionServices
+  nameWithType: ExpressionServices
+  fullName: System.Activities.Expressions.ExpressionServices
+  type: Class
+  assemblies:
+  - System.Activities
+  namespace: System.Activities.Expressions
+  summary: A transformation API used to convert environment aware expressions to an activity tree.
+  remarks: "The conversion methods in this class transform the specified lambda expressions, which can contain multiple sub-expressions, into activity trees composed of a hierarchy of activities. It is strongly recommended to use these conversion methods instead of instantiating expression activities directly because they provide a higher level of abstraction and enable you to implement your workflow more intuitively. See the examples for more information.  \n  \n The conversion methods in <xref:System.Activities.Expressions.ExpressionServices> are designed to work with variables and constants defined inside the workflow, or passed into the workflow via arguments."
+  example:
+  - "The following code example calls <xref:System.Activities.Expressions.ExpressionServices.Convert%2A> to compute the sum of the array element at index 0 and the array element at index 1. Next, the resulting sum is assigned to a variable and is printed to the console.  \n  \n```  \n  \npublic static void ComputeSumWithConvert()  \n{  \n    var arrayvar = new Variable<int[]>(\"arrayvar\", new int[] { 1, 2 });  \n    var intvar = new Variable<int>(\"intvar\");              \n  \n    // Use ExpressionServices.Convert() to convert the composite lambda expression  \n    // that represents the sum of array elements at index 0 and 1.  \n    Activity<int> activity1 = ExpressionServices.Convert<int>(ctx => arrayvar.Get(ctx)[0] + arrayvar.Get(ctx)[1]);  \n  \n    Activity seq = new Sequence  \n    {  \n        Variables = { arrayvar, intvar },  \n        Activities =  \n        {                      \n            // Get the sum value.  \n            new Assign<int>  \n            {  \n                To = intvar,  \n                Value = activity1,  \n            },  \n            // Print the sum value of 3 to the console.  \n            new WriteLine  \n            {                          \n                Text = new InArgument<string>(ctx => intvar.Get(ctx).ToString()),  \n            },  \n        }  \n    };  \n  \n    WorkflowInvoker.Invoke(seq);  \n  \n}  \n  \n```  \n  \n The following code example is provided for comparison purposes. This second example shows how to compute the sum by instantiating the <xref:System.Activities.Expressions.Add%603> expression activity. The two examples are functionally equivalent but as you can see the second approach involves more coding and is not as straightforward as calling <xref:System.Activities.Expressions.ExpressionServices.Convert%2A>. Therefore the first example is recommended.  \n  \n```  \n  \npublic static void ComputeSumWithExpressionActivity()  \n{  \n    var arrayvar = new Variable<int[]>(\"arrayvar\", new int[] { 1, 2 });  \n    var intvar = new Variable<int>(\"intvar\");  \n  \n    // Create an Add activity to compute the sum of array elements at index 0 and 1.  \n    Activity<int> activity1 = new Add<int, int, int>  \n    {  \n        Left = new ArrayItemValue<int>  \n        {  \n            Array = arrayvar,  \n            Index = 0,  \n        },  \n        Right = new ArrayItemValue<int>  \n        {  \n            Array = arrayvar,  \n            Index = 1,  \n        }  \n    };              \n  \n    Activity seq = new Sequence  \n    {  \n        Variables = { arrayvar, intvar },  \n        Activities =  \n        {  \n            // Get the sum value.  \n            new Assign<int>  \n            {  \n                To = intvar,  \n                Value = activity1,  \n            },  \n            // Print the sum value of 3 to the console.   \n            new WriteLine  \n            {                          \n                Text = new InArgument<string>(ctx => intvar.Get(ctx).ToString()),  \n            },                      \n        }  \n    };  \n  \n    WorkflowInvoker.Invoke(seq);  \n  \n}  \n  \n```"
+  syntax:
+    content: public static class ExpressionServices
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Expressions/ExpressionServices.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Activities.Expressions.ExpressionServices.Convert``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}})
+  commentId: M:System.Activities.Expressions.ExpressionServices.Convert``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}})
+  id: Convert``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}})
+  parent: System.Activities.Expressions.ExpressionServices
+  langs:
+  - csharp
+  name: Convert<TResult>(Expression<Func<ActivityContext,TResult>>)
+  nameWithType: ExpressionServices.Convert<TResult>(Expression<Func<ActivityContext,TResult>>)
+  fullName: ExpressionServices.Convert<TResult>(Expression<Func<ActivityContext,TResult>>)
+  type: Method
+  assemblies:
+  - System.Activities
+  namespace: System.Activities.Expressions
+  summary: Converts a workflow environment-aware expression to an activity tree.
+  remarks: "For a code example of <xref:System.Activities.Expressions.ExpressionServices.Convert%2A>, see <xref:System.Activities.Expressions.ExpressionServices.ConvertReference%2A>.  \n  \n The conversion methods in <xref:System.Activities.Expressions.ExpressionServices> are designed to work with variables and constants defined inside the workflow, or passed into the workflow via arguments."
+  syntax:
+    content: public static System.Activities.Activity<TResult> Convert<TResult> (System.Linq.Expressions.Expression<Func<System.Activities.ActivityContext,TResult>> expression);
+    parameters:
+    - id: expression
+      type: System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,TResult}}
+      description: The expression being converted.
+    typeParameters:
+    - id: TResult
+      description: The type the expression is being converted to.
+    return:
+      type: System.Activities.Activity`1
+      description: The converted expression.
+  overload: System.Activities.Expressions.ExpressionServices.Convert``1*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Expressions/ExpressionServices.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Activities.Expressions.ExpressionServices.ConvertReference``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}})
+  commentId: M:System.Activities.Expressions.ExpressionServices.ConvertReference``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}})
+  id: ConvertReference``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}})
+  parent: System.Activities.Expressions.ExpressionServices
+  langs:
+  - csharp
+  name: ConvertReference<TResult>(Expression<Func<ActivityContext,TResult>>)
+  nameWithType: ExpressionServices.ConvertReference<TResult>(Expression<Func<ActivityContext,TResult>>)
+  fullName: ExpressionServices.ConvertReference<TResult>(Expression<Func<ActivityContext,TResult>>)
+  type: Method
+  assemblies:
+  - System.Activities
+  namespace: System.Activities.Expressions
+  summary: Converts a reference to a workflow environment-aware expression to an activity tree.
+  remarks: The conversion methods in <xref:System.Activities.Expressions.ExpressionServices> are designed to work with variables and constants defined inside the workflow, or passed into the workflow via arguments.
+  example:
+  - "The following two code examples illustrate the use of <xref:System.Activities.Expressions.ExpressionServices.ConvertReference%2A> and <xref:System.Activities.Expressions.ExpressionServices.Convert%2A>. The first code example uses <xref:System.Activities.Expressions.ExpressionServices.ConvertReference%2A> in an `Assign` activity to convert a lambda expression into a string property that is assigned a value. Next, <xref:System.Activities.Expressions.ExpressionServices.Convert%2A> is called to convert a lambda expression into a string property value that is printed to the console in the `WriteLine` activity.  \n  \n```  \n  \n// Define a struct with a property named AProperty.  \nstruct StructWithProperty  \n{  \n    public string AProperty { get; set; }  \n}  \n  \npublic static void ConvertReferenceForValueTypePropertyReferenceSample()  \n{              \n    // Create a variable of type StructWithProperty to store the property.  \n    var swpvar = new Variable<StructWithProperty>(\"swpvar\", new StructWithProperty());  \n  \n    Activity myActivity = new Sequence  \n    {  \n        Variables = { swpvar },  \n        Activities =   \n        {                      \n            // Create an Assign activity to assign a value to the AProperty property.  \n            new Assign<string>  \n            {  \n                To = ExpressionServices.ConvertReference<string>(ctx => swpvar.Get(ctx).AProperty),  \n                // Assign a string literal to AProperty.  \n                Value = \"Hello\",  \n            },  \n            // Print the new property value to the console.  \n            new WriteLine()  \n            {  \n                Text = ExpressionServices.Convert<string>(ctx => swpvar.Get(ctx).AProperty),  \n            }  \n        }  \n    };  \n  \n    // Invoke the Sequence activity.  \n    WorkflowInvoker.Invoke(myActivity);  \n}  \n  \n```  \n  \n The following code example is like the previous one except that the expression to convert is a reference to an item in a multidimensional array.  \n  \n```  \n  \npublic static void ConvertReferenceForMultidimensionalArrayItemReferenceSample()  \n{  \n    // Create a variable to store a multidimensional array.  \n    var arrayvar = new Variable<int[,]>(\"arrayvar\", new int[4, 5]);  \n  \n    Activity myActivity = new Sequence  \n    {  \n        Variables = { arrayvar },  \n        Activities =   \n        {                      \n            // Create an Assign activity to assign a value to the array item at index [1,2].  \n            new Assign<int>  \n            {  \n                To = ExpressionServices.ConvertReference<int>(ctx => arrayvar.Get(ctx)[1, 2]),  \n                // Assign an integer value to the array item at row 1 column 2.  \n                Value = 1,  \n            },  \n            // Print the array item value to the console.  \n            new WriteLine()  \n            {  \n                Text = ExpressionServices.Convert<string>(ctx => arrayvar.Get(ctx)[1, 2].ToString()),  \n            }  \n        }  \n    };  \n  \n    // Invoke the Sequence activity.  \n    WorkflowInvoker.Invoke(myActivity);  \n}  \n  \n```"
+  syntax:
+    content: public static System.Activities.Activity<System.Activities.Location<TResult>> ConvertReference<TResult> (System.Linq.Expressions.Expression<Func<System.Activities.ActivityContext,TResult>> expression);
+    parameters:
+    - id: expression
+      type: System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,TResult}}
+      description: The expression being converted.
+    typeParameters:
+    - id: TResult
+      description: The type the expression is being converted to.
+    return:
+      type: System.Activities.Activity{System.Activities.Location{TResult}}
+      description: The converted expression.
+  overload: System.Activities.Expressions.ExpressionServices.ConvertReference``1*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Expressions/ExpressionServices.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Activities.Expressions.ExpressionServices.TryConvert``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}},System.Activities.Activity{``0}@)
+  commentId: M:System.Activities.Expressions.ExpressionServices.TryConvert``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}},System.Activities.Activity{``0}@)
+  id: TryConvert``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}},System.Activities.Activity{``0}@)
+  parent: System.Activities.Expressions.ExpressionServices
+  langs:
+  - csharp
+  name: TryConvert<TResult>(Expression<Func<ActivityContext,TResult>>, Activity<TResult>)
+  nameWithType: ExpressionServices.TryConvert<TResult>(Expression<Func<ActivityContext,TResult>>, Activity<TResult>)
+  fullName: ExpressionServices.TryConvert<TResult>(Expression<Func<ActivityContext,TResult>>, Activity<TResult>)
+  type: Method
+  assemblies:
+  - System.Activities
+  namespace: System.Activities.Expressions
+  summary: Converts a workflow environment-aware expression to an activity tree.
+  remarks: The conversion methods in <xref:System.Activities.Expressions.ExpressionServices> are designed to work with variables and constants defined inside the workflow, or passed into the workflow via arguments.
+  syntax:
+    content: public static bool TryConvert<TResult> (System.Linq.Expressions.Expression<Func<System.Activities.ActivityContext,TResult>> expression, out System.Activities.Activity<TResult> result);
+    parameters:
+    - id: expression
+      type: System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,TResult}}
+      description: The expression being converted.
+    - id: result
+      type: System.Activities.Activity`1
+      description: The converted expression.
+    typeParameters:
+    - id: TResult
+      description: The type the expression is being converted to.
+    return:
+      type: System.Boolean
+      description: '`true` if the expression can be converted; otherwise, `false`.'
+  overload: System.Activities.Expressions.ExpressionServices.TryConvert``1*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Expressions/ExpressionServices.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.Activities.Expressions.ExpressionServices.TryConvertReference``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}},System.Activities.Activity{System.Activities.Location{``0}}@)
+  commentId: M:System.Activities.Expressions.ExpressionServices.TryConvertReference``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}},System.Activities.Activity{System.Activities.Location{``0}}@)
+  id: TryConvertReference``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}},System.Activities.Activity{System.Activities.Location{``0}}@)
+  parent: System.Activities.Expressions.ExpressionServices
+  langs:
+  - csharp
+  name: TryConvertReference<TResult>(Expression<Func<ActivityContext,TResult>>, Activity<Location<TResult>>)
+  nameWithType: ExpressionServices.TryConvertReference<TResult>(Expression<Func<ActivityContext,TResult>>, Activity<Location<TResult>>)
+  fullName: ExpressionServices.TryConvertReference<TResult>(Expression<Func<ActivityContext,TResult>>, Activity<Location<TResult>>)
+  type: Method
+  assemblies:
+  - System.Activities
+  namespace: System.Activities.Expressions
+  summary: Converts a reference to a workflow environment-aware expression to an activity tree.
+  remarks: The conversion methods in <xref:System.Activities.Expressions.ExpressionServices> are designed to work with variables and constants defined inside the workflow, or passed into the workflow via arguments.
+  syntax:
+    content: public static bool TryConvertReference<TResult> (System.Linq.Expressions.Expression<Func<System.Activities.ActivityContext,TResult>> expression, out System.Activities.Activity<System.Activities.Location<TResult>> result);
+    parameters:
+    - id: expression
+      type: System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,TResult}}
+      description: The expression being converted.
+    - id: result
+      type: System.Activities.Activity{System.Activities.Location{TResult}}
+      description: The converted expression.
+    typeParameters:
+    - id: TResult
+      description: The type the expression is being converted to.
+    return:
+      type: System.Boolean
+      description: '`true` if the expression can be converted; otherwise, `false`.'
+  overload: System.Activities.Expressions.ExpressionServices.TryConvertReference``1*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Expressions/ExpressionServices.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Activities.Expressions.ExpressionServices.Convert``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}})
+  parent: System.Activities.Expressions.ExpressionServices
+  isExternal: false
+  name: Convert<TResult>(Expression<Func<ActivityContext,TResult>>)
+  nameWithType: ExpressionServices.Convert<TResult>(Expression<Func<ActivityContext,TResult>>)
+  fullName: ExpressionServices.Convert<TResult>(Expression<Func<ActivityContext,TResult>>)
+- uid: System.Activities.Activity`1
+  parent: System.Activities
+  isExternal: false
+  name: Activity<TResult>
+  nameWithType: Activity<TResult>
+  fullName: System.Activities.Activity<TResult>
+- uid: System.Linq.Expressions.Expression`1
+  name: Expression<TDelegate>
+  nameWithType: Expression<TDelegate>
+  fullName: System.Linq.Expressions.Expression<TDelegate>
+- uid: System.Func`2
+  name: Func<T,TResult>
+  nameWithType: Func<T,TResult>
+  fullName: System.Func<T,TResult>
+- uid: System.Activities.ActivityContext
+  name: ActivityContext
+  nameWithType: ActivityContext
+  fullName: System.Activities.ActivityContext
+- uid: TResult
+  name: TResult
+  nameWithType: TResult
+  fullName: TResult
+- uid: System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,TResult}}
+  parent: System.Linq.Expressions
+  isExternal: false
+  name: Expression<Func<ActivityContext,TResult>>
+  nameWithType: Expression<Func<ActivityContext,TResult>>
+  fullName: System.Linq.Expressions.Expression<System.Func<System.Activities.ActivityContext,TResult>>
+  spec.csharp:
+  - uid: System.Linq.Expressions.Expression`1
+    name: Expression
+    nameWithType: Expression
+    fullName: System.Linq.Expressions.Expression
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Activities.ActivityContext
+    name: ActivityContext
+    nameWithType: ActivityContext
+    fullName: System.Activities.ActivityContext
+  - name: ','
+    nameWithType: ','
+    fullName: ','
+  - uid: TResult
+    name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Activities.Expressions.ExpressionServices.ConvertReference``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}})
+  parent: System.Activities.Expressions.ExpressionServices
+  isExternal: false
+  name: ConvertReference<TResult>(Expression<Func<ActivityContext,TResult>>)
+  nameWithType: ExpressionServices.ConvertReference<TResult>(Expression<Func<ActivityContext,TResult>>)
+  fullName: ExpressionServices.ConvertReference<TResult>(Expression<Func<ActivityContext,TResult>>)
+- uid: System.Activities.Location`1
+  name: Location<T>
+  nameWithType: Location<T>
+  fullName: System.Activities.Location<T>
+- uid: System.Activities.Activity{System.Activities.Location{TResult}}
+  parent: System.Activities
+  isExternal: false
+  name: Activity<Location<TResult>>
+  nameWithType: Activity<Location<TResult>>
+  fullName: System.Activities.Activity<System.Activities.Location<TResult>>
+  spec.csharp:
+  - uid: System.Activities.Activity`1
+    name: Activity
+    nameWithType: Activity
+    fullName: System.Activities.Activity
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Activities.Location`1
+    name: Location
+    nameWithType: Location
+    fullName: System.Activities.Location
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: TResult
+    name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Activities.Expressions.ExpressionServices.TryConvert``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}},System.Activities.Activity{``0}@)
+  parent: System.Activities.Expressions.ExpressionServices
+  isExternal: false
+  name: TryConvert<TResult>(Expression<Func<ActivityContext,TResult>>, Activity<TResult>)
+  nameWithType: ExpressionServices.TryConvert<TResult>(Expression<Func<ActivityContext,TResult>>, Activity<TResult>)
+  fullName: ExpressionServices.TryConvert<TResult>(Expression<Func<ActivityContext,TResult>>, Activity<TResult>)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Activities.Expressions.ExpressionServices.TryConvertReference``1(System.Linq.Expressions.Expression{System.Func{System.Activities.ActivityContext,``0}},System.Activities.Activity{System.Activities.Location{``0}}@)
+  parent: System.Activities.Expressions.ExpressionServices
+  isExternal: false
+  name: TryConvertReference<TResult>(Expression<Func<ActivityContext,TResult>>, Activity<Location<TResult>>)
+  nameWithType: ExpressionServices.TryConvertReference<TResult>(Expression<Func<ActivityContext,TResult>>, Activity<Location<TResult>>)
+  fullName: ExpressionServices.TryConvertReference<TResult>(Expression<Func<ActivityContext,TResult>>, Activity<Location<TResult>>)
+- uid: System.Activities.Expressions.ExpressionServices.Convert``1*
+  parent: System.Activities.Expressions.ExpressionServices
+  isExternal: false
+  name: Convert<TResult>
+  nameWithType: ExpressionServices.Convert<TResult>
+  fullName: ExpressionServices.Convert<TResult>
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Expressions/ExpressionServices.xml
+- uid: System.Activities.Expressions.ExpressionServices.ConvertReference``1*
+  parent: System.Activities.Expressions.ExpressionServices
+  isExternal: false
+  name: ConvertReference<TResult>
+  nameWithType: ExpressionServices.ConvertReference<TResult>
+  fullName: ExpressionServices.ConvertReference<TResult>
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Expressions/ExpressionServices.xml
+- uid: System.Activities.Expressions.ExpressionServices.TryConvert``1*
+  parent: System.Activities.Expressions.ExpressionServices
+  isExternal: false
+  name: TryConvert<TResult>
+  nameWithType: ExpressionServices.TryConvert<TResult>
+  fullName: ExpressionServices.TryConvert<TResult>
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Expressions/ExpressionServices.xml
+- uid: System.Activities.Expressions.ExpressionServices.TryConvertReference``1*
+  parent: System.Activities.Expressions.ExpressionServices
+  isExternal: false
+  name: TryConvertReference<TResult>
+  nameWithType: ExpressionServices.TryConvertReference<TResult>
+  fullName: ExpressionServices.TryConvertReference<TResult>
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Activities.Expressions/ExpressionServices.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

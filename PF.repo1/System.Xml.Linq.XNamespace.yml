@@ -1,0 +1,1588 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Xml.Linq.XNamespace
+  commentId: T:System.Xml.Linq.XNamespace
+  id: XNamespace
+  children:
+  - System.Xml.Linq.XNamespace.Equals(System.Object)
+  - System.Xml.Linq.XNamespace.Get(System.String)
+  - System.Xml.Linq.XNamespace.GetHashCode
+  - System.Xml.Linq.XNamespace.GetName(System.String)
+  - System.Xml.Linq.XNamespace.NamespaceName
+  - System.Xml.Linq.XNamespace.None
+  - System.Xml.Linq.XNamespace.op_Addition(System.Xml.Linq.XNamespace,System.String)
+  - System.Xml.Linq.XNamespace.op_Equality(System.Xml.Linq.XNamespace,System.Xml.Linq.XNamespace)
+  - System.Xml.Linq.XNamespace.op_Implicit(System.String to System.Xml.Linq.XNamespace)
+  - System.Xml.Linq.XNamespace.op_Inequality(System.Xml.Linq.XNamespace,System.Xml.Linq.XNamespace)
+  - System.Xml.Linq.XNamespace.ToString
+  - System.Xml.Linq.XNamespace.Xml
+  - System.Xml.Linq.XNamespace.Xmlns
+  langs:
+  - csharp
+  name: XNamespace
+  nameWithType: XNamespace
+  fullName: System.Xml.Linq.XNamespace
+  type: Class
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Represents an XML namespace. This class cannot be inherited.
+  remarks: "This class represents the XML construct of namespaces.  \n  \n Every <xref:System.Xml.Linq.XName> contains an <xref:System.Xml.Linq.XNamespace>. Even if an element is not in a namespace, the element's <xref:System.Xml.Linq.XName> still contains a namespace, <xref:System.Xml.Linq.XNamespace.None%2A?displayProperty=fullName>. The <xref:System.Xml.Linq.XName.Namespace%2A?displayProperty=fullName> property is guaranteed to not be `null`.  \n  \n## Creating an XNamespace Object  \n The most common way to create an <xref:System.Xml.Linq.XNamespace> object is to simply assign a string to it. You can then combine the namespace with a local name by using the override of the addition operator. The following example shows this idiom:  \n  \n```csharp  \n  \n                XNamespace aw = \"http://www.adventure-works.com\";  \nXElement root = new XElement(aw + \"Root\", \"Content\");  \nConsole.WriteLine(root);  \n```  \n  \n```vb  \n  \n                Dim aw As XNamespace = \"http://www.adventure-works.com\"  \nDim root As XElement = New XElement(aw + \"Root\", \"Content\")  \nConsole.WriteLine(root)  \n```  \n  \n However, in Visual Basic, you would typically declare a global default namespace, as follows:  \n  \n```vb  \n  \n                Imports <xmlns='http://www.adventure-works.com'>  \n  \nModule Module1  \n    Sub Main()  \n        Dim root As XElement = _  \n            <Root>Content</Root>  \n        Console.WriteLine(root)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```xml  \n  \n<Root xmlns=\"http://www.adventure-works.com\">Content</Root>  \n```  \n  \n Assigning a string to an <xref:System.Xml.Linq.XNamespace> uses the implicit conversion from <xref:System.String>.  \n  \n See [How to: Create a Document with Namespaces (C#) (LINQ to XML)](http://msdn.microsoft.com/library/af4a595e-ffb2-4187-a61b-d5ed71642c4c) for more information and examples.  \n  \n See [Namespaces in Visual Basic (LINQ to XML)](http://msdn.microsoft.com/library/10b7ba7b-518c-4f14-899f-892575d14dcc) for more information on using namespaces in [!INCLUDE[vbprvb](~/includes/vbprvb-md.md)].  \n  \n## Controlling Namespace Prefixes  \n If you create an attribute that declares a namespace, the prefix specified in the attribute will be persisted in the serialized XML. To create an attribute that declares a namespace with a prefix, you create an attribute where the namespace of the name of the attribute is <xref:System.Xml.Linq.XNamespace.Xmlns%2A>, and the name of the attribute is the namespace prefix. The value of the attribute is the URI of the namespace. The following example shows this idiom:  \n  \n```csharp  \n  \n                XNamespace aw = \"http://www.adventure-works.com\";  \nXElement root = new XElement(aw + \"Root\",  \n    new XAttribute(XNamespace.Xmlns + \"aw\", \"http://www.adventure-works.com\"),  \n    \"Content\");  \nConsole.WriteLine(root);  \n```  \n  \n```vb  \n  \n                Dim aw As XNamespace = \"http://www.adventure-works.com\"  \nDim root As XElement = New XElement(aw + \"Root\", _  \n    New XAttribute(XNamespace.Xmlns + \"aw\", \"http://www.adventure-works.com\"), _  \n    \"Content\")  \nConsole.WriteLine(root)  \n```  \n  \n In [!INCLUDE[vbprvb](~/includes/vbprvb-md.md)], instead of creating a namespace node to control namespace prefixes, you would typically use a global namespace declaration:  \n  \n```vb  \n  \n                Imports <xmlns:aw='http://www.adventure-works.com'>  \n  \nModule Module1  \n    Sub Main()  \n        Dim root As XElement = _  \n            <aw:Root>Content</aw:Root>  \n        Console.WriteLine(root)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n<aw:Root xmlns:aw=\"http://www.adventure-works.com\">Content</aw:Root>  \n```  \n  \n For more information, see [How to: Control Namespace Prefixes (C#) (LINQ to XML)](http://msdn.microsoft.com/library/a40d4479-f1b9-4d8b-8623-445648caed28).  \n  \n## Creating a Default Namespace  \n When constructing an attribute that will be a namespace, if the attribute name has the special value of \"xmlns\", then when the XML tree is serialized, the namespace will be declared as the default namespace. The special attribute with the name of \"xmlns\" itself is not in any namespace. The value of the attribute is the namespace URI.  \n  \n The following example creates an XML tree that contains an attribute that is declared in such a way that the namespace will become the default namespace:  \n  \n```csharp  \n  \n                XNamespace aw = \"http://www.adventure-works.com\";  \nXElement root = new XElement(aw + \"Root\",  \n    new XAttribute(\"xmlns\", \"http://www.adventure-works.com\"),  \n    new XElement(aw + \"Child\", \"content\")  \n);  \nConsole.WriteLine(root);  \n```  \n  \n```vb  \n  \n                Dim aw As XNamespace = \"http://www.adventure-works.com\"  \nDim root As XElement = New XElement(aw + \"Root\", _  \n    New XAttribute(\"xmlns\", \"http://www.adventure-works.com\"), _  \n    New XElement(aw + \"Child\", \"content\") _  \n)  \nConsole.WriteLine(root)  \n```  \n  \n In [!INCLUDE[vbprvb](~/includes/vbprvb-md.md)], instead of creating a namespace node to create a default namespace, you would typically use a global default namespace declaration:  \n  \n```vb  \n  \n                Imports <xmlns='http://www.adventure-works.com'>  \n  \nModule Module1  \n    Sub Main()  \n        Dim root As XElement = _  \n            <Root>  \n                <Child>content</Child>  \n            </Root>  \n        Console.WriteLine(root)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n<Root xmlns=\"http://www.adventure-works.com\">  \n  <Child>content</Child>  \n</Root>  \n```  \n  \n## XNamespace Atomization  \n <xref:System.Xml.Linq.XNamespace> objects are guaranteed to be atomized; that is, if two <xref:System.Xml.Linq.XNamespace> objects have exactly the same URI, they will share the same instance. The equality and comparison operators are provided explicitly for this purpose.  \n  \n## Using Expanded Names  \n Another way to specify a namespace and a local name is to use an expanded name in the form `{namespace}name`:  \n  \n```csharp  \nXElement e = new XElement(\"{http://www.adventure-works.com}Root\",  \n     new XAttribute(\"{http://www.adventure-works.com}Att\", \"content\")  \n);  \nConsole.WriteLine(e);  \n```  \n  \n```vb  \n  \n                Dim e As XElement = New XElement(\"{http://www.adventure-works.com}Root\", _  \n     New XAttribute(\"{http://www.adventure-works.com}Att\", \"content\") _  \n)  \nConsole.WriteLine(e)  \n```  \n  \n This example produces the following output:  \n  \n```  \n<Root p1:Att=\"content\" xmlns:p1=\"http://www.adventure-works.com\" xmlns=\"http://www.adventure-works.com\" />  \n```  \n  \n This approach has performance implications. Each time that you pass a string that contains an expanded name to [!INCLUDE[sqltecxlinq](~/includes/sqltecxlinq-md.md)], it must parse the name, find the atomized namespace, and find the atomized name. This process takes CPU time. If performance is important, you may want to use a different approach.  \n  \n With Visual Basic, the recommended approach is to use XML literals, which does not involve the use of expanded names."
+  syntax:
+    content: public sealed class XNamespace
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XNamespace.Equals(System.Object)
+  commentId: M:System.Xml.Linq.XNamespace.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: System.Xml.Linq.XNamespace
+  langs:
+  - csharp
+  name: Equals(Object)
+  nameWithType: XNamespace.Equals(Object)
+  fullName: XNamespace.Equals(Object)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Determines whether the specified <xref href="System.Xml.Linq.XNamespace"></xref> is equal to the current <xref href="System.Xml.Linq.XNamespace"></xref>.
+  remarks: For two <xref:System.Xml.Linq.XNamespace> objects to be equal, they must have the same URI.
+  example:
+  - "The following example compares two namespaces that refer to the same URI.  \n  \n```csharp  \n  \n                XNamespace aw = \"http://www.adventure-works.com\";  \nConsole.WriteLine(aw == \"http://www.adventure-works.com\");  \n```  \n  \n```vb  \n  \n                Imports <xmlns:aw=\"http://www.adventure-works.com\">  \n  \nModule Module1  \n    Sub Main()  \n        Console.WriteLine(GetXmlNamespace(aw) = \"http://www.adventure-works.com\")  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \nTrue  \n```"
+  syntax:
+    content: public override bool Equals (object obj);
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The <xref href="System.Xml.Linq.XNamespace"></xref> to compare to the current <xref href="System.Xml.Linq.XNamespace"></xref>.
+    return:
+      type: System.Boolean
+      description: A <xref href="System.Boolean"></xref> that indicates whether the specified <xref href="System.Xml.Linq.XNamespace"></xref> is equal to the current <xref href="System.Xml.Linq.XNamespace"></xref>.
+  overload: System.Xml.Linq.XNamespace.Equals*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XNamespace.Get(System.String)
+  commentId: M:System.Xml.Linq.XNamespace.Get(System.String)
+  id: Get(System.String)
+  parent: System.Xml.Linq.XNamespace
+  langs:
+  - csharp
+  name: Get(String)
+  nameWithType: XNamespace.Get(String)
+  fullName: XNamespace.Get(String)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets an <xref href="System.Xml.Linq.XNamespace"></xref> for the specified Uniform Resource Identifier (URI).
+  remarks: The returned <xref:System.Xml.Linq.XNamespace> object is guaranteed to be atomic (that is, it is the only one in the system for that particular URI).
+  example:
+  - "The following example gets a <xref:System.Xml.Linq.XNamespace> from a specified URI.  \n  \n```csharp  \n  \n                XNamespace aw = XNamespace.Get(\"http://www.adventure-works.com\");  \n  \n// This is the preferred form.  \nXNamespace aw2 = \"http://www.adventure-works.com\";  \nConsole.WriteLine(aw);  \nConsole.WriteLine(aw2);  \n```  \n  \n```vb  \n  \n                Imports <xmlns:aw=\"http://www.adventure-works.com\">  \n  \nModule Module1  \n    Sub Main()  \n        Dim aw As XNamespace = XNamespace.Get(\"http://www.adventure-works.com\")  \n  \n        ' This is the preferred form.  \n        Dim aw2 As XNamespace = GetXmlNamespace(aw)  \n        Console.WriteLine(aw)  \n        Console.WriteLine(aw2)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \nhttp://www.adventure-works.com  \nhttp://www.adventure-works.com  \n```"
+  syntax:
+    content: public static System.Xml.Linq.XNamespace Get (string namespaceName);
+    parameters:
+    - id: namespaceName
+      type: System.String
+      description: A <xref href="System.String"></xref> that contains a namespace URI.
+    return:
+      type: System.Xml.Linq.XNamespace
+      description: An <xref href="System.Xml.Linq.XNamespace"></xref> created from the specified URI.
+  overload: System.Xml.Linq.XNamespace.Get*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XNamespace.GetHashCode
+  commentId: M:System.Xml.Linq.XNamespace.GetHashCode
+  id: GetHashCode
+  parent: System.Xml.Linq.XNamespace
+  langs:
+  - csharp
+  name: GetHashCode()
+  nameWithType: XNamespace.GetHashCode()
+  fullName: XNamespace.GetHashCode()
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets a hash code for this <xref href="System.Xml.Linq.XNamespace"></xref>.
+  remarks: This method serves as a hash function for <xref:System.Xml.Linq.XNamespace>. You can use <xref:System.Xml.Linq.XNamespace.GetHashCode%2A> in hashing algorithms and data structures like a hash table.
+  syntax:
+    content: public override int GetHashCode ();
+    parameters: []
+    return:
+      type: System.Int32
+      description: An <xref href="System.Int32"></xref> that contains the hash code for the <xref href="System.Xml.Linq.XNamespace"></xref>.
+  overload: System.Xml.Linq.XNamespace.GetHashCode*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XNamespace.GetName(System.String)
+  commentId: M:System.Xml.Linq.XNamespace.GetName(System.String)
+  id: GetName(System.String)
+  parent: System.Xml.Linq.XNamespace
+  langs:
+  - csharp
+  name: GetName(String)
+  nameWithType: XNamespace.GetName(String)
+  fullName: XNamespace.GetName(String)
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Returns an <xref href="System.Xml.Linq.XName"></xref> object created from this <xref href="System.Xml.Linq.XNamespace"></xref> and the specified local name.
+  remarks: The returned <xref:System.Xml.Linq.XName> object is guaranteed to be atomic (that is, it is the only one in the system for a specific expanded name).
+  example:
+  - "The following example uses this property to retrieve an <xref:System.Xml.Linq.XName>.  \n  \n```csharp  \n  \n                XNamespace aw = \"http://www.adventure-works.com\";  \nXName name = aw.GetName(\"Root\");  \nConsole.WriteLine(\"{0}\", name);  \n```  \n  \n```vb  \n  \n                Imports <xmlns:aw=\"http://www.adventure-works.com\">  \n  \nModule Module1  \n    Sub Main()  \n        Dim aw As XNamespace = GetXmlNamespace(aw)  \n        Dim name As XName = aw.GetName(\"Root\")  \n        Console.WriteLine(\"{0}\", name)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n{http://www.adventure-works.com}Root  \n```"
+  syntax:
+    content: public System.Xml.Linq.XName GetName (string localName);
+    parameters:
+    - id: localName
+      type: System.String
+      description: A <xref href="System.String"></xref> that contains a local name.
+    return:
+      type: System.Xml.Linq.XName
+      description: An <xref href="System.Xml.Linq.XName"></xref> created from this <xref href="System.Xml.Linq.XNamespace"></xref> and the specified local name.
+  overload: System.Xml.Linq.XNamespace.GetName*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XNamespace.NamespaceName
+  commentId: P:System.Xml.Linq.XNamespace.NamespaceName
+  id: NamespaceName
+  parent: System.Xml.Linq.XNamespace
+  langs:
+  - csharp
+  name: NamespaceName
+  nameWithType: XNamespace.NamespaceName
+  fullName: XNamespace.NamespaceName
+  type: Property
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets the Uniform Resource Identifier (URI) of this namespace.
+  remarks: ''
+  example:
+  - "The following example shows how to use this property:  \n  \n```csharp  \n  \n                string markup =  \n@\"<aw:Root  \n    xmlns:aw='http://www.adventure-works.com'/>\";  \nXElement root = XElement.Parse(markup);  \nConsole.WriteLine(root.Name.Namespace.NamespaceName);  \n```  \n  \n```vb  \n  \n                Imports <xmlns:aw=\"http://www.adventure-works.com\">  \n  \nModule Module1  \n    Sub Main()  \n        Dim aw As XNamespace = GetXmlNamespace(aw)  \n        Dim root As XElement = <aw:Root/>  \n        Console.WriteLine(root.Name.Namespace.NamespaceName)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \nhttp://www.adventure-works.com  \n```"
+  syntax:
+    content: public string NamespaceName { get; }
+    return:
+      type: System.String
+      description: A <xref href="System.String"></xref> that contains the URI of the namespace.
+  overload: System.Xml.Linq.XNamespace.NamespaceName*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XNamespace.None
+  commentId: P:System.Xml.Linq.XNamespace.None
+  id: None
+  parent: System.Xml.Linq.XNamespace
+  langs:
+  - csharp
+  name: None
+  nameWithType: XNamespace.None
+  fullName: XNamespace.None
+  type: Property
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets the <xref href="System.Xml.Linq.XNamespace"></xref> object that corresponds to no namespace.
+  remarks: If an element or attribute is in no namespace, its namespace will be set to the namespace returned by this property.
+  example:
+  - "The following example shows uses this property to determine which elements are in no namespace.  \n  \n```csharp  \n  \n                XNamespace aw = \"http://www.adventure-works.com\";  \n  \nXElement root = new XElement(\"Root\",  \n    new XElement(aw + \"ChildInNamespace\", \"content\"),  \n    new XElement(\"ChildInNoNamespace\", \"content\")  \n);  \n  \nif (root.Name.Namespace == XNamespace.None)  \n    Console.WriteLine(\"Root element is in no namespace\");  \nelse  \n    Console.WriteLine(\"Root element is in a namespace\");  \n  \nif (root.Element(aw + \"ChildInNamespace\").Name.Namespace == XNamespace.None)  \n    Console.WriteLine(\"ChildInNamespace element is in no namespace\");  \nelse  \n    Console.WriteLine(\"ChildInNamespace element is in a namespace\");  \n  \nif (root.Element(\"ChildInNoNamespace\").Name.Namespace == XNamespace.None)  \n    Console.WriteLine(\"ChildInNoNamespace element is in no namespace\");  \nelse  \n    Console.WriteLine(\"ChildInNoNamespace element is in a namespace\");  \n```  \n  \n```vb  \n  \n                Imports <xmlns:aw=\"http://www.adventure-works.com\">  \n  \nModule Module1  \n    Sub Main()  \n        Dim root As XElement = _  \n            <Root>  \n                <aw:ChildInNamespace>content</aw:ChildInNamespace>  \n                <ChildInNoNamespace>content</ChildInNoNamespace>  \n            </Root>  \n  \n        If (root.Name.Namespace Is XNamespace.None) Then  \n            Console.WriteLine(\"Root element is in no namespace\")  \n        Else  \n            Console.WriteLine(\"Root element is in a namespace\")  \n        End If  \n  \n        If (root.Element(GetXmlNamespace(aw) + \"ChildInNamespace\") _  \n                .Name.Namespace Is XNamespace.None) Then  \n            Console.WriteLine(\"ChildInNamespace element is in no namespace\")  \n        Else  \n            Console.WriteLine(\"ChildInNamespace element is in a namespace\")  \n        End If  \n  \n        If (root.Element(\"ChildInNoNamespace\") _  \n                .Name.Namespace Is XNamespace.None) Then  \n            Console.WriteLine(\"ChildInNoNamespace element is in no namespace\")  \n        Else  \n            Console.WriteLine(\"ChildInNoNamespace element is in a namespace\")  \n        End If  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \nRoot element is in no namespace  \nChildInNamespace element is in a namespace  \nChildInNoNamespace element is in no namespace  \n```"
+  syntax:
+    content: public static System.Xml.Linq.XNamespace None { get; }
+    return:
+      type: System.Xml.Linq.XNamespace
+      description: The <xref href="System.Xml.Linq.XNamespace"></xref> that corresponds to no namespace.
+  overload: System.Xml.Linq.XNamespace.None*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XNamespace.op_Addition(System.Xml.Linq.XNamespace,System.String)
+  commentId: M:System.Xml.Linq.XNamespace.op_Addition(System.Xml.Linq.XNamespace,System.String)
+  id: op_Addition(System.Xml.Linq.XNamespace,System.String)
+  parent: System.Xml.Linq.XNamespace
+  langs:
+  - csharp
+  name: op_Addition(XNamespace, String)
+  nameWithType: XNamespace.op_Addition(XNamespace, String)
+  fullName: XNamespace.op_Addition(XNamespace, String)
+  type: Operator
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Combines an <xref href="System.Xml.Linq.XNamespace"></xref> object with a local name to create an <xref href="System.Xml.Linq.XName"></xref>.
+  remarks: "This operator enables the common idiom of combining a namespace and a local name in the construction of an element or attribute. This idiom provides some of the benefits of having namespace prefixes, in that you can refer to a namespace using a variable that is short. This eliminates syntactic noise in the code that creates XML trees.  \n  \n The equivalent method for this operator is ?qualifyHint=True&autoUpgrade=False"
+  example:
+  - "The following example shows the use of the `+` operator to create an <xref:System.Xml.Linq.XName> from an <xref:System.Xml.Linq.XNamespace> and a local name.  \n  \n```csharp  \n  \n                XNamespace aw = \"http://www.adventure-works.com\";  \nXElement root = new XElement(aw + \"Root\",  \n    new XElement(aw + \"Child\")  \n);  \nConsole.WriteLine(root);  \n```  \n  \n```vb  \n  \n                Dim aw As XNamespace = \"http://www.adventure-works.com\"  \nDim root As XElement = New XElement(aw + \"Root\", _  \n    New XElement(aw + \"Child\") _  \n)  \nConsole.WriteLine(root)  \n```  \n  \n In Visual Basic, this is the preferred idiom:  \n  \n```vb  \n  \n                Imports <xmlns=\"http://www.adventure-works.com\">  \n  \nModule Module1  \n    Sub Main()  \n        Dim aw As XNamespace = GetXmlNamespace()  \n        Dim root As XElement = _  \n            <Root>  \n                <Child/>  \n            </Root>  \n        Console.WriteLine(root)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n<Root xmlns=\"http://www.adventure-works.com\">  \n  <Child />  \n</Root>  \n```"
+  syntax:
+    content: public static System.Xml.Linq.XName op_Addition (System.Xml.Linq.XNamespace ns, string localName);
+    parameters:
+    - id: ns
+      type: System.Xml.Linq.XNamespace
+      description: An <xref href="System.Xml.Linq.XNamespace"></xref> that contains the namespace.
+    - id: localName
+      type: System.String
+      description: A <xref href="System.String"></xref> that contains the local name.
+    return:
+      type: System.Xml.Linq.XName
+      description: The new <xref href="System.Xml.Linq.XName"></xref> constructed from the namespace and local name.
+  overload: System.Xml.Linq.XNamespace.op_Addition*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XNamespace.op_Equality(System.Xml.Linq.XNamespace,System.Xml.Linq.XNamespace)
+  commentId: M:System.Xml.Linq.XNamespace.op_Equality(System.Xml.Linq.XNamespace,System.Xml.Linq.XNamespace)
+  id: op_Equality(System.Xml.Linq.XNamespace,System.Xml.Linq.XNamespace)
+  parent: System.Xml.Linq.XNamespace
+  langs:
+  - csharp
+  name: op_Equality(XNamespace, XNamespace)
+  nameWithType: XNamespace.op_Equality(XNamespace, XNamespace)
+  fullName: XNamespace.op_Equality(XNamespace, XNamespace)
+  type: Operator
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Returns a value indicating whether two instances of <xref href="System.Xml.Linq.XNamespace"></xref> are equal.
+  remarks: "The operator overloads `==` and `!=` are provided to enable comparisons between <xref:System.Xml.Linq.XNamespace> and string (for example, `element.Name.Namespace == \"http://www.adventure-works.com\"`). The predefined reference equality operators in C# require one operand to be convertible to the type of the other through reference conversions only, and do not consider the implicit conversion from string to <xref:System.Xml.Linq.XNamespace>.  \n  \n The equivalent method for this operator is ?qualifyHint=True&autoUpgrade=False"
+  example:
+  - "The following example shows the comparison of an <xref:System.Xml.Linq.XNamespace> and a string.  \n  \n```csharp  \n  \n                XNamespace aw = \"http://www.adventure-works.com\";  \nConsole.WriteLine(aw == \"http://www.adventure-works.com\");  \n```  \n  \n```vb  \n  \n                Imports <xmlns=\"http://www.adventure-works.com\">  \n  \nModule Module1  \n    Sub Main()  \n        Dim aw As XNamespace = GetXmlNamespace()  \n        Console.WriteLine(aw = \"http://www.adventure-works.com\")  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \nTrue  \n```"
+  syntax:
+    content: public static bool op_Equality (System.Xml.Linq.XNamespace left, System.Xml.Linq.XNamespace right);
+    parameters:
+    - id: left
+      type: System.Xml.Linq.XNamespace
+      description: The first <xref href="System.Xml.Linq.XNamespace"></xref> to compare.
+    - id: right
+      type: System.Xml.Linq.XNamespace
+      description: The second <xref href="System.Xml.Linq.XNamespace"></xref> to compare.
+    return:
+      type: System.Boolean
+      description: A <xref href="System.Boolean"></xref> that indicates whether <code>left</code> and <code>right</code> are equal.
+  overload: System.Xml.Linq.XNamespace.op_Equality*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XNamespace.op_Implicit(System.String to System.Xml.Linq.XNamespace)
+  commentId: M:System.Xml.Linq.XNamespace.op_Implicit(System.String)~System.Xml.Linq.XNamespace
+  id: op_Implicit(System.String to System.Xml.Linq.XNamespace)
+  parent: System.Xml.Linq.XNamespace
+  langs:
+  - csharp
+  name: op_Implicit(String to XNamespace)
+  nameWithType: XNamespace.op_Implicit(String to XNamespace)
+  fullName: XNamespace.op_Implicit(String to XNamespace)
+  type: Operator
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  syntax:
+    content: >-
+      [System.CLSCompliant(false)]
+
+      public static System.Xml.Linq.XNamespace op_Implicit (string namespaceName);
+    parameters:
+    - id: namespaceName
+      type: System.String
+      description: ''
+    return:
+      type: System.Xml.Linq.XNamespace
+      description: ''
+  overload: System.Xml.Linq.XNamespace.op_Implicit*
+  exceptions: []
+  attributes:
+  - type: System.CLSCompliantAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+- uid: System.Xml.Linq.XNamespace.op_Inequality(System.Xml.Linq.XNamespace,System.Xml.Linq.XNamespace)
+  commentId: M:System.Xml.Linq.XNamespace.op_Inequality(System.Xml.Linq.XNamespace,System.Xml.Linq.XNamespace)
+  id: op_Inequality(System.Xml.Linq.XNamespace,System.Xml.Linq.XNamespace)
+  parent: System.Xml.Linq.XNamespace
+  langs:
+  - csharp
+  name: op_Inequality(XNamespace, XNamespace)
+  nameWithType: XNamespace.op_Inequality(XNamespace, XNamespace)
+  fullName: XNamespace.op_Inequality(XNamespace, XNamespace)
+  type: Operator
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Returns a value indicating whether two instances of <xref href="System.Xml.Linq.XNamespace"></xref> are not equal.
+  remarks: "The operator overloads `==` and `!=` are provided to enable comparisons between <xref:System.Xml.Linq.XNamespace> and string (for example, `element.Name.Namespace == \"http://www.adventure-works.com\"`). The predefined reference equality operators in C# require one operand to be convertible to the type of the other through reference conversions only, and do not consider the implicit conversion from string to <xref:System.Xml.Linq.XNamespace>.  \n  \n The equivalent method for this operator is ?qualifyHint=True&autoUpgrade=False"
+  example:
+  - "The following example shows a comparison of a <xref:System.Xml.Linq.XNamespace> to a string.  \n  \n```csharp  \n  \n                XNamespace aw = \"http://www.adventure-works.com\";  \nConsole.WriteLine(aw != \"http://www.adventure-works.com\");  \n```  \n  \n```vb  \n  \n                Imports <xmlns=\"http://www.adventure-works.com\">  \n  \nModule Module1  \n    Sub Main()  \n        Dim aw As XNamespace = GetXmlNamespace()  \n        Console.WriteLine(aw <> \"http://www.adventure-works.com\")  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \nFalse  \n```"
+  syntax:
+    content: public static bool op_Inequality (System.Xml.Linq.XNamespace left, System.Xml.Linq.XNamespace right);
+    parameters:
+    - id: left
+      type: System.Xml.Linq.XNamespace
+      description: The first <xref href="System.Xml.Linq.XNamespace"></xref> to compare.
+    - id: right
+      type: System.Xml.Linq.XNamespace
+      description: The second <xref href="System.Xml.Linq.XNamespace"></xref> to compare.
+    return:
+      type: System.Boolean
+      description: A <xref href="System.Boolean"></xref> that indicates whether <code>left</code> and <code>right</code> are not equal.
+  overload: System.Xml.Linq.XNamespace.op_Inequality*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XNamespace.ToString
+  commentId: M:System.Xml.Linq.XNamespace.ToString
+  id: ToString
+  parent: System.Xml.Linq.XNamespace
+  langs:
+  - csharp
+  name: ToString()
+  nameWithType: XNamespace.ToString()
+  fullName: XNamespace.ToString()
+  type: Method
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Returns the URI of this <xref href="System.Xml.Linq.XNamespace"></xref>.
+  remarks: ''
+  example:
+  - "The following example uses this method to print a namespace on the console.  \n  \n```csharp  \n  \n                XNamespace aw = \"http://www.adventure-works.com\";  \nConsole.WriteLine(\"{0}\", aw.ToString());  \n```  \n  \n```vb  \n  \n                Imports <xmlns=\"http://www.adventure-works.com\">  \n  \nModule Module1  \n    Sub Main()  \n        Dim aw As XNamespace = GetXmlNamespace()  \n        Console.WriteLine(\"{0}\", aw)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \nhttp://www.adventure-works.com  \n```"
+  syntax:
+    content: public override string ToString ();
+    parameters: []
+    return:
+      type: System.String
+      description: The URI of this <xref href="System.Xml.Linq.XNamespace"></xref>.
+  overload: System.Xml.Linq.XNamespace.ToString*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XNamespace.Xml
+  commentId: P:System.Xml.Linq.XNamespace.Xml
+  id: Xml
+  parent: System.Xml.Linq.XNamespace
+  langs:
+  - csharp
+  name: Xml
+  nameWithType: XNamespace.Xml
+  fullName: XNamespace.Xml
+  type: Property
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets the <xref href="System.Xml.Linq.XNamespace"></xref> object that corresponds to the XML URI (<code>http://www.w3.org/XML/1998/namespace</code>).
+  remarks: Certain standardized attributes, such as `space`, are in the `http://www.w3.org/XML/1998/namespace` namespace. The W3C standard specifies that this namespace does not have to be declared as an attribute in the XML tree. It is a reserved namespace that is always automatically available in the XML parser.
+  example:
+  - "The following example shows how to create an `xml:space=\"preserve\"` attribute in an XML tree:  \n  \n```csharp  \n  \n                XElement root = new XElement(\"Root\",  \n    new XAttribute(XNamespace.Xml + \"space\", \"preserve\"),  \n    new XElement(\"Child\", \"content\")  \n);  \nConsole.WriteLine(root);  \n```  \n  \n```vb  \n  \n                Dim root As XElement = _  \n    <Root xml:space=\"preserve\">  \n        <Child>content</Child>  \n    </Root>  \nConsole.WriteLine(root)  \n```  \n  \n This example produces the following output:  \n  \n```  \n<Root xml:space=\"preserve\">  \n  <Child>content</Child>  \n</Root>  \n```"
+  syntax:
+    content: public static System.Xml.Linq.XNamespace Xml { get; }
+    return:
+      type: System.Xml.Linq.XNamespace
+      description: The <xref href="System.Xml.Linq.XNamespace"></xref> that corresponds to the XML URI (<code>http://www.w3.org/XML/1998/namespace</code>).
+  overload: System.Xml.Linq.XNamespace.Xml*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.Linq.XNamespace.Xmlns
+  commentId: P:System.Xml.Linq.XNamespace.Xmlns
+  id: Xmlns
+  parent: System.Xml.Linq.XNamespace
+  langs:
+  - csharp
+  name: Xmlns
+  nameWithType: XNamespace.Xmlns
+  fullName: XNamespace.Xmlns
+  type: Property
+  assemblies:
+  - System.Xml.XDocument
+  - System.Xml.Linq
+  - netstandard
+  namespace: System.Xml.Linq
+  summary: Gets the <xref href="System.Xml.Linq.XNamespace"></xref> object that corresponds to the xmlns URI (<code>http://www.w3.org/2000/xmlns/</code>).
+  remarks: When you declare namespaces, the namespace attributes themselves are in the **xmlns** namespace. The W3C standard specifies that this namespace does not have to be declared as an attribute in the XML tree. It is a reserved namespace that is always automatically available in the XML parser.
+  example:
+  - "The following example shows how to add a namespace to an XML tree. The namespace for the attribute that declares the namespace is the namespace returned by this property.  \n  \n```csharp  \n  \n                XNamespace aw = \"http://www.adventure-works.com\";  \nXElement root = new XElement(aw + \"Root\",  \n    new XAttribute(XNamespace.Xmlns + \"aw\", \"http://www.adventure-works.com\"),  \n    new XElement(aw + \"Child\", \"content\")  \n);  \nConsole.WriteLine(root);  \n```  \n  \n```vb  \n  \n                Dim root = <aw:Root xmlns:aw=\"http://www.adventure-works.com\">  \n               <aw:Child>content</aw:Child>  \n           </aw:Root>  \nConsole.WriteLine(root)  \n```  \n  \n In Visual Basic, the preferred idiom is:  \n  \n```vb  \nImports <xmlns:aw='http://www.adventure-works.com'>  \n  \nModule Module1  \n    Sub Main()  \n        Dim root As XElement = _  \n            <aw:Root>  \n                <aw:Child>content</aw:Child>  \n            </aw:Root>  \n        Console.WriteLine(root)  \n    End Sub  \nEnd Module  \n```  \n  \n This example produces the following output:  \n  \n```  \n<aw:Root xmlns:aw=\"http://www.adventure-works.com\">  \n  <aw:Child>content</aw:Child>  \n</aw:Root>  \n```"
+  syntax:
+    content: public static System.Xml.Linq.XNamespace Xmlns { get; }
+    return:
+      type: System.Xml.Linq.XNamespace
+      description: The <xref href="System.Xml.Linq.XNamespace"></xref> that corresponds to the **xmlns** URI (<code>http://www.w3.org/2000/xmlns/</code>).
+  overload: System.Xml.Linq.XNamespace.Xmlns*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Xml.Linq.XNamespace.Equals(System.Object)
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: XNamespace.Equals(Object)
+  fullName: XNamespace.Equals(Object)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Xml.Linq.XNamespace.Get(System.String)
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: Get(String)
+  nameWithType: XNamespace.Get(String)
+  fullName: XNamespace.Get(String)
+- uid: System.Xml.Linq.XNamespace
+  parent: System.Xml.Linq
+  isExternal: false
+  name: XNamespace
+  nameWithType: XNamespace
+  fullName: System.Xml.Linq.XNamespace
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Xml.Linq.XNamespace.GetHashCode
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: XNamespace.GetHashCode()
+  fullName: XNamespace.GetHashCode()
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Xml.Linq.XNamespace.GetName(System.String)
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: GetName(String)
+  nameWithType: XNamespace.GetName(String)
+  fullName: XNamespace.GetName(String)
+- uid: System.Xml.Linq.XName
+  parent: System.Xml.Linq
+  isExternal: false
+  name: XName
+  nameWithType: XName
+  fullName: System.Xml.Linq.XName
+- uid: System.Xml.Linq.XNamespace.NamespaceName
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: NamespaceName
+  nameWithType: XNamespace.NamespaceName
+  fullName: XNamespace.NamespaceName
+- uid: System.Xml.Linq.XNamespace.None
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: None
+  nameWithType: XNamespace.None
+  fullName: XNamespace.None
+- uid: System.Xml.Linq.XNamespace.op_Addition(System.Xml.Linq.XNamespace,System.String)
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: op_Addition(XNamespace, String)
+  nameWithType: XNamespace.op_Addition(XNamespace, String)
+  fullName: XNamespace.op_Addition(XNamespace, String)
+- uid: System.Xml.Linq.XNamespace.op_Equality(System.Xml.Linq.XNamespace,System.Xml.Linq.XNamespace)
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: op_Equality(XNamespace, XNamespace)
+  nameWithType: XNamespace.op_Equality(XNamespace, XNamespace)
+  fullName: XNamespace.op_Equality(XNamespace, XNamespace)
+- uid: System.Xml.Linq.XNamespace.op_Implicit(System.String to System.Xml.Linq.XNamespace)
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: op_Implicit(String to XNamespace)
+  nameWithType: XNamespace.op_Implicit(String to XNamespace)
+  fullName: XNamespace.op_Implicit(String to XNamespace)
+- uid: System.Xml.Linq.XNamespace.op_Inequality(System.Xml.Linq.XNamespace,System.Xml.Linq.XNamespace)
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: op_Inequality(XNamespace, XNamespace)
+  nameWithType: XNamespace.op_Inequality(XNamespace, XNamespace)
+  fullName: XNamespace.op_Inequality(XNamespace, XNamespace)
+- uid: System.Xml.Linq.XNamespace.ToString
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: ToString()
+  nameWithType: XNamespace.ToString()
+  fullName: XNamespace.ToString()
+- uid: System.Xml.Linq.XNamespace.Xml
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: Xml
+  nameWithType: XNamespace.Xml
+  fullName: XNamespace.Xml
+- uid: System.Xml.Linq.XNamespace.Xmlns
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: Xmlns
+  nameWithType: XNamespace.Xmlns
+  fullName: XNamespace.Xmlns
+- uid: System.Xml.Linq.XNamespace.Equals*
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: Equals
+  nameWithType: XNamespace.Equals
+  fullName: XNamespace.Equals
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+- uid: System.Xml.Linq.XNamespace.Get*
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: Get
+  nameWithType: XNamespace.Get
+  fullName: XNamespace.Get
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+- uid: System.Xml.Linq.XNamespace.GetHashCode*
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: GetHashCode
+  nameWithType: XNamespace.GetHashCode
+  fullName: XNamespace.GetHashCode
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+- uid: System.Xml.Linq.XNamespace.GetName*
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: GetName
+  nameWithType: XNamespace.GetName
+  fullName: XNamespace.GetName
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+- uid: System.Xml.Linq.XNamespace.NamespaceName*
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: NamespaceName
+  nameWithType: XNamespace.NamespaceName
+  fullName: XNamespace.NamespaceName
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+- uid: System.Xml.Linq.XNamespace.None*
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: None
+  nameWithType: XNamespace.None
+  fullName: XNamespace.None
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+- uid: System.Xml.Linq.XNamespace.op_Addition*
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: op_Addition
+  nameWithType: XNamespace.op_Addition
+  fullName: XNamespace.op_Addition
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+- uid: System.Xml.Linq.XNamespace.op_Equality*
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: op_Equality
+  nameWithType: XNamespace.op_Equality
+  fullName: XNamespace.op_Equality
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+- uid: System.Xml.Linq.XNamespace.op_Implicit*
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: op_Implicit
+  nameWithType: XNamespace.op_Implicit
+  fullName: XNamespace.op_Implicit
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+- uid: System.Xml.Linq.XNamespace.op_Inequality*
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: op_Inequality
+  nameWithType: XNamespace.op_Inequality
+  fullName: XNamespace.op_Inequality
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+- uid: System.Xml.Linq.XNamespace.ToString*
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: ToString
+  nameWithType: XNamespace.ToString
+  fullName: XNamespace.ToString
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+- uid: System.Xml.Linq.XNamespace.Xml*
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: Xml
+  nameWithType: XNamespace.Xml
+  fullName: XNamespace.Xml
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+- uid: System.Xml.Linq.XNamespace.Xmlns*
+  parent: System.Xml.Linq.XNamespace
+  isExternal: false
+  name: Xmlns
+  nameWithType: XNamespace.Xmlns
+  fullName: XNamespace.Xmlns
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml.Linq/XNamespace.xml
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)

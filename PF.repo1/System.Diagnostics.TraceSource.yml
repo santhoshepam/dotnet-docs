@@ -1,0 +1,1764 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Diagnostics.TraceSource
+  commentId: T:System.Diagnostics.TraceSource
+  id: TraceSource
+  children:
+  - System.Diagnostics.TraceSource.#ctor(System.String)
+  - System.Diagnostics.TraceSource.#ctor(System.String,System.Diagnostics.SourceLevels)
+  - System.Diagnostics.TraceSource.Attributes
+  - System.Diagnostics.TraceSource.Close
+  - System.Diagnostics.TraceSource.Flush
+  - System.Diagnostics.TraceSource.GetSupportedAttributes
+  - System.Diagnostics.TraceSource.Listeners
+  - System.Diagnostics.TraceSource.Name
+  - System.Diagnostics.TraceSource.Switch
+  - System.Diagnostics.TraceSource.TraceData(System.Diagnostics.TraceEventType,System.Int32,System.Object)
+  - System.Diagnostics.TraceSource.TraceData(System.Diagnostics.TraceEventType,System.Int32,System.Object[])
+  - System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32)
+  - System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32,System.String)
+  - System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])
+  - System.Diagnostics.TraceSource.TraceInformation(System.String)
+  - System.Diagnostics.TraceSource.TraceInformation(System.String,System.Object[])
+  - System.Diagnostics.TraceSource.TraceTransfer(System.Int32,System.String,System.Guid)
+  langs:
+  - csharp
+  name: TraceSource
+  nameWithType: TraceSource
+  fullName: System.Diagnostics.TraceSource
+  type: Class
+  assemblies:
+  - System.Diagnostics.TraceSource
+  - System
+  - netstandard
+  namespace: System.Diagnostics
+  summary: Provides a set of methods and properties that enable applications to trace the execution of code and associate trace messages with their source.
+  remarks: "The <xref:System.Diagnostics.TraceSource> class is used by applications to produce traces that can be associated with the application. <xref:System.Diagnostics.TraceSource> provides tracing methods that allow you to easily trace events, trace data, and issue informational traces. Trace output from <xref:System.Diagnostics.TraceSource> can be controlled by configuration file settings. The configuration file is located in the folder with the application executable and has the name of the application with the .config file name extension added. For example, the name of the configuration file for TraceSourceSample.exe is TraceSourceSample.exe.config. The configuration file can be used to determine where the trace information is to be sent and what levels of activity are to be traced. The following example shows the contents of a sample application configuration file.  \n  \n```  \n<configuration>  \n  <system.diagnostics>  \n    <sources>  \n      <source name=\"TraceTest\" switchName=\"SourceSwitch\"   \n        switchType=\"System.Diagnostics.SourceSwitch\" >  \n        <listeners>  \n          <add name=\"console\" />  \n          <remove name =\"Default\" />  \n        </listeners>  \n      </source>  \n    </sources>  \n    <switches>  \n      <!-- You can set the level at which tracing is to occur -->  \n      <add name=\"SourceSwitch\" value=\"Warning\" />  \n        <!-- You can turn tracing off -->  \n        <!--add name=\"SourceSwitch\" value=\"Off\" -->  \n    </switches>  \n    <sharedListeners>  \n      <add name=\"console\"   \n        type=\"System.Diagnostics.ConsoleTraceListener\"   \n        initializeData=\"false\"/>  \n    </sharedListeners>  \n    <trace autoflush=\"true\" indentsize=\"4\">  \n      <listeners>  \n        <add name=\"console\" />  \n      </listeners>  \n    </trace>  \n  </system.diagnostics>  \n</configuration>  \n```  \n  \n The <xref:System.Diagnostics.TraceSource> class is identified by the name of a source, typically the name of the application.  The trace messages coming from a particular component can be initiated by a particular trace source, allowing all messages coming from that component to be easily identified.  \n  \n <xref:System.Diagnostics.TraceSource> defines tracing methods but does not actually provide any specific mechanism for generating and storing tracing data. The tracing data is produced by trace listeners, which are plug-ins that can be loaded by trace sources.  \n  \n> [!NOTE]\n>  You should not call the tracing methods during finalization. Doing so can result in an <xref:System.ObjectDisposedException> being thrown.  \n  \n You can customize the tracing output's target by adding or removing <xref:System.Diagnostics.TraceListener> instances to or from the collection stored in the <xref:System.Diagnostics.TraceSource.Listeners%2A?displayProperty=fullName> property. By default, trace output is produced using an instance of the <xref:System.Diagnostics.DefaultTraceListener> class. The preceding configuration file example demonstrates removing the <xref:System.Diagnostics.DefaultTraceListener> and adding a <xref:System.Diagnostics.ConsoleTraceListener> to produce the trace output for the trace source. For more information, see [\\&lt;listeners\\&gt;](~/docs/framework/configure-apps/file-schema/trace-debug/listeners-element-for-source.md) and [\\&lt;sharedListeners\\&gt;](~/docs/framework/configure-apps/file-schema/trace-debug/sharedlisteners-element.md).  \n  \n> [!NOTE]\n>  Adding a trace listener to the <xref:System.Diagnostics.TraceSource.Listeners%2A> collection can cause an exception to be thrown while tracing, if a resource used by the trace listener is not available. The conditions and the exception thrown depend on the trace listener and cannot be enumerated in this topic. It may be useful to place calls to the <xref:System.Diagnostics.TraceSource> methods in `try`/`catch` blocks to detect and handle any exceptions from trace listeners.  \n  \n The <xref:System.Diagnostics.SourceSwitch> class provides the means to dynamically control the tracing output. The preceding configuration file example shows how you can turn off tracing from a trace source and control the level at which tracing occurs.  You can modify the value of the source switch without recompiling your application. For information on using the configuration file to set a switch, see <xref:System.Diagnostics.Switch> and [How to: Create, Initialize and Configure Trace Switches](~/docs/framework/debug-trace-profile/how-to-create-initialize-and-configure-trace-switches.md).  \n  \n> [!NOTE]\n>  If you modify a configuration file while an application is executing, the application must be stopped and restarted or the <xref:System.Diagnostics.Trace.Refresh%2A> method must be called before the new settings take effect.  \n  \n The <xref:System.Diagnostics.TraceEventType> enumeration is used to define the event type of the trace message. Trace filters use the <xref:System.Diagnostics.TraceEventType> to determine if a trace listener should produce the trace message.  \n  \n The trace listeners can optionally have an additional layer of filtering through a trace filter.  If a trace listener has an associated filter, the listener calls the <xref:System.Diagnostics.TraceFilter.ShouldTrace%2A> method on that filter to determine whether or not to produce the trace information.  \n  \n The trace listeners use the values of the <xref:System.Diagnostics.Trace> class properties <xref:System.Diagnostics.Trace.Indent%2A>, <xref:System.Diagnostics.Trace.IndentSize%2A>, and <xref:System.Diagnostics.Trace.AutoFlush%2A> to format trace output. You can use configuration file attributes to set the <xref:System.Diagnostics.Trace.Indent%2A>, <xref:System.Diagnostics.Trace.IndentSize%2A>, and <xref:System.Diagnostics.Trace.AutoFlush%2A> properties. The following example sets the <xref:System.Diagnostics.Trace.AutoFlush%2A> property to `false` and the <xref:System.Diagnostics.Trace.IndentSize%2A> property to 3.  \n  \n```  \n<configuration>  \n  <system.diagnostics>  \n    <trace autoflush=\"false\" indentsize=\"3\" />  \n  </system.diagnostics>  \n</configuration>  \n```"
+  example:
+  - "The following code example shows the use of the <xref:System.Diagnostics.TraceSource> class to forward traces to listeners.  The example also demonstrates switch and filter usage.  \n  \n [!code-cpp[System.Diagnostics.TraceSource2#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/CPP/tracesource2.cpp#1)]\n [!code-csharp[System.Diagnostics.TraceSource2#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/CS/program.cs#1)]\n [!code-vb[System.Diagnostics.TraceSource2#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/VB/program.vb#1)]"
+  syntax:
+    content: public class TraceSource
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.TraceSource.#ctor(System.String)
+  commentId: M:System.Diagnostics.TraceSource.#ctor(System.String)
+  id: '#ctor(System.String)'
+  parent: System.Diagnostics.TraceSource
+  langs:
+  - csharp
+  name: TraceSource(String)
+  nameWithType: TraceSource.TraceSource(String)
+  fullName: TraceSource.TraceSource(String)
+  type: Constructor
+  assemblies:
+  - System.Diagnostics.TraceSource
+  - System
+  - netstandard
+  namespace: System.Diagnostics
+  summary: Initializes a new instance of the <xref href="System.Diagnostics.TraceSource"></xref> class, using the specified name for the source.
+  remarks: "The source name is used to identify traces. It is used by a <xref:System.Diagnostics.SourceFilter> to determine whether a trace listener should produce the trace. The recommended practice is to use the name of the application for the source name.  \n  \n> [!NOTE]\n>  It is not necessary to create a new <xref:System.Diagnostics.TraceSource> instance for each trace request. Create one <xref:System.Diagnostics.TraceSource> instance and use it for all trace requests for the application."
+  example:
+  - "The following code example shows the use of the <xref:System.Diagnostics.TraceSource.%23ctor%2A> constructor to create a new <xref:System.Diagnostics.TraceSource> object. This code example is part of a larger example provided for the <xref:System.Diagnostics.TraceSource> class.  \n  \n [!code-csharp[System.Diagnostics.TraceSource2#9](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/CS/program.cs#9)]\n [!code-vb[System.Diagnostics.TraceSource2#9](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/VB/program.vb#9)]"
+  syntax:
+    content: public TraceSource (string name);
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the source (typically, the name of the application).
+  overload: System.Diagnostics.TraceSource.#ctor*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>name</code> is `null`.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>name</code> is an empty string ("").
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.TraceSource.#ctor(System.String,System.Diagnostics.SourceLevels)
+  commentId: M:System.Diagnostics.TraceSource.#ctor(System.String,System.Diagnostics.SourceLevels)
+  id: '#ctor(System.String,System.Diagnostics.SourceLevels)'
+  parent: System.Diagnostics.TraceSource
+  langs:
+  - csharp
+  name: TraceSource(String, SourceLevels)
+  nameWithType: TraceSource.TraceSource(String, SourceLevels)
+  fullName: TraceSource.TraceSource(String, SourceLevels)
+  type: Constructor
+  assemblies:
+  - System.Diagnostics.TraceSource
+  - System
+  - netstandard
+  namespace: System.Diagnostics
+  summary: Initializes a new instance of the <xref href="System.Diagnostics.TraceSource"></xref> class, using the specified name for the source and the default source level at which tracing is to occur.
+  remarks: "The source name is used to identify traces. It can be used by a <xref:System.Diagnostics.SourceSwitch> to determine if tracing is to occur and by a <xref:System.Diagnostics.SourceFilter> to determine whether to produce the trace. The default source level is used by an <xref:System.Diagnostics.EventTypeFilter> to determine if tracing is to occur based on the source level of the message to be traced.  \n  \n> [!NOTE]\n>  It is not necessary to create a new <xref:System.Diagnostics.TraceSource> instance for each trace request. Create one <xref:System.Diagnostics.TraceSource> instance and use it for all trace requests for the application."
+  syntax:
+    content: public TraceSource (string name, System.Diagnostics.SourceLevels defaultLevel);
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the source, typically the name of the application.
+    - id: defaultLevel
+      type: System.Diagnostics.SourceLevels
+      description: A bitwise combination of the enumeration values that specifies the default source level at which to trace.
+  overload: System.Diagnostics.TraceSource.#ctor*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>name</code> is `null`.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>name</code> is an empty string ("").
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.TraceSource.Attributes
+  commentId: P:System.Diagnostics.TraceSource.Attributes
+  id: Attributes
+  parent: System.Diagnostics.TraceSource
+  langs:
+  - csharp
+  name: Attributes
+  nameWithType: TraceSource.Attributes
+  fullName: TraceSource.Attributes
+  type: Property
+  assemblies:
+  - System
+  - netstandard
+  - System.Diagnostics.TraceSource
+  namespace: System.Diagnostics
+  summary: Gets the custom switch attributes defined in the application configuration file.
+  remarks: "The <xref:System.Diagnostics.TraceSource.Attributes%2A> property identifies the custom attributes referenced in the application's configuration file. Unreferenced custom attributes are not enumerated. Classes that inherit from the <xref:System.Diagnostics.TraceSource> class can add custom attributes by overriding the <xref:System.Diagnostics.Switch.GetSupportedAttributes%2A?displayProperty=fullName> method and returning a string array of custom attribute names.  \n  \n The following is a sample of a trace source element specifying the custom attribute `SecondTraceSourceAttribute`:  \n  \n```  \n<sources>  \n  <source name=\"TraceTest\" switchName=\"TestSourceSwitch\"   \n    switchType=\"Testing.MySourceSwitch, TraceSample\"   \n    SecondTraceSourceAttribute=\"two\">  \n  </source>  \n</sources>  \n```"
+  example:
+  - "The following code sample shows how to display the custom attributes for a <xref:System.Diagnostics.TraceSource>.  This code example is part of a larger example provided for the <xref:System.Diagnostics.TraceSource> class.  \n  \n [!code-csharp[System.Diagnostics.TraceSource2#14](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/CS/program.cs#14)]\n [!code-vb[System.Diagnostics.TraceSource2#14](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/VB/program.vb#14)]"
+  syntax:
+    content: public System.Collections.Specialized.StringDictionary Attributes { get; }
+    return:
+      type: System.Collections.Specialized.StringDictionary
+      description: A <xref href="System.Collections.Specialized.StringDictionary"></xref> containing the custom attributes for the trace switch.
+  overload: System.Diagnostics.TraceSource.Attributes*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.TraceSource.Close
+  commentId: M:System.Diagnostics.TraceSource.Close
+  id: Close
+  parent: System.Diagnostics.TraceSource
+  langs:
+  - csharp
+  name: Close()
+  nameWithType: TraceSource.Close()
+  fullName: TraceSource.Close()
+  type: Method
+  assemblies:
+  - System.Diagnostics.TraceSource
+  - System
+  - netstandard
+  namespace: System.Diagnostics
+  summary: Closes all the trace listeners in the trace listener collection.
+  remarks: The <xref:System.Diagnostics.TraceSource.Close%2A> method calls the <xref:System.Diagnostics.TraceListener.Close%2A> method of each trace listener in the <xref:System.Diagnostics.TraceSource.Listeners%2A> collection.
+  example:
+  - "The following code example shows how you can use the <xref:System.Diagnostics.TraceSource.Close%2A> method to close all the listeners in the collection. This code example is part of a larger example provided for the <xref:System.Diagnostics.TraceSource> class.  \n  \n [!code-csharp[System.Diagnostics.TraceSource2#33](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/CS/program.cs#33)]\n [!code-vb[System.Diagnostics.TraceSource2#33](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/VB/program.vb#33)]"
+  syntax:
+    content: public void Close ();
+    parameters: []
+  overload: System.Diagnostics.TraceSource.Close*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.TraceSource.Flush
+  commentId: M:System.Diagnostics.TraceSource.Flush
+  id: Flush
+  parent: System.Diagnostics.TraceSource
+  langs:
+  - csharp
+  name: Flush()
+  nameWithType: TraceSource.Flush()
+  fullName: TraceSource.Flush()
+  type: Method
+  assemblies:
+  - System.Diagnostics.TraceSource
+  - System
+  - netstandard
+  namespace: System.Diagnostics
+  summary: Flushes all the trace listeners in the trace listener collection.
+  remarks: The <xref:System.Diagnostics.TraceSource.Flush%2A> method calls the <xref:System.Diagnostics.TraceListener.Flush%2A> method of each trace listener in the <xref:System.Diagnostics.TraceSource.Listeners%2A> collection.
+  example:
+  - "The following code example shows how you can use the <xref:System.Diagnostics.TraceSource.Flush%2A> method to flush all the listeners in the collection. This code example is part of a larger example provided for the <xref:System.Diagnostics.TraceSource> class.  \n  \n [!code-csharp[System.Diagnostics.TraceSource2#33](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/CS/program.cs#33)]\n [!code-vb[System.Diagnostics.TraceSource2#33](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/VB/program.vb#33)]"
+  syntax:
+    content: public void Flush ();
+    parameters: []
+  overload: System.Diagnostics.TraceSource.Flush*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: An attempt was made to trace an event during finalization.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.TraceSource.GetSupportedAttributes
+  commentId: M:System.Diagnostics.TraceSource.GetSupportedAttributes
+  id: GetSupportedAttributes
+  parent: System.Diagnostics.TraceSource
+  langs:
+  - csharp
+  name: GetSupportedAttributes()
+  nameWithType: TraceSource.GetSupportedAttributes()
+  fullName: TraceSource.GetSupportedAttributes()
+  type: Method
+  assemblies:
+  - System
+  - netstandard
+  - System.Diagnostics.TraceSource
+  namespace: System.Diagnostics
+  summary: Gets the custom attributes supported by the trace source.
+  remarks: The default implementation for <xref:System.Diagnostics.TraceSource.GetSupportedAttributes%2A> returns `null`.
+  example:
+  - "The following code example shows an override of the <xref:System.Diagnostics.TraceSource.GetSupportedAttributes%2A> method to identify the custom attributes for the `MyTraceSource` class.  \n  \n [!code-csharp[System.Diagnostics.TraceSource#33](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Diagnostics.TraceSource/CS/program.cs#33)]\n [!code-vb[System.Diagnostics.TraceSource#33](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Diagnostics.TraceSource/VB/program.vb#33)]"
+  syntax:
+    content: protected virtual string[] GetSupportedAttributes ();
+    parameters: []
+    return:
+      type: System.String[]
+      description: A string array naming the custom attributes supported by the trace source, or `null` if there are no custom attributes.
+  overload: System.Diagnostics.TraceSource.GetSupportedAttributes*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.TraceSource.Listeners
+  commentId: P:System.Diagnostics.TraceSource.Listeners
+  id: Listeners
+  parent: System.Diagnostics.TraceSource
+  langs:
+  - csharp
+  name: Listeners
+  nameWithType: TraceSource.Listeners
+  fullName: TraceSource.Listeners
+  type: Property
+  assemblies:
+  - System.Diagnostics.TraceSource
+  - System
+  - netstandard
+  namespace: System.Diagnostics
+  summary: Gets the collection of trace listeners for the trace source.
+  remarks: Use this property to access and perform operations on the trace listeners.
+  syntax:
+    content: public System.Diagnostics.TraceListenerCollection Listeners { get; }
+    return:
+      type: System.Diagnostics.TraceListenerCollection
+      description: A <xref href="System.Diagnostics.TraceListenerCollection"></xref> that contains the active trace listeners associated with the source.
+  overload: System.Diagnostics.TraceSource.Listeners*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.TraceSource.Name
+  commentId: P:System.Diagnostics.TraceSource.Name
+  id: Name
+  parent: System.Diagnostics.TraceSource
+  langs:
+  - csharp
+  name: Name
+  nameWithType: TraceSource.Name
+  fullName: TraceSource.Name
+  type: Property
+  assemblies:
+  - System.Diagnostics.TraceSource
+  - System
+  - netstandard
+  namespace: System.Diagnostics
+  summary: Gets the name of the trace source.
+  remarks: "The name is set by the `name` parameter passed to the constructor. You can refer to the trace source by using the `name` attribute in the configuration file.  \n  \n The following XML element shows referring to a trace source in the configuration file.  \n  \n```  \n<configuration>  \n  <system.diagnostics>  \n    <sources>  \n      <source name=\"TraceTest\">  \n      </source>  \n    </sources>  \n  </system.diagnostics>  \n</configuration>  \n```"
+  example:
+  - "The following code sample shows how to name a trace source in the constructor call.  This code example is part of a larger example provided for the <xref:System.Diagnostics.TraceSource> class.  \n  \n [!code-csharp[System.Diagnostics.TraceSource2#9](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/CS/program.cs#9)]\n [!code-vb[System.Diagnostics.TraceSource2#9](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/VB/program.vb#9)]"
+  syntax:
+    content: public string Name { get; }
+    return:
+      type: System.String
+      description: The name of the trace source.
+  overload: System.Diagnostics.TraceSource.Name*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.TraceSource.Switch
+  commentId: P:System.Diagnostics.TraceSource.Switch
+  id: Switch
+  parent: System.Diagnostics.TraceSource
+  langs:
+  - csharp
+  name: Switch
+  nameWithType: TraceSource.Switch
+  fullName: TraceSource.Switch
+  type: Property
+  assemblies:
+  - System.Diagnostics.TraceSource
+  - System
+  - netstandard
+  namespace: System.Diagnostics
+  summary: Gets or sets the source switch value.
+  remarks: "The <xref:System.Diagnostics.TraceSource.Switch%2A> property allows the filtering of messages before the trace source calls the listeners.  \n  \n The switch is used to check whether trace calls should be generated or ignored. Each trace method calls the <xref:System.Diagnostics.SourceSwitch.ShouldTrace%2A> method of the <xref:System.Diagnostics.SourceSwitch> to determine whether to proceed with the trace. If the call returns `true`, the listeners are called."
+  syntax:
+    content: public System.Diagnostics.SourceSwitch Switch { get; set; }
+    return:
+      type: System.Diagnostics.SourceSwitch
+      description: A <xref href="System.Diagnostics.SourceSwitch"></xref> object representing the source switch value.
+  overload: System.Diagnostics.TraceSource.Switch*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <xref href="System.Diagnostics.TraceSource.Switch"></xref> is set to `null`.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.TraceSource.TraceData(System.Diagnostics.TraceEventType,System.Int32,System.Object)
+  commentId: M:System.Diagnostics.TraceSource.TraceData(System.Diagnostics.TraceEventType,System.Int32,System.Object)
+  id: TraceData(System.Diagnostics.TraceEventType,System.Int32,System.Object)
+  parent: System.Diagnostics.TraceSource
+  langs:
+  - csharp
+  name: TraceData(TraceEventType, Int32, Object)
+  nameWithType: TraceSource.TraceData(TraceEventType, Int32, Object)
+  fullName: TraceSource.TraceData(TraceEventType, Int32, Object)
+  type: Method
+  assemblies:
+  - System.Diagnostics.TraceSource
+  - System
+  - netstandard
+  namespace: System.Diagnostics
+  summary: Writes trace data to the trace listeners in the <xref href="System.Diagnostics.TraceSource.Listeners"></xref> collection using the specified event type, event identifier, and trace data.
+  remarks: "The <xref:System.Diagnostics.TraceSource.TraceData%2A> method, like the <xref:System.Diagnostics.TraceSource.TraceEvent%2A> method, is intended for automated tools, but it also allows the attaching of an additional object, such as an exception instance, to the trace.  \n  \n The <xref:System.Diagnostics.TraceSource.TraceData%2A> method calls the <xref:System.Diagnostics.SourceSwitch.ShouldTrace%2A?displayProperty=fullName> method of the <xref:System.Diagnostics.SourceSwitch> object returned by the <xref:System.Diagnostics.TraceSource.Switch%2A> property. If <xref:System.Diagnostics.SourceSwitch.ShouldTrace%2A> returns `true`, <xref:System.Diagnostics.TraceSource.TraceData%2A> calls the corresponding <xref:System.Diagnostics.TraceListener.TraceData%2A> method on all listeners. Otherwise, <xref:System.Diagnostics.TraceSource.TraceData%2A> returns without calling the listeners' methods.  \n  \n> [!NOTE]\n>  The <xref:System.Diagnostics.EventLogTraceListener> object is limited to a maximum `id` value of 65,535. If the `id` value specified is greater than 65,535, the <xref:System.Diagnostics.EventLogTraceListener> object uses 65,535."
+  example:
+  - "The following code example shows the use of the <xref:System.Diagnostics.TraceSource.TraceData%28System.Diagnostics.TraceEventType%2CSystem.Int32%2CSystem.Object%29> method to filter and forward a trace message to the listeners. This code example is part of a larger example provided for the <xref:System.Diagnostics.TraceSource> class.  \n  \n [!code-csharp[System.Diagnostics.TraceSource2#28](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/CS/program.cs#28)]\n [!code-vb[System.Diagnostics.TraceSource2#28](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/VB/program.vb#28)]"
+  syntax:
+    content: >-
+      [System.Diagnostics.Conditional("TRACE")]
+
+      public void TraceData (System.Diagnostics.TraceEventType eventType, int id, object data);
+    parameters:
+    - id: eventType
+      type: System.Diagnostics.TraceEventType
+      description: One of the enumeration values that specifies the event type of the trace data.
+    - id: id
+      type: System.Int32
+      description: A numeric identifier for the event.
+    - id: data
+      type: System.Object
+      description: The trace data.
+  overload: System.Diagnostics.TraceSource.TraceData*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: An attempt was made to trace an event during finalization.
+  attributes:
+  - type: System.Diagnostics.ConditionalAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.TraceSource.TraceData(System.Diagnostics.TraceEventType,System.Int32,System.Object[])
+  commentId: M:System.Diagnostics.TraceSource.TraceData(System.Diagnostics.TraceEventType,System.Int32,System.Object[])
+  id: TraceData(System.Diagnostics.TraceEventType,System.Int32,System.Object[])
+  parent: System.Diagnostics.TraceSource
+  langs:
+  - csharp
+  name: TraceData(TraceEventType, Int32, Object[])
+  nameWithType: TraceSource.TraceData(TraceEventType, Int32, Object[])
+  fullName: TraceSource.TraceData(TraceEventType, Int32, Object[])
+  type: Method
+  assemblies:
+  - System.Diagnostics.TraceSource
+  - System
+  - netstandard
+  namespace: System.Diagnostics
+  summary: Writes trace data to the trace listeners in the <xref href="System.Diagnostics.TraceSource.Listeners"></xref> collection using the specified event type, event identifier, and trace data array.
+  remarks: "The <xref:System.Diagnostics.TraceSource.TraceData%2A> method, like the <xref:System.Diagnostics.TraceSource.TraceEvent%2A> method, is intended for automated tools, but it also allows the attaching of additional objects, such as an exception instance and a stack trace, to the trace.  \n  \n The <xref:System.Diagnostics.TraceSource.TraceData%2A> method calls the <xref:System.Diagnostics.SourceSwitch.ShouldTrace%2A> method of the <xref:System.Diagnostics.SourceSwitch> object returned by the <xref:System.Diagnostics.TraceSource.Switch%2A> property. If <xref:System.Diagnostics.SourceSwitch.ShouldTrace%2A> returns `true`, <xref:System.Diagnostics.TraceSource.TraceData%2A> calls the corresponding <xref:System.Diagnostics.TraceListener.TraceData%2A> method on all listeners. Otherwise, <xref:System.Diagnostics.TraceSource.TraceData%2A> returns without calling the listeners' methods.  \n  \n> [!NOTE]\n>  The <xref:System.Diagnostics.EventLogTraceListener> object is limited to a maximum `id` value of 65,535. If the `id` value specified is greater than 65,535, the <xref:System.Diagnostics.EventLogTraceListener> object uses 65,535."
+  syntax:
+    content: >-
+      [System.Diagnostics.Conditional("TRACE")]
+
+      public void TraceData (System.Diagnostics.TraceEventType eventType, int id, object[] data);
+    parameters:
+    - id: eventType
+      type: System.Diagnostics.TraceEventType
+      description: One of the enumeration values that specifies the event type of the trace data.
+    - id: id
+      type: System.Int32
+      description: A numeric identifier for the event.
+    - id: data
+      type: System.Object[]
+      description: An object array containing the trace data.
+  overload: System.Diagnostics.TraceSource.TraceData*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: An attempt was made to trace an event during finalization.
+  attributes:
+  - type: System.Diagnostics.ConditionalAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32)
+  commentId: M:System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32)
+  id: TraceEvent(System.Diagnostics.TraceEventType,System.Int32)
+  parent: System.Diagnostics.TraceSource
+  langs:
+  - csharp
+  name: TraceEvent(TraceEventType, Int32)
+  nameWithType: TraceSource.TraceEvent(TraceEventType, Int32)
+  fullName: TraceSource.TraceEvent(TraceEventType, Int32)
+  type: Method
+  assemblies:
+  - System.Diagnostics.TraceSource
+  - System
+  - netstandard
+  namespace: System.Diagnostics
+  summary: Writes a trace event message to the trace listeners in the <xref href="System.Diagnostics.TraceSource.Listeners"></xref> collection using the specified event type and event identifier.
+  remarks: "The <xref:System.Diagnostics.TraceSource.TraceEvent%2A> method is intended to trace events that can be processed automatically by tools. For example, a monitoring tool can notify an administrator if a specific event is traced by a specific source.  \n  \n The <xref:System.Diagnostics.TraceSource.TraceEvent%2A> method calls the <xref:System.Diagnostics.SourceSwitch.ShouldTrace%2A> method of the <xref:System.Diagnostics.SourceSwitch> object returned by the <xref:System.Diagnostics.TraceSource.Switch%2A> property. If <xref:System.Diagnostics.SourceSwitch.ShouldTrace%2A> returns `true`, <xref:System.Diagnostics.TraceSource.TraceEvent%2A> calls the corresponding <xref:System.Diagnostics.TraceListener.TraceEvent%2A> method of each listener. Otherwise, <xref:System.Diagnostics.TraceSource.TraceEvent%2A> returns without calling the listeners' methods.  \n  \n The trace content is listener specific. If the method is not overridden by the listener implementation, the default output is the name of the trace source, its numeric identity, and the event type.  Additional trace content is dependent upon the listener's <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property value.  \n  \n> [!NOTE]\n>  The <xref:System.Diagnostics.EventLogTraceListener> object is limited to a maximum `id` value of 65,535. If the `id` value specified is greater than 65,535, the <xref:System.Diagnostics.EventLogTraceListener> uses 65,535."
+  example:
+  - "The following code example shows the use of the <xref:System.Diagnostics.TraceSource.TraceEvent%28System.Diagnostics.TraceEventType%2CSystem.Int32%29> method to pass a trace event to the listeners. This code example is part of a larger example provided for the <xref:System.Diagnostics.TraceSource> class.  \n  \n [!code-csharp[System.Diagnostics.TraceSource2#17](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/CS/program.cs#17)]\n [!code-vb[System.Diagnostics.TraceSource2#17](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/VB/program.vb#17)]"
+  syntax:
+    content: >-
+      [System.Diagnostics.Conditional("TRACE")]
+
+      public void TraceEvent (System.Diagnostics.TraceEventType eventType, int id);
+    parameters:
+    - id: eventType
+      type: System.Diagnostics.TraceEventType
+      description: One of the enumeration values that specifies the event type of the trace data.
+    - id: id
+      type: System.Int32
+      description: A numeric identifier for the event.
+  overload: System.Diagnostics.TraceSource.TraceEvent*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: An attempt was made to trace an event during finalization.
+  attributes:
+  - type: System.Diagnostics.ConditionalAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32,System.String)
+  commentId: M:System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32,System.String)
+  id: TraceEvent(System.Diagnostics.TraceEventType,System.Int32,System.String)
+  parent: System.Diagnostics.TraceSource
+  langs:
+  - csharp
+  name: TraceEvent(TraceEventType, Int32, String)
+  nameWithType: TraceSource.TraceEvent(TraceEventType, Int32, String)
+  fullName: TraceSource.TraceEvent(TraceEventType, Int32, String)
+  type: Method
+  assemblies:
+  - System.Diagnostics.TraceSource
+  - System
+  - netstandard
+  namespace: System.Diagnostics
+  summary: Writes a trace event message to the trace listeners in the <xref href="System.Diagnostics.TraceSource.Listeners"></xref> collection using the specified event type, event identifier, and message.
+  remarks: "The <xref:System.Diagnostics.TraceSource.TraceEvent%2A> method is intended to trace events that can be processed automatically by tools. For example, a monitoring tool can notify an administrator if a specific event is traced by a specific source.  \n  \n The <xref:System.Diagnostics.TraceSource.TraceEvent%2A> method calls the <xref:System.Diagnostics.SourceSwitch.ShouldTrace%2A> method of the <xref:System.Diagnostics.SourceSwitch> object returned by the <xref:System.Diagnostics.TraceSource.Switch%2A> property. If <xref:System.Diagnostics.SourceSwitch.ShouldTrace%2A> returns `true`, <xref:System.Diagnostics.TraceSource.TraceEvent%2A> calls the corresponding <xref:System.Diagnostics.TraceListener.TraceEvent%2A> method of each listener. Otherwise, <xref:System.Diagnostics.TraceSource.TraceEvent%2A> returns without calling the listeners' methods.  \n  \n The trace content is listener specific. If the method is not overridden by the listener implementation, the default output is the name of the trace source, its numeric identity, the event type, and the message.  Additional trace content is dependent upon the listener's <xref:System.Diagnostics.TraceListener.TraceOutputOptions%2A> property value.  \n  \n> [!NOTE]\n>  The <xref:System.Diagnostics.EventLogTraceListener> object is limited to a maximum `id` value of 65,535. If the `id` value specified is greater than 65,535, the <xref:System.Diagnostics.EventLogTraceListener> object uses 65,535."
+  example:
+  - "The following code example shows the use of the <xref:System.Diagnostics.TraceSource.TraceEvent%28System.Diagnostics.TraceEventType%2CSystem.Int32%29> method to pass a trace event to the listeners. This code example is part of a larger example provided for the <xref:System.Diagnostics.TraceSource> class.  \n  \n [!code-csharp[System.Diagnostics.TraceSource2#18](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/CS/program.cs#18)]\n [!code-vb[System.Diagnostics.TraceSource2#18](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/VB/program.vb#18)]"
+  syntax:
+    content: >-
+      [System.Diagnostics.Conditional("TRACE")]
+
+      public void TraceEvent (System.Diagnostics.TraceEventType eventType, int id, string message);
+    parameters:
+    - id: eventType
+      type: System.Diagnostics.TraceEventType
+      description: One of the enumeration values that specifies the event type of the trace data.
+    - id: id
+      type: System.Int32
+      description: A numeric identifier for the event.
+    - id: message
+      type: System.String
+      description: The trace message to write.
+  overload: System.Diagnostics.TraceSource.TraceEvent*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: An attempt was made to trace an event during finalization.
+  attributes:
+  - type: System.Diagnostics.ConditionalAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])
+  commentId: M:System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])
+  id: TraceEvent(System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])
+  parent: System.Diagnostics.TraceSource
+  langs:
+  - csharp
+  name: TraceEvent(TraceEventType, Int32, String, Object[])
+  nameWithType: TraceSource.TraceEvent(TraceEventType, Int32, String, Object[])
+  fullName: TraceSource.TraceEvent(TraceEventType, Int32, String, Object[])
+  type: Method
+  assemblies:
+  - System.Diagnostics.TraceSource
+  - System
+  - netstandard
+  namespace: System.Diagnostics
+  summary: Writes a trace event to the trace listeners in the <xref href="System.Diagnostics.TraceSource.Listeners"></xref> collection using the specified event type, event identifier, and argument array and format.
+  remarks: "For more information about the `format` parameter, see [Composite Formatting](~/docs/standard/base-types/composite-formatting.md).  \n  \n The <xref:System.Diagnostics.TraceSource.TraceEvent%2A> method is intended to trace events that can be processed automatically by tools. For example, a monitoring tool can notify an administrator if a specific event is traced by a specific source.  \n  \n The <xref:System.Diagnostics.TraceSource.TraceEvent%2A> method calls the <xref:System.Diagnostics.SourceSwitch.ShouldTrace%2A> method of the <xref:System.Diagnostics.SourceSwitch> object returned by the <xref:System.Diagnostics.TraceSource.Switch%2A> property. If <xref:System.Diagnostics.SourceSwitch.ShouldTrace%2A> returns `true`, <xref:System.Diagnostics.TraceSource.TraceEvent%2A> calls the corresponding <xref:System.Diagnostics.TraceListener.TraceEvent%2A> method of each listener. Otherwise, <xref:System.Diagnostics.TraceSource.TraceEvent%2A> returns without calling the listeners' methods.  \n  \n The trace content is listener specific. The default <xref:System.Diagnostics.TraceListener.TraceEvent%28System.Diagnostics.TraceEventCache%2CSystem.String%2CSystem.Diagnostics.TraceEventType%2CSystem.Int32%2CSystem.String%2CSystem.Object%5B%5D%29> method writes the source name, event type, and numeric identity in the trace header, then calls the <xref:System.String.Format%28System.IFormatProvider%2CSystem.String%2CSystem.Object%5B%5D%29?displayProperty=fullName> method, passing the `format` string and `args` array and using the <xref:System.Globalization.CultureInfo.InvariantCulture?displayProperty=fullName> property to format the string as the message output.  \n  \n> [!NOTE]\n>  The <xref:System.Diagnostics.EventLogTraceListener> object is limited to a maximum `id` value of 65,535. If the `id` value specified is greater than 65,535, the <xref:System.Diagnostics.EventLogTraceListener> object uses 65,535."
+  example:
+  - "The following code example shows the use of the <xref:System.Diagnostics.TraceSource.TraceEvent%28System.Diagnostics.TraceEventType%2CSystem.Int32%29> method to pass a trace event to the listeners. This code example is part of a larger example provided for the <xref:System.Diagnostics.TraceSource> class.  \n  \n [!code-csharp[System.Diagnostics.TraceSource2#24](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/CS/program.cs#24)]\n [!code-vb[System.Diagnostics.TraceSource2#24](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Diagnostics.TraceSource2/VB/program.vb#24)]"
+  syntax:
+    content: >-
+      [System.Diagnostics.Conditional("TRACE")]
+
+      public void TraceEvent (System.Diagnostics.TraceEventType eventType, int id, string format, object[] args);
+    parameters:
+    - id: eventType
+      type: System.Diagnostics.TraceEventType
+      description: One of the enumeration values that specifies the event type of the trace data.
+    - id: id
+      type: System.Int32
+      description: A numeric identifier for the event.
+    - id: format
+      type: System.String
+      description: A composite format string that contains text intermixed with zero or more format items, which correspond to objects in the <code>args</code> array.
+    - id: args
+      type: System.Object[]
+      description: An `object` array containing zero or more objects to format.
+  overload: System.Diagnostics.TraceSource.TraceEvent*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>format</code> is `null`.
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: "<code>format</code> is invalid.  \n  \n -or-  \n  \n The number that indicates an argument to format is less than zero, or greater than or equal to the number of specified objects to format."
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: An attempt was made to trace an event during finalization.
+  attributes:
+  - type: System.Diagnostics.ConditionalAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.TraceSource.TraceInformation(System.String)
+  commentId: M:System.Diagnostics.TraceSource.TraceInformation(System.String)
+  id: TraceInformation(System.String)
+  parent: System.Diagnostics.TraceSource
+  langs:
+  - csharp
+  name: TraceInformation(String)
+  nameWithType: TraceSource.TraceInformation(String)
+  fullName: TraceSource.TraceInformation(String)
+  type: Method
+  assemblies:
+  - System.Diagnostics.TraceSource
+  - System
+  - netstandard
+  namespace: System.Diagnostics
+  summary: Writes an informational message to the trace listeners in the <xref href="System.Diagnostics.TraceSource.Listeners"></xref> collection using the specified message.
+  remarks: "The <xref:System.Diagnostics.TraceSource.TraceInformation%2A> method provides an informational message intended to be read by users and not by tools.  \n  \n <xref:System.Diagnostics.TraceSource.TraceInformation%28System.String%29> calls the <xref:System.Diagnostics.TraceSource.TraceEvent%28System.Diagnostics.TraceEventType%2CSystem.Int32%2CSystem.String%29> method, setting `eventType` to <xref:System.Diagnostics.TraceEventType?displayProperty=fullName> and passing the informative message as the message string. The <xref:System.Diagnostics.TraceSource.TraceEvent%28System.Diagnostics.TraceEventType%2CSystem.Int32%2CSystem.String%29> method in turn calls the <xref:System.Diagnostics.TraceListener.TraceEvent%28System.Diagnostics.TraceEventCache%2CSystem.String%2CSystem.Diagnostics.TraceEventType%2CSystem.Int32%2CSystem.String%29> method of each trace listener."
+  syntax:
+    content: >-
+      [System.Diagnostics.Conditional("TRACE")]
+
+      public void TraceInformation (string message);
+    parameters:
+    - id: message
+      type: System.String
+      description: The informative message to write.
+  overload: System.Diagnostics.TraceSource.TraceInformation*
+  exceptions:
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: An attempt was made to trace an event during finalization.
+  attributes:
+  - type: System.Diagnostics.ConditionalAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.TraceSource.TraceInformation(System.String,System.Object[])
+  commentId: M:System.Diagnostics.TraceSource.TraceInformation(System.String,System.Object[])
+  id: TraceInformation(System.String,System.Object[])
+  parent: System.Diagnostics.TraceSource
+  langs:
+  - csharp
+  name: TraceInformation(String, Object[])
+  nameWithType: TraceSource.TraceInformation(String, Object[])
+  fullName: TraceSource.TraceInformation(String, Object[])
+  type: Method
+  assemblies:
+  - System.Diagnostics.TraceSource
+  - System
+  - netstandard
+  namespace: System.Diagnostics
+  summary: Writes an informational message to the trace listeners in the <xref href="System.Diagnostics.TraceSource.Listeners"></xref> collection using the specified object array and formatting information.
+  remarks: "For more information about the `format` parameter, see [Composite Formatting](~/docs/standard/base-types/composite-formatting.md).  \n  \n The <xref:System.Diagnostics.TraceSource.TraceInformation%2A> method provides an informational message intended to be read by users and not by tools.  \n  \n <xref:System.Diagnostics.TraceSource.TraceInformation%28System.String%2CSystem.Object%5B%5D%29> calls the <xref:System.Diagnostics.TraceSource.TraceEvent%28System.Diagnostics.TraceEventType%2CSystem.Int32%2CSystem.String%2CSystem.Object%5B%5D%29> method, setting `eventType` to <xref:System.Diagnostics.TraceEventType?displayProperty=fullName> and passing the message content as an object array with formatting information. The <xref:System.Diagnostics.TraceSource.TraceEvent%28System.Diagnostics.TraceEventType%2CSystem.Int32%2CSystem.String%2CSystem.Object%5B%5D%29> method in turn calls the <xref:System.Diagnostics.TraceListener.TraceEvent%28System.Diagnostics.TraceEventCache%2CSystem.String%2CSystem.Diagnostics.TraceEventType%2CSystem.Int32%2CSystem.String%2CSystem.Object%5B%5D%29> method of each trace listener."
+  syntax:
+    content: >-
+      [System.Diagnostics.Conditional("TRACE")]
+
+      public void TraceInformation (string format, object[] args);
+    parameters:
+    - id: format
+      type: System.String
+      description: A composite format string that contains text intermixed with zero or more format items, which correspond to objects in the <code>args</code> array.
+    - id: args
+      type: System.Object[]
+      description: An array containing zero or more objects to format.
+  overload: System.Diagnostics.TraceSource.TraceInformation*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>format</code> is `null`.
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: "<code>format</code> is invalid.  \n  \n -or-  \n  \n The number that indicates an argument to format is less than zero, or greater than or equal to the number of specified objects to format."
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: An attempt was made to trace an event during finalization.
+  attributes:
+  - type: System.Diagnostics.ConditionalAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Diagnostics.TraceSource.TraceTransfer(System.Int32,System.String,System.Guid)
+  commentId: M:System.Diagnostics.TraceSource.TraceTransfer(System.Int32,System.String,System.Guid)
+  id: TraceTransfer(System.Int32,System.String,System.Guid)
+  parent: System.Diagnostics.TraceSource
+  langs:
+  - csharp
+  name: TraceTransfer(Int32, String, Guid)
+  nameWithType: TraceSource.TraceTransfer(Int32, String, Guid)
+  fullName: TraceSource.TraceTransfer(Int32, String, Guid)
+  type: Method
+  assemblies:
+  - System
+  - netstandard
+  - System.Diagnostics.TraceSource
+  namespace: System.Diagnostics
+  summary: Writes a trace transfer message to the trace listeners in the <xref href="System.Diagnostics.TraceSource.Listeners"></xref> collection using the specified numeric identifier, message, and related activity identifier.
+  remarks: "The <xref:System.Diagnostics.TraceSource.TraceTransfer%2A> method calls the <xref:System.Diagnostics.TraceListener.TraceTransfer%2A> method of each trace listener in the <xref:System.Diagnostics.TraceSource.Listeners%2A> property to write the trace information. The default <xref:System.Diagnostics.TraceListener.TraceTransfer%2A> method in the base <xref:System.Diagnostics.TraceListener> class calls the <xref:System.Diagnostics.TraceListener.TraceEvent%28System.Diagnostics.TraceEventCache%2CSystem.String%2CSystem.Diagnostics.TraceEventType%2CSystem.Int32%2CSystem.String%29?displayProperty=fullName> method to process the call, setting `eventType` to <xref:System.Diagnostics.TraceEventType?displayProperty=fullName> and appending a string representation of the `relatedActivityId` GUID to `message`.  \n  \n <xref:System.Diagnostics.TraceSource.TraceTransfer%2A> is intended to be used with the logical operations of a <xref:System.Diagnostics.CorrelationManager>. The `relatedActivityId` parameter relates to the <xref:System.Diagnostics.CorrelationManager.ActivityId%2A> property of a <xref:System.Diagnostics.CorrelationManager> object. If a logical operation begins in one activity and transfers to another, the second activity logs the transfer by calling the <xref:System.Diagnostics.TraceSource.TraceTransfer%2A> method. The <xref:System.Diagnostics.TraceSource.TraceTransfer%2A> call relates the new activity identity to the previous identity. The most likely consumer of this functionality is a trace viewer that can report logical operations that span multiple activities."
+  syntax:
+    content: >-
+      [System.Diagnostics.Conditional("TRACE")]
+
+      public void TraceTransfer (int id, string message, Guid relatedActivityId);
+    parameters:
+    - id: id
+      type: System.Int32
+      description: A numeric identifier for the event.
+    - id: message
+      type: System.String
+      description: The trace message to write.
+    - id: relatedActivityId
+      type: System.Guid
+      description: A structure that identifies the related activity.
+  overload: System.Diagnostics.TraceSource.TraceTransfer*
+  exceptions: []
+  attributes:
+  - type: System.Diagnostics.ConditionalAttribute
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.ObjectDisposedException
+  parent: System
+  isExternal: false
+  name: ObjectDisposedException
+  nameWithType: ObjectDisposedException
+  fullName: System.ObjectDisposedException
+- uid: System.FormatException
+  parent: System
+  isExternal: false
+  name: FormatException
+  nameWithType: FormatException
+  fullName: System.FormatException
+- uid: System.Diagnostics.TraceSource.#ctor(System.String)
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: TraceSource(String)
+  nameWithType: TraceSource.TraceSource(String)
+  fullName: TraceSource.TraceSource(String)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Diagnostics.TraceSource.#ctor(System.String,System.Diagnostics.SourceLevels)
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: TraceSource(String, SourceLevels)
+  nameWithType: TraceSource.TraceSource(String, SourceLevels)
+  fullName: TraceSource.TraceSource(String, SourceLevels)
+- uid: System.Diagnostics.SourceLevels
+  parent: System.Diagnostics
+  isExternal: false
+  name: SourceLevels
+  nameWithType: SourceLevels
+  fullName: System.Diagnostics.SourceLevels
+- uid: System.Diagnostics.TraceSource.Attributes
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: Attributes
+  nameWithType: TraceSource.Attributes
+  fullName: TraceSource.Attributes
+- uid: System.Collections.Specialized.StringDictionary
+  parent: System.Collections.Specialized
+  isExternal: false
+  name: StringDictionary
+  nameWithType: StringDictionary
+  fullName: System.Collections.Specialized.StringDictionary
+- uid: System.Diagnostics.TraceSource.Close
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: Close()
+  nameWithType: TraceSource.Close()
+  fullName: TraceSource.Close()
+- uid: System.Diagnostics.TraceSource.Flush
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: Flush()
+  nameWithType: TraceSource.Flush()
+  fullName: TraceSource.Flush()
+- uid: System.Diagnostics.TraceSource.GetSupportedAttributes
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: GetSupportedAttributes()
+  nameWithType: TraceSource.GetSupportedAttributes()
+  fullName: TraceSource.GetSupportedAttributes()
+- uid: System.String[]
+  parent: System
+  isExternal: false
+  name: String[]
+  nameWithType: String[]
+  fullName: System.String[]
+  spec.csharp:
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+- uid: System.Diagnostics.TraceSource.Listeners
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: Listeners
+  nameWithType: TraceSource.Listeners
+  fullName: TraceSource.Listeners
+- uid: System.Diagnostics.TraceListenerCollection
+  parent: System.Diagnostics
+  isExternal: false
+  name: TraceListenerCollection
+  nameWithType: TraceListenerCollection
+  fullName: System.Diagnostics.TraceListenerCollection
+- uid: System.Diagnostics.TraceSource.Name
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: Name
+  nameWithType: TraceSource.Name
+  fullName: TraceSource.Name
+- uid: System.Diagnostics.TraceSource.Switch
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: Switch
+  nameWithType: TraceSource.Switch
+  fullName: TraceSource.Switch
+- uid: System.Diagnostics.SourceSwitch
+  parent: System.Diagnostics
+  isExternal: false
+  name: SourceSwitch
+  nameWithType: SourceSwitch
+  fullName: System.Diagnostics.SourceSwitch
+- uid: System.Diagnostics.TraceSource.TraceData(System.Diagnostics.TraceEventType,System.Int32,System.Object)
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: TraceData(TraceEventType, Int32, Object)
+  nameWithType: TraceSource.TraceData(TraceEventType, Int32, Object)
+  fullName: TraceSource.TraceData(TraceEventType, Int32, Object)
+- uid: System.Diagnostics.TraceEventType
+  parent: System.Diagnostics
+  isExternal: false
+  name: TraceEventType
+  nameWithType: TraceEventType
+  fullName: System.Diagnostics.TraceEventType
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Diagnostics.TraceSource.TraceData(System.Diagnostics.TraceEventType,System.Int32,System.Object[])
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: TraceData(TraceEventType, Int32, Object[])
+  nameWithType: TraceSource.TraceData(TraceEventType, Int32, Object[])
+  fullName: TraceSource.TraceData(TraceEventType, Int32, Object[])
+- uid: System.Object[]
+  parent: System
+  isExternal: false
+  name: Object[]
+  nameWithType: Object[]
+  fullName: System.Object[]
+  spec.csharp:
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+- uid: System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32)
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: TraceEvent(TraceEventType, Int32)
+  nameWithType: TraceSource.TraceEvent(TraceEventType, Int32)
+  fullName: TraceSource.TraceEvent(TraceEventType, Int32)
+- uid: System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32,System.String)
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: TraceEvent(TraceEventType, Int32, String)
+  nameWithType: TraceSource.TraceEvent(TraceEventType, Int32, String)
+  fullName: TraceSource.TraceEvent(TraceEventType, Int32, String)
+- uid: System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: TraceEvent(TraceEventType, Int32, String, Object[])
+  nameWithType: TraceSource.TraceEvent(TraceEventType, Int32, String, Object[])
+  fullName: TraceSource.TraceEvent(TraceEventType, Int32, String, Object[])
+- uid: System.Diagnostics.TraceSource.TraceInformation(System.String)
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: TraceInformation(String)
+  nameWithType: TraceSource.TraceInformation(String)
+  fullName: TraceSource.TraceInformation(String)
+- uid: System.Diagnostics.TraceSource.TraceInformation(System.String,System.Object[])
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: TraceInformation(String, Object[])
+  nameWithType: TraceSource.TraceInformation(String, Object[])
+  fullName: TraceSource.TraceInformation(String, Object[])
+- uid: System.Diagnostics.TraceSource.TraceTransfer(System.Int32,System.String,System.Guid)
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: TraceTransfer(Int32, String, Guid)
+  nameWithType: TraceSource.TraceTransfer(Int32, String, Guid)
+  fullName: TraceSource.TraceTransfer(Int32, String, Guid)
+- uid: System.Guid
+  parent: System
+  isExternal: false
+  name: Guid
+  nameWithType: Guid
+  fullName: System.Guid
+- uid: System.Diagnostics.TraceSource.#ctor*
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: TraceSource
+  nameWithType: TraceSource.TraceSource
+  fullName: TraceSource.TraceSource
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+- uid: System.Diagnostics.TraceSource.Attributes*
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: Attributes
+  nameWithType: TraceSource.Attributes
+  fullName: TraceSource.Attributes
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+- uid: System.Diagnostics.TraceSource.Close*
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: Close
+  nameWithType: TraceSource.Close
+  fullName: TraceSource.Close
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+- uid: System.Diagnostics.TraceSource.Flush*
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: Flush
+  nameWithType: TraceSource.Flush
+  fullName: TraceSource.Flush
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+- uid: System.Diagnostics.TraceSource.GetSupportedAttributes*
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: GetSupportedAttributes
+  nameWithType: TraceSource.GetSupportedAttributes
+  fullName: TraceSource.GetSupportedAttributes
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+- uid: System.Diagnostics.TraceSource.Listeners*
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: Listeners
+  nameWithType: TraceSource.Listeners
+  fullName: TraceSource.Listeners
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+- uid: System.Diagnostics.TraceSource.Name*
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: Name
+  nameWithType: TraceSource.Name
+  fullName: TraceSource.Name
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+- uid: System.Diagnostics.TraceSource.Switch*
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: Switch
+  nameWithType: TraceSource.Switch
+  fullName: TraceSource.Switch
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+- uid: System.Diagnostics.TraceSource.TraceData*
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: TraceData
+  nameWithType: TraceSource.TraceData
+  fullName: TraceSource.TraceData
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+- uid: System.Diagnostics.TraceSource.TraceEvent*
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: TraceEvent
+  nameWithType: TraceSource.TraceEvent
+  fullName: TraceSource.TraceEvent
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+- uid: System.Diagnostics.TraceSource.TraceInformation*
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: TraceInformation
+  nameWithType: TraceSource.TraceInformation
+  fullName: TraceSource.TraceInformation
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+- uid: System.Diagnostics.TraceSource.TraceTransfer*
+  parent: System.Diagnostics.TraceSource
+  isExternal: false
+  name: TraceTransfer
+  nameWithType: TraceSource.TraceTransfer
+  fullName: TraceSource.TraceTransfer
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Diagnostics/TraceSource.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

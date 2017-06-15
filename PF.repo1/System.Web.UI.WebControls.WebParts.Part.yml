@@ -1,0 +1,1744 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Web.UI.WebControls.WebParts.Part
+  commentId: T:System.Web.UI.WebControls.WebParts.Part
+  id: Part
+  children:
+  - System.Web.UI.WebControls.WebParts.Part.ChromeState
+  - System.Web.UI.WebControls.WebParts.Part.ChromeType
+  - System.Web.UI.WebControls.WebParts.Part.Controls
+  - System.Web.UI.WebControls.WebParts.Part.DataBind
+  - System.Web.UI.WebControls.WebParts.Part.Description
+  - System.Web.UI.WebControls.WebParts.Part.Title
+  - System.Web.UI.WebControls.WebParts.Part.System#Web#UI#WebControls#ICompositeControlDesignerAccessor#RecreateChildControls
+  langs:
+  - csharp
+  name: Part
+  nameWithType: Part
+  fullName: System.Web.UI.WebControls.WebParts.Part
+  type: Class
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls.WebParts
+  summary: Serves as the base class for all Web Parts part controls, which render a modular user interface on a Web Forms page.
+  remarks: "The <xref:System.Web.UI.WebControls.WebParts.Part> class defines properties that are common to all part controls and enable them to have a modular and consistent appearance on a Web page. These common properties include a title, a description, and characteristics of the chrome or frame that surrounds a part control.  \n  \n The <xref:System.Web.UI.WebControls.WebParts.Part.Title%2A> property specifies a title for the part control. The <xref:System.Web.UI.WebControls.WebParts.Part.Description%2A> property is used to summarize the part control's purpose, and appears as a ToolTip in the title bar of the control. The <xref:System.Web.UI.WebControls.WebParts.Part.ChromeType%2A> property dictates what kind of border is rendered around a part control, while the <xref:System.Web.UI.WebControls.WebParts.Part.ChromeState%2A> property indicates whether a part control is rendered normally, or minimized. The border of a part control is affected by the properties of the zone that contains it; for example, the <xref:System.Web.UI.WebControls.WebParts.WebZone.PartChromeType%2A> property affects the frames of all part controls contained in a zone.  \n  \n One type of part control is the <xref:System.Web.UI.WebControls.WebParts.WebPart> control, which renders content inside a corresponding zone. Another type is the <xref:System.Web.UI.WebControls.WebParts.EditorPart> control, which provides user interface (UI) controls used to modify (personalize) individual <xref:System.Web.UI.WebControls.WebParts.WebPart> controls. A third type of part control is the <xref:System.Web.UI.WebControls.WebParts.CatalogPart> control, which provides a list of <xref:System.Web.UI.WebControls.WebParts.WebPart> controls that users can add to or remove from a Web page.  \n  \n Part controls are contained in zones, all of which derive from the abstract <xref:System.Web.UI.WebControls.WebParts.WebZone> class. A zone is responsible for organizing the part controls it contains. Each zone also renders UI elements for itself, including a header, a footer, a title bar, and UI elements around each contained part control, such as borders.  \n  \n> [!NOTE]\n>  While part controls usually reside in zones, it is possible to place a part control outside a zone, if the control is referenced declaratively in the markup of a Web page. If a part control is declared outside a zone on a Web page, the control still works, but loses most of its Web Parts functionality. For example, the control cannot be edited, and cannot be dragged into a zone at run time. It is also helpful to remember that no part control can be dragged from a zone and dropped onto a page outside of a zone at run time.  \n  \n Some examples of base part types, and their corresponding zone types, are shown in the following table.  \n  \n|Part control type|Zone type|  \n|-----------------------|---------------|  \n|<xref:System.Web.UI.WebControls.WebParts.WebPart>|<xref:System.Web.UI.WebControls.WebParts.WebPartZone>|  \n|<xref:System.Web.UI.WebControls.WebParts.EditorPart>|<xref:System.Web.UI.WebControls.WebParts.EditorZone>|  \n|<xref:System.Web.UI.WebControls.WebParts.CatalogPart>|<xref:System.Web.UI.WebControls.WebParts.CatalogZone>|  \n  \n The various kinds of part controls that derive from the <xref:System.Web.UI.WebControls.WebParts.Part> class handle the inherited, UI-oriented properties differently. <xref:System.Web.UI.WebControls.WebParts.WebPart> controls override several of the inherited UI properties, and mark them with the `Personalizable` attribute (for details, see the <xref:System.Web.UI.WebControls.WebParts.PersonalizableAttribute> class documentation), which enables the values of those properties to be saved for future browser sessions, a feature known as personalization. For example, if you programmatically enable a user to update the value of a <xref:System.Web.UI.WebControls.WebParts.WebPart> control's <xref:System.Web.UI.WebControls.WebParts.WebPart.Title%2A> property at run time, that value will be personalized (assuming that personalization is enabled, which is the default). Several UI properties that <xref:System.Web.UI.WebControls.WebParts.WebPart> controls inherit from the <xref:System.Web.UI.WebControls.WebParts.Part> class, and from the <xref:System.Web.UI.WebControls.WebControl> class, are handled the same way.  \n  \n In contrast, other part controls, such as <xref:System.Web.UI.WebControls.WebParts.EditorPart> and <xref:System.Web.UI.WebControls.WebParts.CatalogPart>, do not enable the inherited UI properties to be personalized. For this reason, programmatically assigned property values are not saved for future browser sessions. For example, if you programmatically enable a user to update a <xref:System.Web.UI.WebControls.WebParts.PropertyGridEditorPart> control's <xref:System.Web.UI.WebControls.WebParts.PropertyGridEditorPart.Title%2A> property at run time, the updated value is lost after the control is closed or the browser session ends.  \n  \n An easy way to save the values on such inherited UI properties for <xref:System.Web.UI.WebControls.WebParts.EditorPart> and <xref:System.Web.UI.WebControls.WebParts.CatalogPart> controls for future browser sessions is to declare the property values in page persistence format. However, this is a static approach and still does not allow users to personalize the property values. As an alternative, if you want to enable programmatic updates to the inherited UI properties so users can personalize them at run time, you can use private, static variables to save the property values. Each time a new instance of an <xref:System.Web.UI.WebControls.WebParts.EditorPart> or <xref:System.Web.UI.WebControls.WebParts.CatalogPart> control is created (for example, in the method that handles the control's <xref:System.Web.UI.Control.Init> event), you can reassign a static variable's value to a corresponding property. Such an approach gives users the ability to personalize the editing UI and catalog UI of a Web Parts application."
+  example:
+  - "The following code examples demonstrate declarative use of several properties of the <xref:System.Web.UI.WebControls.WebParts.Part> class, by using two instances of a custom <xref:System.Web.UI.WebControls.WebParts.WebPart> control referenced in an ASP.NET Web page. For the code example to run, you must compile this source code. You can compile it explicitly and put the resulting assembly in your Web site's Bin folder or the global assembly cache. Alternatively, you can put the source code in your site's App_Code folder, where it will be dynamically compiled at run time. For a walkthrough that demonstrates both methods of compiling, see [Walkthrough: Developing and Using a Custom Web Server Control](http://msdn.microsoft.com/library/6d90782a-a1a4-45a6-b2d4-cf6362b83b08).  \n  \n The first part of the example contains the code for the custom control, named `TextDisplayWebPart`. Because the control derives from <xref:System.Web.UI.WebControls.WebParts.WebPart>, it also inherits the common properties that the <xref:System.Web.UI.WebControls.WebParts.Part> class provides, and illustrates the use of those properties in this code example.  \n  \n [!code-csharp[WebParts_Part_Overview#2](~/samples/snippets/csharp/VS_Snippets_WebNet/WebParts_Part_Overview/CS/textdisplaywebpart.cs#2)]\n [!code-vb[WebParts_Part_Overview#2](~/samples/snippets/visualbasic/VS_Snippets_WebNet/WebParts_Part_Overview/VB/textdisplaywebpart.vb#2)]  \n  \n The second part of the example shows how to reference the custom part controls in an ASP.NET Web page. Notice that the various <xref:System.Web.UI.WebControls.WebParts.Part> properties are assigned declaratively to the custom control instances. Compare the declarative code that references the two instances on the page, and then load the page in a browser. Note how the various properties affect the appearance of the controls. For example, after you load the page in a browser, the second instance of the `TextDisplayWebPart` control appears minimized, because its <xref:System.Web.UI.WebControls.WebParts.Part.ChromeState%2A> property value is set to <xref:System.Web.UI.WebControls.WebParts.PartChromeState.Minimized>.  \n  \n <!-- TODO: review snippet reference [!code-csharp[WebParts_Part_Overview#1](~/samples/snippets/csharp/VS_Snippets_WebNet/WebParts_Part_Overview/CS/partoverviewcs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[WebParts_Part_Overview#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/WebParts_Part_Overview/VB/partoverviewvb.aspx#1)]  -->"
+  syntax:
+    content: 'public abstract class Part : System.Web.UI.WebControls.Panel, System.Web.UI.INamingContainer, System.Web.UI.WebControls.ICompositeControlDesignerAccessor'
+  inheritance:
+  - System.Object
+  - System.Web.UI.Control
+  - System.Web.UI.WebControls.WebControl
+  - System.Web.UI.WebControls.Panel
+  derivedClasses:
+  - System.Web.UI.WebControls.WebParts.CatalogPart
+  - System.Web.UI.WebControls.WebParts.EditorPart
+  - System.Web.UI.WebControls.WebParts.WebPart
+  implements:
+  - System.Web.UI.INamingContainer
+  - System.Web.UI.WebControls.ICompositeControlDesignerAccessor
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  - System.Web.UI.Control.Adapter
+  - System.Web.UI.Control.AddedControl(System.Web.UI.Control,System.Int32)
+  - System.Web.UI.Control.AddParsedSubObject(System.Object)
+  - System.Web.UI.Control.ApplyStyleSheetSkin(System.Web.UI.Page)
+  - System.Web.UI.Control.AppRelativeTemplateSourceDirectory
+  - System.Web.UI.Control.BeginRenderTracing(System.IO.TextWriter,System.Object)
+  - System.Web.UI.Control.BindingContainer
+  - System.Web.UI.Control.BuildProfileTree(System.String,System.Boolean)
+  - System.Web.UI.Control.ChildControlsCreated
+  - System.Web.UI.Control.ClearCachedClientID
+  - System.Web.UI.Control.ClearChildControlState
+  - System.Web.UI.Control.ClearChildState
+  - System.Web.UI.Control.ClearChildViewState
+  - System.Web.UI.Control.ClearEffectiveClientIDMode
+  - System.Web.UI.Control.ClientID
+  - System.Web.UI.Control.ClientIDMode
+  - System.Web.UI.Control.ClientIDSeparator
+  - System.Web.UI.Control.Context
+  - System.Web.UI.Control.CreateChildControls
+  - System.Web.UI.Control.CreateControlCollection
+  - System.Web.UI.Control.DataBind(System.Boolean)
+  - System.Web.UI.Control.DataBindChildren
+  - System.Web.UI.Control.DataBinding
+  - System.Web.UI.Control.DataItemContainer
+  - System.Web.UI.Control.DataKeysContainer
+  - System.Web.UI.Control.DesignMode
+  - System.Web.UI.Control.Dispose
+  - System.Web.UI.Control.Disposed
+  - System.Web.UI.Control.EnableViewState
+  - System.Web.UI.Control.EndRenderTracing(System.IO.TextWriter,System.Object)
+  - System.Web.UI.Control.EnsureChildControls
+  - System.Web.UI.Control.EnsureID
+  - System.Web.UI.Control.Events
+  - System.Web.UI.Control.FindControl(System.String)
+  - System.Web.UI.Control.FindControl(System.String,System.Int32)
+  - System.Web.UI.Control.Focus
+  - System.Web.UI.Control.GetDesignModeState
+  - System.Web.UI.Control.GetRouteUrl(System.Object)
+  - System.Web.UI.Control.GetRouteUrl(System.String,System.Object)
+  - System.Web.UI.Control.GetRouteUrl(System.String,System.Web.Routing.RouteValueDictionary)
+  - System.Web.UI.Control.GetRouteUrl(System.Web.Routing.RouteValueDictionary)
+  - System.Web.UI.Control.GetUniqueIDRelativeTo(System.Web.UI.Control)
+  - System.Web.UI.Control.HasChildViewState
+  - System.Web.UI.Control.HasControls
+  - System.Web.UI.Control.HasEvents
+  - System.Web.UI.Control.ID
+  - System.Web.UI.Control.IdSeparator
+  - System.Web.UI.Control.Init
+  - System.Web.UI.Control.IsChildControlStateCleared
+  - System.Web.UI.Control.IsLiteralContent
+  - System.Web.UI.Control.IsTrackingViewState
+  - System.Web.UI.Control.IsViewStateEnabled
+  - System.Web.UI.Control.Load
+  - System.Web.UI.Control.LoadControlState(System.Object)
+  - System.Web.UI.Control.LoadViewStateByID
+  - System.Web.UI.Control.MapPathSecure(System.String)
+  - System.Web.UI.Control.NamingContainer
+  - System.Web.UI.Control.OnBubbleEvent(System.Object,System.EventArgs)
+  - System.Web.UI.Control.OnDataBinding(System.EventArgs)
+  - System.Web.UI.Control.OnInit(System.EventArgs)
+  - System.Web.UI.Control.OnLoad(System.EventArgs)
+  - System.Web.UI.Control.OnPreRender(System.EventArgs)
+  - System.Web.UI.Control.OnUnload(System.EventArgs)
+  - System.Web.UI.Control.OpenFile(System.String)
+  - System.Web.UI.Control.Page
+  - System.Web.UI.Control.Parent
+  - System.Web.UI.Control.PreRender
+  - System.Web.UI.Control.RaiseBubbleEvent(System.Object,System.EventArgs)
+  - System.Web.UI.Control.RemovedControl(System.Web.UI.Control)
+  - System.Web.UI.Control.RenderChildren(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter,System.Web.UI.Adapters.ControlAdapter)
+  - System.Web.UI.Control.RenderingCompatibility
+  - System.Web.UI.Control.ResolveAdapter
+  - System.Web.UI.Control.ResolveClientUrl(System.String)
+  - System.Web.UI.Control.ResolveUrl(System.String)
+  - System.Web.UI.Control.SaveControlState
+  - System.Web.UI.Control.SetDesignModeState(System.Collections.IDictionary)
+  - System.Web.UI.Control.SetRenderMethodDelegate(System.Web.UI.RenderMethod)
+  - System.Web.UI.Control.SetTraceData(System.Object,System.Object)
+  - System.Web.UI.Control.SetTraceData(System.Object,System.Object,System.Object)
+  - System.Web.UI.Control.Site
+  - System.Web.UI.Control.System#Web#UI#IControlBuilderAccessor#ControlBuilder
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#GetDesignModeState
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetDesignModeState(System.Collections.IDictionary)
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetOwnerControl(System.Web.UI.Control)
+  - System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#UserData
+  - System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#DataBindings
+  - System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#HasDataBindings
+  - System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#Expressions
+  - System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#HasExpressions
+  - System.Web.UI.Control.System#Web#UI#IParserAccessor#AddParsedSubObject(System.Object)
+  - System.Web.UI.Control.TemplateControl
+  - System.Web.UI.Control.TemplateSourceDirectory
+  - System.Web.UI.Control.UniqueID
+  - System.Web.UI.Control.Unload
+  - System.Web.UI.Control.ValidateRequestMode
+  - System.Web.UI.Control.ViewState
+  - System.Web.UI.Control.ViewStateIgnoresCase
+  - System.Web.UI.Control.ViewStateMode
+  - System.Web.UI.Control.Visible
+  - System.Web.UI.WebControls.Panel.AddAttributesToRender(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.WebControls.Panel.BackImageUrl
+  - System.Web.UI.WebControls.Panel.CreateControlStyle
+  - System.Web.UI.WebControls.Panel.DefaultButton
+  - System.Web.UI.WebControls.Panel.Direction
+  - System.Web.UI.WebControls.Panel.GroupingText
+  - System.Web.UI.WebControls.Panel.HorizontalAlign
+  - System.Web.UI.WebControls.Panel.RenderBeginTag(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.WebControls.Panel.RenderEndTag(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.WebControls.Panel.ScrollBars
+  - System.Web.UI.WebControls.Panel.SupportsDisabledAttribute
+  - System.Web.UI.WebControls.Panel.Wrap
+  - System.Web.UI.WebControls.WebControl.AccessKey
+  - System.Web.UI.WebControls.WebControl.ApplyStyle(System.Web.UI.WebControls.Style)
+  - System.Web.UI.WebControls.WebControl.Attributes
+  - System.Web.UI.WebControls.WebControl.BackColor
+  - System.Web.UI.WebControls.WebControl.BorderColor
+  - System.Web.UI.WebControls.WebControl.BorderStyle
+  - System.Web.UI.WebControls.WebControl.BorderWidth
+  - System.Web.UI.WebControls.WebControl.ControlStyle
+  - System.Web.UI.WebControls.WebControl.ControlStyleCreated
+  - System.Web.UI.WebControls.WebControl.CopyBaseAttributes(System.Web.UI.WebControls.WebControl)
+  - System.Web.UI.WebControls.WebControl.CssClass
+  - System.Web.UI.WebControls.WebControl.DisabledCssClass
+  - System.Web.UI.WebControls.WebControl.Enabled
+  - System.Web.UI.WebControls.WebControl.EnableTheming
+  - System.Web.UI.WebControls.WebControl.Font
+  - System.Web.UI.WebControls.WebControl.ForeColor
+  - System.Web.UI.WebControls.WebControl.HasAttributes
+  - System.Web.UI.WebControls.WebControl.Height
+  - System.Web.UI.WebControls.WebControl.IsEnabled
+  - System.Web.UI.WebControls.WebControl.LoadViewState(System.Object)
+  - System.Web.UI.WebControls.WebControl.MergeStyle(System.Web.UI.WebControls.Style)
+  - System.Web.UI.WebControls.WebControl.Render(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.WebControls.WebControl.RenderContents(System.Web.UI.HtmlTextWriter)
+  - System.Web.UI.WebControls.WebControl.SaveViewState
+  - System.Web.UI.WebControls.WebControl.SkinID
+  - System.Web.UI.WebControls.WebControl.Style
+  - System.Web.UI.WebControls.WebControl.System#Web#UI#IAttributeAccessor#GetAttribute(System.String)
+  - System.Web.UI.WebControls.WebControl.System#Web#UI#IAttributeAccessor#SetAttribute(System.String,System.String)
+  - System.Web.UI.WebControls.WebControl.TabIndex
+  - System.Web.UI.WebControls.WebControl.TagKey
+  - System.Web.UI.WebControls.WebControl.TagName
+  - System.Web.UI.WebControls.WebControl.ToolTip
+  - System.Web.UI.WebControls.WebControl.TrackViewState
+  - System.Web.UI.WebControls.WebControl.Width
+  extensionMethods:
+  - System.Web.DynamicData.DynamicDataExtensions.FindDataSourceControl(System.Web.UI.Control)
+  - System.Web.DynamicData.DynamicDataExtensions.FindFieldTemplate(System.Web.UI.Control,System.String)
+  - System.Web.DynamicData.DynamicDataExtensions.FindMetaTable(System.Web.UI.Control)
+  - System.Web.DynamicData.DynamicDataExtensions.GetDefaultValues(System.Web.UI.INamingContainer)
+  - System.Web.DynamicData.DynamicDataExtensions.GetMetaTable(System.Web.UI.INamingContainer)
+  - System.Web.DynamicData.DynamicDataExtensions.SetMetaTable(System.Web.UI.INamingContainer,System.Web.DynamicData.MetaTable)
+  - System.Web.DynamicData.DynamicDataExtensions.SetMetaTable(System.Web.UI.INamingContainer,System.Web.DynamicData.MetaTable,System.Collections.Generic.IDictionary{System.String,System.Object})
+  - System.Web.DynamicData.DynamicDataExtensions.SetMetaTable(System.Web.UI.INamingContainer,System.Web.DynamicData.MetaTable,System.Object)
+  - System.Web.DynamicData.DynamicDataExtensions.TryGetMetaTable(System.Web.UI.INamingContainer,System.Web.DynamicData.MetaTable@)
+  - System.Web.UI.DataControlExtensions.EnableDynamicData(System.Web.UI.INamingContainer,System.Type)
+  - System.Web.UI.DataControlExtensions.EnableDynamicData(System.Web.UI.INamingContainer,System.Type,System.Collections.Generic.IDictionary{System.String,System.Object})
+  - System.Web.UI.DataControlExtensions.EnableDynamicData(System.Web.UI.INamingContainer,System.Type,System.Object)
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls.WebParts/Part.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.WebParts.Part.ChromeState
+  commentId: P:System.Web.UI.WebControls.WebParts.Part.ChromeState
+  id: ChromeState
+  parent: System.Web.UI.WebControls.WebParts.Part
+  langs:
+  - csharp
+  name: ChromeState
+  nameWithType: Part.ChromeState
+  fullName: Part.ChromeState
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls.WebParts
+  summary: Gets or sets whether a part control is in a minimized or normal state.
+  remarks: A part control's <xref:System.Web.UI.WebControls.WebParts.Part.ChromeState%2A> can be normal or minimized.
+  example:
+  - "The following code example illustrates the declarative use of the <xref:System.Web.UI.WebControls.WebParts.Part.ChromeState%2A> property in a part control. This example requires the custom <xref:System.Web.UI.WebControls.WebParts.WebPart> control `TextDisplayWebPart`, which can be found in the Example section of the <xref:System.Web.UI.WebControls.WebParts.Part> class summary.  \n  \n Note that in the declarative markup for the Web page, the second instance of the `TextDisplayWebPart` control sets its <xref:System.Web.UI.WebControls.WebParts.Part.ChromeState%2A> property. After you load the page in a browser, the second control instance appears minimized.  \n  \n <!-- TODO: review snippet reference [!code-csharp[WebParts_Part_Overview#1](~/samples/snippets/csharp/VS_Snippets_WebNet/WebParts_Part_Overview/CS/partoverviewcs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[WebParts_Part_Overview#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/WebParts_Part_Overview/VB/partoverviewvb.aspx#1)]  -->"
+  syntax:
+    content: public virtual System.Web.UI.WebControls.WebParts.PartChromeState ChromeState { get; set; }
+    return:
+      type: System.Web.UI.WebControls.WebParts.PartChromeState
+      description: One of the <xref href="System.Web.UI.WebControls.WebParts.PartChromeState"></xref> values. The default is <xref href="System.Web.UI.WebControls.WebParts.PartChromeState.Normal"></xref>.
+  overload: System.Web.UI.WebControls.WebParts.Part.ChromeState*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The value specified is not one of the <xref href="System.Web.UI.WebControls.WebParts.PartChromeState"></xref> values.
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls.WebParts/Part.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.WebParts.Part.ChromeType
+  commentId: P:System.Web.UI.WebControls.WebParts.Part.ChromeType
+  id: ChromeType
+  parent: System.Web.UI.WebControls.WebParts.Part
+  langs:
+  - csharp
+  name: ChromeType
+  nameWithType: Part.ChromeType
+  fullName: Part.ChromeType
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls.WebParts
+  summary: Gets or sets the type of border that frames a Web Parts control.
+  remarks: A part control's <xref:System.Web.UI.WebControls.WebParts.Part.ChromeType%2A> property determines what kind of border surrounds the control. Options include showing a title only, a border only, a title and border, neither, or the default option, which simply uses the value of the <xref:System.Web.UI.WebControls.WebParts.WebZone.PartChromeType%2A> property.
+  example:
+  - "The following code example illustrates the declarative use of the <xref:System.Web.UI.WebControls.WebParts.Part.ChromeType%2A> property in a part control. This example requires the custom <xref:System.Web.UI.WebControls.WebParts.WebPart> control `TextDisplayWebPart`, which can be found in the Example section of the <xref:System.Web.UI.WebControls.WebParts.Part> class summary.  \n  \n In the declarative code for the Web page, the second instance of the `TextDisplayWebPart` control sets its <xref:System.Web.UI.WebControls.WebParts.Part.ChromeType%2A> property to have only a title, whereas the first instance has a title and a border. After you load the page in a browser, the second instance of the control appears minimized. If you maximize the control, it shows a title without a border.  \n  \n <!-- TODO: review snippet reference [!code-csharp[WebParts_Part_Overview#1](~/samples/snippets/csharp/VS_Snippets_WebNet/WebParts_Part_Overview/CS/partoverviewcs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[WebParts_Part_Overview#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/WebParts_Part_Overview/VB/partoverviewvb.aspx#1)]  -->"
+  syntax:
+    content: public virtual System.Web.UI.WebControls.WebParts.PartChromeType ChromeType { get; set; }
+    return:
+      type: System.Web.UI.WebControls.WebParts.PartChromeType
+      description: One of the <xref href="System.Web.UI.WebControls.WebParts.PartChromeType"></xref> values. The default is <xref href="System.Web.UI.WebControls.WebParts.PartChromeType.Default"></xref>.
+  overload: System.Web.UI.WebControls.WebParts.Part.ChromeType*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The value is not one of the <xref href="System.Web.UI.WebControls.WebParts.PartChromeType"></xref> values.
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls.WebParts/Part.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.WebParts.Part.Controls
+  commentId: P:System.Web.UI.WebControls.WebParts.Part.Controls
+  id: Controls
+  parent: System.Web.UI.WebControls.WebParts.Part
+  langs:
+  - csharp
+  name: Controls
+  nameWithType: Part.Controls
+  fullName: Part.Controls
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls.WebParts
+  summary: Gets a <xref href="System.Web.UI.ControlCollection"></xref> object that contains the child controls for a specified server control in the user interface hierarchy.
+  remarks: "On an ASP.NET page, when controls are added declaratively between the opening and closing tags of a server control, ASP.NET automatically adds the controls to the containing server control's <xref:System.Web.UI.ControlCollection> object. Any HTML tags or text strings that are not processed on the server are treated as <xref:System.Web.UI.LiteralControl> objects. These are added to the collection like other server controls.  \n  \n The <xref:System.Web.UI.Control.Controls%2A> property allows you programmatic access to the instance of the <xref:System.Web.UI.ControlCollection> class for any server control. You can add controls to the collection, remove controls from the collection, or iterate through the server controls in the collection."
+  syntax:
+    content: public override System.Web.UI.ControlCollection Controls { get; }
+    return:
+      type: System.Web.UI.ControlCollection
+      description: The collection of child controls for the specified server control.
+  overload: System.Web.UI.WebControls.WebParts.Part.Controls*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls.WebParts/Part.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.WebParts.Part.DataBind
+  commentId: M:System.Web.UI.WebControls.WebParts.Part.DataBind
+  id: DataBind
+  parent: System.Web.UI.WebControls.WebParts.Part
+  langs:
+  - csharp
+  name: DataBind()
+  nameWithType: Part.DataBind()
+  fullName: Part.DataBind()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls.WebParts
+  summary: Binds a data source to the invoked server control and all its child controls.
+  syntax:
+    content: public override void DataBind ();
+    parameters: []
+  overload: System.Web.UI.WebControls.WebParts.Part.DataBind*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls.WebParts/Part.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.WebParts.Part.Description
+  commentId: P:System.Web.UI.WebControls.WebParts.Part.Description
+  id: Description
+  parent: System.Web.UI.WebControls.WebParts.Part
+  langs:
+  - csharp
+  name: Description
+  nameWithType: Part.Description
+  fullName: Part.Description
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls.WebParts
+  summary: Gets or sets a brief phrase that summarizes what the part control does, for use in ToolTips and catalogs of part controls.
+  remarks: "The <xref:System.Web.UI.WebControls.WebParts.Part.Description%2A> property is typically a string that is used in catalogs that provide lists of part controls, and as a ToolTip in the part control's title bar. The content of the <xref:System.Web.UI.WebControls.WebParts.Part.Description%2A> appears in a ToolTip when you position your mouse pointer over the title text in a part control's title bar. The ToolTip text is created from the value of the <xref:System.Web.UI.WebControls.WebParts.WebPart.DisplayTitle%2A> property, followed by a hyphen, followed by the <xref:System.Web.UI.WebControls.WebParts.Part.Description%2A> property value.  \n  \n The value of this property, when set, can be saved automatically to a resource file by using a designer tool. For more information, see <xref:System.ComponentModel.LocalizableAttribute> and [Globalization and Localization](http://msdn.microsoft.com/library/8ef3838e-9d05-4236-9dd0-ceecff9df80d)."
+  example:
+  - "The following code example illustrates the declarative use of the <xref:System.Web.UI.WebControls.WebParts.Part.Description%2A> property in a part control. This example requires the custom <xref:System.Web.UI.WebControls.WebParts.WebPart> control `TextDisplayWebPart`, which can be found in the Example section of the <xref:System.Web.UI.WebControls.WebParts.Part> class summary.  \n  \n After you load the page in a browser, if you position your mouse pointer over the title text of the first control instance, the description text appears in a ToolTip.  \n  \n <!-- TODO: review snippet reference [!code-csharp[WebParts_Part_Overview#1](~/samples/snippets/csharp/VS_Snippets_WebNet/WebParts_Part_Overview/CS/partoverviewcs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[WebParts_Part_Overview#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/WebParts_Part_Overview/VB/partoverviewvb.aspx#1)]  -->"
+  syntax:
+    content: public virtual string Description { get; set; }
+    return:
+      type: System.String
+      description: A string that briefly summarizes the part control's functionality. The default value is an empty string ("").
+  overload: System.Web.UI.WebControls.WebParts.Part.Description*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls.WebParts/Part.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.WebParts.Part.Title
+  commentId: P:System.Web.UI.WebControls.WebParts.Part.Title
+  id: Title
+  parent: System.Web.UI.WebControls.WebParts.Part
+  langs:
+  - csharp
+  name: Title
+  nameWithType: Part.Title
+  fullName: Part.Title
+  type: Property
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls.WebParts
+  summary: Gets or sets the title of a part control.
+  remarks: "The visible title text in a part control's title bar is set by the <xref:System.Web.UI.WebControls.WebParts.Part.Title%2A> property. The title text also appears as part of the ToolTip text when you position your mouse pointer over the title bar of a <xref:System.Web.UI.WebControls.WebParts.WebPart> control or other server control that appears in a <xref:System.Web.UI.WebControls.WebParts.WebPartZone> zone.  \n  \n The style of the title text is determined by the <xref:System.Web.UI.WebControls.WebParts.WebZone.PartTitleStyle%2A> property of the zone that contains the part control.  \n  \n If you do not supply a title for a control, the Web Parts control set automatically calculates a default string to use as a title. For more information, see <xref:System.Web.UI.WebControls.WebParts.WebPart.DisplayTitle%2A>. Also, it is possible to provide a standard subtitle that is appended to the title string. For details, see <xref:System.Web.UI.WebControls.WebParts.WebPart.Subtitle%2A>.  \n  \n The value of this property, when set, can be saved automatically to a resource file by using a designer tool. For more information, see <xref:System.ComponentModel.LocalizableAttribute> and [Globalization and Localization](http://msdn.microsoft.com/library/8ef3838e-9d05-4236-9dd0-ceecff9df80d)."
+  example:
+  - "The following code example illustrates the declarative use of the <xref:System.Web.UI.WebControls.WebParts.Part.Title%2A> property in a part control. This example requires the custom <xref:System.Web.UI.WebControls.WebParts.WebPart> control `TextDisplayWebPart`, which can be found in the Example section of the <xref:System.Web.UI.WebControls.WebParts.Part> class summary.  \n  \n <!-- TODO: review snippet reference [!code-csharp[WebParts_Part_Overview#1](~/samples/snippets/csharp/VS_Snippets_WebNet/WebParts_Part_Overview/CS/partoverviewcs.aspx#1)]  -->\n <!-- TODO: review snippet reference [!code-vb[WebParts_Part_Overview#1](~/samples/snippets/visualbasic/VS_Snippets_WebNet/WebParts_Part_Overview/VB/partoverviewvb.aspx#1)]  -->"
+  syntax:
+    content: public virtual string Title { get; set; }
+    return:
+      type: System.String
+      description: A string that represents the title of the part control. The default value is an empty string ("").
+  overload: System.Web.UI.WebControls.WebParts.Part.Title*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls.WebParts/Part.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+- uid: System.Web.UI.WebControls.WebParts.Part.System#Web#UI#WebControls#ICompositeControlDesignerAccessor#RecreateChildControls
+  commentId: M:System.Web.UI.WebControls.WebParts.Part.System#Web#UI#WebControls#ICompositeControlDesignerAccessor#RecreateChildControls
+  id: System#Web#UI#WebControls#ICompositeControlDesignerAccessor#RecreateChildControls
+  isEii: true
+  parent: System.Web.UI.WebControls.WebParts.Part
+  langs:
+  - csharp
+  name: ICompositeControlDesignerAccessor.RecreateChildControls()
+  nameWithType: Part.ICompositeControlDesignerAccessor.RecreateChildControls()
+  fullName: Part.ICompositeControlDesignerAccessor.RecreateChildControls()
+  type: Method
+  assemblies:
+  - System.Web
+  namespace: System.Web.UI.WebControls.WebParts
+  summary: Allows the developer of a designer for a composite part control to recreate the control's child controls on the design surface.
+  syntax:
+    content: void ICompositeControlDesignerAccessor.RecreateChildControls ();
+    parameters: []
+  overload: System.Web.UI.WebControls.WebParts.Part.System#Web#UI#WebControls#ICompositeControlDesignerAccessor#RecreateChildControls*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls.WebParts/Part.xml
+  ms.technology:
+  - dotnet-webforms
+  author: tdykstra
+  ms.author: tdykstra
+  manager: wpickett
+references:
+- uid: System.Web.UI.WebControls.Panel
+  parent: System.Web.UI.WebControls
+  isExternal: false
+  name: Panel
+  nameWithType: Panel
+  fullName: System.Web.UI.WebControls.Panel
+- uid: System.ArgumentOutOfRangeException
+  parent: System
+  isExternal: false
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: System.Web.UI.WebControls.WebParts.Part.ChromeState
+  parent: System.Web.UI.WebControls.WebParts.Part
+  isExternal: false
+  name: ChromeState
+  nameWithType: Part.ChromeState
+  fullName: Part.ChromeState
+- uid: System.Web.UI.WebControls.WebParts.PartChromeState
+  parent: System.Web.UI.WebControls.WebParts
+  isExternal: false
+  name: PartChromeState
+  nameWithType: PartChromeState
+  fullName: System.Web.UI.WebControls.WebParts.PartChromeState
+- uid: System.Web.UI.WebControls.WebParts.Part.ChromeType
+  parent: System.Web.UI.WebControls.WebParts.Part
+  isExternal: false
+  name: ChromeType
+  nameWithType: Part.ChromeType
+  fullName: Part.ChromeType
+- uid: System.Web.UI.WebControls.WebParts.PartChromeType
+  parent: System.Web.UI.WebControls.WebParts
+  isExternal: false
+  name: PartChromeType
+  nameWithType: PartChromeType
+  fullName: System.Web.UI.WebControls.WebParts.PartChromeType
+- uid: System.Web.UI.WebControls.WebParts.Part.Controls
+  parent: System.Web.UI.WebControls.WebParts.Part
+  isExternal: false
+  name: Controls
+  nameWithType: Part.Controls
+  fullName: Part.Controls
+- uid: System.Web.UI.ControlCollection
+  parent: System.Web.UI
+  isExternal: false
+  name: ControlCollection
+  nameWithType: ControlCollection
+  fullName: System.Web.UI.ControlCollection
+- uid: System.Web.UI.WebControls.WebParts.Part.DataBind
+  parent: System.Web.UI.WebControls.WebParts.Part
+  isExternal: false
+  name: DataBind()
+  nameWithType: Part.DataBind()
+  fullName: Part.DataBind()
+- uid: System.Web.UI.WebControls.WebParts.Part.Description
+  parent: System.Web.UI.WebControls.WebParts.Part
+  isExternal: false
+  name: Description
+  nameWithType: Part.Description
+  fullName: Part.Description
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Web.UI.WebControls.WebParts.Part.Title
+  parent: System.Web.UI.WebControls.WebParts.Part
+  isExternal: false
+  name: Title
+  nameWithType: Part.Title
+  fullName: Part.Title
+- uid: System.Web.UI.WebControls.WebParts.Part.System#Web#UI#WebControls#ICompositeControlDesignerAccessor#RecreateChildControls
+  parent: System.Web.UI.WebControls.WebParts.Part
+  isExternal: false
+  name: ICompositeControlDesignerAccessor.RecreateChildControls()
+  nameWithType: Part.ICompositeControlDesignerAccessor.RecreateChildControls()
+  fullName: Part.ICompositeControlDesignerAccessor.RecreateChildControls()
+- uid: System.Web.UI.WebControls.WebParts.Part.ChromeState*
+  parent: System.Web.UI.WebControls.WebParts.Part
+  isExternal: false
+  name: ChromeState
+  nameWithType: Part.ChromeState
+  fullName: Part.ChromeState
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls.WebParts/Part.xml
+- uid: System.Web.UI.WebControls.WebParts.Part.ChromeType*
+  parent: System.Web.UI.WebControls.WebParts.Part
+  isExternal: false
+  name: ChromeType
+  nameWithType: Part.ChromeType
+  fullName: Part.ChromeType
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls.WebParts/Part.xml
+- uid: System.Web.UI.WebControls.WebParts.Part.Controls*
+  parent: System.Web.UI.WebControls.WebParts.Part
+  isExternal: false
+  name: Controls
+  nameWithType: Part.Controls
+  fullName: Part.Controls
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls.WebParts/Part.xml
+- uid: System.Web.UI.WebControls.WebParts.Part.DataBind*
+  parent: System.Web.UI.WebControls.WebParts.Part
+  isExternal: false
+  name: DataBind
+  nameWithType: Part.DataBind
+  fullName: Part.DataBind
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls.WebParts/Part.xml
+- uid: System.Web.UI.WebControls.WebParts.Part.Description*
+  parent: System.Web.UI.WebControls.WebParts.Part
+  isExternal: false
+  name: Description
+  nameWithType: Part.Description
+  fullName: Part.Description
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls.WebParts/Part.xml
+- uid: System.Web.UI.WebControls.WebParts.Part.Title*
+  parent: System.Web.UI.WebControls.WebParts.Part
+  isExternal: false
+  name: Title
+  nameWithType: Part.Title
+  fullName: Part.Title
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls.WebParts/Part.xml
+- uid: System.Web.UI.WebControls.WebParts.Part.System#Web#UI#WebControls#ICompositeControlDesignerAccessor#RecreateChildControls*
+  parent: System.Web.UI.WebControls.WebParts.Part
+  isExternal: false
+  name: System.Web.UI.WebControls.ICompositeControlDesignerAccessor.RecreateChildControls
+  nameWithType: Part.System.Web.UI.WebControls.ICompositeControlDesignerAccessor.RecreateChildControls
+  fullName: Part.System.Web.UI.WebControls.ICompositeControlDesignerAccessor.RecreateChildControls
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Web.UI.WebControls.WebParts/Part.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Web.UI.Control.Adapter
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Adapter
+  nameWithType: Control.Adapter
+  fullName: Control.Adapter
+- uid: System.Web.UI.Control.AddedControl(System.Web.UI.Control,System.Int32)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AddedControl(Control, Int32)
+  nameWithType: Control.AddedControl(Control, Int32)
+  fullName: Control.AddedControl(Control, Int32)
+- uid: System.Web.UI.Control.AddParsedSubObject(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AddParsedSubObject(Object)
+  nameWithType: Control.AddParsedSubObject(Object)
+  fullName: Control.AddParsedSubObject(Object)
+- uid: System.Web.UI.Control.ApplyStyleSheetSkin(System.Web.UI.Page)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ApplyStyleSheetSkin(Page)
+  nameWithType: Control.ApplyStyleSheetSkin(Page)
+  fullName: Control.ApplyStyleSheetSkin(Page)
+- uid: System.Web.UI.Control.AppRelativeTemplateSourceDirectory
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: AppRelativeTemplateSourceDirectory
+  nameWithType: Control.AppRelativeTemplateSourceDirectory
+  fullName: Control.AppRelativeTemplateSourceDirectory
+- uid: System.Web.UI.Control.BeginRenderTracing(System.IO.TextWriter,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BeginRenderTracing(TextWriter, Object)
+  nameWithType: Control.BeginRenderTracing(TextWriter, Object)
+  fullName: Control.BeginRenderTracing(TextWriter, Object)
+- uid: System.Web.UI.Control.BindingContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BindingContainer
+  nameWithType: Control.BindingContainer
+  fullName: Control.BindingContainer
+- uid: System.Web.UI.Control.BuildProfileTree(System.String,System.Boolean)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: BuildProfileTree(String, Boolean)
+  nameWithType: Control.BuildProfileTree(String, Boolean)
+  fullName: Control.BuildProfileTree(String, Boolean)
+- uid: System.Web.UI.Control.ChildControlsCreated
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ChildControlsCreated
+  nameWithType: Control.ChildControlsCreated
+  fullName: Control.ChildControlsCreated
+- uid: System.Web.UI.Control.ClearCachedClientID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearCachedClientID()
+  nameWithType: Control.ClearCachedClientID()
+  fullName: Control.ClearCachedClientID()
+- uid: System.Web.UI.Control.ClearChildControlState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildControlState()
+  nameWithType: Control.ClearChildControlState()
+  fullName: Control.ClearChildControlState()
+- uid: System.Web.UI.Control.ClearChildState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildState()
+  nameWithType: Control.ClearChildState()
+  fullName: Control.ClearChildState()
+- uid: System.Web.UI.Control.ClearChildViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearChildViewState()
+  nameWithType: Control.ClearChildViewState()
+  fullName: Control.ClearChildViewState()
+- uid: System.Web.UI.Control.ClearEffectiveClientIDMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClearEffectiveClientIDMode()
+  nameWithType: Control.ClearEffectiveClientIDMode()
+  fullName: Control.ClearEffectiveClientIDMode()
+- uid: System.Web.UI.Control.ClientID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClientID
+  nameWithType: Control.ClientID
+  fullName: Control.ClientID
+- uid: System.Web.UI.Control.ClientIDMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClientIDMode
+  nameWithType: Control.ClientIDMode
+  fullName: Control.ClientIDMode
+- uid: System.Web.UI.Control.ClientIDSeparator
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ClientIDSeparator
+  nameWithType: Control.ClientIDSeparator
+  fullName: Control.ClientIDSeparator
+- uid: System.Web.UI.Control.Context
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Context
+  nameWithType: Control.Context
+  fullName: Control.Context
+- uid: System.Web.UI.Control.CreateChildControls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: CreateChildControls()
+  nameWithType: Control.CreateChildControls()
+  fullName: Control.CreateChildControls()
+- uid: System.Web.UI.Control.CreateControlCollection
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: CreateControlCollection()
+  nameWithType: Control.CreateControlCollection()
+  fullName: Control.CreateControlCollection()
+- uid: System.Web.UI.Control.DataBind(System.Boolean)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBind(Boolean)
+  nameWithType: Control.DataBind(Boolean)
+  fullName: Control.DataBind(Boolean)
+- uid: System.Web.UI.Control.DataBindChildren
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBindChildren()
+  nameWithType: Control.DataBindChildren()
+  fullName: Control.DataBindChildren()
+- uid: System.Web.UI.Control.DataBinding
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataBinding
+  nameWithType: Control.DataBinding
+  fullName: Control.DataBinding
+- uid: System.Web.UI.Control.DataItemContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataItemContainer
+  nameWithType: Control.DataItemContainer
+  fullName: Control.DataItemContainer
+- uid: System.Web.UI.Control.DataKeysContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DataKeysContainer
+  nameWithType: Control.DataKeysContainer
+  fullName: Control.DataKeysContainer
+- uid: System.Web.UI.Control.DesignMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: DesignMode
+  nameWithType: Control.DesignMode
+  fullName: Control.DesignMode
+- uid: System.Web.UI.Control.Dispose
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Dispose()
+  nameWithType: Control.Dispose()
+  fullName: Control.Dispose()
+- uid: System.Web.UI.Control.Disposed
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Disposed
+  nameWithType: Control.Disposed
+  fullName: Control.Disposed
+- uid: System.Web.UI.WebControls.WebControl.EnableTheming
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: EnableTheming
+  nameWithType: WebControl.EnableTheming
+  fullName: WebControl.EnableTheming
+- uid: System.Web.UI.Control.EnableViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnableViewState
+  nameWithType: Control.EnableViewState
+  fullName: Control.EnableViewState
+- uid: System.Web.UI.Control.EndRenderTracing(System.IO.TextWriter,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EndRenderTracing(TextWriter, Object)
+  nameWithType: Control.EndRenderTracing(TextWriter, Object)
+  fullName: Control.EndRenderTracing(TextWriter, Object)
+- uid: System.Web.UI.Control.EnsureChildControls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnsureChildControls()
+  nameWithType: Control.EnsureChildControls()
+  fullName: Control.EnsureChildControls()
+- uid: System.Web.UI.Control.EnsureID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: EnsureID()
+  nameWithType: Control.EnsureID()
+  fullName: Control.EnsureID()
+- uid: System.Web.UI.Control.Events
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Events
+  nameWithType: Control.Events
+  fullName: Control.Events
+- uid: System.Web.UI.Control.FindControl(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: FindControl(String)
+  nameWithType: Control.FindControl(String)
+  fullName: Control.FindControl(String)
+- uid: System.Web.UI.Control.FindControl(System.String,System.Int32)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: FindControl(String, Int32)
+  nameWithType: Control.FindControl(String, Int32)
+  fullName: Control.FindControl(String, Int32)
+- uid: System.Web.UI.Control.Focus
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Focus()
+  nameWithType: Control.Focus()
+  fullName: Control.Focus()
+- uid: System.Web.UI.Control.GetDesignModeState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetDesignModeState()
+  nameWithType: Control.GetDesignModeState()
+  fullName: Control.GetDesignModeState()
+- uid: System.Web.UI.Control.GetRouteUrl(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(Object)
+  nameWithType: Control.GetRouteUrl(Object)
+  fullName: Control.GetRouteUrl(Object)
+- uid: System.Web.UI.Control.GetRouteUrl(System.Web.Routing.RouteValueDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(RouteValueDictionary)
+  nameWithType: Control.GetRouteUrl(RouteValueDictionary)
+  fullName: Control.GetRouteUrl(RouteValueDictionary)
+- uid: System.Web.UI.Control.GetRouteUrl(System.String,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(String, Object)
+  nameWithType: Control.GetRouteUrl(String, Object)
+  fullName: Control.GetRouteUrl(String, Object)
+- uid: System.Web.UI.Control.GetRouteUrl(System.String,System.Web.Routing.RouteValueDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetRouteUrl(String, RouteValueDictionary)
+  nameWithType: Control.GetRouteUrl(String, RouteValueDictionary)
+  fullName: Control.GetRouteUrl(String, RouteValueDictionary)
+- uid: System.Web.UI.Control.GetUniqueIDRelativeTo(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: GetUniqueIDRelativeTo(Control)
+  nameWithType: Control.GetUniqueIDRelativeTo(Control)
+  fullName: Control.GetUniqueIDRelativeTo(Control)
+- uid: System.Web.UI.Control.HasChildViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: HasChildViewState
+  nameWithType: Control.HasChildViewState
+  fullName: Control.HasChildViewState
+- uid: System.Web.UI.Control.HasControls
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: HasControls()
+  nameWithType: Control.HasControls()
+  fullName: Control.HasControls()
+- uid: System.Web.UI.Control.HasEvents
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: HasEvents()
+  nameWithType: Control.HasEvents()
+  fullName: Control.HasEvents()
+- uid: System.Web.UI.Control.ID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ID
+  nameWithType: Control.ID
+  fullName: Control.ID
+- uid: System.Web.UI.Control.IdSeparator
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IdSeparator
+  nameWithType: Control.IdSeparator
+  fullName: Control.IdSeparator
+- uid: System.Web.UI.Control.Init
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Init
+  nameWithType: Control.Init
+  fullName: Control.Init
+- uid: System.Web.UI.Control.IsChildControlStateCleared
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsChildControlStateCleared
+  nameWithType: Control.IsChildControlStateCleared
+  fullName: Control.IsChildControlStateCleared
+- uid: System.Web.UI.Control.IsLiteralContent
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsLiteralContent()
+  nameWithType: Control.IsLiteralContent()
+  fullName: Control.IsLiteralContent()
+- uid: System.Web.UI.Control.IsTrackingViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsTrackingViewState
+  nameWithType: Control.IsTrackingViewState
+  fullName: Control.IsTrackingViewState
+- uid: System.Web.UI.Control.IsViewStateEnabled
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IsViewStateEnabled
+  nameWithType: Control.IsViewStateEnabled
+  fullName: Control.IsViewStateEnabled
+- uid: System.Web.UI.Control.Load
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Load
+  nameWithType: Control.Load
+  fullName: Control.Load
+- uid: System.Web.UI.Control.LoadControlState(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: LoadControlState(Object)
+  nameWithType: Control.LoadControlState(Object)
+  fullName: Control.LoadControlState(Object)
+- uid: System.Web.UI.WebControls.WebControl.LoadViewState(System.Object)
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: LoadViewState(Object)
+  nameWithType: WebControl.LoadViewState(Object)
+  fullName: WebControl.LoadViewState(Object)
+- uid: System.Web.UI.Control.LoadViewStateByID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: LoadViewStateByID
+  nameWithType: Control.LoadViewStateByID
+  fullName: Control.LoadViewStateByID
+- uid: System.Web.UI.Control.MapPathSecure(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: MapPathSecure(String)
+  nameWithType: Control.MapPathSecure(String)
+  fullName: Control.MapPathSecure(String)
+- uid: System.Web.UI.Control.NamingContainer
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: NamingContainer
+  nameWithType: Control.NamingContainer
+  fullName: Control.NamingContainer
+- uid: System.Web.UI.Control.OnBubbleEvent(System.Object,System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnBubbleEvent(Object, EventArgs)
+  nameWithType: Control.OnBubbleEvent(Object, EventArgs)
+  fullName: Control.OnBubbleEvent(Object, EventArgs)
+- uid: System.Web.UI.Control.OnDataBinding(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnDataBinding(EventArgs)
+  nameWithType: Control.OnDataBinding(EventArgs)
+  fullName: Control.OnDataBinding(EventArgs)
+- uid: System.Web.UI.Control.OnInit(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnInit(EventArgs)
+  nameWithType: Control.OnInit(EventArgs)
+  fullName: Control.OnInit(EventArgs)
+- uid: System.Web.UI.Control.OnLoad(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnLoad(EventArgs)
+  nameWithType: Control.OnLoad(EventArgs)
+  fullName: Control.OnLoad(EventArgs)
+- uid: System.Web.UI.Control.OnPreRender(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnPreRender(EventArgs)
+  nameWithType: Control.OnPreRender(EventArgs)
+  fullName: Control.OnPreRender(EventArgs)
+- uid: System.Web.UI.Control.OnUnload(System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OnUnload(EventArgs)
+  nameWithType: Control.OnUnload(EventArgs)
+  fullName: Control.OnUnload(EventArgs)
+- uid: System.Web.UI.Control.OpenFile(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: OpenFile(String)
+  nameWithType: Control.OpenFile(String)
+  fullName: Control.OpenFile(String)
+- uid: System.Web.UI.Control.Page
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Page
+  nameWithType: Control.Page
+  fullName: Control.Page
+- uid: System.Web.UI.Control.Parent
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Parent
+  nameWithType: Control.Parent
+  fullName: Control.Parent
+- uid: System.Web.UI.Control.PreRender
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: PreRender
+  nameWithType: Control.PreRender
+  fullName: Control.PreRender
+- uid: System.Web.UI.Control.RaiseBubbleEvent(System.Object,System.EventArgs)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RaiseBubbleEvent(Object, EventArgs)
+  nameWithType: Control.RaiseBubbleEvent(Object, EventArgs)
+  fullName: Control.RaiseBubbleEvent(Object, EventArgs)
+- uid: System.Web.UI.Control.RemovedControl(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RemovedControl(Control)
+  nameWithType: Control.RemovedControl(Control)
+  fullName: Control.RemovedControl(Control)
+- uid: System.Web.UI.WebControls.WebControl.Render(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: Render(HtmlTextWriter)
+  nameWithType: WebControl.Render(HtmlTextWriter)
+  fullName: WebControl.Render(HtmlTextWriter)
+- uid: System.Web.UI.Control.RenderChildren(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderChildren(HtmlTextWriter)
+  nameWithType: Control.RenderChildren(HtmlTextWriter)
+  fullName: Control.RenderChildren(HtmlTextWriter)
+- uid: System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderControl(HtmlTextWriter)
+  nameWithType: Control.RenderControl(HtmlTextWriter)
+  fullName: Control.RenderControl(HtmlTextWriter)
+- uid: System.Web.UI.Control.RenderControl(System.Web.UI.HtmlTextWriter,System.Web.UI.Adapters.ControlAdapter)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderControl(HtmlTextWriter, ControlAdapter)
+  nameWithType: Control.RenderControl(HtmlTextWriter, ControlAdapter)
+  fullName: Control.RenderControl(HtmlTextWriter, ControlAdapter)
+- uid: System.Web.UI.Control.RenderingCompatibility
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: RenderingCompatibility
+  nameWithType: Control.RenderingCompatibility
+  fullName: Control.RenderingCompatibility
+- uid: System.Web.UI.Control.ResolveAdapter
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveAdapter()
+  nameWithType: Control.ResolveAdapter()
+  fullName: Control.ResolveAdapter()
+- uid: System.Web.UI.Control.ResolveClientUrl(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveClientUrl(String)
+  nameWithType: Control.ResolveClientUrl(String)
+  fullName: Control.ResolveClientUrl(String)
+- uid: System.Web.UI.Control.ResolveUrl(System.String)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ResolveUrl(String)
+  nameWithType: Control.ResolveUrl(String)
+  fullName: Control.ResolveUrl(String)
+- uid: System.Web.UI.Control.SaveControlState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SaveControlState()
+  nameWithType: Control.SaveControlState()
+  fullName: Control.SaveControlState()
+- uid: System.Web.UI.WebControls.WebControl.SaveViewState
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: SaveViewState()
+  nameWithType: WebControl.SaveViewState()
+  fullName: WebControl.SaveViewState()
+- uid: System.Web.UI.Control.SetDesignModeState(System.Collections.IDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetDesignModeState(IDictionary)
+  nameWithType: Control.SetDesignModeState(IDictionary)
+  fullName: Control.SetDesignModeState(IDictionary)
+- uid: System.Web.UI.Control.SetRenderMethodDelegate(System.Web.UI.RenderMethod)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetRenderMethodDelegate(RenderMethod)
+  nameWithType: Control.SetRenderMethodDelegate(RenderMethod)
+  fullName: Control.SetRenderMethodDelegate(RenderMethod)
+- uid: System.Web.UI.Control.SetTraceData(System.Object,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetTraceData(Object, Object)
+  nameWithType: Control.SetTraceData(Object, Object)
+  fullName: Control.SetTraceData(Object, Object)
+- uid: System.Web.UI.Control.SetTraceData(System.Object,System.Object,System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: SetTraceData(Object, Object, Object)
+  nameWithType: Control.SetTraceData(Object, Object, Object)
+  fullName: Control.SetTraceData(Object, Object, Object)
+- uid: System.Web.UI.Control.Site
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Site
+  nameWithType: Control.Site
+  fullName: Control.Site
+- uid: System.Web.UI.WebControls.WebControl.SkinID
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: SkinID
+  nameWithType: WebControl.SkinID
+  fullName: WebControl.SkinID
+- uid: System.Web.UI.Control.TemplateControl
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: TemplateControl
+  nameWithType: Control.TemplateControl
+  fullName: Control.TemplateControl
+- uid: System.Web.UI.Control.TemplateSourceDirectory
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: TemplateSourceDirectory
+  nameWithType: Control.TemplateSourceDirectory
+  fullName: Control.TemplateSourceDirectory
+- uid: System.Web.UI.WebControls.WebControl.TrackViewState
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: TrackViewState()
+  nameWithType: WebControl.TrackViewState()
+  fullName: WebControl.TrackViewState()
+- uid: System.Web.UI.Control.UniqueID
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: UniqueID
+  nameWithType: Control.UniqueID
+  fullName: Control.UniqueID
+- uid: System.Web.UI.Control.Unload
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Unload
+  nameWithType: Control.Unload
+  fullName: Control.Unload
+- uid: System.Web.UI.Control.ValidateRequestMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ValidateRequestMode
+  nameWithType: Control.ValidateRequestMode
+  fullName: Control.ValidateRequestMode
+- uid: System.Web.UI.Control.ViewState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewState
+  nameWithType: Control.ViewState
+  fullName: Control.ViewState
+- uid: System.Web.UI.Control.ViewStateIgnoresCase
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewStateIgnoresCase
+  nameWithType: Control.ViewStateIgnoresCase
+  fullName: Control.ViewStateIgnoresCase
+- uid: System.Web.UI.Control.ViewStateMode
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: ViewStateMode
+  nameWithType: Control.ViewStateMode
+  fullName: Control.ViewStateMode
+- uid: System.Web.UI.Control.Visible
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: Visible
+  nameWithType: Control.Visible
+  fullName: Control.Visible
+- uid: System.Web.UI.Control.System#Web#UI#IControlBuilderAccessor#ControlBuilder
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlBuilderAccessor.ControlBuilder
+  nameWithType: Control.IControlBuilderAccessor.ControlBuilder
+  fullName: Control.IControlBuilderAccessor.ControlBuilder
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#GetDesignModeState
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.GetDesignModeState()
+  nameWithType: Control.IControlDesignerAccessor.GetDesignModeState()
+  fullName: Control.IControlDesignerAccessor.GetDesignModeState()
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetDesignModeState(System.Collections.IDictionary)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.SetDesignModeState(IDictionary)
+  nameWithType: Control.IControlDesignerAccessor.SetDesignModeState(IDictionary)
+  fullName: Control.IControlDesignerAccessor.SetDesignModeState(IDictionary)
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#SetOwnerControl(System.Web.UI.Control)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.SetOwnerControl(Control)
+  nameWithType: Control.IControlDesignerAccessor.SetOwnerControl(Control)
+  fullName: Control.IControlDesignerAccessor.SetOwnerControl(Control)
+- uid: System.Web.UI.Control.System#Web#UI#IControlDesignerAccessor#UserData
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IControlDesignerAccessor.UserData
+  nameWithType: Control.IControlDesignerAccessor.UserData
+  fullName: Control.IControlDesignerAccessor.UserData
+- uid: System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#DataBindings
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IDataBindingsAccessor.DataBindings
+  nameWithType: Control.IDataBindingsAccessor.DataBindings
+  fullName: Control.IDataBindingsAccessor.DataBindings
+- uid: System.Web.UI.Control.System#Web#UI#IDataBindingsAccessor#HasDataBindings
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IDataBindingsAccessor.HasDataBindings
+  nameWithType: Control.IDataBindingsAccessor.HasDataBindings
+  fullName: Control.IDataBindingsAccessor.HasDataBindings
+- uid: System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#Expressions
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IExpressionsAccessor.Expressions
+  nameWithType: Control.IExpressionsAccessor.Expressions
+  fullName: Control.IExpressionsAccessor.Expressions
+- uid: System.Web.UI.Control.System#Web#UI#IExpressionsAccessor#HasExpressions
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IExpressionsAccessor.HasExpressions
+  nameWithType: Control.IExpressionsAccessor.HasExpressions
+  fullName: Control.IExpressionsAccessor.HasExpressions
+- uid: System.Web.UI.Control.System#Web#UI#IParserAccessor#AddParsedSubObject(System.Object)
+  parent: System.Web.UI.Control
+  isExternal: false
+  name: IParserAccessor.AddParsedSubObject(Object)
+  nameWithType: Control.IParserAccessor.AddParsedSubObject(Object)
+  fullName: Control.IParserAccessor.AddParsedSubObject(Object)
+- uid: System.Web.UI.WebControls.WebControl.AccessKey
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: AccessKey
+  nameWithType: WebControl.AccessKey
+  fullName: WebControl.AccessKey
+- uid: System.Web.UI.WebControls.Panel.AddAttributesToRender(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.WebControls.Panel
+  isExternal: false
+  name: AddAttributesToRender(HtmlTextWriter)
+  nameWithType: Panel.AddAttributesToRender(HtmlTextWriter)
+  fullName: Panel.AddAttributesToRender(HtmlTextWriter)
+- uid: System.Web.UI.WebControls.WebControl.ApplyStyle(System.Web.UI.WebControls.Style)
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: ApplyStyle(Style)
+  nameWithType: WebControl.ApplyStyle(Style)
+  fullName: WebControl.ApplyStyle(Style)
+- uid: System.Web.UI.WebControls.WebControl.Attributes
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: Attributes
+  nameWithType: WebControl.Attributes
+  fullName: WebControl.Attributes
+- uid: System.Web.UI.WebControls.WebControl.BackColor
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: BackColor
+  nameWithType: WebControl.BackColor
+  fullName: WebControl.BackColor
+- uid: System.Web.UI.WebControls.WebControl.BorderColor
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: BorderColor
+  nameWithType: WebControl.BorderColor
+  fullName: WebControl.BorderColor
+- uid: System.Web.UI.WebControls.WebControl.BorderStyle
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: BorderStyle
+  nameWithType: WebControl.BorderStyle
+  fullName: WebControl.BorderStyle
+- uid: System.Web.UI.WebControls.WebControl.BorderWidth
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: BorderWidth
+  nameWithType: WebControl.BorderWidth
+  fullName: WebControl.BorderWidth
+- uid: System.Web.UI.WebControls.WebControl.ControlStyle
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: ControlStyle
+  nameWithType: WebControl.ControlStyle
+  fullName: WebControl.ControlStyle
+- uid: System.Web.UI.WebControls.WebControl.ControlStyleCreated
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: ControlStyleCreated
+  nameWithType: WebControl.ControlStyleCreated
+  fullName: WebControl.ControlStyleCreated
+- uid: System.Web.UI.WebControls.WebControl.CopyBaseAttributes(System.Web.UI.WebControls.WebControl)
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: CopyBaseAttributes(WebControl)
+  nameWithType: WebControl.CopyBaseAttributes(WebControl)
+  fullName: WebControl.CopyBaseAttributes(WebControl)
+- uid: System.Web.UI.WebControls.Panel.CreateControlStyle
+  parent: System.Web.UI.WebControls.Panel
+  isExternal: false
+  name: CreateControlStyle()
+  nameWithType: Panel.CreateControlStyle()
+  fullName: Panel.CreateControlStyle()
+- uid: System.Web.UI.WebControls.WebControl.CssClass
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: CssClass
+  nameWithType: WebControl.CssClass
+  fullName: WebControl.CssClass
+- uid: System.Web.UI.WebControls.WebControl.DisabledCssClass
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: DisabledCssClass
+  nameWithType: WebControl.DisabledCssClass
+  fullName: WebControl.DisabledCssClass
+- uid: System.Web.UI.WebControls.WebControl.Enabled
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: Enabled
+  nameWithType: WebControl.Enabled
+  fullName: WebControl.Enabled
+- uid: System.Web.UI.WebControls.WebControl.Font
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: Font
+  nameWithType: WebControl.Font
+  fullName: WebControl.Font
+- uid: System.Web.UI.WebControls.WebControl.ForeColor
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: ForeColor
+  nameWithType: WebControl.ForeColor
+  fullName: WebControl.ForeColor
+- uid: System.Web.UI.WebControls.WebControl.HasAttributes
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: HasAttributes
+  nameWithType: WebControl.HasAttributes
+  fullName: WebControl.HasAttributes
+- uid: System.Web.UI.WebControls.WebControl.Height
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: Height
+  nameWithType: WebControl.Height
+  fullName: WebControl.Height
+- uid: System.Web.UI.WebControls.WebControl.IsEnabled
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: IsEnabled
+  nameWithType: WebControl.IsEnabled
+  fullName: WebControl.IsEnabled
+- uid: System.Web.UI.WebControls.WebControl.MergeStyle(System.Web.UI.WebControls.Style)
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: MergeStyle(Style)
+  nameWithType: WebControl.MergeStyle(Style)
+  fullName: WebControl.MergeStyle(Style)
+- uid: System.Web.UI.WebControls.Panel.RenderBeginTag(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.WebControls.Panel
+  isExternal: false
+  name: RenderBeginTag(HtmlTextWriter)
+  nameWithType: Panel.RenderBeginTag(HtmlTextWriter)
+  fullName: Panel.RenderBeginTag(HtmlTextWriter)
+- uid: System.Web.UI.WebControls.WebControl.RenderContents(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: RenderContents(HtmlTextWriter)
+  nameWithType: WebControl.RenderContents(HtmlTextWriter)
+  fullName: WebControl.RenderContents(HtmlTextWriter)
+- uid: System.Web.UI.WebControls.Panel.RenderEndTag(System.Web.UI.HtmlTextWriter)
+  parent: System.Web.UI.WebControls.Panel
+  isExternal: false
+  name: RenderEndTag(HtmlTextWriter)
+  nameWithType: Panel.RenderEndTag(HtmlTextWriter)
+  fullName: Panel.RenderEndTag(HtmlTextWriter)
+- uid: System.Web.UI.WebControls.WebControl.Style
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: Style
+  nameWithType: WebControl.Style
+  fullName: WebControl.Style
+- uid: System.Web.UI.WebControls.Panel.SupportsDisabledAttribute
+  parent: System.Web.UI.WebControls.Panel
+  isExternal: false
+  name: SupportsDisabledAttribute
+  nameWithType: Panel.SupportsDisabledAttribute
+  fullName: Panel.SupportsDisabledAttribute
+- uid: System.Web.UI.WebControls.WebControl.TabIndex
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: TabIndex
+  nameWithType: WebControl.TabIndex
+  fullName: WebControl.TabIndex
+- uid: System.Web.UI.WebControls.WebControl.TagKey
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: TagKey
+  nameWithType: WebControl.TagKey
+  fullName: WebControl.TagKey
+- uid: System.Web.UI.WebControls.WebControl.TagName
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: TagName
+  nameWithType: WebControl.TagName
+  fullName: WebControl.TagName
+- uid: System.Web.UI.WebControls.WebControl.ToolTip
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: ToolTip
+  nameWithType: WebControl.ToolTip
+  fullName: WebControl.ToolTip
+- uid: System.Web.UI.WebControls.WebControl.Width
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: Width
+  nameWithType: WebControl.Width
+  fullName: WebControl.Width
+- uid: System.Web.UI.WebControls.WebControl.System#Web#UI#IAttributeAccessor#GetAttribute(System.String)
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: IAttributeAccessor.GetAttribute(String)
+  nameWithType: WebControl.IAttributeAccessor.GetAttribute(String)
+  fullName: WebControl.IAttributeAccessor.GetAttribute(String)
+- uid: System.Web.UI.WebControls.WebControl.System#Web#UI#IAttributeAccessor#SetAttribute(System.String,System.String)
+  parent: System.Web.UI.WebControls.WebControl
+  isExternal: false
+  name: IAttributeAccessor.SetAttribute(String, String)
+  nameWithType: WebControl.IAttributeAccessor.SetAttribute(String, String)
+  fullName: WebControl.IAttributeAccessor.SetAttribute(String, String)
+- uid: System.Web.UI.WebControls.Panel.BackImageUrl
+  parent: System.Web.UI.WebControls.Panel
+  isExternal: false
+  name: BackImageUrl
+  nameWithType: Panel.BackImageUrl
+  fullName: Panel.BackImageUrl
+- uid: System.Web.UI.WebControls.Panel.DefaultButton
+  parent: System.Web.UI.WebControls.Panel
+  isExternal: false
+  name: DefaultButton
+  nameWithType: Panel.DefaultButton
+  fullName: Panel.DefaultButton
+- uid: System.Web.UI.WebControls.Panel.Direction
+  parent: System.Web.UI.WebControls.Panel
+  isExternal: false
+  name: Direction
+  nameWithType: Panel.Direction
+  fullName: Panel.Direction
+- uid: System.Web.UI.WebControls.Panel.GroupingText
+  parent: System.Web.UI.WebControls.Panel
+  isExternal: false
+  name: GroupingText
+  nameWithType: Panel.GroupingText
+  fullName: Panel.GroupingText
+- uid: System.Web.UI.WebControls.Panel.HorizontalAlign
+  parent: System.Web.UI.WebControls.Panel
+  isExternal: false
+  name: HorizontalAlign
+  nameWithType: Panel.HorizontalAlign
+  fullName: Panel.HorizontalAlign
+- uid: System.Web.UI.WebControls.Panel.ScrollBars
+  parent: System.Web.UI.WebControls.Panel
+  isExternal: false
+  name: ScrollBars
+  nameWithType: Panel.ScrollBars
+  fullName: Panel.ScrollBars
+- uid: System.Web.UI.WebControls.Panel.Wrap
+  parent: System.Web.UI.WebControls.Panel
+  isExternal: false
+  name: Wrap
+  nameWithType: Panel.Wrap
+  fullName: Panel.Wrap
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindDataSourceControl(System.Web.UI.Control)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindDataSourceControl(Control)
+  nameWithType: DynamicDataExtensions.FindDataSourceControl(Control)
+  fullName: DynamicDataExtensions.FindDataSourceControl(Control)
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindFieldTemplate(System.Web.UI.Control,System.String)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindFieldTemplate(Control, String)
+  nameWithType: DynamicDataExtensions.FindFieldTemplate(Control, String)
+  fullName: DynamicDataExtensions.FindFieldTemplate(Control, String)
+- uid: System.Web.DynamicData.DynamicDataExtensions.FindMetaTable(System.Web.UI.Control)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: FindMetaTable(Control)
+  nameWithType: DynamicDataExtensions.FindMetaTable(Control)
+  fullName: DynamicDataExtensions.FindMetaTable(Control)
+- uid: System.Web.DynamicData.DynamicDataExtensions.GetDefaultValues(System.Web.UI.INamingContainer)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: GetDefaultValues(INamingContainer)
+  nameWithType: DynamicDataExtensions.GetDefaultValues(INamingContainer)
+  fullName: DynamicDataExtensions.GetDefaultValues(INamingContainer)
+- uid: System.Web.DynamicData.DynamicDataExtensions.GetMetaTable(System.Web.UI.INamingContainer)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: GetMetaTable(INamingContainer)
+  nameWithType: DynamicDataExtensions.GetMetaTable(INamingContainer)
+  fullName: DynamicDataExtensions.GetMetaTable(INamingContainer)
+- uid: System.Web.DynamicData.DynamicDataExtensions.SetMetaTable(System.Web.UI.INamingContainer,System.Web.DynamicData.MetaTable)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: SetMetaTable(INamingContainer, MetaTable)
+  nameWithType: DynamicDataExtensions.SetMetaTable(INamingContainer, MetaTable)
+  fullName: DynamicDataExtensions.SetMetaTable(INamingContainer, MetaTable)
+- uid: System.Web.DynamicData.DynamicDataExtensions.SetMetaTable(System.Web.UI.INamingContainer,System.Web.DynamicData.MetaTable,System.Collections.Generic.IDictionary{System.String,System.Object})
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: SetMetaTable(INamingContainer, MetaTable, IDictionary<String,Object>)
+  nameWithType: DynamicDataExtensions.SetMetaTable(INamingContainer, MetaTable, IDictionary<String,Object>)
+  fullName: DynamicDataExtensions.SetMetaTable(INamingContainer, MetaTable, IDictionary<String,Object>)
+- uid: System.Web.DynamicData.DynamicDataExtensions.SetMetaTable(System.Web.UI.INamingContainer,System.Web.DynamicData.MetaTable,System.Object)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: SetMetaTable(INamingContainer, MetaTable, Object)
+  nameWithType: DynamicDataExtensions.SetMetaTable(INamingContainer, MetaTable, Object)
+  fullName: DynamicDataExtensions.SetMetaTable(INamingContainer, MetaTable, Object)
+- uid: System.Web.DynamicData.DynamicDataExtensions.TryGetMetaTable(System.Web.UI.INamingContainer,System.Web.DynamicData.MetaTable@)
+  parent: System.Web.DynamicData.DynamicDataExtensions
+  isExternal: false
+  name: TryGetMetaTable(INamingContainer, MetaTable)
+  nameWithType: DynamicDataExtensions.TryGetMetaTable(INamingContainer, MetaTable)
+  fullName: DynamicDataExtensions.TryGetMetaTable(INamingContainer, MetaTable)
+- uid: System.Web.UI.DataControlExtensions.EnableDynamicData(System.Web.UI.INamingContainer,System.Type)
+  parent: System.Web.UI.DataControlExtensions
+  isExternal: false
+  name: EnableDynamicData(INamingContainer, Type)
+  nameWithType: DataControlExtensions.EnableDynamicData(INamingContainer, Type)
+  fullName: DataControlExtensions.EnableDynamicData(INamingContainer, Type)
+- uid: System.Web.UI.DataControlExtensions.EnableDynamicData(System.Web.UI.INamingContainer,System.Type,System.Collections.Generic.IDictionary{System.String,System.Object})
+  parent: System.Web.UI.DataControlExtensions
+  isExternal: false
+  name: EnableDynamicData(INamingContainer, Type, IDictionary<String,Object>)
+  nameWithType: DataControlExtensions.EnableDynamicData(INamingContainer, Type, IDictionary<String,Object>)
+  fullName: DataControlExtensions.EnableDynamicData(INamingContainer, Type, IDictionary<String,Object>)
+- uid: System.Web.UI.DataControlExtensions.EnableDynamicData(System.Web.UI.INamingContainer,System.Type,System.Object)
+  parent: System.Web.UI.DataControlExtensions
+  isExternal: false
+  name: EnableDynamicData(INamingContainer, Type, Object)
+  nameWithType: DataControlExtensions.EnableDynamicData(INamingContainer, Type, Object)
+  fullName: DataControlExtensions.EnableDynamicData(INamingContainer, Type, Object)
+- uid: System.Web.UI.INamingContainer
+  parent: System.Web.UI
+  isExternal: false
+  name: INamingContainer
+  nameWithType: INamingContainer
+  fullName: System.Web.UI.INamingContainer
+- uid: System.Web.UI.WebControls.ICompositeControlDesignerAccessor
+  parent: System.Web.UI.WebControls
+  isExternal: false
+  name: ICompositeControlDesignerAccessor
+  nameWithType: ICompositeControlDesignerAccessor
+  fullName: System.Web.UI.WebControls.ICompositeControlDesignerAccessor

@@ -1,0 +1,607 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.ServiceModel.Activities.ReceiveReply
+  commentId: T:System.ServiceModel.Activities.ReceiveReply
+  id: ReceiveReply
+  children:
+  - System.ServiceModel.Activities.ReceiveReply.#ctor
+  - System.ServiceModel.Activities.ReceiveReply.Action
+  - System.ServiceModel.Activities.ReceiveReply.CacheMetadata(System.Activities.ActivityMetadata)
+  - System.ServiceModel.Activities.ReceiveReply.Content
+  - System.ServiceModel.Activities.ReceiveReply.CorrelationInitializers
+  - System.ServiceModel.Activities.ReceiveReply.Request
+  langs:
+  - csharp
+  name: ReceiveReply
+  nameWithType: ReceiveReply
+  fullName: System.ServiceModel.Activities.ReceiveReply
+  type: Class
+  assemblies:
+  - System.ServiceModel.Activities
+  namespace: System.ServiceModel.Activities
+  summary: An activity that receives a message as part of a request/reply message exchange pattern.
+  remarks: ''
+  example:
+  - "The following example shows how to use a <xref:System.ServiceModel.Activities.ReceiveReply> activity. A <xref:System.ServiceModel.Activities.Send> activity is created and added to a <xref:System.Activities.Statements.Sequence>. A <xref:System.ServiceModel.Activities.ReceiveReply> activity is then added to the <xref:System.Activities.Statements.Sequence> to receive the reply from the <xref:System.ServiceModel.Activities.Send> activity.  \n  \n```  \nstatic void CreateClientWorkflow()  \n{  \n   Variable<string> message = new Variable<string>(\"message\", \"Hello!\");  \n   Variable<string> result = new Variable<string> { Name = \"result\" };  \n  \n   Endpoint endpoint = new Endpoint  \n   {  \n      AddressUri = new Uri(Microsoft.Samples.WorkflowServicesSamples.Common.Constants.ServiceBaseAddress), Binding = new BasicHttpBinding(),  \n   };  \n  \n   Send requestEcho = new Send  \n   {  \n      ServiceContractName = XName.Get(\"Echo\", \"http://tempuri.org/\"),  \n                Endpoint = endpoint,  \n                OperationName = \"Echo\",  \n      //parameters for send  \n      Content = new SendParametersContent  \n      {  \n         Parameters =   \n            {   \n               { \"message\", new InArgument<string>(message) }  \n            }  \n        }  \n    };  \n    workflow = new CorrelationScope  \n    {  \n       Body = new Sequence  \n       {  \n          Variables = { message, result },  \n                    Activities =  \n                    {  \n                        new WriteLine {  \n                            Text = new InArgument<string>(\"Client is ready!\")  \n                        },  \n                        requestEcho,  \n  \n                        new WriteLine {  \n                            Text = new InArgument<string>(\"Message sent: Hello!\")  \n                        },  \n  \n                        new ReceiveReply  \n                        {  \n                            Request = requestEcho,  \n                            //parameters for the reply  \n                            Content = new ReceiveParametersContent                              \n                            {  \n                                Parameters =   \n                                {  \n                                    { \"echo\", new OutArgument<string>(result) }  \n                                }  \n                            }  \n                        },                                                  \n                        new WriteLine {  \n                            Text = new InArgument<string>(env => \"Message received: \"+result.Get(env))  \n                        }  \n                    }  \n                }  \n            };  \n        }  \n  \n```"
+  syntax:
+    content: >-
+      [System.Windows.Markup.ContentProperty("Content")]
+
+      public sealed class ReceiveReply : System.Activities.Activity
+  inheritance:
+  - System.Object
+  - System.Activities.Activity
+  implements: []
+  inheritedMembers:
+  - System.Activities.Activity.CacheId
+  - System.Activities.Activity.Constraints
+  - System.Activities.Activity.DisplayName
+  - System.Activities.Activity.Id
+  - System.Activities.Activity.Implementation
+  - System.Activities.Activity.ImplementationVersion
+  - System.Activities.Activity.OnCreateDynamicUpdateMap(System.Activities.DynamicUpdate.UpdateMapMetadata,System.Activities.Activity)
+  - System.Activities.Activity.ShouldSerializeDisplayName
+  - System.Activities.Activity.ToString
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  attributes:
+  - type: System.Windows.Markup.ContentPropertyAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Activities/ReceiveReply.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Activities.ReceiveReply.#ctor
+  commentId: M:System.ServiceModel.Activities.ReceiveReply.#ctor
+  id: '#ctor'
+  parent: System.ServiceModel.Activities.ReceiveReply
+  langs:
+  - csharp
+  name: ReceiveReply()
+  nameWithType: ReceiveReply.ReceiveReply()
+  fullName: ReceiveReply.ReceiveReply()
+  type: Constructor
+  assemblies:
+  - System.ServiceModel.Activities
+  namespace: System.ServiceModel.Activities
+  summary: Initializes a new instance of the <xref href="System.ServiceModel.Activities.ReceiveReply"></xref> class.
+  syntax:
+    content: public ReceiveReply ();
+    parameters: []
+  overload: System.ServiceModel.Activities.ReceiveReply.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Activities/ReceiveReply.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Activities.ReceiveReply.Action
+  commentId: P:System.ServiceModel.Activities.ReceiveReply.Action
+  id: Action
+  parent: System.ServiceModel.Activities.ReceiveReply
+  langs:
+  - csharp
+  name: Action
+  nameWithType: ReceiveReply.Action
+  fullName: ReceiveReply.Action
+  type: Property
+  assemblies:
+  - System.ServiceModel.Activities
+  namespace: System.ServiceModel.Activities
+  summary: Gets or sets the value of the action header of the message.
+  syntax:
+    content: public string Action { get; set; }
+    return:
+      type: System.String
+      description: The action of the message.
+  overload: System.ServiceModel.Activities.ReceiveReply.Action*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Activities/ReceiveReply.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Activities.ReceiveReply.CacheMetadata(System.Activities.ActivityMetadata)
+  commentId: M:System.ServiceModel.Activities.ReceiveReply.CacheMetadata(System.Activities.ActivityMetadata)
+  id: CacheMetadata(System.Activities.ActivityMetadata)
+  parent: System.ServiceModel.Activities.ReceiveReply
+  langs:
+  - csharp
+  name: CacheMetadata(ActivityMetadata)
+  nameWithType: ReceiveReply.CacheMetadata(ActivityMetadata)
+  fullName: ReceiveReply.CacheMetadata(ActivityMetadata)
+  type: Method
+  assemblies:
+  - System.ServiceModel.Activities
+  namespace: System.ServiceModel.Activities
+  syntax:
+    content: protected override void CacheMetadata (System.Activities.ActivityMetadata metadata);
+    parameters:
+    - id: metadata
+      type: System.Activities.ActivityMetadata
+      description: ''
+  overload: System.ServiceModel.Activities.ReceiveReply.CacheMetadata*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Activities/ReceiveReply.xml
+- uid: System.ServiceModel.Activities.ReceiveReply.Content
+  commentId: P:System.ServiceModel.Activities.ReceiveReply.Content
+  id: Content
+  parent: System.ServiceModel.Activities.ReceiveReply
+  langs:
+  - csharp
+  name: Content
+  nameWithType: ReceiveReply.Content
+  fullName: ReceiveReply.Content
+  type: Property
+  assemblies:
+  - System.ServiceModel.Activities
+  namespace: System.ServiceModel.Activities
+  summary: Gets or sets the content received by the <xref href="System.ServiceModel.Activities.ReceiveReply"></xref> activity
+  remarks: 'The content can be one of the following types: <xref:System.ServiceModel.Activities.ReceiveMessageContent> or <xref:System.ServiceModel.Activities.ReceiveParametersContent>. Use <xref:System.ServiceModel.Activities.ReceiveMessageContent> when receiving a message <xref:System.ServiceModel.Channels.Message> or a message contract type. Use <xref:System.ServiceModel.Activities.ReceiveParametersContent> when receiving data contract types.'
+  syntax:
+    content: public System.ServiceModel.Activities.ReceiveContent Content { get; set; }
+    return:
+      type: System.ServiceModel.Activities.ReceiveContent
+      description: The content received.
+  overload: System.ServiceModel.Activities.ReceiveReply.Content*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Activities/ReceiveReply.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Activities.ReceiveReply.CorrelationInitializers
+  commentId: P:System.ServiceModel.Activities.ReceiveReply.CorrelationInitializers
+  id: CorrelationInitializers
+  parent: System.ServiceModel.Activities.ReceiveReply
+  langs:
+  - csharp
+  name: CorrelationInitializers
+  nameWithType: ReceiveReply.CorrelationInitializers
+  fullName: ReceiveReply.CorrelationInitializers
+  type: Property
+  assemblies:
+  - System.ServiceModel.Activities
+  namespace: System.ServiceModel.Activities
+  summary: Gets a collection of correlation initializers.
+  remarks: '[!INCLUDE[crabout](~/includes/crabout-md.md)] correlation see [Correlation](~/docs/framework/wcf/feature-details/correlation.md).'
+  syntax:
+    content: public System.Collections.ObjectModel.Collection<System.ServiceModel.Activities.CorrelationInitializer> CorrelationInitializers { get; }
+    return:
+      type: System.Collections.ObjectModel.Collection{System.ServiceModel.Activities.CorrelationInitializer}
+      description: A collection of correlation initializers.
+  overload: System.ServiceModel.Activities.ReceiveReply.CorrelationInitializers*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Activities/ReceiveReply.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+- uid: System.ServiceModel.Activities.ReceiveReply.Request
+  commentId: P:System.ServiceModel.Activities.ReceiveReply.Request
+  id: Request
+  parent: System.ServiceModel.Activities.ReceiveReply
+  langs:
+  - csharp
+  name: Request
+  nameWithType: ReceiveReply.Request
+  fullName: ReceiveReply.Request
+  type: Property
+  assemblies:
+  - System.ServiceModel.Activities
+  namespace: System.ServiceModel.Activities
+  summary: Gets or sets a reference to the <xref href="System.ServiceModel.Activities.Send"></xref> activity paired with this <xref href="System.ServiceModel.Activities.ReceiveReply"></xref> activity.
+  remarks: <xref:System.ServiceModel.Activities.Send> and <xref:System.ServiceModel.Activities.ReceiveReply> activities are used together to model a request/response message exchange pattern. This property specifies which <xref:System.ServiceModel.Activities.Send> activity the <xref:System.ServiceModel.Activities.ReceiveReply> activity is paired with.
+  syntax:
+    content: public System.ServiceModel.Activities.Send Request { get; set; }
+    return:
+      type: System.ServiceModel.Activities.Send
+      description: The send activity.
+  overload: System.ServiceModel.Activities.ReceiveReply.Request*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Activities/ReceiveReply.xml
+  ms.technology:
+  - dotnet-standard
+  author: Erikre
+  ms.author: erikre
+  manager: erikre
+references:
+- uid: System.Activities.Activity
+  parent: System.Activities
+  isExternal: false
+  name: Activity
+  nameWithType: Activity
+  fullName: System.Activities.Activity
+- uid: System.ServiceModel.Activities.ReceiveReply.#ctor
+  parent: System.ServiceModel.Activities.ReceiveReply
+  isExternal: false
+  name: ReceiveReply()
+  nameWithType: ReceiveReply.ReceiveReply()
+  fullName: ReceiveReply.ReceiveReply()
+- uid: System.ServiceModel.Activities.ReceiveReply.Action
+  parent: System.ServiceModel.Activities.ReceiveReply
+  isExternal: false
+  name: Action
+  nameWithType: ReceiveReply.Action
+  fullName: ReceiveReply.Action
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.ServiceModel.Activities.ReceiveReply.CacheMetadata(System.Activities.ActivityMetadata)
+  parent: System.ServiceModel.Activities.ReceiveReply
+  isExternal: false
+  name: CacheMetadata(ActivityMetadata)
+  nameWithType: ReceiveReply.CacheMetadata(ActivityMetadata)
+  fullName: ReceiveReply.CacheMetadata(ActivityMetadata)
+- uid: System.Activities.ActivityMetadata
+  parent: System.Activities
+  isExternal: false
+  name: ActivityMetadata
+  nameWithType: ActivityMetadata
+  fullName: System.Activities.ActivityMetadata
+- uid: System.ServiceModel.Activities.ReceiveReply.Content
+  parent: System.ServiceModel.Activities.ReceiveReply
+  isExternal: false
+  name: Content
+  nameWithType: ReceiveReply.Content
+  fullName: ReceiveReply.Content
+- uid: System.ServiceModel.Activities.ReceiveContent
+  parent: System.ServiceModel.Activities
+  isExternal: false
+  name: ReceiveContent
+  nameWithType: ReceiveContent
+  fullName: System.ServiceModel.Activities.ReceiveContent
+- uid: System.ServiceModel.Activities.ReceiveReply.CorrelationInitializers
+  parent: System.ServiceModel.Activities.ReceiveReply
+  isExternal: false
+  name: CorrelationInitializers
+  nameWithType: ReceiveReply.CorrelationInitializers
+  fullName: ReceiveReply.CorrelationInitializers
+- uid: System.Collections.ObjectModel.Collection`1
+  name: Collection<T>
+  nameWithType: Collection<T>
+  fullName: System.Collections.ObjectModel.Collection<T>
+- uid: System.ServiceModel.Activities.CorrelationInitializer
+  name: CorrelationInitializer
+  nameWithType: CorrelationInitializer
+  fullName: System.ServiceModel.Activities.CorrelationInitializer
+- uid: System.Collections.ObjectModel.Collection{System.ServiceModel.Activities.CorrelationInitializer}
+  parent: System.Collections.ObjectModel
+  isExternal: false
+  name: Collection<CorrelationInitializer>
+  nameWithType: Collection<CorrelationInitializer>
+  fullName: System.Collections.ObjectModel.Collection<System.ServiceModel.Activities.CorrelationInitializer>
+  spec.csharp:
+  - uid: System.Collections.ObjectModel.Collection`1
+    name: Collection
+    nameWithType: Collection
+    fullName: System.Collections.ObjectModel.Collection
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.ServiceModel.Activities.CorrelationInitializer
+    name: CorrelationInitializer
+    nameWithType: CorrelationInitializer
+    fullName: System.ServiceModel.Activities.CorrelationInitializer
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.ServiceModel.Activities.ReceiveReply.Request
+  parent: System.ServiceModel.Activities.ReceiveReply
+  isExternal: false
+  name: Request
+  nameWithType: ReceiveReply.Request
+  fullName: ReceiveReply.Request
+- uid: System.ServiceModel.Activities.Send
+  parent: System.ServiceModel.Activities
+  isExternal: false
+  name: Send
+  nameWithType: Send
+  fullName: System.ServiceModel.Activities.Send
+- uid: System.ServiceModel.Activities.ReceiveReply.#ctor*
+  parent: System.ServiceModel.Activities.ReceiveReply
+  isExternal: false
+  name: ReceiveReply
+  nameWithType: ReceiveReply.ReceiveReply
+  fullName: ReceiveReply.ReceiveReply
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Activities/ReceiveReply.xml
+- uid: System.ServiceModel.Activities.ReceiveReply.Action*
+  parent: System.ServiceModel.Activities.ReceiveReply
+  isExternal: false
+  name: Action
+  nameWithType: ReceiveReply.Action
+  fullName: ReceiveReply.Action
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Activities/ReceiveReply.xml
+- uid: System.ServiceModel.Activities.ReceiveReply.CacheMetadata*
+  parent: System.ServiceModel.Activities.ReceiveReply
+  isExternal: false
+  name: CacheMetadata
+  nameWithType: ReceiveReply.CacheMetadata
+  fullName: ReceiveReply.CacheMetadata
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Activities/ReceiveReply.xml
+- uid: System.ServiceModel.Activities.ReceiveReply.Content*
+  parent: System.ServiceModel.Activities.ReceiveReply
+  isExternal: false
+  name: Content
+  nameWithType: ReceiveReply.Content
+  fullName: ReceiveReply.Content
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Activities/ReceiveReply.xml
+- uid: System.ServiceModel.Activities.ReceiveReply.CorrelationInitializers*
+  parent: System.ServiceModel.Activities.ReceiveReply
+  isExternal: false
+  name: CorrelationInitializers
+  nameWithType: ReceiveReply.CorrelationInitializers
+  fullName: ReceiveReply.CorrelationInitializers
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Activities/ReceiveReply.xml
+- uid: System.ServiceModel.Activities.ReceiveReply.Request*
+  parent: System.ServiceModel.Activities.ReceiveReply
+  isExternal: false
+  name: Request
+  nameWithType: ReceiveReply.Request
+  fullName: ReceiveReply.Request
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.ServiceModel.Activities/ReceiveReply.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Activities.Activity.ToString
+  parent: System.Activities.Activity
+  isExternal: false
+  name: ToString()
+  nameWithType: Activity.ToString()
+  fullName: Activity.ToString()
+- uid: System.Activities.Activity.CacheId
+  parent: System.Activities.Activity
+  isExternal: false
+  name: CacheId
+  nameWithType: Activity.CacheId
+  fullName: Activity.CacheId
+- uid: System.Activities.Activity.Constraints
+  parent: System.Activities.Activity
+  isExternal: false
+  name: Constraints
+  nameWithType: Activity.Constraints
+  fullName: Activity.Constraints
+- uid: System.Activities.Activity.DisplayName
+  parent: System.Activities.Activity
+  isExternal: false
+  name: DisplayName
+  nameWithType: Activity.DisplayName
+  fullName: Activity.DisplayName
+- uid: System.Activities.Activity.Id
+  parent: System.Activities.Activity
+  isExternal: false
+  name: Id
+  nameWithType: Activity.Id
+  fullName: Activity.Id
+- uid: System.Activities.Activity.Implementation
+  parent: System.Activities.Activity
+  isExternal: false
+  name: Implementation
+  nameWithType: Activity.Implementation
+  fullName: Activity.Implementation
+- uid: System.Activities.Activity.ImplementationVersion
+  parent: System.Activities.Activity
+  isExternal: false
+  name: ImplementationVersion
+  nameWithType: Activity.ImplementationVersion
+  fullName: Activity.ImplementationVersion
+- uid: System.Activities.Activity.OnCreateDynamicUpdateMap(System.Activities.DynamicUpdate.UpdateMapMetadata,System.Activities.Activity)
+  parent: System.Activities.Activity
+  isExternal: false
+  name: OnCreateDynamicUpdateMap(UpdateMapMetadata, Activity)
+  nameWithType: Activity.OnCreateDynamicUpdateMap(UpdateMapMetadata, Activity)
+  fullName: Activity.OnCreateDynamicUpdateMap(UpdateMapMetadata, Activity)
+- uid: System.Activities.Activity.ShouldSerializeDisplayName
+  parent: System.Activities.Activity
+  isExternal: false
+  name: ShouldSerializeDisplayName()
+  nameWithType: Activity.ShouldSerializeDisplayName()
+  fullName: Activity.ShouldSerializeDisplayName()

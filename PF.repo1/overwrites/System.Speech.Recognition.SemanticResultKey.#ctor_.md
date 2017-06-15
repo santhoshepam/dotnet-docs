@@ -1,0 +1,5 @@
+---
+summary: Constructs an instance of <xref href="System.Speech.Recognition.SemanticResultKey"></xref> and associates the key with grammar components.
+remarks: "The constructors for <xref:System.Speech.Recognition.SemanticResultKey> specify a text tag (the semantic key) and a set of grammar components to add to a speech recognition grammar.  \n  \n The grammar components can be specified either as an array of <xref:System.Speech.Recognition.GrammarBuilder> objects, or as an array of <xref:System.String> instances.  \n  \n If the grammar components are used in recognition, you can access the returned <xref:System.Speech.Recognition.SemanticValue> using the text tag provided to the constructor of <xref:System.Speech.Recognition.SemanticResultKey> as a semantic key. The <xref:System.Speech.Recognition.SemanticValue.Value%2A> property of the <xref:System.Speech.Recognition.SemanticValue> instance will be determined by the grammar components used in the definition of <xref:System.Speech.Recognition.SemanticResultKey>."
+uid: System.Speech.Recognition.SemanticResultKey.#ctor*
+---

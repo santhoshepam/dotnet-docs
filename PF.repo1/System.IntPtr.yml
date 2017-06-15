@@ -1,0 +1,2771 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.IntPtr
+  commentId: T:System.IntPtr
+  id: IntPtr
+  children:
+  - System.IntPtr.#ctor(System.Int32)
+  - System.IntPtr.#ctor(System.Int64)
+  - System.IntPtr.#ctor(System.Void*)
+  - System.IntPtr.Add(System.IntPtr,System.Int32)
+  - System.IntPtr.Equals(System.Object)
+  - System.IntPtr.GetHashCode
+  - System.IntPtr.op_Addition(System.IntPtr,System.Int32)
+  - System.IntPtr.op_Equality(System.IntPtr,System.IntPtr)
+  - System.IntPtr.op_Explicit(System.Void* to System.IntPtr)
+  - System.IntPtr.op_Explicit(System.IntPtr to System.Int64)
+  - System.IntPtr.op_Explicit(System.IntPtr to System.Void*)
+  - System.IntPtr.op_Explicit(System.Int64 to System.IntPtr)
+  - System.IntPtr.op_Explicit(System.Int32 to System.IntPtr)
+  - System.IntPtr.op_Explicit(System.IntPtr to System.Int32)
+  - System.IntPtr.op_Inequality(System.IntPtr,System.IntPtr)
+  - System.IntPtr.op_Subtraction(System.IntPtr,System.Int32)
+  - System.IntPtr.Size
+  - System.IntPtr.Subtract(System.IntPtr,System.Int32)
+  - System.IntPtr.ToInt32
+  - System.IntPtr.ToInt64
+  - System.IntPtr.ToPointer
+  - System.IntPtr.ToString(System.String)
+  - System.IntPtr.ToString
+  - System.IntPtr.Zero
+  - System.IntPtr.System#IEquatable{System#IntPtr}#Equals(System.IntPtr)
+  - System.IntPtr.System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  langs:
+  - csharp
+  name: IntPtr
+  nameWithType: IntPtr
+  fullName: System.IntPtr
+  type: Struct
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: A platform-specific type that is used to represent a pointer or a handle.
+  remarks: "The <xref:System.IntPtr> type is designed to be an integer whose size is platform-specific. That is, an instance of this type is expected to be 32-bits on 32-bit hardware and operating systems, and 64-bits on 64-bit hardware and operating systems.  \n  \n The <xref:System.IntPtr> type can be used by languages that support pointers, and as a common means of referring to data between languages that do and do not support pointers.  \n  \n <xref:System.IntPtr> objects can also be used to hold handles. For example, instances of <xref:System.IntPtr> are used extensively in the <xref:System.IO.FileStream?displayProperty=fullName> class to hold file handles.  \n  \n The <xref:System.IntPtr> type is CLS-compliant, while the <xref:System.UIntPtr> type is not. Only the <xref:System.IntPtr> type is used in the common language runtime. The <xref:System.UIntPtr> type is provided mostly to maintain architectural symmetry with the <xref:System.IntPtr> type.  \n  \n This type implements the <xref:System.Runtime.Serialization.ISerializable> interface."
+  example:
+  - "The following example uses managed pointers to reverse the characters in an array. After it initializes a <xref:System.String> object and gets its length, it does the following:  \n  \n1.  Calls the <xref:System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi%2A?displayProperty=fullName> method to copy the Unicode string to unmanaged memory as an ANSI (one-byte) character. The method returns an <xref:System.IntPtr> object that points to the beginning of the unmanaged string. The Visual Basic example uses this pointer directly; in the C++ and C# examples, it is cast to a pointer to a byte.  \n  \n2.  Calls the <xref:System.Runtime.InteropServices.Marshal.AllocHGlobal%2A?displayProperty=fullName> method to allocate the same number of bytes as the unmanaged string occupies. The method returns an <xref:System.IntPtr> object that points to the beginning of the unmanaged block of memory. The Visual Basic example uses this pointer directly; in the C++ and C# examples, it is cast to a pointer to a byte.  \n  \n3.  The Visual Basic example defines a variable named `offset` that is equal to the length of the ANSI string. It is used to determine the offset into unmanaged memory to which the next charter in the ANSI string is copied. Because its starting value is the length of the string, the copy operation will copy a character from the start of the string to the end of the memory block.  \n  \n     The C# and C++ examples call the <xref:System.IntPtr.ToPointer%2A> method to get an unmanaged pointer to the starting address of the string and the unmanaged block of memory, and they add one less than the length of the string to the starting address of the ANSI string. Because the unmanaged string pointer now points to the end of the string, the copy operation will copy a character from the end of the string to the start of the memory block.  \n  \n4.  Uses a loop to copy each character from the string to the unmanaged block of memory.  \n  \n     The Visual Basic example calls the <xref:System.Runtime.InteropServices.Marshal.ReadByte%28System.IntPtr%2CSystem.Int32%29?displayProperty=fullName> method to read the byte (or one-byte character) at a specified offset from the managed pointer to the ANSI string. The offset is incremented with each iteration of the loop. It then calls the <xref:System.Runtime.InteropServices.Marshal.WriteByte%28System.IntPtr%2CSystem.Int32%2CSystem.Byte%29?displayProperty=fullName> method to write the byte to the memory address defined by the starting address of the unmanaged block of memory plus `offset`. It then decrements `offset`.  \n  \n     The C# and C++ examples perform the copy operation, then decrement the pointer to the address of the next location in the unmanaged ANSI string and increment the pointer to the next address in the unmanaged block.  \n  \n5.  All examples call the <xref:System.Runtime.InteropServices.Marshal.PtrToStringAnsi%2A?displayProperty=fullName> to convert the unmanaged memory block containing the copied ANSI string to a managed Unicode <xref:System.String> object.  \n  \n6.  After displaying the original and reversed strings, all examples call the <xref:System.Runtime.InteropServices.Marshal.FreeHGlobal%2A> method to free the memory allocated for the unmanaged ANSI string and the unmanaged block of memory.  \n  \n [!code-cpp[System.IntPtr#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.intptr/cpp/topointer.cpp#1)]\n [!code-csharp[System.IntPtr#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.intptr/cs/topointer.cs#1)]\n [!code-vb[System.IntPtr#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.intptr/vb/topointer.vb#1)]"
+  syntax:
+    content: >-
+      [System.Runtime.InteropServices.ComVisible(true)]
+
+      public struct IntPtr : System.Runtime.Serialization.ISerializable
+  inheritance:
+  - System.Object
+  - System.ValueType
+  implements:
+  - System.Runtime.Serialization.ISerializable
+  attributes:
+  - type: System.Runtime.InteropServices.ComVisibleAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.#ctor(System.Int32)
+  commentId: M:System.IntPtr.#ctor(System.Int32)
+  id: '#ctor(System.Int32)'
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: IntPtr(Int32)
+  nameWithType: IntPtr.IntPtr(Int32)
+  fullName: IntPtr.IntPtr(Int32)
+  type: Constructor
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Initializes a new instance of <xref href="System.IntPtr"></xref> using the specified 32-bit pointer or handle.
+  syntax:
+    content: public IntPtr (int value);
+    parameters:
+    - id: value
+      type: System.Int32
+      description: A pointer or handle contained in a 32-bit signed integer.
+  overload: System.IntPtr.#ctor*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.#ctor(System.Int64)
+  commentId: M:System.IntPtr.#ctor(System.Int64)
+  id: '#ctor(System.Int64)'
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: IntPtr(Int64)
+  nameWithType: IntPtr.IntPtr(Int64)
+  fullName: IntPtr.IntPtr(Int64)
+  type: Constructor
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Initializes a new instance of <xref href="System.IntPtr"></xref> using the specified 64-bit pointer.
+  remarks: An exception is only thrown if the value of `value` requires more bits than the current platform supports.
+  syntax:
+    content: public IntPtr (long value);
+    parameters:
+    - id: value
+      type: System.Int64
+      description: A pointer or handle contained in a 64-bit signed integer.
+  overload: System.IntPtr.#ctor*
+  exceptions:
+  - type: System.OverflowException
+    commentId: T:System.OverflowException
+    description: On a 32-bit platform, <code>value</code> is too large or too small to represent as an <xref href="System.IntPtr"></xref>.
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.#ctor(System.Void*)
+  commentId: M:System.IntPtr.#ctor(System.Void*)
+  id: '#ctor(System.Void*)'
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: IntPtr(Void*)
+  nameWithType: IntPtr.IntPtr(Void*)
+  fullName: IntPtr.IntPtr(Void*)
+  type: Constructor
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Initializes a new instance of <xref href="System.IntPtr"></xref> using the specified pointer to an unspecified type.
+  syntax:
+    content: >-
+      [System.CLSCompliant(false)]
+
+      public IntPtr (void* value);
+    parameters:
+    - id: value
+      type: System.Void*
+      description: A pointer to an unspecified type.
+  overload: System.IntPtr.#ctor*
+  exceptions: []
+  attributes:
+  - type: System.CLSCompliantAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.Add(System.IntPtr,System.Int32)
+  commentId: M:System.IntPtr.Add(System.IntPtr,System.Int32)
+  id: Add(System.IntPtr,System.Int32)
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: Add(IntPtr, Int32)
+  nameWithType: IntPtr.Add(IntPtr, Int32)
+  fullName: IntPtr.Add(IntPtr, Int32)
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Adds an offset to the value of a pointer.
+  remarks: "The <xref:System.IntPtr.Add%2A> method does not throw an exception if the result is too large to represent as a pointer on the specified platform. Instead, the addition operation is performed in an unchecked context.  \n  \n Languages that do not support operator overloading or custom operators can use this method to add an offset to the value of a pointer."
+  example:
+  - "The following example instantiates an <xref:System.IntPtr> object that points to the beginning of a ten-element array, and then calls the <xref:System.IntPtr.Add%2A> method to iterate the elements in the array.  \n  \n [!code-csharp[System.IntPtr.Add#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.intptr.add/cs/add1.cs#1)]\n [!code-vb[System.IntPtr.Add#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.intptr.add/vb/add1.vb#1)]"
+  syntax:
+    content: public static IntPtr Add (IntPtr pointer, int offset);
+    parameters:
+    - id: pointer
+      type: System.IntPtr
+      description: The pointer to add the offset to.
+    - id: offset
+      type: System.Int32
+      description: The offset to add.
+    return:
+      type: System.IntPtr
+      description: A new pointer that reflects the addition of <code>offset</code> to <code>pointer</code>.
+  overload: System.IntPtr.Add*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.Equals(System.Object)
+  commentId: M:System.IntPtr.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: Equals(Object)
+  nameWithType: IntPtr.Equals(Object)
+  fullName: IntPtr.Equals(Object)
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Returns a value indicating whether this instance is equal to a specified object.
+  syntax:
+    content: public override bool Equals (object obj);
+    parameters:
+    - id: obj
+      type: System.Object
+      description: An object to compare with this instance or `null`.
+    return:
+      type: System.Boolean
+      description: '`true` if <code>obj</code> is an instance of <xref href="System.IntPtr"></xref> and equals the value of this instance; otherwise, `false`.'
+  overload: System.IntPtr.Equals*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.GetHashCode
+  commentId: M:System.IntPtr.GetHashCode
+  id: GetHashCode
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: GetHashCode()
+  nameWithType: IntPtr.GetHashCode()
+  fullName: IntPtr.GetHashCode()
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Returns the hash code for this instance.
+  syntax:
+    content: public override int GetHashCode ();
+    parameters: []
+    return:
+      type: System.Int32
+      description: A 32-bit signed integer hash code.
+  overload: System.IntPtr.GetHashCode*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.op_Addition(System.IntPtr,System.Int32)
+  commentId: M:System.IntPtr.op_Addition(System.IntPtr,System.Int32)
+  id: op_Addition(System.IntPtr,System.Int32)
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: op_Addition(IntPtr, Int32)
+  nameWithType: IntPtr.op_Addition(IntPtr, Int32)
+  fullName: IntPtr.op_Addition(IntPtr, Int32)
+  type: Operator
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Adds an offset to the value of a pointer.
+  remarks: "The <xref:System.IntPtr.op_Addition%2A> method defines the addition operation for <xref:System.IntPtr> objects. It enables code such as the following.  \n  \n [!code-csharp[System.IntPtr.op_Addition#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.intptr.op_addition/cs/addition1.cs#1)]\n [!code-vb[System.IntPtr.op_Addition#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.intptr.op_addition/vb/addition1.vb#1)]  \n  \n Languages that do not support custom operators can call the <xref:System.IntPtr.Add%2A> method instead.  \n  \n The addition operation does not throw an exception if the result is too large to represent as a pointer on the specified platform. Instead, it is performed in an unchecked context.  \n  \n The equivalent method for this operator is <xref:System.IntPtr.Add%28System.IntPtr%2CSystem.Int32%29?displayProperty=fullName>"
+  syntax:
+    content: public static IntPtr op_Addition (IntPtr pointer, int offset);
+    parameters:
+    - id: pointer
+      type: System.IntPtr
+      description: The pointer to add the offset to.
+    - id: offset
+      type: System.Int32
+      description: The offset to add.
+    return:
+      type: System.IntPtr
+      description: A new pointer that reflects the addition of <code>offset</code> to <code>pointer</code>.
+  overload: System.IntPtr.op_Addition*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.op_Equality(System.IntPtr,System.IntPtr)
+  commentId: M:System.IntPtr.op_Equality(System.IntPtr,System.IntPtr)
+  id: op_Equality(System.IntPtr,System.IntPtr)
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: op_Equality(IntPtr, IntPtr)
+  nameWithType: IntPtr.op_Equality(IntPtr, IntPtr)
+  fullName: IntPtr.op_Equality(IntPtr, IntPtr)
+  type: Operator
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Determines whether two specified instances of <xref href="System.IntPtr"></xref> are equal.
+  remarks: The equivalent method for this operator is <xref:System.IntPtr.Equals%28System.Object%29?displayProperty=fullName>
+  syntax:
+    content: public static bool op_Equality (IntPtr value1, IntPtr value2);
+    parameters:
+    - id: value1
+      type: System.IntPtr
+      description: The first pointer or handle to compare.
+    - id: value2
+      type: System.IntPtr
+      description: The second pointer or handle to compare.
+    return:
+      type: System.Boolean
+      description: '`true` if <code>value1</code> equals <code>value2</code>; otherwise, `false`.'
+  overload: System.IntPtr.op_Equality*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.op_Explicit(System.Void* to System.IntPtr)
+  commentId: M:System.IntPtr.op_Explicit(System.Void*)~System.IntPtr
+  id: op_Explicit(System.Void* to System.IntPtr)
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: op_Explicit(Void* to IntPtr)
+  nameWithType: IntPtr.op_Explicit(Void* to IntPtr)
+  fullName: IntPtr.op_Explicit(Void* to IntPtr)
+  type: Operator
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  syntax:
+    content: >-
+      [System.CLSCompliant(false)]
+
+      public static IntPtr op_Explicit (void* value);
+    parameters:
+    - id: value
+      type: System.Void*
+      description: ''
+    return:
+      type: System.IntPtr
+      description: ''
+  overload: System.IntPtr.op_Explicit*
+  exceptions: []
+  attributes:
+  - type: System.CLSCompliantAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.op_Explicit(System.IntPtr to System.Int64)
+  commentId: M:System.IntPtr.op_Explicit(System.IntPtr)~System.Int64
+  id: op_Explicit(System.IntPtr to System.Int64)
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: op_Explicit(IntPtr to Int64)
+  nameWithType: IntPtr.op_Explicit(IntPtr to Int64)
+  fullName: IntPtr.op_Explicit(IntPtr to Int64)
+  type: Operator
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  syntax:
+    content: public static long op_Explicit (IntPtr value);
+    parameters:
+    - id: value
+      type: System.IntPtr
+      description: ''
+    return:
+      type: System.Int64
+      description: ''
+  overload: System.IntPtr.op_Explicit*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.op_Explicit(System.IntPtr to System.Void*)
+  commentId: M:System.IntPtr.op_Explicit(System.IntPtr)~System.Void*
+  id: op_Explicit(System.IntPtr to System.Void*)
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: op_Explicit(IntPtr to Void*)
+  nameWithType: IntPtr.op_Explicit(IntPtr to Void*)
+  fullName: IntPtr.op_Explicit(IntPtr to Void*)
+  type: Operator
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  syntax:
+    content: >-
+      [System.CLSCompliant(false)]
+
+      public static void* op_Explicit (IntPtr value);
+    parameters:
+    - id: value
+      type: System.IntPtr
+      description: ''
+    return:
+      type: System.Void*
+      description: ''
+  overload: System.IntPtr.op_Explicit*
+  exceptions: []
+  attributes:
+  - type: System.CLSCompliantAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.op_Explicit(System.Int64 to System.IntPtr)
+  commentId: M:System.IntPtr.op_Explicit(System.Int64)~System.IntPtr
+  id: op_Explicit(System.Int64 to System.IntPtr)
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: op_Explicit(Int64 to IntPtr)
+  nameWithType: IntPtr.op_Explicit(Int64 to IntPtr)
+  fullName: IntPtr.op_Explicit(Int64 to IntPtr)
+  type: Operator
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  syntax:
+    content: public static IntPtr op_Explicit (long value);
+    parameters:
+    - id: value
+      type: System.Int64
+      description: ''
+    return:
+      type: System.IntPtr
+      description: ''
+  overload: System.IntPtr.op_Explicit*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.op_Explicit(System.Int32 to System.IntPtr)
+  commentId: M:System.IntPtr.op_Explicit(System.Int32)~System.IntPtr
+  id: op_Explicit(System.Int32 to System.IntPtr)
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: op_Explicit(Int32 to IntPtr)
+  nameWithType: IntPtr.op_Explicit(Int32 to IntPtr)
+  fullName: IntPtr.op_Explicit(Int32 to IntPtr)
+  type: Operator
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  syntax:
+    content: public static IntPtr op_Explicit (int value);
+    parameters:
+    - id: value
+      type: System.Int32
+      description: ''
+    return:
+      type: System.IntPtr
+      description: ''
+  overload: System.IntPtr.op_Explicit*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.op_Explicit(System.IntPtr to System.Int32)
+  commentId: M:System.IntPtr.op_Explicit(System.IntPtr)~System.Int32
+  id: op_Explicit(System.IntPtr to System.Int32)
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: op_Explicit(IntPtr to Int32)
+  nameWithType: IntPtr.op_Explicit(IntPtr to Int32)
+  fullName: IntPtr.op_Explicit(IntPtr to Int32)
+  type: Operator
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  syntax:
+    content: public static int op_Explicit (IntPtr value);
+    parameters:
+    - id: value
+      type: System.IntPtr
+      description: ''
+    return:
+      type: System.Int32
+      description: ''
+  overload: System.IntPtr.op_Explicit*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.op_Inequality(System.IntPtr,System.IntPtr)
+  commentId: M:System.IntPtr.op_Inequality(System.IntPtr,System.IntPtr)
+  id: op_Inequality(System.IntPtr,System.IntPtr)
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: op_Inequality(IntPtr, IntPtr)
+  nameWithType: IntPtr.op_Inequality(IntPtr, IntPtr)
+  fullName: IntPtr.op_Inequality(IntPtr, IntPtr)
+  type: Operator
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Determines whether two specified instances of <xref href="System.IntPtr"></xref> are not equal.
+  remarks: The equivalent method for this operator is <xref:System.IntPtr.Equals%28System.Object%29?displayProperty=fullName>
+  syntax:
+    content: public static bool op_Inequality (IntPtr value1, IntPtr value2);
+    parameters:
+    - id: value1
+      type: System.IntPtr
+      description: The first pointer or handle to compare.
+    - id: value2
+      type: System.IntPtr
+      description: The second pointer or handle to compare.
+    return:
+      type: System.Boolean
+      description: '`true` if <code>value1</code> does not equal <code>value2</code>; otherwise, `false`.'
+  overload: System.IntPtr.op_Inequality*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.op_Subtraction(System.IntPtr,System.Int32)
+  commentId: M:System.IntPtr.op_Subtraction(System.IntPtr,System.Int32)
+  id: op_Subtraction(System.IntPtr,System.Int32)
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: op_Subtraction(IntPtr, Int32)
+  nameWithType: IntPtr.op_Subtraction(IntPtr, Int32)
+  fullName: IntPtr.op_Subtraction(IntPtr, Int32)
+  type: Operator
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Subtracts an offset from the value of a pointer.
+  remarks: "The <xref:System.IntPtr.op_Subtraction%2A> method defines the subtraction operation for <xref:System.IntPtr> objects. It enables code such as the following.  \n  \n [!code-csharp[System.IntPtr.op_Addition#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.intptr.op_addition/cs/op_subtraction1.cs#2)]\n [!code-vb[System.IntPtr.op_Addition#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.intptr.op_addition/vb/op_subtraction1.vb#2)]  \n  \n Languages that do not support custom operators can call the <xref:System.IntPtr.Subtract%2A> method instead.  \n  \n The subtraction operation does not throw an exception if the result is too small to represent as a pointer on the specified platform. Instead, it is performed in an unchecked context.  \n  \n The equivalent method for this operator is <xref:System.IntPtr.Subtract%28System.IntPtr%2CSystem.Int32%29?displayProperty=fullName>"
+  syntax:
+    content: public static IntPtr op_Subtraction (IntPtr pointer, int offset);
+    parameters:
+    - id: pointer
+      type: System.IntPtr
+      description: The pointer to subtract the offset from.
+    - id: offset
+      type: System.Int32
+      description: The offset to subtract.
+    return:
+      type: System.IntPtr
+      description: A new pointer that reflects the subtraction of <code>offset</code> from <code>pointer</code>.
+  overload: System.IntPtr.op_Subtraction*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.Size
+  commentId: P:System.IntPtr.Size
+  id: Size
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: Size
+  nameWithType: IntPtr.Size
+  fullName: IntPtr.Size
+  type: Property
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Gets the size of this instance.
+  syntax:
+    content: >-
+      [get: System.Runtime.ConstrainedExecution.ReliabilityContract(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.Success)]
+
+      public static int Size { get; }
+    return:
+      type: System.Int32
+      description: The size of a pointer or handle in this process, measured in bytes. The value of this property is 4 in a 32-bit process, and 8 in a 64-bit process. You can define the process type by setting the `/platform` switch when you compile your code with the C# and Visual Basic compilers.
+  overload: System.IntPtr.Size*
+  exceptions: []
+  attributes:
+  - type: 'get: System.Runtime.ConstrainedExecution.ReliabilityContract'
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.Subtract(System.IntPtr,System.Int32)
+  commentId: M:System.IntPtr.Subtract(System.IntPtr,System.Int32)
+  id: Subtract(System.IntPtr,System.Int32)
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: Subtract(IntPtr, Int32)
+  nameWithType: IntPtr.Subtract(IntPtr, Int32)
+  fullName: IntPtr.Subtract(IntPtr, Int32)
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Subtracts an offset from the value of a pointer.
+  remarks: "The <xref:System.IntPtr.Subtract%2A> method does not throw an exception if the result is too small to represent as a pointer on the specified platform. Instead, the subtraction operation is performed in an unchecked context.  \n  \n Languages that do not support operator overloading or custom operators can use this method to subtract an offset from the value of a pointer."
+  example:
+  - "The following example instantiates an <xref:System.IntPtr> object that points to the end of a ten-element array, and then calls the <xref:System.IntPtr.Subtract%2A> method to iterate the elements in the array in reverse order.  \n  \n [!code-csharp[System.IntPtr.Subtract#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.intptr.subtract/cs/subtract1.cs#1)]\n [!code-vb[System.IntPtr.Subtract#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.intptr.subtract/vb/subtract1.vb#1)]"
+  syntax:
+    content: public static IntPtr Subtract (IntPtr pointer, int offset);
+    parameters:
+    - id: pointer
+      type: System.IntPtr
+      description: The pointer to subtract the offset from.
+    - id: offset
+      type: System.Int32
+      description: The offset to subtract.
+    return:
+      type: System.IntPtr
+      description: A new pointer that reflects the subtraction of <code>offset</code> from <code>pointer</code>.
+  overload: System.IntPtr.Subtract*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.ToInt32
+  commentId: M:System.IntPtr.ToInt32
+  id: ToInt32
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: ToInt32()
+  nameWithType: IntPtr.ToInt32()
+  fullName: IntPtr.ToInt32()
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Converts the value of this instance to a 32-bit signed integer.
+  syntax:
+    content: public int ToInt32 ();
+    parameters: []
+    return:
+      type: System.Int32
+      description: A 32-bit signed integer equal to the value of this instance.
+  overload: System.IntPtr.ToInt32*
+  exceptions:
+  - type: System.OverflowException
+    commentId: T:System.OverflowException
+    description: On a 64-bit platform, the value of this instance is too large or too small to represent as a 32-bit signed integer.
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.ToInt64
+  commentId: M:System.IntPtr.ToInt64
+  id: ToInt64
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: ToInt64()
+  nameWithType: IntPtr.ToInt64()
+  fullName: IntPtr.ToInt64()
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Converts the value of this instance to a 64-bit signed integer.
+  syntax:
+    content: public long ToInt64 ();
+    parameters: []
+    return:
+      type: System.Int64
+      description: A 64-bit signed integer equal to the value of this instance.
+  overload: System.IntPtr.ToInt64*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.ToPointer
+  commentId: M:System.IntPtr.ToPointer
+  id: ToPointer
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: ToPointer()
+  nameWithType: IntPtr.ToPointer()
+  fullName: IntPtr.ToPointer()
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Converts the value of this instance to a pointer to an unspecified type.
+  remarks: ''
+  example:
+  - "The following example uses managed pointers to reverse the characters in an array. After it initializes a <xref:System.String> object and gets its length, it does the following:  \n  \n-   Calls the <xref:System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi%2A?displayProperty=fullName> method to copy the Unicode string to unmanaged memory as ANSI (one-byte) characters. The method returns an <xref:System.IntPtr> object that points to the beginning of the unmanaged string.  \n  \n-   Calls the <xref:System.Runtime.InteropServices.Marshal.AllocHGlobal%2A?displayProperty=fullName> method to allocate the same number of bytes as the unmanaged string occupies. The method returns an <xref:System.IntPtr> object that points to the beginning of the unmanaged block of memory.  \n  \n-   Calls the <xref:System.IntPtr.ToPointer%2A> method to get an unmanaged pointer to the starting address of the string and the unmanaged block of memory, and adds one less than the length of the string to the starting address of the ANSI string. Because the unmanaged string pointer now points to the end of the string, the copy operation will copy a character from the end of the string to the start of the memory block.  \n  \n-   Uses a loop to copy each character from the string to the unmanaged block of memory. After each copy operation, it decrements the pointer to the address of the next location in the unmanaged ANSI string and increments the pointer to the next address in the unmanaged block.  \n  \n-   Calls the <xref:System.Runtime.InteropServices.Marshal.PtrToStringAnsi%2A?displayProperty=fullName> to convert the unmanaged memory block containing the copied ANSI string to a managed Unicode <xref:System.String> object.  \n  \n-   After displaying the original and reversed strings, calls the <xref:System.Runtime.InteropServices.Marshal.FreeHGlobal%2A?displayProperty=fullName> method to free the memory allocated for the unmanaged ANSI string and the unmanaged block of memory.  \n  \n [!code-cpp[System.IntPtr.ToPointer#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/System.IntPtr.ToPointer/cpp/topointer.cpp#1)]\n [!code-csharp[System.IntPtr.ToPointer#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/System.IntPtr.ToPointer/cs/topointer.cs#1)]"
+  syntax:
+    content: >-
+      [System.CLSCompliant(false)]
+
+      public void* ToPointer ();
+    parameters: []
+    return:
+      type: System.Void*
+      description: A pointer to <xref href="System.Void"></xref>; that is, a pointer to memory containing data of an unspecified type.
+  overload: System.IntPtr.ToPointer*
+  exceptions: []
+  attributes:
+  - type: System.CLSCompliantAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.ToString(System.String)
+  commentId: M:System.IntPtr.ToString(System.String)
+  id: ToString(System.String)
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: ToString(String)
+  nameWithType: IntPtr.ToString(String)
+  fullName: IntPtr.ToString(String)
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Converts the numeric value of the current <xref href="System.IntPtr"></xref> object to its equivalent string representation.
+  remarks: "If the `format` parameter is `null` or an empty string (\"\"), the return value is formatted with the general format specifier (\"G\"). For more information about numeric format specifiers, see the [Standard Numeric Format Strings](~/docs/standard/base-types/standard-numeric-format-strings.md) topic.  \n  \n The return value is formatted using the invariant culture."
+  syntax:
+    content: public string ToString (string format);
+    parameters:
+    - id: format
+      type: System.String
+      description: A format specification that governs how the current <xref href="System.IntPtr"></xref> object is converted.
+    return:
+      type: System.String
+      description: The string representation of the value of the current <xref href="System.IntPtr"></xref> object.
+  overload: System.IntPtr.ToString*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.ToString
+  commentId: M:System.IntPtr.ToString
+  id: ToString
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: ToString()
+  nameWithType: IntPtr.ToString()
+  fullName: IntPtr.ToString()
+  type: Method
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: Converts the numeric value of the current <xref href="System.IntPtr"></xref> object to its equivalent string representation.
+  remarks: If the value of the <xref:System.IntPtr.Size%2A> property for this instance is 4, then this method is equivalent to <xref:System.Int32.ToString%2A?displayProperty=fullName>; otherwise, this method is equivalent to <xref:System.Int64.ToString%2A?displayProperty=fullName>.
+  syntax:
+    content: public override string ToString ();
+    parameters: []
+    return:
+      type: System.String
+      description: The string representation of the value of this instance.
+  overload: System.IntPtr.ToString*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.Zero
+  commentId: F:System.IntPtr.Zero
+  id: Zero
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: Zero
+  nameWithType: IntPtr.Zero
+  fullName: IntPtr.Zero
+  type: Field
+  assemblies:
+  - System.Runtime
+  - mscorlib
+  - netstandard
+  namespace: System
+  summary: A read-only field that represents a pointer or handle that has been initialized to zero.
+  remarks: "The value of this field is not equivalent to `null`. Use this field to efficiently determine whether an instance of <xref:System.IntPtr> has been set to a value other than zero.  \n  \n For example, assume the variable, ip, is an instance of <xref:System.IntPtr>. You can determine if it has been set by comparing it to the value returned by a constructor, for example: \" `if ip != new IntPtr(0)...` \". However, invoking a constructor to get an unintialized pointer is inefficient. It is better to code either \" `if ip != IntPtr.Zero...` \", or \" `if !IntPtr.Zero.Equals(ip)...` \".  \n  \n When calling the Windows API from managed code, you can pass <xref:System.IntPtr.Zero?displayProperty=fullName> instead of `null` if an argument is expected to be either a pointer or a `null`. For example, the following call to the Windows `CreateFile` function supplies <xref:System.IntPtr.Zero?displayProperty=fullName> for the `pSecurityAttributes` and `hTemplateFile` argument values.  \n  \n [!code-csharp[System.IntPtr.Zero#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.intptr.zero/cs/zero4.cs#2)]\n [!code-vb[System.IntPtr.Zero#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.intptr.zero/vb/zero4.vb#2)]  \n  \n> [!NOTE]\n>  Although <xref:System.IntPtr.Zero> is equivalent to `null` for Windows API functions with parameters or return values that can be either pointers or `null`, <xref:System.IntPtr.Zero> is not equivalent to `null`. Passing `null` to the `IntPtr.Zero.Equals` method always returns `false`.  \n  \n You can also test for a `null` return value from Windows API function calls that return either a pointer or a `null` by comparing the returned value with <xref:System.IntPtr.Zero?displayProperty=fullName>. For example, the call to the `GetWindow` function in the following example tries to retrieve the handle of a non-existent window. If it were called from unmanaged code, the function would return `null`, but when it is called from managed code, it returns <xref:System.IntPtr.Zero?displayProperty=fullName>.  \n  \n [!code-csharp[System.IntPtr.Zero#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.intptr.zero/cs/zero2.cs#1)]\n [!code-vb[System.IntPtr.Zero#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.intptr.zero/vb/zero2.vb#1)]"
+  syntax:
+    content: public static readonly IntPtr Zero;
+    return:
+      type: System.IntPtr
+      description: ''
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.IntPtr.System#IEquatable{System#IntPtr}#Equals(System.IntPtr)
+  commentId: M:System.IntPtr.System#IEquatable<System#IntPtr>#Equals(System.IntPtr)
+  id: System#IEquatable{System#IntPtr}#Equals(System.IntPtr)
+  isEii: true
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: IEquatable<IntPtr>.Equals(IntPtr)
+  nameWithType: IntPtr.IEquatable<IntPtr>.Equals(IntPtr)
+  fullName: IntPtr.IEquatable<IntPtr>.Equals(IntPtr)
+  type: Method
+  assemblies:
+  - System.Runtime
+  namespace: System
+  syntax:
+    content: bool IEquatable<IntPtr>.Equals (IntPtr other);
+    parameters:
+    - id: other
+      type: System.IntPtr
+      description: ''
+    return:
+      type: System.Boolean
+      description: ''
+  overload: System.IntPtr.System#IEquatable{System#IntPtr}#Equals*
+  exceptions: []
+  version:
+  - netcore-2.0
+  monikers:
+  - netcore-2.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  commentId: M:System.IntPtr.System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  id: System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  isEii: true
+  parent: System.IntPtr
+  langs:
+  - csharp
+  name: ISerializable.GetObjectData(SerializationInfo, StreamingContext)
+  nameWithType: IntPtr.ISerializable.GetObjectData(SerializationInfo, StreamingContext)
+  fullName: IntPtr.ISerializable.GetObjectData(SerializationInfo, StreamingContext)
+  type: Method
+  assemblies:
+  - mscorlib
+  - netstandard
+  - System.Runtime
+  namespace: System
+  summary: Populates a <xref href="System.Runtime.Serialization.SerializationInfo"></xref> object with the data needed to serialize the current <xref href="System.IntPtr"></xref> object.
+  remarks: This  method populates the `info` parameter with the value of the current <xref:System.IntPtr> object.
+  syntax:
+    content: void ISerializable.GetObjectData (System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);
+    parameters:
+    - id: info
+      type: System.Runtime.Serialization.SerializationInfo
+      description: The <xref href="System.Runtime.Serialization.SerializationInfo"></xref> object to populate with data.
+    - id: context
+      type: System.Runtime.Serialization.StreamingContext
+      description: The destination for this serialization. (This parameter is not used; specify `null`.)
+  overload: System.IntPtr.System#Runtime#Serialization#ISerializable#GetObjectData*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>info</code> is `null`.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+references:
+- uid: System.ValueType
+  parent: System
+  isExternal: false
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.OverflowException
+  parent: System
+  isExternal: false
+  name: OverflowException
+  nameWithType: OverflowException
+  fullName: System.OverflowException
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.IntPtr.#ctor(System.Int32)
+  parent: System.IntPtr
+  isExternal: false
+  name: IntPtr(Int32)
+  nameWithType: IntPtr.IntPtr(Int32)
+  fullName: IntPtr.IntPtr(Int32)
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.IntPtr.#ctor(System.Int64)
+  parent: System.IntPtr
+  isExternal: false
+  name: IntPtr(Int64)
+  nameWithType: IntPtr.IntPtr(Int64)
+  fullName: IntPtr.IntPtr(Int64)
+- uid: System.Int64
+  parent: System
+  isExternal: false
+  name: Int64
+  nameWithType: Int64
+  fullName: System.Int64
+- uid: System.IntPtr.#ctor(System.Void*)
+  parent: System.IntPtr
+  isExternal: false
+  name: IntPtr(Void*)
+  nameWithType: IntPtr.IntPtr(Void*)
+  fullName: IntPtr.IntPtr(Void*)
+- uid: System.Void
+  name: Void
+  nameWithType: Void
+  fullName: System.Void
+- uid: System.Void*
+  parent: System
+  isExternal: false
+  name: Void*
+  nameWithType: Void*
+  fullName: System.Void*
+  spec.csharp:
+  - uid: System.Void
+    name: Void
+    nameWithType: Void
+    fullName: System.Void
+  - name: '*'
+    nameWithType: '*'
+    fullName: '*'
+- uid: System.IntPtr.Add(System.IntPtr,System.Int32)
+  parent: System.IntPtr
+  isExternal: false
+  name: Add(IntPtr, Int32)
+  nameWithType: IntPtr.Add(IntPtr, Int32)
+  fullName: IntPtr.Add(IntPtr, Int32)
+- uid: System.IntPtr
+  parent: System
+  isExternal: false
+  name: IntPtr
+  nameWithType: IntPtr
+  fullName: System.IntPtr
+- uid: System.IntPtr.Equals(System.Object)
+  parent: System.IntPtr
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: IntPtr.Equals(Object)
+  fullName: IntPtr.Equals(Object)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.IntPtr.GetHashCode
+  parent: System.IntPtr
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: IntPtr.GetHashCode()
+  fullName: IntPtr.GetHashCode()
+- uid: System.IntPtr.op_Addition(System.IntPtr,System.Int32)
+  parent: System.IntPtr
+  isExternal: false
+  name: op_Addition(IntPtr, Int32)
+  nameWithType: IntPtr.op_Addition(IntPtr, Int32)
+  fullName: IntPtr.op_Addition(IntPtr, Int32)
+- uid: System.IntPtr.op_Equality(System.IntPtr,System.IntPtr)
+  parent: System.IntPtr
+  isExternal: false
+  name: op_Equality(IntPtr, IntPtr)
+  nameWithType: IntPtr.op_Equality(IntPtr, IntPtr)
+  fullName: IntPtr.op_Equality(IntPtr, IntPtr)
+- uid: System.IntPtr.op_Explicit(System.Void* to System.IntPtr)
+  parent: System.IntPtr
+  isExternal: false
+  name: op_Explicit(Void* to IntPtr)
+  nameWithType: IntPtr.op_Explicit(Void* to IntPtr)
+  fullName: IntPtr.op_Explicit(Void* to IntPtr)
+- uid: System.IntPtr.op_Explicit(System.IntPtr to System.Int64)
+  parent: System.IntPtr
+  isExternal: false
+  name: op_Explicit(IntPtr to Int64)
+  nameWithType: IntPtr.op_Explicit(IntPtr to Int64)
+  fullName: IntPtr.op_Explicit(IntPtr to Int64)
+- uid: System.IntPtr.op_Explicit(System.IntPtr to System.Void*)
+  parent: System.IntPtr
+  isExternal: false
+  name: op_Explicit(IntPtr to Void*)
+  nameWithType: IntPtr.op_Explicit(IntPtr to Void*)
+  fullName: IntPtr.op_Explicit(IntPtr to Void*)
+- uid: System.IntPtr.op_Explicit(System.Int64 to System.IntPtr)
+  parent: System.IntPtr
+  isExternal: false
+  name: op_Explicit(Int64 to IntPtr)
+  nameWithType: IntPtr.op_Explicit(Int64 to IntPtr)
+  fullName: IntPtr.op_Explicit(Int64 to IntPtr)
+- uid: System.IntPtr.op_Explicit(System.Int32 to System.IntPtr)
+  parent: System.IntPtr
+  isExternal: false
+  name: op_Explicit(Int32 to IntPtr)
+  nameWithType: IntPtr.op_Explicit(Int32 to IntPtr)
+  fullName: IntPtr.op_Explicit(Int32 to IntPtr)
+- uid: System.IntPtr.op_Explicit(System.IntPtr to System.Int32)
+  parent: System.IntPtr
+  isExternal: false
+  name: op_Explicit(IntPtr to Int32)
+  nameWithType: IntPtr.op_Explicit(IntPtr to Int32)
+  fullName: IntPtr.op_Explicit(IntPtr to Int32)
+- uid: System.IntPtr.op_Inequality(System.IntPtr,System.IntPtr)
+  parent: System.IntPtr
+  isExternal: false
+  name: op_Inequality(IntPtr, IntPtr)
+  nameWithType: IntPtr.op_Inequality(IntPtr, IntPtr)
+  fullName: IntPtr.op_Inequality(IntPtr, IntPtr)
+- uid: System.IntPtr.op_Subtraction(System.IntPtr,System.Int32)
+  parent: System.IntPtr
+  isExternal: false
+  name: op_Subtraction(IntPtr, Int32)
+  nameWithType: IntPtr.op_Subtraction(IntPtr, Int32)
+  fullName: IntPtr.op_Subtraction(IntPtr, Int32)
+- uid: System.IntPtr.Size
+  parent: System.IntPtr
+  isExternal: false
+  name: Size
+  nameWithType: IntPtr.Size
+  fullName: IntPtr.Size
+- uid: System.IntPtr.Subtract(System.IntPtr,System.Int32)
+  parent: System.IntPtr
+  isExternal: false
+  name: Subtract(IntPtr, Int32)
+  nameWithType: IntPtr.Subtract(IntPtr, Int32)
+  fullName: IntPtr.Subtract(IntPtr, Int32)
+- uid: System.IntPtr.ToInt32
+  parent: System.IntPtr
+  isExternal: false
+  name: ToInt32()
+  nameWithType: IntPtr.ToInt32()
+  fullName: IntPtr.ToInt32()
+- uid: System.IntPtr.ToInt64
+  parent: System.IntPtr
+  isExternal: false
+  name: ToInt64()
+  nameWithType: IntPtr.ToInt64()
+  fullName: IntPtr.ToInt64()
+- uid: System.IntPtr.ToPointer
+  parent: System.IntPtr
+  isExternal: false
+  name: ToPointer()
+  nameWithType: IntPtr.ToPointer()
+  fullName: IntPtr.ToPointer()
+- uid: System.IntPtr.ToString(System.String)
+  parent: System.IntPtr
+  isExternal: false
+  name: ToString(String)
+  nameWithType: IntPtr.ToString(String)
+  fullName: IntPtr.ToString(String)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.IntPtr.ToString
+  parent: System.IntPtr
+  isExternal: false
+  name: ToString()
+  nameWithType: IntPtr.ToString()
+  fullName: IntPtr.ToString()
+- uid: System.IntPtr.Zero
+  parent: System.IntPtr
+  isExternal: false
+  name: Zero
+  nameWithType: IntPtr.Zero
+  fullName: IntPtr.Zero
+- uid: System.IntPtr.System#IEquatable{System#IntPtr}#Equals(System.IntPtr)
+  parent: System.IntPtr
+  isExternal: false
+  name: IEquatable<IntPtr>.Equals(IntPtr)
+  nameWithType: IntPtr.IEquatable<IntPtr>.Equals(IntPtr)
+  fullName: IntPtr.IEquatable<IntPtr>.Equals(IntPtr)
+- uid: System.IntPtr.System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  parent: System.IntPtr
+  isExternal: false
+  name: ISerializable.GetObjectData(SerializationInfo, StreamingContext)
+  nameWithType: IntPtr.ISerializable.GetObjectData(SerializationInfo, StreamingContext)
+  fullName: IntPtr.ISerializable.GetObjectData(SerializationInfo, StreamingContext)
+- uid: System.Runtime.Serialization.SerializationInfo
+  parent: System.Runtime.Serialization
+  isExternal: false
+  name: SerializationInfo
+  nameWithType: SerializationInfo
+  fullName: System.Runtime.Serialization.SerializationInfo
+- uid: System.Runtime.Serialization.StreamingContext
+  parent: System.Runtime.Serialization
+  isExternal: false
+  name: StreamingContext
+  nameWithType: StreamingContext
+  fullName: System.Runtime.Serialization.StreamingContext
+- uid: System.IntPtr.#ctor*
+  parent: System.IntPtr
+  isExternal: false
+  name: IntPtr
+  nameWithType: IntPtr.IntPtr
+  fullName: IntPtr.IntPtr
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.Add*
+  parent: System.IntPtr
+  isExternal: false
+  name: Add
+  nameWithType: IntPtr.Add
+  fullName: IntPtr.Add
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.Equals*
+  parent: System.IntPtr
+  isExternal: false
+  name: Equals
+  nameWithType: IntPtr.Equals
+  fullName: IntPtr.Equals
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.GetHashCode*
+  parent: System.IntPtr
+  isExternal: false
+  name: GetHashCode
+  nameWithType: IntPtr.GetHashCode
+  fullName: IntPtr.GetHashCode
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.op_Addition*
+  parent: System.IntPtr
+  isExternal: false
+  name: op_Addition
+  nameWithType: IntPtr.op_Addition
+  fullName: IntPtr.op_Addition
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.op_Equality*
+  parent: System.IntPtr
+  isExternal: false
+  name: op_Equality
+  nameWithType: IntPtr.op_Equality
+  fullName: IntPtr.op_Equality
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.op_Explicit*
+  parent: System.IntPtr
+  isExternal: false
+  name: op_Explicit
+  nameWithType: IntPtr.op_Explicit
+  fullName: IntPtr.op_Explicit
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.op_Inequality*
+  parent: System.IntPtr
+  isExternal: false
+  name: op_Inequality
+  nameWithType: IntPtr.op_Inequality
+  fullName: IntPtr.op_Inequality
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.op_Subtraction*
+  parent: System.IntPtr
+  isExternal: false
+  name: op_Subtraction
+  nameWithType: IntPtr.op_Subtraction
+  fullName: IntPtr.op_Subtraction
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.Size*
+  parent: System.IntPtr
+  isExternal: false
+  name: Size
+  nameWithType: IntPtr.Size
+  fullName: IntPtr.Size
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.Subtract*
+  parent: System.IntPtr
+  isExternal: false
+  name: Subtract
+  nameWithType: IntPtr.Subtract
+  fullName: IntPtr.Subtract
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.ToInt32*
+  parent: System.IntPtr
+  isExternal: false
+  name: ToInt32
+  nameWithType: IntPtr.ToInt32
+  fullName: IntPtr.ToInt32
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.ToInt64*
+  parent: System.IntPtr
+  isExternal: false
+  name: ToInt64
+  nameWithType: IntPtr.ToInt64
+  fullName: IntPtr.ToInt64
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.ToPointer*
+  parent: System.IntPtr
+  isExternal: false
+  name: ToPointer
+  nameWithType: IntPtr.ToPointer
+  fullName: IntPtr.ToPointer
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.ToString*
+  parent: System.IntPtr
+  isExternal: false
+  name: ToString
+  nameWithType: IntPtr.ToString
+  fullName: IntPtr.ToString
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.5
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.System#IEquatable{System#IntPtr}#Equals*
+  parent: System.IntPtr
+  isExternal: false
+  name: System.IEquatable<System.IntPtr>.Equals
+  nameWithType: IntPtr.System.IEquatable<System.IntPtr>.Equals
+  fullName: IntPtr.System.IEquatable<System.IntPtr>.Equals
+  monikers:
+  - netcore-2.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.IntPtr.System#Runtime#Serialization#ISerializable#GetObjectData*
+  parent: System.IntPtr
+  isExternal: false
+  name: System.Runtime.Serialization.ISerializable.GetObjectData
+  nameWithType: IntPtr.System.Runtime.Serialization.ISerializable.GetObjectData
+  fullName: IntPtr.System.Runtime.Serialization.ISerializable.GetObjectData
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System/IntPtr.xml
+- uid: System.Runtime.Serialization.ISerializable
+  parent: System.Runtime.Serialization
+  isExternal: false
+  name: ISerializable
+  nameWithType: ISerializable
+  fullName: System.Runtime.Serialization.ISerializable

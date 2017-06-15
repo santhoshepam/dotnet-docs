@@ -1,0 +1,1584 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Threading.Mutex
+  commentId: T:System.Threading.Mutex
+  id: Mutex
+  children:
+  - System.Threading.Mutex.#ctor
+  - System.Threading.Mutex.#ctor(System.Boolean)
+  - System.Threading.Mutex.#ctor(System.Boolean,System.String)
+  - System.Threading.Mutex.#ctor(System.Boolean,System.String,System.Boolean@)
+  - System.Threading.Mutex.#ctor(System.Boolean,System.String,System.Boolean@,System.Security.AccessControl.MutexSecurity)
+  - System.Threading.Mutex.GetAccessControl
+  - System.Threading.Mutex.OpenExisting(System.String)
+  - System.Threading.Mutex.OpenExisting(System.String,System.Security.AccessControl.MutexRights)
+  - System.Threading.Mutex.ReleaseMutex
+  - System.Threading.Mutex.SetAccessControl(System.Security.AccessControl.MutexSecurity)
+  - System.Threading.Mutex.TryOpenExisting(System.String,System.Threading.Mutex@)
+  - System.Threading.Mutex.TryOpenExisting(System.String,System.Security.AccessControl.MutexRights,System.Threading.Mutex@)
+  langs:
+  - csharp
+  name: Mutex
+  nameWithType: Mutex
+  fullName: System.Threading.Mutex
+  type: Class
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: A synchronization primitive that can also be used for interprocess synchronization.
+  remarks: "> [!NOTE]\n>  To view the .NET Framework source code for this type, see the [Reference Source](http://referencesource.microsoft.com/#mscorlib/system/threading/mutex.cs#29b92e0e2832a8d6). You can browse through the source code online, download the reference for offline viewing, and step through the sources (including patches and updates) during debugging; see [instructions](http://referencesource.microsoft.com/).  \n  \n When two or more threads need to access a shared resource at the same time, the system needs a synchronization mechanism to ensure that only one thread at a time uses the resource. <xref:System.Threading.Mutex> is a synchronization primitive that grants exclusive access to the shared resource to only one thread. If a thread acquires a mutex, the second thread that wants to acquire that mutex is suspended until the first thread releases the mutex.  \n  \n> [!IMPORTANT]\n>  This type implements the <xref:System.IDisposable> interface. When you have finished using the type, you should dispose of it either directly or indirectly. To dispose of the type directly, call its <xref:System.IDisposable.Dispose%2A> method in a `try`/`catch` block. To dispose of it indirectly, use a language construct such as `using` (in C#) or `Using` (in Visual Basic). For more information, see the \"Using an Object that Implements IDisposable\" section in the <xref:System.IDisposable> interface topic.  \n  \n You can use the <xref:System.Threading.WaitHandle.WaitOne%2A?displayProperty=fullName> method to request ownership of a mutex. The calling thread blocks until one of the following occurs:  \n  \n-   The mutex is signaled to indicate that it is not owned. When this happens, the <xref:System.Threading.WaitHandle.WaitOne%2A> method returns `true`, and the calling thread assumes ownership of the mutex and accesses the resource protected by the mutex. When it has finished accessing the resource, the thread must call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method to release ownership of the mutex. The first example in the Examples section illustrates this pattern.  \n  \n-   The time-out interval specified in the call to a <xref:System.Threading.WaitHandle.WaitOne%2A> method that has a `millisecondsTimeout` or `timeout` parameter has elapsed. When this happens, the <xref:System.Threading.WaitHandle.WaitOne%2A> method returns `false`, and the calling thread makes no further attempt to acquire ownership of the mutex. In this case, you should structure your code so that access to the resource that is protected by the mutex is denied to the calling thread. Because the thread never acquired ownership of the mutex, it must not call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method. The second example in the Examples section illustrates this pattern.  \n  \n The <xref:System.Threading.Mutex> class enforces thread identity, so a mutex can be released only by the thread that acquired it. By contrast, the <xref:System.Threading.Semaphore> class does not enforce thread identity. A mutex can also be passed across application domain boundaries.  \n  \n The thread that owns a mutex can request the same mutex in repeated calls to <xref:System.Threading.WaitHandle.WaitOne%2A> without blocking its execution. However, the thread must call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method the same number of times to release ownership of the mutex.  \n  \n Because the <xref:System.Threading.Mutex> class inherits from <xref:System.Threading.WaitHandle>, you can also call the static <xref:System.Threading.WaitHandle.WaitAll%2A?displayProperty=fullName> and <xref:System.Threading.WaitHandle.WaitAny%2A?displayProperty=fullName> methods to synchronize access to a protected resource.  \n  \n If a thread terminates while owning a mutex, the mutex is said to be abandoned. The state of the mutex is set to signaled, and the next waiting thread gets ownership. Beginning in version 2.0 of the .NET Framework, an <xref:System.Threading.AbandonedMutexException> is thrown in the next thread that acquires the abandoned mutex. Before version 2.0 of the .NET Framework, no exception was thrown.  \n  \n> [!CAUTION]\n>  An abandoned mutex often indicates a serious error in the code. When a thread exits without releasing the mutex, the data structures protected by the mutex might not be in a consistent state. The next thread to request ownership of the mutex can handle this exception and proceed, if the integrity of the data structures can be verified.  \n  \n In the case of a system-wide mutex, an abandoned mutex might indicate that an application has been terminated abruptly (for example, by using Windows Task Manager).  \n  \n Mutexes are of two types: local mutexes, which are unnamed, and named system mutexes. A local mutex exists only within your process. It can be used by any thread in your process that has a reference to the <xref:System.Threading.Mutex> object that represents the mutex. Each unnamed <xref:System.Threading.Mutex> object represents a separate local mutex.  \n  \n Named system mutexes are visible throughout the operating system, and can be used to synchronize the activities of processes. You can create a <xref:System.Threading.Mutex> object that represents a named system mutex by using a constructor that accepts a name. The operating-system object can be created at the same time, or it can exist before the creation of the <xref:System.Threading.Mutex> object. You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex, and you can use the <xref:System.Threading.Mutex.OpenExisting%2A> method to open an existing named system mutex.  \n  \n> [!NOTE]\n>  On a server that is running Terminal Services, a named system mutex can have two levels of visibility. If its name begins with the prefix \"Global\\\\\", the mutex is visible in all terminal server sessions. If its name begins with the prefix \"Local\\\\\", the mutex is visible only in the terminal server session where it was created. In that case, a separate mutex with the same name can exist in each of the other terminal server sessions on the server. If you do not specify a prefix when you create a named mutex, it takes the prefix \"Local\\\\\". Within a terminal server session, two mutexes whose names differ only by their prefixes are separate mutexes, and both are visible to all processes in the terminal server session. That is, the prefix names \"Global\\\\\" and \"Local\\\\\" describe the scope of the mutex name relative to terminal server sessions, not relative to processes."
+  example:
+  - "This example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource. Because each calling thread is blocked until it acquires ownership of the mutex, it must call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method to release ownership of the thread.  \n  \n [!code-csharp[System.Threading.Mutex.Class#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.mutex.class/cs/example1.cs#1)]\n [!code-vb[System.Threading.Mutex.Class#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.mutex.class/vb/example1.vb#1)]  \n  \n In the following example, each thread calls the <xref:System.Threading.WaitHandle.WaitOne%28System.Int32%29> method to acquire the mutex. If the time-out interval elapses, the method returns `false`, and the thread neither acquires the mutex nor gains access to the resource the mutex protects. The <xref:System.Threading.Mutex.ReleaseMutex%2A> method is called only by the thread that acquires the mutex.  \n  \n [!code-csharp[System.Threading.Mutex.Class#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.mutex.class/cs/example2.cs#2)]\n [!code-vb[System.Threading.Mutex.Class#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.mutex.class/vb/example2.vb#2)]"
+  syntax:
+    content: >-
+      [System.Runtime.InteropServices.ComVisible(true)]
+
+      public sealed class Mutex : System.Threading.WaitHandle
+  inheritance:
+  - System.Object
+  - System.Threading.WaitHandle
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  - System.Threading.WaitHandle.Close
+  - System.Threading.WaitHandle.Dispose
+  - System.Threading.WaitHandle.Dispose(System.Boolean)
+  - System.Threading.WaitHandle.Handle
+  - System.Threading.WaitHandle.InvalidHandle
+  - System.Threading.WaitHandle.SafeWaitHandle
+  - System.Threading.WaitHandle.SignalAndWait(System.Threading.WaitHandle,System.Threading.WaitHandle)
+  - System.Threading.WaitHandle.SignalAndWait(System.Threading.WaitHandle,System.Threading.WaitHandle,System.Int32,System.Boolean)
+  - System.Threading.WaitHandle.SignalAndWait(System.Threading.WaitHandle,System.Threading.WaitHandle,System.TimeSpan,System.Boolean)
+  - System.Threading.WaitHandle.WaitAll(System.Threading.WaitHandle[])
+  - System.Threading.WaitHandle.WaitAll(System.Threading.WaitHandle[],System.Int32)
+  - System.Threading.WaitHandle.WaitAll(System.Threading.WaitHandle[],System.Int32,System.Boolean)
+  - System.Threading.WaitHandle.WaitAll(System.Threading.WaitHandle[],System.TimeSpan)
+  - System.Threading.WaitHandle.WaitAll(System.Threading.WaitHandle[],System.TimeSpan,System.Boolean)
+  - System.Threading.WaitHandle.WaitAny(System.Threading.WaitHandle[])
+  - System.Threading.WaitHandle.WaitAny(System.Threading.WaitHandle[],System.Int32)
+  - System.Threading.WaitHandle.WaitAny(System.Threading.WaitHandle[],System.Int32,System.Boolean)
+  - System.Threading.WaitHandle.WaitAny(System.Threading.WaitHandle[],System.TimeSpan)
+  - System.Threading.WaitHandle.WaitAny(System.Threading.WaitHandle[],System.TimeSpan,System.Boolean)
+  - System.Threading.WaitHandle.WaitOne
+  - System.Threading.WaitHandle.WaitOne(System.Int32)
+  - System.Threading.WaitHandle.WaitOne(System.Int32,System.Boolean)
+  - System.Threading.WaitHandle.WaitOne(System.TimeSpan)
+  - System.Threading.WaitHandle.WaitOne(System.TimeSpan,System.Boolean)
+  - System.Threading.WaitHandle.WaitTimeout
+  extensionMethods:
+  - System.Threading.ThreadingAclExtensions.GetAccessControl(System.Threading.Mutex)
+  - System.Threading.ThreadingAclExtensions.SetAccessControl(System.Threading.Mutex,System.Security.AccessControl.MutexSecurity)
+  - System.Threading.WaitHandleExtensions.GetSafeWaitHandle(System.Threading.WaitHandle)
+  - System.Threading.WaitHandleExtensions.SetSafeWaitHandle(System.Threading.WaitHandle,Microsoft.Win32.SafeHandles.SafeWaitHandle)
+  attributes:
+  - type: System.Runtime.InteropServices.ComVisibleAttribute
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Mutex.#ctor
+  commentId: M:System.Threading.Mutex.#ctor
+  id: '#ctor'
+  parent: System.Threading.Mutex
+  langs:
+  - csharp
+  name: Mutex()
+  nameWithType: Mutex.Mutex()
+  fullName: Mutex.Mutex()
+  type: Constructor
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Initializes a new instance of the <xref href="System.Threading.Mutex"></xref> class with default properties.
+  remarks: Calling this constructor overload is the same as calling the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor overload and specifying `false` for initial ownership of the mutex. That is, the calling thread does not own the mutex.
+  example:
+  - "The following code example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource. The thread that creates the mutex does not own it initially.  \n  \n [!code-cpp[System.Threading.Mutex Default Ctor Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex Default Ctor Example/CPP/class1.cpp#1)]\n [!code-csharp[System.Threading.Mutex Default Ctor Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex Default Ctor Example/CS/class1.cs#1)]\n [!code-vb[System.Threading.Mutex Default Ctor Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex Default Ctor Example/VB/class1.vb#1)]"
+  syntax:
+    content: public Mutex ();
+    parameters: []
+  overload: System.Threading.Mutex.#ctor*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Mutex.#ctor(System.Boolean)
+  commentId: M:System.Threading.Mutex.#ctor(System.Boolean)
+  id: '#ctor(System.Boolean)'
+  parent: System.Threading.Mutex
+  langs:
+  - csharp
+  name: Mutex(Boolean)
+  nameWithType: Mutex.Mutex(Boolean)
+  fullName: Mutex.Mutex(Boolean)
+  type: Constructor
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Initializes a new instance of the <xref href="System.Threading.Mutex"></xref> class with a Boolean value that indicates whether the calling thread should have initial ownership of the mutex.
+  remarks: ''
+  example:
+  - "The following code example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource. The thread that creates the <xref:System.Threading.Mutex> owns it initially.  \n  \n [!code-cpp[System.Threading.Mutex 1Arg Ctor Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex 1Arg Ctor Example/CPP/class1.cpp#1)]\n [!code-csharp[System.Threading.Mutex 1Arg Ctor Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex 1Arg Ctor Example/CS/class1.cs#1)]\n [!code-vb[System.Threading.Mutex 1Arg Ctor Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex 1Arg Ctor Example/VB/class1.vb#1)]"
+  syntax:
+    content: public Mutex (bool initiallyOwned);
+    parameters:
+    - id: initiallyOwned
+      type: System.Boolean
+      description: '`true` to give the calling thread initial ownership of the mutex; otherwise, `false`.'
+  overload: System.Threading.Mutex.#ctor*
+  exceptions: []
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Mutex.#ctor(System.Boolean,System.String)
+  commentId: M:System.Threading.Mutex.#ctor(System.Boolean,System.String)
+  id: '#ctor(System.Boolean,System.String)'
+  parent: System.Threading.Mutex
+  langs:
+  - csharp
+  name: Mutex(Boolean, String)
+  nameWithType: Mutex.Mutex(Boolean, String)
+  fullName: Mutex.Mutex(Boolean, String)
+  type: Constructor
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Initializes a new instance of the <xref href="System.Threading.Mutex"></xref> class with a Boolean value that indicates whether the calling thread should have initial ownership of the mutex, and a string that is the name of the mutex.
+  remarks: "If `name` is not `null` and `initiallyOwned` is `true`, the calling thread owns the mutex only if the named system mutex was created as a result of this call. Since there is no mechanism for determining whether the named system mutex was created, it is better to specify `false` for `initiallyOwned` when calling this constructor overload. You can use the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%2CSystem.String%2CSystem.Boolean%40%29> constructor if you need to determine initial ownership.  \n  \n This constructor initializes a <xref:System.Threading.Mutex> object that represents a named system mutex. You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex.  \n  \n If the named mutex has already been created with access control security, and the caller does not have <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName>, an exception is thrown. To open an existing named mutex with only those permissions needed for synchronizing thread activities, see the <xref:System.Threading.Mutex.OpenExisting%2A> method.  \n  \n If you specify `null` or an empty string for `name`, a local mutex is created, as if you had called the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor. In this case, `createdNew` is always `true`.  \n  \n Because they are system-wide, named mutexes can be used to coordinate resource use across process boundaries.  \n  \n> [!NOTE]\n>  On a server that is running Terminal Services, a named system mutex can have two levels of visibility. If its name begins with the prefix \"Global\\\\\", the mutex is visible in all terminal server sessions. If its name begins with the prefix \"Local\\\\\", the mutex is visible only in the terminal server session where it was created. In that case, a separate mutex with the same name can exist in each of the other terminal server sessions on the server. If you do not specify a prefix when you create a named mutex, it takes the prefix \"Local\\\\\". Within a terminal server session, two mutexes whose names differ only by their prefixes are separate mutexes, and both are visible to all processes in the terminal server session. That is, the prefix names \"Global\\\\\" and \"Local\\\\\" describe the scope of the mutex name relative to terminal server sessions, not relative to processes."
+  example:
+  - "The following example shows how a named mutex is used to signal between threads running in two separate processes.  \n  \n Run this program from two or more command windows. Each process creates a <xref:System.Threading.Mutex> object that represents the named mutex `MyMutex`. The named mutex is a system object whose lifetime is bounded by the lifetimes of the <xref:System.Threading.Mutex> objects that represent it. The named mutex is created when the first process creates its <xref:System.Threading.Mutex> object; in this example, the named mutex is owned by the first process that runs the program. The named mutex is destroyed when all the <xref:System.Threading.Mutex> objects that represent it have been released.  \n  \n The constructor overload used in this example cannot tell the calling thread whether initial ownership of the named mutex was granted. You should not use this constructor to request initial ownership unless you can be certain that the thread will create the named mutex.  \n  \n [!code-cpp[System.Threading.Mutex 2Arg Ctor Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex 2Arg Ctor Example/CPP/class1.cpp#1)]\n [!code-csharp[System.Threading.Mutex 2Arg Ctor Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex 2Arg Ctor Example/CS/class1.cs#1)]\n [!code-vb[System.Threading.Mutex 2Arg Ctor Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex 2Arg Ctor Example/VB/class1.vb#1)]"
+  syntax:
+    content: public Mutex (bool initiallyOwned, string name);
+    parameters:
+    - id: initiallyOwned
+      type: System.Boolean
+      description: '`true` to give the calling thread initial ownership of the named system mutex if the named system mutex is created as a result of this call; otherwise, `false`.'
+    - id: name
+      type: System.String
+      description: The name of the <xref href="System.Threading.Mutex"></xref>. If the value is `null`, the <xref href="System.Threading.Mutex"></xref> is unnamed.
+  overload: System.Threading.Mutex.#ctor*
+  exceptions:
+  - type: System.UnauthorizedAccessException
+    commentId: T:System.UnauthorizedAccessException
+    description: The named mutex exists and has access control security, but the user does not have <xref href="System.Security.AccessControl.MutexRights.FullControl"></xref>.
+  - type: System.IO.IOException
+    commentId: T:System.IO.IOException
+    description: A Win32 error occurred.
+  - type: System.Threading.WaitHandleCannotBeOpenedException
+    commentId: T:System.Threading.WaitHandleCannotBeOpenedException
+    description: The named mutex cannot be created, perhaps because a wait handle of a different type has the same name.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>name</code> is longer than 260 characters.
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Mutex.#ctor(System.Boolean,System.String,System.Boolean@)
+  commentId: M:System.Threading.Mutex.#ctor(System.Boolean,System.String,System.Boolean@)
+  id: '#ctor(System.Boolean,System.String,System.Boolean@)'
+  parent: System.Threading.Mutex
+  langs:
+  - csharp
+  name: Mutex(Boolean, String, Boolean)
+  nameWithType: Mutex.Mutex(Boolean, String, Boolean)
+  fullName: Mutex.Mutex(Boolean, String, Boolean)
+  type: Constructor
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Initializes a new instance of the <xref href="System.Threading.Mutex"></xref> class with a Boolean value that indicates whether the calling thread should have initial ownership of the mutex, a string that is the name of the mutex, and a Boolean value that, when the method returns, indicates whether the calling thread was granted initial ownership of the mutex.
+  remarks: "If `name` is not `null` and `initiallyOwned` is `true`, the calling thread owns the named mutex only if `createdNew` is `true` after the call. Otherwise the thread can request the mutex by calling the <xref:System.Threading.WaitHandle.WaitOne%2A>method.  \n  \n This constructor initializes a <xref:System.Threading.Mutex> object that represents a named system mutex. You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex.  \n  \n If the named mutex has already been created with access control security, and the caller does not have <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName> rights, an exception is thrown. To open an existing named mutex with only those permissions needed for synchronizing thread activities, see the <xref:System.Threading.Mutex.OpenExisting%2A> method.  \n  \n If you specify `null` or an empty string for `name`, a local mutex is created, as if you had called the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor. In this case, `createdNew` is always `true`.  \n  \n Because they are system-wide, named mutexes can be used to coordinate resource use across process boundaries.  \n  \n> [!NOTE]\n>  On a server that is running Terminal Services, a named system mutex can have two levels of visibility. If its name begins with the prefix \"Global\\\\\", the mutex is visible in all terminal server sessions. If its name begins with the prefix \"Local\\\\\", the mutex is visible only in the terminal server session where it was created. In that case, a separate mutex with the same name can exist in each of the other terminal server sessions on the server. If you do not specify a prefix when you create a named mutex, it takes the prefix \"Local\\\\\". Within a terminal server session, two mutexes whose names differ only by their prefixes are separate mutexes, and both are visible to all processes in the terminal server session. That is, the prefix names \"Global\\\\\" and \"Local\\\\\" describe the scope of the mutex name relative to terminal server sessions, not relative to processes."
+  example:
+  - "The following code example shows how a named mutex is used to signal between processes or threads. Run this program from two or more command windows. Each process creates a <xref:System.Threading.Mutex> object that represents the named mutex \"MyMutex\". The named mutex is a system object. In this example, its lifetime is bounded by the lifetimes of the <xref:System.Threading.Mutex> objects that represent it. The named mutex is created when the first process creates its local <xref:System.Threading.Mutex> object, and destroyed when all the <xref:System.Threading.Mutex> objects that represent it have been released. The named mutex is initially owned by the first process. The second process and any subsequent processes wait for earlier processes to release the named mutex.  \n  \n [!code-cpp[System.Threading.Mutex 3Arg Ctor Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex 3Arg Ctor Example/CPP/class1.cpp#1)]\n [!code-csharp[System.Threading.Mutex 3Arg Ctor Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex 3Arg Ctor Example/CS/class1.cs#1)]\n [!code-vb[System.Threading.Mutex 3Arg Ctor Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex 3Arg Ctor Example/VB/class1.vb#1)]"
+  syntax:
+    content: public Mutex (bool initiallyOwned, string name, out bool createdNew);
+    parameters:
+    - id: initiallyOwned
+      type: System.Boolean
+      description: '`true` to give the calling thread initial ownership of the named system mutex if the named system mutex is created as a result of this call; otherwise, `false`.'
+    - id: name
+      type: System.String
+      description: The name of the <xref href="System.Threading.Mutex"></xref>. If the value is `null`, the <xref href="System.Threading.Mutex"></xref> is unnamed.
+    - id: createdNew
+      type: System.Boolean
+      description: When this method returns, contains a Boolean that is `true` if a local mutex was created (that is, if <code>name</code> is `null` or an empty string) or if the specified named system mutex was created; `false` if the specified named system mutex already existed. This parameter is passed uninitialized.
+  overload: System.Threading.Mutex.#ctor*
+  exceptions:
+  - type: System.UnauthorizedAccessException
+    commentId: T:System.UnauthorizedAccessException
+    description: The named mutex exists and has access control security, but the user does not have <xref href="System.Security.AccessControl.MutexRights.FullControl"></xref>.
+  - type: System.IO.IOException
+    commentId: T:System.IO.IOException
+    description: A Win32 error occurred.
+  - type: System.Threading.WaitHandleCannotBeOpenedException
+    commentId: T:System.Threading.WaitHandleCannotBeOpenedException
+    description: The named mutex cannot be created, perhaps because a wait handle of a different type has the same name.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>name</code> is longer than 260 characters.
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Mutex.#ctor(System.Boolean,System.String,System.Boolean@,System.Security.AccessControl.MutexSecurity)
+  commentId: M:System.Threading.Mutex.#ctor(System.Boolean,System.String,System.Boolean@,System.Security.AccessControl.MutexSecurity)
+  id: '#ctor(System.Boolean,System.String,System.Boolean@,System.Security.AccessControl.MutexSecurity)'
+  parent: System.Threading.Mutex
+  langs:
+  - csharp
+  name: Mutex(Boolean, String, Boolean, MutexSecurity)
+  nameWithType: Mutex.Mutex(Boolean, String, Boolean, MutexSecurity)
+  fullName: Mutex.Mutex(Boolean, String, Boolean, MutexSecurity)
+  type: Constructor
+  assemblies:
+  - mscorlib
+  namespace: System.Threading
+  summary: Initializes a new instance of the <xref href="System.Threading.Mutex"></xref> class with a Boolean value that indicates whether the calling thread should have initial ownership of the mutex, a string that is the name of the mutex, a Boolean variable that, when the method returns, indicates whether the calling thread was granted initial ownership of the mutex, and the access control security to be applied to the named mutex.
+  remarks: "If `name` is not `null` and `initiallyOwned` is `true`, the calling thread owns the named mutex only if `createdNew` is `true` after the call. Otherwise the thread can request the mutex by calling the <xref:System.Threading.WaitHandle.WaitOne%2A> method.  \n  \n Use this constructor to apply access control security to a named system mutex when it is created, preventing other code from taking control of the mutex.  \n  \n This constructor initializes a <xref:System.Threading.Mutex> object that represents a named system mutex. You can create multiple <xref:System.Threading.Mutex> objects that represent the same named system mutex.  \n  \n If the named system mutex does not exist, it is created with the specified access control security. If the named mutex exists, the specified access control security is ignored.  \n  \n> [!NOTE]\n>  The caller has full control over the newly created <xref:System.Threading.Mutex> object even if `mutexSecurity` denies or fails to grant some access rights to the current user. However, if the current user attempts to get another <xref:System.Threading.Mutex> object to represent the same named mutex, using either a constructor or the <xref:System.Threading.Mutex.OpenExisting%2A> method, Windows access control security is applied.  \n  \n If the named mutex has already been created with access control security, and the caller does not have <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName>, an exception is thrown. To open an existing named mutex with only those permissions needed for synchronizing thread activities, see the <xref:System.Threading.Mutex.OpenExisting%2A> method.  \n  \n If you specify `null` or an empty string for `name`, a local mutex is created, as if you had called the <xref:System.Threading.Mutex.%23ctor%28System.Boolean%29> constructor. In this case, `createdNew` is always `true`.  \n  \n Because they are system-wide, named mutexes can be used to coordinate resource use across process boundaries.  \n  \n> [!NOTE]\n>  On a server that is running Terminal Services, a named system mutex can have two levels of visibility. If its name begins with the prefix \"Global\\\\\", the mutex is visible in all terminal server sessions. If its name begins with the prefix \"Local\\\\\", the mutex is visible only in the terminal server session where it was created. In that case, a separate mutex with the same name can exist in each of the other terminal server sessions on the server. If you do not specify a prefix when you create a named mutex, it takes the prefix \"Local\\\\\". Within a terminal server session, two mutexes whose names differ only by their prefixes are separate mutexes, and both are visible to all processes in the terminal server session. That is, the prefix names \"Global\\\\\" and \"Local\\\\\" describe the scope of the mutex name relative to terminal server sessions, not relative to processes."
+  example:
+  - "The following code example demonstrates the cross-process behavior of a named mutex with access control security. The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.  \n  \n If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.  \n  \n If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>. The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions.  \n  \n After the permissions are changed, the mutex is opened with the rights required to enter and release it. If you run the compiled example from a third command window, it runs using the new permissions.  \n  \n [!code-cpp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CPP/source.cpp#1)]\n [!code-csharp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CS/source.cs#1)]\n [!code-vb[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/VB/source.vb#1)]"
+  syntax:
+    content: public Mutex (bool initiallyOwned, string name, out bool createdNew, System.Security.AccessControl.MutexSecurity mutexSecurity);
+    parameters:
+    - id: initiallyOwned
+      type: System.Boolean
+      description: '`true` to give the calling thread initial ownership of the named system mutex if the named system mutex is created as a result of this call; otherwise, `false`.'
+    - id: name
+      type: System.String
+      description: The name of the system mutex. If the value is `null`, the <xref href="System.Threading.Mutex"></xref> is unnamed.
+    - id: createdNew
+      type: System.Boolean
+      description: When this method returns, contains a Boolean that is `true` if a local mutex was created (that is, if <code>name</code> is `null` or an empty string) or if the specified named system mutex was created; `false` if the specified named system mutex already existed. This parameter is passed uninitialized.
+    - id: mutexSecurity
+      type: System.Security.AccessControl.MutexSecurity
+      description: A <xref href="System.Security.AccessControl.MutexSecurity"></xref> object that represents the access control security to be applied to the named system mutex.
+  overload: System.Threading.Mutex.#ctor*
+  exceptions:
+  - type: System.IO.IOException
+    commentId: T:System.IO.IOException
+    description: A Win32 error occurred.
+  - type: System.UnauthorizedAccessException
+    commentId: T:System.UnauthorizedAccessException
+    description: The named mutex exists and has access control security, but the user does not have <xref href="System.Security.AccessControl.MutexRights.FullControl"></xref>.
+  - type: System.Threading.WaitHandleCannotBeOpenedException
+    commentId: T:System.Threading.WaitHandleCannotBeOpenedException
+    description: The named mutex cannot be created, perhaps because a wait handle of a different type has the same name.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>name</code> is longer than 260 characters.
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Mutex.GetAccessControl
+  commentId: M:System.Threading.Mutex.GetAccessControl
+  id: GetAccessControl
+  parent: System.Threading.Mutex
+  langs:
+  - csharp
+  name: GetAccessControl()
+  nameWithType: Mutex.GetAccessControl()
+  fullName: Mutex.GetAccessControl()
+  type: Method
+  assemblies:
+  - mscorlib
+  namespace: System.Threading
+  summary: Gets a <xref href="System.Security.AccessControl.MutexSecurity"></xref> object that represents the access control security for the named mutex.
+  remarks: "The <xref:System.Threading.Mutex.GetAccessControl%2A> method uses the following combination of flags (combined using the bitwise OR operation) to search for permissions: <xref:System.Security.AccessControl.AccessControlSections?displayProperty=fullName>, <xref:System.Security.AccessControl.AccessControlSections?displayProperty=fullName>, and <xref:System.Security.AccessControl.AccessControlSections?displayProperty=fullName>.  \n  \n The user must have <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName> to call this method, and the mutex must have been opened with <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName>."
+  example:
+  - "The following code example demonstrates the cross-process behavior of a named mutex with access control security. The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.  \n  \n If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.  \n  \n If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>. The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions, using the <xref:System.Threading.Mutex.GetAccessControl%2A> and <xref:System.Threading.Mutex.SetAccessControl%2A> methods.  \n  \n After the permissions are changed, the mutex is opened with the rights required to enter and release it. If you run the compiled example from a third command window, it runs using the new permissions.  \n  \n [!code-cpp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CPP/source.cpp#1)]\n [!code-csharp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CS/source.cs#1)]\n [!code-vb[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/VB/source.vb#1)]"
+  syntax:
+    content: public System.Security.AccessControl.MutexSecurity GetAccessControl ();
+    parameters: []
+    return:
+      type: System.Security.AccessControl.MutexSecurity
+      description: A <xref href="System.Security.AccessControl.MutexSecurity"></xref> object that represents the access control security for the named mutex.
+  overload: System.Threading.Mutex.GetAccessControl*
+  exceptions:
+  - type: System.UnauthorizedAccessException
+    commentId: T:System.UnauthorizedAccessException
+    description: "The current <xref href=\"System.Threading.Mutex\"></xref> object represents a named system mutex, but the user does not have <xref href=\"System.Security.AccessControl.MutexRights.ReadPermissions\"></xref>.  \n  \n -or-  \n  \n The current <xref href=\"System.Threading.Mutex\"></xref> object represents a named system mutex, and was not opened with <xref href=\"System.Security.AccessControl.MutexRights.ReadPermissions\"></xref>."
+  - type: System.NotSupportedException
+    commentId: T:System.NotSupportedException
+    description: Not supported for Windows 98 or Windows Millennium Edition.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Mutex.OpenExisting(System.String)
+  commentId: M:System.Threading.Mutex.OpenExisting(System.String)
+  id: OpenExisting(System.String)
+  parent: System.Threading.Mutex
+  langs:
+  - csharp
+  name: OpenExisting(String)
+  nameWithType: Mutex.OpenExisting(String)
+  fullName: Mutex.OpenExisting(String)
+  type: Method
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Opens the specified named mutex, if it already exists.
+  remarks: "The <xref:System.Threading.Mutex.OpenExisting%2A> method tries to open the specified named system mutex. If the system mutex does not exist, this method throws an exception instead of creating the system object. To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.  \n  \n Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.  \n  \n This method overload is equivalent to calling the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload and specifying <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName> and <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName> rights, combined by using the bitwise OR operation.  \n  \n Specifying the <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName> flag allows a thread to wait on the mutex, and specifying the <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName> flag allows a thread to call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.  \n  \n This method does not request ownership of the mutex."
+  example:
+  - "The following code example demonstrates the cross-process behavior of a named mutex with access control security. The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.  \n  \n If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.  \n  \n If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>. The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions.  \n  \n After the permissions are changed, the mutex is opened with the rights required to enter and release it. If you run the compiled example from a third command window, it runs using the new permissions.  \n  \n [!code-cpp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CPP/source.cpp#1)]\n [!code-csharp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CS/source.cs#1)]\n [!code-vb[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/VB/source.vb#1)]"
+  syntax:
+    content: public static System.Threading.Mutex OpenExisting (string name);
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the system mutex to open.
+    return:
+      type: System.Threading.Mutex
+      description: An object that represents the named system mutex.
+  overload: System.Threading.Mutex.OpenExisting*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: "<code>name</code> is an empty string.  \n  \n -or-  \n  \n <code>name</code> is longer than 260 characters."
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>name</code> is `null`.
+  - type: System.Threading.WaitHandleCannotBeOpenedException
+    commentId: T:System.Threading.WaitHandleCannotBeOpenedException
+    description: The named mutex does not exist.
+  - type: System.IO.IOException
+    commentId: T:System.IO.IOException
+    description: A Win32 error occurred.
+  - type: System.UnauthorizedAccessException
+    commentId: T:System.UnauthorizedAccessException
+    description: The named mutex exists, but the user does not have the security access required to use it.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Mutex.OpenExisting(System.String,System.Security.AccessControl.MutexRights)
+  commentId: M:System.Threading.Mutex.OpenExisting(System.String,System.Security.AccessControl.MutexRights)
+  id: OpenExisting(System.String,System.Security.AccessControl.MutexRights)
+  parent: System.Threading.Mutex
+  langs:
+  - csharp
+  name: OpenExisting(String, MutexRights)
+  nameWithType: Mutex.OpenExisting(String, MutexRights)
+  fullName: Mutex.OpenExisting(String, MutexRights)
+  type: Method
+  assemblies:
+  - mscorlib
+  namespace: System.Threading
+  summary: Opens the specified named mutex, if it already exists, with the desired security access.
+  remarks: "The `rights` parameter must include the <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName> flag to allow threads to wait on the mutex, and the <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName> flag to allow threads to call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.  \n  \n The <xref:System.Threading.Mutex.OpenExisting%2A> method tries to open an existing named mutex. If the system mutex does not exist, this method throws an exception instead of creating the system object. To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.  \n  \n Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.  \n  \n This method does not request ownership of the mutex."
+  example:
+  - "The following code example demonstrates the cross-process behavior of a named mutex with access control security. The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.  \n  \n If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.  \n  \n If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>. The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions.  \n  \n After the permissions are changed, the mutex is opened with the rights required to enter and release it. If you run the compiled example from a third command window, it runs using the new permissions.  \n  \n [!code-cpp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CPP/source.cpp#1)]\n [!code-csharp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CS/source.cs#1)]\n [!code-vb[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/VB/source.vb#1)]"
+  syntax:
+    content: public static System.Threading.Mutex OpenExisting (string name, System.Security.AccessControl.MutexRights rights);
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the system mutex to open.
+    - id: rights
+      type: System.Security.AccessControl.MutexRights
+      description: A bitwise combination of the enumeration values that represent the desired security access.
+    return:
+      type: System.Threading.Mutex
+      description: An object that represents the named system mutex.
+  overload: System.Threading.Mutex.OpenExisting*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: "<code>name</code> is an empty string.  \n  \n -or-  \n  \n <code>name</code> is longer than 260 characters."
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>name</code> is `null`.
+  - type: System.Threading.WaitHandleCannotBeOpenedException
+    commentId: T:System.Threading.WaitHandleCannotBeOpenedException
+    description: The named mutex does not exist.
+  - type: System.IO.IOException
+    commentId: T:System.IO.IOException
+    description: A Win32 error occurred.
+  - type: System.UnauthorizedAccessException
+    commentId: T:System.UnauthorizedAccessException
+    description: The named mutex exists, but the user does not have the desired security access.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Mutex.ReleaseMutex
+  commentId: M:System.Threading.Mutex.ReleaseMutex
+  id: ReleaseMutex
+  parent: System.Threading.Mutex
+  langs:
+  - csharp
+  name: ReleaseMutex()
+  nameWithType: Mutex.ReleaseMutex()
+  fullName: Mutex.ReleaseMutex()
+  type: Method
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Releases the <xref href="System.Threading.Mutex"></xref> once.
+  remarks: "Whenever a thread acquires a mutex (for example, by calling its <xref:System.Threading.WaitHandle.WaitOne%2A> method), it must subsequently call <xref:System.Threading.Mutex.ReleaseMutex%2A> to relinquish ownership of the mutex and unblock other threads that are trying to gain ownership of the mutex. If the attempt to get ownership of the mutex fails (for example, when a call to the <xref:System.Threading.WaitHandle.WaitOne%2A> method with a `millisecondsTimeout` or a `timeout` parameter returns `false` because the request times out), the thread shouldn't call <xref:System.Threading.Mutex.ReleaseMutex%2A>, In this case, the thread should also not be allowed to access the resource protected by the mutex, as the following example shows.  \n  \n [!code-csharp[System.Threading.Mutex.Class#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.threading.mutex.class/cs/example2.cs#2)]\n [!code-vb[System.Threading.Mutex.Class#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.threading.mutex.class/vb/example2.vb#2)]  \n  \n A thread that owns a mutex can specify the same mutex in repeated wait function calls without blocking its execution. The number of calls is kept by the common language runtime. The thread must call <xref:System.Threading.Mutex.ReleaseMutex%2A> the same number of times to release ownership of the mutex.  \n  \n If a thread terminates while owning a mutex, the mutex is said to be abandoned. The state of the mutex is set to signaled and the next waiting thread gets ownership. If no one owns the mutex, the state of the mutex is signaled. Beginning in version 2.0 of the .NET Framework, an <xref:System.Threading.AbandonedMutexException> is thrown in the next thread that acquires the mutex. Prior to version 2.0 of the .NET Framework, no exception was thrown.  \n  \n> [!CAUTION]\n>  An abandoned mutex often indicates a serious error in the code. When a thread exits without releasing the mutex, the data structures protected by the mutex might not be in a consistent state. The next thread to request ownership of the mutex can handle this exception and proceed, if the integrity of the data structures can be verified.  \n  \n In the case of a system-wide mutex, an abandoned mutex might indicate that an application has been terminated abruptly (for example, by using Windows Task Manager)."
+  example:
+  - "The following example shows how a local <xref:System.Threading.Mutex> object is used to synchronize access to a protected resource. The thread that creates the mutex does not own it initially. The <xref:System.Threading.Mutex.ReleaseMutex%2A> method is used to release the mutex when it is no longer needed.  \n  \n [!code-cpp[System.Threading.Mutex Default Ctor Example#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex Default Ctor Example/CPP/class1.cpp#1)]\n [!code-csharp[System.Threading.Mutex Default Ctor Example#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex Default Ctor Example/CS/class1.cs#1)]\n [!code-vb[System.Threading.Mutex Default Ctor Example#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex Default Ctor Example/VB/class1.vb#1)]"
+  syntax:
+    content: public void ReleaseMutex ();
+    parameters: []
+  overload: System.Threading.Mutex.ReleaseMutex*
+  exceptions:
+  - type: System.ApplicationException
+    commentId: T:System.ApplicationException
+    description: The calling thread does not own the mutex.
+  - type: System.ObjectDisposedException
+    commentId: T:System.ObjectDisposedException
+    description: The current instance has already been disposed.
+  attributes: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Mutex.SetAccessControl(System.Security.AccessControl.MutexSecurity)
+  commentId: M:System.Threading.Mutex.SetAccessControl(System.Security.AccessControl.MutexSecurity)
+  id: SetAccessControl(System.Security.AccessControl.MutexSecurity)
+  parent: System.Threading.Mutex
+  langs:
+  - csharp
+  name: SetAccessControl(MutexSecurity)
+  nameWithType: Mutex.SetAccessControl(MutexSecurity)
+  fullName: Mutex.SetAccessControl(MutexSecurity)
+  type: Method
+  assemblies:
+  - mscorlib
+  namespace: System.Threading
+  summary: Sets the access control security for a named system mutex.
+  remarks: The user must have <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName> rights to call this method, and the mutex must have been opened with <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName>.
+  example:
+  - "The following code example demonstrates the cross-process behavior of a named mutex with access control security. The example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload to test for the existence of a named mutex.  \n  \n If the mutex does not exist, it is created with initial ownership and access control security that denies the current user the right to use the mutex, but grants the right to read and change permissions on the mutex.  \n  \n If you run the compiled example from two command windows, the second copy will throw an access violation exception on the call to <xref:System.Threading.Mutex.OpenExisting%28System.String%29>. The exception is caught, and the example uses the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload to open the mutex with the rights needed to read and change the permissions, using the <xref:System.Threading.Mutex.GetAccessControl%2A> and <xref:System.Threading.Mutex.SetAccessControl%2A> methods.  \n  \n After the permissions are changed, the mutex is opened with the rights required to enter and release it. If you run the compiled example from a third command window, it runs using the new permissions.  \n  \n [!code-cpp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/cpp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CPP/source.cpp#1)]\n [!code-csharp[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/CS/source.cs#1)]\n [!code-vb[System.Threading.Mutex.ctor named 4#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Mutex.ctor named 4/VB/source.vb#1)]"
+  syntax:
+    content: public void SetAccessControl (System.Security.AccessControl.MutexSecurity mutexSecurity);
+    parameters:
+    - id: mutexSecurity
+      type: System.Security.AccessControl.MutexSecurity
+      description: A <xref href="System.Security.AccessControl.MutexSecurity"></xref> object that represents the access control security to be applied to the named system mutex.
+  overload: System.Threading.Mutex.SetAccessControl*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>mutexSecurity</code> is `null`.
+  - type: System.UnauthorizedAccessException
+    commentId: T:System.UnauthorizedAccessException
+    description: "The user does not have <xref href=\"System.Security.AccessControl.MutexRights.ChangePermissions\"></xref>.  \n  \n -or-  \n  \n The mutex was not opened with <xref href=\"System.Security.AccessControl.MutexRights.ChangePermissions\"></xref>."
+  - type: System.SystemException
+    commentId: T:System.SystemException
+    description: The current <xref href="System.Threading.Mutex"></xref> object does not represent a named system mutex.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Mutex.TryOpenExisting(System.String,System.Threading.Mutex@)
+  commentId: M:System.Threading.Mutex.TryOpenExisting(System.String,System.Threading.Mutex@)
+  id: TryOpenExisting(System.String,System.Threading.Mutex@)
+  parent: System.Threading.Mutex
+  langs:
+  - csharp
+  name: TryOpenExisting(String, Mutex)
+  nameWithType: Mutex.TryOpenExisting(String, Mutex)
+  fullName: Mutex.TryOpenExisting(String, Mutex)
+  type: Method
+  assemblies:
+  - System.Threading
+  - mscorlib
+  - netstandard
+  namespace: System.Threading
+  summary: Opens the specified named mutex, if it already exists, and returns a value that indicates whether the operation succeeded.
+  remarks: "If the named mutex does not exist, this method does not create it. To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.  \n  \n If you are uncertain whether a named mutex exists, use this method overload instead of the <xref:System.Threading.Mutex.OpenExisting%28System.String%29> method overload, which throws an exception if the mutex does not exist.  \n  \n Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.  \n  \n This method overload is equivalent to calling the <xref:System.Threading.Mutex.TryOpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%2CSystem.Threading.Mutex%40%29> method overload and specifying <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName> and <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName> rights, combined by using the bitwise OR operation. Specifying the <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName> flag allows a thread to wait on the mutex, and specifying the <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName> flag allows a thread to call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.  \n  \n This method does not request ownership of the mutex."
+  syntax:
+    content: public static bool TryOpenExisting (string name, out System.Threading.Mutex result);
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the system mutex to open.
+    - id: result
+      type: System.Threading.Mutex
+      description: When this method returns, contains a <xref href="System.Threading.Mutex"></xref> object that represents the named mutex if the call succeeded, or `null` if the call failed. This parameter is treated as uninitialized.
+    return:
+      type: System.Boolean
+      description: '`true` if the named mutex was opened successfully; otherwise, `false`.'
+  overload: System.Threading.Mutex.TryOpenExisting*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: "<code>name</code> is an empty string.  \n  \n -or-  \n  \n <code>name</code> is longer than 260 characters."
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>name</code> is `null`.
+  - type: System.IO.IOException
+    commentId: T:System.IO.IOException
+    description: A Win32 error occurred.
+  - type: System.UnauthorizedAccessException
+    commentId: T:System.UnauthorizedAccessException
+    description: The named mutex exists, but the user does not have the security access required to use it.
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Threading.Mutex.TryOpenExisting(System.String,System.Security.AccessControl.MutexRights,System.Threading.Mutex@)
+  commentId: M:System.Threading.Mutex.TryOpenExisting(System.String,System.Security.AccessControl.MutexRights,System.Threading.Mutex@)
+  id: TryOpenExisting(System.String,System.Security.AccessControl.MutexRights,System.Threading.Mutex@)
+  parent: System.Threading.Mutex
+  langs:
+  - csharp
+  name: TryOpenExisting(String, MutexRights, Mutex)
+  nameWithType: Mutex.TryOpenExisting(String, MutexRights, Mutex)
+  fullName: Mutex.TryOpenExisting(String, MutexRights, Mutex)
+  type: Method
+  assemblies:
+  - mscorlib
+  namespace: System.Threading
+  summary: Opens the specified named mutex, if it already exists, with the desired security access, and returns a value that indicates whether the operation succeeded.
+  remarks: "If the named mutex does not exist, this method does not create it. To create the system mutex when it does not already exist, use one of the <xref:System.Threading.Mutex.%23ctor%2A> constructors that has a `name` parameter.  \n  \n If you are uncertain whether a named mutex exists, use this method overload instead of the <xref:System.Threading.Mutex.OpenExisting%28System.String%2CSystem.Security.AccessControl.MutexRights%29> method overload, which throws an exception if the mutex does not exist.  \n  \n The `rights` parameter must include the <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName> flag to allow threads to wait on the mutex, and the <xref:System.Security.AccessControl.MutexRights?displayProperty=fullName> flag to allow threads to call the <xref:System.Threading.Mutex.ReleaseMutex%2A> method.  \n  \n Multiple calls to this method that use the same value for `name` do not necessarily return the same <xref:System.Threading.Mutex> object, even though the objects that are returned represent the same named system mutex.  \n  \n This method does not request ownership of the mutex."
+  syntax:
+    content: public static bool TryOpenExisting (string name, System.Security.AccessControl.MutexRights rights, out System.Threading.Mutex result);
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the system mutex to open.
+    - id: rights
+      type: System.Security.AccessControl.MutexRights
+      description: A bitwise combination of the enumeration values that represent the desired security access.
+    - id: result
+      type: System.Threading.Mutex
+      description: When this method returns, contains a <xref href="System.Threading.Mutex"></xref> object that represents the named mutex if the call succeeded, or `null` if the call failed. This parameter is treated as uninitialized.
+    return:
+      type: System.Boolean
+      description: '`true` if the named mutex was opened successfully; otherwise, `false`.'
+  overload: System.Threading.Mutex.TryOpenExisting*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: "<code>name</code> is an empty string.  \n  \n -or-  \n  \n <code>name</code> is longer than 260 characters."
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>name</code> is `null`.
+  - type: System.IO.IOException
+    commentId: T:System.IO.IOException
+    description: A Win32 error occurred.
+  - type: System.UnauthorizedAccessException
+    commentId: T:System.UnauthorizedAccessException
+    description: The named mutex exists, but the user does not have the security access required to use it.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+references:
+- uid: System.Threading.WaitHandle
+  parent: System.Threading
+  isExternal: false
+  name: WaitHandle
+  nameWithType: WaitHandle
+  fullName: System.Threading.WaitHandle
+- uid: System.UnauthorizedAccessException
+  parent: System
+  isExternal: false
+  name: UnauthorizedAccessException
+  nameWithType: UnauthorizedAccessException
+  fullName: System.UnauthorizedAccessException
+- uid: System.IO.IOException
+  parent: System.IO
+  isExternal: false
+  name: IOException
+  nameWithType: IOException
+  fullName: System.IO.IOException
+- uid: System.Threading.WaitHandleCannotBeOpenedException
+  parent: System.Threading
+  isExternal: false
+  name: WaitHandleCannotBeOpenedException
+  nameWithType: WaitHandleCannotBeOpenedException
+  fullName: System.Threading.WaitHandleCannotBeOpenedException
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.NotSupportedException
+  parent: System
+  isExternal: false
+  name: NotSupportedException
+  nameWithType: NotSupportedException
+  fullName: System.NotSupportedException
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.ApplicationException
+  parent: System
+  isExternal: false
+  name: ApplicationException
+  nameWithType: ApplicationException
+  fullName: System.ApplicationException
+- uid: System.ObjectDisposedException
+  parent: System
+  isExternal: false
+  name: ObjectDisposedException
+  nameWithType: ObjectDisposedException
+  fullName: System.ObjectDisposedException
+- uid: System.SystemException
+  parent: System
+  isExternal: false
+  name: SystemException
+  nameWithType: SystemException
+  fullName: System.SystemException
+- uid: System.Threading.Mutex.#ctor
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: Mutex()
+  nameWithType: Mutex.Mutex()
+  fullName: Mutex.Mutex()
+- uid: System.Threading.Mutex.#ctor(System.Boolean)
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: Mutex(Boolean)
+  nameWithType: Mutex.Mutex(Boolean)
+  fullName: Mutex.Mutex(Boolean)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Threading.Mutex.#ctor(System.Boolean,System.String)
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: Mutex(Boolean, String)
+  nameWithType: Mutex.Mutex(Boolean, String)
+  fullName: Mutex.Mutex(Boolean, String)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Threading.Mutex.#ctor(System.Boolean,System.String,System.Boolean@)
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: Mutex(Boolean, String, Boolean)
+  nameWithType: Mutex.Mutex(Boolean, String, Boolean)
+  fullName: Mutex.Mutex(Boolean, String, Boolean)
+- uid: System.Threading.Mutex.#ctor(System.Boolean,System.String,System.Boolean@,System.Security.AccessControl.MutexSecurity)
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: Mutex(Boolean, String, Boolean, MutexSecurity)
+  nameWithType: Mutex.Mutex(Boolean, String, Boolean, MutexSecurity)
+  fullName: Mutex.Mutex(Boolean, String, Boolean, MutexSecurity)
+- uid: System.Security.AccessControl.MutexSecurity
+  parent: System.Security.AccessControl
+  isExternal: false
+  name: MutexSecurity
+  nameWithType: MutexSecurity
+  fullName: System.Security.AccessControl.MutexSecurity
+- uid: System.Threading.Mutex.GetAccessControl
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: GetAccessControl()
+  nameWithType: Mutex.GetAccessControl()
+  fullName: Mutex.GetAccessControl()
+- uid: System.Threading.Mutex.OpenExisting(System.String)
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: OpenExisting(String)
+  nameWithType: Mutex.OpenExisting(String)
+  fullName: Mutex.OpenExisting(String)
+- uid: System.Threading.Mutex
+  parent: System.Threading
+  isExternal: false
+  name: Mutex
+  nameWithType: Mutex
+  fullName: System.Threading.Mutex
+- uid: System.Threading.Mutex.OpenExisting(System.String,System.Security.AccessControl.MutexRights)
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: OpenExisting(String, MutexRights)
+  nameWithType: Mutex.OpenExisting(String, MutexRights)
+  fullName: Mutex.OpenExisting(String, MutexRights)
+- uid: System.Security.AccessControl.MutexRights
+  parent: System.Security.AccessControl
+  isExternal: false
+  name: MutexRights
+  nameWithType: MutexRights
+  fullName: System.Security.AccessControl.MutexRights
+- uid: System.Threading.Mutex.ReleaseMutex
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: ReleaseMutex()
+  nameWithType: Mutex.ReleaseMutex()
+  fullName: Mutex.ReleaseMutex()
+- uid: System.Threading.Mutex.SetAccessControl(System.Security.AccessControl.MutexSecurity)
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: SetAccessControl(MutexSecurity)
+  nameWithType: Mutex.SetAccessControl(MutexSecurity)
+  fullName: Mutex.SetAccessControl(MutexSecurity)
+- uid: System.Threading.Mutex.TryOpenExisting(System.String,System.Threading.Mutex@)
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: TryOpenExisting(String, Mutex)
+  nameWithType: Mutex.TryOpenExisting(String, Mutex)
+  fullName: Mutex.TryOpenExisting(String, Mutex)
+- uid: System.Threading.Mutex.TryOpenExisting(System.String,System.Security.AccessControl.MutexRights,System.Threading.Mutex@)
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: TryOpenExisting(String, MutexRights, Mutex)
+  nameWithType: Mutex.TryOpenExisting(String, MutexRights, Mutex)
+  fullName: Mutex.TryOpenExisting(String, MutexRights, Mutex)
+- uid: System.Threading.Mutex.#ctor*
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: Mutex
+  nameWithType: Mutex.Mutex
+  fullName: Mutex.Mutex
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+- uid: System.Threading.Mutex.GetAccessControl*
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: GetAccessControl
+  nameWithType: Mutex.GetAccessControl
+  fullName: Mutex.GetAccessControl
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+- uid: System.Threading.Mutex.OpenExisting*
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: OpenExisting
+  nameWithType: Mutex.OpenExisting
+  fullName: Mutex.OpenExisting
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+- uid: System.Threading.Mutex.ReleaseMutex*
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: ReleaseMutex
+  nameWithType: Mutex.ReleaseMutex
+  fullName: Mutex.ReleaseMutex
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+- uid: System.Threading.Mutex.SetAccessControl*
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: SetAccessControl
+  nameWithType: Mutex.SetAccessControl
+  fullName: Mutex.SetAccessControl
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+- uid: System.Threading.Mutex.TryOpenExisting*
+  parent: System.Threading.Mutex
+  isExternal: false
+  name: TryOpenExisting
+  nameWithType: Mutex.TryOpenExisting
+  fullName: Mutex.TryOpenExisting
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-1.0
+  - netstandard-1.1
+  - netstandard-1.2
+  - netstandard-1.3
+  - netstandard-1.4
+  - netstandard-1.6
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Threading/Mutex.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Threading.WaitHandle.Close
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: Close()
+  nameWithType: WaitHandle.Close()
+  fullName: WaitHandle.Close()
+- uid: System.Threading.WaitHandle.Dispose
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: Dispose()
+  nameWithType: WaitHandle.Dispose()
+  fullName: WaitHandle.Dispose()
+- uid: System.Threading.WaitHandle.Dispose(System.Boolean)
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: Dispose(Boolean)
+  nameWithType: WaitHandle.Dispose(Boolean)
+  fullName: WaitHandle.Dispose(Boolean)
+- uid: System.Threading.WaitHandle.Handle
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: Handle
+  nameWithType: WaitHandle.Handle
+  fullName: WaitHandle.Handle
+- uid: System.Threading.WaitHandle.InvalidHandle
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: InvalidHandle
+  nameWithType: WaitHandle.InvalidHandle
+  fullName: WaitHandle.InvalidHandle
+- uid: System.Threading.WaitHandle.SafeWaitHandle
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: SafeWaitHandle
+  nameWithType: WaitHandle.SafeWaitHandle
+  fullName: WaitHandle.SafeWaitHandle
+- uid: System.Threading.WaitHandle.SignalAndWait(System.Threading.WaitHandle,System.Threading.WaitHandle)
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: SignalAndWait(WaitHandle, WaitHandle)
+  nameWithType: WaitHandle.SignalAndWait(WaitHandle, WaitHandle)
+  fullName: WaitHandle.SignalAndWait(WaitHandle, WaitHandle)
+- uid: System.Threading.WaitHandle.SignalAndWait(System.Threading.WaitHandle,System.Threading.WaitHandle,System.Int32,System.Boolean)
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: SignalAndWait(WaitHandle, WaitHandle, Int32, Boolean)
+  nameWithType: WaitHandle.SignalAndWait(WaitHandle, WaitHandle, Int32, Boolean)
+  fullName: WaitHandle.SignalAndWait(WaitHandle, WaitHandle, Int32, Boolean)
+- uid: System.Threading.WaitHandle.SignalAndWait(System.Threading.WaitHandle,System.Threading.WaitHandle,System.TimeSpan,System.Boolean)
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: SignalAndWait(WaitHandle, WaitHandle, TimeSpan, Boolean)
+  nameWithType: WaitHandle.SignalAndWait(WaitHandle, WaitHandle, TimeSpan, Boolean)
+  fullName: WaitHandle.SignalAndWait(WaitHandle, WaitHandle, TimeSpan, Boolean)
+- uid: System.Threading.WaitHandle.WaitAll(System.Threading.WaitHandle[],System.TimeSpan,System.Boolean)
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: WaitAll(WaitHandle[], TimeSpan, Boolean)
+  nameWithType: WaitHandle.WaitAll(WaitHandle[], TimeSpan, Boolean)
+  fullName: WaitHandle.WaitAll(WaitHandle[], TimeSpan, Boolean)
+- uid: System.Threading.WaitHandle.WaitAll(System.Threading.WaitHandle[],System.Int32,System.Boolean)
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: WaitAll(WaitHandle[], Int32, Boolean)
+  nameWithType: WaitHandle.WaitAll(WaitHandle[], Int32, Boolean)
+  fullName: WaitHandle.WaitAll(WaitHandle[], Int32, Boolean)
+- uid: System.Threading.WaitHandle.WaitAll(System.Threading.WaitHandle[],System.TimeSpan)
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: WaitAll(WaitHandle[], TimeSpan)
+  nameWithType: WaitHandle.WaitAll(WaitHandle[], TimeSpan)
+  fullName: WaitHandle.WaitAll(WaitHandle[], TimeSpan)
+- uid: System.Threading.WaitHandle.WaitAll(System.Threading.WaitHandle[],System.Int32)
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: WaitAll(WaitHandle[], Int32)
+  nameWithType: WaitHandle.WaitAll(WaitHandle[], Int32)
+  fullName: WaitHandle.WaitAll(WaitHandle[], Int32)
+- uid: System.Threading.WaitHandle.WaitAll(System.Threading.WaitHandle[])
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: WaitAll(WaitHandle[])
+  nameWithType: WaitHandle.WaitAll(WaitHandle[])
+  fullName: WaitHandle.WaitAll(WaitHandle[])
+- uid: System.Threading.WaitHandle.WaitAny(System.Threading.WaitHandle[])
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: WaitAny(WaitHandle[])
+  nameWithType: WaitHandle.WaitAny(WaitHandle[])
+  fullName: WaitHandle.WaitAny(WaitHandle[])
+- uid: System.Threading.WaitHandle.WaitAny(System.Threading.WaitHandle[],System.Int32)
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: WaitAny(WaitHandle[], Int32)
+  nameWithType: WaitHandle.WaitAny(WaitHandle[], Int32)
+  fullName: WaitHandle.WaitAny(WaitHandle[], Int32)
+- uid: System.Threading.WaitHandle.WaitAny(System.Threading.WaitHandle[],System.TimeSpan)
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: WaitAny(WaitHandle[], TimeSpan)
+  nameWithType: WaitHandle.WaitAny(WaitHandle[], TimeSpan)
+  fullName: WaitHandle.WaitAny(WaitHandle[], TimeSpan)
+- uid: System.Threading.WaitHandle.WaitAny(System.Threading.WaitHandle[],System.Int32,System.Boolean)
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: WaitAny(WaitHandle[], Int32, Boolean)
+  nameWithType: WaitHandle.WaitAny(WaitHandle[], Int32, Boolean)
+  fullName: WaitHandle.WaitAny(WaitHandle[], Int32, Boolean)
+- uid: System.Threading.WaitHandle.WaitAny(System.Threading.WaitHandle[],System.TimeSpan,System.Boolean)
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: WaitAny(WaitHandle[], TimeSpan, Boolean)
+  nameWithType: WaitHandle.WaitAny(WaitHandle[], TimeSpan, Boolean)
+  fullName: WaitHandle.WaitAny(WaitHandle[], TimeSpan, Boolean)
+- uid: System.Threading.WaitHandle.WaitOne
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: WaitOne()
+  nameWithType: WaitHandle.WaitOne()
+  fullName: WaitHandle.WaitOne()
+- uid: System.Threading.WaitHandle.WaitOne(System.Int32)
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: WaitOne(Int32)
+  nameWithType: WaitHandle.WaitOne(Int32)
+  fullName: WaitHandle.WaitOne(Int32)
+- uid: System.Threading.WaitHandle.WaitOne(System.TimeSpan)
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: WaitOne(TimeSpan)
+  nameWithType: WaitHandle.WaitOne(TimeSpan)
+  fullName: WaitHandle.WaitOne(TimeSpan)
+- uid: System.Threading.WaitHandle.WaitOne(System.Int32,System.Boolean)
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: WaitOne(Int32, Boolean)
+  nameWithType: WaitHandle.WaitOne(Int32, Boolean)
+  fullName: WaitHandle.WaitOne(Int32, Boolean)
+- uid: System.Threading.WaitHandle.WaitOne(System.TimeSpan,System.Boolean)
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: WaitOne(TimeSpan, Boolean)
+  nameWithType: WaitHandle.WaitOne(TimeSpan, Boolean)
+  fullName: WaitHandle.WaitOne(TimeSpan, Boolean)
+- uid: System.Threading.WaitHandle.WaitTimeout
+  parent: System.Threading.WaitHandle
+  isExternal: false
+  name: WaitTimeout
+  nameWithType: WaitHandle.WaitTimeout
+  fullName: WaitHandle.WaitTimeout
+- uid: System.Threading.ThreadingAclExtensions.GetAccessControl(System.Threading.Mutex)
+  parent: System.Threading.ThreadingAclExtensions
+  isExternal: false
+  name: GetAccessControl(Mutex)
+  nameWithType: ThreadingAclExtensions.GetAccessControl(Mutex)
+  fullName: ThreadingAclExtensions.GetAccessControl(Mutex)
+- uid: System.Threading.ThreadingAclExtensions.SetAccessControl(System.Threading.Mutex,System.Security.AccessControl.MutexSecurity)
+  parent: System.Threading.ThreadingAclExtensions
+  isExternal: false
+  name: SetAccessControl(Mutex, MutexSecurity)
+  nameWithType: ThreadingAclExtensions.SetAccessControl(Mutex, MutexSecurity)
+  fullName: ThreadingAclExtensions.SetAccessControl(Mutex, MutexSecurity)
+- uid: System.Threading.WaitHandleExtensions.GetSafeWaitHandle(System.Threading.WaitHandle)
+  parent: System.Threading.WaitHandleExtensions
+  isExternal: false
+  name: GetSafeWaitHandle(WaitHandle)
+  nameWithType: WaitHandleExtensions.GetSafeWaitHandle(WaitHandle)
+  fullName: WaitHandleExtensions.GetSafeWaitHandle(WaitHandle)
+- uid: System.Threading.WaitHandleExtensions.SetSafeWaitHandle(System.Threading.WaitHandle,Microsoft.Win32.SafeHandles.SafeWaitHandle)
+  parent: System.Threading.WaitHandleExtensions
+  isExternal: false
+  name: SetSafeWaitHandle(WaitHandle, SafeWaitHandle)
+  nameWithType: WaitHandleExtensions.SetSafeWaitHandle(WaitHandle, SafeWaitHandle)
+  fullName: WaitHandleExtensions.SetSafeWaitHandle(WaitHandle, SafeWaitHandle)

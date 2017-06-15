@@ -1,0 +1,474 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Runtime.Hosting.ApplicationActivator
+  commentId: T:System.Runtime.Hosting.ApplicationActivator
+  id: ApplicationActivator
+  children:
+  - System.Runtime.Hosting.ApplicationActivator.#ctor
+  - System.Runtime.Hosting.ApplicationActivator.CreateInstance(System.ActivationContext)
+  - System.Runtime.Hosting.ApplicationActivator.CreateInstance(System.ActivationContext,System.String[])
+  - System.Runtime.Hosting.ApplicationActivator.CreateInstanceHelper(System.AppDomainSetup)
+  langs:
+  - csharp
+  name: ApplicationActivator
+  nameWithType: ApplicationActivator
+  fullName: System.Runtime.Hosting.ApplicationActivator
+  type: Class
+  assemblies:
+  - mscorlib
+  namespace: System.Runtime.Hosting
+  summary: Provides the base class for the activation of manifest-based assemblies.
+  remarks: "There is a single designated instance of the <xref:System.Runtime.Hosting.ApplicationActivator> class in each <xref:System.AppDomain> to which all activation calls are routed. The <xref:System.AppDomainManager> for the current <xref:System.AppDomain> can provide its own custom <xref:System.Runtime.Hosting.ApplicationActivator> for this purpose. If a custom <xref:System.Runtime.Hosting.ApplicationActivator> is not provided, an instance of the default <xref:System.Runtime.Hosting.ApplicationActivator> is created.  \n  \n The following steps describe the behavior of the default <xref:System.Runtime.Hosting.ApplicationActivator.CreateInstance%2A> method implementation:  \n  \n1.  Checks if the <xref:System.ActivationContext> of the add-in to be activated matches the <xref:System.ActivationContext> of the current domain; if not, proceeds to step 2. Otherwise, executes the assembly and returns the result wrapped in an object handle.  \n  \n2.  Activates the add-in in a new <xref:System.AppDomain>. The following steps are taken to initialize a new <xref:System.AppDomain> using the <xref:System.Runtime.Hosting.ActivationArguments> for the add-in.  \n  \n    1.  Creates a new <xref:System.AppDomainSetup> object using an <xref:System.Runtime.Hosting.ActivationArguments> object containing the activation context for the add-in.  \n  \n    2.  Calls the <xref:System.Runtime.Hosting.ApplicationActivator.CreateInstanceHelper%2A> method to create a new domain using the <xref:System.AppDomainSetup> object.  \n  \n    3.  The <xref:System.Runtime.Hosting.ApplicationActivator.CreateInstanceHelper%2A> method calls the <xref:System.Security.HostSecurityManager.DetermineApplicationTrust%2A?displayProperty=fullName> method to acquire an <xref:System.Security.Policy.ApplicationTrust> object for the add-in. If the <xref:System.Security.Policy.ApplicationTrust.IsApplicationTrustedToRun%2A> property returns `true`, the add-in is executed. If not, <xref:System.Runtime.Hosting.ApplicationActivator.CreateInstanceHelper%2A> throws a <xref:System.Security.Policy.PolicyException> indicating that execution permission could not be acquired.  \n  \n    4.  If the add-in is trusted to run, then a new <xref:System.AppDomain> is created and configured for the <xref:System.ActivationContext> of the add-in, and the add-in is loaded and executed.  \n  \n    5.  The result of the activation of the add-in is returned, wrapped in an object handle.  \n  \n A custom activator can tailor the activation of an add-in to a particular set of circumstances. For example, a custom activator could find an existing <xref:System.AppDomain> to activate this add-in instead of creating a new domain every time.  \n  \n The following steps describe the behavior of a custom <xref:System.Runtime.Hosting.ApplicationActivator> that activates an add-in in an existing <xref:System.AppDomain>:  \n  \n1.  The custom activator finds a domain that has the same <xref:System.ActivationContext> as the add-in that is being activated.  \n  \n2.  If the <xref:System.ActivationContext> has never been seen before in the process, the custom activator creates a new <xref:System.AppDomain> for this <xref:System.ActivationContext> by calling the <xref:System.AppDomain.CreateDomain%2A> method directly, or delegating this activity to the <xref:System.Runtime.Hosting.ApplicationActivator.CreateInstanceHelper%2A> in the base class.  \n  \n3.  If there is an existing domain with the same <xref:System.ActivationContext>, then the activator can delegate the <xref:System.Runtime.Hosting.ApplicationActivator.CreateInstance%2A> method call to the <xref:System.Runtime.Hosting.ApplicationActivator> in the target domain. Note that this would be a cross-domain call to an <xref:System.Runtime.Hosting.ApplicationActivator> that resides in the target <xref:System.AppDomain>."
+  example:
+  - "The following code example shows how to obtain an <xref:System.Runtime.Hosting.ApplicationActivator> object from the current <xref:System.AppDomain.DomainManager%2A> for a manifest-based application.  \n  \n [!code-csharp[System.Runtime.Hosting.ApplicationActivator#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.Runtime.Hosting.ApplicationActivator/cs/program.cs#1)]\n [!code-vb[System.Runtime.Hosting.ApplicationActivator#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Runtime.Hosting.ApplicationActivator/vb/program.vb#1)]"
+  syntax:
+    content: >-
+      [System.Runtime.InteropServices.ComVisible(true)]
+
+      public class ApplicationActivator
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: System.Runtime.InteropServices.ComVisibleAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Hosting/ApplicationActivator.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Runtime.Hosting.ApplicationActivator.#ctor
+  commentId: M:System.Runtime.Hosting.ApplicationActivator.#ctor
+  id: '#ctor'
+  parent: System.Runtime.Hosting.ApplicationActivator
+  langs:
+  - csharp
+  name: ApplicationActivator()
+  nameWithType: ApplicationActivator.ApplicationActivator()
+  fullName: ApplicationActivator.ApplicationActivator()
+  type: Constructor
+  assemblies:
+  - mscorlib
+  namespace: System.Runtime.Hosting
+  summary: Initializes a new instance of the <xref href="System.Runtime.Hosting.ApplicationActivator"></xref> class.
+  syntax:
+    content: public ApplicationActivator ();
+    parameters: []
+  overload: System.Runtime.Hosting.ApplicationActivator.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Hosting/ApplicationActivator.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Runtime.Hosting.ApplicationActivator.CreateInstance(System.ActivationContext)
+  commentId: M:System.Runtime.Hosting.ApplicationActivator.CreateInstance(System.ActivationContext)
+  id: CreateInstance(System.ActivationContext)
+  parent: System.Runtime.Hosting.ApplicationActivator
+  langs:
+  - csharp
+  name: CreateInstance(ActivationContext)
+  nameWithType: ApplicationActivator.CreateInstance(ActivationContext)
+  fullName: ApplicationActivator.CreateInstance(ActivationContext)
+  type: Method
+  assemblies:
+  - mscorlib
+  namespace: System.Runtime.Hosting
+  summary: Creates an instance of the application to be activated, using the specified activation context.
+  remarks: This method is intended for the manifest-based activation of applications.
+  syntax:
+    content: public virtual System.Runtime.Remoting.ObjectHandle CreateInstance (ActivationContext activationContext);
+    parameters:
+    - id: activationContext
+      type: System.ActivationContext
+      description: An <xref href="System.ActivationContext"></xref> that identifies the application to activate.
+    return:
+      type: System.Runtime.Remoting.ObjectHandle
+      description: An <xref href="System.Runtime.Remoting.ObjectHandle"></xref> that is a wrapper for the return value of the application execution. The return value must be unwrapped to access the real object.
+  overload: System.Runtime.Hosting.ApplicationActivator.CreateInstance*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>activationContext</code> is `null`.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Hosting/ApplicationActivator.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Runtime.Hosting.ApplicationActivator.CreateInstance(System.ActivationContext,System.String[])
+  commentId: M:System.Runtime.Hosting.ApplicationActivator.CreateInstance(System.ActivationContext,System.String[])
+  id: CreateInstance(System.ActivationContext,System.String[])
+  parent: System.Runtime.Hosting.ApplicationActivator
+  langs:
+  - csharp
+  name: CreateInstance(ActivationContext, String[])
+  nameWithType: ApplicationActivator.CreateInstance(ActivationContext, String[])
+  fullName: ApplicationActivator.CreateInstance(ActivationContext, String[])
+  type: Method
+  assemblies:
+  - mscorlib
+  namespace: System.Runtime.Hosting
+  summary: Creates an instance of the application to be activated, using the specified activation context  and custom activation data.
+  remarks: This method is intended for the manifest-based activation of applications. The activation data consists of information such as the query string portion of a URL.
+  syntax:
+    content: public virtual System.Runtime.Remoting.ObjectHandle CreateInstance (ActivationContext activationContext, string[] activationCustomData);
+    parameters:
+    - id: activationContext
+      type: System.ActivationContext
+      description: An <xref href="System.ActivationContext"></xref> that identifies the application to activate.
+    - id: activationCustomData
+      type: System.String[]
+      description: Custom activation data.
+    return:
+      type: System.Runtime.Remoting.ObjectHandle
+      description: An <xref href="System.Runtime.Remoting.ObjectHandle"></xref> that is a wrapper for the return value of the application execution. The return value must be unwrapped to access the real object.
+  overload: System.Runtime.Hosting.ApplicationActivator.CreateInstance*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>activationContext</code> is `null`.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Hosting/ApplicationActivator.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+- uid: System.Runtime.Hosting.ApplicationActivator.CreateInstanceHelper(System.AppDomainSetup)
+  commentId: M:System.Runtime.Hosting.ApplicationActivator.CreateInstanceHelper(System.AppDomainSetup)
+  id: CreateInstanceHelper(System.AppDomainSetup)
+  parent: System.Runtime.Hosting.ApplicationActivator
+  langs:
+  - csharp
+  name: CreateInstanceHelper(AppDomainSetup)
+  nameWithType: ApplicationActivator.CreateInstanceHelper(AppDomainSetup)
+  fullName: ApplicationActivator.CreateInstanceHelper(AppDomainSetup)
+  type: Method
+  assemblies:
+  - mscorlib
+  namespace: System.Runtime.Hosting
+  summary: Creates an instance of an application using the specified <xref href="System.AppDomainSetup"></xref> object.
+  remarks: This method is intended for the manifest-based activation of applications.
+  syntax:
+    content: protected static System.Runtime.Remoting.ObjectHandle CreateInstanceHelper (AppDomainSetup adSetup);
+    parameters:
+    - id: adSetup
+      type: System.AppDomainSetup
+      description: An <xref href="System.AppDomainSetup"></xref> object whose <xref href="System.AppDomainSetup.ActivationArguments"></xref> property identifies the application to activate.
+    return:
+      type: System.Runtime.Remoting.ObjectHandle
+      description: An <xref href="System.Runtime.Remoting.ObjectHandle"></xref> that is a wrapper for the return value of the application execution. The return value must be unwrapped to access the real object.
+  overload: System.Runtime.Hosting.ApplicationActivator.CreateInstanceHelper*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The <xref href="System.AppDomainSetup.ActivationArguments"></xref> property of <code>adSetup</code> is `null`.
+  - type: System.Security.Policy.PolicyException
+    commentId: T:System.Security.Policy.PolicyException
+    description: The application instance failed to execute because the policy settings on the current application domain do not provide permission for this application to run.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Hosting/ApplicationActivator.xml
+  ms.technology:
+  - dotnet-standard
+  author: rpetrusha
+  ms.author: ronpet
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.Security.Policy.PolicyException
+  parent: System.Security.Policy
+  isExternal: false
+  name: PolicyException
+  nameWithType: PolicyException
+  fullName: System.Security.Policy.PolicyException
+- uid: System.Runtime.Hosting.ApplicationActivator.#ctor
+  parent: System.Runtime.Hosting.ApplicationActivator
+  isExternal: false
+  name: ApplicationActivator()
+  nameWithType: ApplicationActivator.ApplicationActivator()
+  fullName: ApplicationActivator.ApplicationActivator()
+- uid: System.Runtime.Hosting.ApplicationActivator.CreateInstance(System.ActivationContext)
+  parent: System.Runtime.Hosting.ApplicationActivator
+  isExternal: false
+  name: CreateInstance(ActivationContext)
+  nameWithType: ApplicationActivator.CreateInstance(ActivationContext)
+  fullName: ApplicationActivator.CreateInstance(ActivationContext)
+- uid: System.Runtime.Remoting.ObjectHandle
+  parent: System.Runtime.Remoting
+  isExternal: false
+  name: ObjectHandle
+  nameWithType: ObjectHandle
+  fullName: System.Runtime.Remoting.ObjectHandle
+- uid: System.ActivationContext
+  parent: System
+  isExternal: false
+  name: ActivationContext
+  nameWithType: ActivationContext
+  fullName: System.ActivationContext
+- uid: System.Runtime.Hosting.ApplicationActivator.CreateInstance(System.ActivationContext,System.String[])
+  parent: System.Runtime.Hosting.ApplicationActivator
+  isExternal: false
+  name: CreateInstance(ActivationContext, String[])
+  nameWithType: ApplicationActivator.CreateInstance(ActivationContext, String[])
+  fullName: ApplicationActivator.CreateInstance(ActivationContext, String[])
+- uid: System.String
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.String[]
+  parent: System
+  isExternal: false
+  name: String[]
+  nameWithType: String[]
+  fullName: System.String[]
+  spec.csharp:
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+- uid: System.Runtime.Hosting.ApplicationActivator.CreateInstanceHelper(System.AppDomainSetup)
+  parent: System.Runtime.Hosting.ApplicationActivator
+  isExternal: false
+  name: CreateInstanceHelper(AppDomainSetup)
+  nameWithType: ApplicationActivator.CreateInstanceHelper(AppDomainSetup)
+  fullName: ApplicationActivator.CreateInstanceHelper(AppDomainSetup)
+- uid: System.AppDomainSetup
+  parent: System
+  isExternal: false
+  name: AppDomainSetup
+  nameWithType: AppDomainSetup
+  fullName: System.AppDomainSetup
+- uid: System.Runtime.Hosting.ApplicationActivator.#ctor*
+  parent: System.Runtime.Hosting.ApplicationActivator
+  isExternal: false
+  name: ApplicationActivator
+  nameWithType: ApplicationActivator.ApplicationActivator
+  fullName: ApplicationActivator.ApplicationActivator
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Hosting/ApplicationActivator.xml
+- uid: System.Runtime.Hosting.ApplicationActivator.CreateInstance*
+  parent: System.Runtime.Hosting.ApplicationActivator
+  isExternal: false
+  name: CreateInstance
+  nameWithType: ApplicationActivator.CreateInstance
+  fullName: ApplicationActivator.CreateInstance
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Hosting/ApplicationActivator.xml
+- uid: System.Runtime.Hosting.ApplicationActivator.CreateInstanceHelper*
+  parent: System.Runtime.Hosting.ApplicationActivator
+  isExternal: false
+  name: CreateInstanceHelper
+  nameWithType: ApplicationActivator.CreateInstanceHelper
+  fullName: ApplicationActivator.CreateInstanceHelper
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Runtime.Hosting/ApplicationActivator.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()

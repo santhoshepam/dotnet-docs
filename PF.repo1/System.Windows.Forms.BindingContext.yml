@@ -1,0 +1,1549 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Windows.Forms.BindingContext
+  commentId: T:System.Windows.Forms.BindingContext
+  id: BindingContext
+  children:
+  - System.Windows.Forms.BindingContext.#ctor
+  - System.Windows.Forms.BindingContext.Add(System.Object,System.Windows.Forms.BindingManagerBase)
+  - System.Windows.Forms.BindingContext.AddCore(System.Object,System.Windows.Forms.BindingManagerBase)
+  - System.Windows.Forms.BindingContext.Clear
+  - System.Windows.Forms.BindingContext.ClearCore
+  - System.Windows.Forms.BindingContext.CollectionChanged
+  - System.Windows.Forms.BindingContext.Contains(System.Object)
+  - System.Windows.Forms.BindingContext.Contains(System.Object,System.String)
+  - System.Windows.Forms.BindingContext.IsReadOnly
+  - System.Windows.Forms.BindingContext.Item(System.Object,System.String)
+  - System.Windows.Forms.BindingContext.Item(System.Object)
+  - System.Windows.Forms.BindingContext.OnCollectionChanged(System.ComponentModel.CollectionChangeEventArgs)
+  - System.Windows.Forms.BindingContext.Remove(System.Object)
+  - System.Windows.Forms.BindingContext.RemoveCore(System.Object)
+  - System.Windows.Forms.BindingContext.UpdateBinding(System.Windows.Forms.BindingContext,System.Windows.Forms.Binding)
+  - System.Windows.Forms.BindingContext.System#Collections#ICollection#CopyTo(System.Array,System.Int32)
+  - System.Windows.Forms.BindingContext.System#Collections#ICollection#Count
+  - System.Windows.Forms.BindingContext.System#Collections#ICollection#IsSynchronized
+  - System.Windows.Forms.BindingContext.System#Collections#ICollection#SyncRoot
+  - System.Windows.Forms.BindingContext.System#Collections#IEnumerable#GetEnumerator
+  langs:
+  - csharp
+  name: BindingContext
+  nameWithType: BindingContext
+  fullName: System.Windows.Forms.BindingContext
+  type: Class
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Manages the collection of <xref href="System.Windows.Forms.BindingManagerBase"></xref> objects for any object that inherits from the <xref href="System.Windows.Forms.Control"></xref> class.
+  remarks: "Each Windows Form has at least one <xref:System.Windows.Forms.BindingContext> object that manages the <xref:System.Windows.Forms.BindingManagerBase> objects for the form. Because the <xref:System.Windows.Forms.BindingManagerBase> class is abstract, the return type of the <xref:System.Windows.Forms.BindingContext.Item%2A> property is either a <xref:System.Windows.Forms.CurrencyManager> or a <xref:System.Windows.Forms.PropertyManager>. If the data source is an object that can return only a single property (instead of a list of objects), the <xref:System.Type> is a <xref:System.Windows.Forms.PropertyManager>. For example, if you specify a <xref:System.Windows.Forms.TextBox> as the data source, a <xref:System.Windows.Forms.PropertyManager> is returned. On the other hand, if the data source is an object that implements <xref:System.Collections.IList> or <xref:System.ComponentModel.IBindingList>, a <xref:System.Windows.Forms.CurrencyManager> is returned.  \n  \n For each data source on a Windows Form, there is a single <xref:System.Windows.Forms.CurrencyManager> or <xref:System.Windows.Forms.PropertyManager>. Because there may be multiple data sources associated with a Windows Form, the <xref:System.Windows.Forms.BindingContext> enables you to retrieve any particular <xref:System.Windows.Forms.CurrencyManager> associated with a data source.  \n  \n> [!NOTE]\n>  When using the <xref:System.Windows.Forms.BindingContext.Item%2A> property, the <xref:System.Windows.Forms.BindingContext> creates a new <xref:System.Windows.Forms.BindingManagerBase> if one does not already exist. This can lead to some confusion, as the returned object may not manage the list (or any list) that you intend. To prevent returning an invalid <xref:System.Windows.Forms.BindingManagerBase>, use the <xref:System.Windows.Forms.BindingContext.Contains%2A> method to determine if the intended <xref:System.Windows.Forms.BindingManagerBase> already exists.  \n  \n If you use a container control, such as a <xref:System.Windows.Forms.GroupBox>, <xref:System.Windows.Forms.Panel>, or <xref:System.Windows.Forms.TabControl>, to contain data-bound controls, you can create a <xref:System.Windows.Forms.BindingContext> for just that container control and its controls. Then, each part of your form can be managed by its own <xref:System.Windows.Forms.BindingManagerBase>. See the <xref:System.Windows.Forms.BindingContext.%23ctor%2A> constructor for more information about creating multiple <xref:System.Windows.Forms.BindingManagerBase> objects for the same data source.  \n  \n If you add a <xref:System.Windows.Forms.TextBox> control to a form and bind it to a column of a table in a dataset, the control communicates with the <xref:System.Windows.Forms.BindingContext> of that form. The <xref:System.Windows.Forms.BindingContext>, in turn, talks to the specific <xref:System.Windows.Forms.CurrencyManager> for that data association. If you queried the `Position` property of the <xref:System.Windows.Forms.CurrencyManager>, it would report the current record for the binding of that <xref:System.Windows.Forms.TextBox> control. In the following code example, a <xref:System.Windows.Forms.TextBox> control is bound to the `FirstName` column of a `Customers` table on the `dataSet1` dataset through the <xref:System.Windows.Forms.BindingContext> for the form it is on.  \n  \n```vb  \nTextBox1.DataBindings.Add(\"Text\", dataSet1, \"Customers.FirstName\")  \n  \n```  \n  \n```csharp  \ntextBox1.DataBindings.Add(\"Text\", dataSet1, \"Customers.FirstName\");  \n  \n```  \n  \n```cpp  \ntextBox1->DataBindings->Add(\"Text\", dataSet1, \"Customers.FirstName\");  \n```  \n  \n You can add a second <xref:System.Windows.Forms.TextBox> control (`TextBox2`) to the form and bind it to the `LastName` column of the `Customers` table in the same dataset. The <xref:System.Windows.Forms.BindingContext> is aware of the first binding (`TextBox1` to `Customers.FirstName`), so it would use the same <xref:System.Windows.Forms.CurrencyManager>, as both text boxes are bound to the same dataset (`DataSet1`).  \n  \n```vb  \nTextBox2.DataBindings.Add(\"Text\", dataSet1, \"Customers.LastName\")  \n  \n```  \n  \n```csharp  \ntextBox2.DataBindings.Add(\"Text\", dataSet1, \"Customers.LastName\");  \n  \n```  \n  \n```cpp  \ntextBox2->DataBindings->Add(\"Text\", dataSet1, \"Customers.LastName\");  \n```  \n  \n If you bind `TextBox2` to a different dataset, the <xref:System.Windows.Forms.BindingContext> creates and manages a second <xref:System.Windows.Forms.CurrencyManager>.  \n  \n It is important to be consistent about how you set the <xref:System.Windows.Forms.ListControl.DataSource%2A> and <xref:System.Windows.Forms.ListControl.DisplayMember%2A> properties; otherwise, the <xref:System.Windows.Forms.BindingContext> creates multiple currency managers for the same dataset, which results in errors. The following code example shows a few ways to set the properties and their associated <xref:System.Windows.Forms.BindingContext> objects. You can set the properties using either of the following methods, as long as you are consistent throughout your code.  \n  \n```vb  \nComboBox1.DataSource = DataSet1  \nComboBox1.DisplayMember = \"Customers.FirstName\"  \nMe.BindingContext(dataSet1, \"Customers\").Position = 1  \n  \n```  \n  \n```csharp  \ncomboBox1.DataSource = DataSet1;  \ncomboBox1.DisplayMember = \"Customers.FirstName\";  \nthis.BindingContext[dataSet1, \"Customers\"].Position = 1;  \n  \n```  \n  \n```cpp  \ncomboBox1->DataSource = dataSet1;  \ncomboBox1->DisplayMember = \"Customers.FirstName\";  \nthis->BindingContext->get_Item(dataSet1, \"Customers\")->Position = 1;  \n  \n```  \n  \n```vb  \nComboBox1.DataSource = DataSet1.Customers  \nComboBox1.DisplayMember = \"FirstName\"  \nMe.BindingContext(dataSet1.Customers).Position = 1  \n  \n```  \n  \n```csharp  \ncomboBox1.DataSource = DataSet1.Customers;  \ncomboBox1.DisplayMember = \"FirstName\";  \nthis.BindingContext[dataSet1.Customers].Position = 1;  \n  \n```  \n  \n```cpp  \ncomboBox1->DataSource = dataSet1->Customers;  \ncomboBox1->DisplayMember = \"FirstName\";  \nthis->BindingContext->get_Item(dataSet1->Customers)->Position = 1;  \n  \n```  \n  \n> [!NOTE]\n>  Most Windows Forms applications bind through a <xref:System.Windows.Forms.BindingSource>. The <xref:System.Windows.Forms.BindingSource> component encapsulates a <xref:System.Windows.Forms.CurrencyManager> and exposes the <xref:System.Windows.Forms.CurrencyManager> programming interface. When using a <xref:System.Windows.Forms.BindingSource> for binding, you should use the members exposed by the <xref:System.Windows.Forms.BindingSource> to manipulate \"currency\" (that is, `Position`) rather than go through the <xref:System.Windows.Forms.BindingContext>."
+  example:
+  - "The following code example creates four <xref:System.Windows.Forms.Binding> objects to bind five controls—a <xref:System.Windows.Forms.DateTimePicker> and four <xref:System.Windows.Forms.TextBox> controls—to several data sources. The <xref:System.Windows.Forms.BindingContext> is then used to get the <xref:System.Windows.Forms.BindingManagerBase> for each data source.  \n  \n [!code-cpp[Classic BindingContext Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic BindingContext Example/CPP/source.cpp#1)]\n [!code-csharp[Classic BindingContext Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic BindingContext Example/CS/source.cs#1)]\n [!code-vb[Classic BindingContext Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic BindingContext Example/VB/source.vb#1)]"
+  syntax:
+    content: 'public class BindingContext : System.Collections.ICollection'
+  inheritance:
+  - System.Object
+  implements:
+  - System.Collections.ICollection
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Linq.Enumerable.Cast``1(System.Collections.IEnumerable)
+  - System.Linq.Enumerable.OfType``1(System.Collections.IEnumerable)
+  - System.Linq.ParallelEnumerable.AsParallel(System.Collections.IEnumerable)
+  - System.Linq.Queryable.AsQueryable(System.Collections.IEnumerable)
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingContext.#ctor
+  commentId: M:System.Windows.Forms.BindingContext.#ctor
+  id: '#ctor'
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: BindingContext()
+  nameWithType: BindingContext.BindingContext()
+  fullName: BindingContext.BindingContext()
+  type: Constructor
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Initializes a new instance of the <xref href="System.Windows.Forms.BindingContext"></xref> class.
+  remarks: If you want to have multiple <xref:System.Windows.Forms.BindingManagerBase> instances for the same data source, create a new <xref:System.Windows.Forms.BindingContext> and set it to the <xref:System.Windows.Forms.Control.BindingContext%2A> property of an object that inherits from the <xref:System.Windows.Forms.Control> class. For example, if you have two <xref:System.Windows.Forms.BindingManagerBase> objects (from two different <xref:System.Windows.Forms.BindingContext> objects), you can set the <xref:System.Windows.Forms.BindingManagerBase.Position%2A> properties of each <xref:System.Windows.Forms.BindingManagerBase> to different values. This causes each set of data-bound controls to display different values from the same data source.
+  example:
+  - "The following code example creates two new <xref:System.Windows.Forms.BindingContext> objects and assigns each object to the <xref:System.Windows.Forms.BindingContext> property of a <xref:System.Windows.Forms.GroupBox> control. `GroupBox1` contains `TextBox1`, and `GroupBox2` contains `TextBox2` (which is accomplished by using the <xref:System.Windows.Forms.Control.ControlCollection.AddRange%2A> method of the <xref:System.Windows.Forms.Control.ControlCollection> class). The example then adds <xref:System.Windows.Forms.Binding> objects to the two <xref:System.Windows.Forms.TextBox> controls, binding each to the same data source and data member. The example also shows two event handlers that use the <xref:System.Windows.Forms.BindingContext> from the <xref:System.Windows.Forms.GroupBox> controls to set the <xref:System.Windows.Forms.BindingManagerBase.Position%2A> property on different <xref:System.Windows.Forms.BindingManagerBase> objects.  \n  \n [!code-cpp[Classic BindingContext.BindingContext Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic BindingContext.BindingContext Example/CPP/source.cpp#1)]\n [!code-csharp[Classic BindingContext.BindingContext Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic BindingContext.BindingContext Example/CS/source.cs#1)]\n [!code-vb[Classic BindingContext.BindingContext Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic BindingContext.BindingContext Example/VB/source.vb#1)]"
+  syntax:
+    content: public BindingContext ();
+    parameters: []
+  overload: System.Windows.Forms.BindingContext.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingContext.Add(System.Object,System.Windows.Forms.BindingManagerBase)
+  commentId: M:System.Windows.Forms.BindingContext.Add(System.Object,System.Windows.Forms.BindingManagerBase)
+  id: Add(System.Object,System.Windows.Forms.BindingManagerBase)
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: Add(Object, BindingManagerBase)
+  nameWithType: BindingContext.Add(Object, BindingManagerBase)
+  fullName: BindingContext.Add(Object, BindingManagerBase)
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Adds the <xref href="System.Windows.Forms.BindingManagerBase"></xref> associated with a specific data source to the collection.
+  syntax:
+    content: protected void Add (object dataSource, System.Windows.Forms.BindingManagerBase listManager);
+    parameters:
+    - id: dataSource
+      type: System.Object
+      description: The <xref href="System.Object"></xref> associated with the <xref href="System.Windows.Forms.BindingManagerBase"></xref>.
+    - id: listManager
+      type: System.Windows.Forms.BindingManagerBase
+      description: The <xref href="System.Windows.Forms.BindingManagerBase"></xref> to add.
+  overload: System.Windows.Forms.BindingContext.Add*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingContext.AddCore(System.Object,System.Windows.Forms.BindingManagerBase)
+  commentId: M:System.Windows.Forms.BindingContext.AddCore(System.Object,System.Windows.Forms.BindingManagerBase)
+  id: AddCore(System.Object,System.Windows.Forms.BindingManagerBase)
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: AddCore(Object, BindingManagerBase)
+  nameWithType: BindingContext.AddCore(Object, BindingManagerBase)
+  fullName: BindingContext.AddCore(Object, BindingManagerBase)
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Adds the <xref href="System.Windows.Forms.BindingManagerBase"></xref> associated with a specific data source to the collection.
+  syntax:
+    content: protected virtual void AddCore (object dataSource, System.Windows.Forms.BindingManagerBase listManager);
+    parameters:
+    - id: dataSource
+      type: System.Object
+      description: The object associated with the <xref href="System.Windows.Forms.BindingManagerBase"></xref>.
+    - id: listManager
+      type: System.Windows.Forms.BindingManagerBase
+      description: The <xref href="System.Windows.Forms.BindingManagerBase"></xref> to add.
+  overload: System.Windows.Forms.BindingContext.AddCore*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: "<code>dataSource</code> is `null`.  \n  \n -or-  \n  \n <code>listManager</code> is `null`."
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingContext.Clear
+  commentId: M:System.Windows.Forms.BindingContext.Clear
+  id: Clear
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: Clear()
+  nameWithType: BindingContext.Clear()
+  fullName: BindingContext.Clear()
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Clears the collection of any <xref href="System.Windows.Forms.BindingManagerBase"></xref> objects.
+  syntax:
+    content: protected void Clear ();
+    parameters: []
+  overload: System.Windows.Forms.BindingContext.Clear*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingContext.ClearCore
+  commentId: M:System.Windows.Forms.BindingContext.ClearCore
+  id: ClearCore
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: ClearCore()
+  nameWithType: BindingContext.ClearCore()
+  fullName: BindingContext.ClearCore()
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Clears the collection.
+  syntax:
+    content: protected virtual void ClearCore ();
+    parameters: []
+  overload: System.Windows.Forms.BindingContext.ClearCore*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingContext.CollectionChanged
+  commentId: E:System.Windows.Forms.BindingContext.CollectionChanged
+  id: CollectionChanged
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: CollectionChanged
+  nameWithType: BindingContext.CollectionChanged
+  fullName: BindingContext.CollectionChanged
+  type: Event
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Always raises a <xref href="System.NotImplementedException"></xref> when handled.
+  remarks: The <xref:System.Windows.Forms.BindingContext.CollectionChanged> event is obsolete and always raises a <xref:System.NotImplementedException> when handled. For more information about handling events, see [Handling and Raising Events](http://msdn.microsoft.com/library/b6f65241-e0ad-4590-a99f-200ce741bb1f).
+  syntax:
+    content: >-
+      [System.ComponentModel.Browsable(false)]
+
+      public event System.ComponentModel.CollectionChangeEventHandler CollectionChanged;
+    return:
+      type: System.ComponentModel.CollectionChangeEventHandler
+      description: ''
+  exceptions:
+  - type: System.NotImplementedException
+    commentId: T:System.NotImplementedException
+    description: Occurs in all cases.
+  attributes:
+  - type: System.ComponentModel.BrowsableAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingContext.Contains(System.Object)
+  commentId: M:System.Windows.Forms.BindingContext.Contains(System.Object)
+  id: Contains(System.Object)
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: Contains(Object)
+  nameWithType: BindingContext.Contains(Object)
+  fullName: BindingContext.Contains(Object)
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Gets a value indicating whether the <xref href="System.Windows.Forms.BindingContext"></xref> contains the <xref href="System.Windows.Forms.BindingManagerBase"></xref> associated with the specified data source.
+  remarks: "See the <xref:System.Windows.Forms.Binding> class for a list of possible data sources and information about creating bindings between controls and data sources.  \n  \n See the <xref:System.Windows.Forms.BindingContext.Item%2A> property for information about returning a <xref:System.Windows.Forms.BindingManagerBase> using only a data source."
+  example:
+  - "The following code example uses the <xref:System.Windows.Forms.BindingContext.Contains%2A> method to determine whether a <xref:System.Windows.Forms.BindingManagerBase> exists for each control on a form. The example passes each <xref:System.Data.DataTable> in a <xref:System.Data.DataSet> to the method.  \n  \n [!code-cpp[Classic BindingContext.Contains Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic BindingContext.Contains Example/CPP/source.cpp#1)]\n [!code-csharp[Classic BindingContext.Contains Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic BindingContext.Contains Example/CS/source.cs#1)]\n [!code-vb[Classic BindingContext.Contains Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic BindingContext.Contains Example/VB/source.vb#1)]"
+  syntax:
+    content: public bool Contains (object dataSource);
+    parameters:
+    - id: dataSource
+      type: System.Object
+      description: An <xref href="System.Object"></xref> that represents the data source.
+    return:
+      type: System.Boolean
+      description: '`true` if the <xref href="System.Windows.Forms.BindingContext"></xref> contains the specified <xref href="System.Windows.Forms.BindingManagerBase"></xref>; otherwise, `false`.'
+  overload: System.Windows.Forms.BindingContext.Contains*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Forms.BindingContext.Contains(System.Object,System.String)
+  commentId: M:System.Windows.Forms.BindingContext.Contains(System.Object,System.String)
+  id: Contains(System.Object,System.String)
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: Contains(Object, String)
+  nameWithType: BindingContext.Contains(Object, String)
+  fullName: BindingContext.Contains(Object, String)
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Gets a value indicating whether the <xref href="System.Windows.Forms.BindingContext"></xref> contains the <xref href="System.Windows.Forms.BindingManagerBase"></xref> associated with the specified data source and data member.
+  remarks: "See the <xref:System.Windows.Forms.Binding> class for a list of possible data sources and for information about creating bindings between controls and data sources.  \n  \n See the <xref:System.Windows.Forms.BindingContext.Item%2A> property for information about returning a <xref:System.Windows.Forms.BindingManagerBase> using a data source and data member."
+  example:
+  - "The following code example uses the <xref:System.Windows.Forms.BindingContext.Contains%2A> method to test whether a specific <xref:System.Windows.Forms.BindingManagerBase> exists before attempting to get it through the <xref:System.Windows.Forms.BindingContext.Item%2A> property.  \n  \n [!code-cpp[Classic BindingContext.Contains1 Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic BindingContext.Contains1 Example/CPP/source.cpp#1)]\n [!code-csharp[Classic BindingContext.Contains1 Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic BindingContext.Contains1 Example/CS/source.cs#1)]\n [!code-vb[Classic BindingContext.Contains1 Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic BindingContext.Contains1 Example/VB/source.vb#1)]"
+  syntax:
+    content: public bool Contains (object dataSource, string dataMember);
+    parameters:
+    - id: dataSource
+      type: System.Object
+      description: An <xref href="System.Object"></xref> that represents the data source.
+    - id: dataMember
+      type: System.String
+      description: The information needed to resolve to a specific <xref href="System.Windows.Forms.BindingManagerBase"></xref>.
+    return:
+      type: System.Boolean
+      description: '`true` if the <xref href="System.Windows.Forms.BindingContext"></xref> contains the specified <xref href="System.Windows.Forms.BindingManagerBase"></xref>; otherwise, `false`.'
+  overload: System.Windows.Forms.BindingContext.Contains*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingContext.IsReadOnly
+  commentId: P:System.Windows.Forms.BindingContext.IsReadOnly
+  id: IsReadOnly
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: IsReadOnly
+  nameWithType: BindingContext.IsReadOnly
+  fullName: BindingContext.IsReadOnly
+  type: Property
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Gets a value indicating whether the collection is read-only.
+  remarks: This property is derived from <xref:System.Collections.ICollection>, and is overridden to always return `false`.
+  syntax:
+    content: public bool IsReadOnly { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the collection is read-only; otherwise, `false`.'
+  overload: System.Windows.Forms.BindingContext.IsReadOnly*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingContext.Item(System.Object,System.String)
+  commentId: P:System.Windows.Forms.BindingContext.Item(System.Object,System.String)
+  id: Item(System.Object,System.String)
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: Item(Object, String)
+  nameWithType: BindingContext.Item(Object, String)
+  fullName: BindingContext.Item(Object, String)
+  type: Property
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Gets a <xref href="System.Windows.Forms.BindingManagerBase"></xref> that is associated with the specified data source and data member.
+  remarks: "Use this overload when the <xref:System.Windows.Forms.BindingManagerBase> manages a set of <xref:System.Windows.Forms.Binding> objects for which the data source contains multiple objects. For example, a <xref:System.Data.DataSet> can contain several <xref:System.Data.DataTable> objects linked by <xref:System.Data.DataRelation> objects. In such a case, the navigation path is required to enable the <xref:System.Windows.Forms.BindingContext> to return the correct <xref:System.Windows.Forms.BindingManagerBase>.  \n  \n> [!NOTE]\n>  The <xref:System.Windows.Forms.BindingContext.Item%2A> property will always return a <xref:System.Windows.Forms.BindingManagerBase>, when the `dataMember` parameter is valid. It will never return `null`.  \n  \n See the <xref:System.Windows.Forms.Binding> class for a list of possible data sources and for information about creating bindings between controls and data sources.  \n  \n If the desired <xref:System.Windows.Forms.BindingManagerBase> manages a list, the navigation path must also end with a list. For example, the following C# code binds a <xref:System.Windows.Forms.TextBox> control to the order date in a table of orders. The navigation path includes the <xref:System.Data.DataTable.TableName%2A>, the <xref:System.Data.DataRelation.RelationName%2A>, and the <xref:System.Data.DataColumn.ColumnName%2A>. However, the <xref:System.Windows.Forms.BindingManagerBase> must be retrieved using only the <xref:System.Data.DataTable.TableName%2A> and <xref:System.Data.DataRelation.RelationName%2A> (which resolves to a list).  \n  \n```  \n// The navigation path for a Binding ends with a property.  \ntextBox1.DataBindings.Add  \n(\"Text\", dataSet1, \"Customers.custToOrders.OrderDate\");  \n// The navigation path for the BindingManagerBase ends with a list.  \nBindingManagerBase bmOrders = this.BindingContext  \n[dataSet1, \"Customers.custToOrders\"];  \n```  \n  \n When returning a <xref:System.Windows.Forms.BindingManagerBase>, you should use the same data source as the <xref:System.Windows.Forms.Binding> and modify only the navigation path.  \n  \n Use the <xref:System.Windows.Forms.BindingContext.Contains%2A> method to determine if the desired <xref:System.Windows.Forms.BindingManagerBase> already exists."
+  example:
+  - "The following code example demonstrates how to use the <xref:System.Windows.Forms.BindingContext.Item%2A> to retrieve the <xref:System.Windows.Forms.BindingManagerBase> for a particular binding. It also shows how to handle the <xref:System.Windows.Forms.BindingManagerBase.BindingComplete> event for the <xref:System.Windows.Forms.BindingManagerBase> to ensure multiple controls bound to the same data source remain synchronized when one of the control values is changed. To run this example, paste the code into a Windows Form and call the `InitializeControlsAndData` method from the form's constructor or <xref:System.Windows.Forms.Form.Load> event-handling method.  \n  \n [!code-csharp[System.Windows.Forms.BindingSourceMultipleControls#11](~/samples/snippets/csharp/VS_Snippets_Winforms/System.Windows.Forms.BindingSourceMultipleControls/CS/Form1.cs#11)]\n [!code-vb[System.Windows.Forms.BindingSourceMultipleControls#11](~/samples/snippets/visualbasic/VS_Snippets_Winforms/System.Windows.Forms.BindingSourceMultipleControls/VB/Form1.vb#11)]"
+  syntax:
+    content: public System.Windows.Forms.BindingManagerBase this[object dataSource, string dataMember] { get; }
+    parameters:
+    - id: dataSource
+      type: System.Object
+      description: The data source associated with a particular <xref href="System.Windows.Forms.BindingManagerBase"></xref>.
+    - id: dataMember
+      type: System.String
+      description: A navigation path containing the information that resolves to a specific <xref href="System.Windows.Forms.BindingManagerBase"></xref>.
+    return:
+      type: System.Windows.Forms.BindingManagerBase
+      description: The <xref href="System.Windows.Forms.BindingManagerBase"></xref> for the specified data source and data member.
+  overload: System.Windows.Forms.BindingContext.Item*
+  exceptions:
+  - type: System.Exception
+    commentId: T:System.Exception
+    description: The specified <code>dataMember</code> does not exist within the data source.
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingContext.Item(System.Object)
+  commentId: P:System.Windows.Forms.BindingContext.Item(System.Object)
+  id: Item(System.Object)
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: Item(Object)
+  nameWithType: BindingContext.Item(Object)
+  fullName: BindingContext.Item(Object)
+  type: Property
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Gets the <xref href="System.Windows.Forms.BindingManagerBase"></xref> that is associated with the specified data source.
+  remarks: "Use this overload if the <xref:System.Windows.Forms.BindingManagerBase> you want does not require a navigation path. For example, if the <xref:System.Windows.Forms.BindingManagerBase> manages a set of <xref:System.Windows.Forms.Binding> objects that use an <xref:System.Collections.ArrayList> or <xref:System.Data.DataTable> as the <xref:System.Windows.Forms.Binding.DataSource%2A>, no navigation path is required.  \n  \n> [!NOTE]\n>  The <xref:System.Windows.Forms.BindingContext.Item%2A> property will always return a <xref:System.Windows.Forms.BindingManagerBase>, and never return `null`.  \n  \n See the <xref:System.Windows.Forms.Binding> class for a list of possible data sources and for information about creating bindings between controls and data sources."
+  example:
+  - "The following code example returns three <xref:System.Windows.Forms.BindingManagerBase> objects: one for a <xref:System.Data.DataView>, one for an <xref:System.Collections.ArrayList>, and one for the <xref:System.Windows.Forms.Binding.DataSource%2A> of a <xref:System.Windows.Forms.Binding> that belongs to a <xref:System.Windows.Forms.TextBox> control.  \n  \n [!code-cpp[Classic BindingContext.this Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic BindingContext.this Example/CPP/source.cpp#1)]\n [!code-csharp[Classic BindingContext.this Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic BindingContext.this Example/CS/source.cs#1)]\n [!code-vb[Classic BindingContext.this Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic BindingContext.this Example/VB/source.vb#1)]"
+  syntax:
+    content: public System.Windows.Forms.BindingManagerBase this[object dataSource] { get; }
+    parameters:
+    - id: dataSource
+      type: System.Object
+      description: The data source associated with a particular <xref href="System.Windows.Forms.BindingManagerBase"></xref>.
+    return:
+      type: System.Windows.Forms.BindingManagerBase
+      description: A <xref href="System.Windows.Forms.BindingManagerBase"></xref> for the specified data source.
+  overload: System.Windows.Forms.BindingContext.Item*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingContext.OnCollectionChanged(System.ComponentModel.CollectionChangeEventArgs)
+  commentId: M:System.Windows.Forms.BindingContext.OnCollectionChanged(System.ComponentModel.CollectionChangeEventArgs)
+  id: OnCollectionChanged(System.ComponentModel.CollectionChangeEventArgs)
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: OnCollectionChanged(CollectionChangeEventArgs)
+  nameWithType: BindingContext.OnCollectionChanged(CollectionChangeEventArgs)
+  fullName: BindingContext.OnCollectionChanged(CollectionChangeEventArgs)
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Raises the <xref href="System.Windows.Forms.BindingContext.CollectionChanged"></xref> event.
+  remarks: "Raising an event invokes the event handler through a delegate. For more information, see [Handling and Raising Events](http://msdn.microsoft.com/library/b6f65241-e0ad-4590-a99f-200ce741bb1f).  \n  \n The <xref:System.Windows.Forms.BindingContext.OnCollectionChanged%2A> method also allows derived classes to handle the event without attaching a delegate. This is the preferred technique for handling the event in a derived class."
+  syntax:
+    content: protected virtual void OnCollectionChanged (System.ComponentModel.CollectionChangeEventArgs ccevent);
+    parameters:
+    - id: ccevent
+      type: System.ComponentModel.CollectionChangeEventArgs
+      description: A <xref href="System.ComponentModel.CollectionChangeEventArgs"></xref> that contains the event data.
+  overload: System.Windows.Forms.BindingContext.OnCollectionChanged*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Forms.BindingContext.Remove(System.Object)
+  commentId: M:System.Windows.Forms.BindingContext.Remove(System.Object)
+  id: Remove(System.Object)
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: Remove(Object)
+  nameWithType: BindingContext.Remove(Object)
+  fullName: BindingContext.Remove(Object)
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Deletes the <xref href="System.Windows.Forms.BindingManagerBase"></xref> associated with the specified data source.
+  syntax:
+    content: protected void Remove (object dataSource);
+    parameters:
+    - id: dataSource
+      type: System.Object
+      description: The data source associated with the <xref href="System.Windows.Forms.BindingManagerBase"></xref> to remove.
+  overload: System.Windows.Forms.BindingContext.Remove*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingContext.RemoveCore(System.Object)
+  commentId: M:System.Windows.Forms.BindingContext.RemoveCore(System.Object)
+  id: RemoveCore(System.Object)
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: RemoveCore(Object)
+  nameWithType: BindingContext.RemoveCore(Object)
+  fullName: BindingContext.RemoveCore(Object)
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Removes the <xref href="System.Windows.Forms.BindingManagerBase"></xref> associated with the specified data source.
+  syntax:
+    content: protected virtual void RemoveCore (object dataSource);
+    parameters:
+    - id: dataSource
+      type: System.Object
+      description: The data source associated with the <xref href="System.Windows.Forms.BindingManagerBase"></xref> to remove.
+  overload: System.Windows.Forms.BindingContext.RemoveCore*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Forms.BindingContext.UpdateBinding(System.Windows.Forms.BindingContext,System.Windows.Forms.Binding)
+  commentId: M:System.Windows.Forms.BindingContext.UpdateBinding(System.Windows.Forms.BindingContext,System.Windows.Forms.Binding)
+  id: UpdateBinding(System.Windows.Forms.BindingContext,System.Windows.Forms.Binding)
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: UpdateBinding(BindingContext, Binding)
+  nameWithType: BindingContext.UpdateBinding(BindingContext, Binding)
+  fullName: BindingContext.UpdateBinding(BindingContext, Binding)
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Associates a <xref href="System.Windows.Forms.Binding"></xref> with a new <xref href="System.Windows.Forms.BindingContext"></xref>.
+  remarks: This method is intended update the bindings of components that implement <xref:System.Windows.Forms.IBindableComponent>, when their <xref:System.Windows.Forms.BindingContext> changes.
+  syntax:
+    content: public static void UpdateBinding (System.Windows.Forms.BindingContext newBindingContext, System.Windows.Forms.Binding binding);
+    parameters:
+    - id: newBindingContext
+      type: System.Windows.Forms.BindingContext
+      description: The new <xref href="System.Windows.Forms.BindingContext"></xref> to associate with the <xref href="System.Windows.Forms.Binding"></xref>.
+    - id: binding
+      type: System.Windows.Forms.Binding
+      description: The <xref href="System.Windows.Forms.Binding"></xref> to associate with the new <xref href="System.Windows.Forms.BindingContext"></xref>.
+  overload: System.Windows.Forms.BindingContext.UpdateBinding*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingContext.System#Collections#ICollection#CopyTo(System.Array,System.Int32)
+  commentId: M:System.Windows.Forms.BindingContext.System#Collections#ICollection#CopyTo(System.Array,System.Int32)
+  id: System#Collections#ICollection#CopyTo(System.Array,System.Int32)
+  isEii: true
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: ICollection.CopyTo(Array, Int32)
+  nameWithType: BindingContext.ICollection.CopyTo(Array, Int32)
+  fullName: BindingContext.ICollection.CopyTo(Array, Int32)
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Copies the elements of the collection into a specified array, starting at the collection index.
+  remarks: ''
+  example:
+  - >-
+    [!code-cpp[Classic BindingContext.ICollection.CopyTo Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic BindingContext.ICollection.CopyTo Example/CPP/source.cpp#1)]
+     [!code-csharp[Classic BindingContext.ICollection.CopyTo Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic BindingContext.ICollection.CopyTo Example/CS/source.cs#1)]
+     [!code-vb[Classic BindingContext.ICollection.CopyTo Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic BindingContext.ICollection.CopyTo Example/VB/source.vb#1)]
+  syntax:
+    content: void ICollection.CopyTo (Array ar, int index);
+    parameters:
+    - id: ar
+      type: System.Array
+      description: An <xref href="System.Array"></xref> to copy into.
+    - id: index
+      type: System.Int32
+      description: The collection index to begin copying from.
+  overload: System.Windows.Forms.BindingContext.System#Collections#ICollection#CopyTo*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingContext.System#Collections#ICollection#Count
+  commentId: P:System.Windows.Forms.BindingContext.System#Collections#ICollection#Count
+  id: System#Collections#ICollection#Count
+  isEii: true
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: ICollection.Count
+  nameWithType: BindingContext.ICollection.Count
+  fullName: BindingContext.ICollection.Count
+  type: Property
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Gets the total number of <xref href="System.Windows.Forms.CurrencyManager"></xref> objects managed by the <xref href="System.Windows.Forms.BindingContext"></xref>.
+  remarks: ''
+  example:
+  - "The following code example returns the number of <xref:System.Windows.Forms.CurrencyManager> objects managed by the <xref:System.Windows.Forms.BindingContext>.  \n  \n [!code-cpp[Classic BindingContext.ICollection.Count Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic BindingContext.ICollection.Count Example/CPP/source.cpp#1)]\n [!code-csharp[Classic BindingContext.ICollection.Count Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic BindingContext.ICollection.Count Example/CS/source.cs#1)]\n [!code-vb[Classic BindingContext.ICollection.Count Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic BindingContext.ICollection.Count Example/VB/source.vb#1)]"
+  syntax:
+    content: int System.Collections.ICollection.Count { get; }
+    return:
+      type: System.Int32
+      description: The number of data sources managed by the <xref href="System.Windows.Forms.BindingContext"></xref>.
+  overload: System.Windows.Forms.BindingContext.System#Collections#ICollection#Count*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingContext.System#Collections#ICollection#IsSynchronized
+  commentId: P:System.Windows.Forms.BindingContext.System#Collections#ICollection#IsSynchronized
+  id: System#Collections#ICollection#IsSynchronized
+  isEii: true
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: ICollection.IsSynchronized
+  nameWithType: BindingContext.ICollection.IsSynchronized
+  fullName: BindingContext.ICollection.IsSynchronized
+  type: Property
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Gets a value indicating whether the collection is synchronized.
+  remarks: This property is derived from <xref:System.Collections.ICollection>, and is overridden to always return `false`.
+  syntax:
+    content: bool System.Collections.ICollection.IsSynchronized { get; }
+    return:
+      type: System.Boolean
+      description: '`true` if the collection is thread safe; otherwise, `false`.'
+  overload: System.Windows.Forms.BindingContext.System#Collections#ICollection#IsSynchronized*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.author: kempb
+  manager: ghogen
+- uid: System.Windows.Forms.BindingContext.System#Collections#ICollection#SyncRoot
+  commentId: P:System.Windows.Forms.BindingContext.System#Collections#ICollection#SyncRoot
+  id: System#Collections#ICollection#SyncRoot
+  isEii: true
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: ICollection.SyncRoot
+  nameWithType: BindingContext.ICollection.SyncRoot
+  fullName: BindingContext.ICollection.SyncRoot
+  type: Property
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Gets an object to use for synchronization (thread safety).
+  syntax:
+    content: object System.Collections.ICollection.SyncRoot { get; }
+    return:
+      type: System.Object
+      description: This property is derived from <xref href="System.Collections.ICollection"></xref>, and is overridden to always return `null`.
+  overload: System.Windows.Forms.BindingContext.System#Collections#ICollection#SyncRoot*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+- uid: System.Windows.Forms.BindingContext.System#Collections#IEnumerable#GetEnumerator
+  commentId: M:System.Windows.Forms.BindingContext.System#Collections#IEnumerable#GetEnumerator
+  id: System#Collections#IEnumerable#GetEnumerator
+  isEii: true
+  parent: System.Windows.Forms.BindingContext
+  langs:
+  - csharp
+  name: IEnumerable.GetEnumerator()
+  nameWithType: BindingContext.IEnumerable.GetEnumerator()
+  fullName: BindingContext.IEnumerable.GetEnumerator()
+  type: Method
+  assemblies:
+  - System.Windows.Forms
+  namespace: System.Windows.Forms
+  summary: Gets an enumerator for the collection.
+  remarks: The <xref:System.Collections.IEnumerator> returned by the <xref:System.Windows.Forms.BindingContext.System%23Collections%23IEnumerable%23GetEnumerator%2A> method allows you to iterate over the collection managed by the <xref:System.Windows.Forms.BindingContext>.
+  example:
+  - "The following code example uses the <xref:System.Windows.Forms.BindingContext.System%23Collections%23IEnumerable%23GetEnumerator%2A> method to return an <xref:System.Collections.IEnumerator> for the <xref:System.Windows.Forms.BindingContext>.  \n  \n [!code-cpp[Classic BindingContext.IEnumerable.GetEnumerator Example#1](~/samples/snippets/cpp/VS_Snippets_Winforms/Classic BindingContext.IEnumerable.GetEnumerator Example/CPP/source.cpp#1)]\n [!code-csharp[Classic BindingContext.IEnumerable.GetEnumerator Example#1](~/samples/snippets/csharp/VS_Snippets_Winforms/Classic BindingContext.IEnumerable.GetEnumerator Example/CS/source.cs#1)]\n [!code-vb[Classic BindingContext.IEnumerable.GetEnumerator Example#1](~/samples/snippets/visualbasic/VS_Snippets_Winforms/Classic BindingContext.IEnumerable.GetEnumerator Example/VB/source.vb#1)]"
+  syntax:
+    content: System.Collections.IEnumerator IEnumerable.GetEnumerator ();
+    parameters: []
+    return:
+      type: System.Collections.IEnumerator
+      description: An <xref href="System.Collections.IEnumerator"></xref> for the collection.
+  overload: System.Windows.Forms.BindingContext.System#Collections#IEnumerable#GetEnumerator*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+  ms.technology:
+  - dotnet-winforms
+  author: stevehoag
+  ms.author: shoag
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.NotImplementedException
+  parent: System
+  isExternal: false
+  name: NotImplementedException
+  nameWithType: NotImplementedException
+  fullName: System.NotImplementedException
+- uid: System.Exception
+  parent: System
+  isExternal: false
+  name: Exception
+  nameWithType: Exception
+  fullName: System.Exception
+- uid: System.Windows.Forms.BindingContext.#ctor
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: BindingContext()
+  nameWithType: BindingContext.BindingContext()
+  fullName: BindingContext.BindingContext()
+- uid: System.Windows.Forms.BindingContext.Add(System.Object,System.Windows.Forms.BindingManagerBase)
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: Add(Object, BindingManagerBase)
+  nameWithType: BindingContext.Add(Object, BindingManagerBase)
+  fullName: BindingContext.Add(Object, BindingManagerBase)
+- uid: System.Windows.Forms.BindingManagerBase
+  parent: System.Windows.Forms
+  isExternal: false
+  name: BindingManagerBase
+  nameWithType: BindingManagerBase
+  fullName: System.Windows.Forms.BindingManagerBase
+- uid: System.Windows.Forms.BindingContext.AddCore(System.Object,System.Windows.Forms.BindingManagerBase)
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: AddCore(Object, BindingManagerBase)
+  nameWithType: BindingContext.AddCore(Object, BindingManagerBase)
+  fullName: BindingContext.AddCore(Object, BindingManagerBase)
+- uid: System.Windows.Forms.BindingContext.Clear
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: Clear()
+  nameWithType: BindingContext.Clear()
+  fullName: BindingContext.Clear()
+- uid: System.Windows.Forms.BindingContext.ClearCore
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: ClearCore()
+  nameWithType: BindingContext.ClearCore()
+  fullName: BindingContext.ClearCore()
+- uid: System.Windows.Forms.BindingContext.CollectionChanged
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: CollectionChanged
+  nameWithType: BindingContext.CollectionChanged
+  fullName: BindingContext.CollectionChanged
+- uid: System.ComponentModel.CollectionChangeEventHandler
+  parent: System.ComponentModel
+  isExternal: false
+  name: CollectionChangeEventHandler
+  nameWithType: CollectionChangeEventHandler
+  fullName: System.ComponentModel.CollectionChangeEventHandler
+- uid: System.Windows.Forms.BindingContext.Contains(System.Object)
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: Contains(Object)
+  nameWithType: BindingContext.Contains(Object)
+  fullName: BindingContext.Contains(Object)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Windows.Forms.BindingContext.Contains(System.Object,System.String)
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: Contains(Object, String)
+  nameWithType: BindingContext.Contains(Object, String)
+  fullName: BindingContext.Contains(Object, String)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Windows.Forms.BindingContext.IsReadOnly
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: IsReadOnly
+  nameWithType: BindingContext.IsReadOnly
+  fullName: BindingContext.IsReadOnly
+- uid: System.Windows.Forms.BindingContext.Item(System.Object,System.String)
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: Item(Object, String)
+  nameWithType: BindingContext.Item(Object, String)
+  fullName: BindingContext.Item(Object, String)
+- uid: System.Windows.Forms.BindingContext.Item(System.Object)
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: Item(Object)
+  nameWithType: BindingContext.Item(Object)
+  fullName: BindingContext.Item(Object)
+- uid: System.Windows.Forms.BindingContext.OnCollectionChanged(System.ComponentModel.CollectionChangeEventArgs)
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: OnCollectionChanged(CollectionChangeEventArgs)
+  nameWithType: BindingContext.OnCollectionChanged(CollectionChangeEventArgs)
+  fullName: BindingContext.OnCollectionChanged(CollectionChangeEventArgs)
+- uid: System.ComponentModel.CollectionChangeEventArgs
+  parent: System.ComponentModel
+  isExternal: false
+  name: CollectionChangeEventArgs
+  nameWithType: CollectionChangeEventArgs
+  fullName: System.ComponentModel.CollectionChangeEventArgs
+- uid: System.Windows.Forms.BindingContext.Remove(System.Object)
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: Remove(Object)
+  nameWithType: BindingContext.Remove(Object)
+  fullName: BindingContext.Remove(Object)
+- uid: System.Windows.Forms.BindingContext.RemoveCore(System.Object)
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: RemoveCore(Object)
+  nameWithType: BindingContext.RemoveCore(Object)
+  fullName: BindingContext.RemoveCore(Object)
+- uid: System.Windows.Forms.BindingContext.UpdateBinding(System.Windows.Forms.BindingContext,System.Windows.Forms.Binding)
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: UpdateBinding(BindingContext, Binding)
+  nameWithType: BindingContext.UpdateBinding(BindingContext, Binding)
+  fullName: BindingContext.UpdateBinding(BindingContext, Binding)
+- uid: System.Windows.Forms.BindingContext
+  parent: System.Windows.Forms
+  isExternal: false
+  name: BindingContext
+  nameWithType: BindingContext
+  fullName: System.Windows.Forms.BindingContext
+- uid: System.Windows.Forms.Binding
+  parent: System.Windows.Forms
+  isExternal: false
+  name: Binding
+  nameWithType: Binding
+  fullName: System.Windows.Forms.Binding
+- uid: System.Windows.Forms.BindingContext.System#Collections#ICollection#CopyTo(System.Array,System.Int32)
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: ICollection.CopyTo(Array, Int32)
+  nameWithType: BindingContext.ICollection.CopyTo(Array, Int32)
+  fullName: BindingContext.ICollection.CopyTo(Array, Int32)
+- uid: System.Array
+  parent: System
+  isExternal: false
+  name: Array
+  nameWithType: Array
+  fullName: System.Array
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Windows.Forms.BindingContext.System#Collections#ICollection#Count
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: ICollection.Count
+  nameWithType: BindingContext.ICollection.Count
+  fullName: BindingContext.ICollection.Count
+- uid: System.Windows.Forms.BindingContext.System#Collections#ICollection#IsSynchronized
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: ICollection.IsSynchronized
+  nameWithType: BindingContext.ICollection.IsSynchronized
+  fullName: BindingContext.ICollection.IsSynchronized
+- uid: System.Windows.Forms.BindingContext.System#Collections#ICollection#SyncRoot
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: ICollection.SyncRoot
+  nameWithType: BindingContext.ICollection.SyncRoot
+  fullName: BindingContext.ICollection.SyncRoot
+- uid: System.Windows.Forms.BindingContext.System#Collections#IEnumerable#GetEnumerator
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: IEnumerable.GetEnumerator()
+  nameWithType: BindingContext.IEnumerable.GetEnumerator()
+  fullName: BindingContext.IEnumerable.GetEnumerator()
+- uid: System.Collections.IEnumerator
+  parent: System.Collections
+  isExternal: false
+  name: IEnumerator
+  nameWithType: IEnumerator
+  fullName: System.Collections.IEnumerator
+- uid: System.Windows.Forms.BindingContext.#ctor*
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: BindingContext
+  nameWithType: BindingContext.BindingContext
+  fullName: BindingContext.BindingContext
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+- uid: System.Windows.Forms.BindingContext.Add*
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: Add
+  nameWithType: BindingContext.Add
+  fullName: BindingContext.Add
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+- uid: System.Windows.Forms.BindingContext.AddCore*
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: AddCore
+  nameWithType: BindingContext.AddCore
+  fullName: BindingContext.AddCore
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+- uid: System.Windows.Forms.BindingContext.Clear*
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: Clear
+  nameWithType: BindingContext.Clear
+  fullName: BindingContext.Clear
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+- uid: System.Windows.Forms.BindingContext.ClearCore*
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: ClearCore
+  nameWithType: BindingContext.ClearCore
+  fullName: BindingContext.ClearCore
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+- uid: System.Windows.Forms.BindingContext.Contains*
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: Contains
+  nameWithType: BindingContext.Contains
+  fullName: BindingContext.Contains
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+- uid: System.Windows.Forms.BindingContext.IsReadOnly*
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: IsReadOnly
+  nameWithType: BindingContext.IsReadOnly
+  fullName: BindingContext.IsReadOnly
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+- uid: System.Windows.Forms.BindingContext.Item*
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: Item
+  nameWithType: BindingContext.Item
+  fullName: BindingContext.Item
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+- uid: System.Windows.Forms.BindingContext.OnCollectionChanged*
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: OnCollectionChanged
+  nameWithType: BindingContext.OnCollectionChanged
+  fullName: BindingContext.OnCollectionChanged
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+- uid: System.Windows.Forms.BindingContext.Remove*
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: Remove
+  nameWithType: BindingContext.Remove
+  fullName: BindingContext.Remove
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+- uid: System.Windows.Forms.BindingContext.RemoveCore*
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: RemoveCore
+  nameWithType: BindingContext.RemoveCore
+  fullName: BindingContext.RemoveCore
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+- uid: System.Windows.Forms.BindingContext.UpdateBinding*
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: UpdateBinding
+  nameWithType: BindingContext.UpdateBinding
+  fullName: BindingContext.UpdateBinding
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+- uid: System.Windows.Forms.BindingContext.System#Collections#ICollection#CopyTo*
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: System.Collections.ICollection.CopyTo
+  nameWithType: BindingContext.System.Collections.ICollection.CopyTo
+  fullName: BindingContext.System.Collections.ICollection.CopyTo
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+- uid: System.Windows.Forms.BindingContext.System#Collections#ICollection#Count*
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: System.Collections.ICollection.Count
+  nameWithType: BindingContext.System.Collections.ICollection.Count
+  fullName: BindingContext.System.Collections.ICollection.Count
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+- uid: System.Windows.Forms.BindingContext.System#Collections#ICollection#IsSynchronized*
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: System.Collections.ICollection.IsSynchronized
+  nameWithType: BindingContext.System.Collections.ICollection.IsSynchronized
+  fullName: BindingContext.System.Collections.ICollection.IsSynchronized
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+- uid: System.Windows.Forms.BindingContext.System#Collections#ICollection#SyncRoot*
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: System.Collections.ICollection.SyncRoot
+  nameWithType: BindingContext.System.Collections.ICollection.SyncRoot
+  fullName: BindingContext.System.Collections.ICollection.SyncRoot
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+- uid: System.Windows.Forms.BindingContext.System#Collections#IEnumerable#GetEnumerator*
+  parent: System.Windows.Forms.BindingContext
+  isExternal: false
+  name: System.Collections.IEnumerable.GetEnumerator
+  nameWithType: BindingContext.System.Collections.IEnumerable.GetEnumerator
+  fullName: BindingContext.System.Collections.IEnumerable.GetEnumerator
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Windows.Forms/BindingContext.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Linq.Enumerable.Cast``1(System.Collections.IEnumerable)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Cast<TResult>(IEnumerable)
+  nameWithType: Enumerable.Cast<TResult>(IEnumerable)
+  fullName: Enumerable.Cast<TResult>(IEnumerable)
+- uid: System.Linq.Enumerable.OfType``1(System.Collections.IEnumerable)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: OfType<TResult>(IEnumerable)
+  nameWithType: Enumerable.OfType<TResult>(IEnumerable)
+  fullName: Enumerable.OfType<TResult>(IEnumerable)
+- uid: System.Linq.ParallelEnumerable.AsParallel(System.Collections.IEnumerable)
+  parent: System.Linq.ParallelEnumerable
+  isExternal: false
+  name: AsParallel(IEnumerable)
+  nameWithType: ParallelEnumerable.AsParallel(IEnumerable)
+  fullName: ParallelEnumerable.AsParallel(IEnumerable)
+- uid: System.Linq.Queryable.AsQueryable(System.Collections.IEnumerable)
+  parent: System.Linq.Queryable
+  isExternal: false
+  name: AsQueryable(IEnumerable)
+  nameWithType: Queryable.AsQueryable(IEnumerable)
+  fullName: Queryable.AsQueryable(IEnumerable)
+- uid: System.Collections.ICollection
+  parent: System.Collections
+  isExternal: false
+  name: ICollection
+  nameWithType: ICollection
+  fullName: System.Collections.ICollection

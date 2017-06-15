@@ -1,0 +1,5 @@
+---
+summary: Adds the filters whose query criteria are satisfied by a specified message or buffered message to a collection.
+remarks: "Use one of these methods when more than one filter is expected to match the message and the matching filters are required. Note that the collection that contains the filters is not cleared before the results are added. This allows you to accumulate all matches across multiple filter tables into a single collection.  \n  \n If the body of the message must be inspected by a filter in the filter table, buffer the message and pass it to the <xref:System.ServiceModel.Dispatcher.IMessageFilterTable%601.GetMatchingFilters%2A> method. Otherwise, use <xref:System.ServiceModel.Dispatcher.IMessageFilterTable%601.GetMatchingFilters%2A>.  \n  \n The matching <xref:System.ServiceModel.Dispatcher.MessageFilter> objects are stored in the `results` parameter. The filter data can then be recovered from the filter table using these filters as keys with the methods provided by <xref:System.Collections.Generic.IDictionary%602>."
+uid: System.ServiceModel.Dispatcher.IMessageFilterTable`1.GetMatchingFilters*
+---

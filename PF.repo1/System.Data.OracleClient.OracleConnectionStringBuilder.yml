@@ -1,0 +1,2055 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder
+  commentId: T:System.Data.OracleClient.OracleConnectionStringBuilder
+  id: OracleConnectionStringBuilder
+  children:
+  - System.Data.OracleClient.OracleConnectionStringBuilder.#ctor
+  - System.Data.OracleClient.OracleConnectionStringBuilder.#ctor(System.String)
+  - System.Data.OracleClient.OracleConnectionStringBuilder.Clear
+  - System.Data.OracleClient.OracleConnectionStringBuilder.ContainsKey(System.String)
+  - System.Data.OracleClient.OracleConnectionStringBuilder.DataSource
+  - System.Data.OracleClient.OracleConnectionStringBuilder.Enlist
+  - System.Data.OracleClient.OracleConnectionStringBuilder.GetProperties(System.Collections.Hashtable)
+  - System.Data.OracleClient.OracleConnectionStringBuilder.IntegratedSecurity
+  - System.Data.OracleClient.OracleConnectionStringBuilder.IsFixedSize
+  - System.Data.OracleClient.OracleConnectionStringBuilder.Item(System.String)
+  - System.Data.OracleClient.OracleConnectionStringBuilder.Keys
+  - System.Data.OracleClient.OracleConnectionStringBuilder.LoadBalanceTimeout
+  - System.Data.OracleClient.OracleConnectionStringBuilder.MaxPoolSize
+  - System.Data.OracleClient.OracleConnectionStringBuilder.MinPoolSize
+  - System.Data.OracleClient.OracleConnectionStringBuilder.OmitOracleConnectionName
+  - System.Data.OracleClient.OracleConnectionStringBuilder.Password
+  - System.Data.OracleClient.OracleConnectionStringBuilder.PersistSecurityInfo
+  - System.Data.OracleClient.OracleConnectionStringBuilder.Pooling
+  - System.Data.OracleClient.OracleConnectionStringBuilder.Remove(System.String)
+  - System.Data.OracleClient.OracleConnectionStringBuilder.ShouldSerialize(System.String)
+  - System.Data.OracleClient.OracleConnectionStringBuilder.TryGetValue(System.String,System.Object@)
+  - System.Data.OracleClient.OracleConnectionStringBuilder.Unicode
+  - System.Data.OracleClient.OracleConnectionStringBuilder.UserID
+  - System.Data.OracleClient.OracleConnectionStringBuilder.Values
+  langs:
+  - csharp
+  name: OracleConnectionStringBuilder
+  nameWithType: OracleConnectionStringBuilder
+  fullName: System.Data.OracleClient.OracleConnectionStringBuilder
+  type: Class
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Provides a simple way to create and manage the contents of connection strings used by the <xref href="System.Data.OracleClient.OracleConnection"></xref> class.
+  remarks: "This type is deprecated and will be removed in a future version of the .NET Framework. For more information, see [Oracle and ADO.NET](~/docs/framework/data/adonet/oracle-and-adonet.md).  \n  \n The connection string builders allow developers to programmatically create syntactically correct connection strings, and to parse and rebuild existing connection strings, using properties and methods of the class. The connection string builder provides strongly typed properties corresponding to the known key/value pairs allowed by Oracle. The <xref:System.Data.OracleClient.OracleConnectionStringBuilder> class implements the <xref:System.ComponentModel.ICustomTypeDescriptor> interface. This means that the class works with Visual Studio .NET designers at design time. When developers use the designer to build strongly typed **DataSets** and strongly typed connections within Visual Studio .NET, the strongly typed connection string builder class will display the properties associated with its type and will also have converters that can map common values for known keys.  \n  \n Developers needing to create connection strings as part of applications can use the <xref:System.Data.OracleClient.OracleConnectionStringBuilder> class to build and modify connection strings. The <xref:System.Data.OracleClient.OracleConnectionStringBuilder> class also makes it easy to manage connection strings stored in an application configuration file.  \n  \n The <xref:System.Data.OracleClient.OracleConnectionStringBuilder> performs checks for valid key/value pairs. Therefore, this class cannot be used to create invalid connection strings. Trying to add invalid pairs will throw an exception. The <xref:System.Data.OracleClient.OracleConnectionStringBuilder> class maintains a fixed collection of synonyms, and when required, can perform the required translation to convert from a synonym to the corresponding well-known key name. For example, when you use the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.Item%2A> property to retrieve a value, you can specify a string that contains any synonym for the key you need. See the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.Item%2A> property for a full list of acceptable synonyms.  \n  \n The <xref:System.Data.OracleClient.OracleConnectionStringBuilder> handles attempts to insert malicious entries. For example, the following code, using the default <xref:System.Data.OracleClient.OracleConnectionStringBuilder.Item%2A> property (the indexer, in C#) correctly escapes the nested key/value pair.  \n  \n```vb  \nDim builder As New System.Data. _  \n    OracleClient.OracleConnectionStringBuilder  \nbuilder(\"Data Source\") = \"OracleDemo\"  \nbuilder(\"Integrated Security\") = True  \nbuilder(\"User ID\") = \"Mary;NewValue=Bad\"  \nSystem.Diagnostics.Debug.WriteLine(builder.ConnectionString)  \n```  \n  \n```csharp  \nSystem.Data.OracleClient.OracleConnectionStringBuilder builder =  \n   new System.Data.OracleClient.OracleConnectionStringBuilder();  \nbuilder[\"Data Source\"] = \"OracleDemo\";  \nbuilder[\"integrated Security\"] = true;  \nbuilder[\"User ID\"] = \"Mary;NewValue=Bad\";  \nSystem.Diagnostics.Debug.WriteLine(builder.ConnectionString);  \n```  \n  \n The result is the following connection string that handles the invalid value in a safe manner by enclosing the User ID value in quotes:  \n  \n```  \nData Source=OracleDemo;Integrated Security=True;User ID=\"Mary;NewValue=Bad\"  \n```"
+  example:
+  - "The following console application builds connection strings for an Oracle database. The code uses an <xref:System.Data.OracleClient.OracleConnectionStringBuilder> class to create the connection string, and then passes the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.ConnectionString%2A> property of the <xref:System.Data.OracleClient.OracleConnectionStringBuilder> instance to the constructor of the connection class. The example also parses an existing connection string, and demonstrates various ways of manipulating the connection string's contents.  \n  \n> [!NOTE]\n>  This example includes a password to demonstrate how <xref:System.Data.OracleClient.OracleConnectionStringBuilder> works with connection strings. In your applications, we recommend that you use Windows Authentication. If you must use a password, do not include a hard-coded password in your application.  \n  \n [!code-csharp[DataWorks OracleConnectionStringBuilder#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder/CS/source.cs#1)]\n [!code-vb[DataWorks OracleConnectionStringBuilder#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder/VB/source.vb#1)]"
+  syntax:
+    content: >-
+      [System.ComponentModel.TypeConverter(typeof(System.Data.OracleClient.OracleConnectionStringBuilder/OracleConnectionStringBuilderConverter))]
+
+      [System.Obsolete("OracleConnectionStringBuilder has been deprecated. http://go.microsoft.com/fwlink/?LinkID=144260", false)]
+
+      public sealed class OracleConnectionStringBuilder : System.Data.Common.DbConnectionStringBuilder
+  inheritance:
+  - System.Object
+  - System.Data.Common.DbConnectionStringBuilder
+  implements: []
+  inheritedMembers:
+  - System.Data.Common.DbConnectionStringBuilder.Add(System.String,System.Object)
+  - System.Data.Common.DbConnectionStringBuilder.AppendKeyValuePair(System.Text.StringBuilder,System.String,System.String)
+  - System.Data.Common.DbConnectionStringBuilder.AppendKeyValuePair(System.Text.StringBuilder,System.String,System.String,System.Boolean)
+  - System.Data.Common.DbConnectionStringBuilder.BrowsableConnectionString
+  - System.Data.Common.DbConnectionStringBuilder.ClearPropertyDescriptors
+  - System.Data.Common.DbConnectionStringBuilder.ConnectionString
+  - System.Data.Common.DbConnectionStringBuilder.Count
+  - System.Data.Common.DbConnectionStringBuilder.EquivalentTo(System.Data.Common.DbConnectionStringBuilder)
+  - System.Data.Common.DbConnectionStringBuilder.IsReadOnly
+  - System.Data.Common.DbConnectionStringBuilder.System#Collections#ICollection#CopyTo(System.Array,System.Int32)
+  - System.Data.Common.DbConnectionStringBuilder.System#Collections#ICollection#IsSynchronized
+  - System.Data.Common.DbConnectionStringBuilder.System#Collections#ICollection#SyncRoot
+  - System.Data.Common.DbConnectionStringBuilder.System#Collections#IDictionary#Add(System.Object,System.Object)
+  - System.Data.Common.DbConnectionStringBuilder.System#Collections#IDictionary#Contains(System.Object)
+  - System.Data.Common.DbConnectionStringBuilder.System#Collections#IDictionary#GetEnumerator
+  - System.Data.Common.DbConnectionStringBuilder.System#Collections#IDictionary#IsFixedSize
+  - System.Data.Common.DbConnectionStringBuilder.System#Collections#IDictionary#IsReadOnly
+  - System.Data.Common.DbConnectionStringBuilder.System#Collections#IDictionary#Item(System.Object)
+  - System.Data.Common.DbConnectionStringBuilder.System#Collections#IDictionary#Remove(System.Object)
+  - System.Data.Common.DbConnectionStringBuilder.System#Collections#IEnumerable#GetEnumerator
+  - System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetAttributes
+  - System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetClassName
+  - System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetComponentName
+  - System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetConverter
+  - System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetDefaultEvent
+  - System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetDefaultProperty
+  - System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetEditor(System.Type)
+  - System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetEvents
+  - System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetEvents(System.Attribute[])
+  - System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetProperties
+  - System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetProperties(System.Attribute[])
+  - System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetPropertyOwner(System.ComponentModel.PropertyDescriptor)
+  - System.Data.Common.DbConnectionStringBuilder.ToString
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  extensionMethods:
+  - System.Linq.Enumerable.Cast``1(System.Collections.IEnumerable)
+  - System.Linq.Enumerable.OfType``1(System.Collections.IEnumerable)
+  - System.Linq.ParallelEnumerable.AsParallel(System.Collections.IEnumerable)
+  - System.Linq.Queryable.AsQueryable(System.Collections.IEnumerable)
+  attributes:
+  - type: System.ComponentModel.TypeConverterAttribute
+  - type: System.ObsoleteAttribute
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.#ctor
+  commentId: M:System.Data.OracleClient.OracleConnectionStringBuilder.#ctor
+  id: '#ctor'
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: OracleConnectionStringBuilder()
+  nameWithType: OracleConnectionStringBuilder.OracleConnectionStringBuilder()
+  fullName: OracleConnectionStringBuilder.OracleConnectionStringBuilder()
+  type: Constructor
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Initializes a new instance of the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref> class.
+  syntax:
+    content: public OracleConnectionStringBuilder ();
+    parameters: []
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.#ctor(System.String)
+  commentId: M:System.Data.OracleClient.OracleConnectionStringBuilder.#ctor(System.String)
+  id: '#ctor(System.String)'
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: OracleConnectionStringBuilder(String)
+  nameWithType: OracleConnectionStringBuilder.OracleConnectionStringBuilder(String)
+  fullName: OracleConnectionStringBuilder.OracleConnectionStringBuilder(String)
+  type: Constructor
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Initializes a new instance of the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref> class. The provided connection string provides the data for the instance's internal connection information.
+  remarks: The <xref:System.Data.OracleClient.OracleConnectionStringBuilder> class provides a fixed internal collection of key/value pairs. Even if you supply only a small subset of the possible connection string values in the constructor, the object always provides default values for each key/value pair. When the <xref:System.Data.Common.DbConnection.ConnectionString%2A> property of the object is retrieved, the string contains only key/value pairs in which the value is different from the default value for the item.
+  example:
+  - "The following example supplies a simple connection string in the <xref:System.Data.OracleClient.OracleConnectionStringBuilder> object's constructor, and then iterates through all the key/value pairs within the object. Note that the collection provides default values for each items. Also note that the <xref:System.Data.OracleClient.OracleConnectionStringBuilder> class converts synonyms for the well-known keys so that they are consistent with the well-known names.  \n  \n> [!NOTE]\n>  This example includes a password to demonstrate how <xref:System.Data.OracleClient.OracleConnectionStringBuilder> works with connection strings. In your applications, we recommend that you use Windows Authentication. If you must use a password, do not include a hard-coded password in your application.  \n  \n [!code-csharp[DataWorks OracleConnectionStringBuilder.Ctor#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.Ctor/CS/source.cs#1)]\n [!code-vb[DataWorks OracleConnectionStringBuilder.Ctor#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.Ctor/VB/source.vb#1)]"
+  syntax:
+    content: public OracleConnectionStringBuilder (string connectionString);
+    parameters:
+    - id: connectionString
+      type: System.String
+      description: The basis for the object's internal connection information. Parsed into name/value pairs. Invalid key names raise a <xref href="System.Collections.Generic.KeyNotFoundException"></xref>.
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.#ctor*
+  exceptions:
+  - type: System.Collections.Generic.KeyNotFoundException
+    commentId: T:System.Collections.Generic.KeyNotFoundException
+    description: Invalid key name within the connection string.
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: Invalid value within the connection string (specifically, when a Boolean or numeric value was expected but not supplied).
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Clear
+  commentId: M:System.Data.OracleClient.OracleConnectionStringBuilder.Clear
+  id: Clear
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: Clear()
+  nameWithType: OracleConnectionStringBuilder.Clear()
+  fullName: OracleConnectionStringBuilder.Clear()
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Clears the contents of the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref> instance.
+  remarks: The <xref:System.Data.OracleClient.OracleConnectionStringBuilder.Clear%2A> method removes all key/value pairs from the <xref:System.Data.OracleClient.OracleConnectionStringBuilder>, and resets all corresponding properties. This includes resetting the connection string to an empty string.
+  example:
+  - "The following example demonstrates the effect of calling the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.Clear%2A> method. This example populates the <xref:System.Data.OracleClient.OracleConnectionStringBuilder> with some key/value pairs, and then calls the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.Clear%2A> method and shows the results.  \n  \n [!code-csharp[DataWorks OracleConnectionStringBuilder.Clear#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.Clear/CS/source.cs#1)]\n [!code-vb[DataWorks OracleConnectionStringBuilder.Clear#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.Clear/VB/source.vb#1)]"
+  syntax:
+    content: public override void Clear ();
+    parameters: []
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.Clear*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.ContainsKey(System.String)
+  commentId: M:System.Data.OracleClient.OracleConnectionStringBuilder.ContainsKey(System.String)
+  id: ContainsKey(System.String)
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: ContainsKey(String)
+  nameWithType: OracleConnectionStringBuilder.ContainsKey(String)
+  fullName: OracleConnectionStringBuilder.ContainsKey(String)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Determines whether the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref> contains a specific key.
+  remarks: Because the <xref:System.Data.OracleClient.OracleConnectionStringBuilder> contains a fixed-size collection of key/value pairs, the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.ContainsKey%2A> method determines only if a particular key name is valid.
+  example:
+  - "The following example creates an <xref:System.Data.OracleClient.OracleConnectionStringBuilder> instance, sets some of its properties, and then tries to determine whether various keys exist within the object by calling the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.ContainsKey%2A> method.  \n  \n [!code-csharp[DataWorks OracleConnectionStringBuilder.ContainsKey#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.ContainsKey/CS/source.cs#1)]\n [!code-vb[DataWorks OracleConnectionStringBuilder.ContainsKey#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.ContainsKey/VB/source.vb#1)]"
+  syntax:
+    content: public override bool ContainsKey (string keyword);
+    parameters:
+    - id: keyword
+      type: System.String
+      description: The key to locate in the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref>.
+    return:
+      type: System.Boolean
+      description: '`true` if the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref> contains an element that has the specified key; otherwise, `false`.'
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.ContainsKey*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>keyword</code> is null (`Nothing` in Visual Basic)
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.DataSource
+  commentId: P:System.Data.OracleClient.OracleConnectionStringBuilder.DataSource
+  id: DataSource
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: DataSource
+  nameWithType: OracleConnectionStringBuilder.DataSource
+  fullName: OracleConnectionStringBuilder.DataSource
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets the name of the Oracle data source to connect to.
+  remarks: This property corresponds to the "Data Source" and "Server" keys within the connection string. Regardless of which of these values has been supplied within the supplied connection string, the connection string created by the <xref:System.Data.OracleClient.OracleConnectionStringBuilder> will use the well-known "Data Source" key. If the value passed in is null when you try to set the property, the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.DataSource%2A> property is reset. If the value has not been set and the developer tries to retrieve the property, the return value is <xref:System.String.Empty>.
+  example:
+  - "The following example demonstrates that the <xref:System.Data.OracleClient.OracleConnectionStringBuilder> class converts synonyms for the \"Data Source\" connection string key into the well-known key.  \n  \n [!code-csharp[DataWorks OracleConnectionStringBuilder.DataSource#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.DataSource/CS/source.cs#1)]\n [!code-vb[DataWorks OracleConnectionStringBuilder.DataSource#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.DataSource/VB/source.vb#1)]"
+  syntax:
+    content: public string DataSource { get; set; }
+    return:
+      type: System.String
+      description: The value of the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder.DataSource"></xref> property, or <xref href="System.String.Empty"></xref> if none has been supplied.
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.DataSource*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Enlist
+  commentId: P:System.Data.OracleClient.OracleConnectionStringBuilder.Enlist
+  id: Enlist
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: Enlist
+  nameWithType: OracleConnectionStringBuilder.Enlist
+  fullName: OracleConnectionStringBuilder.Enlist
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets a value that indicates whether the pooler automatically enlists the connection in the creation thread's current transaction context.
+  remarks: This property corresponds to the "Enlist" key within the connection string.
+  syntax:
+    content: public bool Enlist { get; set; }
+    return:
+      type: System.Boolean
+      description: The value of the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder.Enlist"></xref> property, or `true` if the property has not been previously set.
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.Enlist*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.GetProperties(System.Collections.Hashtable)
+  commentId: M:System.Data.OracleClient.OracleConnectionStringBuilder.GetProperties(System.Collections.Hashtable)
+  id: GetProperties(System.Collections.Hashtable)
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: GetProperties(Hashtable)
+  nameWithType: OracleConnectionStringBuilder.GetProperties(Hashtable)
+  fullName: OracleConnectionStringBuilder.GetProperties(Hashtable)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  syntax:
+    content: protected override void GetProperties (System.Collections.Hashtable propertyDescriptors);
+    parameters:
+    - id: propertyDescriptors
+      type: System.Collections.Hashtable
+      description: ''
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.GetProperties*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.IntegratedSecurity
+  commentId: P:System.Data.OracleClient.OracleConnectionStringBuilder.IntegratedSecurity
+  id: IntegratedSecurity
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: IntegratedSecurity
+  nameWithType: OracleConnectionStringBuilder.IntegratedSecurity
+  fullName: OracleConnectionStringBuilder.IntegratedSecurity
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets a value that indicates whether "User ID" and "Password" are specified in the connection (when `false`) or whether the current Windows account credentials are used for authentication (when `true`).
+  remarks: This property corresponds to the "Integrated Security" key within the connection string.
+  example:
+  - "The following example converts an existing connection string from using Windows Authentication to using integrated security. The example works by removing the user name and password from the connection string, and then setting the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.IntegratedSecurity%2A> property of the <xref:System.Data.OracleClient.OracleConnectionStringBuilder> object.  \n  \n> [!NOTE]\n>  This example includes a password to demonstrate how <xref:System.Data.OracleClient.OracleConnectionStringBuilder> works with connection strings. In your applications, we recommend that you use Windows Authentication. If you must use a password, do not include a hard-coded password in your application.  \n  \n [!code-csharp[DataWorks OracleConnectionStringBuilder.IntegratedSecurity#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.IntegratedSecurity/CS/source.cs#1)]\n [!code-vb[DataWorks OracleConnectionStringBuilder.IntegratedSecurity#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.IntegratedSecurity/VB/source.vb#1)]"
+  syntax:
+    content: public bool IntegratedSecurity { get; set; }
+    return:
+      type: System.Boolean
+      description: The value of the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder.IntegratedSecurity"></xref> property, or a `false` if none has been supplied.
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.IntegratedSecurity*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.IsFixedSize
+  commentId: P:System.Data.OracleClient.OracleConnectionStringBuilder.IsFixedSize
+  id: IsFixedSize
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: IsFixedSize
+  nameWithType: OracleConnectionStringBuilder.IsFixedSize
+  fullName: OracleConnectionStringBuilder.IsFixedSize
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets a value that indicates whether the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref> has a fixed size.
+  syntax:
+    content: public override bool IsFixedSize { get; }
+    return:
+      type: System.Boolean
+      description: '`true` in every case, because the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref> supplies a fixed-size collection of key/value pairs.'
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.IsFixedSize*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Item(System.String)
+  commentId: P:System.Data.OracleClient.OracleConnectionStringBuilder.Item(System.String)
+  id: Item(System.String)
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: Item(String)
+  nameWithType: OracleConnectionStringBuilder.Item(String)
+  fullName: OracleConnectionStringBuilder.Item(String)
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets the value associated with the specified key. In C#, this property is the indexer.
+  remarks: "Because the <xref:System.Data.OracleClient.OracleConnectionStringBuilder> contains a fixed-size dictionary, trying to add a key that does not exist within the dictionary throws a <xref:System.Collections.Generic.KeyNotFoundException>. The following table lists all the possible keys within the connection string, and the default value for each.  \n  \n|Key|Property|Default value|  \n|---------|--------------|-------------------|  \n|Data Source (or server)|<xref:System.Data.OracleClient.OracleConnectionStringBuilder.DataSource%2A>|Empty string|  \n|Persist Security Info (or persistsecurityinfo)|<xref:System.Data.OracleClient.OracleConnectionStringBuilder.PersistSecurityInfo%2A>|False|  \n|Integrated Security|<xref:System.Data.OracleClient.OracleConnectionStringBuilder.IntegratedSecurity%2A>|False|  \n|User ID (or user or uid)|<xref:System.Data.OracleClient.OracleConnectionStringBuilder.UserID%2A>|Empty string|  \n|Password|<xref:System.Data.OracleClient.OracleConnectionStringBuilder.Password%2A>|Empty string|  \n|Enlist|<xref:System.Data.OracleClient.OracleConnectionStringBuilder.Enlist%2A>|True|  \n|Pooling|<xref:System.Data.OracleClient.OracleConnectionStringBuilder.Pooling%2A>|True|  \n|Min Pool Size|<xref:System.Data.OracleClient.OracleConnectionStringBuilder.MinPoolSize%2A>|0|  \n|Max Pool Size|<xref:System.Data.OracleClient.OracleConnectionStringBuilder.MaxPoolSize%2A>|100|  \n|Omit Oracle Connection Name|<xref:System.Data.OracleClient.OracleConnectionStringBuilder.OmitOracleConnectionName%2A>|False|  \n|Unicode|<xref:System.Data.OracleClient.OracleConnectionStringBuilder.Unicode%2A>|False|  \n|Load Balance Timeout (or connection lifetime)|<xref:System.Data.OracleClient.OracleConnectionStringBuilder.LoadBalanceTimeout%2A>|0|"
+  example:
+  - "The following code, in a console application, creates a new <xref:System.Data.OracleClient.OracleConnectionStringBuilder> and adds key/value pairs to its connection string, using the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.Item%2A> property.  \n  \n [!code-csharp[DataWorks OracleConnectionStringBuilder.Item#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.Item/CS/source.cs#1)]\n [!code-vb[DataWorks OracleConnectionStringBuilder.Item#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.Item/VB/source.vb#1)]"
+  syntax:
+    content: public override object this[string keyword] { get; set; }
+    parameters:
+    - id: keyword
+      type: System.String
+      description: The key of the item to get or set.
+    return:
+      type: System.Object
+      description: The value associated with the specified key.
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.Item*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>keyword</code> is a null reference (`Nothing` in Visual Basic).
+  - type: System.Collections.Generic.KeyNotFoundException
+    commentId: T:System.Collections.Generic.KeyNotFoundException
+    description: Tried to add a key which does not exist within the available keys.
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: Invalid value within the connection string (specifically, when a Boolean or numeric value was expected but not supplied).
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Keys
+  commentId: P:System.Data.OracleClient.OracleConnectionStringBuilder.Keys
+  id: Keys
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: Keys
+  nameWithType: OracleConnectionStringBuilder.Keys
+  fullName: OracleConnectionStringBuilder.Keys
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets an <xref href="System.Collections.ICollection"></xref> that contains the keys in the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref>.
+  remarks: The order of the values in the <xref:System.Collections.ICollection> is unspecified, but it is the same order as the associated values in the <xref:System.Collections.ICollection> returned by the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.Values%2A> property.
+  example:
+  - "The following console application example creates a new <xref:System.Data.OracleClient.OracleConnectionStringBuilder>. The code loops through the <xref:System.Collections.ICollection> returned by the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.Keys%2A> property displaying the key/value pairs.  \n  \n [!code-csharp[DataWorks OracleConnectionStringBuilder.Keys#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.Keys/CS/source.cs#1)]\n [!code-vb[DataWorks OracleConnectionStringBuilder.Keys#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.Keys/VB/source.vb#1)]"
+  syntax:
+    content: public override System.Collections.ICollection Keys { get; }
+    return:
+      type: System.Collections.ICollection
+      description: An <xref href="System.Collections.ICollection"></xref> that contains the keys in the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref>.
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.Keys*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.LoadBalanceTimeout
+  commentId: P:System.Data.OracleClient.OracleConnectionStringBuilder.LoadBalanceTimeout
+  id: LoadBalanceTimeout
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: LoadBalanceTimeout
+  nameWithType: OracleConnectionStringBuilder.LoadBalanceTimeout
+  fullName: OracleConnectionStringBuilder.LoadBalanceTimeout
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets the minimum time, in seconds, for the connection to live in the connection pool before it is removed.
+  remarks: This property corresponds to the "Load Balance Timeout" and "Connection Lifetime" keys within the connection string.
+  syntax:
+    content: public int LoadBalanceTimeout { get; set; }
+    return:
+      type: System.Int32
+      description: The value of the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder.LoadBalanceTimeout"></xref> property, or 0 if none has been supplied.
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.LoadBalanceTimeout*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.MaxPoolSize
+  commentId: P:System.Data.OracleClient.OracleConnectionStringBuilder.MaxPoolSize
+  id: MaxPoolSize
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: MaxPoolSize
+  nameWithType: OracleConnectionStringBuilder.MaxPoolSize
+  fullName: OracleConnectionStringBuilder.MaxPoolSize
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets the maximum number of connections allowed in the connection pool for this specific connection string.
+  remarks: This property corresponds to the "Max Pool Size" key within the connection string.
+  syntax:
+    content: public int MaxPoolSize { get; set; }
+    return:
+      type: System.Int32
+      description: The value of the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder.MaxPoolSize"></xref> property, or 100 if none has been supplied.
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.MaxPoolSize*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.MinPoolSize
+  commentId: P:System.Data.OracleClient.OracleConnectionStringBuilder.MinPoolSize
+  id: MinPoolSize
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: MinPoolSize
+  nameWithType: OracleConnectionStringBuilder.MinPoolSize
+  fullName: OracleConnectionStringBuilder.MinPoolSize
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets the minimum number of connections allowed in the connection pool for this specific connection string.
+  remarks: This property corresponds to the "Min Pool Size" key within the connection string.
+  syntax:
+    content: public int MinPoolSize { get; set; }
+    return:
+      type: System.Int32
+      description: The value of the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder.MinPoolSize"></xref> property, or 0 if none has been supplied.
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.MinPoolSize*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.OmitOracleConnectionName
+  commentId: P:System.Data.OracleClient.OracleConnectionStringBuilder.OmitOracleConnectionName
+  id: OmitOracleConnectionName
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: OmitOracleConnectionName
+  nameWithType: OracleConnectionStringBuilder.OmitOracleConnectionName
+  fullName: OracleConnectionStringBuilder.OmitOracleConnectionName
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets the flag that enables transaction rollbacks on earlier versions of Oracle (prior to 8.1.7.4.1).
+  remarks: When set to `true`, this property prevents certain errors from occurring when attempting to roll back transactions in earlier versions of Oracle (prior to 8.1.7.4.1).
+  syntax:
+    content: public bool OmitOracleConnectionName { get; set; }
+    return:
+      type: System.Boolean
+      description: '`true` if transaction rollbacks are enabled; otherwise `false`.'
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.OmitOracleConnectionName*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Password
+  commentId: P:System.Data.OracleClient.OracleConnectionStringBuilder.Password
+  id: Password
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: Password
+  nameWithType: OracleConnectionStringBuilder.Password
+  fullName: OracleConnectionStringBuilder.Password
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets the password for the Oracle account.
+  remarks: This property corresponds to the "Password" and "pwd" keys within the connection string.
+  example:
+  - If the value passed in is null when you try to set the property, the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.Password%2A> property is reset. If the value has not been set and the developer tries to retrieve the property, the return value is <xref:System.String.Empty>.
+  syntax:
+    content: public string Password { get; set; }
+    return:
+      type: System.String
+      description: The value of the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder.Password"></xref> property, or <xref href="System.String.Empty"></xref> if none has been supplied.
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.Password*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.PersistSecurityInfo
+  commentId: P:System.Data.OracleClient.OracleConnectionStringBuilder.PersistSecurityInfo
+  id: PersistSecurityInfo
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: PersistSecurityInfo
+  nameWithType: OracleConnectionStringBuilder.PersistSecurityInfo
+  fullName: OracleConnectionStringBuilder.PersistSecurityInfo
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets a Boolean value that indicates if security-sensitive information, such as the password, is not returned as part of the connection if the connection is open or has ever been in an open state.
+  remarks: This property corresponds to the "Persist Security Info" and "persistsecurityinfo" keys within the connection string.
+  syntax:
+    content: public bool PersistSecurityInfo { get; set; }
+    return:
+      type: System.Boolean
+      description: The value of the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder.PersistSecurityInfo"></xref> property, or `false` if none has been supplied.
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.PersistSecurityInfo*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Pooling
+  commentId: P:System.Data.OracleClient.OracleConnectionStringBuilder.Pooling
+  id: Pooling
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: Pooling
+  nameWithType: OracleConnectionStringBuilder.Pooling
+  fullName: OracleConnectionStringBuilder.Pooling
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets a Boolean value that indicates whether the connection will be pooled, or whether each connection will be explicitly opened every time that the connection is requested.
+  remarks: This property corresponds to the "Pooling" key within the connection string.
+  syntax:
+    content: public bool Pooling { get; set; }
+    return:
+      type: System.Boolean
+      description: The value of the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder.Pooling"></xref> property, or `true` if none has been supplied.
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.Pooling*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Remove(System.String)
+  commentId: M:System.Data.OracleClient.OracleConnectionStringBuilder.Remove(System.String)
+  id: Remove(System.String)
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: Remove(String)
+  nameWithType: OracleConnectionStringBuilder.Remove(String)
+  fullName: OracleConnectionStringBuilder.Remove(String)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Removes the entry with the specified key from the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref> instance.
+  remarks: "Because the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.Remove%2A> method returns a value that indicates its success, it is not necessary to look for the existence of a key before trying to remove the key/value pair from the <xref:System.Data.OracleClient.OracleConnectionStringBuilder> instance. Because the <xref:System.Data.OracleClient.OracleConnectionStringBuilder> maintains a fixed-size collection of key/value pairs, calling the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.Remove%2A> method just resets the value of the key/value pair back to its default value.  \n  \n Because the collection of keys supported by the <xref:System.Data.OracleClient.OracleConnectionStringBuilder> is fixed, every item within the collection has a known default value.  \n  \n The following table lists the keys, and the value for each when the <xref:System.Data.OracleClient.OracleConnectionStringBuilder> is first initialized, or after the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.Remove%2A> method has been called:  \n  \n|Key|Default value|  \n|---------|-------------------|  \n|Data Source|Empty string|  \n|Persist Security Info|False|  \n|Integrated Security|False|  \n|User ID|Empty string|  \n|Password|Empty string|  \n|Enlist|True|  \n|Pooling|True|  \n|Min Pool Size|0|  \n|Max Pool Size|100|  \n|Unicode|False|  \n|Load Balance Timeout|0|  \n|Omit Oracle Connection Name|False|"
+  example:
+  - "The following example converts an existing connection string from using Windows Authentication to using integrated security. The example works by removing the user name and password from the connection string, and then setting the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.IntegratedSecurity%2A> property of the <xref:System.Data.OracleClient.OracleConnectionStringBuilder> object.  \n  \n> [!NOTE]\n>  This example includes a password to demonstrate how <xref:System.Data.OracleClient.OracleConnectionStringBuilder> works with connection strings. In your applications, we recommend that you use Windows Authentication. If you must use a password, do not include a hard-coded password in your application.  \n  \n [!code-csharp[DataWorks OracleConnectionStringBuilder.Remove#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.Remove/CS/source.cs#1)]\n [!code-vb[DataWorks OracleConnectionStringBuilder.Remove#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.Remove/VB/source.vb#1)]"
+  syntax:
+    content: public override bool Remove (string keyword);
+    parameters:
+    - id: keyword
+      type: System.String
+      description: The key of the key/value pair to be removed from the connection string in this <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref>.
+    return:
+      type: System.Boolean
+      description: '`true` if the key existed within the connection string and was removed, `false` if the key did not exist.'
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.Remove*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>keyword</code> is null (`Nothing` in Visual Basic).
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.ShouldSerialize(System.String)
+  commentId: M:System.Data.OracleClient.OracleConnectionStringBuilder.ShouldSerialize(System.String)
+  id: ShouldSerialize(System.String)
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: ShouldSerialize(String)
+  nameWithType: OracleConnectionStringBuilder.ShouldSerialize(String)
+  fullName: OracleConnectionStringBuilder.ShouldSerialize(String)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Indicates whether the specified key exists in this <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref> instance.
+  remarks: This method behaves identically to the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.ContainsKey%2A> method.
+  syntax:
+    content: public override bool ShouldSerialize (string keyword);
+    parameters:
+    - id: keyword
+      type: System.String
+      description: The key to locate in the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref>.
+    return:
+      type: System.Boolean
+      description: '`true` if the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref> contains an entry with the specified key; otherwise, `false`.'
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.ShouldSerialize*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.TryGetValue(System.String,System.Object@)
+  commentId: M:System.Data.OracleClient.OracleConnectionStringBuilder.TryGetValue(System.String,System.Object@)
+  id: TryGetValue(System.String,System.Object@)
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: TryGetValue(String, Object)
+  nameWithType: OracleConnectionStringBuilder.TryGetValue(String, Object)
+  fullName: OracleConnectionStringBuilder.TryGetValue(String, Object)
+  type: Method
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Retrieves a value corresponding to the supplied key from this <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref>.
+  remarks: The <xref:System.Data.OracleClient.OracleConnectionStringBuilder.TryGetValue%2A> method lets developers safely retrieve a value from an <xref:System.Data.OracleClient.OracleConnectionStringBuilder> without needing to verify that the supplied key name is a valid key name. Because <xref:System.Data.OracleClient.OracleConnectionStringBuilder.TryGetValue%2A> gracefully handles searching for a non-existent key, there is no need to look for the existence of a key before retrieving its value. Calling <xref:System.Data.OracleClient.OracleConnectionStringBuilder.TryGetValue%2A> with a nonexistent key will place the value null (`Nothing` in Visual Basic) in the `value` parameter.
+  example:
+  - "The following example demonstrates the behavior of the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.TryGetValue%2A> method.  \n  \n [!code-csharp[DataWorks OracleConnectionStringBuilder.TryGetValue#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.TryGetValue/CS/source.cs#1)]\n [!code-vb[DataWorks OracleConnectionStringBuilder.TryGetValue#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.TryGetValue/VB/source.vb#1)]"
+  syntax:
+    content: public override bool TryGetValue (string keyword, out object value);
+    parameters:
+    - id: keyword
+      type: System.String
+      description: The key of the item to retrieve.
+    - id: value
+      type: System.Object
+      description: The value corresponding to <code>keyword.</code>
+    return:
+      type: System.Boolean
+      description: '`true` if <code>keyword</code> was found within the connection string; otherwise, `false`.'
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.TryGetValue*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Unicode
+  commentId: P:System.Data.OracleClient.OracleConnectionStringBuilder.Unicode
+  id: Unicode
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: Unicode
+  nameWithType: OracleConnectionStringBuilder.Unicode
+  fullName: OracleConnectionStringBuilder.Unicode
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets a Boolean value that indicates if the client supports the Unicode functionality available in later Oracle clients, or if it is non-Unicode aware.
+  remarks: This property corresponds to the "Unicode" key within the connection string.
+  syntax:
+    content: public bool Unicode { get; set; }
+    return:
+      type: System.Boolean
+      description: The value of the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder.Unicode"></xref> property, or `false` if none has been supplied.
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.Unicode*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.UserID
+  commentId: P:System.Data.OracleClient.OracleConnectionStringBuilder.UserID
+  id: UserID
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: UserID
+  nameWithType: OracleConnectionStringBuilder.UserID
+  fullName: OracleConnectionStringBuilder.UserID
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets or sets the user ID to be used when connecting to Oracle.
+  remarks: "This property corresponds to the \"User ID\", \"user\", and \"uid\" keys within the connection string.  \n  \n If the value passed in is null when you try to set the property, the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.UserID%2A> property is reset. If the value has not been set and the developer tries to retrieve the property, the return value is <xref:System.String.Empty>."
+  syntax:
+    content: public string UserID { get; set; }
+    return:
+      type: System.String
+      description: The value of the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder.UserID"></xref> property, or <xref href="System.String.Empty"></xref> if none has been supplied.
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.UserID*
+  exceptions: []
+  attributes: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Values
+  commentId: P:System.Data.OracleClient.OracleConnectionStringBuilder.Values
+  id: Values
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  langs:
+  - csharp
+  name: Values
+  nameWithType: OracleConnectionStringBuilder.Values
+  fullName: OracleConnectionStringBuilder.Values
+  type: Property
+  assemblies:
+  - System.Data.OracleClient
+  namespace: System.Data.OracleClient
+  summary: Gets an <xref href="System.Collections.ICollection"></xref> that contains the values in the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref>.
+  remarks: The order of the values in the <xref:System.Collections.ICollection> is unspecified, but it is the same order as the associated keys in the <xref:System.Collections.ICollection> returned by the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.Keys%2A> property. Because each instance of the <xref:System.Data.OracleClient.OracleConnectionStringBuilder> always contains the same fixed set of keys, the <xref:System.Data.OracleClient.OracleConnectionStringBuilder.Values%2A> property always returns the values corresponding to the fixed set of keys, in the same order as the keys.
+  example:
+  - "The following example first creates a new <xref:System.Data.OracleClient.OracleConnectionStringBuilder>, and then iterates through all the values within the object.  \n  \n [!code-csharp[DataWorks OracleConnectionStringBuilder.Values#1](~/samples/snippets/csharp/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.Values/CS/source.cs#1)]\n [!code-vb[DataWorks OracleConnectionStringBuilder.Values#1](~/samples/snippets/visualbasic/VS_Snippets_ADO.NET/DataWorks OracleConnectionStringBuilder.Values/VB/source.vb#1)]"
+  syntax:
+    content: public override System.Collections.ICollection Values { get; }
+    return:
+      type: System.Collections.ICollection
+      description: An <xref href="System.Collections.ICollection"></xref> that contains the values in the <xref href="System.Data.OracleClient.OracleConnectionStringBuilder"></xref>.
+  overload: System.Data.OracleClient.OracleConnectionStringBuilder.Values*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+references:
+- uid: System.Data.Common.DbConnectionStringBuilder
+  parent: System.Data.Common
+  isExternal: false
+  name: DbConnectionStringBuilder
+  nameWithType: DbConnectionStringBuilder
+  fullName: System.Data.Common.DbConnectionStringBuilder
+- uid: System.Collections.Generic.KeyNotFoundException
+  parent: System.Collections.Generic
+  isExternal: false
+  name: KeyNotFoundException
+  nameWithType: KeyNotFoundException
+  fullName: System.Collections.Generic.KeyNotFoundException
+- uid: System.FormatException
+  parent: System
+  isExternal: false
+  name: FormatException
+  nameWithType: FormatException
+  fullName: System.FormatException
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.#ctor
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: OracleConnectionStringBuilder()
+  nameWithType: OracleConnectionStringBuilder.OracleConnectionStringBuilder()
+  fullName: OracleConnectionStringBuilder.OracleConnectionStringBuilder()
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.#ctor(System.String)
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: OracleConnectionStringBuilder(String)
+  nameWithType: OracleConnectionStringBuilder.OracleConnectionStringBuilder(String)
+  fullName: OracleConnectionStringBuilder.OracleConnectionStringBuilder(String)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Clear
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Clear()
+  nameWithType: OracleConnectionStringBuilder.Clear()
+  fullName: OracleConnectionStringBuilder.Clear()
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.ContainsKey(System.String)
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: ContainsKey(String)
+  nameWithType: OracleConnectionStringBuilder.ContainsKey(String)
+  fullName: OracleConnectionStringBuilder.ContainsKey(String)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.DataSource
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: DataSource
+  nameWithType: OracleConnectionStringBuilder.DataSource
+  fullName: OracleConnectionStringBuilder.DataSource
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Enlist
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Enlist
+  nameWithType: OracleConnectionStringBuilder.Enlist
+  fullName: OracleConnectionStringBuilder.Enlist
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.GetProperties(System.Collections.Hashtable)
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: GetProperties(Hashtable)
+  nameWithType: OracleConnectionStringBuilder.GetProperties(Hashtable)
+  fullName: OracleConnectionStringBuilder.GetProperties(Hashtable)
+- uid: System.Collections.Hashtable
+  parent: System.Collections
+  isExternal: false
+  name: Hashtable
+  nameWithType: Hashtable
+  fullName: System.Collections.Hashtable
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.IntegratedSecurity
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: IntegratedSecurity
+  nameWithType: OracleConnectionStringBuilder.IntegratedSecurity
+  fullName: OracleConnectionStringBuilder.IntegratedSecurity
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.IsFixedSize
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: IsFixedSize
+  nameWithType: OracleConnectionStringBuilder.IsFixedSize
+  fullName: OracleConnectionStringBuilder.IsFixedSize
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Item(System.String)
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Item(String)
+  nameWithType: OracleConnectionStringBuilder.Item(String)
+  fullName: OracleConnectionStringBuilder.Item(String)
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Keys
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Keys
+  nameWithType: OracleConnectionStringBuilder.Keys
+  fullName: OracleConnectionStringBuilder.Keys
+- uid: System.Collections.ICollection
+  parent: System.Collections
+  isExternal: false
+  name: ICollection
+  nameWithType: ICollection
+  fullName: System.Collections.ICollection
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.LoadBalanceTimeout
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: LoadBalanceTimeout
+  nameWithType: OracleConnectionStringBuilder.LoadBalanceTimeout
+  fullName: OracleConnectionStringBuilder.LoadBalanceTimeout
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.MaxPoolSize
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: MaxPoolSize
+  nameWithType: OracleConnectionStringBuilder.MaxPoolSize
+  fullName: OracleConnectionStringBuilder.MaxPoolSize
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.MinPoolSize
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: MinPoolSize
+  nameWithType: OracleConnectionStringBuilder.MinPoolSize
+  fullName: OracleConnectionStringBuilder.MinPoolSize
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.OmitOracleConnectionName
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: OmitOracleConnectionName
+  nameWithType: OracleConnectionStringBuilder.OmitOracleConnectionName
+  fullName: OracleConnectionStringBuilder.OmitOracleConnectionName
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Password
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Password
+  nameWithType: OracleConnectionStringBuilder.Password
+  fullName: OracleConnectionStringBuilder.Password
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.PersistSecurityInfo
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: PersistSecurityInfo
+  nameWithType: OracleConnectionStringBuilder.PersistSecurityInfo
+  fullName: OracleConnectionStringBuilder.PersistSecurityInfo
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Pooling
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Pooling
+  nameWithType: OracleConnectionStringBuilder.Pooling
+  fullName: OracleConnectionStringBuilder.Pooling
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Remove(System.String)
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Remove(String)
+  nameWithType: OracleConnectionStringBuilder.Remove(String)
+  fullName: OracleConnectionStringBuilder.Remove(String)
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.ShouldSerialize(System.String)
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: ShouldSerialize(String)
+  nameWithType: OracleConnectionStringBuilder.ShouldSerialize(String)
+  fullName: OracleConnectionStringBuilder.ShouldSerialize(String)
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.TryGetValue(System.String,System.Object@)
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: TryGetValue(String, Object)
+  nameWithType: OracleConnectionStringBuilder.TryGetValue(String, Object)
+  fullName: OracleConnectionStringBuilder.TryGetValue(String, Object)
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Unicode
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Unicode
+  nameWithType: OracleConnectionStringBuilder.Unicode
+  fullName: OracleConnectionStringBuilder.Unicode
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.UserID
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: UserID
+  nameWithType: OracleConnectionStringBuilder.UserID
+  fullName: OracleConnectionStringBuilder.UserID
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Values
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Values
+  nameWithType: OracleConnectionStringBuilder.Values
+  fullName: OracleConnectionStringBuilder.Values
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.#ctor*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: OracleConnectionStringBuilder
+  nameWithType: OracleConnectionStringBuilder.OracleConnectionStringBuilder
+  fullName: OracleConnectionStringBuilder.OracleConnectionStringBuilder
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Clear*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Clear
+  nameWithType: OracleConnectionStringBuilder.Clear
+  fullName: OracleConnectionStringBuilder.Clear
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.ContainsKey*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: ContainsKey
+  nameWithType: OracleConnectionStringBuilder.ContainsKey
+  fullName: OracleConnectionStringBuilder.ContainsKey
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.DataSource*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: DataSource
+  nameWithType: OracleConnectionStringBuilder.DataSource
+  fullName: OracleConnectionStringBuilder.DataSource
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Enlist*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Enlist
+  nameWithType: OracleConnectionStringBuilder.Enlist
+  fullName: OracleConnectionStringBuilder.Enlist
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.GetProperties*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: GetProperties
+  nameWithType: OracleConnectionStringBuilder.GetProperties
+  fullName: OracleConnectionStringBuilder.GetProperties
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.IntegratedSecurity*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: IntegratedSecurity
+  nameWithType: OracleConnectionStringBuilder.IntegratedSecurity
+  fullName: OracleConnectionStringBuilder.IntegratedSecurity
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.IsFixedSize*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: IsFixedSize
+  nameWithType: OracleConnectionStringBuilder.IsFixedSize
+  fullName: OracleConnectionStringBuilder.IsFixedSize
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Item*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Item
+  nameWithType: OracleConnectionStringBuilder.Item
+  fullName: OracleConnectionStringBuilder.Item
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Keys*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Keys
+  nameWithType: OracleConnectionStringBuilder.Keys
+  fullName: OracleConnectionStringBuilder.Keys
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.LoadBalanceTimeout*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: LoadBalanceTimeout
+  nameWithType: OracleConnectionStringBuilder.LoadBalanceTimeout
+  fullName: OracleConnectionStringBuilder.LoadBalanceTimeout
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.MaxPoolSize*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: MaxPoolSize
+  nameWithType: OracleConnectionStringBuilder.MaxPoolSize
+  fullName: OracleConnectionStringBuilder.MaxPoolSize
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.MinPoolSize*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: MinPoolSize
+  nameWithType: OracleConnectionStringBuilder.MinPoolSize
+  fullName: OracleConnectionStringBuilder.MinPoolSize
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.OmitOracleConnectionName*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: OmitOracleConnectionName
+  nameWithType: OracleConnectionStringBuilder.OmitOracleConnectionName
+  fullName: OracleConnectionStringBuilder.OmitOracleConnectionName
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Password*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Password
+  nameWithType: OracleConnectionStringBuilder.Password
+  fullName: OracleConnectionStringBuilder.Password
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.PersistSecurityInfo*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: PersistSecurityInfo
+  nameWithType: OracleConnectionStringBuilder.PersistSecurityInfo
+  fullName: OracleConnectionStringBuilder.PersistSecurityInfo
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Pooling*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Pooling
+  nameWithType: OracleConnectionStringBuilder.Pooling
+  fullName: OracleConnectionStringBuilder.Pooling
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Remove*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Remove
+  nameWithType: OracleConnectionStringBuilder.Remove
+  fullName: OracleConnectionStringBuilder.Remove
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.ShouldSerialize*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: ShouldSerialize
+  nameWithType: OracleConnectionStringBuilder.ShouldSerialize
+  fullName: OracleConnectionStringBuilder.ShouldSerialize
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.TryGetValue*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: TryGetValue
+  nameWithType: OracleConnectionStringBuilder.TryGetValue
+  fullName: OracleConnectionStringBuilder.TryGetValue
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Unicode*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Unicode
+  nameWithType: OracleConnectionStringBuilder.Unicode
+  fullName: OracleConnectionStringBuilder.Unicode
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.UserID*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: UserID
+  nameWithType: OracleConnectionStringBuilder.UserID
+  fullName: OracleConnectionStringBuilder.UserID
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Data.OracleClient.OracleConnectionStringBuilder.Values*
+  parent: System.Data.OracleClient.OracleConnectionStringBuilder
+  isExternal: false
+  name: Values
+  nameWithType: OracleConnectionStringBuilder.Values
+  fullName: OracleConnectionStringBuilder.Values
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.OracleClient/OracleConnectionStringBuilder.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Data.Common.DbConnectionStringBuilder.ToString
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ToString()
+  nameWithType: DbConnectionStringBuilder.ToString()
+  fullName: DbConnectionStringBuilder.ToString()
+- uid: System.Data.Common.DbConnectionStringBuilder.Add(System.String,System.Object)
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: Add(String, Object)
+  nameWithType: DbConnectionStringBuilder.Add(String, Object)
+  fullName: DbConnectionStringBuilder.Add(String, Object)
+- uid: System.Data.Common.DbConnectionStringBuilder.AppendKeyValuePair(System.Text.StringBuilder,System.String,System.String)
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: AppendKeyValuePair(StringBuilder, String, String)
+  nameWithType: DbConnectionStringBuilder.AppendKeyValuePair(StringBuilder, String, String)
+  fullName: DbConnectionStringBuilder.AppendKeyValuePair(StringBuilder, String, String)
+- uid: System.Data.Common.DbConnectionStringBuilder.AppendKeyValuePair(System.Text.StringBuilder,System.String,System.String,System.Boolean)
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: AppendKeyValuePair(StringBuilder, String, String, Boolean)
+  nameWithType: DbConnectionStringBuilder.AppendKeyValuePair(StringBuilder, String, String, Boolean)
+  fullName: DbConnectionStringBuilder.AppendKeyValuePair(StringBuilder, String, String, Boolean)
+- uid: System.Data.Common.DbConnectionStringBuilder.BrowsableConnectionString
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: BrowsableConnectionString
+  nameWithType: DbConnectionStringBuilder.BrowsableConnectionString
+  fullName: DbConnectionStringBuilder.BrowsableConnectionString
+- uid: System.Data.Common.DbConnectionStringBuilder.ClearPropertyDescriptors
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ClearPropertyDescriptors()
+  nameWithType: DbConnectionStringBuilder.ClearPropertyDescriptors()
+  fullName: DbConnectionStringBuilder.ClearPropertyDescriptors()
+- uid: System.Data.Common.DbConnectionStringBuilder.ConnectionString
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ConnectionString
+  nameWithType: DbConnectionStringBuilder.ConnectionString
+  fullName: DbConnectionStringBuilder.ConnectionString
+- uid: System.Data.Common.DbConnectionStringBuilder.Count
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: Count
+  nameWithType: DbConnectionStringBuilder.Count
+  fullName: DbConnectionStringBuilder.Count
+- uid: System.Data.Common.DbConnectionStringBuilder.EquivalentTo(System.Data.Common.DbConnectionStringBuilder)
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: EquivalentTo(DbConnectionStringBuilder)
+  nameWithType: DbConnectionStringBuilder.EquivalentTo(DbConnectionStringBuilder)
+  fullName: DbConnectionStringBuilder.EquivalentTo(DbConnectionStringBuilder)
+- uid: System.Data.Common.DbConnectionStringBuilder.IsReadOnly
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: IsReadOnly
+  nameWithType: DbConnectionStringBuilder.IsReadOnly
+  fullName: DbConnectionStringBuilder.IsReadOnly
+- uid: System.Data.Common.DbConnectionStringBuilder.System#Collections#ICollection#CopyTo(System.Array,System.Int32)
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ICollection.CopyTo(Array, Int32)
+  nameWithType: DbConnectionStringBuilder.ICollection.CopyTo(Array, Int32)
+  fullName: DbConnectionStringBuilder.ICollection.CopyTo(Array, Int32)
+- uid: System.Data.Common.DbConnectionStringBuilder.System#Collections#ICollection#IsSynchronized
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ICollection.IsSynchronized
+  nameWithType: DbConnectionStringBuilder.ICollection.IsSynchronized
+  fullName: DbConnectionStringBuilder.ICollection.IsSynchronized
+- uid: System.Data.Common.DbConnectionStringBuilder.System#Collections#ICollection#SyncRoot
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ICollection.SyncRoot
+  nameWithType: DbConnectionStringBuilder.ICollection.SyncRoot
+  fullName: DbConnectionStringBuilder.ICollection.SyncRoot
+- uid: System.Data.Common.DbConnectionStringBuilder.System#Collections#IDictionary#Add(System.Object,System.Object)
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: IDictionary.Add(Object, Object)
+  nameWithType: DbConnectionStringBuilder.IDictionary.Add(Object, Object)
+  fullName: DbConnectionStringBuilder.IDictionary.Add(Object, Object)
+- uid: System.Data.Common.DbConnectionStringBuilder.System#Collections#IDictionary#Contains(System.Object)
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: IDictionary.Contains(Object)
+  nameWithType: DbConnectionStringBuilder.IDictionary.Contains(Object)
+  fullName: DbConnectionStringBuilder.IDictionary.Contains(Object)
+- uid: System.Data.Common.DbConnectionStringBuilder.System#Collections#IDictionary#GetEnumerator
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: IDictionary.GetEnumerator()
+  nameWithType: DbConnectionStringBuilder.IDictionary.GetEnumerator()
+  fullName: DbConnectionStringBuilder.IDictionary.GetEnumerator()
+- uid: System.Data.Common.DbConnectionStringBuilder.System#Collections#IDictionary#IsFixedSize
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: IDictionary.IsFixedSize
+  nameWithType: DbConnectionStringBuilder.IDictionary.IsFixedSize
+  fullName: DbConnectionStringBuilder.IDictionary.IsFixedSize
+- uid: System.Data.Common.DbConnectionStringBuilder.System#Collections#IDictionary#IsReadOnly
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: IDictionary.IsReadOnly
+  nameWithType: DbConnectionStringBuilder.IDictionary.IsReadOnly
+  fullName: DbConnectionStringBuilder.IDictionary.IsReadOnly
+- uid: System.Data.Common.DbConnectionStringBuilder.System#Collections#IDictionary#Item(System.Object)
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: IDictionary.Item(Object)
+  nameWithType: DbConnectionStringBuilder.IDictionary.Item(Object)
+  fullName: DbConnectionStringBuilder.IDictionary.Item(Object)
+- uid: System.Data.Common.DbConnectionStringBuilder.System#Collections#IDictionary#Remove(System.Object)
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: IDictionary.Remove(Object)
+  nameWithType: DbConnectionStringBuilder.IDictionary.Remove(Object)
+  fullName: DbConnectionStringBuilder.IDictionary.Remove(Object)
+- uid: System.Data.Common.DbConnectionStringBuilder.System#Collections#IEnumerable#GetEnumerator
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: IEnumerable.GetEnumerator()
+  nameWithType: DbConnectionStringBuilder.IEnumerable.GetEnumerator()
+  fullName: DbConnectionStringBuilder.IEnumerable.GetEnumerator()
+- uid: System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetAttributes
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ICustomTypeDescriptor.GetAttributes()
+  nameWithType: DbConnectionStringBuilder.ICustomTypeDescriptor.GetAttributes()
+  fullName: DbConnectionStringBuilder.ICustomTypeDescriptor.GetAttributes()
+- uid: System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetClassName
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ICustomTypeDescriptor.GetClassName()
+  nameWithType: DbConnectionStringBuilder.ICustomTypeDescriptor.GetClassName()
+  fullName: DbConnectionStringBuilder.ICustomTypeDescriptor.GetClassName()
+- uid: System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetComponentName
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ICustomTypeDescriptor.GetComponentName()
+  nameWithType: DbConnectionStringBuilder.ICustomTypeDescriptor.GetComponentName()
+  fullName: DbConnectionStringBuilder.ICustomTypeDescriptor.GetComponentName()
+- uid: System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetConverter
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ICustomTypeDescriptor.GetConverter()
+  nameWithType: DbConnectionStringBuilder.ICustomTypeDescriptor.GetConverter()
+  fullName: DbConnectionStringBuilder.ICustomTypeDescriptor.GetConverter()
+- uid: System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetDefaultEvent
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ICustomTypeDescriptor.GetDefaultEvent()
+  nameWithType: DbConnectionStringBuilder.ICustomTypeDescriptor.GetDefaultEvent()
+  fullName: DbConnectionStringBuilder.ICustomTypeDescriptor.GetDefaultEvent()
+- uid: System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetDefaultProperty
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ICustomTypeDescriptor.GetDefaultProperty()
+  nameWithType: DbConnectionStringBuilder.ICustomTypeDescriptor.GetDefaultProperty()
+  fullName: DbConnectionStringBuilder.ICustomTypeDescriptor.GetDefaultProperty()
+- uid: System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetEditor(System.Type)
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ICustomTypeDescriptor.GetEditor(Type)
+  nameWithType: DbConnectionStringBuilder.ICustomTypeDescriptor.GetEditor(Type)
+  fullName: DbConnectionStringBuilder.ICustomTypeDescriptor.GetEditor(Type)
+- uid: System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetEvents
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ICustomTypeDescriptor.GetEvents()
+  nameWithType: DbConnectionStringBuilder.ICustomTypeDescriptor.GetEvents()
+  fullName: DbConnectionStringBuilder.ICustomTypeDescriptor.GetEvents()
+- uid: System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetEvents(System.Attribute[])
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ICustomTypeDescriptor.GetEvents(Attribute[])
+  nameWithType: DbConnectionStringBuilder.ICustomTypeDescriptor.GetEvents(Attribute[])
+  fullName: DbConnectionStringBuilder.ICustomTypeDescriptor.GetEvents(Attribute[])
+- uid: System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetProperties
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ICustomTypeDescriptor.GetProperties()
+  nameWithType: DbConnectionStringBuilder.ICustomTypeDescriptor.GetProperties()
+  fullName: DbConnectionStringBuilder.ICustomTypeDescriptor.GetProperties()
+- uid: System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetProperties(System.Attribute[])
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ICustomTypeDescriptor.GetProperties(Attribute[])
+  nameWithType: DbConnectionStringBuilder.ICustomTypeDescriptor.GetProperties(Attribute[])
+  fullName: DbConnectionStringBuilder.ICustomTypeDescriptor.GetProperties(Attribute[])
+- uid: System.Data.Common.DbConnectionStringBuilder.System#ComponentModel#ICustomTypeDescriptor#GetPropertyOwner(System.ComponentModel.PropertyDescriptor)
+  parent: System.Data.Common.DbConnectionStringBuilder
+  isExternal: false
+  name: ICustomTypeDescriptor.GetPropertyOwner(PropertyDescriptor)
+  nameWithType: DbConnectionStringBuilder.ICustomTypeDescriptor.GetPropertyOwner(PropertyDescriptor)
+  fullName: DbConnectionStringBuilder.ICustomTypeDescriptor.GetPropertyOwner(PropertyDescriptor)
+- uid: System.Linq.Enumerable.Cast``1(System.Collections.IEnumerable)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: Cast<TResult>(IEnumerable)
+  nameWithType: Enumerable.Cast<TResult>(IEnumerable)
+  fullName: Enumerable.Cast<TResult>(IEnumerable)
+- uid: System.Linq.Enumerable.OfType``1(System.Collections.IEnumerable)
+  parent: System.Linq.Enumerable
+  isExternal: false
+  name: OfType<TResult>(IEnumerable)
+  nameWithType: Enumerable.OfType<TResult>(IEnumerable)
+  fullName: Enumerable.OfType<TResult>(IEnumerable)
+- uid: System.Linq.ParallelEnumerable.AsParallel(System.Collections.IEnumerable)
+  parent: System.Linq.ParallelEnumerable
+  isExternal: false
+  name: AsParallel(IEnumerable)
+  nameWithType: ParallelEnumerable.AsParallel(IEnumerable)
+  fullName: ParallelEnumerable.AsParallel(IEnumerable)
+- uid: System.Linq.Queryable.AsQueryable(System.Collections.IEnumerable)
+  parent: System.Linq.Queryable
+  isExternal: false
+  name: AsQueryable(IEnumerable)
+  nameWithType: Queryable.AsQueryable(IEnumerable)
+  fullName: Queryable.AsQueryable(IEnumerable)

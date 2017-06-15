@@ -1,0 +1,5 @@
+---
+summary: Returns a value that indicates whether the match criterion of a filter in the table is satisfied by the specified message or buffered message, and returns the filter data for the filter that matched.
+remarks: "Use one of these methods when, at most, one filter is expected to match the message and only the filter data from the matching filter must be recovered. These methods return a boolean that indicates whether a matching filter was found and set the `data` reference parameter to the matching filter data.  \n  \n Use <xref:System.ServiceModel.Dispatcher.IMessageFilterTable%601.GetMatchingFilter%2A> if the body of the message is not inspected by any of the filters in the filter table.  \n  \n If the body of the message may be inspected by a filter in the filter table, buffer the message and pass it to the <xref:System.ServiceModel.Dispatcher.IMessageFilterTable%601.GetMatchingFilter%2A> version of the method."
+uid: System.ServiceModel.Dispatcher.IMessageFilterTable`1.GetMatchingValue*
+---

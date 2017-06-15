@@ -1,0 +1,4267 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Xml.XmlTextWriter
+  commentId: T:System.Xml.XmlTextWriter
+  id: XmlTextWriter
+  children:
+  - System.Xml.XmlTextWriter.#ctor(System.IO.TextWriter)
+  - System.Xml.XmlTextWriter.#ctor(System.IO.Stream,System.Text.Encoding)
+  - System.Xml.XmlTextWriter.#ctor(System.String,System.Text.Encoding)
+  - System.Xml.XmlTextWriter.BaseStream
+  - System.Xml.XmlTextWriter.Close
+  - System.Xml.XmlTextWriter.Flush
+  - System.Xml.XmlTextWriter.Formatting
+  - System.Xml.XmlTextWriter.Indentation
+  - System.Xml.XmlTextWriter.IndentChar
+  - System.Xml.XmlTextWriter.LookupPrefix(System.String)
+  - System.Xml.XmlTextWriter.Namespaces
+  - System.Xml.XmlTextWriter.QuoteChar
+  - System.Xml.XmlTextWriter.WriteBase64(System.Byte[],System.Int32,System.Int32)
+  - System.Xml.XmlTextWriter.WriteBinHex(System.Byte[],System.Int32,System.Int32)
+  - System.Xml.XmlTextWriter.WriteCData(System.String)
+  - System.Xml.XmlTextWriter.WriteCharEntity(System.Char)
+  - System.Xml.XmlTextWriter.WriteChars(System.Char[],System.Int32,System.Int32)
+  - System.Xml.XmlTextWriter.WriteComment(System.String)
+  - System.Xml.XmlTextWriter.WriteDocType(System.String,System.String,System.String,System.String)
+  - System.Xml.XmlTextWriter.WriteEndAttribute
+  - System.Xml.XmlTextWriter.WriteEndDocument
+  - System.Xml.XmlTextWriter.WriteEndElement
+  - System.Xml.XmlTextWriter.WriteEntityRef(System.String)
+  - System.Xml.XmlTextWriter.WriteFullEndElement
+  - System.Xml.XmlTextWriter.WriteName(System.String)
+  - System.Xml.XmlTextWriter.WriteNmToken(System.String)
+  - System.Xml.XmlTextWriter.WriteProcessingInstruction(System.String,System.String)
+  - System.Xml.XmlTextWriter.WriteQualifiedName(System.String,System.String)
+  - System.Xml.XmlTextWriter.WriteRaw(System.Char[],System.Int32,System.Int32)
+  - System.Xml.XmlTextWriter.WriteRaw(System.String)
+  - System.Xml.XmlTextWriter.WriteStartAttribute(System.String,System.String,System.String)
+  - System.Xml.XmlTextWriter.WriteStartDocument
+  - System.Xml.XmlTextWriter.WriteStartDocument(System.Boolean)
+  - System.Xml.XmlTextWriter.WriteStartElement(System.String,System.String,System.String)
+  - System.Xml.XmlTextWriter.WriteState
+  - System.Xml.XmlTextWriter.WriteString(System.String)
+  - System.Xml.XmlTextWriter.WriteSurrogateCharEntity(System.Char,System.Char)
+  - System.Xml.XmlTextWriter.WriteWhitespace(System.String)
+  - System.Xml.XmlTextWriter.XmlLang
+  - System.Xml.XmlTextWriter.XmlSpace
+  langs:
+  - csharp
+  name: XmlTextWriter
+  nameWithType: XmlTextWriter
+  fullName: System.Xml.XmlTextWriter
+  type: Class
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: "Represents a writer that provides a fast, non-cached, forward-only way of generating streams or files containing XML data that conforms to the W3C Extensible Markup Language (XML) 1.0 and the Namespaces in XML recommendations.  \n  \n Starting with the .NET Framework 2.0, we recommend that you use the <xref href=\"System.Xml.XmlWriter\"></xref> class instead."
+  remarks: "This class implements the <xref:System.Xml.XmlWriter> class.  \n  \n> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n `XmlTextWriter` maintains a namespace stack corresponding to all the namespaces defined in the current element stack. Using `XmlTextWriter` you can declare namespaces manually.  \n  \n```  \nw.WriteStartElement(\"root\");  \nw.WriteAttributeString(\"xmlns\", \"x\", null, \"urn:1\");  \n w.WriteStartElement(\"item\",\"urn:1\");  \n w.WriteEndElement();  \n w.WriteStartElement(\"item\",\"urn:1\");  \n w.WriteEndElement();  \nw.WriteEndElement();  \n```  \n  \n The above C# code produces the following output. `XmlTextWriter` promotes the namespace declaration to the root element to avoid having it duplicated on the two child elements. The child elements pick up the prefix from the namespace declaration.  \n  \n```  \n<root xmlns:x=\"urn:1\">  \n <x:item/>  \n <x:item/>  \n</x:root>  \n```  \n  \n `XmlTextWriter` also allows you to override the current namespace declaration. In the following example, the namespace URI \"123\" is overridden by \"abc\" to produce the XML element `<x:node xmlns:x=\"abc\"/>`.  \n  \n```  \nw.WriteStartElement(\"x\",\"node\",\"123\");  \nw.WriteAttributeString(\"xmlns\",\"x\",null,\"abc\");  \n```  \n  \n By using the write methods that take a prefix as an argument you can also specify which prefix to use. In the following example, two different prefixes are mapped to the same namespace URI to produce the XML text `<x:root xmlns:x=\"urn:1\"><y:item xmlns:y=\"urn:1\"/></x:root>`.  \n  \n```  \nXmlTextWriter w = new XmlTextWriter(Console.Out);  \nw.WriteStartElement(\"x\",\"root\",\"urn:1\");  \n w.WriteStartElement(\"y\",\"item\",\"urn:1\");  \n w.WriteEndElement();  \nw.WriteEndElement();  \nw.Close();  \n```  \n  \n If there are multiple namespace declarations mapping different prefixes to the same namespace URI, `XmlTextWriter` walks the stack of namespace declarations backwards and picks the closest one.  \n  \n```  \nXmlTextWriter w = new XmlTextWriter(Console.Out);  \nw.Formatting = Formatting.Indented;  \nw.WriteStartElement(\"x\",\"root\",\"urn:1\");  \nw.WriteStartElement(\"y\",\"item\",\"urn:1\");  \nw.WriteAttributeString(\"attr\",\"urn:1\",\"123\");  \nw.WriteEndElement();  \nw.WriteEndElement();  \nw.Close();  \n```  \n  \n In the above C# example, because the `WriteAttributeString` call does not specify a prefix, the writer uses the last prefix pushed onto the namespace stack, and produces the following XML:  \n  \n```  \n<x:root xmlns:x=\"urn:1\">  \n <y:item y:attr=\"123\" xmlns:y=\"urn:1\" />  \n</x:root>  \n```  \n  \n If namespace conflicts occur, `XmlTextWriter` resolves them by generating alternate prefixes. For example, if an attribute and element have the same prefix but different namespaces, `XmlWriter` generates an alternate prefix for the attribute. The generated prefixes are named `n{i}` where `i` is a number beginning at 1. The number is reset to 1 for each element.  \n  \n Attributes which are associated with a namespace URI must have a prefix (default namespaces do not apply to attributes). This conforms to section 5.2 of the W3C Namespaces in XML recommendation. If an attribute references a namespace URI, but does not specify a prefix, the writer generates a prefix for the attribute.  \n  \n When writing an empty element, an additional space is added between tag name and the closing tag, for example `<item />`. This provides compatibility with older browsers.  \n  \n When a `String` is used as method parameter, `null` and `String.Empty` are equivalent. `String.Empty` follows the W3C rules.  \n  \n To write strongly typed data, use the <xref:System.Xml.XmlConvert> class to convert data types to string. For example, the following C# code converts the data from `Double` to `String` and writes the element `<price>19.95</price>`.  \n  \n```  \nDouble price = 19.95;  \nwriter.WriteElementString(\"price\", XmlConvert.ToString(price));  \n```  \n  \n `XmlTextWriter` does not check for the following:  \n  \n-   Invalid characters in attribute and element names.  \n  \n-   Unicode characters that do not fit the specified encoding. If the Unicode characters do not fit the specified encoding, the `XmlTextWriter` does not escape the Unicode characters into character entities.  \n  \n-   Duplicate attributes.  \n  \n-   Characters in the DOCTYPE public identifier or system identifier.  \n  \n## Security Considerations  \n The following items are things to consider when working with the <xref:System.Xml.XmlTextWriter> class.  \n  \n-   Exceptions thrown by the <xref:System.Xml.XmlTextWriter> can disclose path information that you do not want bubbled up to the application. Your applications must catch exceptions and process them appropriately.  \n  \n-   When you pass the <xref:System.Xml.XmlTextWriter> to another application the underlying stream is exposed to that application. If you need to pass the <xref:System.Xml.XmlTextWriter> to a semi-trusted application, you should use an <xref:System.Xml.XmlWriter> object created by the <xref:System.Xml.XmlWriter.Create%2A> method instead.  \n  \n-   The <xref:System.Xml.XmlTextWriter> does not validate any data that is passed to the <xref:System.Xml.XmlTextWriter.WriteDocType%2A> or <xref:System.Xml.XmlTextWriter.WriteRaw%2A> methods. You should not pass arbitrary data to these methods.  \n  \n-   If the default settings are changed, there is no guarantee that the generated output is well-formed XML data.  \n  \n-   Do not accept supporting components, such as an <xref:System.Text.Encoding> object, from an untrusted source."
+  syntax:
+    content: 'public class XmlTextWriter : System.Xml.XmlWriter'
+  inheritance:
+  - System.Object
+  - System.Xml.XmlWriter
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  - System.Xml.XmlWriter.Create(System.IO.Stream)
+  - System.Xml.XmlWriter.Create(System.IO.Stream,System.Xml.XmlWriterSettings)
+  - System.Xml.XmlWriter.Create(System.IO.TextWriter)
+  - System.Xml.XmlWriter.Create(System.IO.TextWriter,System.Xml.XmlWriterSettings)
+  - System.Xml.XmlWriter.Create(System.String)
+  - System.Xml.XmlWriter.Create(System.String,System.Xml.XmlWriterSettings)
+  - System.Xml.XmlWriter.Create(System.Text.StringBuilder)
+  - System.Xml.XmlWriter.Create(System.Text.StringBuilder,System.Xml.XmlWriterSettings)
+  - System.Xml.XmlWriter.Create(System.Xml.XmlWriter)
+  - System.Xml.XmlWriter.Create(System.Xml.XmlWriter,System.Xml.XmlWriterSettings)
+  - System.Xml.XmlWriter.Dispose
+  - System.Xml.XmlWriter.Dispose(System.Boolean)
+  - System.Xml.XmlWriter.FlushAsync
+  - System.Xml.XmlWriter.Settings
+  - System.Xml.XmlWriter.WriteAttributes(System.Xml.XmlReader,System.Boolean)
+  - System.Xml.XmlWriter.WriteAttributesAsync(System.Xml.XmlReader,System.Boolean)
+  - System.Xml.XmlWriter.WriteAttributeString(System.String,System.String)
+  - System.Xml.XmlWriter.WriteAttributeString(System.String,System.String,System.String)
+  - System.Xml.XmlWriter.WriteAttributeString(System.String,System.String,System.String,System.String)
+  - System.Xml.XmlWriter.WriteAttributeStringAsync(System.String,System.String,System.String,System.String)
+  - System.Xml.XmlWriter.WriteBase64Async(System.Byte[],System.Int32,System.Int32)
+  - System.Xml.XmlWriter.WriteBinHexAsync(System.Byte[],System.Int32,System.Int32)
+  - System.Xml.XmlWriter.WriteCDataAsync(System.String)
+  - System.Xml.XmlWriter.WriteCharEntityAsync(System.Char)
+  - System.Xml.XmlWriter.WriteCharsAsync(System.Char[],System.Int32,System.Int32)
+  - System.Xml.XmlWriter.WriteCommentAsync(System.String)
+  - System.Xml.XmlWriter.WriteDocTypeAsync(System.String,System.String,System.String,System.String)
+  - System.Xml.XmlWriter.WriteElementString(System.String,System.String)
+  - System.Xml.XmlWriter.WriteElementString(System.String,System.String,System.String)
+  - System.Xml.XmlWriter.WriteElementString(System.String,System.String,System.String,System.String)
+  - System.Xml.XmlWriter.WriteElementStringAsync(System.String,System.String,System.String,System.String)
+  - System.Xml.XmlWriter.WriteEndAttributeAsync
+  - System.Xml.XmlWriter.WriteEndDocumentAsync
+  - System.Xml.XmlWriter.WriteEndElementAsync
+  - System.Xml.XmlWriter.WriteEntityRefAsync(System.String)
+  - System.Xml.XmlWriter.WriteFullEndElementAsync
+  - System.Xml.XmlWriter.WriteNameAsync(System.String)
+  - System.Xml.XmlWriter.WriteNmTokenAsync(System.String)
+  - System.Xml.XmlWriter.WriteNode(System.Xml.XmlReader,System.Boolean)
+  - System.Xml.XmlWriter.WriteNode(System.Xml.XPath.XPathNavigator,System.Boolean)
+  - System.Xml.XmlWriter.WriteNodeAsync(System.Xml.XmlReader,System.Boolean)
+  - System.Xml.XmlWriter.WriteNodeAsync(System.Xml.XPath.XPathNavigator,System.Boolean)
+  - System.Xml.XmlWriter.WriteProcessingInstructionAsync(System.String,System.String)
+  - System.Xml.XmlWriter.WriteQualifiedNameAsync(System.String,System.String)
+  - System.Xml.XmlWriter.WriteRawAsync(System.Char[],System.Int32,System.Int32)
+  - System.Xml.XmlWriter.WriteRawAsync(System.String)
+  - System.Xml.XmlWriter.WriteStartAttribute(System.String)
+  - System.Xml.XmlWriter.WriteStartAttribute(System.String,System.String)
+  - System.Xml.XmlWriter.WriteStartAttributeAsync(System.String,System.String,System.String)
+  - System.Xml.XmlWriter.WriteStartDocumentAsync
+  - System.Xml.XmlWriter.WriteStartDocumentAsync(System.Boolean)
+  - System.Xml.XmlWriter.WriteStartElement(System.String)
+  - System.Xml.XmlWriter.WriteStartElement(System.String,System.String)
+  - System.Xml.XmlWriter.WriteStartElementAsync(System.String,System.String,System.String)
+  - System.Xml.XmlWriter.WriteStringAsync(System.String)
+  - System.Xml.XmlWriter.WriteSurrogateCharEntityAsync(System.Char,System.Char)
+  - System.Xml.XmlWriter.WriteValue(System.Boolean)
+  - System.Xml.XmlWriter.WriteValue(System.DateTime)
+  - System.Xml.XmlWriter.WriteValue(System.DateTimeOffset)
+  - System.Xml.XmlWriter.WriteValue(System.Decimal)
+  - System.Xml.XmlWriter.WriteValue(System.Double)
+  - System.Xml.XmlWriter.WriteValue(System.Int32)
+  - System.Xml.XmlWriter.WriteValue(System.Int64)
+  - System.Xml.XmlWriter.WriteValue(System.Object)
+  - System.Xml.XmlWriter.WriteValue(System.Single)
+  - System.Xml.XmlWriter.WriteValue(System.String)
+  - System.Xml.XmlWriter.WriteWhitespaceAsync(System.String)
+  attributes: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.#ctor(System.IO.TextWriter)
+  commentId: M:System.Xml.XmlTextWriter.#ctor(System.IO.TextWriter)
+  id: '#ctor(System.IO.TextWriter)'
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: XmlTextWriter(TextWriter)
+  nameWithType: XmlTextWriter.XmlTextWriter(TextWriter)
+  fullName: XmlTextWriter.XmlTextWriter(TextWriter)
+  type: Constructor
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Creates an instance of the `XmlTextWriter` class using the specified <xref href="System.IO.TextWriter"></xref>.
+  remarks: >-
+    > [!NOTE]
+
+    >  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.
+  syntax:
+    content: public XmlTextWriter (System.IO.TextWriter w);
+    parameters:
+    - id: w
+      type: System.IO.TextWriter
+      description: The `TextWriter` to write to. It is assumed that the `TextWriter` is already set to the correct encoding.
+  overload: System.Xml.XmlTextWriter.#ctor*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.#ctor(System.IO.Stream,System.Text.Encoding)
+  commentId: M:System.Xml.XmlTextWriter.#ctor(System.IO.Stream,System.Text.Encoding)
+  id: '#ctor(System.IO.Stream,System.Text.Encoding)'
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: XmlTextWriter(Stream, Encoding)
+  nameWithType: XmlTextWriter.XmlTextWriter(Stream, Encoding)
+  fullName: XmlTextWriter.XmlTextWriter(Stream, Encoding)
+  type: Constructor
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Creates an instance of the `XmlTextWriter` class using the specified stream and encoding.
+  remarks: >-
+    > [!NOTE]
+
+    >  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.
+  syntax:
+    content: public XmlTextWriter (System.IO.Stream w, System.Text.Encoding encoding);
+    parameters:
+    - id: w
+      type: System.IO.Stream
+      description: The stream to which you want to write.
+    - id: encoding
+      type: System.Text.Encoding
+      description: The encoding to generate. If encoding is `null` it writes out the stream as UTF-8 and omits the encoding attribute from the `ProcessingInstruction`.
+  overload: System.Xml.XmlTextWriter.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The encoding is not supported or the stream cannot be written to.
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>w</code> is `null`.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.#ctor(System.String,System.Text.Encoding)
+  commentId: M:System.Xml.XmlTextWriter.#ctor(System.String,System.Text.Encoding)
+  id: '#ctor(System.String,System.Text.Encoding)'
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: XmlTextWriter(String, Encoding)
+  nameWithType: XmlTextWriter.XmlTextWriter(String, Encoding)
+  fullName: XmlTextWriter.XmlTextWriter(String, Encoding)
+  type: Constructor
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Creates an instance of the <xref href="System.Xml.XmlTextWriter"></xref> class using the specified file.
+  remarks: >-
+    > [!NOTE]
+
+    >  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.
+  syntax:
+    content: public XmlTextWriter (string filename, System.Text.Encoding encoding);
+    parameters:
+    - id: filename
+      type: System.String
+      description: The filename to write to. If the file exists, it truncates it and overwrites it with the new content.
+    - id: encoding
+      type: System.Text.Encoding
+      description: The encoding to generate. If encoding is `null` it writes the file out as UTF-8, and omits the encoding attribute from the `ProcessingInstruction`.
+  overload: System.Xml.XmlTextWriter.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The encoding is not supported; the filename is empty, contains only white space, or contains one or more invalid characters.
+  - type: System.UnauthorizedAccessException
+    commentId: T:System.UnauthorizedAccessException
+    description: Access is denied.
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The filename is `null`.
+  - type: System.IO.DirectoryNotFoundException
+    commentId: T:System.IO.DirectoryNotFoundException
+    description: The directory to write to is not found.
+  - type: System.IO.IOException
+    commentId: T:System.IO.IOException
+    description: The filename includes an incorrect or invalid syntax for file name, directory name, or volume label syntax.
+  - type: System.Security.SecurityException
+    commentId: T:System.Security.SecurityException
+    description: The caller does not have the required permission.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.BaseStream
+  commentId: P:System.Xml.XmlTextWriter.BaseStream
+  id: BaseStream
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: BaseStream
+  nameWithType: XmlTextWriter.BaseStream
+  fullName: XmlTextWriter.BaseStream
+  type: Property
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Gets the underlying stream object.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n If the writer was constructed using a `TextWriter` that is derived from the `StreamWriter` class, this property is equivalent to the <xref:System.IO.StreamWriter.BaseStream%2A?displayProperty=fullName> property. If the writer was constructed using a <xref:System.IO.Stream>, this property returns the `Stream` passed to the constructor. If the writer was constructed using a file name, this property returns the `Stream` representing the file."
+  syntax:
+    content: public System.IO.Stream BaseStream { get; }
+    return:
+      type: System.IO.Stream
+      description: The stream to which the `XmlTextWriter` is writing or `null` if the `XmlTextWriter` was constructed using a <xref href="System.IO.TextWriter"></xref> that does not inherit from the <xref href="System.IO.StreamWriter"></xref> class.
+  overload: System.Xml.XmlTextWriter.BaseStream*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.Close
+  commentId: M:System.Xml.XmlTextWriter.Close
+  id: Close
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: Close()
+  nameWithType: XmlTextWriter.Close()
+  fullName: XmlTextWriter.Close()
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Closes this stream and the underlying stream.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n Any elements or attributes left open are automatically closed.  \n  \n This method does not throw any exceptions."
+  example:
+  - "The following example writes an XML fragment.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.Formatting Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.Formatting Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.Formatting Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.Formatting Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.Formatting Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.Formatting Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void Close ();
+    parameters: []
+  overload: System.Xml.XmlTextWriter.Close*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.Flush
+  commentId: M:System.Xml.XmlTextWriter.Flush
+  id: Flush
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: Flush()
+  nameWithType: XmlTextWriter.Flush()
+  fullName: XmlTextWriter.Flush()
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Flushes whatever is in the buffer to the underlying streams and also flushes the underlying stream.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n This is called instead of <xref:System.Xml.XmlTextWriter.Close%2A> when you want to write more to the underlying stream without losing what is still in the buffer."
+  example:
+  - "The following example writes out two XML fragments.  \n  \n [!code-cpp[XmlTextWriter.Flush#1](~/samples/snippets/cpp/VS_Snippets_Data/XmlTextWriter.Flush/CPP/write2docs.cpp#1)]\n [!code-csharp[XmlTextWriter.Flush#1](~/samples/snippets/csharp/VS_Snippets_Data/XmlTextWriter.Flush/CS/write2docs.cs#1)]\n [!code-vb[XmlTextWriter.Flush#1](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlTextWriter.Flush/VB/write2docs.vb#1)]"
+  syntax:
+    content: public override void Flush ();
+    parameters: []
+  overload: System.Xml.XmlTextWriter.Flush*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.Formatting
+  commentId: P:System.Xml.XmlTextWriter.Formatting
+  id: Formatting
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: Formatting
+  nameWithType: XmlTextWriter.Formatting
+  fullName: XmlTextWriter.Formatting
+  type: Property
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Indicates how the output is formatted.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n If the `Indented` option is set, child elements are indented using the <xref:System.Xml.XmlTextWriter.Indentation%2A> and <xref:System.Xml.XmlTextWriter.IndentChar%2A> properties. Only element content is indented. The following C# code writes out HTML elements including mixed content:  \n  \n```  \nXmlTextWriter w = new XmlTextWriter(Console.Out);   \n w.Formatting = Formatting.Indented;   \n w.WriteStartElement(\"ol\");   \n w.WriteStartElement(\"li\");   \n w.WriteString(\"The big \"); // This means \"li\" now has a mixed content model.  \n w.WriteElementString(\"b\", \"E\");   \n w.WriteElementString(\"i\", \"lephant\");   \n w.WriteString(\" walks slowly.\");   \n w.WriteEndElement();   \n w.WriteEndElement();  \n```  \n  \n The above code produces the following output:  \n  \n```  \n<ol>   \n  <li>The big <b>E</b><i>lephant</i> walks slowly.</li>   \n</ol>  \n```  \n  \n When this is viewed in HTML no white space appears between the bold and italic elements. In fact, in this example, if indenting was added between these elements the word \"Elephant\" would be incorrectly broken.  \n  \n> [!NOTE]\n>  Writing any text content, excluding `String.Empty` puts that element into mixed content mode. Child elements do not inherit this \"mixed\" mode status. A child element of a \"mixed\" element does indenting, unless it is also contains \"mixed\" content. Element content (http://www.w3.org/TR/1998/REC-xml-19980210#sec-element-content) and mixed content (http://www.w3.org/TR/1998/REC-xml-19980210#sec-mixed-content) are defined according to the XML 1.0 definitions of these terms."
+  example:
+  - "The following example writes an XML fragment.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.Formatting Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.Formatting Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.Formatting Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.Formatting Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.Formatting Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.Formatting Example/VB/source.vb#1)]"
+  syntax:
+    content: public System.Xml.Formatting Formatting { get; set; }
+    return:
+      type: System.Xml.Formatting
+      description: One of the <xref href="System.Xml.Formatting"></xref> values. The default is `Formatting.None` (no special formatting).
+  overload: System.Xml.XmlTextWriter.Formatting*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.Indentation
+  commentId: P:System.Xml.XmlTextWriter.Indentation
+  id: Indentation
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: Indentation
+  nameWithType: XmlTextWriter.Indentation
+  fullName: XmlTextWriter.Indentation
+  type: Property
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Gets or sets how many IndentChars to write for each level in the hierarchy when <xref href="System.Xml.XmlTextWriter.Formatting"></xref> is set to `Formatting.Indented`.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n Indentation is performed on following node types: `DocumentType`, `Element`, `Comment`, `ProcessingInstruction`, and `CDATASection`. All other node types are not affected. The `XmlTextWriter` does not indent the internal DTD subset. However, you could do the following to apply formatting to the internal DTD subset.  \n  \n```  \nString name = \"Employees\";  \nString pubid = null;  \nString sysid = null;  \nString subset =  \n@\"  \n    <!ELEMENT Employees (Employee)+>  \n    <!ELEMENT Employee EMPTY>  \n    <!ATTLIST Employee firstname CDATA #REQUIRED>  \n    <!ENTITY Company 'Microsoft'>]>  \n\";  \nXmlTextWriter tw = new XmlTextWriter(Console.Out);  \ntw.WriteDocType(name, pubid, sysid, subset);  \n```"
+  example:
+  - "The following example writes an XML fragment.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.Formatting Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.Formatting Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.Formatting Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.Formatting Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.Formatting Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.Formatting Example/VB/source.vb#1)]"
+  syntax:
+    content: public int Indentation { get; set; }
+    return:
+      type: System.Int32
+      description: Number of `IndentChars` for each level. The default is 2.
+  overload: System.Xml.XmlTextWriter.Indentation*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: Setting this property to a negative value.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.IndentChar
+  commentId: P:System.Xml.XmlTextWriter.IndentChar
+  id: IndentChar
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: IndentChar
+  nameWithType: XmlTextWriter.IndentChar
+  fullName: XmlTextWriter.IndentChar
+  type: Property
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Gets or sets which character to use for indenting when <xref href="System.Xml.XmlTextWriter.Formatting"></xref> is set to `Formatting.Indented`.
+  remarks: >-
+    > [!NOTE]
+
+    >  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.
+  syntax:
+    content: public char IndentChar { get; set; }
+    return:
+      type: System.Char
+      description: "The character to use for indenting. The default is space.  \n  \n <block subset=\"none\" type=\"note\"><p>  \n The `XmlTextWriter` allows you to set this property to any character. To ensure valid XML, you must specify a valid white space character, 0x9, 0x10, 0x13 or 0x20.  \n  \n</p></block>"
+  overload: System.Xml.XmlTextWriter.IndentChar*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.LookupPrefix(System.String)
+  commentId: M:System.Xml.XmlTextWriter.LookupPrefix(System.String)
+  id: LookupPrefix(System.String)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: LookupPrefix(String)
+  nameWithType: XmlTextWriter.LookupPrefix(String)
+  fullName: XmlTextWriter.LookupPrefix(String)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Returns the closest prefix defined in the current namespace scope for the namespace URI.
+  remarks: >-
+    > [!NOTE]
+
+    >  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.
+  example:
+  - "The following example writes out a book.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.WriteStartElement Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartElement Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.WriteStartElement Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartElement Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.WriteStartElement Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartElement Example/VB/source.vb#1)]"
+  syntax:
+    content: public override string LookupPrefix (string ns);
+    parameters:
+    - id: ns
+      type: System.String
+      description: Namespace URI whose prefix you want to find.
+    return:
+      type: System.String
+      description: The matching prefix. Or `null` if no matching namespace URI is found in the current scope.
+  overload: System.Xml.XmlTextWriter.LookupPrefix*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>ns</code> is either `null` or `String.Empty`.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.Namespaces
+  commentId: P:System.Xml.XmlTextWriter.Namespaces
+  id: Namespaces
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: Namespaces
+  nameWithType: XmlTextWriter.Namespaces
+  fullName: XmlTextWriter.Namespaces
+  type: Property
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Gets or sets a value indicating whether to do namespace support.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n This property determines whether the writer supports the W3C Namespaces in XML recommendation located at www.w3.org/TR/REC-xml-names."
+  syntax:
+    content: public bool Namespaces { get; set; }
+    return:
+      type: System.Boolean
+      description: "`true` to support namespaces; otherwise, `false`.  \n  \n The default is `true`."
+  overload: System.Xml.XmlTextWriter.Namespaces*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: You can only change this property when in the `WriteState.Start` state.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.QuoteChar
+  commentId: P:System.Xml.XmlTextWriter.QuoteChar
+  id: QuoteChar
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: QuoteChar
+  nameWithType: XmlTextWriter.QuoteChar
+  fullName: XmlTextWriter.QuoteChar
+  type: Property
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Gets or sets which character to use to quote attribute values.
+  remarks: >-
+    > [!NOTE]
+
+    >  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.
+  syntax:
+    content: public char QuoteChar { get; set; }
+    return:
+      type: System.Char
+      description: The character to use to quote attribute values. This must be a single quote (&#39;) or a double quote (&#34;). The default is a double quote.
+  overload: System.Xml.XmlTextWriter.QuoteChar*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: Setting this property to something other than either a single or double quote.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteBase64(System.Byte[],System.Int32,System.Int32)
+  commentId: M:System.Xml.XmlTextWriter.WriteBase64(System.Byte[],System.Int32,System.Int32)
+  id: WriteBase64(System.Byte[],System.Int32,System.Int32)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteBase64(Byte[], Int32, Int32)
+  nameWithType: XmlTextWriter.WriteBase64(Byte[], Int32, Int32)
+  fullName: XmlTextWriter.WriteBase64(Byte[], Int32, Int32)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Encodes the specified binary bytes as base64 and writes out the resulting text.
+  remarks: >-
+    > [!NOTE]
+
+    >  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.
+  example:
+  - "The following example encodes an input file using `WriteBase64` and generates a temporary XML file. The temporary XML file is decoded using the <xref:System.Xml.XmlTextReader.ReadBase64%2A> method and compared to the original file.  \n  \n [!code-cpp[XmlWriter.WriteBase64#1](~/samples/snippets/cpp/VS_Snippets_Data/XmlWriter.WriteBase64/CPP/writebase64.cpp#1)]\n [!code-csharp[XmlWriter.WriteBase64#1](~/samples/snippets/csharp/VS_Snippets_Data/XmlWriter.WriteBase64/CS/writebase64.cs#1)]\n [!code-vb[XmlWriter.WriteBase64#1](~/samples/snippets/visualbasic/VS_Snippets_Data/XmlWriter.WriteBase64/VB/writebase64.vb#1)]"
+  syntax:
+    content: public override void WriteBase64 (byte[] buffer, int index, int count);
+    parameters:
+    - id: buffer
+      type: System.Byte[]
+      description: Byte array to encode.
+    - id: index
+      type: System.Int32
+      description: The position within the buffer indicating the start of the bytes to write.
+    - id: count
+      type: System.Int32
+      description: The number of bytes to write.
+  overload: System.Xml.XmlTextWriter.WriteBase64*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>buffer</code> is `null`.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The buffer length minus <code>index</code> is less than <code>count</code>.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>index</code> or <code>count</code> is less than zero.
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The <xref href="System.Xml.XmlTextWriter.WriteState"></xref> is `Closed`.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteBinHex(System.Byte[],System.Int32,System.Int32)
+  commentId: M:System.Xml.XmlTextWriter.WriteBinHex(System.Byte[],System.Int32,System.Int32)
+  id: WriteBinHex(System.Byte[],System.Int32,System.Int32)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteBinHex(Byte[], Int32, Int32)
+  nameWithType: XmlTextWriter.WriteBinHex(Byte[], Int32, Int32)
+  fullName: XmlTextWriter.WriteBinHex(Byte[], Int32, Int32)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Encodes the specified binary bytes as binhex and writes out the resulting text.
+  remarks: >-
+    > [!NOTE]
+
+    >  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.
+  syntax:
+    content: public override void WriteBinHex (byte[] buffer, int index, int count);
+    parameters:
+    - id: buffer
+      type: System.Byte[]
+      description: Byte array to encode.
+    - id: index
+      type: System.Int32
+      description: The position in the buffer indicating the start of the bytes to write.
+    - id: count
+      type: System.Int32
+      description: The number of bytes to write.
+  overload: System.Xml.XmlTextWriter.WriteBinHex*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>buffer</code> is `null`.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The buffer length minus <code>index</code> is less than <code>count</code>.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: <code>index</code> or <code>count</code> is less than zero.
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The <xref href="System.Xml.XmlTextWriter.WriteState"></xref> is Closed.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteCData(System.String)
+  commentId: M:System.Xml.XmlTextWriter.WriteCData(System.String)
+  id: WriteCData(System.String)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteCData(String)
+  nameWithType: XmlTextWriter.WriteCData(String)
+  fullName: XmlTextWriter.WriteCData(String)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Writes out a <![CDATA[...]]> block containing the specified text.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n If `text` is either `null` or `String.Empty`, this method writes an empty CDATA block, for example \\<![CDATA[]]>."
+  example:
+  - "The following example writes an XML file representing a book.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void WriteCData (string text);
+    parameters:
+    - id: text
+      type: System.String
+      description: Text to place inside the CDATA block.
+  overload: System.Xml.XmlTextWriter.WriteCData*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The text would result in a non-well formed XML document.
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The <xref href="System.Xml.XmlTextWriter.WriteState"></xref> is `Closed`.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteCharEntity(System.Char)
+  commentId: M:System.Xml.XmlTextWriter.WriteCharEntity(System.Char)
+  id: WriteCharEntity(System.Char)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteCharEntity(Char)
+  nameWithType: XmlTextWriter.WriteCharEntity(Char)
+  fullName: XmlTextWriter.WriteCharEntity(Char)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Forces the generation of a character entity for the specified Unicode character value.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n This method writes the Unicode character in hexadecimal character entity reference format."
+  example:
+  - "The following example uses the `WriteCharEntity` method to write an e-mail address.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.WriteTimeSpan Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteTimeSpan Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.WriteTimeSpan Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteTimeSpan Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.WriteTimeSpan Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteTimeSpan Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void WriteCharEntity (char ch);
+    parameters:
+    - id: ch
+      type: System.Char
+      description: Unicode character for which to generate a character entity.
+  overload: System.Xml.XmlTextWriter.WriteCharEntity*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The character is in the surrogate pair character range, `0xd800` - `0xdfff`; or the text would result in a non-well formed XML document.
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The <xref href="System.Xml.XmlTextWriter.WriteState"></xref> is `Closed`.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteChars(System.Char[],System.Int32,System.Int32)
+  commentId: M:System.Xml.XmlTextWriter.WriteChars(System.Char[],System.Int32,System.Int32)
+  id: WriteChars(System.Char[],System.Int32,System.Int32)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteChars(Char[], Int32, Int32)
+  nameWithType: XmlTextWriter.WriteChars(Char[], Int32, Int32)
+  fullName: XmlTextWriter.WriteChars(Char[], Int32, Int32)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Writes text one buffer at a time.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n This method can be used to write large amounts of text one buffer at a time.  \n  \n Special handling must be done to ensure the `WriteChars` method does not split surrogate pair characters across multiple buffer writes. The XML specification defines the valid ranges for surrogate pairs.  \n  \n An exception is thrown if surrogate pair characters are written that would result in the surrogate pair characters being split in the buffer."
+  example:
+  - '[!code-csharp[XmlTextWriter.WriteChars#1](~/samples/snippets/csharp/VS_Snippets_Data/xmltextwriter.writechars/cs/xmlwriterwritecharsexample.cs#1)]'
+  syntax:
+    content: public override void WriteChars (char[] buffer, int index, int count);
+    parameters:
+    - id: buffer
+      type: System.Char[]
+      description: Character array containing the text to write.
+    - id: index
+      type: System.Int32
+      description: The position in the buffer indicating the start of the text to write.
+    - id: count
+      type: System.Int32
+      description: The number of characters to write.
+  overload: System.Xml.XmlTextWriter.WriteChars*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>buffer</code> is `null`.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: "<code>index</code> or <code>count</code> is less than zero.  \n  \n -or-  \n  \n The buffer length minus <code>index</code> is less than <code>count</code>; the call results in surrogate pair characters being split or an invalid surrogate pair being written."
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The <xref href="System.Xml.XmlTextWriter.WriteState"></xref> is Closed.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteComment(System.String)
+  commentId: M:System.Xml.XmlTextWriter.WriteComment(System.String)
+  id: WriteComment(System.String)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteComment(String)
+  nameWithType: XmlTextWriter.WriteComment(String)
+  fullName: XmlTextWriter.WriteComment(String)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Writes out a comment <!--...--> containing the specified text.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n If `text` is either `null` or `String.Empty`, this method writes a `Comment` with no data content, for example \\<!---->."
+  example:
+  - "The following example writes an XML file representing a book.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void WriteComment (string text);
+    parameters:
+    - id: text
+      type: System.String
+      description: Text to place inside the comment.
+  overload: System.Xml.XmlTextWriter.WriteComment*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The text would result in a non-well formed XML document
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The <xref href="System.Xml.XmlTextWriter.WriteState"></xref> is `Closed`.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteDocType(System.String,System.String,System.String,System.String)
+  commentId: M:System.Xml.XmlTextWriter.WriteDocType(System.String,System.String,System.String,System.String)
+  id: WriteDocType(System.String,System.String,System.String,System.String)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteDocType(String, String, String, String)
+  nameWithType: XmlTextWriter.WriteDocType(String, String, String, String)
+  fullName: XmlTextWriter.WriteDocType(String, String, String, String)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Writes the DOCTYPE declaration with the specified name and optional attributes.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n This method does not check for invalid characters in `pubid`, `sysid` or `subset`. It also does not check that the internal subset is well-formed.  \n  \n> [!IMPORTANT]\n>  The <xref:System.Xml.XmlTextWriter> does not validate any data that is passed to the <xref:System.Xml.XmlTextWriter.WriteDocType%2A> method. You should not pass arbitrary data to this method."
+  example:
+  - "The following example writes an XML file representing a book.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void WriteDocType (string name, string pubid, string sysid, string subset);
+    parameters:
+    - id: name
+      type: System.String
+      description: The name of the DOCTYPE. This must be non-empty.
+    - id: pubid
+      type: System.String
+      description: If non-null it also writes PUBLIC "pubid" "sysid" where <code>pubid</code> and <code>sysid</code> are replaced with the value of the given arguments.
+    - id: sysid
+      type: System.String
+      description: If <code>pubid</code> is null and <code>sysid</code> is non-null it writes SYSTEM "sysid" where <code>sysid</code> is replaced with the value of this argument.
+    - id: subset
+      type: System.String
+      description: If non-null it writes [subset] where subset is replaced with the value of this argument.
+  overload: System.Xml.XmlTextWriter.WriteDocType*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: This method was called outside the prolog (after the root element).
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: "<code>name</code> is `null` or `String.Empty`  \n  \n -or-  \n  \n the value for <code>name</code> would result in invalid XML."
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteEndAttribute
+  commentId: M:System.Xml.XmlTextWriter.WriteEndAttribute
+  id: WriteEndAttribute
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteEndAttribute()
+  nameWithType: XmlTextWriter.WriteEndAttribute()
+  fullName: XmlTextWriter.WriteEndAttribute()
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Closes the previous <xref href="System.Xml.XmlTextWriter.WriteStartAttribute(System.String,System.String,System.String)"></xref> call.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n If you call `WriteStartAttribute`, you can close the attribute with this method.  \n  \n You can also close the attribute by calling `WriteStartAttribute` again, calling <xref:System.Xml.XmlWriter.WriteAttributeString%2A>, or calling <xref:System.Xml.XmlTextWriter.WriteEndElement%2A>."
+  example:
+  - "The following example writes out a book.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.WriteStartElement Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartElement Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.WriteStartElement Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartElement Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.WriteStartElement Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartElement Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void WriteEndAttribute ();
+    parameters: []
+  overload: System.Xml.XmlTextWriter.WriteEndAttribute*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteEndDocument
+  commentId: M:System.Xml.XmlTextWriter.WriteEndDocument
+  id: WriteEndDocument
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteEndDocument()
+  nameWithType: XmlTextWriter.WriteEndDocument()
+  fullName: XmlTextWriter.WriteEndDocument()
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Closes any open elements or attributes and puts the writer back in the Start state.
+  remarks: >-
+    > [!NOTE]
+
+    >  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.
+  example:
+  - "The following example writes an XML file representing a book.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void WriteEndDocument ();
+    parameters: []
+  overload: System.Xml.XmlTextWriter.WriteEndDocument*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The XML document is invalid.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteEndElement
+  commentId: M:System.Xml.XmlTextWriter.WriteEndElement
+  id: WriteEndElement
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteEndElement()
+  nameWithType: XmlTextWriter.WriteEndElement()
+  fullName: XmlTextWriter.WriteEndElement()
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Closes one element and pops the corresponding namespace scope.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n If the element contains no content a short end tag \"/>\" is written; otherwise a full end tag is written."
+  example:
+  - "The following example writes an XML file representing a book.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.WriteEndElement Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteEndElement Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.WriteEndElement Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteEndElement Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.WriteEndElement Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteEndElement Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void WriteEndElement ();
+    parameters: []
+  overload: System.Xml.XmlTextWriter.WriteEndElement*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteEntityRef(System.String)
+  commentId: M:System.Xml.XmlTextWriter.WriteEntityRef(System.String)
+  id: WriteEntityRef(System.String)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteEntityRef(String)
+  nameWithType: XmlTextWriter.WriteEntityRef(String)
+  fullName: XmlTextWriter.WriteEntityRef(String)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Writes out an entity reference as `&name;`.
+  remarks: >-
+    > [!NOTE]
+
+    >  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.
+  example:
+  - "The following example writes an XML file representing a book.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void WriteEntityRef (string name);
+    parameters:
+    - id: name
+      type: System.String
+      description: Name of the entity reference.
+  overload: System.Xml.XmlTextWriter.WriteEntityRef*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The text would result in a non-well formed XML document or <code>name</code> is either `null` or `String.Empty`.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteFullEndElement
+  commentId: M:System.Xml.XmlTextWriter.WriteFullEndElement
+  id: WriteFullEndElement
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteFullEndElement()
+  nameWithType: XmlTextWriter.WriteFullEndElement()
+  fullName: XmlTextWriter.WriteFullEndElement()
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Closes one element and pops the corresponding namespace scope.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n This method always writes the full end tag. This is useful when dealing with elements that must include a full end tag. For example, browsers expect HTML script blocks to be closed with \"\\</script>\"."
+  example:
+  - "The following example writes out an element with no content. It uses WriteFullEndElement to write the full end element tag.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.WriteFullEndElement Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteFullEndElement Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.WriteFullEndElement Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteFullEndElement Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.WriteFullEndElement Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteFullEndElement Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void WriteFullEndElement ();
+    parameters: []
+  overload: System.Xml.XmlTextWriter.WriteFullEndElement*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteName(System.String)
+  commentId: M:System.Xml.XmlTextWriter.WriteName(System.String)
+  id: WriteName(System.String)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteName(String)
+  nameWithType: XmlTextWriter.WriteName(String)
+  fullName: XmlTextWriter.WriteName(String)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Writes out the specified name, ensuring it is a valid name according to the W3C XML 1.0 recommendation (http://www.w3.org/TR/1998/REC-xml-19980210#NT-Name).
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n If <xref:System.Xml.XmlTextWriter.Namespaces%2A> is set to `true`, `WriteName` also checks that the name is also valid according to the W3C Namespaces in XML recommendation."
+  syntax:
+    content: public override void WriteName (string name);
+    parameters:
+    - id: name
+      type: System.String
+      description: Name to write.
+  overload: System.Xml.XmlTextWriter.WriteName*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>name</code> is not a valid XML name; or <code>name</code> is either `null` or `String.Empty`.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteNmToken(System.String)
+  commentId: M:System.Xml.XmlTextWriter.WriteNmToken(System.String)
+  id: WriteNmToken(System.String)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteNmToken(String)
+  nameWithType: XmlTextWriter.WriteNmToken(String)
+  fullName: XmlTextWriter.WriteNmToken(String)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Writes out the specified name, ensuring it is a valid `NmToken` according to the W3C XML 1.0 recommendation (http://www.w3.org/TR/1998/REC-xml-19980210#NT-Name).
+  remarks: >-
+    > [!NOTE]
+
+    >  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.
+  syntax:
+    content: public override void WriteNmToken (string name);
+    parameters:
+    - id: name
+      type: System.String
+      description: Name to write.
+  overload: System.Xml.XmlTextWriter.WriteNmToken*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>name</code> is not a valid `NmToken`; or <code>name</code> is either `null` or `String.Empty`.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteProcessingInstruction(System.String,System.String)
+  commentId: M:System.Xml.XmlTextWriter.WriteProcessingInstruction(System.String,System.String)
+  id: WriteProcessingInstruction(System.String,System.String)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteProcessingInstruction(String, String)
+  nameWithType: XmlTextWriter.WriteProcessingInstruction(String, String)
+  fullName: XmlTextWriter.WriteProcessingInstruction(String, String)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: 'Writes out a processing instruction with a space between the name and text as follows: <?name text?>.'
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n If `text` is either `null` or `String.Empty`, this method writes a `ProcessingInstruction` with no data content, for example \\<?name?>."
+  example:
+  - "The following example writes an XML file representing a book.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void WriteProcessingInstruction (string name, string text);
+    parameters:
+    - id: name
+      type: System.String
+      description: Name of the processing instruction.
+    - id: text
+      type: System.String
+      description: Text to include in the processing instruction.
+  overload: System.Xml.XmlTextWriter.WriteProcessingInstruction*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: "The text would result in a non-well formed XML document.  \n  \n <code>name</code> is either `null` or `String.Empty`.  \n  \n This method is being used to create an XML declaration after <xref href=\"System.Xml.XmlTextWriter.WriteStartDocument\"></xref> has already been called."
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteQualifiedName(System.String,System.String)
+  commentId: M:System.Xml.XmlTextWriter.WriteQualifiedName(System.String,System.String)
+  id: WriteQualifiedName(System.String,System.String)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteQualifiedName(String, String)
+  nameWithType: XmlTextWriter.WriteQualifiedName(String, String)
+  fullName: XmlTextWriter.WriteQualifiedName(String, String)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Writes out the namespace-qualified name. This method looks up the prefix that is in scope for the given namespace.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n For example, the following Microsoft Visual C# code:  \n  \n```  \nwriter.Formatting = Formatting.Indented;  \nwriter.WriteStartElement(\"root\");  \n writer.WriteAttributeString(\"xmlns\",\"x\",null,\"urn:abc\");  \n writer.WriteStartElement(\"item\");  \n writer.WriteStartAttribute(\"href\",null);  \n writer.WriteString(\"#\");  \n writer.WriteQualifiedName(\"test\",\"urn:abc\");  \n writer.WriteEndAttribute();  \n writer.WriteEndElement();  \n writer.WriteEndElement();  \n writer.Close();  \n```  \n  \n Generates the following output:  \n  \n```  \n<root xmlns:x=\"urn:abc\">  \n <item href=\"#x:test\"/>  \n </root>  \n```  \n  \n If `ns` maps to the current default namespace, no prefix is generated.  \n  \n When writing attribute values, this method generates a prefix if `ns` is not found. When writing element content, it throws an exception if `ns` is not found.  \n  \n If this writer supports namespaces (<xref:System.Xml.XmlTextWriter.Namespaces%2A> is set to `true`), this method also checks that the name is valid according to the W3C Namespaces in XML recommendation (http://www.w3.org/TR/REC-xml-names)."
+  example:
+  - "The following example writes out a portion of a XSD schema.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.WriteQualifiedName Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteQualifiedName Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.WriteQualifiedName Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteQualifiedName Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.WriteQualifiedName Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteQualifiedName Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void WriteQualifiedName (string localName, string ns);
+    parameters:
+    - id: localName
+      type: System.String
+      description: The local name to write.
+    - id: ns
+      type: System.String
+      description: The namespace URI to associate with the name.
+  overload: System.Xml.XmlTextWriter.WriteQualifiedName*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: "<code>localName</code> is either `null` or `String.Empty`.  \n  \n <code>localName</code> is not a valid name according to the W3C Namespaces spec."
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteRaw(System.Char[],System.Int32,System.Int32)
+  commentId: M:System.Xml.XmlTextWriter.WriteRaw(System.Char[],System.Int32,System.Int32)
+  id: WriteRaw(System.Char[],System.Int32,System.Int32)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteRaw(Char[], Int32, Int32)
+  nameWithType: XmlTextWriter.WriteRaw(Char[], Int32, Int32)
+  fullName: XmlTextWriter.WriteRaw(Char[], Int32, Int32)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Writes raw markup manually from a character buffer.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n This method does not escape special characters.  \n  \n> [!IMPORTANT]\n>  The <xref:System.Xml.XmlTextWriter> does not validate any data that is passed to the <xref:System.Xml.XmlTextWriter.WriteRaw%2A> method. You should not pass arbitrary data to this method."
+  syntax:
+    content: public override void WriteRaw (char[] buffer, int index, int count);
+    parameters:
+    - id: buffer
+      type: System.Char[]
+      description: Character array containing the text to write.
+    - id: index
+      type: System.Int32
+      description: The position within the buffer indicating the start of the text to write.
+    - id: count
+      type: System.Int32
+      description: The number of characters to write.
+  overload: System.Xml.XmlTextWriter.WriteRaw*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code>buffer</code> is `null`.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: "<code>index</code> or <code>count</code> is less than zero.  \n  \n -or-  \n  \n The buffer length minus <code>index</code> is less than <code>count</code>."
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteRaw(System.String)
+  commentId: M:System.Xml.XmlTextWriter.WriteRaw(System.String)
+  id: WriteRaw(System.String)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteRaw(String)
+  nameWithType: XmlTextWriter.WriteRaw(String)
+  fullName: XmlTextWriter.WriteRaw(String)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Writes raw markup manually from a string.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n This method does not escape special characters.  \n  \n> [!IMPORTANT]\n>  The <xref:System.Xml.XmlTextWriter> does not validate any data that is passed to the <xref:System.Xml.XmlTextWriter.WriteRaw%2A> method. You should not pass arbitrary data to this method."
+  example:
+  - "The following example writes a string using the `WriteRaw` method.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.WriteRaw1 Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteRaw1 Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.WriteRaw1 Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteRaw1 Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.WriteRaw1 Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteRaw1 Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void WriteRaw (string data);
+    parameters:
+    - id: data
+      type: System.String
+      description: String containing the text to write.
+  overload: System.Xml.XmlTextWriter.WriteRaw*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteStartAttribute(System.String,System.String,System.String)
+  commentId: M:System.Xml.XmlTextWriter.WriteStartAttribute(System.String,System.String,System.String)
+  id: WriteStartAttribute(System.String,System.String,System.String)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteStartAttribute(String, String, String)
+  nameWithType: XmlTextWriter.WriteStartAttribute(String, String, String)
+  fullName: XmlTextWriter.WriteStartAttribute(String, String, String)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Writes the start of an attribute.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n This is a more advanced version of <xref:System.Xml.XmlWriter.WriteAttributeString%2A> that allows you to write an attribute value using multiple write methods, such as <xref:System.Xml.XmlTextWriter.WriteString%2A>."
+  example:
+  - "The following example writes out a book.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.WriteStartElement Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartElement Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.WriteStartElement Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartElement Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.WriteStartElement Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartElement Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void WriteStartAttribute (string prefix, string localName, string ns);
+    parameters:
+    - id: prefix
+      type: System.String
+      description: '`Namespace` prefix of the attribute.'
+    - id: localName
+      type: System.String
+      description: '`LocalName` of the attribute.'
+    - id: ns
+      type: System.String
+      description: '`NamespaceURI` of the attribute'
+  overload: System.Xml.XmlTextWriter.WriteStartAttribute*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code>localName</code> is either `null` or `String.Empty`.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteStartDocument
+  commentId: M:System.Xml.XmlTextWriter.WriteStartDocument
+  id: WriteStartDocument
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteStartDocument()
+  nameWithType: XmlTextWriter.WriteStartDocument()
+  fullName: XmlTextWriter.WriteStartDocument()
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Writes the XML declaration with the version "1.0".
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n The encoding level of the document is determined by how the writer is implemented. For example, if an <xref:System.Text.Encoding> object is specified in the `XmlTextWriter` constructor, this determines the value of the encoding attribute. This method does not create a standalone attribute.  \n  \n When `WriteStartDocument` is called the writer validates that what you are writing is a well-formed XML document. For example, it checks that the XML declaration is the first node, that one and only one root-level element exists and so on. If this method is not called, the writer assumes an XML fragment is being written and applies no root level rules.  \n  \n If `WriteStartDocument` has been called and then the <xref:System.Xml.XmlTextWriter.WriteProcessingInstruction%2A> method is used to create another XML declaration, an exception is thrown."
+  example:
+  - "The following example writes an XML file representing a book.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.WriteStartDocument Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartDocument Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void WriteStartDocument ();
+    parameters: []
+  overload: System.Xml.XmlTextWriter.WriteStartDocument*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: This is not the first write method called after the constructor.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteStartDocument(System.Boolean)
+  commentId: M:System.Xml.XmlTextWriter.WriteStartDocument(System.Boolean)
+  id: WriteStartDocument(System.Boolean)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteStartDocument(Boolean)
+  nameWithType: XmlTextWriter.WriteStartDocument(Boolean)
+  fullName: XmlTextWriter.WriteStartDocument(Boolean)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Writes the XML declaration with the version "1.0" and the standalone attribute.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n The encoding level of the document is determined by how the writer is implemented. For example, if an <xref:System.Text.Encoding> object is specified in the `XmlTextWriter` constructor, this determines the value of the encoding attribute.  \n  \n When `WriteStartDocument` is called the writer validates that what you are writing is a well-formed XML document. For example, it checks that the XML declaration is the first node, that one and only one root-level element exists and so on. If this method is not called, the writer assumes an XML fragment is being written and applies no root level rules.  \n  \n If `WriteStartDocument` has been called and then the <xref:System.Xml.XmlTextWriter.WriteProcessingInstruction%2A> method is used to create another XML declaration, an exception is thrown."
+  syntax:
+    content: public override void WriteStartDocument (bool standalone);
+    parameters:
+    - id: standalone
+      type: System.Boolean
+      description: If `true`, it writes "standalone=yes"; if `false`, it writes "standalone=no".
+  overload: System.Xml.XmlTextWriter.WriteStartDocument*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: This is not the first write method called after the constructor.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteStartElement(System.String,System.String,System.String)
+  commentId: M:System.Xml.XmlTextWriter.WriteStartElement(System.String,System.String,System.String)
+  id: WriteStartElement(System.String,System.String,System.String)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteStartElement(String, String, String)
+  nameWithType: XmlTextWriter.WriteStartElement(String, String, String)
+  fullName: XmlTextWriter.WriteStartElement(String, String, String)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Writes the specified start tag and associates it with the given namespace and prefix.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n After calling this method you can either write attributes or create content using <xref:System.Xml.XmlTextWriter.WriteComment%2A>, <xref:System.Xml.XmlTextWriter.WriteString%2A>, or <xref:System.Xml.XmlTextWriter.WriteStartElement%2A> for child elements. You can close the element with <xref:System.Xml.XmlTextWriter.WriteEndElement%2A> at which time an end tag is written out."
+  example:
+  - "The following example writes out a book.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.WriteStartElement Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartElement Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.WriteStartElement Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartElement Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.WriteStartElement Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.WriteStartElement Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void WriteStartElement (string prefix, string localName, string ns);
+    parameters:
+    - id: prefix
+      type: System.String
+      description: The namespace prefix of the element.
+    - id: localName
+      type: System.String
+      description: The local name of the element.
+    - id: ns
+      type: System.String
+      description: The namespace URI to associate with the element. If this namespace is already in scope and has an associated prefix then the writer automatically writes that prefix also.
+  overload: System.Xml.XmlTextWriter.WriteStartElement*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The writer is closed.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteState
+  commentId: P:System.Xml.XmlTextWriter.WriteState
+  id: WriteState
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteState
+  nameWithType: XmlTextWriter.WriteState
+  fullName: XmlTextWriter.WriteState
+  type: Property
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Gets the state of the writer.
+  remarks: >-
+    > [!NOTE]
+
+    >  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.
+  syntax:
+    content: public override System.Xml.WriteState WriteState { get; }
+    return:
+      type: System.Xml.WriteState
+      description: One of the <xref href="System.Xml.WriteState"></xref> values.
+  overload: System.Xml.XmlTextWriter.WriteState*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteString(System.String)
+  commentId: M:System.Xml.XmlTextWriter.WriteString(System.String)
+  id: WriteString(System.String)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteString(String)
+  nameWithType: XmlTextWriter.WriteString(String)
+  fullName: XmlTextWriter.WriteString(String)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Writes the given text content.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n `WriteString` does the following  \n  \n-   The characters `&`, `<`, and `>` are replaced with `&amp;`, `&lt;`, and `&gt;`, respectively.  \n  \n-   Character values in the range 0x-0x1F (excluding white space characters 0x9, 0xA, and 0xD) are replaced with numeric character entities (`&#0;` through `&#0x1F`).  \n  \n-   If `WriteString` is called in the context of an attribute value, double and single quotes are replaced with `&quot;` and `&apos;` respectively.  \n  \n For example, this input string `test<item>test` is written as  \n  \n```  \ntest&lt;item&gt;test  \n```  \n  \n If `text` is either `null` or `String.Empty`, this method writes a text node with no data content."
+  example:
+  - "The following example writes an XML fragment.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.Formatting Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.Formatting Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.Formatting Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.Formatting Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.Formatting Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.Formatting Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void WriteString (string text);
+    parameters:
+    - id: text
+      type: System.String
+      description: Text to write.
+  overload: System.Xml.XmlTextWriter.WriteString*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The text string contains an invalid surrogate pair.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteSurrogateCharEntity(System.Char,System.Char)
+  commentId: M:System.Xml.XmlTextWriter.WriteSurrogateCharEntity(System.Char,System.Char)
+  id: WriteSurrogateCharEntity(System.Char,System.Char)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteSurrogateCharEntity(Char, Char)
+  nameWithType: XmlTextWriter.WriteSurrogateCharEntity(Char, Char)
+  fullName: XmlTextWriter.WriteSurrogateCharEntity(Char, Char)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Generates and writes the surrogate character entity for the surrogate character pair.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n This method is only applicable on systems that use UTF-16 encoding.  \n  \n The surrogate character entity is written in hexadecimal format. The range for surrogate characters is `#x10000` to `#x10FFFF`. The following formula is used to generate the surrogate character entity: (`highChar` - `0xD800`) * `0x400` + (`lowChar` - `0xDC00`) + `0x10000`.  \n  \n For both HTML and XML, the document character set (and therefore the notation of numeric character references) is based on UCS [ISO-10646]. A single numeric character reference in a source document may therefore in some cases correspond to two 16-bit units in a string (a high surrogate and a low surrogate). These 16-bit units are referred to as a surrogate pair.  \n  \n For more information regarding surrogates or characters, refer to section 3.7 of the Unicode 3.0/Unicode 2.0 standard located at http://www.unicode.org, or section 2.2 of the W3C XML 1.0 Recommendation located at http://www.w3.org/TR/REC-xml#charsets."
+  syntax:
+    content: public override void WriteSurrogateCharEntity (char lowChar, char highChar);
+    parameters:
+    - id: lowChar
+      type: System.Char
+      description: The low surrogate. This must be a value between `0xDC00` and `0xDFFF`.
+    - id: highChar
+      type: System.Char
+      description: The high surrogate. This must be a value between `0xD800` and `0xDBFF`.
+  overload: System.Xml.XmlTextWriter.WriteSurrogateCharEntity*
+  exceptions:
+  - type: System.Exception
+    commentId: T:System.Exception
+    description: An invalid surrogate character pair was passed.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.WriteWhitespace(System.String)
+  commentId: M:System.Xml.XmlTextWriter.WriteWhitespace(System.String)
+  id: WriteWhitespace(System.String)
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: WriteWhitespace(String)
+  nameWithType: XmlTextWriter.WriteWhitespace(String)
+  fullName: XmlTextWriter.WriteWhitespace(String)
+  type: Method
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Writes out the given white space.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n This method is used to manually format your document. Use the <xref:System.Xml.XmlTextWriter.Formatting%2A> property to have the writer format the output automatically."
+  example:
+  - "The following example uses the `WriteWhitespace` method to control how the file is formatted.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.XmlSpace Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.XmlSpace Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.XmlSpace Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.XmlSpace Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.XmlSpace Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.XmlSpace Example/VB/source.vb#1)]"
+  syntax:
+    content: public override void WriteWhitespace (string ws);
+    parameters:
+    - id: ws
+      type: System.String
+      description: The string of white space characters.
+  overload: System.Xml.XmlTextWriter.WriteWhitespace*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The string contains non-white space characters.
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.XmlLang
+  commentId: P:System.Xml.XmlTextWriter.XmlLang
+  id: XmlLang
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: XmlLang
+  nameWithType: XmlTextWriter.XmlLang
+  fullName: XmlTextWriter.XmlLang
+  type: Property
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Gets the current `xml:lang` scope.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n This property allows one component to find out what state another component has left the writer in. For example, perhaps one component wants to tell another which language help text to generate. The language information is communicated by writing an `xml:lang` attribute."
+  syntax:
+    content: public override string XmlLang { get; }
+    return:
+      type: System.String
+      description: The current `xml:lang` or `null` if there is no `xml:lang` in the current scope.
+  overload: System.Xml.XmlTextWriter.XmlLang*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+- uid: System.Xml.XmlTextWriter.XmlSpace
+  commentId: P:System.Xml.XmlTextWriter.XmlSpace
+  id: XmlSpace
+  parent: System.Xml.XmlTextWriter
+  langs:
+  - csharp
+  name: XmlSpace
+  nameWithType: XmlTextWriter.XmlSpace
+  fullName: XmlTextWriter.XmlSpace
+  type: Property
+  assemblies:
+  - System.Xml
+  - netstandard
+  - System.Xml.ReaderWriter
+  namespace: System.Xml
+  summary: Gets an <xref href="System.Xml.XmlSpace"></xref> representing the current `xml:space` scope.
+  remarks: "> [!NOTE]\n>  Starting with the .NET Framework 2.0, we recommend that you create <xref:System.Xml.XmlWriter> instances by using the <xref:System.Xml.XmlWriter.Create%2A?displayProperty=fullName> method and the <xref:System.Xml.XmlWriterSettings> class to take advantage of new functionality.  \n  \n This property allows one component to find out in what state another component has left the writer."
+  example:
+  - "The following example uses the `WriteWhitespace` method to control how the file is formatted.  \n  \n [!code-cpp[Classic WebData XmlTextWriter.XmlSpace Example#1](~/samples/snippets/cpp/VS_Snippets_Data/Classic WebData XmlTextWriter.XmlSpace Example/CPP/source.cpp#1)]\n [!code-csharp[Classic WebData XmlTextWriter.XmlSpace Example#1](~/samples/snippets/csharp/VS_Snippets_Data/Classic WebData XmlTextWriter.XmlSpace Example/CS/source.cs#1)]\n [!code-vb[Classic WebData XmlTextWriter.XmlSpace Example#1](~/samples/snippets/visualbasic/VS_Snippets_Data/Classic WebData XmlTextWriter.XmlSpace Example/VB/source.vb#1)]"
+  syntax:
+    content: public override System.Xml.XmlSpace XmlSpace { get; }
+    return:
+      type: System.Xml.XmlSpace
+      description: "An `XmlSpace` representing the current `xml:space` scope.  \n  \n <table><thead><tr><th> Value  \n  \n </th><th> Meaning  \n  \n </th></tr></thead><tbody><tr><td> None  \n  \n </td><td> This is the default if no `xml:space` scope exists.  \n  \n </td></tr><tr><td> Default  \n  \n </td><td> The current scope is `xml:space`=\"default\".  \n  \n </td></tr><tr><td> Preserve  \n  \n </td><td> The current scope is `xml:space`=\"preserve\".  \n  \n </td></tr></tbody></table>"
+  overload: System.Xml.XmlTextWriter.XmlSpace*
+  exceptions: []
+  version:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+  ms.technology:
+  - dotnet-standard
+  author: mairaw
+  ms.author: mairaw
+  manager: wpickett
+references:
+- uid: System.Xml.XmlWriter
+  parent: System.Xml
+  isExternal: false
+  name: XmlWriter
+  nameWithType: XmlWriter
+  fullName: System.Xml.XmlWriter
+- uid: System.ArgumentException
+  parent: System
+  isExternal: false
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.ArgumentNullException
+  parent: System
+  isExternal: false
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.UnauthorizedAccessException
+  parent: System
+  isExternal: false
+  name: UnauthorizedAccessException
+  nameWithType: UnauthorizedAccessException
+  fullName: System.UnauthorizedAccessException
+- uid: System.IO.DirectoryNotFoundException
+  parent: System.IO
+  isExternal: false
+  name: DirectoryNotFoundException
+  nameWithType: DirectoryNotFoundException
+  fullName: System.IO.DirectoryNotFoundException
+- uid: System.IO.IOException
+  parent: System.IO
+  isExternal: false
+  name: IOException
+  nameWithType: IOException
+  fullName: System.IO.IOException
+- uid: System.Security.SecurityException
+  parent: System.Security
+  isExternal: false
+  name: SecurityException
+  nameWithType: SecurityException
+  fullName: System.Security.SecurityException
+- uid: System.InvalidOperationException
+  parent: System
+  isExternal: false
+  name: InvalidOperationException
+  nameWithType: InvalidOperationException
+  fullName: System.InvalidOperationException
+- uid: System.ArgumentOutOfRangeException
+  parent: System
+  isExternal: false
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: System.Exception
+  parent: System
+  isExternal: false
+  name: Exception
+  nameWithType: Exception
+  fullName: System.Exception
+- uid: System.Xml.XmlTextWriter.#ctor(System.IO.TextWriter)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: XmlTextWriter(TextWriter)
+  nameWithType: XmlTextWriter.XmlTextWriter(TextWriter)
+  fullName: XmlTextWriter.XmlTextWriter(TextWriter)
+- uid: System.IO.TextWriter
+  parent: System.IO
+  isExternal: false
+  name: TextWriter
+  nameWithType: TextWriter
+  fullName: System.IO.TextWriter
+- uid: System.Xml.XmlTextWriter.#ctor(System.IO.Stream,System.Text.Encoding)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: XmlTextWriter(Stream, Encoding)
+  nameWithType: XmlTextWriter.XmlTextWriter(Stream, Encoding)
+  fullName: XmlTextWriter.XmlTextWriter(Stream, Encoding)
+- uid: System.IO.Stream
+  parent: System.IO
+  isExternal: false
+  name: Stream
+  nameWithType: Stream
+  fullName: System.IO.Stream
+- uid: System.Text.Encoding
+  parent: System.Text
+  isExternal: false
+  name: Encoding
+  nameWithType: Encoding
+  fullName: System.Text.Encoding
+- uid: System.Xml.XmlTextWriter.#ctor(System.String,System.Text.Encoding)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: XmlTextWriter(String, Encoding)
+  nameWithType: XmlTextWriter.XmlTextWriter(String, Encoding)
+  fullName: XmlTextWriter.XmlTextWriter(String, Encoding)
+- uid: System.String
+  parent: System
+  isExternal: false
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Xml.XmlTextWriter.BaseStream
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: BaseStream
+  nameWithType: XmlTextWriter.BaseStream
+  fullName: XmlTextWriter.BaseStream
+- uid: System.Xml.XmlTextWriter.Close
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: Close()
+  nameWithType: XmlTextWriter.Close()
+  fullName: XmlTextWriter.Close()
+- uid: System.Xml.XmlTextWriter.Flush
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: Flush()
+  nameWithType: XmlTextWriter.Flush()
+  fullName: XmlTextWriter.Flush()
+- uid: System.Xml.XmlTextWriter.Formatting
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: Formatting
+  nameWithType: XmlTextWriter.Formatting
+  fullName: XmlTextWriter.Formatting
+- uid: System.Xml.Formatting
+  parent: System.Xml
+  isExternal: false
+  name: Formatting
+  nameWithType: Formatting
+  fullName: System.Xml.Formatting
+- uid: System.Xml.XmlTextWriter.Indentation
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: Indentation
+  nameWithType: XmlTextWriter.Indentation
+  fullName: XmlTextWriter.Indentation
+- uid: System.Int32
+  parent: System
+  isExternal: false
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: System.Xml.XmlTextWriter.IndentChar
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: IndentChar
+  nameWithType: XmlTextWriter.IndentChar
+  fullName: XmlTextWriter.IndentChar
+- uid: System.Char
+  parent: System
+  isExternal: false
+  name: Char
+  nameWithType: Char
+  fullName: System.Char
+- uid: System.Xml.XmlTextWriter.LookupPrefix(System.String)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: LookupPrefix(String)
+  nameWithType: XmlTextWriter.LookupPrefix(String)
+  fullName: XmlTextWriter.LookupPrefix(String)
+- uid: System.Xml.XmlTextWriter.Namespaces
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: Namespaces
+  nameWithType: XmlTextWriter.Namespaces
+  fullName: XmlTextWriter.Namespaces
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Xml.XmlTextWriter.QuoteChar
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: QuoteChar
+  nameWithType: XmlTextWriter.QuoteChar
+  fullName: XmlTextWriter.QuoteChar
+- uid: System.Xml.XmlTextWriter.WriteBase64(System.Byte[],System.Int32,System.Int32)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteBase64(Byte[], Int32, Int32)
+  nameWithType: XmlTextWriter.WriteBase64(Byte[], Int32, Int32)
+  fullName: XmlTextWriter.WriteBase64(Byte[], Int32, Int32)
+- uid: System.Byte
+  name: Byte
+  nameWithType: Byte
+  fullName: System.Byte
+- uid: System.Byte[]
+  parent: System
+  isExternal: false
+  name: Byte[]
+  nameWithType: Byte[]
+  fullName: System.Byte[]
+  spec.csharp:
+  - uid: System.Byte
+    name: Byte
+    nameWithType: Byte
+    fullName: System.Byte
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+- uid: System.Xml.XmlTextWriter.WriteBinHex(System.Byte[],System.Int32,System.Int32)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteBinHex(Byte[], Int32, Int32)
+  nameWithType: XmlTextWriter.WriteBinHex(Byte[], Int32, Int32)
+  fullName: XmlTextWriter.WriteBinHex(Byte[], Int32, Int32)
+- uid: System.Xml.XmlTextWriter.WriteCData(System.String)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteCData(String)
+  nameWithType: XmlTextWriter.WriteCData(String)
+  fullName: XmlTextWriter.WriteCData(String)
+- uid: System.Xml.XmlTextWriter.WriteCharEntity(System.Char)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteCharEntity(Char)
+  nameWithType: XmlTextWriter.WriteCharEntity(Char)
+  fullName: XmlTextWriter.WriteCharEntity(Char)
+- uid: System.Xml.XmlTextWriter.WriteChars(System.Char[],System.Int32,System.Int32)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteChars(Char[], Int32, Int32)
+  nameWithType: XmlTextWriter.WriteChars(Char[], Int32, Int32)
+  fullName: XmlTextWriter.WriteChars(Char[], Int32, Int32)
+- uid: System.Char[]
+  parent: System
+  isExternal: false
+  name: Char[]
+  nameWithType: Char[]
+  fullName: System.Char[]
+  spec.csharp:
+  - uid: System.Char
+    name: Char
+    nameWithType: Char
+    fullName: System.Char
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+- uid: System.Xml.XmlTextWriter.WriteComment(System.String)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteComment(String)
+  nameWithType: XmlTextWriter.WriteComment(String)
+  fullName: XmlTextWriter.WriteComment(String)
+- uid: System.Xml.XmlTextWriter.WriteDocType(System.String,System.String,System.String,System.String)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteDocType(String, String, String, String)
+  nameWithType: XmlTextWriter.WriteDocType(String, String, String, String)
+  fullName: XmlTextWriter.WriteDocType(String, String, String, String)
+- uid: System.Xml.XmlTextWriter.WriteEndAttribute
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteEndAttribute()
+  nameWithType: XmlTextWriter.WriteEndAttribute()
+  fullName: XmlTextWriter.WriteEndAttribute()
+- uid: System.Xml.XmlTextWriter.WriteEndDocument
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteEndDocument()
+  nameWithType: XmlTextWriter.WriteEndDocument()
+  fullName: XmlTextWriter.WriteEndDocument()
+- uid: System.Xml.XmlTextWriter.WriteEndElement
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteEndElement()
+  nameWithType: XmlTextWriter.WriteEndElement()
+  fullName: XmlTextWriter.WriteEndElement()
+- uid: System.Xml.XmlTextWriter.WriteEntityRef(System.String)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteEntityRef(String)
+  nameWithType: XmlTextWriter.WriteEntityRef(String)
+  fullName: XmlTextWriter.WriteEntityRef(String)
+- uid: System.Xml.XmlTextWriter.WriteFullEndElement
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteFullEndElement()
+  nameWithType: XmlTextWriter.WriteFullEndElement()
+  fullName: XmlTextWriter.WriteFullEndElement()
+- uid: System.Xml.XmlTextWriter.WriteName(System.String)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteName(String)
+  nameWithType: XmlTextWriter.WriteName(String)
+  fullName: XmlTextWriter.WriteName(String)
+- uid: System.Xml.XmlTextWriter.WriteNmToken(System.String)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteNmToken(String)
+  nameWithType: XmlTextWriter.WriteNmToken(String)
+  fullName: XmlTextWriter.WriteNmToken(String)
+- uid: System.Xml.XmlTextWriter.WriteProcessingInstruction(System.String,System.String)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteProcessingInstruction(String, String)
+  nameWithType: XmlTextWriter.WriteProcessingInstruction(String, String)
+  fullName: XmlTextWriter.WriteProcessingInstruction(String, String)
+- uid: System.Xml.XmlTextWriter.WriteQualifiedName(System.String,System.String)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteQualifiedName(String, String)
+  nameWithType: XmlTextWriter.WriteQualifiedName(String, String)
+  fullName: XmlTextWriter.WriteQualifiedName(String, String)
+- uid: System.Xml.XmlTextWriter.WriteRaw(System.Char[],System.Int32,System.Int32)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteRaw(Char[], Int32, Int32)
+  nameWithType: XmlTextWriter.WriteRaw(Char[], Int32, Int32)
+  fullName: XmlTextWriter.WriteRaw(Char[], Int32, Int32)
+- uid: System.Xml.XmlTextWriter.WriteRaw(System.String)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteRaw(String)
+  nameWithType: XmlTextWriter.WriteRaw(String)
+  fullName: XmlTextWriter.WriteRaw(String)
+- uid: System.Xml.XmlTextWriter.WriteStartAttribute(System.String,System.String,System.String)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteStartAttribute(String, String, String)
+  nameWithType: XmlTextWriter.WriteStartAttribute(String, String, String)
+  fullName: XmlTextWriter.WriteStartAttribute(String, String, String)
+- uid: System.Xml.XmlTextWriter.WriteStartDocument
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteStartDocument()
+  nameWithType: XmlTextWriter.WriteStartDocument()
+  fullName: XmlTextWriter.WriteStartDocument()
+- uid: System.Xml.XmlTextWriter.WriteStartDocument(System.Boolean)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteStartDocument(Boolean)
+  nameWithType: XmlTextWriter.WriteStartDocument(Boolean)
+  fullName: XmlTextWriter.WriteStartDocument(Boolean)
+- uid: System.Xml.XmlTextWriter.WriteStartElement(System.String,System.String,System.String)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteStartElement(String, String, String)
+  nameWithType: XmlTextWriter.WriteStartElement(String, String, String)
+  fullName: XmlTextWriter.WriteStartElement(String, String, String)
+- uid: System.Xml.XmlTextWriter.WriteState
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteState
+  nameWithType: XmlTextWriter.WriteState
+  fullName: XmlTextWriter.WriteState
+- uid: System.Xml.WriteState
+  parent: System.Xml
+  isExternal: false
+  name: WriteState
+  nameWithType: WriteState
+  fullName: System.Xml.WriteState
+- uid: System.Xml.XmlTextWriter.WriteString(System.String)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteString(String)
+  nameWithType: XmlTextWriter.WriteString(String)
+  fullName: XmlTextWriter.WriteString(String)
+- uid: System.Xml.XmlTextWriter.WriteSurrogateCharEntity(System.Char,System.Char)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteSurrogateCharEntity(Char, Char)
+  nameWithType: XmlTextWriter.WriteSurrogateCharEntity(Char, Char)
+  fullName: XmlTextWriter.WriteSurrogateCharEntity(Char, Char)
+- uid: System.Xml.XmlTextWriter.WriteWhitespace(System.String)
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteWhitespace(String)
+  nameWithType: XmlTextWriter.WriteWhitespace(String)
+  fullName: XmlTextWriter.WriteWhitespace(String)
+- uid: System.Xml.XmlTextWriter.XmlLang
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: XmlLang
+  nameWithType: XmlTextWriter.XmlLang
+  fullName: XmlTextWriter.XmlLang
+- uid: System.Xml.XmlTextWriter.XmlSpace
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: XmlSpace
+  nameWithType: XmlTextWriter.XmlSpace
+  fullName: XmlTextWriter.XmlSpace
+- uid: System.Xml.XmlSpace
+  parent: System.Xml
+  isExternal: false
+  name: XmlSpace
+  nameWithType: XmlSpace
+  fullName: System.Xml.XmlSpace
+- uid: System.Xml.XmlTextWriter.#ctor*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: XmlTextWriter
+  nameWithType: XmlTextWriter.XmlTextWriter
+  fullName: XmlTextWriter.XmlTextWriter
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteRaw*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteRaw
+  nameWithType: XmlTextWriter.WriteRaw
+  fullName: XmlTextWriter.WriteRaw
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteStartDocument*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteStartDocument
+  nameWithType: XmlTextWriter.WriteStartDocument
+  fullName: XmlTextWriter.WriteStartDocument
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.BaseStream*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: BaseStream
+  nameWithType: XmlTextWriter.BaseStream
+  fullName: XmlTextWriter.BaseStream
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.Close*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: Close
+  nameWithType: XmlTextWriter.Close
+  fullName: XmlTextWriter.Close
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.Flush*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: Flush
+  nameWithType: XmlTextWriter.Flush
+  fullName: XmlTextWriter.Flush
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.Formatting*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: Formatting
+  nameWithType: XmlTextWriter.Formatting
+  fullName: XmlTextWriter.Formatting
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.Indentation*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: Indentation
+  nameWithType: XmlTextWriter.Indentation
+  fullName: XmlTextWriter.Indentation
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.IndentChar*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: IndentChar
+  nameWithType: XmlTextWriter.IndentChar
+  fullName: XmlTextWriter.IndentChar
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.LookupPrefix*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: LookupPrefix
+  nameWithType: XmlTextWriter.LookupPrefix
+  fullName: XmlTextWriter.LookupPrefix
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.Namespaces*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: Namespaces
+  nameWithType: XmlTextWriter.Namespaces
+  fullName: XmlTextWriter.Namespaces
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.QuoteChar*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: QuoteChar
+  nameWithType: XmlTextWriter.QuoteChar
+  fullName: XmlTextWriter.QuoteChar
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteBase64*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteBase64
+  nameWithType: XmlTextWriter.WriteBase64
+  fullName: XmlTextWriter.WriteBase64
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteBinHex*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteBinHex
+  nameWithType: XmlTextWriter.WriteBinHex
+  fullName: XmlTextWriter.WriteBinHex
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteCData*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteCData
+  nameWithType: XmlTextWriter.WriteCData
+  fullName: XmlTextWriter.WriteCData
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteCharEntity*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteCharEntity
+  nameWithType: XmlTextWriter.WriteCharEntity
+  fullName: XmlTextWriter.WriteCharEntity
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteChars*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteChars
+  nameWithType: XmlTextWriter.WriteChars
+  fullName: XmlTextWriter.WriteChars
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteComment*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteComment
+  nameWithType: XmlTextWriter.WriteComment
+  fullName: XmlTextWriter.WriteComment
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteDocType*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteDocType
+  nameWithType: XmlTextWriter.WriteDocType
+  fullName: XmlTextWriter.WriteDocType
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteEndAttribute*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteEndAttribute
+  nameWithType: XmlTextWriter.WriteEndAttribute
+  fullName: XmlTextWriter.WriteEndAttribute
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteEndDocument*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteEndDocument
+  nameWithType: XmlTextWriter.WriteEndDocument
+  fullName: XmlTextWriter.WriteEndDocument
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteEndElement*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteEndElement
+  nameWithType: XmlTextWriter.WriteEndElement
+  fullName: XmlTextWriter.WriteEndElement
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteEntityRef*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteEntityRef
+  nameWithType: XmlTextWriter.WriteEntityRef
+  fullName: XmlTextWriter.WriteEntityRef
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteFullEndElement*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteFullEndElement
+  nameWithType: XmlTextWriter.WriteFullEndElement
+  fullName: XmlTextWriter.WriteFullEndElement
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteName*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteName
+  nameWithType: XmlTextWriter.WriteName
+  fullName: XmlTextWriter.WriteName
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteNmToken*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteNmToken
+  nameWithType: XmlTextWriter.WriteNmToken
+  fullName: XmlTextWriter.WriteNmToken
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteProcessingInstruction*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteProcessingInstruction
+  nameWithType: XmlTextWriter.WriteProcessingInstruction
+  fullName: XmlTextWriter.WriteProcessingInstruction
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteQualifiedName*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteQualifiedName
+  nameWithType: XmlTextWriter.WriteQualifiedName
+  fullName: XmlTextWriter.WriteQualifiedName
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteStartAttribute*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteStartAttribute
+  nameWithType: XmlTextWriter.WriteStartAttribute
+  fullName: XmlTextWriter.WriteStartAttribute
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteStartElement*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteStartElement
+  nameWithType: XmlTextWriter.WriteStartElement
+  fullName: XmlTextWriter.WriteStartElement
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteState*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteState
+  nameWithType: XmlTextWriter.WriteState
+  fullName: XmlTextWriter.WriteState
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteString*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteString
+  nameWithType: XmlTextWriter.WriteString
+  fullName: XmlTextWriter.WriteString
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteSurrogateCharEntity*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteSurrogateCharEntity
+  nameWithType: XmlTextWriter.WriteSurrogateCharEntity
+  fullName: XmlTextWriter.WriteSurrogateCharEntity
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.WriteWhitespace*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: WriteWhitespace
+  nameWithType: XmlTextWriter.WriteWhitespace
+  fullName: XmlTextWriter.WriteWhitespace
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.XmlLang*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: XmlLang
+  nameWithType: XmlTextWriter.XmlLang
+  fullName: XmlTextWriter.XmlLang
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Xml.XmlTextWriter.XmlSpace*
+  parent: System.Xml.XmlTextWriter
+  isExternal: false
+  name: XmlSpace
+  nameWithType: XmlTextWriter.XmlSpace
+  fullName: XmlTextWriter.XmlSpace
+  monikers:
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Xml/XmlTextWriter.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Xml.XmlWriter.Create(System.Text.StringBuilder,System.Xml.XmlWriterSettings)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: Create(StringBuilder, XmlWriterSettings)
+  nameWithType: XmlWriter.Create(StringBuilder, XmlWriterSettings)
+  fullName: XmlWriter.Create(StringBuilder, XmlWriterSettings)
+- uid: System.Xml.XmlWriter.Create(System.String,System.Xml.XmlWriterSettings)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: Create(String, XmlWriterSettings)
+  nameWithType: XmlWriter.Create(String, XmlWriterSettings)
+  fullName: XmlWriter.Create(String, XmlWriterSettings)
+- uid: System.Xml.XmlWriter.Create(System.IO.TextWriter,System.Xml.XmlWriterSettings)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: Create(TextWriter, XmlWriterSettings)
+  nameWithType: XmlWriter.Create(TextWriter, XmlWriterSettings)
+  fullName: XmlWriter.Create(TextWriter, XmlWriterSettings)
+- uid: System.Xml.XmlWriter.Create(System.IO.Stream,System.Xml.XmlWriterSettings)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: Create(Stream, XmlWriterSettings)
+  nameWithType: XmlWriter.Create(Stream, XmlWriterSettings)
+  fullName: XmlWriter.Create(Stream, XmlWriterSettings)
+- uid: System.Xml.XmlWriter.Create(System.Xml.XmlWriter,System.Xml.XmlWriterSettings)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: Create(XmlWriter, XmlWriterSettings)
+  nameWithType: XmlWriter.Create(XmlWriter, XmlWriterSettings)
+  fullName: XmlWriter.Create(XmlWriter, XmlWriterSettings)
+- uid: System.Xml.XmlWriter.Create(System.Text.StringBuilder)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: Create(StringBuilder)
+  nameWithType: XmlWriter.Create(StringBuilder)
+  fullName: XmlWriter.Create(StringBuilder)
+- uid: System.Xml.XmlWriter.Create(System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: Create(String)
+  nameWithType: XmlWriter.Create(String)
+  fullName: XmlWriter.Create(String)
+- uid: System.Xml.XmlWriter.Create(System.IO.TextWriter)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: Create(TextWriter)
+  nameWithType: XmlWriter.Create(TextWriter)
+  fullName: XmlWriter.Create(TextWriter)
+- uid: System.Xml.XmlWriter.Create(System.IO.Stream)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: Create(Stream)
+  nameWithType: XmlWriter.Create(Stream)
+  fullName: XmlWriter.Create(Stream)
+- uid: System.Xml.XmlWriter.Create(System.Xml.XmlWriter)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: Create(XmlWriter)
+  nameWithType: XmlWriter.Create(XmlWriter)
+  fullName: XmlWriter.Create(XmlWriter)
+- uid: System.Xml.XmlWriter.Dispose
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: Dispose()
+  nameWithType: XmlWriter.Dispose()
+  fullName: XmlWriter.Dispose()
+- uid: System.Xml.XmlWriter.Dispose(System.Boolean)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: Dispose(Boolean)
+  nameWithType: XmlWriter.Dispose(Boolean)
+  fullName: XmlWriter.Dispose(Boolean)
+- uid: System.Xml.XmlWriter.FlushAsync
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: FlushAsync()
+  nameWithType: XmlWriter.FlushAsync()
+  fullName: XmlWriter.FlushAsync()
+- uid: System.Xml.XmlWriter.Settings
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: Settings
+  nameWithType: XmlWriter.Settings
+  fullName: XmlWriter.Settings
+- uid: System.Xml.XmlWriter.WriteAttributes(System.Xml.XmlReader,System.Boolean)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteAttributes(XmlReader, Boolean)
+  nameWithType: XmlWriter.WriteAttributes(XmlReader, Boolean)
+  fullName: XmlWriter.WriteAttributes(XmlReader, Boolean)
+- uid: System.Xml.XmlWriter.WriteAttributesAsync(System.Xml.XmlReader,System.Boolean)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteAttributesAsync(XmlReader, Boolean)
+  nameWithType: XmlWriter.WriteAttributesAsync(XmlReader, Boolean)
+  fullName: XmlWriter.WriteAttributesAsync(XmlReader, Boolean)
+- uid: System.Xml.XmlWriter.WriteAttributeString(System.String,System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteAttributeString(String, String)
+  nameWithType: XmlWriter.WriteAttributeString(String, String)
+  fullName: XmlWriter.WriteAttributeString(String, String)
+- uid: System.Xml.XmlWriter.WriteAttributeString(System.String,System.String,System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteAttributeString(String, String, String)
+  nameWithType: XmlWriter.WriteAttributeString(String, String, String)
+  fullName: XmlWriter.WriteAttributeString(String, String, String)
+- uid: System.Xml.XmlWriter.WriteAttributeString(System.String,System.String,System.String,System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteAttributeString(String, String, String, String)
+  nameWithType: XmlWriter.WriteAttributeString(String, String, String, String)
+  fullName: XmlWriter.WriteAttributeString(String, String, String, String)
+- uid: System.Xml.XmlWriter.WriteAttributeStringAsync(System.String,System.String,System.String,System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteAttributeStringAsync(String, String, String, String)
+  nameWithType: XmlWriter.WriteAttributeStringAsync(String, String, String, String)
+  fullName: XmlWriter.WriteAttributeStringAsync(String, String, String, String)
+- uid: System.Xml.XmlWriter.WriteBase64Async(System.Byte[],System.Int32,System.Int32)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteBase64Async(Byte[], Int32, Int32)
+  nameWithType: XmlWriter.WriteBase64Async(Byte[], Int32, Int32)
+  fullName: XmlWriter.WriteBase64Async(Byte[], Int32, Int32)
+- uid: System.Xml.XmlWriter.WriteBinHexAsync(System.Byte[],System.Int32,System.Int32)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteBinHexAsync(Byte[], Int32, Int32)
+  nameWithType: XmlWriter.WriteBinHexAsync(Byte[], Int32, Int32)
+  fullName: XmlWriter.WriteBinHexAsync(Byte[], Int32, Int32)
+- uid: System.Xml.XmlWriter.WriteCDataAsync(System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteCDataAsync(String)
+  nameWithType: XmlWriter.WriteCDataAsync(String)
+  fullName: XmlWriter.WriteCDataAsync(String)
+- uid: System.Xml.XmlWriter.WriteCharEntityAsync(System.Char)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteCharEntityAsync(Char)
+  nameWithType: XmlWriter.WriteCharEntityAsync(Char)
+  fullName: XmlWriter.WriteCharEntityAsync(Char)
+- uid: System.Xml.XmlWriter.WriteCharsAsync(System.Char[],System.Int32,System.Int32)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteCharsAsync(Char[], Int32, Int32)
+  nameWithType: XmlWriter.WriteCharsAsync(Char[], Int32, Int32)
+  fullName: XmlWriter.WriteCharsAsync(Char[], Int32, Int32)
+- uid: System.Xml.XmlWriter.WriteCommentAsync(System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteCommentAsync(String)
+  nameWithType: XmlWriter.WriteCommentAsync(String)
+  fullName: XmlWriter.WriteCommentAsync(String)
+- uid: System.Xml.XmlWriter.WriteDocTypeAsync(System.String,System.String,System.String,System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteDocTypeAsync(String, String, String, String)
+  nameWithType: XmlWriter.WriteDocTypeAsync(String, String, String, String)
+  fullName: XmlWriter.WriteDocTypeAsync(String, String, String, String)
+- uid: System.Xml.XmlWriter.WriteElementString(System.String,System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteElementString(String, String)
+  nameWithType: XmlWriter.WriteElementString(String, String)
+  fullName: XmlWriter.WriteElementString(String, String)
+- uid: System.Xml.XmlWriter.WriteElementString(System.String,System.String,System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteElementString(String, String, String)
+  nameWithType: XmlWriter.WriteElementString(String, String, String)
+  fullName: XmlWriter.WriteElementString(String, String, String)
+- uid: System.Xml.XmlWriter.WriteElementString(System.String,System.String,System.String,System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteElementString(String, String, String, String)
+  nameWithType: XmlWriter.WriteElementString(String, String, String, String)
+  fullName: XmlWriter.WriteElementString(String, String, String, String)
+- uid: System.Xml.XmlWriter.WriteElementStringAsync(System.String,System.String,System.String,System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteElementStringAsync(String, String, String, String)
+  nameWithType: XmlWriter.WriteElementStringAsync(String, String, String, String)
+  fullName: XmlWriter.WriteElementStringAsync(String, String, String, String)
+- uid: System.Xml.XmlWriter.WriteEndAttributeAsync
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteEndAttributeAsync()
+  nameWithType: XmlWriter.WriteEndAttributeAsync()
+  fullName: XmlWriter.WriteEndAttributeAsync()
+- uid: System.Xml.XmlWriter.WriteEndDocumentAsync
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteEndDocumentAsync()
+  nameWithType: XmlWriter.WriteEndDocumentAsync()
+  fullName: XmlWriter.WriteEndDocumentAsync()
+- uid: System.Xml.XmlWriter.WriteEndElementAsync
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteEndElementAsync()
+  nameWithType: XmlWriter.WriteEndElementAsync()
+  fullName: XmlWriter.WriteEndElementAsync()
+- uid: System.Xml.XmlWriter.WriteEntityRefAsync(System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteEntityRefAsync(String)
+  nameWithType: XmlWriter.WriteEntityRefAsync(String)
+  fullName: XmlWriter.WriteEntityRefAsync(String)
+- uid: System.Xml.XmlWriter.WriteFullEndElementAsync
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteFullEndElementAsync()
+  nameWithType: XmlWriter.WriteFullEndElementAsync()
+  fullName: XmlWriter.WriteFullEndElementAsync()
+- uid: System.Xml.XmlWriter.WriteNameAsync(System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteNameAsync(String)
+  nameWithType: XmlWriter.WriteNameAsync(String)
+  fullName: XmlWriter.WriteNameAsync(String)
+- uid: System.Xml.XmlWriter.WriteNmTokenAsync(System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteNmTokenAsync(String)
+  nameWithType: XmlWriter.WriteNmTokenAsync(String)
+  fullName: XmlWriter.WriteNmTokenAsync(String)
+- uid: System.Xml.XmlWriter.WriteNode(System.Xml.XmlReader,System.Boolean)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteNode(XmlReader, Boolean)
+  nameWithType: XmlWriter.WriteNode(XmlReader, Boolean)
+  fullName: XmlWriter.WriteNode(XmlReader, Boolean)
+- uid: System.Xml.XmlWriter.WriteNode(System.Xml.XPath.XPathNavigator,System.Boolean)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteNode(XPathNavigator, Boolean)
+  nameWithType: XmlWriter.WriteNode(XPathNavigator, Boolean)
+  fullName: XmlWriter.WriteNode(XPathNavigator, Boolean)
+- uid: System.Xml.XmlWriter.WriteNodeAsync(System.Xml.XmlReader,System.Boolean)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteNodeAsync(XmlReader, Boolean)
+  nameWithType: XmlWriter.WriteNodeAsync(XmlReader, Boolean)
+  fullName: XmlWriter.WriteNodeAsync(XmlReader, Boolean)
+- uid: System.Xml.XmlWriter.WriteNodeAsync(System.Xml.XPath.XPathNavigator,System.Boolean)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteNodeAsync(XPathNavigator, Boolean)
+  nameWithType: XmlWriter.WriteNodeAsync(XPathNavigator, Boolean)
+  fullName: XmlWriter.WriteNodeAsync(XPathNavigator, Boolean)
+- uid: System.Xml.XmlWriter.WriteProcessingInstructionAsync(System.String,System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteProcessingInstructionAsync(String, String)
+  nameWithType: XmlWriter.WriteProcessingInstructionAsync(String, String)
+  fullName: XmlWriter.WriteProcessingInstructionAsync(String, String)
+- uid: System.Xml.XmlWriter.WriteQualifiedNameAsync(System.String,System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteQualifiedNameAsync(String, String)
+  nameWithType: XmlWriter.WriteQualifiedNameAsync(String, String)
+  fullName: XmlWriter.WriteQualifiedNameAsync(String, String)
+- uid: System.Xml.XmlWriter.WriteRawAsync(System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteRawAsync(String)
+  nameWithType: XmlWriter.WriteRawAsync(String)
+  fullName: XmlWriter.WriteRawAsync(String)
+- uid: System.Xml.XmlWriter.WriteRawAsync(System.Char[],System.Int32,System.Int32)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteRawAsync(Char[], Int32, Int32)
+  nameWithType: XmlWriter.WriteRawAsync(Char[], Int32, Int32)
+  fullName: XmlWriter.WriteRawAsync(Char[], Int32, Int32)
+- uid: System.Xml.XmlWriter.WriteStartAttribute(System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteStartAttribute(String)
+  nameWithType: XmlWriter.WriteStartAttribute(String)
+  fullName: XmlWriter.WriteStartAttribute(String)
+- uid: System.Xml.XmlWriter.WriteStartAttribute(System.String,System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteStartAttribute(String, String)
+  nameWithType: XmlWriter.WriteStartAttribute(String, String)
+  fullName: XmlWriter.WriteStartAttribute(String, String)
+- uid: System.Xml.XmlWriter.WriteStartAttributeAsync(System.String,System.String,System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteStartAttributeAsync(String, String, String)
+  nameWithType: XmlWriter.WriteStartAttributeAsync(String, String, String)
+  fullName: XmlWriter.WriteStartAttributeAsync(String, String, String)
+- uid: System.Xml.XmlWriter.WriteStartDocumentAsync(System.Boolean)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteStartDocumentAsync(Boolean)
+  nameWithType: XmlWriter.WriteStartDocumentAsync(Boolean)
+  fullName: XmlWriter.WriteStartDocumentAsync(Boolean)
+- uid: System.Xml.XmlWriter.WriteStartDocumentAsync
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteStartDocumentAsync()
+  nameWithType: XmlWriter.WriteStartDocumentAsync()
+  fullName: XmlWriter.WriteStartDocumentAsync()
+- uid: System.Xml.XmlWriter.WriteStartElement(System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteStartElement(String)
+  nameWithType: XmlWriter.WriteStartElement(String)
+  fullName: XmlWriter.WriteStartElement(String)
+- uid: System.Xml.XmlWriter.WriteStartElement(System.String,System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteStartElement(String, String)
+  nameWithType: XmlWriter.WriteStartElement(String, String)
+  fullName: XmlWriter.WriteStartElement(String, String)
+- uid: System.Xml.XmlWriter.WriteStartElementAsync(System.String,System.String,System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteStartElementAsync(String, String, String)
+  nameWithType: XmlWriter.WriteStartElementAsync(String, String, String)
+  fullName: XmlWriter.WriteStartElementAsync(String, String, String)
+- uid: System.Xml.XmlWriter.WriteStringAsync(System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteStringAsync(String)
+  nameWithType: XmlWriter.WriteStringAsync(String)
+  fullName: XmlWriter.WriteStringAsync(String)
+- uid: System.Xml.XmlWriter.WriteSurrogateCharEntityAsync(System.Char,System.Char)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteSurrogateCharEntityAsync(Char, Char)
+  nameWithType: XmlWriter.WriteSurrogateCharEntityAsync(Char, Char)
+  fullName: XmlWriter.WriteSurrogateCharEntityAsync(Char, Char)
+- uid: System.Xml.XmlWriter.WriteValue(System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteValue(String)
+  nameWithType: XmlWriter.WriteValue(String)
+  fullName: XmlWriter.WriteValue(String)
+- uid: System.Xml.XmlWriter.WriteValue(System.Single)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteValue(Single)
+  nameWithType: XmlWriter.WriteValue(Single)
+  fullName: XmlWriter.WriteValue(Single)
+- uid: System.Xml.XmlWriter.WriteValue(System.Object)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteValue(Object)
+  nameWithType: XmlWriter.WriteValue(Object)
+  fullName: XmlWriter.WriteValue(Object)
+- uid: System.Xml.XmlWriter.WriteValue(System.Int64)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteValue(Int64)
+  nameWithType: XmlWriter.WriteValue(Int64)
+  fullName: XmlWriter.WriteValue(Int64)
+- uid: System.Xml.XmlWriter.WriteValue(System.Int32)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteValue(Int32)
+  nameWithType: XmlWriter.WriteValue(Int32)
+  fullName: XmlWriter.WriteValue(Int32)
+- uid: System.Xml.XmlWriter.WriteValue(System.DateTimeOffset)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteValue(DateTimeOffset)
+  nameWithType: XmlWriter.WriteValue(DateTimeOffset)
+  fullName: XmlWriter.WriteValue(DateTimeOffset)
+- uid: System.Xml.XmlWriter.WriteValue(System.Decimal)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteValue(Decimal)
+  nameWithType: XmlWriter.WriteValue(Decimal)
+  fullName: XmlWriter.WriteValue(Decimal)
+- uid: System.Xml.XmlWriter.WriteValue(System.DateTime)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteValue(DateTime)
+  nameWithType: XmlWriter.WriteValue(DateTime)
+  fullName: XmlWriter.WriteValue(DateTime)
+- uid: System.Xml.XmlWriter.WriteValue(System.Boolean)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteValue(Boolean)
+  nameWithType: XmlWriter.WriteValue(Boolean)
+  fullName: XmlWriter.WriteValue(Boolean)
+- uid: System.Xml.XmlWriter.WriteValue(System.Double)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteValue(Double)
+  nameWithType: XmlWriter.WriteValue(Double)
+  fullName: XmlWriter.WriteValue(Double)
+- uid: System.Xml.XmlWriter.WriteWhitespaceAsync(System.String)
+  parent: System.Xml.XmlWriter
+  isExternal: false
+  name: WriteWhitespaceAsync(String)
+  nameWithType: XmlWriter.WriteWhitespaceAsync(String)
+  fullName: XmlWriter.WriteWhitespaceAsync(String)

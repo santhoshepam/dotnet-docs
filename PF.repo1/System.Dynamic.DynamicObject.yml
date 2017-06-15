@@ -1,0 +1,1731 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Dynamic.DynamicObject
+  commentId: T:System.Dynamic.DynamicObject
+  id: DynamicObject
+  children:
+  - System.Dynamic.DynamicObject.#ctor
+  - System.Dynamic.DynamicObject.GetDynamicMemberNames
+  - System.Dynamic.DynamicObject.GetMetaObject(System.Linq.Expressions.Expression)
+  - System.Dynamic.DynamicObject.TryBinaryOperation(System.Dynamic.BinaryOperationBinder,System.Object,System.Object@)
+  - System.Dynamic.DynamicObject.TryConvert(System.Dynamic.ConvertBinder,System.Object@)
+  - System.Dynamic.DynamicObject.TryCreateInstance(System.Dynamic.CreateInstanceBinder,System.Object[],System.Object@)
+  - System.Dynamic.DynamicObject.TryDeleteIndex(System.Dynamic.DeleteIndexBinder,System.Object[])
+  - System.Dynamic.DynamicObject.TryDeleteMember(System.Dynamic.DeleteMemberBinder)
+  - System.Dynamic.DynamicObject.TryGetIndex(System.Dynamic.GetIndexBinder,System.Object[],System.Object@)
+  - System.Dynamic.DynamicObject.TryGetMember(System.Dynamic.GetMemberBinder,System.Object@)
+  - System.Dynamic.DynamicObject.TryInvoke(System.Dynamic.InvokeBinder,System.Object[],System.Object@)
+  - System.Dynamic.DynamicObject.TryInvokeMember(System.Dynamic.InvokeMemberBinder,System.Object[],System.Object@)
+  - System.Dynamic.DynamicObject.TrySetIndex(System.Dynamic.SetIndexBinder,System.Object[],System.Object)
+  - System.Dynamic.DynamicObject.TrySetMember(System.Dynamic.SetMemberBinder,System.Object)
+  - System.Dynamic.DynamicObject.TryUnaryOperation(System.Dynamic.UnaryOperationBinder,System.Object@)
+  langs:
+  - csharp
+  name: DynamicObject
+  nameWithType: DynamicObject
+  fullName: System.Dynamic.DynamicObject
+  type: Class
+  assemblies:
+  - System.Dynamic.Runtime
+  - System.Core
+  - netstandard
+  - System.Linq.Expressions
+  namespace: System.Dynamic
+  summary: Provides a base class for specifying dynamic behavior at run time. This class must be inherited from; you cannot instantiate it directly.
+  remarks: "The `DynamicObject` class enables you to define which operations can be performed on dynamic objects and how to perform those operations. For example, you can define what happens when you try to get or set an object property, call a method, or perform standard mathematical operations such as addition and multiplication.  \n  \n This class can be useful if you want to create a more convenient protocol for a library. For example, if users of your library have to use syntax like `Scriptobj.SetProperty(\"Count\", 1)`, you can provide the ability to use much simpler syntax, like `scriptobj.Count = 1`.  \n  \n You cannot directly create an instance of the `DynamicObject` class. To implement the dynamic behavior, you may want to inherit from the `DynamicObject` class and override necessary methods. For example, if you need only operations for setting and getting properties, you can override just the <xref:System.Dynamic.DynamicObject.TrySetMember%2A> and <xref:System.Dynamic.DynamicObject.TryGetMember%2A> methods.  \n  \n In C#, to enable dynamic behavior for instances of classes derived from the `DynamicObject` class, you must use the `dynamic` keyword. For more information, see [Using Type dynamic](~/docs/csharp/programming-guide/types/using-type-dynamic.md).  \n  \n In Visual Basic, dynamic operations are supported by late binding. For more information, see [Early and Late Binding](http://msdn.microsoft.com/library/d6ff7f1e-b94f-4205-ab8d-5cfa91758724).  \n  \n The following code example demonstrates how to create an instance of a class that is derived from the `DynamicObject` class.  \n  \n```csharp  \npublic class SampleDynamicObject : DynamicObject {}  \n//...  \ndynamic sampleObject = new SampleDynamicObject ();  \n```  \n  \n```vb  \nPublic Class SampleDynamicObject   \n    Inherits DynamicObject  \n'...  \nDim sampleObject As Object = New SampleDynamicObject()  \n```  \n  \n You can also add your own members to classes derived from the `DynamicObject` class. If your class defines properties and also overrides the <xref:System.Dynamic.DynamicObject.TrySetMember%2A> method, the dynamic language runtime (DLR) first uses the language binder to look for a static definition of a property in the class. If there is no such property, the DLR calls the <xref:System.Dynamic.DynamicObject.TrySetMember%2A> method.  \n  \n The `DynamicObject` class implements the DLR interface <xref:System.Dynamic.IDynamicMetaObjectProvider>, which enables you to share instances of the `DynamicObject` class between languages that support the DLR interoperability model. For example, you can create an instance of the `DynamicObject` class in C# and then pass it to an IronPython function. For more information, see [Dynamic Language Runtime Overview](~/docs/framework/reflection-and-codedom/dynamic-language-runtime-overview.md) and documentation on the [CodePlex](http://go.microsoft.com/fwlink/?LinkId=141028) Web site.  \n  \n> [!NOTE]\n>  If you have a simple scenario in which you need an object that can only add and remove members at run time but that does not need to define specific operations and does not have static members, use the <xref:System.Dynamic.ExpandoObject> class.  \n>   \n>  If you have a more advanced scenario in which you need to define how dynamic objects participate in the interoperability protocol, or you need to manage DLR fast dynamic dispatch caching, create your own implementation of the <xref:System.Dynamic.IDynamicMetaObjectProvider> interface."
+  example:
+  - "Assume that you want to provide alternative syntax for accessing values in a dictionary, so that instead of writing `sampleDictionary[\"Text\"] = \"Sample text\"` (`sampleDictionary(\"Text\") = \"Sample text\"` in Visual Basic), you can write `sampleDictionary.Text = \"Sample text\"`. Also, you want this syntax to be case-insensitive, so that `sampleDictionary.Text` is equivalent to `sampleDictionary.text`.  \n  \n The following code example demonstrates the `DynamicDictionary` class, which is derived from the `DynamicObject` class. The `DynamicDictionary` class contains an object of the `Dictionary<string, object>` type (`Dictionary(Of String, Object)` in Visual Basic) to store the key-value pairs, and overrides the <xref:System.Dynamic.DynamicObject.TrySetMember%2A> and <xref:System.Dynamic.DynamicObject.TryGetMember%2A> methods to support the new syntax. It also provides a `Count` property, which shows how many dynamic properties the dictionary contains.  \n  \n [!code-csharp[System.Dynamic.DynamicObject#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.dynamic.dynamicobject/cs/program.cs#1)]\n [!code-vb[System.Dynamic.DynamicObject#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.dynamic.dynamicobject/vb/module1.vb#1)]  \n  \n For more examples, see [Creating Wrappers with DynamicObject](http://go.microsoft.com/fwlink/?LinkId=169008) on the C# Frequently Asked Questions blog."
+  syntax:
+    content: 'public class DynamicObject : System.Dynamic.IDynamicMetaObjectProvider'
+  inheritance:
+  - System.Object
+  derivedClasses:
+  - System.Windows.Interop.DynamicScriptObject
+  implements:
+  - System.Dynamic.IDynamicMetaObjectProvider
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: BillWagner
+  ms.author: wiwagn
+  manager: wpickett
+- uid: System.Dynamic.DynamicObject.#ctor
+  commentId: M:System.Dynamic.DynamicObject.#ctor
+  id: '#ctor'
+  parent: System.Dynamic.DynamicObject
+  langs:
+  - csharp
+  name: DynamicObject()
+  nameWithType: DynamicObject.DynamicObject()
+  fullName: DynamicObject.DynamicObject()
+  type: Constructor
+  assemblies:
+  - System.Dynamic.Runtime
+  - System.Core
+  - netstandard
+  - System.Linq.Expressions
+  namespace: System.Dynamic
+  summary: Enables derived types to initialize a new instance of the <xref href="System.Dynamic.DynamicObject"></xref> type.
+  remarks: "You cannot directly create an instance of the <xref:System.Dynamic.DynamicObject> class. To implement dynamic behavior, you have to inherit from the <xref:System.Dynamic.DynamicObject> class and override necessary methods.  \n  \n In C#, to enable dynamic behavior for instances of the classes derived from the <xref:System.Dynamic.DynamicObject> class, you must use the `dynamic` keyword. For more information, see [Using Type dynamic](~/docs/csharp/programming-guide/types/using-type-dynamic.md).  \n  \n In Visual Basic, dynamic operations are supported by late binding. For more information, see [Early and Late Binding](http://msdn.microsoft.com/library/d6ff7f1e-b94f-4205-ab8d-5cfa91758724)."
+  example:
+  - "The following code example demonstrates how to create an instance of classes that are derived from the <xref:System.Dynamic.DynamicObject> class.  \n  \n```csharp  \npublic class SampleDynamicObject : DynamicObject {}  \n//...  \ndynamic sampleObject = new SampleDynamicObject ();  \n```  \n  \n```vb  \nPublic Class SampleDynamicObject   \n    Inherits DynamicObject  \n'...  \nDim sampleObject As Object = New SampleDynamicObject()  \n```"
+  syntax:
+    content: protected DynamicObject ();
+    parameters: []
+  overload: System.Dynamic.DynamicObject.#ctor*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: billchi
+  manager: douge
+- uid: System.Dynamic.DynamicObject.GetDynamicMemberNames
+  commentId: M:System.Dynamic.DynamicObject.GetDynamicMemberNames
+  id: GetDynamicMemberNames
+  parent: System.Dynamic.DynamicObject
+  langs:
+  - csharp
+  name: GetDynamicMemberNames()
+  nameWithType: DynamicObject.GetDynamicMemberNames()
+  fullName: DynamicObject.GetDynamicMemberNames()
+  type: Method
+  assemblies:
+  - System.Dynamic.Runtime
+  - System.Core
+  - netstandard
+  - System.Linq.Expressions
+  namespace: System.Dynamic
+  summary: Returns the enumeration of all dynamic member names.
+  remarks: This method exists for debugging purposes only.
+  syntax:
+    content: public virtual System.Collections.Generic.IEnumerable<string> GetDynamicMemberNames ();
+    parameters: []
+    return:
+      type: System.Collections.Generic.IEnumerable{System.String}
+      description: A sequence that contains dynamic member names.
+  overload: System.Dynamic.DynamicObject.GetDynamicMemberNames*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: BillWagner
+  ms.author: wiwagn
+  manager: wpickett
+- uid: System.Dynamic.DynamicObject.GetMetaObject(System.Linq.Expressions.Expression)
+  commentId: M:System.Dynamic.DynamicObject.GetMetaObject(System.Linq.Expressions.Expression)
+  id: GetMetaObject(System.Linq.Expressions.Expression)
+  parent: System.Dynamic.DynamicObject
+  langs:
+  - csharp
+  name: GetMetaObject(Expression)
+  nameWithType: DynamicObject.GetMetaObject(Expression)
+  fullName: DynamicObject.GetMetaObject(Expression)
+  type: Method
+  assemblies:
+  - System.Dynamic.Runtime
+  - System.Core
+  - netstandard
+  - System.Linq.Expressions
+  namespace: System.Dynamic
+  summary: Provides a <xref href="System.Dynamic.DynamicMetaObject"></xref> that dispatches to the dynamic virtual methods. The object can be encapsulated inside another <xref href="System.Dynamic.DynamicMetaObject"></xref> to provide custom behavior for individual actions. This method supports the Dynamic Language Runtime infrastructure for language implementers and it is not intended to be used directly from your code.
+  syntax:
+    content: public virtual System.Dynamic.DynamicMetaObject GetMetaObject (System.Linq.Expressions.Expression parameter);
+    parameters:
+    - id: parameter
+      type: System.Linq.Expressions.Expression
+      description: The expression that represents <xref href="System.Dynamic.DynamicMetaObject"></xref> to dispatch to the dynamic virtual methods.
+    return:
+      type: System.Dynamic.DynamicMetaObject
+      description: An object of the <xref href="System.Dynamic.DynamicMetaObject"></xref> type.
+  overload: System.Dynamic.DynamicObject.GetMetaObject*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: BillWagner
+  ms.author: wiwagn
+  manager: wpickett
+- uid: System.Dynamic.DynamicObject.TryBinaryOperation(System.Dynamic.BinaryOperationBinder,System.Object,System.Object@)
+  commentId: M:System.Dynamic.DynamicObject.TryBinaryOperation(System.Dynamic.BinaryOperationBinder,System.Object,System.Object@)
+  id: TryBinaryOperation(System.Dynamic.BinaryOperationBinder,System.Object,System.Object@)
+  parent: System.Dynamic.DynamicObject
+  langs:
+  - csharp
+  name: TryBinaryOperation(BinaryOperationBinder, Object, Object)
+  nameWithType: DynamicObject.TryBinaryOperation(BinaryOperationBinder, Object, Object)
+  fullName: DynamicObject.TryBinaryOperation(BinaryOperationBinder, Object, Object)
+  type: Method
+  assemblies:
+  - System.Dynamic.Runtime
+  - System.Core
+  - netstandard
+  - System.Linq.Expressions
+  namespace: System.Dynamic
+  summary: Provides implementation for binary operations. Classes derived from the <xref href="System.Dynamic.DynamicObject"></xref> class can override this method to specify dynamic behavior for operations such as addition and multiplication.
+  remarks: "Classes derived from the <xref:System.Dynamic.DynamicObject> class can override this method to specify how binary operations should be performed for a dynamic object. When the method is not overridden, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)  \n  \n This method is called when you have binary operations such as addition or multiplication. For example, if the <xref:System.Dynamic.DynamicObject.TryBinaryOperation%2A> method is overridden, it is automatically invoked for statements like `sum = first + second` or `multiply = first*second`, where `first` is derived from the `DynamicObject` class.  \n  \n You can get information about the type of the binary operation by using the `Operation` property of the `binder` parameter.  \n  \n If your dynamic object is used only in C# and Visual Basic, the `binder.Operation` property can have one of the following values from the <xref:System.Linq.Expressions.ExpressionType> enumeration. However, in other languages such as IronPython or IronRuby, you can have other values. For more information about <xref:System.Linq.Expressions.ExpressionType>, see documentation on the [CodePlex](http://go.microsoft.com/fwlink/?LinkId=141028) Web site.  \n  \n|Value|Description|C#|Visual Basic|  \n|-----------|-----------------|---------|------------------|  \n|`Add`|An addition operation without overflow checking, for numeric operands.|`a + b`|`a + b`|  \n|`AddAssign`|An addition compound assignment operation without overflow checking, for numeric operands.|`a += b`|Not supported.|  \n|`And`|A bitwise `AND` operation.|`a & b`|`a And b`|  \n|`AndAssign`|A bitwise `AND` compound assignment operation.|`a &= b`|Not supported.|  \n|`Divide`|An arithmetic division operation.|`a / b`|`a / b`|  \n|`DivideAssign`|An arithmetic division compound assignment operation.|`a /= b`|Not supported.|  \n|`ExclusiveOr`|A bitwise `XOR` operation.|`a ^ b`|`a Xor b`|  \n|`ExclusiveOrAssign`|A bitwise `XOR` compound assignment operation.|`a ^= b`|Not supported.|  \n|`GreaterThan`|A \"greater than\" comparison.|`a > b`|`a > b`|  \n|`GreaterThanOrEqual`|A \"greater than or equal to\" comparison.|`a >= b`|Not supported.|  \n|`LeftShift`|A bitwise left-shift operation.|`a << b`|`a << b`|  \n|`LeftShiftAssign`|A bitwise left-shift compound assignment operation.|`a <<= b`|Not supported.|  \n|`LessThan`|A \"less than\" comparison.|`a < b`|`a < b`|  \n|`LessThanOrEqual`|A \"less than or equal to\" comparison.|`a <= b`|Not supported.|  \n|`Modulo`|An arithmetic remainder operation.|`a % b`|`a Mod b`|  \n|`ModuloAssign`|An arithmetic remainder compound assignment operation.|`a %= b`|Not supported.|  \n|`Multiply`|A multiplication operation without overflow checking, for numeric operands.|`a * b`|`a * b`|  \n|`MultiplyAssign`|A multiplication compound assignment operation without overflow checking, for numeric operands.|`a *= b`|Not supported.|  \n|`NotEqual`|An inequality comparison.|`a != b`|`a <> b`|  \n|`Or`|A bitwise or logical `OR` operation.|`a &#124; b`|`a Or b`|  \n|`OrAssign`|A bitwise or logical `OR` compound assignment.|`a &#124;= b`|Not supported.|  \n|`Power`|A mathematical operation of raising a number to a power.|Not supported.|`a ^ b`|  \n|`RightShift`|A bitwise right-shift operation.|`a >> b`|`a >> b`|  \n|`RightShiftAssign`|A bitwise right-shift compound assignment operation.|`a >>= b`|Not supported.|  \n|`Subtract`|A subtraction operation without overflow checking, for numeric operands.|`a - b`|`a - b`|  \n|`SubtractAssign`|A subtraction compound assignment operation without overflow checking, for numeric operands.|`a -= b`|Not supported.|  \n  \n> [!NOTE]\n>  To implement `OrElse` (`a || b`) and `AndAlso` (`a && b`) operations for dynamic objects in C#, you may want to implement both the <xref:System.Dynamic.DynamicObject.TryUnaryOperation%2A> method and the <xref:System.Dynamic.DynamicObject.TryBinaryOperation%2A> method.  \n>   \n>  The `OrElse` operation consists of the unary `IsTrue` operation and the binary `Or` operation. The `Or` operation is performed only if the result of the `IsTrue` operation is `false`.  \n>   \n>  The `AndAlso` operation consists of the unary `IsFalse` operation and the binary `And` operation. The `And` operation is performed only if the result of the `IsFalse` operation is `false`."
+  example:
+  - "Assume that you need a data structure to store textual and numeric representations of numbers, and you want to define basic mathematical operations such as addition and subtraction for such data.  \n  \n The following code example demonstrates the `DynamicNumber` class, which is derived from the <xref:System.Dynamic.DynamicObject> class. `DynamicNumber` overrides the <xref:System.Dynamic.DynamicObject.TryBinaryOperation%2A> method to enable mathematical operations. It also overrides the <xref:System.Dynamic.DynamicObject.TrySetMember%2A> and <xref:System.Dynamic.DynamicObject.TryGetMember%2A> methods to enable access to the elements.  \n  \n In this example, only addition and subtraction operations are supported. If you try to write a statement like `resultNumber = firstNumber*secondNumber`, a run-time exception is thrown.  \n  \n [!code-csharp[System.Dynamic.DynamicObject#2](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.dynamic.dynamicobject/cs/program.cs#2)]\n [!code-vb[System.Dynamic.DynamicObject#2](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.dynamic.dynamicobject/vb/module1.vb#2)]"
+  syntax:
+    content: public virtual bool TryBinaryOperation (System.Dynamic.BinaryOperationBinder binder, object arg, out object result);
+    parameters:
+    - id: binder
+      type: System.Dynamic.BinaryOperationBinder
+      description: Provides information about the binary operation. The <code>binder.Operation</code> property returns an <xref href="System.Linq.Expressions.ExpressionType"></xref> object. For example, for the <code>sum = first + second</code> statement, where <code>first</code> and <code>second</code> are derived from the `DynamicObject` class, <code>binder.Operation</code> returns <code>ExpressionType.Add</code>.
+    - id: arg
+      type: System.Object
+      description: The right operand for the binary operation. For example, for the <code>sum = first + second</code> statement, where <code>first</code> and <code>second</code> are derived from the `DynamicObject` class, <code>arg</code> is equal to <code>second</code>.
+    - id: result
+      type: System.Object
+      description: The result of the binary operation.
+    return:
+      type: System.Boolean
+      description: '`true` if the operation is successful; otherwise, `false`. If this method returns `false`, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)'
+  overload: System.Dynamic.DynamicObject.TryBinaryOperation*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: BillWagner
+  ms.author: wiwagn
+  manager: wpickett
+- uid: System.Dynamic.DynamicObject.TryConvert(System.Dynamic.ConvertBinder,System.Object@)
+  commentId: M:System.Dynamic.DynamicObject.TryConvert(System.Dynamic.ConvertBinder,System.Object@)
+  id: TryConvert(System.Dynamic.ConvertBinder,System.Object@)
+  parent: System.Dynamic.DynamicObject
+  langs:
+  - csharp
+  name: TryConvert(ConvertBinder, Object)
+  nameWithType: DynamicObject.TryConvert(ConvertBinder, Object)
+  fullName: DynamicObject.TryConvert(ConvertBinder, Object)
+  type: Method
+  assemblies:
+  - System.Dynamic.Runtime
+  - System.Core
+  - netstandard
+  - System.Linq.Expressions
+  namespace: System.Dynamic
+  summary: Provides implementation for type conversion operations. Classes derived from the <xref href="System.Dynamic.DynamicObject"></xref> class can override this method to specify dynamic behavior for operations that convert an object from one type to another.
+  remarks: "Classes derived from the <xref:System.Dynamic.DynamicObject> class can override this method to specify how a type conversion should be performed for a dynamic object. When the method is not overridden, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)  \n  \n In C#, if this method is overridden, it is automatically invoked when you have an explicit or implicit conversion, as shown in the code example below.  \n  \n In Visual Basic, only explicit conversion is supported. If you override this method, you call it by using the <xref:Microsoft.VisualBasic.Conversion.CTypeDynamic%2A> or <xref:Microsoft.VisualBasic.Conversion.CTypeDynamic%2A> functions.  \n  \n```csharp  \n// Explicit conversion.  \nString sampleExplicit = (String)sampleObject;  \n// Implicit conversion.  \nString sampleImplicit = sampleObject;  \n```  \n  \n```vb  \n// Explicit conversion - first variant.  \nDim testExplicit1 = CTypeDynamic(Of String)(sampleObject)  \n// Explicit conversion - second variant.  \nDim testExplicit2 = CTypeDynamic(sampleObject, GetType(String))  \n```"
+  example:
+  - "Assume that you need a data structure to store textual and numeric representations of numbers, and you want to define conversions of this data structure to strings and integers.  \n  \n The following code example demonstrates the `DynamicNumber` class, which is derived from the <xref:System.Dynamic.DynamicObject> class. `DynamicNumber` overrides the <xref:System.Dynamic.DynamicObject.TryConvert%2A> method to enable type conversion. It also overrides the <xref:System.Dynamic.DynamicObject.TrySetMember%2A> and <xref:System.Dynamic.DynamicObject.TryGetMember%2A> methods to enable access to the data elements.  \n  \n In this example, only conversion to strings and integers is supported. If you try to convert an object to any other type, a run-time exception is thrown.  \n  \n [!code-csharp[System.Dynamic.DynamicObject#3](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.dynamic.dynamicobject/cs/program.cs#3)]\n [!code-vb[System.Dynamic.DynamicObject#3](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.dynamic.dynamicobject/vb/module1.vb#3)]"
+  syntax:
+    content: public virtual bool TryConvert (System.Dynamic.ConvertBinder binder, out object result);
+    parameters:
+    - id: binder
+      type: System.Dynamic.ConvertBinder
+      description: Provides information about the conversion operation. The <code>binder.Type</code> property provides the type to which the object must be converted. For example, for the statement <code>(String)sampleObject</code> in C# (<code>CType(sampleObject, Type)</code> in Visual Basic), where <code>sampleObject</code> is an instance of the class derived from the <xref href="System.Dynamic.DynamicObject"></xref> class, <code>binder.Type</code> returns the <xref href="System.String"></xref> type. The <code>binder.Explicit</code> property provides information about the kind of conversion that occurs. It returns `true` for explicit conversion and `false` for implicit conversion.
+    - id: result
+      type: System.Object
+      description: The result of the type conversion operation.
+    return:
+      type: System.Boolean
+      description: '`true` if the operation is successful; otherwise, `false`. If this method returns `false`, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)'
+  overload: System.Dynamic.DynamicObject.TryConvert*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: BillWagner
+  ms.author: wiwagn
+  manager: wpickett
+- uid: System.Dynamic.DynamicObject.TryCreateInstance(System.Dynamic.CreateInstanceBinder,System.Object[],System.Object@)
+  commentId: M:System.Dynamic.DynamicObject.TryCreateInstance(System.Dynamic.CreateInstanceBinder,System.Object[],System.Object@)
+  id: TryCreateInstance(System.Dynamic.CreateInstanceBinder,System.Object[],System.Object@)
+  parent: System.Dynamic.DynamicObject
+  langs:
+  - csharp
+  name: TryCreateInstance(CreateInstanceBinder, Object[], Object)
+  nameWithType: DynamicObject.TryCreateInstance(CreateInstanceBinder, Object[], Object)
+  fullName: DynamicObject.TryCreateInstance(CreateInstanceBinder, Object[], Object)
+  type: Method
+  assemblies:
+  - System.Dynamic.Runtime
+  - System.Core
+  - netstandard
+  - System.Linq.Expressions
+  namespace: System.Dynamic
+  summary: Provides the implementation for operations that initialize a new instance of a dynamic object. This method is not intended for use in C# or Visual Basic.
+  remarks: "Classes derived from the <xref:System.Dynamic.DynamicObject> class can override this method to specify how a new instance of the dynamic object should be initialized. When the method is not overridden, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)  \n  \n C# and Visual Basic compilers never emit code to use this method because they do not support first-class types. This method is intended for languages that support the initialization of dynamic objects by using syntax like `dynamic new`."
+  syntax:
+    content: public virtual bool TryCreateInstance (System.Dynamic.CreateInstanceBinder binder, object[] args, out object result);
+    parameters:
+    - id: binder
+      type: System.Dynamic.CreateInstanceBinder
+      description: Provides information about the initialization operation.
+    - id: args
+      type: System.Object[]
+      description: The arguments that are passed to the object during initialization. For example, for the <code>new SampleType(100)</code> operation, where <code>SampleType</code> is the type derived from the <xref href="System.Dynamic.DynamicObject"></xref> class, <code>args[0]</code> is equal to 100.
+    - id: result
+      type: System.Object
+      description: The result of the initialization.
+    return:
+      type: System.Boolean
+      description: '`true` if the operation is successful; otherwise, `false`. If this method returns `false`, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)'
+  overload: System.Dynamic.DynamicObject.TryCreateInstance*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: BillWagner
+  ms.author: wiwagn
+  manager: wpickett
+- uid: System.Dynamic.DynamicObject.TryDeleteIndex(System.Dynamic.DeleteIndexBinder,System.Object[])
+  commentId: M:System.Dynamic.DynamicObject.TryDeleteIndex(System.Dynamic.DeleteIndexBinder,System.Object[])
+  id: TryDeleteIndex(System.Dynamic.DeleteIndexBinder,System.Object[])
+  parent: System.Dynamic.DynamicObject
+  langs:
+  - csharp
+  name: TryDeleteIndex(DeleteIndexBinder, Object[])
+  nameWithType: DynamicObject.TryDeleteIndex(DeleteIndexBinder, Object[])
+  fullName: DynamicObject.TryDeleteIndex(DeleteIndexBinder, Object[])
+  type: Method
+  assemblies:
+  - System.Dynamic.Runtime
+  - System.Core
+  - netstandard
+  - System.Linq.Expressions
+  namespace: System.Dynamic
+  summary: Provides the implementation for operations that delete an object by index. This method is not intended for use in C# or Visual Basic.
+  remarks: "Classes derived from the <xref:System.Dynamic.DynamicObject> class can override this method to specify how a value that has a specified index should be deleted. When the method is not overridden, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)  \n  \n C# and Visual Basic compilers never emit code to use this method because they do not support this kind of operation. This method is intended for languages that support syntax for deleting objects by index, such as `del sampleObject[1,2]` in Python."
+  syntax:
+    content: public virtual bool TryDeleteIndex (System.Dynamic.DeleteIndexBinder binder, object[] indexes);
+    parameters:
+    - id: binder
+      type: System.Dynamic.DeleteIndexBinder
+      description: Provides information about the deletion.
+    - id: indexes
+      type: System.Object[]
+      description: The indexes to be deleted.
+    return:
+      type: System.Boolean
+      description: '`true` if the operation is successful; otherwise, `false`. If this method returns `false`, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)'
+  overload: System.Dynamic.DynamicObject.TryDeleteIndex*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+  ms.technology:
+  - dotnet-standard
+  ms.author: billchi
+  manager: douge
+- uid: System.Dynamic.DynamicObject.TryDeleteMember(System.Dynamic.DeleteMemberBinder)
+  commentId: M:System.Dynamic.DynamicObject.TryDeleteMember(System.Dynamic.DeleteMemberBinder)
+  id: TryDeleteMember(System.Dynamic.DeleteMemberBinder)
+  parent: System.Dynamic.DynamicObject
+  langs:
+  - csharp
+  name: TryDeleteMember(DeleteMemberBinder)
+  nameWithType: DynamicObject.TryDeleteMember(DeleteMemberBinder)
+  fullName: DynamicObject.TryDeleteMember(DeleteMemberBinder)
+  type: Method
+  assemblies:
+  - System.Dynamic.Runtime
+  - System.Core
+  - netstandard
+  - System.Linq.Expressions
+  namespace: System.Dynamic
+  summary: Provides the implementation for operations that delete an object member. This method is not intended for use in C# or Visual Basic.
+  remarks: "Classes derived from the <xref:System.Dynamic.DynamicObject> class can override this method to specify how an object member should be deleted. When this method is not overridden, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)  \n  \n C# and Visual Basic compilers never emit code to use this method because they do not support this kind of operation. This method is intended for languages that support syntax for deleting members, such as `del sampleObject.SampleMember` in Python."
+  syntax:
+    content: public virtual bool TryDeleteMember (System.Dynamic.DeleteMemberBinder binder);
+    parameters:
+    - id: binder
+      type: System.Dynamic.DeleteMemberBinder
+      description: Provides information about the deletion.
+    return:
+      type: System.Boolean
+      description: '`true` if the operation is successful; otherwise, `false`. If this method returns `false`, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)'
+  overload: System.Dynamic.DynamicObject.TryDeleteMember*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: BillWagner
+  ms.author: wiwagn
+  manager: wpickett
+- uid: System.Dynamic.DynamicObject.TryGetIndex(System.Dynamic.GetIndexBinder,System.Object[],System.Object@)
+  commentId: M:System.Dynamic.DynamicObject.TryGetIndex(System.Dynamic.GetIndexBinder,System.Object[],System.Object@)
+  id: TryGetIndex(System.Dynamic.GetIndexBinder,System.Object[],System.Object@)
+  parent: System.Dynamic.DynamicObject
+  langs:
+  - csharp
+  name: TryGetIndex(GetIndexBinder, Object[], Object)
+  nameWithType: DynamicObject.TryGetIndex(GetIndexBinder, Object[], Object)
+  fullName: DynamicObject.TryGetIndex(GetIndexBinder, Object[], Object)
+  type: Method
+  assemblies:
+  - System.Dynamic.Runtime
+  - System.Core
+  - netstandard
+  - System.Linq.Expressions
+  namespace: System.Dynamic
+  summary: Provides the implementation for operations that get a value by index. Classes derived from the <xref href="System.Dynamic.DynamicObject"></xref> class can override this method to specify dynamic behavior for indexing operations.
+  remarks: "Classes derived from the <xref:System.Dynamic.DynamicObject> class can override this method to specify how getting a value by index should be performed for a dynamic object. When the method is not overridden, the run-time binder of the language determines the behavior. (In most cases, a run-time exception is thrown.)  \n  \n If this method is overridden, it is automatically invoked when you have an operation like `sampleObject[3]` in C# or `sampleObject(3)` in Visual Basic, where `sampleObject` is derived from the <xref:System.Dynamic.DynamicObject> class."
+  example:
+  - "Assume that you want to create an object in which properties can be accessed either by names such as `Property0`, `Property1`, and so on, or by index, so that, for example, `sampleObject.Property0` is equivalent to `sampleObject[0]` in C# or `sampleObject(0)` in Visual Basic.  \n  \n The following code example demonstrates the `SampleDynamicObject` class, which is derived from the <xref:System.Dynamic.DynamicObject> class. The `SampleDynamicObject` class contains an object of the `Dictionary<string, object>` type (`Dictionary(Of String, Object)` in Visual Basic) to store the key-value pairs. `SampleDynamicObject` overrides the <xref:System.Dynamic.DynamicObject.TrySetIndex%2A> and <xref:System.Dynamic.DynamicObject.TryGetIndex%2A> methods to enable access by index. It overrides the <xref:System.Dynamic.DynamicObject.TrySetMember%2A> and <xref:System.Dynamic.DynamicObject.TryGetMember%2A> methods to enable access by property name.  \n  \n [!code-csharp[System.Dynamic.DynamicObject#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.dynamic.dynamicobject/cs/program.cs#4)]\n [!code-vb[System.Dynamic.DynamicObject#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.dynamic.dynamicobject/vb/module1.vb#4)]"
+  syntax:
+    content: public virtual bool TryGetIndex (System.Dynamic.GetIndexBinder binder, object[] indexes, out object result);
+    parameters:
+    - id: binder
+      type: System.Dynamic.GetIndexBinder
+      description: Provides information about the operation.
+    - id: indexes
+      type: System.Object[]
+      description: The indexes that are used in the operation. For example, for the <code>sampleObject[3]</code> operation in C# (<code>sampleObject(3)</code> in Visual Basic), where <code>sampleObject</code> is derived from the `DynamicObject` class, <code>indexes[0]</code> is equal to 3.
+    - id: result
+      type: System.Object
+      description: The result of the index operation.
+    return:
+      type: System.Boolean
+      description: '`true` if the operation is successful; otherwise, `false`. If this method returns `false`, the run-time binder of the language determines the behavior. (In most cases, a run-time exception is thrown.)'
+  overload: System.Dynamic.DynamicObject.TryGetIndex*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: BillWagner
+  ms.author: wiwagn
+  manager: wpickett
+- uid: System.Dynamic.DynamicObject.TryGetMember(System.Dynamic.GetMemberBinder,System.Object@)
+  commentId: M:System.Dynamic.DynamicObject.TryGetMember(System.Dynamic.GetMemberBinder,System.Object@)
+  id: TryGetMember(System.Dynamic.GetMemberBinder,System.Object@)
+  parent: System.Dynamic.DynamicObject
+  langs:
+  - csharp
+  name: TryGetMember(GetMemberBinder, Object)
+  nameWithType: DynamicObject.TryGetMember(GetMemberBinder, Object)
+  fullName: DynamicObject.TryGetMember(GetMemberBinder, Object)
+  type: Method
+  assemblies:
+  - System.Dynamic.Runtime
+  - System.Core
+  - netstandard
+  - System.Linq.Expressions
+  namespace: System.Dynamic
+  summary: Provides the implementation for operations that get member values. Classes derived from the <xref href="System.Dynamic.DynamicObject"></xref> class can override this method to specify dynamic behavior for operations such as getting a value for a property.
+  remarks: "Classes derived from the <xref:System.Dynamic.DynamicObject> class can override this method to specify how operations that get member values should be performed for a dynamic object. When the method is not overridden, the run-time binder of the language determines the behavior. (In most cases, a run-time exception is thrown.)  \n  \n This method is called when you have statements like `Console.WriteLine(sampleObject.SampleProperty)`, where `sampleObject` is an instance of the class derived from the <xref:System.Dynamic.DynamicObject> class.  \n  \n You can also add your own members to classes derived from the `DynamicObject` class. If your class defines properties and also overrides the <xref:System.Dynamic.DynamicObject.TrySetMember%2A> method, the dynamic language runtime (DLR) first uses the language binder to look for a static definition of a property in the class. If there is no such property, the DLR calls the <xref:System.Dynamic.DynamicObject.TrySetMember%2A> method."
+  example:
+  - "Assume that you want to provide alternative syntax for accessing values in a dictionary, so that instead of writing `sampleDictionary[\"Text\"] = \"Sample text\"` (`sampleDictionary(\"Text\") = \"Sample text\"` in Visual Basic), you can write `sampleDictionary.Text = \"Sample text\"`. Also, this syntax must be case-insensitive, so that `sampleDictionary.Text` is equivalent to `sampleDictionary.text`.  \n  \n The following code example demonstrates the `DynamicDictionary` class, which is derived from the <xref:System.Dynamic.DynamicObject> class. The `DynamicDictionary` class contains an object of the `Dictionary<string, object>` type (`Dictionary(Of String, Object)` in Visual Basic) to store the key-value pairs, and overrides the <xref:System.Dynamic.DynamicObject.TrySetMember%2A> and <xref:System.Dynamic.DynamicObject.TryGetMember%2A> methods to support the new syntax. It also provides a `Count` property, which shows how many dynamic properties the dictionary contains.  \n  \n [!code-csharp[System.Dynamic.DynamicObject#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.dynamic.dynamicobject/cs/program.cs#1)]\n [!code-vb[System.Dynamic.DynamicObject#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.dynamic.dynamicobject/vb/module1.vb#1)]"
+  syntax:
+    content: public virtual bool TryGetMember (System.Dynamic.GetMemberBinder binder, out object result);
+    parameters:
+    - id: binder
+      type: System.Dynamic.GetMemberBinder
+      description: Provides information about the object that called the dynamic operation. The <code>binder.Name</code> property provides the name of the member on which the dynamic operation is performed. For example, for the <code>Console.WriteLine(sampleObject.SampleProperty)</code> statement, where <code>sampleObject</code> is an instance of the class derived from the <xref href="System.Dynamic.DynamicObject"></xref> class, <code>binder.Name</code> returns "SampleProperty". The <code>binder.IgnoreCase</code> property specifies whether the member name is case-sensitive.
+    - id: result
+      type: System.Object
+      description: The result of the get operation. For example, if the method is called for a property, you can assign the property value to <code>result</code>.
+    return:
+      type: System.Boolean
+      description: '`true` if the operation is successful; otherwise, `false`. If this method returns `false`, the run-time binder of the language determines the behavior. (In most cases, a run-time exception is thrown.)'
+  overload: System.Dynamic.DynamicObject.TryGetMember*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: BillWagner
+  ms.author: wiwagn
+  manager: wpickett
+- uid: System.Dynamic.DynamicObject.TryInvoke(System.Dynamic.InvokeBinder,System.Object[],System.Object@)
+  commentId: M:System.Dynamic.DynamicObject.TryInvoke(System.Dynamic.InvokeBinder,System.Object[],System.Object@)
+  id: TryInvoke(System.Dynamic.InvokeBinder,System.Object[],System.Object@)
+  parent: System.Dynamic.DynamicObject
+  langs:
+  - csharp
+  name: TryInvoke(InvokeBinder, Object[], Object)
+  nameWithType: DynamicObject.TryInvoke(InvokeBinder, Object[], Object)
+  fullName: DynamicObject.TryInvoke(InvokeBinder, Object[], Object)
+  type: Method
+  assemblies:
+  - System.Dynamic.Runtime
+  - System.Core
+  - netstandard
+  - System.Linq.Expressions
+  namespace: System.Dynamic
+  summary: Provides the implementation for operations that invoke an object. Classes derived from the <xref href="System.Dynamic.DynamicObject"></xref> class can override this method to specify dynamic behavior for operations such as invoking an object or a delegate.
+  remarks: "Classes derived from the <xref:System.Dynamic.DynamicObject> class can override this method to specify how operations that invoke an object should be performed for a dynamic object. When the method is not overridden, the run-time binder of the language determines the behavior. (In most cases, a run-time exception is thrown.)  \n  \n If this method is overridden, it is automatically invoked when you have an operation like `sampleObject(100)`, where `sampleObject` is derived from the <xref:System.Dynamic.DynamicObject> class.  \n  \n The operation for invoking an object is supported in C# but not in Visual Basic. The Visual Basic compiler never emits code to use this method, and the Visual Basic language does not support syntax like `sampleObject(100)`."
+  example:
+  - "Assume that you need a data structure to store textual and numeric representations of numbers. You want to be able to specify the value for each property individually and also to be able to initialize all properties in a single statement.  \n  \n The following code example demonstrates the `DynamicNumber` class, which is derived from the <xref:System.Dynamic.DynamicObject> class. `DynamicNumber` overrides the <xref:System.Dynamic.DynamicObject.TryInvoke%2A> method to enable initialization of all properties at one time. It also overrides the <xref:System.Dynamic.DynamicObject.TrySetMember%2A> and <xref:System.Dynamic.DynamicObject.TryGetMember%2A> methods to enable access to individual object properties.  \n  \n [!code-csharp[System.Dynamic.DynamicObject#5](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.dynamic.dynamicobject/cs/program.cs#5)]"
+  syntax:
+    content: public virtual bool TryInvoke (System.Dynamic.InvokeBinder binder, object[] args, out object result);
+    parameters:
+    - id: binder
+      type: System.Dynamic.InvokeBinder
+      description: Provides information about the invoke operation.
+    - id: args
+      type: System.Object[]
+      description: The arguments that are passed to the object during the invoke operation. For example, for the <code>sampleObject(100)</code> operation, where <code>sampleObject</code> is derived from the <xref href="System.Dynamic.DynamicObject"></xref> class, <code>args[0]</code> is equal to 100.
+    - id: result
+      type: System.Object
+      description: The result of the object invocation.
+    return:
+      type: System.Boolean
+      description: '`true` if the operation is successful; otherwise, `false`. If this method returns `false`, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.'
+  overload: System.Dynamic.DynamicObject.TryInvoke*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: BillWagner
+  ms.author: wiwagn
+  manager: wpickett
+- uid: System.Dynamic.DynamicObject.TryInvokeMember(System.Dynamic.InvokeMemberBinder,System.Object[],System.Object@)
+  commentId: M:System.Dynamic.DynamicObject.TryInvokeMember(System.Dynamic.InvokeMemberBinder,System.Object[],System.Object@)
+  id: TryInvokeMember(System.Dynamic.InvokeMemberBinder,System.Object[],System.Object@)
+  parent: System.Dynamic.DynamicObject
+  langs:
+  - csharp
+  name: TryInvokeMember(InvokeMemberBinder, Object[], Object)
+  nameWithType: DynamicObject.TryInvokeMember(InvokeMemberBinder, Object[], Object)
+  fullName: DynamicObject.TryInvokeMember(InvokeMemberBinder, Object[], Object)
+  type: Method
+  assemblies:
+  - System.Dynamic.Runtime
+  - System.Core
+  - netstandard
+  - System.Linq.Expressions
+  namespace: System.Dynamic
+  summary: Provides the implementation for operations that invoke a member. Classes derived from the <xref href="System.Dynamic.DynamicObject"></xref> class can override this method to specify dynamic behavior for operations such as calling a method.
+  remarks: "Classes derived from the <xref:System.Dynamic.DynamicObject> class can override this method to specify how operations that invoke an object member should be performed for a dynamic object. When the method is not overridden, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)  \n  \n If this method is overridden, it is automatically invoked when you perform an operation like `sampleObject.SampleMethod(100)`, where `sampleObject` is derived from the `DynamicObject` class.  \n  \n You can also add your own methods to classes that are derived from the <xref:System.Dynamic.DynamicObject> class. For example, if you override the <xref:System.Dynamic.DynamicObject.TryInvokeMember%2A> method, the dynamic dispatch system first attempts to determine whether the specified method exists in the class. If it does not find the method, it uses the <xref:System.Dynamic.DynamicObject.TryInvokeMember%2A> implementation.  \n  \n This method does not support `ref` and `out` parameters. All parameters in the `args` array are passed by value."
+  example:
+  - "Assume that you want to provide alternative syntax for accessing values in a dictionary, so that instead of writing `sampleDictionary[\"Text\"] = \"Sample text\"` (`sampleDictionary(\"Text\") = \"Sample text\"` in Visual Basic), you can write `sampleDictionary.Text = \"Sample text\"`. Also, you want to be able to call all the standard dictionary methods on this dictionary.  \n  \n The following code example demonstrates the `DynamicDictionary` class, which is derived from the <xref:System.Dynamic.DynamicObject> class. The `DynamicDictionary` class contains an object of the `Dictionary<string, object>` type (`Dictionary(Of String, Object)` in Visual Basic) to store the key-value pairs. It overrides the <xref:System.Dynamic.DynamicObject.TryInvokeMember%2A> method to support methods of the <xref:System.Collections.Generic.Dictionary%602> class and overrides the <xref:System.Dynamic.DynamicObject.TrySetMember%2A> and <xref:System.Dynamic.DynamicObject.TryGetMember%2A> methods to support the new syntax. It also provides a `Print` method, which prints out all dictionary keys and values.  \n  \n [!code-csharp[System.Dynamic.DynamicObject#6](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.dynamic.dynamicobject/cs/program.cs#6)]\n [!code-vb[System.Dynamic.DynamicObject#6](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.dynamic.dynamicobject/vb/module1.vb#6)]"
+  syntax:
+    content: public virtual bool TryInvokeMember (System.Dynamic.InvokeMemberBinder binder, object[] args, out object result);
+    parameters:
+    - id: binder
+      type: System.Dynamic.InvokeMemberBinder
+      description: Provides information about the dynamic operation. The <code>binder.Name</code> property provides the name of the member on which the dynamic operation is performed. For example, for the statement <code>sampleObject.SampleMethod(100)</code>, where <code>sampleObject</code> is an instance of the class derived from the <xref href="System.Dynamic.DynamicObject"></xref> class, <code>binder.Name</code> returns "SampleMethod". The <code>binder.IgnoreCase</code> property specifies whether the member name is case-sensitive.
+    - id: args
+      type: System.Object[]
+      description: The arguments that are passed to the object member during the invoke operation. For example, for the statement <code>sampleObject.SampleMethod(100)</code>, where <code>sampleObject</code> is derived from the <xref href="System.Dynamic.DynamicObject"></xref> class, <code>args[0]</code> is equal to 100.
+    - id: result
+      type: System.Object
+      description: The result of the member invocation.
+    return:
+      type: System.Boolean
+      description: '`true` if the operation is successful; otherwise, `false`. If this method returns `false`, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)'
+  overload: System.Dynamic.DynamicObject.TryInvokeMember*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: BillWagner
+  ms.author: wiwagn
+  manager: wpickett
+- uid: System.Dynamic.DynamicObject.TrySetIndex(System.Dynamic.SetIndexBinder,System.Object[],System.Object)
+  commentId: M:System.Dynamic.DynamicObject.TrySetIndex(System.Dynamic.SetIndexBinder,System.Object[],System.Object)
+  id: TrySetIndex(System.Dynamic.SetIndexBinder,System.Object[],System.Object)
+  parent: System.Dynamic.DynamicObject
+  langs:
+  - csharp
+  name: TrySetIndex(SetIndexBinder, Object[], Object)
+  nameWithType: DynamicObject.TrySetIndex(SetIndexBinder, Object[], Object)
+  fullName: DynamicObject.TrySetIndex(SetIndexBinder, Object[], Object)
+  type: Method
+  assemblies:
+  - System.Dynamic.Runtime
+  - System.Core
+  - netstandard
+  - System.Linq.Expressions
+  namespace: System.Dynamic
+  summary: Provides the implementation for operations that set a value by index. Classes derived from the <xref href="System.Dynamic.DynamicObject"></xref> class can override this method to specify dynamic behavior for operations that access objects by a specified index.
+  remarks: "Classes derived from the <xref:System.Dynamic.DynamicObject> class can override this method to specify how operations that access an object by index should be performed for a dynamic object. When the method is not overridden, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)  \n  \n If this method is overridden, it is automatically invoked when you have an operation like `sampleObject[3] = 10` in C# or `sampleObject(3) = 10` in Visual Basic, where `sampleObject` is derived from the <xref:System.Dynamic.DynamicObject> class."
+  example:
+  - "Assume that you want to create an object in which properties can be accessed either by names such as `Property0`, `Property1`, and so on, or by index, so that, for example, `sampleObject.Property0` is equivalent to `sampleObject[0]` in C# or `sampleObject(0)` in Visual Basic.  \n  \n The following code example demonstrates the `SampleDynamicObject` class, which is derived from the <xref:System.Dynamic.DynamicObject> class. The `SampleDynamicObject` class contains an object of the `Dictionary<string, object>` type (`Dictionary(Of String, Object)` in Visual Basic) to store the key-value pairs. `SampleDynamicObject` overrides the <xref:System.Dynamic.DynamicObject.TrySetIndex%2A> and <xref:System.Dynamic.DynamicObject.TryGetIndex%2A> methods to enable access by index. It overrides the <xref:System.Dynamic.DynamicObject.TrySetMember%2A> and <xref:System.Dynamic.DynamicObject.TryGetMember%2A> methods to enable access by property name.  \n  \n [!code-csharp[System.Dynamic.DynamicObject#4](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.dynamic.dynamicobject/cs/program.cs#4)]\n [!code-vb[System.Dynamic.DynamicObject#4](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.dynamic.dynamicobject/vb/module1.vb#4)]"
+  syntax:
+    content: public virtual bool TrySetIndex (System.Dynamic.SetIndexBinder binder, object[] indexes, object value);
+    parameters:
+    - id: binder
+      type: System.Dynamic.SetIndexBinder
+      description: Provides information about the operation.
+    - id: indexes
+      type: System.Object[]
+      description: The indexes that are used in the operation. For example, for the <code>sampleObject[3] = 10</code> operation in C# (<code>sampleObject(3) = 10</code> in Visual Basic), where <code>sampleObject</code> is derived from the <xref href="System.Dynamic.DynamicObject"></xref> class, <code>indexes[0]</code> is equal to 3.
+    - id: value
+      type: System.Object
+      description: The value to set to the object that has the specified index. For example, for the <code>sampleObject[3] = 10</code> operation in C# (<code>sampleObject(3) = 10</code> in Visual Basic), where <code>sampleObject</code> is derived from the <xref href="System.Dynamic.DynamicObject"></xref> class, <code>value</code> is equal to 10.
+    return:
+      type: System.Boolean
+      description: '`true` if the operation is successful; otherwise, `false`. If this method returns `false`, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.'
+  overload: System.Dynamic.DynamicObject.TrySetIndex*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: BillWagner
+  ms.author: wiwagn
+  manager: wpickett
+- uid: System.Dynamic.DynamicObject.TrySetMember(System.Dynamic.SetMemberBinder,System.Object)
+  commentId: M:System.Dynamic.DynamicObject.TrySetMember(System.Dynamic.SetMemberBinder,System.Object)
+  id: TrySetMember(System.Dynamic.SetMemberBinder,System.Object)
+  parent: System.Dynamic.DynamicObject
+  langs:
+  - csharp
+  name: TrySetMember(SetMemberBinder, Object)
+  nameWithType: DynamicObject.TrySetMember(SetMemberBinder, Object)
+  fullName: DynamicObject.TrySetMember(SetMemberBinder, Object)
+  type: Method
+  assemblies:
+  - System.Dynamic.Runtime
+  - System.Core
+  - netstandard
+  - System.Linq.Expressions
+  namespace: System.Dynamic
+  summary: Provides the implementation for operations that set member values. Classes derived from the <xref href="System.Dynamic.DynamicObject"></xref> class can override this method to specify dynamic behavior for operations such as setting a value for a property.
+  remarks: "Classes derived from the <xref:System.Dynamic.DynamicObject> class can override this method to specify how operations that set a value to a member should be performed for a dynamic object. When the method is not overridden, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)  \n  \n This method is called when you have statements like `sampleObject.SampleProperty = \"Test\"`, where `sampleObject` is an instance of the class that is derived from the <xref:System.Dynamic.DynamicObject> class.  \n  \n You can also add your own members to classes derived from the `DynamicObject` class. If your class defines properties and also overrides the <xref:System.Dynamic.DynamicObject.TrySetMember%2A> method, the dynamic language runtime (DLR) first uses the language binder to look for a static definition of a property in the class. If there is no such property, the DLR calls the <xref:System.Dynamic.DynamicObject.TrySetMember%2A> method."
+  example:
+  - "Assume that you want to provide alternative syntax for accessing values in a dictionary, so that instead of writing `sampleDictionary[\"Text\"] = \"Sample text\"` (`sampleDictionary(\"Text\") = \"Sample text\"` in Visual Basic), you can write `sampleDictionary.Text = \"Sample text\"`. Also, this syntax must be case-insensitive, so that `sampleDictionary.Text` is equivalent to `sampleDictionary.text`.  \n  \n The following code example demonstrates the `DynamicDictionary` class, which is derived from the <xref:System.Dynamic.DynamicObject> class. The `DynamicDictionary` class contains an object of the `Dictionary<string, object>` type (`Dictionary(Of String, Object)` in Visual Basic) to store the key-value pairs, and overrides the <xref:System.Dynamic.DynamicObject.TrySetMember%2A> and <xref:System.Dynamic.DynamicObject.TryGetMember%2A> methods to support the new syntax. It also provides a `Count` property, which shows how many dynamic properties the dictionary contains.  \n  \n [!code-csharp[System.Dynamic.DynamicObject#1](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.dynamic.dynamicobject/cs/program.cs#1)]\n [!code-vb[System.Dynamic.DynamicObject#1](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.dynamic.dynamicobject/vb/module1.vb#1)]"
+  syntax:
+    content: public virtual bool TrySetMember (System.Dynamic.SetMemberBinder binder, object value);
+    parameters:
+    - id: binder
+      type: System.Dynamic.SetMemberBinder
+      description: Provides information about the object that called the dynamic operation. The <code>binder.Name</code> property provides the name of the member to which the value is being assigned. For example, for the statement <code>sampleObject.SampleProperty = "Test"</code>, where <code>sampleObject</code> is an instance of the class derived from the <xref href="System.Dynamic.DynamicObject"></xref> class, <code>binder.Name</code> returns "SampleProperty". The <code>binder.IgnoreCase</code> property specifies whether the member name is case-sensitive.
+    - id: value
+      type: System.Object
+      description: The value to set to the member. For example, for <code>sampleObject.SampleProperty = "Test"</code>, where <code>sampleObject</code> is an instance of the class derived from the <xref href="System.Dynamic.DynamicObject"></xref> class, the <code>value</code> is "Test".
+    return:
+      type: System.Boolean
+      description: '`true` if the operation is successful; otherwise, `false`. If this method returns `false`, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)'
+  overload: System.Dynamic.DynamicObject.TrySetMember*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: BillWagner
+  ms.author: wiwagn
+  manager: wpickett
+- uid: System.Dynamic.DynamicObject.TryUnaryOperation(System.Dynamic.UnaryOperationBinder,System.Object@)
+  commentId: M:System.Dynamic.DynamicObject.TryUnaryOperation(System.Dynamic.UnaryOperationBinder,System.Object@)
+  id: TryUnaryOperation(System.Dynamic.UnaryOperationBinder,System.Object@)
+  parent: System.Dynamic.DynamicObject
+  langs:
+  - csharp
+  name: TryUnaryOperation(UnaryOperationBinder, Object)
+  nameWithType: DynamicObject.TryUnaryOperation(UnaryOperationBinder, Object)
+  fullName: DynamicObject.TryUnaryOperation(UnaryOperationBinder, Object)
+  type: Method
+  assemblies:
+  - System.Dynamic.Runtime
+  - System.Core
+  - netstandard
+  - System.Linq.Expressions
+  namespace: System.Dynamic
+  summary: Provides implementation for unary operations. Classes derived from the <xref href="System.Dynamic.DynamicObject"></xref> class can override this method to specify dynamic behavior for operations such as negation, increment, or decrement.
+  remarks: "Classes derived from the <xref:System.Dynamic.DynamicObject> class can override this method to specify how unary operations should be performed for a dynamic object. When the method is not overridden, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)  \n  \n This method is called when you have unary operations such as negation, increment, or decrement. For example, if the <xref:System.Dynamic.DynamicObject.TryUnaryOperation%2A> method is overridden, this method is automatically invoked for statements like `negativeNumber = -number`, where `number` is derived from the <xref:System.Dynamic.DynamicObject> class.  \n  \n You can get information about the type of the unary operation by using the `Operation` property of the `binder` parameter.  \n  \n If your dynamic object is used only in C# and Visual Basic, the `binder.Operation` property can have one of the following values from the <xref:System.Linq.Expressions.ExpressionType> enumeration. However, in other languages such as IronPython or IronRuby, you can have other values. For more information about <xref:System.Linq.Expressions.ExpressionType>, see documentation on the [CodePlex](http://go.microsoft.com/fwlink/?LinkId=141028) Web site.  \n  \n|Value|Description|C#|Visual Basic|  \n|-----------|-----------------|---------|------------------|  \n|`Decrement`|A unary decrement operation.|`a--`|Not supported.|  \n|`Increment`|A unary increment operation.|`a++`|Not supported.|  \n|`Negate`|An arithmetic negation.|`-a`|`-a`|  \n|`Not`|A logical negation.|`!a`|`Not a`|  \n|`OnesComplement`|A ones complement.|`~a`|Not supported.|  \n|`IsFalse`|A false condition value.|`a && b`|Not supported.|  \n|`IsTrue`|A true condition value.|`a &#124;&#124; b`|Not supported.|  \n|`UnaryPlus`|A unary plus.|`+a`|`+a`|  \n  \n> [!NOTE]\n>  To implement `OrElse` (`a || b`) and `AndAlso` (`a && b`) operations for dynamic objects in C#, you may want to implement both the <xref:System.Dynamic.DynamicObject.TryUnaryOperation%2A> method and the <xref:System.Dynamic.DynamicObject.TryBinaryOperation%2A> method.  \n>   \n>  The `OrElse` operation consists of the unary `IsTrue` operation and the binary `Or` operation. The `Or` operation is performed only if the result of the `IsTrue` operation is `false`.  \n>   \n>  The `AndAlso` operation consists of the unary `IsFalse` operation and the binary `And` operation. The `And` operation is performed only if the result of the `IsFalse` operation is `false`."
+  example:
+  - "Assume that you need a data structure to store textual and numeric representations of numbers, and you want to define a mathematical negation operation for such data.  \n  \n The following code example demonstrates the `DynamicNumber` class, which is derived from the <xref:System.Dynamic.DynamicObject> class. `DynamicNumber` overrides the <xref:System.Dynamic.DynamicObject.TryUnaryOperation%2A> method to enable the mathematical negation operation. Is also overrides the <xref:System.Dynamic.DynamicObject.TrySetMember%2A> and <xref:System.Dynamic.DynamicObject.TryGetMember%2A> methods to enable access to the elements.  \n  \n In this example, only the mathematical negation operation is supported. If you try to write a statement like `negativeNumber = +number`, a run-time exception occurs.  \n  \n [!code-csharp[System.Dynamic.DynamicObject#7](~/samples/snippets/csharp/VS_Snippets_CLR_System/system.dynamic.dynamicobject/cs/program.cs#7)]\n [!code-vb[System.Dynamic.DynamicObject#7](~/samples/snippets/visualbasic/VS_Snippets_CLR_System/system.dynamic.dynamicobject/vb/module1.vb#7)]"
+  syntax:
+    content: public virtual bool TryUnaryOperation (System.Dynamic.UnaryOperationBinder binder, out object result);
+    parameters:
+    - id: binder
+      type: System.Dynamic.UnaryOperationBinder
+      description: Provides information about the unary operation. The <code>binder.Operation</code> property returns an <xref href="System.Linq.Expressions.ExpressionType"></xref> object. For example, for the <code>negativeNumber = -number</code> statement, where <code>number</code> is derived from the `DynamicObject` class, <code>binder.Operation</code> returns "Negate".
+    - id: result
+      type: System.Object
+      description: The result of the unary operation.
+    return:
+      type: System.Boolean
+      description: '`true` if the operation is successful; otherwise, `false`. If this method returns `false`, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)'
+  overload: System.Dynamic.DynamicObject.TryUnaryOperation*
+  exceptions: []
+  version:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+  ms.technology:
+  - dotnet-standard
+  author: BillWagner
+  ms.author: wiwagn
+  manager: wpickett
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Dynamic.DynamicObject.#ctor
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: DynamicObject()
+  nameWithType: DynamicObject.DynamicObject()
+  fullName: DynamicObject.DynamicObject()
+- uid: System.Dynamic.DynamicObject.GetDynamicMemberNames
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: GetDynamicMemberNames()
+  nameWithType: DynamicObject.GetDynamicMemberNames()
+  fullName: DynamicObject.GetDynamicMemberNames()
+- uid: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+- uid: System.String
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Collections.Generic.IEnumerable{System.String}
+  parent: System.Collections.Generic
+  isExternal: false
+  name: IEnumerable<String>
+  nameWithType: IEnumerable<String>
+  fullName: System.Collections.Generic.IEnumerable<System.String>
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Dynamic.DynamicObject.GetMetaObject(System.Linq.Expressions.Expression)
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: GetMetaObject(Expression)
+  nameWithType: DynamicObject.GetMetaObject(Expression)
+  fullName: DynamicObject.GetMetaObject(Expression)
+- uid: System.Dynamic.DynamicMetaObject
+  parent: System.Dynamic
+  isExternal: false
+  name: DynamicMetaObject
+  nameWithType: DynamicMetaObject
+  fullName: System.Dynamic.DynamicMetaObject
+- uid: System.Linq.Expressions.Expression
+  parent: System.Linq.Expressions
+  isExternal: false
+  name: Expression
+  nameWithType: Expression
+  fullName: System.Linq.Expressions.Expression
+- uid: System.Dynamic.DynamicObject.TryBinaryOperation(System.Dynamic.BinaryOperationBinder,System.Object,System.Object@)
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryBinaryOperation(BinaryOperationBinder, Object, Object)
+  nameWithType: DynamicObject.TryBinaryOperation(BinaryOperationBinder, Object, Object)
+  fullName: DynamicObject.TryBinaryOperation(BinaryOperationBinder, Object, Object)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Dynamic.BinaryOperationBinder
+  parent: System.Dynamic
+  isExternal: false
+  name: BinaryOperationBinder
+  nameWithType: BinaryOperationBinder
+  fullName: System.Dynamic.BinaryOperationBinder
+- uid: System.Dynamic.DynamicObject.TryConvert(System.Dynamic.ConvertBinder,System.Object@)
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryConvert(ConvertBinder, Object)
+  nameWithType: DynamicObject.TryConvert(ConvertBinder, Object)
+  fullName: DynamicObject.TryConvert(ConvertBinder, Object)
+- uid: System.Dynamic.ConvertBinder
+  parent: System.Dynamic
+  isExternal: false
+  name: ConvertBinder
+  nameWithType: ConvertBinder
+  fullName: System.Dynamic.ConvertBinder
+- uid: System.Dynamic.DynamicObject.TryCreateInstance(System.Dynamic.CreateInstanceBinder,System.Object[],System.Object@)
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryCreateInstance(CreateInstanceBinder, Object[], Object)
+  nameWithType: DynamicObject.TryCreateInstance(CreateInstanceBinder, Object[], Object)
+  fullName: DynamicObject.TryCreateInstance(CreateInstanceBinder, Object[], Object)
+- uid: System.Dynamic.CreateInstanceBinder
+  parent: System.Dynamic
+  isExternal: false
+  name: CreateInstanceBinder
+  nameWithType: CreateInstanceBinder
+  fullName: System.Dynamic.CreateInstanceBinder
+- uid: System.Object[]
+  parent: System
+  isExternal: false
+  name: Object[]
+  nameWithType: Object[]
+  fullName: System.Object[]
+  spec.csharp:
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+- uid: System.Dynamic.DynamicObject.TryDeleteIndex(System.Dynamic.DeleteIndexBinder,System.Object[])
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryDeleteIndex(DeleteIndexBinder, Object[])
+  nameWithType: DynamicObject.TryDeleteIndex(DeleteIndexBinder, Object[])
+  fullName: DynamicObject.TryDeleteIndex(DeleteIndexBinder, Object[])
+- uid: System.Dynamic.DeleteIndexBinder
+  parent: System.Dynamic
+  isExternal: false
+  name: DeleteIndexBinder
+  nameWithType: DeleteIndexBinder
+  fullName: System.Dynamic.DeleteIndexBinder
+- uid: System.Dynamic.DynamicObject.TryDeleteMember(System.Dynamic.DeleteMemberBinder)
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryDeleteMember(DeleteMemberBinder)
+  nameWithType: DynamicObject.TryDeleteMember(DeleteMemberBinder)
+  fullName: DynamicObject.TryDeleteMember(DeleteMemberBinder)
+- uid: System.Dynamic.DeleteMemberBinder
+  parent: System.Dynamic
+  isExternal: false
+  name: DeleteMemberBinder
+  nameWithType: DeleteMemberBinder
+  fullName: System.Dynamic.DeleteMemberBinder
+- uid: System.Dynamic.DynamicObject.TryGetIndex(System.Dynamic.GetIndexBinder,System.Object[],System.Object@)
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryGetIndex(GetIndexBinder, Object[], Object)
+  nameWithType: DynamicObject.TryGetIndex(GetIndexBinder, Object[], Object)
+  fullName: DynamicObject.TryGetIndex(GetIndexBinder, Object[], Object)
+- uid: System.Dynamic.GetIndexBinder
+  parent: System.Dynamic
+  isExternal: false
+  name: GetIndexBinder
+  nameWithType: GetIndexBinder
+  fullName: System.Dynamic.GetIndexBinder
+- uid: System.Dynamic.DynamicObject.TryGetMember(System.Dynamic.GetMemberBinder,System.Object@)
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryGetMember(GetMemberBinder, Object)
+  nameWithType: DynamicObject.TryGetMember(GetMemberBinder, Object)
+  fullName: DynamicObject.TryGetMember(GetMemberBinder, Object)
+- uid: System.Dynamic.GetMemberBinder
+  parent: System.Dynamic
+  isExternal: false
+  name: GetMemberBinder
+  nameWithType: GetMemberBinder
+  fullName: System.Dynamic.GetMemberBinder
+- uid: System.Dynamic.DynamicObject.TryInvoke(System.Dynamic.InvokeBinder,System.Object[],System.Object@)
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryInvoke(InvokeBinder, Object[], Object)
+  nameWithType: DynamicObject.TryInvoke(InvokeBinder, Object[], Object)
+  fullName: DynamicObject.TryInvoke(InvokeBinder, Object[], Object)
+- uid: System.Dynamic.InvokeBinder
+  parent: System.Dynamic
+  isExternal: false
+  name: InvokeBinder
+  nameWithType: InvokeBinder
+  fullName: System.Dynamic.InvokeBinder
+- uid: System.Dynamic.DynamicObject.TryInvokeMember(System.Dynamic.InvokeMemberBinder,System.Object[],System.Object@)
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryInvokeMember(InvokeMemberBinder, Object[], Object)
+  nameWithType: DynamicObject.TryInvokeMember(InvokeMemberBinder, Object[], Object)
+  fullName: DynamicObject.TryInvokeMember(InvokeMemberBinder, Object[], Object)
+- uid: System.Dynamic.InvokeMemberBinder
+  parent: System.Dynamic
+  isExternal: false
+  name: InvokeMemberBinder
+  nameWithType: InvokeMemberBinder
+  fullName: System.Dynamic.InvokeMemberBinder
+- uid: System.Dynamic.DynamicObject.TrySetIndex(System.Dynamic.SetIndexBinder,System.Object[],System.Object)
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TrySetIndex(SetIndexBinder, Object[], Object)
+  nameWithType: DynamicObject.TrySetIndex(SetIndexBinder, Object[], Object)
+  fullName: DynamicObject.TrySetIndex(SetIndexBinder, Object[], Object)
+- uid: System.Dynamic.SetIndexBinder
+  parent: System.Dynamic
+  isExternal: false
+  name: SetIndexBinder
+  nameWithType: SetIndexBinder
+  fullName: System.Dynamic.SetIndexBinder
+- uid: System.Dynamic.DynamicObject.TrySetMember(System.Dynamic.SetMemberBinder,System.Object)
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TrySetMember(SetMemberBinder, Object)
+  nameWithType: DynamicObject.TrySetMember(SetMemberBinder, Object)
+  fullName: DynamicObject.TrySetMember(SetMemberBinder, Object)
+- uid: System.Dynamic.SetMemberBinder
+  parent: System.Dynamic
+  isExternal: false
+  name: SetMemberBinder
+  nameWithType: SetMemberBinder
+  fullName: System.Dynamic.SetMemberBinder
+- uid: System.Dynamic.DynamicObject.TryUnaryOperation(System.Dynamic.UnaryOperationBinder,System.Object@)
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryUnaryOperation(UnaryOperationBinder, Object)
+  nameWithType: DynamicObject.TryUnaryOperation(UnaryOperationBinder, Object)
+  fullName: DynamicObject.TryUnaryOperation(UnaryOperationBinder, Object)
+- uid: System.Dynamic.UnaryOperationBinder
+  parent: System.Dynamic
+  isExternal: false
+  name: UnaryOperationBinder
+  nameWithType: UnaryOperationBinder
+  fullName: System.Dynamic.UnaryOperationBinder
+- uid: System.Dynamic.DynamicObject.#ctor*
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: DynamicObject
+  nameWithType: DynamicObject.DynamicObject
+  fullName: DynamicObject.DynamicObject
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+- uid: System.Dynamic.DynamicObject.GetDynamicMemberNames*
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: GetDynamicMemberNames
+  nameWithType: DynamicObject.GetDynamicMemberNames
+  fullName: DynamicObject.GetDynamicMemberNames
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+- uid: System.Dynamic.DynamicObject.GetMetaObject*
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: GetMetaObject
+  nameWithType: DynamicObject.GetMetaObject
+  fullName: DynamicObject.GetMetaObject
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+- uid: System.Dynamic.DynamicObject.TryBinaryOperation*
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryBinaryOperation
+  nameWithType: DynamicObject.TryBinaryOperation
+  fullName: DynamicObject.TryBinaryOperation
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+- uid: System.Dynamic.DynamicObject.TryConvert*
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryConvert
+  nameWithType: DynamicObject.TryConvert
+  fullName: DynamicObject.TryConvert
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+- uid: System.Dynamic.DynamicObject.TryCreateInstance*
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryCreateInstance
+  nameWithType: DynamicObject.TryCreateInstance
+  fullName: DynamicObject.TryCreateInstance
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+- uid: System.Dynamic.DynamicObject.TryDeleteIndex*
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryDeleteIndex
+  nameWithType: DynamicObject.TryDeleteIndex
+  fullName: DynamicObject.TryDeleteIndex
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+- uid: System.Dynamic.DynamicObject.TryDeleteMember*
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryDeleteMember
+  nameWithType: DynamicObject.TryDeleteMember
+  fullName: DynamicObject.TryDeleteMember
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+- uid: System.Dynamic.DynamicObject.TryGetIndex*
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryGetIndex
+  nameWithType: DynamicObject.TryGetIndex
+  fullName: DynamicObject.TryGetIndex
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+- uid: System.Dynamic.DynamicObject.TryGetMember*
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryGetMember
+  nameWithType: DynamicObject.TryGetMember
+  fullName: DynamicObject.TryGetMember
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+- uid: System.Dynamic.DynamicObject.TryInvoke*
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryInvoke
+  nameWithType: DynamicObject.TryInvoke
+  fullName: DynamicObject.TryInvoke
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+- uid: System.Dynamic.DynamicObject.TryInvokeMember*
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryInvokeMember
+  nameWithType: DynamicObject.TryInvokeMember
+  fullName: DynamicObject.TryInvokeMember
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+- uid: System.Dynamic.DynamicObject.TrySetIndex*
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TrySetIndex
+  nameWithType: DynamicObject.TrySetIndex
+  fullName: DynamicObject.TrySetIndex
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+- uid: System.Dynamic.DynamicObject.TrySetMember*
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TrySetMember
+  nameWithType: DynamicObject.TrySetMember
+  fullName: DynamicObject.TrySetMember
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+- uid: System.Dynamic.DynamicObject.TryUnaryOperation*
+  parent: System.Dynamic.DynamicObject
+  isExternal: false
+  name: TryUnaryOperation
+  nameWithType: DynamicObject.TryUnaryOperation
+  fullName: DynamicObject.TryUnaryOperation
+  monikers:
+  - netcore-1.0
+  - netcore-1.1
+  - netcore-2.0
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - netstandard-2.0
+  - xamarinandroid-7.1
+  - xamarinios-10.8
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Dynamic/DynamicObject.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
+- uid: System.Dynamic.IDynamicMetaObjectProvider
+  parent: System.Dynamic
+  isExternal: false
+  name: IDynamicMetaObjectProvider
+  nameWithType: IDynamicMetaObjectProvider
+  fullName: System.Dynamic.IDynamicMetaObjectProvider

@@ -1,0 +1,5 @@
+---
+summary: Captures mouse input to the specified element.
+remarks: "When an element captures the mouse, it receives mouse input whether or not the cursor is within its borders.  \n  \n If a <xref:System.Windows.Input.CaptureMode> is not specified, the default <xref:System.Windows.Input.CaptureMode> is <xref:System.Windows.Input.CaptureMode.Element>.  \n  \n To release mouse capture, call <xref:System.Windows.Input.Mouse.Capture%2A> passing `null` as the element to capture.  \n  \n If the mouse is captured when a <xref:System.Windows.Input.Mouse.MouseDown> or <xref:System.Windows.Input.Mouse.MouseUp> event is raised and the input is not going to the element underneath the mouse, <xref:System.Windows.Input.Mouse.PreviewMouseDownOutsideCapturedElement> and <xref:System.Windows.Input.Mouse.PreviewMouseUpOutsideCapturedElement> are raised first.  This enables the captured element a chance to release capture before the <xref:System.Windows.Input.Mouse.MouseDown> and <xref:System.Windows.Input.Mouse.MouseUp> events are routed."
+uid: System.Windows.Input.Mouse.Capture*
+---

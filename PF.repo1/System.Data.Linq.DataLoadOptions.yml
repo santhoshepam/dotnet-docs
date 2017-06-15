@@ -1,0 +1,630 @@
+### YamlMime:ManagedReference
+items:
+- uid: System.Data.Linq.DataLoadOptions
+  commentId: T:System.Data.Linq.DataLoadOptions
+  id: DataLoadOptions
+  children:
+  - System.Data.Linq.DataLoadOptions.#ctor
+  - System.Data.Linq.DataLoadOptions.AssociateWith(System.Linq.Expressions.LambdaExpression)
+  - System.Data.Linq.DataLoadOptions.AssociateWith``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})
+  - System.Data.Linq.DataLoadOptions.GetAssociationCriteria(System.Reflection.MemberInfo,System.Linq.Expressions.LambdaExpression@)
+  - System.Data.Linq.DataLoadOptions.IsImmediate(System.Reflection.MemberInfo)
+  - System.Data.Linq.DataLoadOptions.LoadWith(System.Linq.Expressions.LambdaExpression)
+  - System.Data.Linq.DataLoadOptions.LoadWith``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})
+  langs:
+  - csharp
+  name: DataLoadOptions
+  nameWithType: DataLoadOptions
+  fullName: System.Data.Linq.DataLoadOptions
+  type: Class
+  assemblies:
+  - System.Data.Linq
+  namespace: System.Data.Linq
+  summary: Provides for immediate loading and filtering of related data.
+  remarks: "## General  \n When you query for an object, you actually retrieve only the object you requested. The *related* objects are not automatically fetched at the same time. (For more information, see [Querying Across Relationships](~/docs/framework/data/adonet/sql/linq/querying-across-relationships.md).)  \n  \n The <xref:System.Data.Linq.DataLoadOptions> class provides two methods to achieve immediate loading of specified related data. The <xref:System.Data.Linq.DataLoadOptions.LoadWith%2A> method allows for immediate loading of data related to the main target. The <xref:System.Data.Linq.DataLoadOptions.AssociateWith%2A> method allows for filtering related objects.  \n  \n## Rules  \n Note the following rules regarding <xref:System.Data.Linq.DataLoadOptions> usage:  \n  \n-   Assigning a <xref:System.Data.Linq.DataLoadOptions> to a <xref:System.Data.Linq.DataContext> after the first query has been executed generates an exception.  \n  \n-   Modifying a <xref:System.Data.Linq.DataLoadOptions> after it has been assigned to a <xref:System.Data.Linq.DataContext> generates an exception  \n  \n## Cycle Handling  \n <xref:System.Data.Linq.DataLoadOptions.LoadWith%2A> and <xref:System.Data.Linq.DataLoadOptions.AssociateWith%2A> directives must not create cycles. The following represent examples of such graphs:  \n  \n-   Example 1: Self recursive  \n  \n    -   `dlo.LoadWith<Employee>(e => e.Reports);`  \n  \n-   Example 2: Back-pointers  \n  \n    -   `dlo.LoadWith <Customer>(c => C.Orders);`  \n  \n    -   `dlo.LoadWith <Order>(o => o.Customer);`  \n  \n-   Example 3: Longer cycles  \n  \n     Although this should not occur in a well-normalized model, it is possible.  \n  \n    -   `dlo.LoadWith <A>(a => a.Bs);`  \n  \n    -   `dlo.LoadWith <B>(b => b.Cs);`  \n  \n    -   `dlo.LoadWith <C>(c => c.As);`  \n  \n-   Example 4: Self recursive subQueries  \n  \n    -   `dlo.AssociateWith<A>(a=>a.As.Where(a=>a.Id=33));`  \n  \n-   Example 5: Longer recursive subqueries  \n  \n    -   `dlo.AssociateWith<A>(a=>a.Bs.Where(b=>b.Id==3));`  \n  \n    -   `dlo.AssociateWith<B>(b=>b.As.Where(a=>a.Id==3));`  \n  \n The following are some general rules that help you understand what occurs in these scenarios.  \n  \n **LoadWith** Each call to <xref:System.Data.Linq.DataLoadOptions.LoadWith%2A> checks whether cycles have been introduced into the graph. If there are, as in Examples 1, 2, and 3, an exception is thrown.  \n  \n **AssociateWith** The engine at run time does not apply the existing SubQuery clauses to the relationship inside the expression.  \n  \n-   In Example 4, the `Where` clause is executed against all `A`, not just the ones sub-filtered by the SubQuery expression itself (because that would be recursive)  \n  \n-   In Example 5, the first `Where` clause is applied to all the `B`s, even though there are subqueries on `B`. The second `Where` clause is applied to all the `A`s even though there are subqueries on `A`."
+  example:
+  - When you retrieve `Customers` from the Northwind sample database, you can use <xref:System.Data.Linq.DataLoadOptions> to specify that `Orders` is also to be retrieved. You can even specify which subset of `Orders` to retrieve.
+  syntax:
+    content: public sealed class DataLoadOptions
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Linq/DataLoadOptions.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.Linq.DataLoadOptions.#ctor
+  commentId: M:System.Data.Linq.DataLoadOptions.#ctor
+  id: '#ctor'
+  parent: System.Data.Linq.DataLoadOptions
+  langs:
+  - csharp
+  name: DataLoadOptions()
+  nameWithType: DataLoadOptions.DataLoadOptions()
+  fullName: DataLoadOptions.DataLoadOptions()
+  type: Constructor
+  assemblies:
+  - System.Data.Linq
+  namespace: System.Data.Linq
+  summary: Initializes a new instance of the <xref href="System.Data.Linq.DataLoadOptions"></xref> class.
+  syntax:
+    content: public DataLoadOptions ();
+    parameters: []
+  overload: System.Data.Linq.DataLoadOptions.#ctor*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Linq/DataLoadOptions.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.Linq.DataLoadOptions.AssociateWith(System.Linq.Expressions.LambdaExpression)
+  commentId: M:System.Data.Linq.DataLoadOptions.AssociateWith(System.Linq.Expressions.LambdaExpression)
+  id: AssociateWith(System.Linq.Expressions.LambdaExpression)
+  parent: System.Data.Linq.DataLoadOptions
+  langs:
+  - csharp
+  name: AssociateWith(LambdaExpression)
+  nameWithType: DataLoadOptions.AssociateWith(LambdaExpression)
+  fullName: DataLoadOptions.AssociateWith(LambdaExpression)
+  type: Method
+  assemblies:
+  - System.Data.Linq
+  namespace: System.Data.Linq
+  summary: Filters the objects retrieved for a particular relationship.
+  remarks: In the following example, the inner loop iterates only over those `Orders` that have not been shipped today.
+  example:
+  - >-
+    [!code-csharp[System.Data.Linq.DataLoadOptions#1](~/samples/snippets/csharp/VS_Snippets_Data/system.data.linq.dataloadoptions/cs/program.cs#1)]
+     [!code-vb[System.Data.Linq.DataLoadOptions#1](~/samples/snippets/visualbasic/VS_Snippets_Data/system.data.linq.dataloadoptions/vb/module1.vb#1)]
+  syntax:
+    content: public void AssociateWith (System.Linq.Expressions.LambdaExpression expression);
+    parameters:
+    - id: expression
+      type: System.Linq.Expressions.LambdaExpression
+      description: "Identifies the query to be used on a particular one-to-many field or property. Note the following:  \n  \n If the expression does not start with a field or property that represents a one-to-many relationship, an exception is thrown.  \n  \n If an operator other than a valid operator appears in the expression, an exception is thrown. Valid operators are as follows:  \n  \n Where  \n  \n OrderBy  \n  \n ThenBy  \n  \n OrderByDescending  \n  \n ThenByDescending  \n  \n Take"
+  overload: System.Data.Linq.DataLoadOptions.AssociateWith*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Linq/DataLoadOptions.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.Linq.DataLoadOptions.AssociateWith``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})
+  commentId: M:System.Data.Linq.DataLoadOptions.AssociateWith``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})
+  id: AssociateWith``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})
+  parent: System.Data.Linq.DataLoadOptions
+  langs:
+  - csharp
+  name: AssociateWith<T>(Expression<Func<T,Object>>)
+  nameWithType: DataLoadOptions.AssociateWith<T>(Expression<Func<T,Object>>)
+  fullName: DataLoadOptions.AssociateWith<T>(Expression<Func<T,Object>>)
+  type: Method
+  assemblies:
+  - System.Data.Linq
+  namespace: System.Data.Linq
+  summary: Filters objects retrieved for a particular relationship.
+  remarks: For information about how to avoid cycles, see <xref:System.Data.Linq.DataLoadOptions>.
+  example:
+  - "In the following example, the inner loop iterates only over those `Orders` that have not been shipped today.  \n  \n [!code-csharp[System.Data.Linq.DataLoadOptions#1](~/samples/snippets/csharp/VS_Snippets_Data/system.data.linq.dataloadoptions/cs/program.cs#1)]\n [!code-vb[System.Data.Linq.DataLoadOptions#1](~/samples/snippets/visualbasic/VS_Snippets_Data/system.data.linq.dataloadoptions/vb/module1.vb#1)]"
+  syntax:
+    content: public void AssociateWith<T> (System.Linq.Expressions.Expression<Func<T,object>> expression);
+    parameters:
+    - id: expression
+      type: System.Linq.Expressions.Expression{System.Func{T,System.Object}}
+      description: "Identifies the query to be used on a particular one-to-many field or property. Note the following:  \n  \n If the expression does not start with a field or property that represents a one-to-many relationship, an exception is thrown.  \n  \n If an operator other than a valid operator appears in the expression, an exception is thrown. Valid operators are as follows:  \n  \n Where  \n  \n OrderBy  \n  \n ThenBy  \n  \n OrderByDescending  \n  \n ThenByDescending  \n  \n Take"
+    typeParameters:
+    - id: T
+      description: "The type that is queried against.  \n  \n If the type is unmapped, an exception is thrown."
+  overload: System.Data.Linq.DataLoadOptions.AssociateWith``1*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Linq/DataLoadOptions.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.Linq.DataLoadOptions.GetAssociationCriteria(System.Reflection.MemberInfo,System.Linq.Expressions.LambdaExpression@)
+  commentId: M:System.Data.Linq.DataLoadOptions.GetAssociationCriteria(System.Reflection.MemberInfo,System.Linq.Expressions.LambdaExpression@)
+  id: GetAssociationCriteria(System.Reflection.MemberInfo,System.Linq.Expressions.LambdaExpression@)
+  parent: System.Data.Linq.DataLoadOptions
+  langs:
+  - csharp
+  name: GetAssociationCriteria(MemberInfo, LambdaExpression)
+  nameWithType: DataLoadOptions.GetAssociationCriteria(MemberInfo, LambdaExpression)
+  fullName: DataLoadOptions.GetAssociationCriteria(MemberInfo, LambdaExpression)
+  type: Method
+  assemblies:
+  - System.Data.Linq
+  namespace: System.Data.Linq
+  syntax:
+    content: public bool GetAssociationCriteria (System.Reflection.MemberInfo memberInfo, out System.Linq.Expressions.LambdaExpression associationCriteria);
+    parameters:
+    - id: memberInfo
+      type: System.Reflection.MemberInfo
+      description: ''
+    - id: associationCriteria
+      type: System.Linq.Expressions.LambdaExpression
+      description: ''
+    return:
+      type: System.Boolean
+      description: ''
+  overload: System.Data.Linq.DataLoadOptions.GetAssociationCriteria*
+  exceptions: []
+  version:
+  - xamarinmac-3.0
+  monikers:
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Linq/DataLoadOptions.xml
+- uid: System.Data.Linq.DataLoadOptions.IsImmediate(System.Reflection.MemberInfo)
+  commentId: M:System.Data.Linq.DataLoadOptions.IsImmediate(System.Reflection.MemberInfo)
+  id: IsImmediate(System.Reflection.MemberInfo)
+  parent: System.Data.Linq.DataLoadOptions
+  langs:
+  - csharp
+  name: IsImmediate(MemberInfo)
+  nameWithType: DataLoadOptions.IsImmediate(MemberInfo)
+  fullName: DataLoadOptions.IsImmediate(MemberInfo)
+  type: Method
+  assemblies:
+  - System.Data.Linq
+  namespace: System.Data.Linq
+  syntax:
+    content: public bool IsImmediate (System.Reflection.MemberInfo memberInfo);
+    parameters:
+    - id: memberInfo
+      type: System.Reflection.MemberInfo
+      description: ''
+    return:
+      type: System.Boolean
+      description: ''
+  overload: System.Data.Linq.DataLoadOptions.IsImmediate*
+  exceptions: []
+  version:
+  - xamarinmac-3.0
+  monikers:
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Linq/DataLoadOptions.xml
+- uid: System.Data.Linq.DataLoadOptions.LoadWith(System.Linq.Expressions.LambdaExpression)
+  commentId: M:System.Data.Linq.DataLoadOptions.LoadWith(System.Linq.Expressions.LambdaExpression)
+  id: LoadWith(System.Linq.Expressions.LambdaExpression)
+  parent: System.Data.Linq.DataLoadOptions
+  langs:
+  - csharp
+  name: LoadWith(LambdaExpression)
+  nameWithType: DataLoadOptions.LoadWith(LambdaExpression)
+  fullName: DataLoadOptions.LoadWith(LambdaExpression)
+  type: Method
+  assemblies:
+  - System.Data.Linq
+  namespace: System.Data.Linq
+  summary: Retrieves specified data related to the main target by using a lambda expression.
+  remarks: In the following example, all the `Orders` for all the `Customers` who are located in London are retrieved when the query is executed. As a result, successive access to the `Orders` property on a `Customer` object does not trigger a new database query.
+  example:
+  - >-
+    [!code-csharp[System.Data.Linq.DataLoadOptions#2](~/samples/snippets/csharp/VS_Snippets_Data/system.data.linq.dataloadoptions/cs/program.cs#2)]
+     [!code-vb[System.Data.Linq.DataLoadOptions#2](~/samples/snippets/visualbasic/VS_Snippets_Data/system.data.linq.dataloadoptions/vb/module1.vb#2)]
+  syntax:
+    content: public void LoadWith (System.Linq.Expressions.LambdaExpression expression);
+    parameters:
+    - id: expression
+      type: System.Linq.Expressions.LambdaExpression
+      description: A lambda expression that identifies the related material.
+  overload: System.Data.Linq.DataLoadOptions.LoadWith*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Linq/DataLoadOptions.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+- uid: System.Data.Linq.DataLoadOptions.LoadWith``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})
+  commentId: M:System.Data.Linq.DataLoadOptions.LoadWith``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})
+  id: LoadWith``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})
+  parent: System.Data.Linq.DataLoadOptions
+  langs:
+  - csharp
+  name: LoadWith<T>(Expression<Func<T,Object>>)
+  nameWithType: DataLoadOptions.LoadWith<T>(Expression<Func<T,Object>>)
+  fullName: DataLoadOptions.LoadWith<T>(Expression<Func<T,Object>>)
+  type: Method
+  assemblies:
+  - System.Data.Linq
+  namespace: System.Data.Linq
+  summary: Specifies which sub-objects to retrieve when a query is submitted for an object of type T.
+  remarks: "You cannot specify the loading of two levels of relationships (for example, `Orders.OrderDetails`). In these scenarios you must specify two separate <xref:System.Data.Linq.DataLoadOptions.LoadWith%2A> methods.  \n  \n To avoid cycling, see Remarks section in <xref:System.Data.Linq.DataLoadOptions>."
+  example:
+  - "In the following example, all the `Orders` for all the `Customers` who are located in London are retrieved when the query is executed. As a result, successive access to the `Orders` property on a `Customer` object does not trigger a new database query.  \n  \n [!code-csharp[System.Data.Linq.DataLoadOptions#2](~/samples/snippets/csharp/VS_Snippets_Data/system.data.linq.dataloadoptions/cs/program.cs#2)]\n [!code-vb[System.Data.Linq.DataLoadOptions#2](~/samples/snippets/visualbasic/VS_Snippets_Data/system.data.linq.dataloadoptions/vb/module1.vb#2)]"
+  syntax:
+    content: public void LoadWith<T> (System.Linq.Expressions.Expression<Func<T,object>> expression);
+    parameters:
+    - id: expression
+      type: System.Linq.Expressions.Expression{System.Func{T,System.Object}}
+      description: "Identifies the field or property to be retrieved.  \n  \n If the expression does not identify a field or property that represents a one-to-one or one-to-many relationship, an exception is thrown."
+    typeParameters:
+    - id: T
+      description: "Type that is queried against.  \n  \n If this type is unmapped, an exception is thrown."
+  overload: System.Data.Linq.DataLoadOptions.LoadWith``1*
+  exceptions: []
+  version:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Linq/DataLoadOptions.xml
+  ms.technology:
+  - dotnet-ado
+  author: JennieHubbard
+  ms.author: jhubbard
+  manager: jhubbard
+references:
+- uid: System.Object
+  parent: System
+  isExternal: false
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Data.Linq.DataLoadOptions.#ctor
+  parent: System.Data.Linq.DataLoadOptions
+  isExternal: false
+  name: DataLoadOptions()
+  nameWithType: DataLoadOptions.DataLoadOptions()
+  fullName: DataLoadOptions.DataLoadOptions()
+- uid: System.Data.Linq.DataLoadOptions.AssociateWith(System.Linq.Expressions.LambdaExpression)
+  parent: System.Data.Linq.DataLoadOptions
+  isExternal: false
+  name: AssociateWith(LambdaExpression)
+  nameWithType: DataLoadOptions.AssociateWith(LambdaExpression)
+  fullName: DataLoadOptions.AssociateWith(LambdaExpression)
+- uid: System.Linq.Expressions.LambdaExpression
+  parent: System.Linq.Expressions
+  isExternal: false
+  name: LambdaExpression
+  nameWithType: LambdaExpression
+  fullName: System.Linq.Expressions.LambdaExpression
+- uid: System.Data.Linq.DataLoadOptions.AssociateWith``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})
+  parent: System.Data.Linq.DataLoadOptions
+  isExternal: false
+  name: AssociateWith<T>(Expression<Func<T,Object>>)
+  nameWithType: DataLoadOptions.AssociateWith<T>(Expression<Func<T,Object>>)
+  fullName: DataLoadOptions.AssociateWith<T>(Expression<Func<T,Object>>)
+- uid: System.Linq.Expressions.Expression`1
+  name: Expression<TDelegate>
+  nameWithType: Expression<TDelegate>
+  fullName: System.Linq.Expressions.Expression<TDelegate>
+- uid: System.Func`2
+  name: Func<T,TResult>
+  nameWithType: Func<T,TResult>
+  fullName: System.Func<T,TResult>
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: System.Linq.Expressions.Expression{System.Func{T,System.Object}}
+  parent: System.Linq.Expressions
+  isExternal: false
+  name: Expression<Func<T,Object>>
+  nameWithType: Expression<Func<T,Object>>
+  fullName: System.Linq.Expressions.Expression<System.Func<T,System.Object>>
+  spec.csharp:
+  - uid: System.Linq.Expressions.Expression`1
+    name: Expression
+    nameWithType: Expression
+    fullName: System.Linq.Expressions.Expression
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: T
+    name: T
+    nameWithType: T
+    fullName: T
+  - name: ','
+    nameWithType: ','
+    fullName: ','
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: System.Data.Linq.DataLoadOptions.GetAssociationCriteria(System.Reflection.MemberInfo,System.Linq.Expressions.LambdaExpression@)
+  parent: System.Data.Linq.DataLoadOptions
+  isExternal: false
+  name: GetAssociationCriteria(MemberInfo, LambdaExpression)
+  nameWithType: DataLoadOptions.GetAssociationCriteria(MemberInfo, LambdaExpression)
+  fullName: DataLoadOptions.GetAssociationCriteria(MemberInfo, LambdaExpression)
+- uid: System.Boolean
+  parent: System
+  isExternal: false
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Reflection.MemberInfo
+  parent: System.Reflection
+  isExternal: false
+  name: MemberInfo
+  nameWithType: MemberInfo
+  fullName: System.Reflection.MemberInfo
+- uid: System.Data.Linq.DataLoadOptions.IsImmediate(System.Reflection.MemberInfo)
+  parent: System.Data.Linq.DataLoadOptions
+  isExternal: false
+  name: IsImmediate(MemberInfo)
+  nameWithType: DataLoadOptions.IsImmediate(MemberInfo)
+  fullName: DataLoadOptions.IsImmediate(MemberInfo)
+- uid: System.Data.Linq.DataLoadOptions.LoadWith(System.Linq.Expressions.LambdaExpression)
+  parent: System.Data.Linq.DataLoadOptions
+  isExternal: false
+  name: LoadWith(LambdaExpression)
+  nameWithType: DataLoadOptions.LoadWith(LambdaExpression)
+  fullName: DataLoadOptions.LoadWith(LambdaExpression)
+- uid: System.Data.Linq.DataLoadOptions.LoadWith``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})
+  parent: System.Data.Linq.DataLoadOptions
+  isExternal: false
+  name: LoadWith<T>(Expression<Func<T,Object>>)
+  nameWithType: DataLoadOptions.LoadWith<T>(Expression<Func<T,Object>>)
+  fullName: DataLoadOptions.LoadWith<T>(Expression<Func<T,Object>>)
+- uid: System.Data.Linq.DataLoadOptions.#ctor*
+  parent: System.Data.Linq.DataLoadOptions
+  isExternal: false
+  name: DataLoadOptions
+  nameWithType: DataLoadOptions.DataLoadOptions
+  fullName: DataLoadOptions.DataLoadOptions
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Linq/DataLoadOptions.xml
+- uid: System.Data.Linq.DataLoadOptions.AssociateWith*
+  parent: System.Data.Linq.DataLoadOptions
+  isExternal: false
+  name: AssociateWith
+  nameWithType: DataLoadOptions.AssociateWith
+  fullName: DataLoadOptions.AssociateWith
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Linq/DataLoadOptions.xml
+- uid: System.Data.Linq.DataLoadOptions.AssociateWith``1*
+  parent: System.Data.Linq.DataLoadOptions
+  isExternal: false
+  name: AssociateWith<T>
+  nameWithType: DataLoadOptions.AssociateWith<T>
+  fullName: DataLoadOptions.AssociateWith<T>
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Linq/DataLoadOptions.xml
+- uid: System.Data.Linq.DataLoadOptions.GetAssociationCriteria*
+  parent: System.Data.Linq.DataLoadOptions
+  isExternal: false
+  name: GetAssociationCriteria
+  nameWithType: DataLoadOptions.GetAssociationCriteria
+  fullName: DataLoadOptions.GetAssociationCriteria
+  monikers:
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Linq/DataLoadOptions.xml
+- uid: System.Data.Linq.DataLoadOptions.IsImmediate*
+  parent: System.Data.Linq.DataLoadOptions
+  isExternal: false
+  name: IsImmediate
+  nameWithType: DataLoadOptions.IsImmediate
+  fullName: DataLoadOptions.IsImmediate
+  monikers:
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Linq/DataLoadOptions.xml
+- uid: System.Data.Linq.DataLoadOptions.LoadWith*
+  parent: System.Data.Linq.DataLoadOptions
+  isExternal: false
+  name: LoadWith
+  nameWithType: DataLoadOptions.LoadWith
+  fullName: DataLoadOptions.LoadWith
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Linq/DataLoadOptions.xml
+- uid: System.Data.Linq.DataLoadOptions.LoadWith``1*
+  parent: System.Data.Linq.DataLoadOptions
+  isExternal: false
+  name: LoadWith<T>
+  nameWithType: DataLoadOptions.LoadWith<T>
+  fullName: DataLoadOptions.LoadWith<T>
+  monikers:
+  - netframework-4.5.1
+  - netframework-4.5.2
+  - netframework-4.5
+  - netframework-4.6.1
+  - netframework-4.6.2
+  - netframework-4.6
+  - netframework-4.7
+  - xamarinmac-3.0
+  content_git_url: https://github.com/dotnet/docs/blob/master/xml/System.Data.Linq/DataLoadOptions.xml
+- uid: System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: Object.Equals(Object)
+- uid: System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: Object.Equals(Object, Object)
+- uid: System.Object.GetHashCode
+  parent: System.Object
+  isExternal: false
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: Object.GetHashCode()
+- uid: System.Object.GetType
+  parent: System.Object
+  isExternal: false
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: Object.GetType()
+- uid: System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: false
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: Object.MemberwiseClone()
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: false
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: Object.ReferenceEquals(Object, Object)
+- uid: System.Object.ToString
+  parent: System.Object
+  isExternal: false
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: Object.ToString()
