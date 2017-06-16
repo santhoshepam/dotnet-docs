@@ -26,8 +26,7 @@ msmqIntegrationBinding
   
 ## Syntax  
   
-```  
-  
+```xml  
 <msmqIntegrationBinding>  
    <binding>   
        <security mode="None/Transport">  

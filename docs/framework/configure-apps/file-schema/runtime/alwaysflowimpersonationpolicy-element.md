@@ -35,7 +35,7 @@ Specifies that the Windows identity always flows across asynchronous points, reg
   
 ## Syntax  
   
-```  
+```xml  
 <alwaysFlowImpersonationPolicy    
   enabled="true|false"/>  
 ```  
@@ -87,19 +87,17 @@ Specifies that the Windows identity always flows across asynchronous points, reg
  ASP.NET by default disables the impersonation flow in the aspnet.config file by using the following configuration settings:  
   
 ```  
-  
 configuration>  
    <runtime>  
       <legacyImpersonationPolicy enabled="true"/>  
       <alwaysFlowImpersonationPolicy enabled="false"/>  
    </runtime>  
 </configuration>  
-  
 ```  
   
  In ASP.NET, if you want to allow the flow of impersonation instead, you must explicitly use the following configuration settings:  
   
-```  
+```xml  
 <configuration>  
    <runtime>  
       <legacyImpersonationPolicy enabled="false"/>  
@@ -111,7 +109,7 @@ configuration>
 ## Example  
  The following example shows how to specify that the Windows identity flows across asynchronous points, even when the impersonation is achieved through means other than managed methods.  
   
-```  
+```xml  
 <configuration>  
   <runtime>  
     <alwaysFlowImpersonationPolicy enabled="true"/>  

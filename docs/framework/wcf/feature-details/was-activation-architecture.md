@@ -48,7 +48,7 @@ This topic itemizes and discusses the components of the Windows Process Activati
   
  Listener adapters for specific protocols are registered during installation in the applicationHost.config file, as shown in the following XML example.  
   
-```  
+```xml  
 <system.applicationHost>  
     <listenerAdapters>  
         <add name="http" />  
@@ -67,7 +67,7 @@ This topic itemizes and discusses the components of the Windows Process Activati
 ### Protocol Handlers  
  Process and AppDomain protocol handlers for specific protocols are registered in the machine-level Web.config file.  
   
-```  
+```xml  
 <system.web>  
    <protocols>  
       <add name="net.tcp"   
@@ -80,7 +80,7 @@ This topic itemizes and discusses the components of the Windows Process Activati
         processHandlerType=  
          "System.ServiceModel.WasHosting.NamedPipeProcessProtocolHandler"  
           appDomainHandlerType=  
-           "System.ServiceModel.WasHosting.NamedPipeAppDomainProtocolHandler”/>  
+           "System.ServiceModel.WasHosting.NamedPipeAppDomainProtocolHandler"/>  
       <add name="net.msmq"  
         processHandlerType=  
          "System.ServiceModel.WasHosting.MsmqProcessProtocolHandler"  

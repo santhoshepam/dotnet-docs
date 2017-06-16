@@ -38,11 +38,10 @@ Adds an IP address or DNS name to the connection management list.
   
 ## Syntax  
   
-```  
-  
-      <add   
-   address = "address expression"   
-   maxconnection = integer   
+```xml  
+      <add   
+   address = "address expression"   
+   maxconnection = integer   
 />  
 ```  
   
@@ -76,7 +75,7 @@ Adds an IP address or DNS name to the connection management list.
 ## Example  
  The following code example configures an application to use four connections to the server www.contoso.com and two connections to all other servers.  
   
-```  
+```xml  
 <configuration>  
   <system.net>  
     <connectionManagement>  

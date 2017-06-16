@@ -35,12 +35,11 @@ public class X
 public class SomeClass   
 {  
 }  
-  
 ```  
   
  With <xref:System.Runtime.Serialization.DataContractSerializer.PreserveObjectReferences%2A> set to `false` (the default), the following XML is generated:  
   
-```  
+```xml  
 <X>  
    <A>contents of someInstance</A>  
    <B>contents of someInstance</B>  
@@ -49,7 +48,7 @@ public class SomeClass
   
  With <xref:System.Runtime.Serialization.DataContractSerializer.PreserveObjectReferences%2A> set to `true`, the following XML is generated:  
   
-```  
+```xml  
 <X>  
    <A id="1">contents of someInstance</A>  
    <B ref="1" />  

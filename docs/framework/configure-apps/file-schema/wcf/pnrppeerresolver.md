@@ -26,8 +26,7 @@ Specifies that the PNRP (Peer Name Resolution Protocol) resolver is to be used a
   
 ## Syntax  
   
-```  
-  
+```xml  
 <pnrpResolver resolverType="String" />  
 ```  
   
@@ -51,7 +50,7 @@ Specifies that the PNRP (Peer Name Resolution Protocol) resolver is to be used a
   
 ## Example  
   
-```  
+```xml  
 <pnrpResolver resolverType="" />  
 ```  
   

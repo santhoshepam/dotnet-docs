@@ -38,10 +38,8 @@ Clears all authentication modules from the application.
   
 ## Syntax  
   
-```  
-  
+```xml  
 <clear/>  
-  
 ```  
   
 ## Attributes and Elements  
@@ -68,7 +66,7 @@ Clears all authentication modules from the application.
 ## Example  
  The following code example removes all configured authentication modules.  
   
-```  
+```xml  
 <configuration>  
   <system.net>  
     <authenticationModules>  

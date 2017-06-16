@@ -25,15 +25,15 @@ Specifies a custom type for certificate validation. This type is used only if th
   
 ## Syntax  
   
-```  
-\<system.identityModel>  
-  <identityConfiguration>  
-    <certificateValidation>  
-      \<certificateValidator type=xs:string>  
-      </certificateValidator>  
-    </certificateValidation>  
-  </identityConfiguration>  
-\</system.identityModel>  
+```xml  
+<system.identityModel>  
+  <identityConfiguration>  
+    <certificateValidation>  
+      <certificateValidator type=xs:string>  
+      </certificateValidator>  
+    </certificateValidation>  
+  </identityConfiguration>  
+</system.identityModel>  
 ```  
   
 ## Attributes and Elements  
@@ -56,7 +56,7 @@ Specifies a custom type for certificate validation. This type is used only if th
   
 ## Example  
   
-```  
+```xml  
 <certificateValidation certificateValidationMode="Custom"  
                        revocationMode="Online"  
                        trustedStoreLocation="LocalMachine">  

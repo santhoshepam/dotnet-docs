@@ -23,8 +23,7 @@ A configuration element that allows you to define virtual service activation set
   
 ## Syntax  
   
-```  
-  
+```xml  
 <serviceHostingEnvironment>   
    <serviceActivations>  
       <add factory="String"  
@@ -56,15 +55,15 @@ A configuration element that allows you to define virtual service activation set
 ## Remarks  
  The following example shows how to configure activation settings within your web.config file.  
   
-```  
+```xml  
 <configuration>  
-  <system.serviceModel>  
-    <serviceHostingEnvironment>  
-      <serviceActivations>  
-        <add service="GreetingService"/>  
-      </serviceActivations>  
-    </serviceHostingEnvironment>  
-  </system.serviceModel>  
+  <system.serviceModel>  
+    <serviceHostingEnvironment>  
+      <serviceActivations>  
+        <add service="GreetingService"/>  
+      </serviceActivations>  
+    </serviceHostingEnvironment>  
+  </system.serviceModel>  
 </configuration>  
 ```  
   

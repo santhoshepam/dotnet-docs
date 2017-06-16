@@ -38,10 +38,8 @@ Removes all registered Web request modules from the application.
   
 ## Syntax  
   
-```  
-  
+```xml  
 <clear/>  
-  
 ```  
   
 ## Attributes and Elements  
@@ -68,7 +66,7 @@ Removes all registered Web request modules from the application.
 ## Example  
  The following code example clears all Web request modules and then registers a Web request module for HTTP.  
   
-```  
+```xml  
 <configuration>  
   <system.net>  
     <webRequestModules>  

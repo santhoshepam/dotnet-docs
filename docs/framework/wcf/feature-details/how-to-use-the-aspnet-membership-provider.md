@@ -120,13 +120,12 @@ The [!INCLUDE[vstecasp](../../../../includes/vstecasp-md.md)] membership provide
           </behavior>  
        </serviceBehaviors>  
     </behaviors>  
-  
     ```  
   
 ## Example  
  The following code shows the configuration for a service that uses the ASP membership feature.  
   
-```  
+```xml  
 <?xml version="1.0" encoding="utf-8" ?>  
 <configuration>  
   <system.serviceModel>  
@@ -159,7 +158,6 @@ The [!INCLUDE[vstecasp](../../../../includes/vstecasp-md.md)] membership provide
     </bindings>  
   </system.serviceModel>  
 </configuration>  
-  
 ```  
   
 ## See Also  

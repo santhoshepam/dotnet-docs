@@ -38,9 +38,8 @@ Redirects one assembly version to another.
   
 ## Syntax  
   
-```  
-  
-   <bindingRedirect    
+```xml  
+   <bindingRedirect    
 oldVersion="existing assembly version"  
 newVersion="new assembly version"/>  
 ```  
@@ -80,7 +79,7 @@ newVersion="new assembly version"/>
 ## Example  
  The following example shows how to redirect one assembly version to another.  
   
-```  
+```xml  
 <configuration>  
    <runtime>  
       <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">  

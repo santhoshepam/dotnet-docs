@@ -26,8 +26,7 @@ A XPath filter that specifies the kind of message to be logged.
   
 ## Syntax  
   
-```  
-  
+```xml  
 <filters>  
    <add filter="String"/>  
 </filters>  
@@ -63,10 +62,10 @@ A XPath filter that specifies the kind of message to be logged.
 ## Example  
  The following is an example of how to configure a filter that records only messages that have a SOAP Header section.  
   
-```  
+```xml  
 <messageLogging logEntireMessage="true"  
      logMalformedMessages="true" logMessagesAtServiceLevel="true"  
-     logMessagesAtTransportLevel="true" maxMessagesToLog="420”>  
+     logMessagesAtTransportLevel="true" maxMessagesToLog="420">  
      <filters>  
         <add xmlns:soap="http://www.w3.org/2003/05/soap-envelope">  
                         /soap:Envelope/soap:Headers  

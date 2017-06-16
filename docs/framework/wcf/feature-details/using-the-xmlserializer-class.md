@@ -174,16 +174,15 @@ manager: "erikre"
 ```xml  
 <?xml version="1.0" encoding="utf-8" ?>  
 <configuration>  
-  <system.xml.serialization>  
-    <xmlSerializer tempFilesLocation='e:\temp\XmlSerializerBug' useLegacySerializerGeneration="true" />  
-  </system.xml.serialization>  
-  <system.diagnostics>  
-    <switches>  
-      <add name="XmlSerialization.Compilation" value="1" />  
-    </switches>  
-  </system.diagnostics>  
+  <system.xml.serialization>  
+    <xmlSerializer tempFilesLocation='e:\temp\XmlSerializerBug' useLegacySerializerGeneration="true" />  
+  </system.xml.serialization>  
+  <system.diagnostics>  
+    <switches>  
+      <add name="XmlSerialization.Compilation" value="1" />  
+    </switches>  
+  </system.diagnostics>  
 </configuration>  
-  
 ```  
   
  If you run into compatibility issues,  such as the `XmlSerializer` failing to serialize a derived class with a non-public new override, you can switch back to the  `XMLSerializer` legacy behavior by using the following configuration:  
@@ -191,10 +190,9 @@ manager: "erikre"
 ```xml  
 <configuration>  
 <appSettings>   
-<add key=”System:Xml:Serialization:UseLegacySerializerGeneration” value=”true” />  
+<add key="System:Xml:Serialization:UseLegacySerializerGeneration" value="true" />  
                </appSettings>  
 </configuration>  
-  
 ```  
   
  As an alternative to the above configuration, you can use the following configuration on a machine running .NET Framework 4.5 or later version:  
@@ -205,7 +203,6 @@ manager: "erikre"
 <xmlSerializer useLegacySerializerGeneration="true"/>  
 </system.xml.serialization>  
 </configuration>  
-  
 ```  
   
 > [!NOTE]

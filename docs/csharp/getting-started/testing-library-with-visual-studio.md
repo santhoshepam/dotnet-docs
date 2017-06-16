@@ -1,5 +1,5 @@
 ---
-title: Testing a class library with .NET Core in Visual Studio 2017
+title: Testing a class library with .NET Core in Visual Studio 2017 | Microsoft Docs
 description: Learn how to test a class library written in C# using Visual Studio 2017
 keywords: .NET Core, .NET Standard class library, Visual Studio 2017, unit testing 
 author: BillWagner
@@ -20,7 +20,7 @@ In [Building a class library with C# and .NET Core in Visual Studio 2017](librar
 
 To create the unit test project, do the following:
 
-1. In **Solution Explorer**, open the context menu for the **ClassLibraryProject** solution node and select **Add** > **New Project**.
+1. In **Solution Explorer**, open the context menu for the **ClassLibraryProjects** solution node and select **Add** > **New Project**.
 
    <!-- Need a VS 2017 version  [!NOTE] In addition to a Unit Test project, you can also use Visual Studio to create an xUnit test project for .NET Core. For a walkthrough that includes an xUnit test project, see [Getting started with .NET Core on Windows, using Visual Studio 2015](../../core/tutorials/using-on-windows.md). --> 
 

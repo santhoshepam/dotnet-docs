@@ -26,8 +26,7 @@ Specifies the security requirements for an endpoint configured with a [\<wsHttpB
   
 ## Syntax  
   
-```  
-  
+```xml  
 <system.ServiceModel>  
     <bindings>  
         <webHttpBinding>  

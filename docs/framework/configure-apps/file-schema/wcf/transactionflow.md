@@ -26,8 +26,7 @@ Specifies transaction flow support for the custom binding.
   
 ## Syntax  
   
-```  
-  
+```xml  
 <transactionFlow transactionProtocol="OleTransactions/WSAtomicTransactionOctober2004"/>  
 ```  
   

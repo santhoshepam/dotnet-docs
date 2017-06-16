@@ -29,8 +29,7 @@ endpointBehaviors section
   
 ## Syntax  
   
-```  
-  
+```xml  
 <add findValue="String"  
           storeLocation="CurrentUser/LocalMachine"  
           storeName=" CurrentUser/LocalMachine"  
@@ -95,7 +94,7 @@ endpointBehaviors section
 ## Example  
  The following example adds an X.509 certificate the collection.  
   
-```  
+```xml  
 <behaviors>  
  <endpointBehaviors>  
   <behavior name="MyEndpointBehavior">  

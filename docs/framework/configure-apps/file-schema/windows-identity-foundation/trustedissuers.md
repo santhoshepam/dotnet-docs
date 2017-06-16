@@ -27,21 +27,21 @@ Configures the list of trusted issuer certificates used by the configuration-bas
   
 ## Syntax  
   
-```  
+```xml  
 <system.identityModel>  
-  <identityConfiguration>  
-    <securityTokenHandlers>  
-      <securityTokenHandlerConfiguration>  
-        <issuerNameRegistry>  
-          <trustedIssuers>  
-            <add thumbprint=xs:string name=xs:string>  
-            <clear>  
-            <remove thumbprint=xs:string>  
-          </trustedIssuers>  
-        </issuerNameRegistry>  
-      </securityTokenHandlerConfiguration>  
-    </securityTokenHandlers>  
-  </identityConfiguration>  
+  <identityConfiguration>  
+    <securityTokenHandlers>  
+      <securityTokenHandlerConfiguration>  
+        <issuerNameRegistry>  
+          <trustedIssuers>  
+            <add thumbprint=xs:string name=xs:string>  
+            <clear>  
+            <remove thumbprint=xs:string>  
+          </trustedIssuers>  
+        </issuerNameRegistry>  
+      </securityTokenHandlerConfiguration>  
+    </securityTokenHandlers>  
+  </identityConfiguration>  
 </system.identityModel>  
 ```  
   
@@ -73,13 +73,12 @@ Configures the list of trusted issuer certificates used by the configuration-bas
 ## Example  
  The following XML shows how to specify the configuration based issuer name registry.  
   
-```  
+```xml  
 <issuerNameRegistry type="System.IdentityModel.Tokens.ConfigurationBasedIssuerNameRegistry, System.IdentityModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">  
   <trustedIssuers>  
     <add thumbprint="9B74CB2F32 … B1DC01EF40D0" name="LocalSTS" />  
   </trustedIssuers>  
 </issuerNameRegistry>  
-  
 ```  
   
 ## See Also  

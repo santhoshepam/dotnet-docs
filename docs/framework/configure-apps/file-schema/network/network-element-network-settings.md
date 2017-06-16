@@ -37,15 +37,14 @@ Configures the network options for an external Simple Mail Transport Protocol (S
   
 ## Syntax  
   
-```  
-  
+```xml  
       <network  
-  clientDomain="string"   
+  clientDomain="string"   
   defaultCredentials="true|false"  
   enableSsl="true|false"  
-  host="string"   
+  host="string"   
 password="string"  
-  port="integer"   
+  port="integer"   
 targetName="string"  
 userName="string"  
 />  
@@ -103,7 +102,7 @@ userName="string"
 ## Example  
  The following code example specifies the appropriate SMTP parameters to send e-mail using the default network credentials.  
   
-```  
+```xml  
 <configuration>  
   <system.net>  
     <mailSettings>  

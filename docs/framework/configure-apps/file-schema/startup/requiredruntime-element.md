@@ -36,9 +36,8 @@ Specifies that the application supports only version 1.0 of the common language 
   
 ## Syntax  
   
-```  
-  
-   <requiredRuntime    
+```xml  
+   <requiredRuntime    
 version="runtime version"  
 safemode="true|false"/>  
 ```  
@@ -84,7 +83,7 @@ safemode="true|false"/>
 ## Example  
  The following example shows how to specify the runtime version in a configuration file.  
   
-```  
+```xml  
 <configuration>  
    <startup>  
       <requiredRuntime version="v1.0.3705" safemode="true"/>  

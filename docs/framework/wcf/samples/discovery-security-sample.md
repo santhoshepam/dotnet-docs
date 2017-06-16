@@ -28,17 +28,16 @@ The Discovery specification does not require that endpoints that participate in 
 ## Secure Channel Factory  
  The secure channel factory creates output or duplex channels that add a compact signature to message headers. To keep messages as small as possible the compact signature format is used. The structure of a compact signature is shown in the following example.  
   
-```  
+```xml  
 <d:Security ... >   
   [<d:Sig Scheme="xs:anyURI"   
          [KeyId="xs:base64Binary"]?  
           Refs="..."  
-         [PrefixList]=”xs:NMTOKENS”   
+         [PrefixList]="xs:NMTOKENS"   
           Sig="xs:base64Binary"   
           ... />]?  
   ...   
 </d:Security>  
-  
 ```  
   
 > [!NOTE]

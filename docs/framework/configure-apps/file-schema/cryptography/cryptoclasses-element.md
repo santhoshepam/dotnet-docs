@@ -37,7 +37,7 @@ Contains a list of cryptography classes that have a mapping to a friendly name i
   
 ## Syntax  
   
-```  
+```xml  
 <cryptoClasses>   
 </cryptoClasses>  
 ```  
@@ -66,7 +66,7 @@ Contains a list of cryptography classes that have a mapping to a friendly name i
 ## Example  
  The following example shows how use the **\<cryptoClass>** element to reference a cryptography class and to configure the runtime. You can then pass the string "RSA" to the <xref:System.Security.Cryptography.CryptoConfig.CreateFromName%2A?displayProperty=fullName> method and use the <xref:System.Security.Cryptography.AsymmetricAlgorithm.Create%2A> method to return a `MyCryptoRSAClass` object.  
   
-```  
+```xml  
 <configuration>  
    <mscorlib>  
       <cryptographySettings>  
@@ -75,12 +75,12 @@ Contains a list of cryptography classes that have a mapping to a friendly name i
                <cryptoClass   MyCryptoRSA="MyCryptoRSAClass, MyAssembly  
                   Culture=neutral, PublicKeyToken=a5d015c7d5a0b012,  
                   Version=1.0.0.0"/>  
-               \<!-- Other cryptography classes go here. -->  
+               <!-- Other cryptography classes go here. -->  
             </cryptoClasses>  
             <nameEntry name="RSA" class="MyCryptoRSA"/>  
             <nameEntry name="System.Security.Cryptography.AsymmetricAlgorithm"  
                        class="MyCryptoRSA"/>  
-             \<!-- Mappings to other cryptography classes go here. -->  
+             <!-- Mappings to other cryptography classes go here. -->  
          </cryptoNameMapping>  
       </cryptographySettings>  
    </mscorlib>  

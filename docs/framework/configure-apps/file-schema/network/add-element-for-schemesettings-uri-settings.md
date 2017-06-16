@@ -30,9 +30,8 @@ Adds a scheme setting for a scheme name.
   
 ## Syntax  
   
-```  
-  
-      <add   
+```xml  
+      <add   
    name = "http|https" genericUriParserOptions="DontUnescapePathDotsAndSlashes"  
 />  
 ```  
@@ -82,7 +81,7 @@ Adds a scheme setting for a scheme name.
 ## Example  
  The following code example shows a configuration used by the <xref:System.Uri> class to support not escaping percent-encoded path delimiters for the http scheme.  
   
-```  
+```xml  
 <configuration>  
   <uri>  
     <schemeSettings>  

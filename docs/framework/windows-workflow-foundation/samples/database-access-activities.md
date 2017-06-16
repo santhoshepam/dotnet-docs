@@ -266,7 +266,7 @@ public class DbQueryDataSet : AsyncCodeActivity<DataSet>
   
 -   `ConfigName`: Set the name of the configuration section that contains the connection information.  
   
-    ```  
+    ```xml  
     <connectionStrings>      
         <add name="DbActivitiesSample"  
              providerName="System.Data.SqlClient"  
@@ -307,7 +307,7 @@ public class DbQueryDataSet : AsyncCodeActivity<DataSet>
   
 2.  Go to the DbActivities sample folder.  
   
-3.  Type “setup.cmd” and press ENTER.  
+3.  Type "setup.cmd" and press ENTER.  
   
     > [!NOTE]
     >  Setup.cmd attempts to install the sample in your local machine SqlExpress instance. If you want to install it in other SQL server instance, edit Setup.cmd with the new instance name.  

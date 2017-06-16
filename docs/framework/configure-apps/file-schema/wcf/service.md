@@ -27,8 +27,7 @@ The `service` element contains the settings for a Windows Communication Foundati
   
 ## Syntax  
   
-```  
-  
+```xml  
 <service behaviorConfiguration=String"  
         name="String"  
 </service>  
@@ -67,7 +66,7 @@ The `service` element contains the settings for a Windows Communication Foundati
 ## Example  
  This is an example of a service configuration.  
   
-```  
+```xml  
 <service behaviorConfiguration="testChannelBehavior"   
      name="HelloWorld">  
      <endpoint   

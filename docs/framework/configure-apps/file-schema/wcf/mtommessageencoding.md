@@ -29,14 +29,13 @@ Specifies the encoding and message versioning used for SOAP Message Transmission
   
 ## Syntax  
   
-```  
-  
+```xml  
 <mtomMessageEncoding   
    maxBufferSize="Integer"  
       maxReadPoolSize="Integer"  
    maxWritePoolSize="Integer"  
    messageVersion="Soap11Addressing1/Soap12Addressing10"  
-      writeEncoding=”UnicodeFffeTextEncoding/Utf16TextEncoding/Utf8TextEncoding" />  
+      writeEncoding="UnicodeFffeTextEncoding/Utf16TextEncoding/Utf8TextEncoding" />  
 ```  
   
 ## Attributes and Elements  
@@ -71,11 +70,11 @@ Specifies the encoding and message versioning used for SOAP Message Transmission
   
 ## Example  
   
-```  
+```xml  
 <mtomMessageEncoding maxReadPoolSize="211"  
     maxWritePoolSize="2132"  
-    messageVersion=”Soap11Addressing10”  
-    textEncoding=”utf-8” />  
+    messageVersion="Soap11Addressing10"  
+    textEncoding="utf-8" />  
 ```  
   
 ## See Also  

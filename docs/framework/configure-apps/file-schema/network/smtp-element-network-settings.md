@@ -36,12 +36,11 @@ Configures the delivery format, delivery method, and from address for sending e-
   
 ## Syntax  
   
-```  
-  
+```xml  
       <smtp  
-  deliveryFormat="format"   
-  deliveryMethod="method"   
-  from="from address"   
+  deliveryFormat="format"   
+  deliveryMethod="method"   
+  from="from address"   
   <specifiedPickupDirectory> … </ specifiedPickupDirectory >  
   <network> … </network>  
 /smtp>  
@@ -74,7 +73,7 @@ Configures the delivery format, delivery method, and from address for sending e-
 ## Example  
  The following code example specifies the appropriate SMTP parameters to send e-mail using the default network credentials.  
   
-```  
+```xml  
 <configuration>  
   <system.net>  
     <mailSettings>  

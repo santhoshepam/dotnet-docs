@@ -110,7 +110,6 @@ Dim tvpParam As SqlParameter = _
   "@tvpNewCategories", addedCategories)  
 tvpParam.SqlDbType = SqlDbType.Structured  
 tvpParam.TypeName = "dbo.CategoryTableType"  
-  
 ```  
   
  You can also use any object derived from <xref:System.Data.Common.DbDataReader> to stream rows of data to a table-valued parameter, as shown in this fragment:  
@@ -134,11 +133,10 @@ Dim tvpParam As SqlParameter = _
   insertCommand.Parameters.AddWithValue("@tvpNewCategories", _  
   dataReader)  
 tvpParam.SqlDbType = SqlDbType.Structured  
-  
 ```  
   
 ## Passing a Table-Valued Parameter to a Stored Procedure  
- This example demonstrates how to pass table-valued parameter data to a stored procedure. The code extracts added rows into a new <xref:System.Data.DataTable> by using the <xref:System.Data.DataTable.GetChanges%2A> method. The code then defines a <xref:System.Data.SqlClient.SqlCommand>, setting the <xref:System.Data.SqlClient.SqlCommand.CommandType%2A> property to <xref:System.Data.CommandType>. The <xref:System.Data.SqlClient.SqlParameter> is populated by using the <xref:System.Data.SqlClient.SqlParameterCollection.AddWithValue%2A> method and the <xref:System.Data.SqlClient.SqlParameter.SqlDbType%2A> is set to `Structured`. The <xref:System.Data.SqlClient.SqlCommand> is then executed by using the <xref:System.Data.SqlClient.SqlCommand.ExecuteNonQuery%2A> method.  
+ This example demonstrates how to pass table-valued parameter data to a stored procedure. The code extracts added rows into a new <xref:System.Data.DataTable> by using the <xref:System.Data.DataTable.GetChanges%2A> method. The code then defines a <xref:System.Data.SqlClient.SqlCommand>, setting the <xref:System.Data.SqlClient.SqlCommand.CommandType%2A> property to <xref:System.Data.CommandType.StoredProcedure>. The <xref:System.Data.SqlClient.SqlParameter> is populated by using the <xref:System.Data.SqlClient.SqlParameterCollection.AddWithValue%2A> method and the <xref:System.Data.SqlClient.SqlParameter.SqlDbType%2A> is set to `Structured`. The <xref:System.Data.SqlClient.SqlCommand> is then executed by using the <xref:System.Data.SqlClient.SqlCommand.ExecuteNonQuery%2A> method.  
   
 ```csharp  
 // Assumes connection is an open SqlConnection object.  

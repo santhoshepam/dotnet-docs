@@ -27,8 +27,7 @@ Specifies settings for an instance of <xref:System.Workflow.Runtime.WorkflowRunt
   
 ## Syntax  
   
-```  
-  
+```xml  
 <workflowRuntime>  
    <services>  
       <add type="String"/>  
@@ -59,7 +58,7 @@ Specifies settings for an instance of <xref:System.Workflow.Runtime.WorkflowRunt
   
 ## Example  
   
-```  
+```xml  
 <serviceBehaviors>  
    <behavior name="ServiceBehavior">  
       <workflowRuntime name="WorkflowServiceHostRuntime"  

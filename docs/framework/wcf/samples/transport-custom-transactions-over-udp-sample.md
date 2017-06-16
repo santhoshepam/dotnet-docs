@@ -96,7 +96,6 @@ public class TransactionFlowInspector : IClientMessageInspector
       [...]  
  }  
 }  
-  
 ```  
   
  The `TransactionFlowInspector` itself is passed to the framework using a custom behavior: the `TransactionFlowBehavior`.  
@@ -246,7 +245,7 @@ if (transaction != null)
   
 10. Note that Svcutil.exe does not generate the binding extension configuration for the `sampleProfileUdpBinding`; you must add it manually.  
   
-    ```  
+    ```xml  
     <configuration>  
         <system.serviceModel>      
             …  

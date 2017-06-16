@@ -46,7 +46,7 @@ Svcutil.exe can export metadata for services, contracts, and data types in compi
   
 2.  Create a configuration file for your service executable and add a service configuration.  
   
-    ```  
+    ```xml  
     <?xml version="1.0" encoding="utf-8" ?>  
     <configuration>  
       <system.serviceModel>  
@@ -166,7 +166,6 @@ public class MyService : IPersonFinder
     </services>  
   </system.serviceModel>  
 </configuration>  
-  
 ```  
   
 ## See Also  

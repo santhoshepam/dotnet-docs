@@ -26,12 +26,11 @@ Represents a configuration element that contains a namespace to prefix mapping t
 ## Syntax  
   
 ```vb  
-   <routing>   <namespaceTable>  
-     <add namespace="String" prefix="String" />    </namespaceTable></routing>  
+   <routing>   <namespaceTable>  
+     <add namespace="String" prefix="String" />    </namespaceTable></routing>  
 ```  
   
 ```csharp  
-  
 ```  
   
 ## Attributes and Elements  

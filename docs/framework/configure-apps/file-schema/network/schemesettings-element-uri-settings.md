@@ -29,9 +29,8 @@ Specifies how a <xref:System.Uri> will be parsed for specific schemes.
   
 ## Syntax  
   
-```  
-  
-      <schemeSettings>   
+```xml  
+      <schemeSettings>   
 </schemeSettings>  
 ```  
   
@@ -76,7 +75,7 @@ Specifies how a <xref:System.Uri> will be parsed for specific schemes.
 ## Example  
  The following code example shows a configuration used by the <xref:System.Uri> class to support not escaping percent-encoded path delimiters for the http scheme.  
   
-```  
+```xml  
 <configuration>  
   <uri>  
     <schemeSettings>  

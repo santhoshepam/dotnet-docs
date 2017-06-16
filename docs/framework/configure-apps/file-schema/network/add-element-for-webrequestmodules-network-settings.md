@@ -38,11 +38,10 @@ Adds a custom Web request module to the application.
   
 ## Syntax  
   
-```  
-  
-      <add   
-  prefix = "URI prefix"   
-  type = "module name, Version, Culture, PublicKeyToken"   
+```xml  
+      <add   
+  prefix = "URI prefix"   
+  type = "module name, Version, Culture, PublicKeyToken"   
 />  
 ```  
   
@@ -80,7 +79,7 @@ Adds a custom Web request module to the application.
 ## Example  
  The following code example registers a custom Web request module for HTTP. You should replace the values for Version and PublicKeyToken with the correct values for the specified module.  
   
-```  
+```xml  
 <configuration>  
   <system.net>  
     <webRequestModules>  

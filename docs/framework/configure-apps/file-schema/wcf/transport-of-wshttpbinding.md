@@ -27,16 +27,15 @@ Defines authentication settings for the HTTP transport.
   
 ## Syntax  
   
-```  
-  
+```xml  
 <wsHttpBinding>  
     <binding>  
-        <security mode=”None|Transport|TransportWithMessageCredential|TransportCredentialOnly”>  
+        <security mode="None|Transport|TransportWithMessageCredential|TransportCredentialOnly">  
             <transport  
             clientCredentialType="Basic|Certificate|Digest|None|Ntlm|Windows"  
             proxyCredentialType="Basic|Digest|None|Ntlm|Windows"  
             realm="string" />  
-                <extendedProtectionPolicy policyEnforcement=”Never|WhenSupported|Always” protectionScenario=”TransportSelected|TrustedProxy”>  
+                <extendedProtectionPolicy policyEnforcement="Never|WhenSupported|Always" protectionScenario="TransportSelected|TrustedProxy">  
                     <customServiceNames></customServiceNames>  
                 </extendedProtecutionPolicy>  
             </transport>  

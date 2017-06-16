@@ -28,8 +28,7 @@ This element is a key/value pair, which identifies the type of a particular tran
   
 ## Syntax  
   
-```  
-  
+```xml  
 <serviceHostingEnvironment>   
    <transportConfigurationTypes>  
       <add name="String"  
@@ -59,7 +58,7 @@ This element is a key/value pair, which identifies the type of a particular tran
   
 ## Example  
   
-```  
+```xml  
 <serviceHostingEnvironment>   
    <transportConfigurationTypes>  
       <add name="net.udp"  

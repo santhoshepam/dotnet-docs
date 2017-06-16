@@ -25,8 +25,7 @@ Represents a configuration element that specifies a pass-through filter, which p
   
 ## Syntax  
   
-```  
-  
+```xml  
 <serviceHostingEnvironment>  
      <baseAddressPrefixFilters>  
         <add prefix="string"/>  
@@ -68,13 +67,13 @@ http://test2.fabrikam.com/Service.svc
   
  You can use the following configuration file to specify a prefix filter at the appdomain level.  
   
-```  
+```xml  
 <system.serviceModel>  
   <serviceHostingEnvironment>  
      <baseAddressPrefixFilters>  
-        <add prefix=”net.tcp://test1.fabrikam.com:8000”/>  
-        <add prefix=”http://test2.fabrikam.com:9000”/>  
-    </baseAddressPrefixFilters>  
+        <add prefix="net.tcp://test1.fabrikam.com:8000"/>  
+        <add prefix="http://test2.fabrikam.com:9000"/>  
+    </baseAddressPrefixFilters>  
   </serviceHostingEnvironment>  
 </system.serviceModel>  
 ```  

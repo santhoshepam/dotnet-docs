@@ -32,7 +32,7 @@ The **keyref** element allows you to establish links between elements within a d
   
  In the example, the **OrderNumber** child element of the **OrderDetail** element refers to the **OrderNo** key child element of the **Order** element.  
   
-```  
+```xml  
 <xs:schema id="MyDataSet" xmlns=""   
             xmlns:xs="http://www.w3.org/2001/XMLSchema"   
             xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">  
@@ -84,7 +84,6 @@ Order(OrderNumber, EmpNumber)
 -   A unique constraint on the **Order** table.  
   
     ```  
-  
               Table: Order  
     Columns: OrderNumber   
     ConstraintName: OrderNumberKey  
@@ -95,7 +94,6 @@ Order(OrderNumber, EmpNumber)
 -   A relationship between the **Order** and **OrderDetail** tables. The **Nested** property is set to **False** because the two elements are not nested in the schema.  
   
     ```  
-  
               ParentTable: Order  
     ParentColumns: OrderNumber   
     ChildTable: OrderDetail  
@@ -109,7 +107,6 @@ Order(OrderNumber, EmpNumber)
 -   A foreign key constraint on the **OrderDetail** table.  
   
     ```  
-  
               ConstraintName: OrderNoRef  
     Type: ForeignKeyConstraint  
     Table: OrderDetail  

@@ -70,13 +70,13 @@ Every endpoint has an address associated with it, which is used to locate and id
   
  The following is an example of configuration code that uses the prefix filters.  
   
-```  
+```xml  
 <system.serviceModel>  
   <serviceHostingEnvironment>  
      <baseAddressPrefixFilters>  
-        <add prefix="net.tcp://payroll.myorg.com:8000"/>  
-        <add prefix="http://shipping.myorg.com:8000"/>  
-    </baseAddressPrefixFilters>  
+        <add prefix="net.tcp://payroll.myorg.com:8000"/>  
+        <add prefix="http://shipping.myorg.com:8000"/>  
+    </baseAddressPrefixFilters>  
   </serviceHostingEnvironment>  
 </system.serviceModel>  
 ```  
@@ -92,10 +92,9 @@ Every endpoint has an address associated with it, which is used to locate and id
   
  The following is an example of configuration code that uses multipleSiteBindingsEnabled on [\<serviceHostingEnvironment>](../../../../docs/framework/configure-apps/file-schema/wcf/servicehostingenvironment.md).  
   
-```  
-  
+```xml  
 <system.serviceModel>  
-  <serviceHostingEnvironment multipleSiteBindingsEnabled=”true” >  
+  <serviceHostingEnvironment multipleSiteBindingsEnabled="true" >  
   </serviceHostingEnvironment>  
 </system.serviceModel>  
 ```  

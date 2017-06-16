@@ -35,8 +35,7 @@ Controls the caching mechanism for network requests.
   
 ## Syntax  
   
-```  
-  
+```xml  
       <requestCaching  
   isPrivateCache ="true|false"  
   disableAllCaching="true|false"  
@@ -88,7 +87,7 @@ Controls the caching mechanism for network requests.
 ## Example  
  The following code example shows how to disable all caching.  
   
-```  
+```xml  
 <configuration>  
   <system.net>  
     <requestCaching  

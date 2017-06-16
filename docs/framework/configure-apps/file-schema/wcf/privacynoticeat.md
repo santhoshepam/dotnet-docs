@@ -26,8 +26,7 @@ Represents a configuration element that specifies a privacy notice used in `wsFe
   
 ## Syntax  
   
-```  
-  
+```xml  
 <privacyNotice url="String"  
         version="Integer" />  
 ```  

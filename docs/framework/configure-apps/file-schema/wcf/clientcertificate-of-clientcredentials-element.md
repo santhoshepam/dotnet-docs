@@ -27,8 +27,7 @@ Defines an X.509 certificate used to authenticate a client to a service.
   
 ## Syntax  
   
-```  
-  
+```xml  
 <clientCertificate findValue="String"   
     storeLocation="LocalMachine/CurrentUser"  
     storeName="AddressBook/AuthRoot/CertificateAuthority/Disallowed/My/Root/TrustedPeople/TrustedPublisher"  

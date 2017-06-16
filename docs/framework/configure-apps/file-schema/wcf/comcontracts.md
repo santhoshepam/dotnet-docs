@@ -19,11 +19,11 @@ manager: "erikre"
 The `comContracts` configuration section contains elements that allow you to specify various properties of a COM+ integration service contract.  
   
 ## Specifying Namespace and Contract  
- COM+ integration service contracts are currently restricted to the “http://tempuri.org” namespace, and contract name is derived from the supporting COM interface. You can, however, specify alternatives by using the `comContracts` section in the configuration file.  
+ COM+ integration service contracts are currently restricted to the "http://tempuri.org" namespace, and contract name is derived from the supporting COM interface. You can, however, specify alternatives by using the `comContracts` section in the configuration file.  
   
  For example, you can use the following configuration to specify the namespace and contract name of the service contract, as well as an option to enforce usage on sessionful bindings.  
   
-```  
+```xml  
 <comContracts>  
   <comContract  
       contract="{5163B1E7-F0CF-4B6A-9A02-4AB654F34284}"  

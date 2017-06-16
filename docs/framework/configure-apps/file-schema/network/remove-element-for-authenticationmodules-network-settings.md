@@ -38,10 +38,9 @@ Removes an authentication module from the application.
   
 ## Syntax  
   
-```  
-  
-      <remove   
-   name = "authentication module name"   
+```xml  
+      <remove   
+   name = "authentication module name"   
 />  
 ```  
   
@@ -74,7 +73,7 @@ Removes an authentication module from the application.
 ## Example  
  The following code example removes an authentication module.  
   
-```  
+```xml  
 <configuration>  
   <system.net>  
     <authenticationModules>  

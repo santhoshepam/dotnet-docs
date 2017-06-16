@@ -18,41 +18,42 @@ author: "rpetrusha"
 ms.author: "ronpet"
 manager: "wpickett"
 ---
-# How to: Determine which .NET Framework versions are installed
-Users can install and run multiple versions of the .NET Framework on their computers. When you develop or deploy your app, you might need to know which .NET Framework versions are installed on the user’s computer. Note that the .NET Framework consists of two main components, which are versioned separately:
-
-- A set of assemblies, which are collections of types and resources that provide the functionality for your apps. The .NET Framework and assemblies share the same version number.
-
-- The common language runtime (CLR), which manages and executes your app's code. The CLR is identified by its own version number (see [Versions and Dependencies](~/docs/framework/migration-guide/versions-and-dependencies.md)).
-
- To get an accurate list of the .NET Framework versions installed on a computer, you can view the registry or query the registry in code:
-
- [Viewing the registry (versions 1-4)](#net_a)
- [Viewing the registry (version 4.5 and later)](#net_b)
- [Using code to query the registry (versions 1-4)](#net_c)
- [Using code to query the registry (version 4.5 and later)](#net_d)
-
- To find the CLR version, you can use a tool or code:
-
- [Using the Clrver tool](#clr_a)
- [Using code to query the System.Environment class](#clr_b)
-
- For information about detecting the installed updates for each version of the .NET Framework, see [How to: Determine Which .NET Framework Updates Are Installed](~/docs/framework/migration-guide/how-to-determine-which-net-framework-updates-are-installed.md). For information about installing the .NET Framework, see the [installation guide](../../../docs/framework/install/guide-for-developers.md).
-
-<a name="net_a"></a> 
-#### To find .NET Framework versions by viewing the registry (.NET Framework 1-4)
-
-1. On the **Start** menu, choose **Run**.
-
-2. In the **Open** box, enter **regedit.exe**.
-
-     You must have administrative credentials to run regedit.exe.
-
-3. In the Registry Editor, open the following subkey:
-
-     `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP`
-
-     The installed versions are listed under the NDP subkey. The version number is stored in the **Version** entry. For the [!INCLUDE[net_v40_long](../../../includes/net-v40-long-md.md)] the **Version** entry is under the Client or Full subkey (under NDP), or under both subkeys.
+# How to: Determine Which .NET Framework Versions Are Installed
+Users can install and run multiple versions of the .NET Framework on their computers. When you develop or deploy your app, you might need to know which .NET Framework versions are installed on the user’s computer. Note that the .NET Framework consists of two main components, which are versioned separately:  
+  
+-   A set of assemblies, which are collections of types and resources that provide the functionality for your apps. The .NET Framework and assemblies share the same version number.  
+  
+-   The common language runtime (CLR), which manages and executes your app's code. The CLR is identified by its own version number (see [Versions and Dependencies](~/docs/framework/migration-guide/versions-and-dependencies.md)).  
+  
+ To get an accurate list of the .NET Framework versions installed on a computer, you can view the registry or query the registry in code:  
+  
+ [Viewing the registry (versions 1-4)](#net_a)  
+ [Viewing the registry (version 4.5 and later)](#net_b)  
+ [Using code to query the registry (versions 1-4)](#net_c)  
+ [Using code to query the registry (version 4.5 and later)](#net_d)  
+  
+ To find the CLR version, you can use a tool or code:  
+  
+ [Using the Clrver tool](#clr_a)  
+ [Using code to query the System.Environment class](#clr_b)  
+  
+ For information about detecting the installed updates for each version of the .NET Framework, see [How to: Determine Which .NET Framework Updates Are Installed](~/docs/framework/migration-guide/how-to-determine-which-net-framework-updates-are-installed.md). For information about installing the .NET Framework, see [Install the .NET Framework for developers](../../../docs/framework/install/guide-for-developers.md).  
+  
+<a name="net_a"></a>   
+#### To find .NET Framework versions by viewing the registry (.NET Framework 1-4)  
+  
+1.  On the **Start** menu, choose **Run**.  
+  
+2.  In the **Open** box, enter **regedit.exe**.  
+  
+     You must have administrative credentials to run regedit.exe.  
+  
+3.  In the Registry Editor, open the following subkey:  
+  
+     `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP`  
+  
+     The installed versions are listed under the NDP subkey. The version number is stored in the **Version** entry. For the [!INCLUDE[net_v40_long](../../../includes/net-v40-long-md.md)] the **Version** entry is under the Client or Full subkey (under NDP), or under both subkeys.  
+  
 
     > [!NOTE]
     > The "NET Framework Setup" folder in the registry does not begin with a period.
@@ -95,17 +96,15 @@ Users can install and run multiple versions of the .NET Framework on their compu
 <a name="net_c"></a> 
 #### To find .NET Framework versions by querying the registry in code (.NET Framework 1-4)
 
-- Use the <xref:Microsoft.Win32.RegistryKey?displayProperty=fullName>class to access the Software\Microsoft\NET Framework Setup\NDP\ subkey under HKEY_LOCAL_MACHINE in the Windows registry.
+- Use the <xref:Microsoft.Win32.RegistryKey?displayProperty=fullName> class to access the Software\Microsoft\NET Framework Setup\NDP\ subkey under HKEY_LOCAL_MACHINE in the Windows registry.
 
      The following code shows an example of this query.
 
     > [!NOTE]
     > This code does not show how to detect the [!INCLUDE[net_v45](../../../includes/net-v45-md.md)] or later. Check the `Release` DWORD to detect those versions, as described in the previous section. For code that does detect the [!INCLUDE[net_v45](../../../includes/net-v45-md.md)] or later versions, see the next section in this article.
 
-     [!code-csharp[ListVersions#0](../../../samples/snippets/csharp/VS_Snippets_CLR/listversions/cs/program.cs#0)]
-     [!code-vb[ListVersions#0](../../../samples/snippets/visualbasic/VS_Snippets_CLR/listversions/vb/program.vb#0)]
-    [!code-csharp[ListVersions#1](../../../samples/snippets/csharp/VS_Snippets_CLR/listversions/cs/program.cs#1)]
-    [!code-vb[ListVersions#1](../../../samples/snippets/visualbasic/VS_Snippets_CLR/listversions/vb/program.vb#1)]
+     [!code-csharp[ListVersions](../../../samples/snippets/csharp/framework/migration-guide/versions-installed1.cs)]
+     [!code-vb[ListVersions](../../../samples/snippets/visualbasic/framework/migration-guide/versions-installed1.vb)]
 
      The example produces output that's similar to the following:
 
@@ -142,8 +141,8 @@ Users can install and run multiple versions of the .NET Framework on their compu
 
      The following example checks the `Release` value in the registry to determine whether the [!INCLUDE[net_v45](../../../includes/net-v45-md.md)] or a later version of the .NET Framework is installed.
 
-     [!code-csharp[ListVersions#5](../../../samples/snippets/csharp/VS_Snippets_CLR/listversions/cs/Versions45Plus.cs#5)]
-     [!code-vb[ListVersions#5](../../../samples/snippets/visualbasic/VS_Snippets_CLR/listversions/vb/Versions45Plus.vb#5)]
+     [!code-csharp[ListVersions#5](../../../samples/snippets/csharp/framework/migration-guide/versions-installed3.cs)]
+     [!code-vb[ListVersions#5](../../../samples/snippets/visualbasic/framework/migration-guide/versions-installed3.vb)]
 
      This example follows the recommended practice for version checking:
 
@@ -178,10 +177,8 @@ Users can install and run multiple versions of the .NET Framework on their compu
 
      Here's an example of querying the <xref:System.Environment.Version%2A?displayProperty=fullName> property for runtime version information:
 
-     [!code-csharp[ListVersions#0](../../../samples/snippets/csharp/VS_Snippets_CLR/listversions/cs/program.cs#0)]
-     [!code-vb[ListVersions#0](../../../samples/snippets/visualbasic/VS_Snippets_CLR/listversions/vb/program.vb#0)]
-    [!code-csharp[ListVersions#2](../../../samples/snippets/csharp/VS_Snippets_CLR/listversions/cs/program.cs#2)]
-    [!code-vb[ListVersions#2](../../../samples/snippets/visualbasic/VS_Snippets_CLR/listversions/vb/program.vb#2)]
+     [!code-csharp[ListVersions](../../../samples/snippets/csharp/framework/migration-guide/versions-installed2.cs)]
+     [!code-vb[ListVersions](../../../samples/snippets/visualbasic/framework/migration-guide/versions-installed2.vb)]
 
      The example produces output that's similar to the following:
 
@@ -191,5 +188,5 @@ Users can install and run multiple versions of the .NET Framework on their compu
 
 ## See Also
  [How to: Determine Which .NET Framework Updates Are Installed](~/docs/framework/migration-guide/how-to-determine-which-net-framework-updates-are-installed.md)   
- [Installation Guide](../../../docs/framework/install/guide-for-developers.md)   
+ [Install the .NET Framework for developers](../../../docs/framework/install/guide-for-developers.md)   
  [Versions and Dependencies](~/docs/framework/migration-guide/versions-and-dependencies.md)

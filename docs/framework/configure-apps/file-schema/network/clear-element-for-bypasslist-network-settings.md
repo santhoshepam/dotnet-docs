@@ -39,10 +39,8 @@ Clears the proxy bypass list.
   
 ## Syntax  
   
-```  
-  
+```xml  
 <clear/>  
-  
 ```  
   
 ## Attributes and Elements  
@@ -69,7 +67,7 @@ Clears the proxy bypass list.
 ## Example  
  The following code example clears the bypass list and then adds two addresses to the bypass list. The first bypasses the proxy for all servers in the contoso.com domain; the second bypasses the proxy for all servers whose IP address begins with 192.168.  
   
-```  
+```xml  
 <configuration>  
   <system.net>  
     <defaultProxy>  

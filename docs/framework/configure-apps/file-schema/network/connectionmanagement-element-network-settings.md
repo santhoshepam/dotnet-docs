@@ -35,9 +35,8 @@ Specifies the maximum number of connections to a network host.
   
 ## Syntax  
   
-```  
-  
-      <connectionManagement>   
+```xml  
+      <connectionManagement>   
 </connectionManagement>  
 ```  
   
@@ -70,7 +69,7 @@ Specifies the maximum number of connections to a network host.
 ## Example  
  The following code example configures an application to use four connections to the server www.contoso.com and two connections to all other servers.  
   
-```  
+```xml  
 <configuration>  
   <system.net>  
     <connectionManagement>  

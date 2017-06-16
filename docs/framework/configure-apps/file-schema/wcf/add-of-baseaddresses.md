@@ -27,8 +27,7 @@ Represents a configuration element that specifies the base addresses used by the
   
 ## Syntax  
   
-```  
-  
+```xml  
 <add baseAddress="string" />  
 ```  
   

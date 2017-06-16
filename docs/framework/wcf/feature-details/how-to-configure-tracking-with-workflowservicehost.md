@@ -22,15 +22,14 @@ This topic explains how to configure tracking for a [!INCLUDE[netfx_current_long
   
 1.  Add the <xref:System.Activities.Tracking.EtwTrackingParticipant> using the <`behavior`> element in a configuration file, as shown in the following example.  
   
-    ```  
+    ```xml  
     <behaviors>  
        <serviceBehaviors>  
          <behavior>  
            <etwTracking profileName="Sample Tracking Profile" />  
-         </behavior>              
+         </behavior>              
        </serviceBehaviors>  
     <behaviors>  
-  
     ```  
   
     > [!NOTE]
@@ -55,7 +54,6 @@ This topic explains how to configure tracking for a [!INCLUDE[netfx_current_long
          </trackingProfile>   
        </tracking>  
     </system.serviceModel>  
-  
     ```  
   
      [!INCLUDE[crabout](../../../../includes/crabout-md.md)] tracking profiles, see [Tracking Profiles](../../../../docs/framework/windows-workflow-foundation/tracking-profiles.md).  

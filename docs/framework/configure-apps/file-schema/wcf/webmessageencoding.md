@@ -26,13 +26,12 @@ Enables plain-text XML, JavaScript Object Notation (JSON) message encodings and 
   
 ## Syntax  
   
-```  
-  
+```xml  
 <webMessageEncoding   
       maxReadPoolSize="Integer"  
    maxWritePoolSize="Integer"  
   
-writeEncoding=”UnicodeFffeTextEncoding/Utf16TextEncoding/Utf8TextEncoding" />  
+writeEncoding="UnicodeFffeTextEncoding/Utf16TextEncoding/Utf8TextEncoding" />  
 ```  
   
 ## Attributes and Elements  
@@ -73,12 +72,12 @@ writeEncoding=”UnicodeFffeTextEncoding/Utf16TextEncoding/Utf8TextEncoding" />
   
 ## Example  
   
-```  
+```xml  
 <webMessageEncoding   
     maxReadPoolSize="256"  
     maxWritePoolSize="128"  
     messageVersion="None"  
-    textEncoding=”utf-8”   
+    textEncoding="utf-8"   
 />  
 ```  
   

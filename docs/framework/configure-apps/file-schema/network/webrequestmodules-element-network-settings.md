@@ -35,9 +35,8 @@ Specifies modules to use to request information from network hosts.
   
 ## Syntax  
   
-```  
-  
-      <webRequestModules>   
+```xml  
+      <webRequestModules>   
 </webRequestModules>  
 ```  
   
@@ -72,7 +71,7 @@ Specifies modules to use to request information from network hosts.
 ## Example  
  The following code example registers the default HTTP module. You should replace the values for Version and PublicKeyToken with the correct values for the specified module.  
   
-```  
+```xml  
 <configuration>  
   <system.net>  
     <webRequestModules>  
