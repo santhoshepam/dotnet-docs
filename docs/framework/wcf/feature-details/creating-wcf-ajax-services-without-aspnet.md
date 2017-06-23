@@ -42,7 +42,7 @@ manager: "erikre"
   
  Alternatively, you can also use configuration to add an AJAX endpoint. Use the <xref:System.ServiceModel.WebHttpBinding> on the service endpoint and configure that endpoint with the <xref:System.ServiceModel.Description.WebHttpBehavior> as shown in the following code snippet.  
   
-```  
+```xml  
 <configuration>  
   <system.serviceModel>  
     <behaviors>  
@@ -95,7 +95,7 @@ string[] GetCities(string firstLetters);
   
  If the operation takes an extra parameter, the request style must be wrapped to wrap both parameters in a single JSON object. An example of this style JSON message is in the following example.  
   
-```  
+```json  
 {"firstLetters": "na", "maxNumber": 2}  
 ```  
   
