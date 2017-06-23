@@ -43,7 +43,7 @@ Instead of specifying a target manifest in a [`dotnet publish`](../tools/dotnet-
 </PropertyGroup>
 ```
 
-This should only be done when the target environment for the application is well-known. This is the case for example for ASP.NET projects.
+This should only be done when the target environment for the application is well-known.
 
 A different case would be an open-source project: the users of the project will likely deploy to a variety of different production environments, which may have different sets of packages pre-installed. Maintainers of the project can't make assumptions about the target manifest, and users should instead rely on the `--manifest` option of [`dotnet publish`](../tools/dotnet-publish.md) instead.
 
@@ -54,6 +54,8 @@ The default ASP.NET targets included with the `Microsoft.NET.Sdk.Web` SDK includ
 When an ASP.NET published application gets deployed, one should make sure that the target environment has ASP.NET installed, as the presence of .NET Core alone will not be sufficient.
 
 If the application needs to be published to such an environment that doesn't include ASP.NET, it is possible to opt out of the implicit store by specifying a `PublishWithAspNetCoreTargetManifest` flag set to false in the project file.
+
+The ASP.NET runtime package store will be installed as part of the SDK packages distributed by Microsoft, and will also be available as a separate download so that any deployment environment can be prepared to receive published ASP.NET applications.
 
 ## Preparing a runtime environment
 
@@ -70,7 +72,7 @@ The first step is to create an XML file that describes the packages that must co
 </Project>
 ```
 
-The runtime package store can then be provisioned by running a `dotnet store --manifest [target-manifest.xml] --runtime [runtime id] --framework [target framework]` command. Multiple target manifest paths can be passed to a single [`dotnet store`](../tools/dotnet-store.md) command.
+The runtime package store can then be provisioned by running a `dotnet store --manifest [target-manifest.xml] --runtime [runtime id] --framework [target framework]` command. Multiple file paths can be passed to a single [`dotnet store`](../tools/dotnet-store.md) command.
 
 The output of the command is a package store under the `.dotnet/store` subdirectory of the user profile, unless a specific location has been specified using the `--output` option. The root directory of the store contains a target manifest `artifact.xml` file, that can be made available to be downloaded by application authors who want to target this store when publishing.
 
