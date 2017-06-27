@@ -2,12 +2,12 @@
 title: "AttributeUsage (C#) | Microsoft Docs"
 ms.custom: ""
 ms.date: "2015-07-20"
-ms.prod: .net
+ms.prod: "visual-studio-dev14"
 ms.reviewer: ""
 ms.suite: ""
 ms.technology: 
   - "devlang-csharp"
-
+ms.tgt_pltfrm: ""
 ms.topic: "article"
 dev_langs: 
   - "CSharp"
@@ -15,14 +15,11 @@ ms.assetid: 22c45568-9a6a-4c2f-8480-f38c1caa0a99
 caps.latest.revision: 3
 author: "BillWagner"
 ms.author: "wiwagn"
-
-translation.priority.mt: 
-  - "cs-cz"
-  - "pl-pl"
-  - "pt-br"
-  - "tr-tr"
+manager: "wpickett"
 ---
 # AttributeUsage (C#)
+[!INCLUDE[csharpbanner](../../../../includes/csharpbanner.md)]
+
 Determines how a custom attribute class can be used. `AttributeUsage` is an attribute that can be applied to custom attribute definitions to control how the new attribute can be applied. The default settings look like this when applied explicitly:  
   
 ```csharp  
@@ -161,8 +158,8 @@ A2
  <xref:System.Attribute>   
  <xref:System.Reflection>   
  [C# Programming Guide](../../../../csharp/programming-guide/index.md)   
- [Attributes](https://msdn.microsoft.com/library/5x6cd29c)   
+ [Attributes](../Topic/Extending%20Metadata%20Using%20Attributes.md)   
  [Reflection (C#)](../../../../csharp/programming-guide/concepts/reflection.md)   
- [Attributes](../../../../csharp/programming-guide/concepts/attributes/index.md)   
+ [Attributes](../Topic/Attributes%20\(C%23%20and%20Visual%20Basic\).md)   
  [Creating Custom Attributes (C#)](../../../../csharp/programming-guide/concepts/attributes/creating-custom-attributes.md)   
  [Accessing Attributes by Using Reflection (C#)](../../../../csharp/programming-guide/concepts/attributes/accessing-attributes-by-using-reflection.md)
